@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>The bookshelf — Andrew Silvestri</title>
+<meta name="description" content="A desktop wallpaper generated from a Goodreads export: your books as a drawn-spine shelf or a wall of their real covers, built entirely in the browser.">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="alternate icon" href="favicon.png">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<meta name="theme-color" content="#070a12">
+<link rel="canonical" href="https://andrewsilvestri.com/desktop.html">
+<link rel="stylesheet" href="style.css?v=6a6d514d">
+</head><body>
+<nav class="top"><a href="index.html">Home</a><span class="dd"><a href="#" class="ddbtn" aria-haspopup="true">The atlas <span class="caret">&#9662;</span></a><span class="ddmenu"><a href="atlas-app.html" target="_blank" rel="noopener">Open the atlas</a><a href="atlas.html">About the atlas</a><a href="model.html">How the model works</a><a href="library.html">Figures</a></span></span><span class="dd"><a href="#" class="ddbtn" aria-haspopup="true">Energy <span class="caret">&#9662;</span></a><span class="ddmenu"><a href="heat.html">Industrial heat break-even</a><a href="storage.html">Battery revenue simulator</a></span></span><a href="climate-cost.html">Climate cost calculator</a><span class="dd"><a href="#" class="ddbtn on" aria-haspopup="true">Others <span class="caret">&#9662;</span></a><span class="ddmenu"><a href="longevity.html">Longevity quotient</a><a href="skyline.html">Skylines, played</a><a href="desktop.html" class="on">The bookshelf</a></span></span><a href="code.html">Code</a></nav>
+<main>
+
+<h1>The bookshelf</h1>
+<p class="dim">A screen is wall space. This hangs a bookshelf on it &mdash;
+built from the books you have actually read, spine by spine.</p>
+
+<p>A desktop background is looked at more often than anything anyone hangs in
+a house, and it is usually a stock photograph. Goodreads exports a CSV of
+everything you have shelved; this page turns it into a wallpaper sized to
+your screen, entirely in the browser &mdash; the CSV is parsed here, the
+shelf is drawn here, the PNG is written here.</p>
+
+<div class="card">
+<div class="tag">Interactive</div>
+<h3 style="margin-top:4px">Bookshelf, yours</h3>
+<p>Drop in a Goodreads export, give it your screen size, and download the
+wallpaper. By default the page works with the network cable out; switch on
+real covers and the shelf becomes a wall of your books&rsquo; actual
+covers.</p>
+<a class="btn" href="bookshelf-app.html" target="_blank" rel="noopener">Open it</a>
+<a class="btn ghost" href="downloads/bookshelf-code.zip">Download it to keep</a>
+</div>
+
+<h2>Two shelves, one honest split</h2>
+
+<p>The default shelf is drawn. A spine&rsquo;s width follows its page count
+and its dress follows its era &mdash; Victorians in banded leather with gilt
+rules, mid-century in cloth and paper labels, recent books in flat graphic
+colour. A five-star rating earns a gilt point at the foot. Everything is
+deterministic per title, so the same book always gets the same spine.</p>
+
+<img class="fig wide" src="assets/bookshelf-demo-shelf.png?v=a87268ec"
+     alt="The bookshelf app drawing the demo library as book spines on three walnut shelves">
+<p class="dim" style="font-size:13px">The drawn shelf: the demo library at
+1920&thinsp;&times;&thinsp;1080, spines sized by page count and dressed by
+era. Fully offline.</p>
+
+<p>Cover mode turns the shelf into a wall of the covers themselves, fetched
+from the Open Library covers service by the ISBNs in the export &mdash; the
+page&rsquo;s single use of the network, off by default, and the request
+carries the ISBN and nothing else. Scans of covers arrive in every vintage
+of exposure and colour, so each one is brought to a single matte finish:
+exposure pulled toward a common middle, saturation eased, one warm wash, one
+pass of grain. A book with no cover on file is left off the wall rather than
+faked &mdash; the caption says how many.</p>
+
+<img class="fig wide" src="assets/bookshelf-demo-covers.png?v=fe485fb1"
+     alt="The bookshelf app in cover mode: a wall of real book covers, uniformly finished, on four shelves">
+<p class="dim" style="font-size:13px">Cover mode with <em>Fit every book</em>:
+43 of the 44 demo books had covers on file, and the case was built to hold
+exactly those. All are brought to the same finish so six decades of printing
+read as one shelf.</p>
+
+<p>A worthwhile limit stated plainly: there is no database of photographed
+book <em>spines</em>, at any scale, from anyone &mdash; spines were never
+scanned the way covers were. That is why the two modes are a real-cover wall
+and a drawn-spine shelf, and nothing in between.</p>
+
+<h2>Which books, and how many shelves</h2>
+
+<p>The shelf holds whichever slice of the library you ask for. The menu
+offers everything, read, and unread &mdash; unread being the to-read pile
+plus whatever is mid-flight &mdash; and then every shelf the export itself
+carries: whatever you have tagged on Goodreads shows up as a choice, with
+its count.</p>
+
+<p>By default the case is built for the screen: a comfortable number of
+shelves at a readable size, holding as many books as happen to fit. <em>Fit
+every book</em> inverts that and builds the case for the library instead,
+searching for the fewest shelves that hold all of it &mdash; more, thinner
+shelves for a large export, fewer and taller ones for a small library that
+would otherwise sit in a corner of the wall. Capacity rises roughly with the
+square of the shelf count, since thinner shelves shrink every book in both
+directions, so the search settles in a few steps. If a library is too large
+even for sixty shelves, the case takes the count that holds the most and the
+caption says how many were left over.</p>
+
+<h2>Install and removal</h2>
+
+<p>The application is one HTML file; the download keeps working from a
+folder on your machine with no server and no internet. To set the result as
+your wallpaper, right-click the PNG, or use the included Windows script,
+which is made reversible: before the first change it saves the path of the
+current wallpaper to a single JSON file beside itself, and
+<code>--undo</code> restores it and deletes the file. No registry keys,
+nothing at startup; removal is deleting the folder.</p>
+
+<h2>The code</h2>
+
+<p>Dependency-free HTML and JavaScript, with a small Python wallpaper setter
+alongside. The download is on the <a href="code.html">code page</a>.</p>
+
+<footer>Andrew Silvestri · energy systems modelling ·
+<a href="mailto:dasilvestri@utexas.edu">dasilvestri@utexas.edu</a></footer>
+</main>
+</body></html>

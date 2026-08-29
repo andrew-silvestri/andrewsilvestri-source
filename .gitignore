@@ -1,0 +1,5 @@
+__pycache__/
+node_modules
+backups/
+site/assets/atlas-data.js
+site/downloads/

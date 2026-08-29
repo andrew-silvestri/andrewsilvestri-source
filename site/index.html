@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Andrew Silvestri — energy systems</title>
+<meta name="description" content="Energy systems modelling: techno-economics, optimisation, and a calibrated model of the world energy system.">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="alternate icon" href="favicon.png">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<meta name="theme-color" content="#070a12">
+<link rel="canonical" href="https://andrewsilvestri.com/">
+<link rel="stylesheet" href="style.css?v=6a6d514d">
+</head><body>
+<nav class="top"><a href="index.html" class="on">Home</a><span class="dd"><a href="#" class="ddbtn" aria-haspopup="true">The atlas <span class="caret">&#9662;</span></a><span class="ddmenu"><a href="atlas-app.html" target="_blank" rel="noopener">Open the atlas</a><a href="atlas.html">About the atlas</a><a href="model.html">How the model works</a><a href="library.html">Figures</a></span></span><span class="dd"><a href="#" class="ddbtn" aria-haspopup="true">Energy <span class="caret">&#9662;</span></a><span class="ddmenu"><a href="heat.html">Industrial heat break-even</a><a href="storage.html">Battery revenue simulator</a></span></span><a href="climate-cost.html">Climate cost calculator</a><span class="dd"><a href="#" class="ddbtn" aria-haspopup="true">Others <span class="caret">&#9662;</span></a><span class="ddmenu"><a href="longevity.html">Longevity quotient</a><a href="skyline.html">Skylines, played</a><a href="desktop.html">The bookshelf</a></span></span><a href="code.html">Code</a></nav>
+<main>
+
+<div id="hero" aria-hidden="true"></div>
+<div class="card">
+<div class="tag">Main project</div>
+<h3 style="margin-top:4px">A model of the world energy system</h3>
+<p>86,622 nodes and 197,068 weighted links.</p>
+<a class="btn" href="atlas-app.html" target="_blank" rel="noopener">Open the atlas</a>
+<a class="btn ghost" href="atlas.html">About the atlas</a>
+<a class="btn ghost" href="model.html">How it works</a>
+
+</div>
+
+<img class="fig wide" src="assets/energy_model_chart.png?v=fbbcf9ef"
+ alt="Overview chart of the world energy model">
+<p class="small">The model at a glance: what it contains, how it is weighted,
+and how it behaves. <a href="library.html">All figures</a>.</p>
+
+<hr>
+<h2>Energy</h2>
+
+<div class="cardgrid">
+<div class="card">
+<div class="tag">Techno-economics</div>
+<h3 style="margin-top:4px"><a href="heat.html">Industrial heat electrification
+break-even</a></h3>
+<p>Cost of heat from an electric boiler against a gas boiler in Texas. The gap
+between the fuel prices decides the outcome. Break-even electricity is about
+1.5 cents per kilowatt hour at $3.50 gas, and capital cost moves it very
+little.</p>
+</div>
+<div class="card">
+<div class="tag">Optimisation</div>
+<h3 style="margin-top:4px"><a href="storage.html">Battery revenue
+simulator</a></h3>
+<p>Linear program over 8,760 hours. Value flattens above four hours of storage
+duration, which is the expected result, now measured.</p>
+</div>
+</div>
+
+<hr>
+<h2>Climate research</h2>
+
+<div class="cardgrid">
+<div class="card">
+<div class="tag">Life-cycle · interactive</div>
+<h3 style="margin-top:4px"><a href="climate-cost.html">The true climate
+cost</a></h3>
+<p>Twenty products taken apart stage by stage, with the allocation on every
+edge and the lifetime of every vehicle exposed rather than buried. Change the
+route and it recomputes instead of looking up an answer somebody prepared.</p>
+</div>
+</div>
+
+<hr>
+<h2>Other work</h2>
+
+<div class="cardgrid">
+<div class="card">
+<div class="tag">Sonification · interactive</div>
+<h3 style="margin-top:4px"><a href="skyline.html">Skylines, played</a></h3>
+<p>A skyline and a spectrum analyser are the same picture, so the picture is
+played. Twenty-seven cities built from real building heights and coordinates;
+turn on the spot and the sound turns with you. What is measured, what is
+assumed and what is invented are each labelled.</p>
+</div>
+<div class="card">
+<div class="tag">Allometry · interactive</div>
+<h3 style="margin-top:4px"><a href="longevity.html">Longevity quotient</a></h3>
+<p>How long an animal lives, against how long an animal of its size should
+live. Body mass predicts lifespan across fourteen orders of magnitude; the
+quotient is what is left once that relationship is divided out.</p>
+</div>
+<div class="card">
+<div class="tag">Desktop · interactive</div>
+<h3 style="margin-top:4px"><a href="desktop.html">The bookshelf</a></h3>
+<p>A wallpaper built from a Goodreads export: your books as drawn spines, or
+as a wall of their real covers brought to one finish. The CSV is parsed in the
+browser and never leaves it.</p>
+</div>
+</div>
+
+<hr>
+<p class="small">Built with Python, Julia and public data.
+<a href="code.html">All source is downloadable.</a></p>
+
+
+<footer>Andrew Silvestri · energy systems modelling ·
+<a href="mailto:dasilvestri@utexas.edu">dasilvestri@utexas.edu</a></footer>
+</main>
+<script src="assets/hero-data.js?v=0d2d5608"></script>
+<script src="assets/hero.js?v=86f382e2"></script>
+<script src="assets/hero-gl.js?v=2528400e"></script>
+</body></html>

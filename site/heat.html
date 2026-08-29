@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Industrial heat break-even — Andrew Silvestri</title>
+<meta name="description" content="Levelised cost of heat for electric versus gas boilers in Texas.">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="alternate icon" href="favicon.png">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<meta name="theme-color" content="#070a12">
+<link rel="canonical" href="https://andrewsilvestri.com/heat.html">
+<link rel="stylesheet" href="style.css?v=6a6d514d">
+</head><body>
+<nav class="top"><a href="index.html">Home</a><span class="dd"><a href="#" class="ddbtn" aria-haspopup="true">The atlas <span class="caret">&#9662;</span></a><span class="ddmenu"><a href="atlas-app.html" target="_blank" rel="noopener">Open the atlas</a><a href="atlas.html">About the atlas</a><a href="model.html">How the model works</a><a href="library.html">Figures</a></span></span><span class="dd"><a href="#" class="ddbtn on" aria-haspopup="true">Energy <span class="caret">&#9662;</span></a><span class="ddmenu"><a href="heat.html" class="on">Industrial heat break-even</a><a href="storage.html">Battery revenue simulator</a></span></span><a href="climate-cost.html">Climate cost calculator</a><span class="dd"><a href="#" class="ddbtn" aria-haspopup="true">Others <span class="caret">&#9662;</span></a><span class="ddmenu"><a href="longevity.html">Longevity quotient</a><a href="skyline.html">Skylines, played</a><a href="desktop.html">The bookshelf</a></span></span><a href="code.html">Code</a></nav>
+<main>
+
+<h1>Industrial heat electrification break-even</h1>
+<p class="dim">Levelised cost of heat from a resistive electric boiler<sup class="cite" id="cr1"><a href="#ref1">1</a></sup> against a
+natural-gas boiler, for process steam in Texas.</p>
+
+<p>A chemical plant that wants to stop burning gas for process steam has one
+obvious substitute. Put an electric resistance heater where the burner was. No
+new chemistry, no new catalyst, nothing to invent. The whole question is
+arithmetic. What does the electricity have to cost before the substitution stops
+losing money?</p>
+
+<p>The comparison is on delivered heat. Both routes are priced in dollars per
+million British thermal units that actually reach the process, not on fuel
+bought at the gate.</p>
+
+<h2>What the model finds</h2>
+<p>At a gas price of $3.50<sup class="cite" id="cr2"><a href="#ref2">2</a></sup> per million British thermal units and electricity at
+6.5 cents per kilowatt hour, gas heat costs about <strong>$5.13</strong> per
+million British thermal units and electric heat about <strong>$20.00</strong>.
+The break-even electricity price is about <strong>1.53 cents per kilowatt
+hour</strong>, or 1.38 cents if only fuel is counted.</p>
+
+<p>That threshold barely moves. Swinging capital cost and fixed operations across
+a range of plus or minus fifty per cent shifts the break-even by roughly 0.15
+cents per kilowatt hour. The spark gap, meaning the ratio between the
+electricity price and the gas price, decides the outcome almost by itself.
+Arguments about equipment cost are arguments about the wrong variable.</p>
+
+<p>Emissions give a second threshold. The electric boiler emits less than the
+gas boiler only when the grid carbon intensity<sup class="cite" id="cr3"><a href="#ref3">3</a></sup> is at or below
+<strong>0.209 tonnes of carbon dioxide per megawatt hour</strong>. The eGRID
+average for the Texas grid is about 0.365. On average grid power, electrifying
+this heat increases emissions.</p>
+
+<img class="fig wide" src="assets/heat_fig1_breakeven_price.png?v=e714947e" alt="Break-even electricity price as a function of the gas price. The line is the locus where the two routes cost the same; below it the electric boiler wins.">
+<p class="small">Break-even electricity price as a function of the gas price. The line is the locus where the two routes cost the same; below it the electric boiler wins.</p>
+
+<img class="fig wide" src="assets/heat_fig3_costgap_contour.png?v=26942bad" alt="Cost gap across the electricity price and gas price plane. The diagonal structure is the spark gap dominating both axes.">
+<p class="small">Cost gap across the electricity price and gas price plane. The diagonal structure is the spark gap dominating both axes.</p>
+
+<img class="fig wide" src="assets/heat_fig4_tornado.png?v=623c085d" alt="Sensitivity of the break-even to every input. Fuel prices dominate; capital and operations barely move it.">
+<p class="small">Sensitivity of the break-even to every input. Fuel prices dominate; capital and operations barely move it.</p>
+
+<img class="fig wide" src="assets/heat_fig5_emissions_parity.png?v=9ac36287" alt="Emissions of both routes against grid carbon intensity. The crossing point is the parity threshold.">
+<p class="small">Emissions of both routes against grid carbon intensity. The crossing point is the parity threshold.</p>
+
+
+<h2>Method</h2>
+<p>The levelised cost<sup class="cite" id="cr4"><a href="#ref4">4</a></sup> is built from an annualised capital charge, fixed and
+variable operations, and fuel, divided by annual delivered heat. Boiler
+efficiency is applied on the gas side, conversion and distribution losses on the
+electric side. The workbook carries the same arithmetic in live formulas, so the
+assumptions can be edited without touching code. The Python implementation is
+the reference for the other ports.</p>
+
+<h2>Limits</h2>
+<p>The prices in the shipped run are placeholders. The model reads a real series
+from a template file the moment one is supplied. The boundary between retail
+all-in electricity and wholesale energy-only pricing has to be stated before any
+number is quoted, because it moves the answer by more than the capital cost
+does. Capital figures are scaling placeholders with a stated uncertainty band
+rather than vendor quotes. The emissions comparison uses average grid intensity.
+A marginal-emissions treatment is more defensible and is the next revision.</p>
+
+<hr>
+<h2>The code</h2>
+<p>Python reference implementation, Julia and Octave ports, and the formula-driven workbook. The archive holds the source only: no generated figures, no bulk
+data. Each model runs from its own <code>README.md</code>.</p>
+
+<p><a class="btn" href="downloads/heat-code.zip">Download source · 23 KB</a>
+<a class="btn ghost" href="code.html">All code</a></p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h2>Sources</h2>
+<p class="small">Numbered markers in the text above point here. Emission factors, cost ranges and lifespan figures are representative values from these sources, not measurements made for this project.</p>
+<ol class="refs"><li id="ref1"><span class="src">Zuberi, Hasanbeigi &amp; Morrow, <i>Electrification of industrial process heat</i>, Lawrence Berkeley National Laboratory, 2021.</span><span class="what">Electric boiler efficiency and capital cost ranges.</span></li><li id="ref2"><span class="src">U.S. Energy Information Administration, <i>Electric Power Monthly</i> Table 5.6.A and the Natural Gas Industrial Price series.</span><span class="what">Texas industrial electricity and gas prices.</span></li><li id="ref3"><span class="src">U.S. EPA, <i>eGRID</i> 2022, ERCOT subregion output emission rates; and EPA, <i>Emission Factors for Greenhouse Gas Inventories</i>, stationary combustion.</span><span class="what">Grid carbon intensity and the natural gas emission factor.</span></li><li id="ref4"><span class="src">NREL, <i>Annual Technology Baseline</i> 2024, financial assumptions.</span><span class="what">Discount rate, economic life and the levelisation method.</span></li></ol>
+
+<footer>Andrew Silvestri · energy systems modelling ·
+<a href="mailto:dasilvestri@utexas.edu">dasilvestri@utexas.edu</a></footer>
+</main>
+</body></html>

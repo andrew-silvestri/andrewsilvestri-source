@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>The true climate cost of a thing</title>
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="alternate icon" href="favicon.png">
+<meta name="theme-color" content="#070a12">
+<style>
+/* Two columns: a fixed reading panel and a stage that takes everything else.
+   Every panel is a flow child of its own cell, so nothing is positioned on top
+   of anything else except the cursor readout, which follows the pointer and is
+   clamped inside the viewport. The labels layer sits over the canvas but is
+   pointer-transparent and self-thinning: a label that would collide with one
+   already placed is dropped rather than drawn across it. */
+:root{
+  --bg:#070a12; --panel:#0c1020; --card:#10152a; --ink:#e3e6f2;
+  --dim:#8b93b0; --faint:#1a2038; --rule:#232a45; --acc:#8b7ff2;
+  --acc-dim:#5a4fb0; --acc-ink:#f2f0ff; --cool:#5aa8d8; --moss:#4f9d84;
+  --rose:#d86a86; --slate:#6f7fd8;
+  --sans:ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif;
+  --mono:ui-monospace,"SF Mono","Cascadia Mono",Consolas,monospace;
+  --serif:"Iowan Old Style","Palatino Linotype",Palatino,Georgia,serif;
+}
+@media (prefers-color-scheme: light){
+  :root{
+    --bg:#f4f5fa; --panel:#ecedf6; --card:#ffffff; --ink:#161a26;
+    --dim:#5c6480; --faint:#e0e3ef; --rule:#d2d7e6; --acc:#4c3fb5;
+    --acc-dim:#7a6fd8; --acc-ink:#ffffff; --cool:#2a6a96; --moss:#2f6f5c;
+    --rose:#a83a58; --slate:#4a56a8;
+  }
+}
+*{box-sizing:border-box}
+html,body{height:100%}
+body{margin:0;background:var(--bg);color:var(--ink);
+  font:15px/1.6 var(--sans);-webkit-font-smoothing:antialiased}
+
+#app{position:fixed;inset:0;display:grid;
+  grid-template-columns:352px 1fr;grid-template-rows:100%}
+
+/* ------------------------------------------------------------- panel --- */
+#side{overflow:auto;background:var(--panel);
+  border-right:1px solid var(--rule);padding:16px 18px 44px}
+#side h1{font:500 20px/1.25 var(--serif);margin:0 0 2px;letter-spacing:-.01em}
+#side .sub{color:var(--dim);font-size:12.5px;margin:0 0 14px}
+.back{color:var(--dim);font-size:12.5px;text-decoration:none;
+  border-bottom:1px solid var(--faint);float:right;margin-left:12px}
+.back:hover{color:var(--acc);border-bottom-color:var(--acc)}
+
+.f{margin:0 0 9px}
+.f label{display:block;font:11px var(--sans);text-transform:uppercase;
+  letter-spacing:.11em;color:var(--dim);margin-bottom:3px}
+/* The lifetime slider. It only appears for the products that amortise a
+   vehicle, because for a kilogram of beef there is nothing to amortise. */
+#life{width:100%;accent-color:var(--acc);margin:2px 0 0}
+.lifeval{display:block;font:12px var(--mono);color:var(--acc);margin-top:2px;
+  font-variant-numeric:tabular-nums}
+select{width:100%;padding:7px 9px;background:var(--card);color:var(--ink);
+  border:1px solid var(--rule);border-radius:7px;font:13.5px var(--sans);
+  appearance:none;-webkit-appearance:none;cursor:pointer;
+  /* The caret is drawn here rather than left to the platform. A native select
+     arrow is the one control a page cannot recolour, and it arrives in
+     whatever accent the operating system happens to use - which is how a
+     stray yellow gets onto an otherwise violet page. */
+  background-image:linear-gradient(45deg,transparent 50%,var(--dim) 50%),
+    linear-gradient(135deg,var(--dim) 50%,transparent 50%);
+  background-position:calc(100% - 15px) 52%,calc(100% - 10px) 52%;
+  background-size:5px 5px,5px 5px;background-repeat:no-repeat}
+select:focus{outline:none;border-color:var(--acc-dim)}
+option{background:var(--card);color:var(--ink)}
+
+.tot{margin:14px 0 0;padding:12px 13px;border:1px solid var(--rule);
+  border-radius:9px;background:var(--card)}
+.tot .big{font:600 27px/1 var(--sans);font-variant-numeric:tabular-nums;
+  color:var(--acc)}
+.tot .u{color:var(--dim);font-size:12px}
+.tot .route{display:block;color:var(--dim);font-size:12px;margin-top:6px}
+.bar{height:5px;border-radius:3px;background:var(--faint);margin-top:9px;
+  overflow:hidden}
+.bar i{display:block;height:100%;background:var(--acc)}
+.note{color:var(--dim);font-size:12.5px;margin:9px 0 0}
+
+h2{font:600 10.5px var(--sans);text-transform:uppercase;letter-spacing:.14em;
+  color:var(--dim);margin:22px 0 8px;padding-bottom:6px;
+  border-bottom:1px solid var(--rule)}
+
+#sel{font-size:13px}
+#sel .nm{font:500 15px var(--serif);color:var(--ink)}
+#sel dl{display:grid;grid-template-columns:auto 1fr;gap:3px 10px;margin:8px 0}
+#sel dt{color:var(--dim);font-size:11.5px;text-transform:uppercase;
+  letter-spacing:.08em}
+#sel dd{margin:0;font-variant-numeric:tabular-nums}
+#sel .why{color:var(--dim);font-size:12.5px;margin-top:8px}
+#sel .path{font:11.5px/1.5 var(--mono);color:var(--dim);margin-top:8px;
+  word-break:break-word}
+.pill{display:inline-block;padding:1px 7px;border-radius:20px;font-size:11px;
+  border:1px solid var(--rule);color:var(--dim);margin:0 5px 4px 0}
+.pill.a{border-color:var(--moss);color:var(--moss)}
+.pill.c{border-color:var(--rose);color:var(--rose)}
+
+.key{display:flex;flex-wrap:wrap;gap:5px 14px;font-size:12px;color:var(--dim)}
+.key span{display:flex;align-items:center;gap:6px}
+.key i{width:9px;height:9px;border-radius:50%;display:inline-block}
+
+.tabs{display:flex;gap:6px;margin:14px 0 0}
+.tabs button{flex:1;padding:6px 0;background:var(--card);color:var(--dim);
+  border:1px solid var(--rule);border-radius:7px;font:12.5px var(--sans);
+  cursor:pointer}
+.tabs button.on{color:var(--acc-ink);background:var(--acc);
+  border-color:var(--acc)}
+
+/* -------------------------------------------------------------- stage --- */
+#stage{position:relative;overflow:hidden;background:
+  radial-gradient(circle at 42% 44%,#0a1024 0%,#05070f 74%)}
+@media (prefers-color-scheme: light){
+  #stage{background:radial-gradient(circle at 42% 44%,#ffffff 0%,#e7e9f4 78%)}
+}
+#gl{position:absolute;inset:0;width:100%;height:100%;display:block;
+  cursor:grab;touch-action:none}
+#gl.drag{cursor:grabbing}
+#labels{position:absolute;inset:0;pointer-events:none;overflow:hidden}
+.lab{position:absolute;font:11.5px/1.25 var(--sans);color:var(--dim);
+  white-space:nowrap;transform:translate(-50%,-50%);
+  text-shadow:0 1px 4px rgba(3,5,14,.92),0 0 2px rgba(3,5,14,.92)}
+.lab.spine{color:var(--ink);font-size:12.5px;font-weight:500}
+.lab.sel{color:var(--acc)}
+.lab.geo{color:var(--cool);letter-spacing:.06em;font-size:11px;
+  text-transform:uppercase}
+.lab b{font-weight:500;font-variant-numeric:tabular-nums;color:var(--ink)}
+@media (prefers-color-scheme: light){
+  .lab{text-shadow:0 1px 4px rgba(255,255,255,.95),0 0 2px rgba(255,255,255,.95)}
+}
+
+#hover{position:absolute;pointer-events:none;display:none;max-width:280px;
+  padding:8px 11px;background:var(--card);border:1px solid var(--rule);
+  border-radius:8px;font-size:12.5px;box-shadow:0 14px 34px rgba(2,4,12,.55);
+  z-index:5}
+#hover .h{font:500 13px var(--serif);color:var(--ink)}
+#hover .v{color:var(--acc);font-variant-numeric:tabular-nums}
+#hover .n{color:var(--dim);font-size:11.5px;margin-top:3px}
+
+#hint{position:absolute;left:14px;bottom:12px;font-size:11.5px;color:var(--dim);
+  pointer-events:none;letter-spacing:.03em}
+#reset{position:absolute;right:14px;bottom:12px;font-size:11.5px;
+  color:var(--dim);background:var(--card);border:1px solid var(--rule);
+  border-radius:7px;padding:5px 11px;cursor:pointer}
+#reset:hover{color:var(--ink);border-color:var(--dim)}
+
+/* ------------------------------------------------ the list, and no-GL --- */
+#list{position:absolute;inset:0;overflow:auto;padding:22px 26px 60px;
+  background:var(--bg);display:none}
+#list.on{display:block}
+#list h3{font:500 17px var(--serif);margin:24px 0 4px}
+#list .stagehead{display:flex;align-items:baseline;gap:10px}
+#list .stagehead .val{color:var(--acc)}
+ul.tree{list-style:none;margin:0;padding:0 0 0 15px;
+  border-left:1px solid var(--faint)}
+ul.tree ul.tree{margin-left:2px}
+li.n{margin:5px 0;padding-left:4px}
+.row{display:flex;align-items:baseline;gap:9px;font-size:13px}
+.lbl{flex:1;min-width:0}
+.dot{width:8px;height:8px;border-radius:50%;display:inline-block;
+  margin-right:6px}
+.amt{color:var(--dim);font-size:11.5px;margin-left:6px}
+.alloc{color:var(--cool);font-size:11.5px;margin-left:5px;
+  font-variant-numeric:tabular-nums}
+.q{color:var(--dim);font-size:10px;border:1px solid var(--rule);
+  border-radius:3px;padding:0 4px;margin-left:5px}
+.val{font-variant-numeric:tabular-nums;color:var(--ink);font-size:12.5px}
+.leafnote{color:var(--dim);font-size:12px;margin:2px 0 4px 14px;max-width:74ch}
+#nogl{position:absolute;inset:0;display:none;align-items:center;
+  justify-content:center;padding:40px;color:var(--dim);text-align:center}
+
+@media (max-width:900px){
+  #app{grid-template-columns:100%;grid-template-rows:auto 1fr}
+  #side{border-right:0;border-bottom:1px solid var(--rule);max-height:46vh}
+}
+</style>
+</head><body>
+
+<div id="app">
+<aside id="side">
+  <a class="back" href="climate-cost.html">&larr; back</a>
+  <h1>The true climate cost</h1>
+  <p class="sub">Three inputs. Every step, and every step inside every step.</p>
+
+  <div class="f"><label>Item</label><select id="item"></select></div>
+  <div class="f"><label>Produced in</label><select id="origin"></select></div>
+  <div class="f"><label>Consumed in</label><select id="dest"></select></div>
+  <div class="f"><label>Freight</label><select id="mode"></select></div>
+  <div class="f" id="lifewrap" style="display:none">
+    <label id="lifelabel">Vehicle life</label>
+    <input id="life" type="range" min="0" max="100" value="50">
+    <span class="lifeval" id="lifeval"></span>
+  </div>
+
+  <div class="tot">
+    <span class="big" id="tot">-</span>
+    <span class="u">kg CO<sub>2</sub>e per <span id="unit">kg</span></span>
+    <div class="bar"><i id="totbar"></i></div>
+    <span class="route" id="route"></span>
+  </div>
+  <p class="note" id="compare"></p>
+  <p class="note" id="itemnote"></p>
+
+  <div class="tabs">
+    <button id="t3d" class="on">Scene</button>
+    <button id="tls">List</button>
+  </div>
+
+  <h2>Selection</h2>
+  <div id="sel"></div>
+
+  <h2>Reading the scene</h2>
+  <div class="key">
+    <span><i style="background:var(--acc)"></i>life-cycle stage</span>
+    <span><i style="background:var(--moss)"></i>freight</span>
+    <span><i style="background:var(--cool)"></i>electricity</span>
+    <span><i style="background:var(--rose)"></i>combustion, soil, decay</span>
+    <span><i style="background:var(--slate)"></i>materials and inputs</span>
+  </div>
+  <p class="note">Ball size is emissions, on a cube-root scale so that small
+  contributions stay visible. The open arc around a ball is its allocation: a
+  full ring means the whole process is charged to this product, a third of a
+  ring means a third of it is. Allocation multiplies down a branch, so a
+  process four levels deep may send only a sliver of itself here.</p>
+</aside>
+
+<div id="stage">
+  <canvas id="gl"></canvas>
+  <div id="labels"></div>
+  <div id="hover"></div>
+  <div id="hint">drag to orbit &middot; scroll to zoom &middot; click a node
+    &middot; arrow keys walk the chain</div>
+  <button id="reset">Reset view</button>
+  <div id="list"></div>
+  <div id="nogl">This scene draws the life cycle in three dimensions and needs
+    WebGL, which this browser has not offered. The same numbers are in the
+    list, which is the button in the panel.</div>
+</div>
+</div>
+
+<script>const D = /*DATA*/;</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script>/*ENGINE*/</script>
+<script>/*SCENE*/</script>
+</body></html>

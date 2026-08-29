@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Skylines, played — Andrew Silvestri</title>
+<meta name="description" content="Twenty-seven city skylines built from real building heights and coordinates, drawn as spectra and played as sound.">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="alternate icon" href="favicon.png">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<meta name="theme-color" content="#070a12">
+<link rel="canonical" href="https://andrewsilvestri.com/skyline.html">
+<link rel="stylesheet" href="style.css?v=6a6d514d">
+</head><body>
+<nav class="top"><a href="index.html">Home</a><span class="dd"><a href="#" class="ddbtn" aria-haspopup="true">The atlas <span class="caret">&#9662;</span></a><span class="ddmenu"><a href="atlas-app.html" target="_blank" rel="noopener">Open the atlas</a><a href="atlas.html">About the atlas</a><a href="model.html">How the model works</a><a href="library.html">Figures</a></span></span><span class="dd"><a href="#" class="ddbtn" aria-haspopup="true">Energy <span class="caret">&#9662;</span></a><span class="ddmenu"><a href="heat.html">Industrial heat break-even</a><a href="storage.html">Battery revenue simulator</a></span></span><a href="climate-cost.html">Climate cost calculator</a><span class="dd"><a href="#" class="ddbtn on" aria-haspopup="true">Others <span class="caret">&#9662;</span></a><span class="ddmenu"><a href="longevity.html">Longevity quotient</a><a href="skyline.html" class="on">Skylines, played</a><a href="desktop.html">The bookshelf</a></span></span><a href="code.html">Code</a></nav>
+<main>
+
+<h1>Skylines, played</h1>
+<p class="dim">A skyline and a spectrum analyser are the same picture. So the
+picture is played.</p>
+
+<p>Both are a row of vertical bars of varying height. That is a coincidence of
+drawing conventions rather than of physics, but it is usable: if a skyline can
+be read as a spectrum, it can be played, and the sound will change as the
+listener turns. This tool does that for twenty-seven cities, using published
+building heights and coordinates.</p>
+
+<div class="card">
+<div class="tag">Interactive</div>
+
+
+<h3 style="margin-top:4px">27 cities</h3>
+<p>The upper panel is a wheel of the city's towers, up to a hundred and twenty
+of them, with the far side drawn in a colder colour because it is behind the
+listener. The lower panel is the same ring as a meter, and the meter is what
+sounds. Drag to turn, or press Spin.</p>
+<a class="btn" href="skyline-app.html" target="_blank" rel="noopener">Open it</a>
+<a class="btn ghost" href="downloads/skyline-code.zip">Download code and data</a>
+</div>
+
+<h2>What is measured and what is invented</h2>
+
+<p>Sonification tends to blur the line between what was observed and what was
+composed, so it is drawn sharply here.</p>
+
+<p><strong>Measured.</strong> Each building carries a published structural
+height and a published coordinate. The listener stands at a stated point, and
+each tower's bearing and apparent height follow from those two numbers by
+trigonometry. Where a tower stands behind a taller one it contributes nothing,
+which is what an eye does.</p>
+
+<p><strong>Assumed.</strong> Footprint width is not recorded anywhere usable,
+so each tower is given a width of eighteen per cent of its height, between
+twenty-five and seventy metres. That is about right for a slender tower and
+about wrong for a broad one.</p>
+
+<p><strong>Rearranged.</strong> The spacing around the wheel, and nothing
+else. Buildings hold their true compass order, clockwise from north; the angle
+between any two of them does not survive. A downtown occupies perhaps forty degrees of a real horizon, and a wheel that
+reproduced that would be two-thirds empty. A transit map takes the same liberty
+with distance, for the same reason.</p>
+
+<p><strong>Invented.</strong> The sound. There is no sense in which a city has
+a pitch. The mapping is a choice, it is written out in full below, and it is
+deterministic: the same city at the same bearing always makes the same
+sound.</p>
+
+<h2>The key</h2>
+
+<table>
+<tr><th>City</th><th>Key</th><th>From</th></tr>
+<tr><td>New York</td><td>Bb blues</td><td class="dim">Gershwin, Rhapsody in Blue - the opening clarinet glissando arrives on B flat, and the piece was written as a portrait of the city</td></tr>
+<tr><td>Dubai</td><td>D hijaz</td><td class="dim">maqam Hijaz, the mode most characteristic of Gulf music</td></tr>
+<tr><td>Shenzhen</td><td>D pent major</td><td class="dim">gong mode</td></tr>
+<tr><td>Tokyo</td><td>D yo</td><td class="dim">the yo scale, the pentatonic used in Japanese folk and much gagaku-derived music</td></tr>
+<tr><td>Chicago</td><td>E blues</td><td class="dim">the Chicago blues, which is a named genre of the city; E is the guitar's home key and the one most of it is played in</td></tr>
+<tr><td>Toronto</td><td>G major</td><td class="dim">O Canada, published in G major</td></tr>
+<tr><td>Paris</td><td>C major</td><td class="dim">Edith Piaf, La Vie en rose, recorded in C major</td></tr>
+<tr><td>Moscow</td><td>Eb major</td><td class="dim">Tchaikovsky, 1812 Overture, op. 49, in E flat major</td></tr>
+<tr><td>Taipei</td><td>G pent minor</td><td class="dim">yu mode</td></tr>
+<tr><td>Hong Kong</td><td>E pent minor</td><td class="dim">yu mode, as in Cantonese opera</td></tr>
+<tr><td>Tel Aviv</td><td>D hijaz</td><td class="dim">Ahava Rabbah, the Jewish liturgical mode with the same interval structure as Hijaz</td></tr>
+<tr><td>Seoul</td><td>G pent major</td><td class="dim">the pyeongjo mode of Korean court music, a major pentatonic</td></tr>
+<tr><td>Austin</td><td>E blues</td><td class="dim">Stevie Ray Vaughan, whose Texas blues is the city's own sound, played in E on a guitar tuned down a half step</td></tr>
+<tr><td>Fort Worth</td><td>C major</td><td class="dim">George Strait, Does Fort Worth Ever Cross Your Mind, recorded in C major</td></tr>
+<tr><td>Nashville</td><td>G major</td><td class="dim">the Nashville Number System, the chord notation this city invented and still runs sessions on; G is the key its session players default to</td></tr>
+</table>
+<p class="small">The thirteen with the most skyline, then Fort Worth and
+Nashville. Nineteen distinct keys across eight modes in all.</p>
+
+<h2>How the bars become sound</h2>
+
+<p>Ninety-six bars is the right number to look at and the wrong number to play.
+Four octaves of a five-note scale is twenty pitches, so five or six adjacent
+bars would land on the same note and become five oscillators detuned by nothing,
+beating against each other. The bars are mapped onto the distinct pitches of the
+scale instead, and a pitch takes the loudest bar that feeds it: twenty-odd real
+partials, ninety-six bars, no unison mud.</p>
+
+<table>
+<tr><th>Property of the bar</th><th>Property of the sound</th><th>Why</th></tr>
+<tr><td>Position across the view</td><td>Pitch, four octaves of the city's
+scale</td><td>A skyline is not a melody, and there is no reason to make an
+arbitrary arrangement of towers sound like a mistake.</td></tr>
+<tr><td>Apparent height</td><td>Loudness of that partial, as height to the
+power 1.6</td><td>The exponent makes the peaks stand out in the ear the way
+they already do in the picture.</td></tr>
+<tr><td>Empty horizon</td><td>Silence</td><td>Which is why turning away from the
+towers quiets the instrument rather than merely changing it.</td></tr>
+</table>
+
+<footer>Andrew Silvestri · energy systems modelling ·
+<a href="mailto:dasilvestri@utexas.edu">dasilvestri@utexas.edu</a></footer>
+</main>
+</body></html>

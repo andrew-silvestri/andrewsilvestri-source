@@ -1,0 +1,71 @@
+{
+  "pulled": {
+    "seed": 417,
+    "anage": 4141,
+    "amniote": 5500,
+    "pantheria": 1013,
+    "amphibio": 359,
+    "fishbase": 2088
+  },
+  "kept_by_source": {
+    "fishbase": 1250,
+    "anage": 3441,
+    "seed": 417,
+    "amphibio": 116,
+    "amniote": 2649
+  },
+  "grades": {
+    "C": 1474,
+    "B": 6250,
+    "A": 149
+  },
+  "classes": {
+    "Actinopterygii": 1966,
+    "Amphibia": 207,
+    "Anthozoa": 3,
+    "Arachnida": 5,
+    "Asteroidea": 1,
+    "Aves": 1929,
+    "Bdelloidea": 1,
+    "Bivalvia": 6,
+    "Branchiopoda": 2,
+    "Cephalopoda": 5,
+    "Chilopoda": 1,
+    "Chondrichthyes": 146,
+    "Chromadorea": 1,
+    "Clitellata": 2,
+    "Demospongiae": 1,
+    "Dipnoi": 2,
+    "Echinoidea": 1,
+    "Eutardigrada": 1,
+    "Gastropoda": 3,
+    "Hexactinellida": 1,
+    "Holothuroidea": 1,
+    "Hydrozoa": 1,
+    "Insecta": 19,
+    "Malacostraca": 7,
+    "Mammalia": 2609,
+    "Merostomata": 1,
+    "Petromyzontida": 19,
+    "Polychaeta": 1,
+    "Reptilia": 928,
+    "Sarcopterygii": 1,
+    "Scyphozoa": 1,
+    "Thecostraca": 1
+  },
+  "mass_index": 14673,
+  "species_with_a_lifespan": 8583,
+  "mass_filled": 524,
+  "mass_modelled_from_length": 641,
+  "dropped_no_mass": 710,
+  "final": 7873,
+  "citations": {
+    "seed": "Hand-checked records, sourced individually on the page.",
+    "anage": "Tacutu et al., Nucleic Acids Research 46:D1083, 2018. AnAge build 15.",
+    "amniote": "Myhrvold et al., Ecology 96:3109, 2015. Amniote life-history database.",
+    "pantheria": "Jones et al., Ecology 90:2648, 2009. PanTHERIA.",
+    "amphibio": "Oliveira et al., Scientific Data 4:170123, 2017. AmphiBIO.",
+    "fishbase": "Froese & Pauly, FishBase, v25.04 snapshot. CC BY-NC.",
+    "avonet": "Tobias et al., Ecology Letters 25:581, 2022. AVONET (body mass only)."
+  }
+}
