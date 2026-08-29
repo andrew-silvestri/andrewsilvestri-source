@@ -19,7 +19,7 @@ import re
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 SITE = os.path.join(HERE, "site")
-SCRIPTS = ("assets/motion.js",
+SCRIPTS = ("assets/motion.js", "assets/syslog.js", "assets/bgloop.js",
            "assets/hero.js", "assets/hero-gl.js", "assets/hero-data.js",
            "assets/atlas-app.js", "assets/atlas-data.js")
 
@@ -39,7 +39,8 @@ def main():
             if os.path.exists(os.path.join(SITE, a))}
     for d in IMAGE_DIRS:
         for img in glob.glob(os.path.join(SITE, d, "*.png")) + \
-                   glob.glob(os.path.join(SITE, d, "*.svg")):
+                   glob.glob(os.path.join(SITE, d, "*.svg")) + \
+                   glob.glob(os.path.join(SITE, d, "*.mp4")):
             vers[f"{d}/{os.path.basename(img)}"] = digest(img)
     changed = 0
     for p in glob.glob(os.path.join(SITE, "*.html")):
@@ -48,8 +49,10 @@ def main():
         t = re.sub(r'href="style\.css(\?v=[0-9a-f]+)?"',
                    f'href="style.css?v={css}"', t)
         for a, v in vers.items():
-            t = re.sub(r'src="' + re.escape(a) + r'(\?v=[0-9a-f]+)?"',
-                       f'src="{a}?v={v}"', t)
+            # src / data-src (the motion-gated <video> pattern) / poster
+            t = re.sub(r'(src|data-src|poster)="' + re.escape(a)
+                       + r'(\?v=[0-9a-f]+)?"',
+                       rf'\1="{a}?v={v}"', t)
         if t != o:
             open(p, "w", encoding="utf-8").write(t)
             changed += 1

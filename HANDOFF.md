@@ -135,8 +135,11 @@ explicitly labelled *assumed* rather than presented as measured. This is the
 single most important rule in the project.
 
 **Colour and layout.** Dark theme, blues/violets/dark greens. No amber. Accent
-is `--acc: #8b7ff2` (violet). Sky blue `#65B2CC` is used for the hero flow
-trails and the atlas impact web. All colours are CSS custom properties in
+is `--acc: #8b7ff2` (violet). The hero flow trails gradient from `--acc` at
+the head to `--cool: #5aa8d8` at the tail (changed from a flat sky blue
+`#65B2CC` in the design-revamp pass, August 2026 - see `hero.js`/`hero-gl.js`).
+The atlas impact web is still sky blue `#65B2CC`, untouched. All colours are
+CSS custom properties in
 `style.css` `:root`; the figure scripts hold matching hex constants in
 `build_throughlines.py` (`BG`, `INK`, `DIM`, `RULE`, `KCOL`).
 
