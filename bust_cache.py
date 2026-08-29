@@ -19,7 +19,7 @@ import re
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 SITE = os.path.join(HERE, "site")
-SCRIPTS = ("assets/motion.js", "assets/syslog.js", "assets/bgloop.js",
+SCRIPTS = ("assets/motion.js", "assets/syslog.js",
            "assets/hero.js", "assets/hero-gl.js", "assets/hero-data.js",
            "assets/atlas-app.js", "assets/atlas-data.js")
 
