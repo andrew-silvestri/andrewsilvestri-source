@@ -38,6 +38,13 @@ import json
 import math
 import os
 
+import matplotlib
+matplotlib.use("Agg")
+import matplotlib.pyplot as plt  # noqa: E402 - needed at module level so
+                                  # _save() (defined before figures()) can
+                                  # reach it; a local import inside figures()
+                                  # alone left _save() with an undefined name.
+
 HERE = os.path.dirname(os.path.abspath(__file__))
 # The merged table is the model of record when it exists. The hand-checked
 # seed is kept beside it and is still the highest-precedence source inside the
@@ -490,9 +497,21 @@ def _save(fig, name):
 
 
 def figures(rows, summary, fit_rows):
-    import matplotlib
-    matplotlib.use("Agg")
-    import matplotlib.pyplot as plt
+
+    # These four figures already carried INK/DIM and the real per-class site
+    # colors (see `colors` below), but never actually switched the canvas to
+    # the site's dark background - the choice of colors implies the intent,
+    # the rcParams to realize it were simply never set, so every one of them
+    # rendered as a light matplotlib-default figure next to the rest of the
+    # (dark) site.
+    BG = "#070a12"
+    plt.rcParams.update({
+        "figure.facecolor": BG, "axes.facecolor": BG, "savefig.facecolor": BG,
+        "text.color": INK, "axes.labelcolor": INK, "axes.titlecolor": INK,
+        "xtick.color": DIM, "ytick.color": DIM,
+        "axes.edgecolor": "#232a45", "grid.color": "#232a45",
+        "axes.spines.top": False, "axes.spines.right": False,
+    })
 
     ga, gb = summary["global_fit"]["a"], summary["global_fit"]["b"]
     colors = {"Mammalia": "#8b7ff2", "Aves": "#5aa8d8", "Reptilia": "#4f9d84",

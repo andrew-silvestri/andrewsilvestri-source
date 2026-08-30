@@ -122,14 +122,14 @@ def main():
     arrow(ax, (6.47, cy), (7.35, cy), shrink=2)
     step_tag(ax, 6.90, 0.85, 2, "damp by the\nnode's inertia")
 
-    ax.add_patch(FancyArrowPatch((7.90, 0.55), (7.90, cy - 0.55),
+    ax.add_patch(FancyArrowPatch((7.90, 3.85), (7.90, cy + 0.55),
                                   arrowstyle="-|>", color=DIM, linewidth=1.1,
                                   linestyle=(0, (2, 2)), mutation_scale=10,
                                   zorder=2))
-    ax.text(7.90, 0.32, "applied change,\nif any", color=DIM, fontsize=8.2,
-            ha="center", va="top", zorder=4)
+    ax.text(7.90, 4.05, "applied change, if any", color=DIM, fontsize=8.2,
+            ha="center", va="bottom", zorder=4)
     box(ax, 7.90, cy, 1.35, 0.95, "tanh", None)
-    step_tag(ax, 7.90, 4.40, 3, "add any applied change,\nthen squash with tanh")
+    step_tag(ax, 7.90, 0.85, 3, "apply the change,\nsquash with tanh")
 
     arrow(ax, (8.58, cy), (9.45, cy), shrink=2)
     ax.add_patch(Circle((9.95, cy), 0.46, facecolor=NODE_COL,

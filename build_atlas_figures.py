@@ -313,7 +313,9 @@ def main():
             if key.lower() in s.lower():
                 return name
         head = s.split("·")[0].strip()
-        return (head[:38] + "…") if len(head) > 38 else (head or "unattributed")
+        if len(head) <= 55:
+            return head or "unattributed"
+        return head[:55].rsplit(" ", 1)[0].rstrip() + "…"
 
     src = collections.Counter()
     for i in range(N):
@@ -339,7 +341,13 @@ def main():
     co2, temp = D.get("co2", []), D.get("temp", [])
     if co2:
         fig, (a1, a2) = plt.subplots(2, 1, figsize=(9.5, 6.2), sharex=True)
-        a1.plot([p[0] for p in co2], [p[1] for p in co2], color=ACC, lw=1.6)
+        # co2 entries are [year, month, ppm], not [year, ppm] - plotting
+        # p[0]/p[1] directly graphed year against month number (1-12) and
+        # threw the real ppm value away, which is why the y-axis read 2-12
+        # instead of ~360-430 and the line rendered as a dense monthly
+        # zigzag compressed into whatever pixel width the year got.
+        a1.plot([p[0] + (p[1] - 1) / 12 for p in co2], [p[2] for p in co2],
+                color=ACC, lw=1.6)
         a1.set_ylabel("CO$_2$ (ppm)")
         a1.grid(alpha=0.18)
         a1.set_title("The two measured series the model treats as its slow "

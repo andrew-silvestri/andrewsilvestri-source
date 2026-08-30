@@ -192,7 +192,7 @@ def main():
                           right=0.965, top=0.500, bottom=0.045)
 
     fig.text(0.055, 0.978, "Throughlines: from the sun to the mind",
-             color=INK, fontsize=21, fontweight="600", va="top")
+             color=INK, fontsize=21, fontweight="bold", va="top")
     fig.text(0.055, 0.951,
              "Every number on this sheet is read from the published model and "
              "computed with the propagation the atlas runs.",
@@ -220,7 +220,7 @@ def main():
             boxstyle="round,pad=0.25,rounding_size=0.4",
             linewidth=1.2, edgecolor=KCOL[k], facecolor=FAINT, zorder=2))
         ax.text(x, y + 1.0, LABEL[k], ha="center", va="center", color=INK,
-                fontsize=9.6, fontweight="600", zorder=3)
+                fontsize=9.6, fontweight="bold", zorder=3)
         ax.text(x, y - 1.3, f"{counts[k]:,}", ha="center", va="center",
                 color=DIM, fontsize=9.0, zorder=3)
         at[k] = (x, y, w, h)
@@ -275,15 +275,15 @@ def main():
             seen.add(nxt)
             cur = nxt
         axb.text(0, y + 11.5, title, color=INK, fontsize=11,
-                 fontweight="600", va="center")
+                 fontweight="bold", va="center")
         step = 100.0 / max(len(route), 1)
         for j, n in enumerate(route):
             x = j * step + 2
             axb.scatter([x], [y], s=95, color=KCOL.get(kind[n], DIM),
                         zorder=3, edgecolors=BG, linewidths=1.2)
             label = nm[n]
-            if len(label) > 26:
-                label = label[:25].rstrip() + "…"
+            if len(label) > 40:
+                label = label[:39].rsplit(" ", 1)[0].rstrip() + "…"
             axb.text(x, y - 7, label, color=DIM, fontsize=8.2,
                      ha="left", va="center", rotation=0)
             axb.text(x, y + 4.5, f"{st[n]:+.3f}", color=INK, fontsize=8.4,
@@ -378,8 +378,8 @@ def main():
     im = axe.imshow(M, aspect="auto", cmap="magma",
                     norm=matplotlib.colors.PowerNorm(0.45))
     axe.set_xticks(range(len(order)))
-    axe.set_xticklabels([SHORT[k] for k in order], rotation=55, ha="right",
-                        color=DIM, fontsize=7.6,
+    axe.set_xticklabels([SHORT[k] for k in order], rotation=68, ha="right",
+                        color=DIM, fontsize=7.2,
                         rotation_mode="anchor")
     axe.set_yticks(range(len(names)))
     axe.set_yticklabels(names, color=DIM, fontsize=8.6)

@@ -218,9 +218,18 @@ def audit(fig):
             if t.get_text().strip():
                 items.append(t)
         if ax.axison:
-            for t in ax.get_xticklabels() + ax.get_yticklabels():
-                if t.get_text().strip() and t.get_visible():
-                    items.append(t)
+            # A locator (log-scale ones especially) keeps Text objects for
+            # ticks just past each edge for its own bookkeeping; they report
+            # get_visible()==True without ever being drawn on the page, and
+            # counting them invents off-canvas failures that are not real.
+            for axis, getter, labeler in (
+                (ax.xaxis, ax.get_xticks, ax.get_xticklabels),
+                (ax.yaxis, ax.get_yticks, ax.get_yticklabels)):
+                lo, hi = sorted(axis.get_view_interval())
+                for loc, t in zip(getter(), labeler()):
+                    if lo - 1e-9 <= loc <= hi + 1e-9 and \
+                            t.get_text().strip() and t.get_visible():
+                        items.append(t)
 
     boxes = []
     for t in items:
