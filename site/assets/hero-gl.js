@@ -177,7 +177,11 @@
       fragmentShader:
         'uniform sampler2D map;varying vec3 vc;' +
         'void main(){vec4 t=texture2D(map,gl_PointCoord);' +
-        'gl_FragColor=vec4(vc,1.0)*t;}'
+        /* 0.55: with 34,936 plant points under additive blending, a full-strength
+           sprite sums to solid white over Europe and the US east coast
+           (HANDOFF.md section 8, trap 10). Scaled so the densest cluster
+           still reads as a cluster, not a glow. */
+        'gl_FragColor=vec4(vc,1.0)*t*0.55;}'
     })));
 
     /* ---- flow, as trailed geometry ------------------------------------- */
@@ -321,6 +325,13 @@
         W = Math.max(240, b.width); H = Math.max(240, b.height);
         camera.aspect = W / H;
         camera.updateProjectionMatrix();
+        // setPixelRatio was only ever called once, at construction (~line 66).
+        // Move the window to a monitor with a different devicePixelRatio - the
+        // one everyday way this fires - and the renderer kept rasterising at
+        // the old monitor's ratio: soft on a hi-DPI screen, oversized and slow
+        // on a lo-DPI one. Re-read it here alongside the size it already
+        // reacts to.
+        renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
         renderer.setSize(W, H);
       }, 180);
     });

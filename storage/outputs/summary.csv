@@ -1,0 +1,11 @@
+metric,value
+price_source,"synthetic (seed 42, calibrated shape)"
+price_mean,39.74
+price_p99,91.8
+neg_hours,152
+rev_$/kW-yr_2h,98.1
+rev_$/kW-yr_4h,107.1
+rev_$/kW-yr_8h,111.0
+cycles_2h,1361.2
+cycles_4h,786.2
+cycles_8h,423.9

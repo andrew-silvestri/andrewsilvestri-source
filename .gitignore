@@ -3,3 +3,5 @@ node_modules
 backups/
 site/assets/atlas-data.js
 site/downloads/
+_deslop/
+site/_preview/

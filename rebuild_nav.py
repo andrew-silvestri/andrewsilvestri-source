@@ -30,8 +30,11 @@ NAV = [
     ("Energy", [
         ("Industrial heat break-even", "heat.html"),
         ("Battery revenue simulator", "storage.html"),
-    ]),
-    ("Climate research", [
+        # Folded in here from its own one-item "Climate research" group in
+        # the 2026-08-30 revamp (SITE_REVAMP_2026-08-30.md, "Navigation
+        # grouping"): nothing distinguished it from the two tools it sat
+        # beside. The pages were edited by hand then; this list caught up
+        # on 2026-09-04 so the generator matches what shipped.
         ("Climate cost calculator", "climate-cost.html"),
     ]),
     ("Others", [

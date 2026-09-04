@@ -1,0 +1,789 @@
+/* andrewsilvestri.com
+ *
+ * Dark ground, luminous data, quiet type. The rule throughout: the page is
+ * the frame and the work is the picture, so nothing here competes with a
+ * figure or a map. One accent colour, hairline rules, and a lot of air.
+ *
+ * Light mode is a deliberate second-class citizen — it exists so the site is
+ * readable for anyone who insists on it, and it is warm paper rather than a
+ * white box.
+ */
+
+:root {
+  --bg:      #070a12;
+  --bg-lift: #0c1020;
+  --card:    #10152a;
+  --ink:     #e3e6f2;
+  --dim:     #8b93b0;
+  --faint:   #1a2038;
+  --rule:    #232a45;
+  --acc:     #8b7ff2;   /* violet — links, emphasis */
+  --acc-dim: #5a4fb0;
+  --acc-ink: #f2f0ff;   /* text on a violet ground */
+  /* A violet ground that carries --acc-ink text. --acc itself is 2.91:1
+     under #f2f0ff, which fails AA; this darker fill is 5.88:1 and its
+     hover 6.96:1. Every filled surface with text on it (nav pill, .btn)
+     uses these, never --acc. Corrected 2026-09-04. */
+  --acc-fill: #5a4fb0;
+  --acc-fill-hover: #4c3fb5;
+  --moss:    #4f9d84;   /* dark green, second data accent */
+  --cool:    #5aa8d8;   /* blue, for data */
+  --shadow:  0 18px 50px rgba(2, 4, 12, .62);
+  --grid-line: rgba(227, 230, 242, .035);
+  /* Three widths, not one. Prose stays at a readable measure because line
+     length is a legibility constraint, not a stylistic one — past about 80
+     characters the eye loses the return sweep. Everything that is not prose
+     has no such limit, so figures, tables and the hero break out of the text
+     column and use the screen. */
+  --text:    min(72ch, 100%);
+  --wide:    min(1140px, 100%);
+  --shell:   1440px;
+  --serif:   "Iowan Old Style", "Palatino Linotype", Palatino, Georgia,
+             "Times New Roman", serif;
+  --sans:    ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+  --mono:    ui-monospace, "SF Mono", "Cascadia Mono", Consolas,
+             "Liberation Mono", monospace;
+}
+
+@media (prefers-color-scheme: light) {
+  :root {
+    --bg:      #f4f5fa;
+    --bg-lift: #ecedf6;
+    --card:    #ffffff;
+    --ink:     #161a26;
+    --dim:     #5c6480;
+    --faint:   #e0e3ef;
+    --rule:    #d2d7e6;
+    --acc:     #4c3fb5;
+    --acc-dim: #7a6fd8;
+    --acc-ink: #ffffff;
+    --acc-fill: #4c3fb5;      /* 7.82:1 under white */
+    --acc-fill-hover: #3d329a; /* 9.90:1 */
+    --cool:    #2a6a96;
+    --moss:    #2f6f5c;
+    --shadow:  0 14px 34px rgba(30, 34, 60, .12);
+    --grid-line: rgba(22, 26, 38, .045);
+  }
+}
+
+* { box-sizing: border-box; }
+
+html { -webkit-text-size-adjust: 100%; }
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--ink);
+  /* Plain fixed fallback for a browser without container query support -
+     main below overrides this for everything that reads it. */
+  font: 17px/1.72 var(--serif);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+/* A barely-there wash so the black is not a void, plus a sparse node/edge
+   graph tiled underneath it - static, zero JS, present on every page rather
+   than only where the hero happens to draw one. Representative of the site
+   without costing anything a browser has to compute: it's one small inline
+   SVG, not a canvas, and there's nothing here for [data-motion="off"] to
+   turn off because nothing here moves. */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  background:
+    radial-gradient(1100px 640px at 50% -8%,
+                    rgba(110, 128, 240, .075), transparent 70%),
+    radial-gradient(900px 520px at 86% 6%,
+                    rgba(79, 157, 132, .05), transparent 68%),
+    url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' width='900' height='900' viewBox='0 0 900 900'><g fill='none' stroke='%238b93b0' stroke-width='1' stroke-opacity='.16'><line x1='452.5' y1='147.5' x2='208.0' y2='270.0'/><line x1='452.5' y1='147.5' x2='205.0' y2='255.0'/><line x1='452.5' y1='147.5' x2='257.5' y2='255.5'/><line x1='452.5' y1='147.5' x2='272.2' y2='388.1'/><line x1='452.5' y1='147.5' x2='619.0' y2='270.1'/><line x1='452.5' y1='147.5' x2='622.0' y2='280.3'/><line x1='452.5' y1='147.5' x2='489.0' y2='505.9'/><line x1='452.5' y1='147.5' x2='291.9' y2='636.9'/><line x1='452.5' y1='147.5' x2='282.8' y2='639.2'/><line x1='452.5' y1='147.5' x2='25.8' y2='516.7'/><line x1='452.5' y1='147.5' x2='299.9' y2='364.5'/><line x1='452.5' y1='147.5' x2='782.5' y2='571.1'/><line x1='452.5' y1='147.5' x2='786.9' y2='570.2'/><line x1='452.5' y1='147.5' x2='484.8' y2='209.7'/><line x1='452.5' y1='147.5' x2='527.1' y2='466.5'/></g><g fill-opacity='.28'><circle cx='452.5' cy='147.5' r='2.6' fill='%234f9d84'/><circle cx='208.0' cy='270.0' r='2.6' fill='%234f9d84'/><circle cx='205.0' cy='255.0' r='2.6' fill='%234f9d84'/><circle cx='257.5' cy='255.5' r='2.6' fill='%234f9d84'/><circle cx='272.2' cy='388.1' r='2.6' fill='%236f7fd8'/><circle cx='619.0' cy='270.1' r='2.6' fill='%236f7fd8'/><circle cx='622.0' cy='280.3' r='2.6' fill='%236f7fd8'/><circle cx='489.0' cy='505.9' r='2.6' fill='%236f7fd8'/><circle cx='291.9' cy='636.9' r='2.6' fill='%236f7fd8'/><circle cx='282.8' cy='639.2' r='2.6' fill='%236f7fd8'/><circle cx='25.8' cy='516.7' r='2.6' fill='%236f7fd8'/><circle cx='299.9' cy='364.5' r='2.6' fill='%236f7fd8'/><circle cx='782.5' cy='571.1' r='2.6' fill='%236f7fd8'/><circle cx='786.9' cy='570.2' r='2.6' fill='%236f7fd8'/><circle cx='484.8' cy='209.7' r='2.6' fill='%236f7fd8'/><circle cx='527.1' cy='466.5' r='2.6' fill='%236f7fd8'/></g></svg>");
+  background-repeat: no-repeat, no-repeat, repeat;
+}
+@media (prefers-color-scheme: light) { body::before { opacity: .5; } }
+/* code.html is a plain index of downloads and asked for nothing behind it:
+   no margin scene (it loads no scene script) and no background layer at all,
+   not even the soft radial wash the rest of the site carries. content:none
+   removes the pseudo-element outright rather than blanking its paint, so
+   there is nothing composited over the page at all. */
+body.bg-bare::before { content: none; }
+
+/* Pages that draw a scene of their own - longevity's biome descent, the
+   bookshelf's spines, the skyline's towers - had the sitewide node/edge tile
+   sitting behind that scene as a second, unrelated background competing with
+   it. This keeps the two soft radial washes, which are what stop the black
+   being a void, and drops only the graph tile. What a reader sees behind the
+   text on those pages is the page's own scene. */
+body.bg-own-scene::before {
+  background:
+    radial-gradient(1100px 640px at 50% -8%,
+                    rgba(110, 128, 240, .075), transparent 70%),
+    radial-gradient(900px 520px at 86% 6%,
+                    rgba(79, 157, 132, .05), transparent 68%);
+  background-repeat: no-repeat, no-repeat;
+}
+/* @generated:bg-curve-heat */
+body.bg-curve-heat::before {
+  background: radial-gradient(1100px 640px at 50% -8%,rgba(110, 128, 240, .075), transparent 70%),radial-gradient(900px 520px at 86% 6%,rgba(79, 157, 132, .05), transparent 68%),
+    url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' width='900' height='260' viewBox='0 0 900 260'><g fill='none' stroke-opacity='.15' stroke-width='2'><path stroke='%234f9d84' d='M0.0 204.4 L900.0 204.4'/><path stroke='%238b7ff2' d='M0.0 254.0 L900.0 -5.3'/></g><circle cx='172.1' cy='204.4' r='3.5' fill='%238b93b0' fill-opacity='.22'/><circle cx='731.2' cy='43.3' r='3.5' fill='%238b7ff2' fill-opacity='.22'/></svg>");
+  background-repeat: no-repeat, no-repeat, no-repeat;
+  background-position: 0 0, 0 0, center 120px;
+  background-size: auto, auto, min(900px, 100%) auto;
+}
+/* @end:bg-curve-heat */
+/* @generated:bg-curve-storage */
+body.bg-curve-storage::before {
+  background: radial-gradient(1100px 640px at 50% -8%,rgba(110, 128, 240, .075), transparent 70%),radial-gradient(900px 520px at 86% 6%,rgba(79, 157, 132, .05), transparent 68%),
+    url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' width='900' height='260' viewBox='0 0 900 260'><path fill='none' stroke='%238b7ff2' stroke-opacity='.15' stroke-width='2' d='M27.0 431.9 L48.8 351.9 L70.6 302.0 L92.5 265.7 L114.3 237.1 L136.1 213.5 L157.9 193.4 L179.8 175.9 L201.6 160.5 L223.4 146.6 L245.2 134.0 L267.1 122.5 L288.9 111.9 L310.7 102.0 L332.5 92.9 L354.4 84.3 L376.2 76.2 L398.0 68.6 L419.9 61.4 L441.7 54.5 L463.5 48.0 L485.3 41.8 L507.1 35.9 L529.0 30.2 L550.8 24.7 L572.6 19.5 L594.4 14.4 L616.3 9.6 L638.1 4.9 L659.9 0.3 L681.8 -4.1 L703.6 -8.3 L725.4 -12.4 L747.2 -16.5 L769.1 -20.3 L790.9 -24.1 L812.7 -27.8 L834.5 -31.4 L856.4 -34.9 L878.2 -38.3 L900.0 -41.6'/><circle cx='180.0' cy='175.8' r='3.5' fill='%238b7ff2' fill-opacity='.22'/><circle cx='360.0' cy='82.2' r='3.5' fill='%238b7ff2' fill-opacity='.22'/><circle cx='720.0' cy='41.6' r='3.5' fill='%238b7ff2' fill-opacity='.22'/></svg>");
+  background-repeat: no-repeat, no-repeat, no-repeat;
+  background-position: 0 0, 0 0, center 120px;
+  background-size: auto, auto, min(900px, 100%) auto;
+}
+/* @end:bg-curve-storage */
+
+/* The static SVG wash is the graceful-degradation fallback for a page
+   carrying assets/force-bg.js: shown as-is when motion is off, the CDN is
+   blocked, or JS is disabled entirely. force-bg.js adds force-graph-live to
+   <body> only once its own real physics graph has actually started, and
+   only then does the static pattern step aside so the two don't layer into
+   visual noise - the radial wash underneath stays either way. */
+body.bg-force-graph.force-graph-live::before {
+  background: radial-gradient(1100px 640px at 50% -8%,
+                rgba(110, 128, 240, .075), transparent 70%),
+              radial-gradient(900px 520px at 86% 6%,
+                rgba(79, 157, 132, .05), transparent 68%);
+}
+
+main, nav.top { position: relative; z-index: 1; }
+
+/* ---------------------------------------------------------------- nav --- */
+nav.top {
+  max-width: var(--shell);
+  margin: 0 auto;
+  /* 34px less the 8px each item carries as padding, so the first item's text
+     lines up with the page text. Never set margin-left here: it overrides the
+     auto margins that centre the shell and drags the whole page to the left. */
+  padding: 26px 34px 0 26px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+  font: 13px/1 var(--sans);
+  letter-spacing: .02em;
+  position: relative;
+  z-index: 50;
+}
+/* Every item carries the same padding, so the highlight sits square on its own
+   text and nothing shifts when an item becomes current. */
+nav.top a {
+  color: var(--dim);
+  text-decoration: none;
+  padding: 5px 10px;
+  margin: 0;
+  border-bottom: 0;
+  white-space: nowrap;
+  transition: color .18s, background .18s;
+}
+nav.top a:hover { color: var(--ink); }
+nav.top a.on,
+nav.top a[aria-current="page"] {
+  color: var(--acc-ink);
+  background: var(--acc-fill);
+  font-weight: 600;
+  border-radius: 3px;
+  text-decoration: none;
+}
+/* the dropdowns are their own inline-block, so they need the same rhythm */
+nav.top .dd { margin: 0; }
+.ddmenu a.on { color: var(--acc-ink); background: var(--acc-fill); }
+
+
+/* dropdown */
+.dd { position: relative; display: inline-block; margin-right: 22px; }
+.dd > .ddbtn { margin-right: 0; cursor: pointer; }
+.caret { font-size: 9px; opacity: .65; }
+.ddmenu {
+  display: none;
+  position: absolute;
+  left: -16px;
+  top: 100%;
+  padding: 9px 0;
+  min-width: 268px;
+  background: var(--card);
+  border: 1px solid var(--rule);
+  border-radius: 2px;
+  box-shadow: var(--shadow);
+}
+.dd:hover > .ddmenu, .dd:focus-within > .ddmenu { display: block; }
+.ddmenu a {
+  display: block;
+  margin: 0;
+  padding: 8px 18px;
+  color: var(--dim);
+  font-size: 13.5px;
+  white-space: nowrap;
+  border: 0;
+}
+.ddmenu a:hover { color: var(--acc); background: var(--bg-lift); }
+
+/* --------------------------------------------------------------- text --- */
+/* A content grid with three named tracks. Children default to the text
+   column; anything tagged .wide or .full breaks out sideways without needing
+   to escape the flow. */
+main {
+  display: grid;
+  margin: 0 auto;
+  /* Fluid top/bottom padding: 30/90px at a phone width, 40/120px past
+     tablet, rather than jumping between just those two states. */
+  padding: clamp(30px, 22.9px + 1.9vw, 40px) 0
+           clamp(90px, 68.6px + 5.71vw, 120px);
+  max-width: var(--shell);
+  /* Type sizes off main's own rendered width, not the raw viewport - a
+     narrow browser window on a huge monitor and the same window width on a
+     small laptop now read identically, which a vw unit cannot express. */
+  container-type: inline-size;
+  grid-template-columns:
+    [full-start] minmax(34px, 1fr)
+    [wide-start] minmax(0, calc((var(--wide) - var(--text)) / 2))
+    [text-start] minmax(0, var(--text)) [text-end]
+    minmax(0, calc((var(--wide) - var(--text)) / 2)) [wide-end]
+    minmax(34px, 1fr) [full-end];
+}
+/* cqw has to be set on a descendant of the container, not the container
+   itself - main sizing its own font off its own inline-size is circular,
+   so the fluid size lives here instead and main's children inherit it. */
+main > * {
+  grid-column: text;
+  min-width: 0;
+  font-size: clamp(16.5px, 15.99px + .152cqw, 17.5px);
+}
+main > .wide, main > table, main > img.fig, main > video.fig, main > #hero,
+main > .cardgrid, main > .mosaic { grid-column: wide; }
+main > .full { grid-column: full; }
+
+h1 {
+  /* Same container-based idea as main's own text: 27px at a narrow column,
+     34px past roughly a tablet-width column. */
+  font-size: clamp(27px, 23.4px + 1.06cqw, 34px);
+  font-weight: 500;
+  letter-spacing: -.015em;
+  line-height: 1.16;
+  margin: 0 0 10px;
+}
+h2 {
+  font-size: 13px;
+  font-family: var(--sans);
+  font-weight: 600;
+  letter-spacing: .13em;
+  text-transform: uppercase;
+  color: var(--dim);
+  margin: 58px 0 16px;
+  padding-bottom: 9px;
+  border-bottom: 1px solid var(--rule);
+}
+h3 {
+  font-size: 19px;
+  font-weight: 500;
+  margin: 26px 0 5px;
+  letter-spacing: -.005em;
+}
+
+p { margin: 15px 0; }
+.dim { color: var(--dim); }
+.small { font-size: 15px; color: var(--dim); }
+
+a {
+  color: var(--acc);
+  text-decoration: none;
+  border-bottom: 1px solid var(--faint);
+}
+a:hover { border-bottom-color: var(--acc); }
+
+hr { border: 0; border-top: 1px solid var(--rule); margin: 52px 0; }
+
+ul { padding-left: 22px; }
+li { margin: 8px 0; }
+
+code {
+  font: 14px var(--mono);
+  background: var(--bg-lift);
+  border: 1px solid var(--faint);
+  padding: 2px 7px;
+  border-radius: 2px;
+  color: var(--cool);
+}
+
+/* -------------------------------------------------------------- table --- */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  font: 14.5px/1.5 var(--sans);
+  margin: 20px 0;
+  font-variant-numeric: tabular-nums;
+}
+th, td {
+  padding: 10px 12px;
+  text-align: left;
+  border-bottom: 1px solid var(--faint);
+  vertical-align: top;
+}
+th {
+  color: var(--dim);
+  font-weight: 600;
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: .1em;
+  border-bottom-color: var(--rule);
+}
+tr:hover td { background: var(--bg-lift); }
+/* Numeric cells, right-aligned so digits line up against each other. The
+   class was in use on several pages and in the house conventions before it
+   had a rule here, which is why those columns were left-aligned in a
+   stylesheet that already asks for tabular figures. */
+th.n, td.n { text-align: right; font-variant-numeric: tabular-nums; }
+
+/* --------------------------------------------------------------- figs --- */
+img.fig, video.fig {
+  width: 100%;
+  max-width: 100%;
+  height: auto;          /* see the note on .cardgrid .card img */
+  border: 1px solid var(--rule);
+  border-radius: 2px;
+  margin: 18px 0 8px;
+  background: var(--card);
+  display: block;
+}
+/* img.fig is also the lightbox trigger (assets/lightbox.js) - video.fig is
+   not, so only the image gets the affordance and the focus ring. */
+img.fig { cursor: zoom-in; }
+img.fig:focus-visible { outline: 2px solid var(--acc); outline-offset: 2px; }
+
+/* ----------------------------------------------------------- lightbox --- */
+/* One overlay, built once by lightbox.js and reused for every img.fig on the
+   page. Sits above everything, including nav's z-index:50. */
+.lightbox {
+  position: fixed;
+  inset: 0;
+  z-index: 500;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: clamp(20px, 5vw, 60px);
+  background: rgba(4, 6, 14, .88);
+  opacity: 0;
+  transition: opacity .18s ease;
+}
+.lightbox[hidden] { display: none; }
+.lightbox.on { opacity: 1; }
+.lightbox-img {
+  /* No width/height set at all: an image smaller than the viewport shows at
+     its own natural size, which is the point, and one larger is capped
+     rather than cropped. */
+  max-width: 100%;
+  max-height: 100%;
+  border: 1px solid var(--rule);
+  border-radius: 2px;
+  box-shadow: var(--shadow);
+  background: var(--card);
+}
+.lightbox-close {
+  position: absolute;
+  top: 18px;
+  right: 22px;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  border: 1px solid var(--rule);
+  background: var(--card);
+  color: var(--ink);
+  font: 22px/1 var(--sans);
+  cursor: pointer;
+  transition: border-color .18s, color .18s;
+}
+.lightbox-close:hover, .lightbox-close:focus-visible {
+  border-color: var(--acc-dim);
+  color: var(--acc);
+}
+@media (max-width: 620px) {
+  .lightbox-close { top: 10px; right: 10px; width: 36px; height: 36px; }
+}
+
+/* --------------------------------------------------------------- grid --- */
+/* Cards sit two-up on a wide screen. Each one's prose therefore stays short
+   even though the block is wider than the text column — which is the whole
+   point of widening: more room without longer lines. */
+.cardgrid {
+  display: grid;
+  gap: 20px;
+  grid-template-columns: repeat(auto-fit, minmax(330px, 1fr));
+  margin: 22px 0;
+}
+.cardgrid .card { margin: 0; height: 100%; }
+
+/* -------------------------------------------------------------- cards --- */
+.card {
+  border: 1px solid var(--rule);
+  border-radius: 2px;
+  padding: 26px 28px;
+  margin: 22px 0;
+  background: linear-gradient(180deg, var(--card), var(--bg-lift));
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, .03);
+  transition: border-color .2s;
+}
+.card:hover { border-color: var(--acc-dim); }
+.card .tag {
+  font: 12px var(--sans);
+  color: var(--acc);
+  text-transform: uppercase;
+  letter-spacing: .16em;
+  margin-bottom: 4px;
+}
+.card h3 { margin-top: 4px; }
+.card h3 a { border: 0; color: var(--ink); }
+.card h3 a:hover { color: var(--acc); }
+/* A thumbnail for a card that has an obvious hero figure - home page tool
+   cards only, not every card on the site. Sized to the card rather than
+   promoted to the wide track: two-up at 330px+ (.cardgrid above), full width
+   of one column at the 760px breakpoint below. */
+.cardgrid .card img {
+  width: 100%;
+  max-width: 100%;
+  /* The markup carries real width/height so the browser can reserve the box
+     and the page does not shift as figures arrive. Those attributes are a
+     presentational hint as well as an aspect ratio, so without this the
+     height one wins and every figure is squashed to its full pixel height
+     inside a card a third as wide. auto keeps the reservation and restores
+     the aspect. */
+  height: auto;
+  border: 1px solid var(--rule);
+  border-radius: 2px;
+  margin: 12px 0 4px;
+  background: var(--card);
+  display: block;
+}
+
+/* --------------------------------------------------------------- btns --- */
+.btn {
+  display: inline-block;
+  background: var(--acc-fill);
+  color: var(--acc-ink);
+  padding: 10px 20px;
+  border-radius: 2px;
+  font: 600 14px var(--sans);
+  letter-spacing: .01em;
+  margin: 12px 10px 0 0;
+  border: 1px solid var(--acc-fill);
+  transition: filter .18s;
+}
+.btn:hover { background: var(--acc-fill-hover); border-color: var(--acc-fill-hover);
+             color: var(--acc-ink); }
+.btn.ghost {
+  background: transparent;
+  color: var(--dim);
+  border-color: var(--rule);
+}
+.btn.ghost:hover { color: var(--ink); border-color: var(--dim); }
+
+/* --------------------------------------------------------------- hero --- */
+#hero {
+  position: relative;
+  width: 100%;
+  /* One fluid rule, not a floor plus a smaller fixed override at 620px -
+     46vh already gets smaller on a short phone screen without help. */
+  height: clamp(300px, 46vh, 560px);
+  /* The h1 sits directly under the globe and needs air, or the name reads
+     as a caption on the image rather than the top of the page. */
+  margin: 18px 0 30px;
+  border-radius: 2px;
+  overflow: hidden;
+  background: radial-gradient(circle at 50% 46%, #0a1024 0%, #05070f 72%);
+  border: 1px solid var(--rule);
+}
+.hero-layer { position: absolute; inset: 0; display: block; }
+/* the WebGL canvas fades in over the 2D pair, then they are stopped */
+.hero-gl { z-index: 2; }
+.hero-cap {
+  font: 11.5px var(--sans);
+  color: var(--dim);
+  letter-spacing: .05em;
+  margin: 10px 0 0;
+}
+
+/* ------------------------------------------------------------- footer --- */
+/* ----------------------------------------------------------- citations --- */
+/* Superscript markers in the prose, and the list they point at. Clicking a
+   marker jumps to the entry and highlights it; clicking back returns. */
+sup.cite { font-size: 10.5px; line-height: 0; vertical-align: super; }
+sup.cite a {
+  color: var(--acc);
+  border: 0;
+  padding: 0 1px;
+  font-family: var(--sans);
+  font-variant-numeric: tabular-nums;
+}
+sup.cite a:hover { text-decoration: underline; }
+ol.refs {
+  counter-reset: ref;
+  list-style: none;
+  padding: 0;
+  margin: 14px 0 0;
+  font: 14px/1.6 var(--sans);
+  color: var(--dim);
+}
+ol.refs li {
+  counter-increment: ref;
+  position: relative;
+  padding: 9px 0 9px 34px;
+  border-bottom: 1px solid var(--faint);
+  scroll-margin-top: 24px;
+}
+ol.refs li::before {
+  content: counter(ref);
+  position: absolute;
+  left: 0;
+  top: 9px;
+  width: 24px;
+  text-align: right;
+  color: var(--acc);
+  font-variant-numeric: tabular-nums;
+}
+ol.refs li:target { background: var(--bg-lift); }
+ol.refs .src { color: var(--ink); }
+ol.refs .what { display: block; margin-top: 2px; font-size: 13px; }
+
+footer {
+  margin-top: 74px;
+  padding-top: 22px;
+  border-top: 1px solid var(--rule);
+  font: 13.5px var(--sans);
+  color: var(--dim);
+}
+
+.grid { display: grid; grid-template-columns: 1fr; gap: 26px; }
+/* library.html's cards sit inside .grid.wide so their figures can reach the
+   full wide track (main > .wide promotes the grid itself, not the images
+   nested two levels inside it). A heading keeps a short measure. A caption
+   cannot: capping it at 72ch left every caption in the left half of a 1082px
+   card with the right half empty, which reads as a layout fault rather than
+   as margin. Setting it in two columns uses the width the figure already
+   claims and keeps each line about 55 characters, which is a better measure
+   than the 72 it had. These captions run 186 to 636 characters, so every one
+   of them has the body to fill two columns. */
+.grid.wide .card > h3, .grid.wide .card > .tag {
+  max-width: 72ch;
+}
+.grid.wide .card > p {
+  columns: 2;
+  column-gap: 44px;
+  orphans: 2;
+  widows: 2;
+}
+@media (max-width: 760px) {
+  /* the grid is one column here and the card is back to prose width */
+  .grid.wide .card > p { columns: 1; }
+}
+
+/* --------------------------------------------------------------- mosaic --- */
+/* A strip of already-generated figures at thumbnail scale - real data used
+   as a graphic, not a new render. Links to the library, not a data source
+   in its own right. */
+.mosaic {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap: 10px;
+  margin: 4px 0 6px;
+}
+.mosaic a {
+  display: block;
+  aspect-ratio: 4 / 3;
+  overflow: hidden;
+  border: 1px solid var(--rule);
+  border-radius: 2px;
+  background: var(--card);
+}
+.mosaic img {
+  width: 100%;
+  height: 100%;
+  /* contain, not cover: these figures range from 1.15:1 to 1.83:1 against a
+     4:3 tile, and a centred cover-crop was cutting whole panels and axis
+     labels off rather than showing a recognisable slice of the chart. */
+  object-fit: contain;
+  display: block;
+  filter: saturate(.9);
+  transition: transform .25s ease, filter .25s ease;
+}
+.mosaic a:hover img { transform: scale(1.04); filter: saturate(1); }
+
+/* ---------------------------------------------------------- method --- */
+/* A very faint coordinate-grid wash behind the model's own method section -
+   same restrained-wash technique as body::before, signalling worked math
+   without competing with the text it sits behind. */
+.method-panel {
+  background-image:
+    linear-gradient(var(--grid-line) 1px, transparent 1px),
+    linear-gradient(90deg, var(--grid-line) 1px, transparent 1px);
+  background-size: 34px 34px;
+  -webkit-mask-image: linear-gradient(180deg, transparent, #000 6%, #000 94%, transparent);
+          mask-image: linear-gradient(180deg, transparent, #000 6%, #000 94%, transparent);
+}
+.method-panel > :first-child { margin-top: 0; }
+
+/* ------------------------------------------------------------- sys-log --- */
+/* A monospace readout restating numbers already given in prose above it -
+   decorative and aria-hidden, never a second source of truth. */
+.sys-log {
+  list-style: none;
+  margin: -14px 0 22px;
+  padding: 14px 18px;
+  background: var(--bg-lift);
+  border: 1px solid var(--faint);
+  border-radius: 2px;
+  font: 12.5px/1.7 var(--mono);
+  color: var(--cool);
+}
+.sys-log li { opacity: 1; transition: opacity .3s ease; }
+.sys-log li::before { content: "$ "; color: var(--dim); }
+.sys-cursor {
+  display: inline-block;
+  width: 7px;
+  height: 13px;
+  margin-left: 2px;
+  background: var(--cool);
+  vertical-align: -2px;
+  animation: sys-blink 1s steps(1) infinite;
+}
+.sys-cursor[hidden] { display: none; }
+@keyframes sys-blink { 50% { opacity: 0; } }
+
+/* -------------------------------------------------------------- motion --- */
+/* The attribute is the single gate. prefers-reduced-motion sets its default in
+   a blocking <head> snippet; the footer control overrides it. Gating on the
+   media query here as well would make that override impossible to express. */
+[data-motion="off"] *,
+[data-motion="off"] *::before,
+[data-motion="off"] *::after {
+  animation-duration: .001ms !important;
+  animation-iteration-count: 1 !important;
+  transition-duration: .001ms !important;
+  scroll-behavior: auto !important;
+}
+
+/* A button, not a link: it changes this page rather than going anywhere. Plain
+   words rather than an icon, because an icon for this has no convention to lean
+   on. Hidden until motion.js reveals it, so it never appears without JS. */
+.motion-toggle {
+  font: inherit;
+  color: var(--dim);
+  background: none;
+  border: 0;
+  border-bottom: 1px solid var(--faint);
+  padding: 0;
+  cursor: pointer;
+}
+.motion-toggle:hover { color: var(--ink); border-bottom-color: var(--acc); }
+.motion-toggle .motion-state { color: var(--acc); }
+
+/* ------------------------------------------------------------- mobile --- */
+@media (max-width: 760px) {
+  main { grid-template-columns: [full-start wide-start text-start] 1fr
+                                [text-end wide-end full-end];
+         padding-left: 20px; padding-right: 20px;
+         max-width: 100%; }
+  .cardgrid { grid-template-columns: 1fr; }
+  /* Nothing may be wider than the screen. One over-wide child gives the
+     whole document a horizontal scroll, and every block then reads as
+     though it has been cut off down the right edge. */
+  main > * { max-width: 100%; min-width: 0; }
+  #hero { max-width: 100%; }
+  /* A table of numbers cannot be made narrow without lying about it, so it
+     scrolls inside its own box rather than stretching the page. */
+  table { display: block; width: 100%; overflow-x: auto; }
+  pre, code { overflow-x: auto; word-break: break-word; }
+}
+@media (max-width: 620px) {
+  /* body/h1 size and main's top/bottom padding are handled by the fluid
+     clamp() rules above now - nothing left to jump here. */
+  /* On a phone the dropdowns used to be forced open — position:static plus
+     display:block — so every page began with the whole site map spilled down
+     the screen and the content pushed below the fold. They stay closed here
+     and open on tap: an anchor takes focus when touched, which is the same
+     mechanism the desktop hover uses, so no script is needed. */
+  .ddmenu {
+    position: static;
+    display: none;
+    border: 0;
+    box-shadow: none;
+    padding: 2px 0 6px;
+    min-width: 0;
+    background: transparent;
+  }
+  .dd:focus-within > .ddmenu { display: block; }
+  .ddmenu a { padding: 9px 0 9px 18px; font-size: 15px; }
+  .dd { display: block; margin: 2px 0; width: 100%; }
+  /* One item per row. The bar is a wrapping flex row, so the groups — which
+     are block-level — took a line each while the plain links flowed
+     together and shared one: "Pipeline liquid holdup  Climate cost
+     calculator" sat side by side looking like a single stuck item. A column
+     gives every item the same shape. */
+  nav.top { gap: 0; padding: 16px 20px 6px;
+            flex-direction: column; align-items: stretch; }
+  nav.top > a, nav.top > .dd { width: 100%; }
+  /* 14.5px top and bottom plus the 15px line box (nav.top's own font shorthand
+     sets line-height:1, so the box is exactly font-size tall) clears the
+     44px touch-target floor instead of the 33px box the old 9px padding left. */
+  nav.top a { padding: 14.5px 4px; font-size: 15px; display: block; }
+  /* The current-page highlight hugs its own text rather than running the
+     width of the bar, which in a column layout stretch would otherwise do. */
+  nav.top a.on { align-self: flex-start; width: auto; }
+  .dd > .ddbtn { display: block; }
+  .caret { float: right; font-size: 11px; opacity: .8; }
+  .card { padding: 20px; }
+}
+
+/* =====================================================================
+   OPTION C — "The atlas"
+   The vocabulary stays: dark ground, violet, the cards, the small-caps
+   section heads, the ambient node graph. What changes is the execution.
+   No webfont: the serif stack is pinned so Android resolves to Charter or
+   Noto Serif instead of nothing, and sizes sit on one scale. The
+   backgrounds keep their canvases but lose every word: sys-log and margin
+   scenes go, the force graph and node tile stay as texture. The hero goes
+   full-bleed and the name sits under it.
+   Resolves F2 (with markup), F6 (by halving), F7, F9 partly; leaves F5's
+   cross-platform face open by choice.
+   ===================================================================== */
+:root {
+  --serif: "Iowan Old Style", "Palatino Linotype", Palatino, Charter, "Bitstream Charter", "Noto Serif", Georgia, serif;
+  --bg: #090d19; --bg-lift: #0e1325; --card: #121831; --faint: #1c2340;
+  --text: min(70ch, 100%);
+}
+body { font: 18px/1.65 var(--serif); }
+main > * { font-size: clamp(17px, 16.4px + .16cqw, 18px); }
+
+h1 { font-size: clamp(32px, 26px + 1.5cqw, 44px); font-weight: 500; letter-spacing: -.02em; line-height: 1.06; margin: 0 0 12px; }
+p.dim { font-size: 20px; line-height: 1.45; font-style: italic; }
+h2 { font: 600 12.5px/1.6 var(--sans); letter-spacing: .14em; text-transform: uppercase; color: var(--dim);
+     margin: 58px 0 16px; padding-bottom: 8px; border-bottom: 1px solid var(--rule); }
+hr:has(+ h2) { display: none; }             /* one rule per boundary, not two */
+hr { margin: 44px 0; }
+h3 { font-size: 20px; }
+th { font-size: 12px; letter-spacing: .06em; }
+.caret { font-size: 11px; }
+sup.cite { font-size: 11px; }
+.masthead { margin-top: 6px; }
+
+.card { background: var(--card); box-shadow: none; border: 1px solid var(--rule); border-radius: 3px; padding: 24px 26px; }
+.card .tag { font-size: 12.5px; letter-spacing: .08em; }
+.cardgrid { grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 18px; }
+.cardgrid .card img { border: 0; background: none; border-radius: 2px; }
+img.fig, video.fig { border: 1px solid var(--rule); background: var(--card); }
+.mosaic { gap: 8px; }
+.mosaic a { border-color: var(--faint); }
+
+main > #hero { grid-column: full; border-radius: 0; border: 0; border-bottom: 1px solid var(--rule);
+               height: clamp(320px, 52vh, 600px); margin: 0 0 28px; }
+.sys-log, .sys-cursor { display: none; }
+nav.top { font-size: 13.5px; }
+.btn { border-radius: 3px; }
+@media (prefers-color-scheme: light) { body::before { opacity: .25; } }

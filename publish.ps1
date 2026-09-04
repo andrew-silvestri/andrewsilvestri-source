@@ -1,3 +1,16 @@
+# RETIRED 2026-09-04. Kept for reference only; do not run it.
+#
+# publish.sh (Git Bash) is the tested publish path. This PowerShell version
+# could not be executed or tested on the machine it was written on and shipped
+# two faults because of it: an encoding fault that choked the parser, and a
+# dry run that left the working tree dirty. Both scripts target the same
+# repository and the same URL; the difference is which one has been run.
+#
+#     ./publish.sh --dry-run
+#     ./publish.sh
+#
+# See HANDOFF.md section 10 and DESLOP_RUNBOOK.md.
+
 <#
 .SYNOPSIS
     Replace everything in the andrewsilvestri.com repository with the current

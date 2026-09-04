@@ -1,5 +1,12 @@
 # Site audit findings — unresolved items
 
+> **All items in this file were resolved on 2026-08-30.** See
+> `SITE_REVAMP_2026-08-30.md` for what was changed and why, including the
+> two items deliberately left open (the unused `fig2_lcoh_stacked` /
+> `fig5_monthly` generators, kept because they ship inside runnable code
+> downloads). The entries below are kept as the record of what was found and
+> why it went unfixed at the time; do not read them as still outstanding.
+
 A record of things found during the site work sessions that were **not**
 fixed and are not reflected on the live site. Each entry: what was found,
 when, why it wasn't fixed, and what it implies if left alone. Items that

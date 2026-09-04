@@ -9,9 +9,9 @@
 <link rel="canonical" href="https://andrewsilvestri.com/longevity.html">
 <script>/* the motion contract — set before first paint */
 try{var m=localStorage.getItem('motion');if(m!=='on'&&m!=='off')m=matchMedia('(prefers-reduced-motion: reduce)').matches?'off':'on';document.documentElement.dataset.motion=m;}catch(e){document.documentElement.dataset.motion='on';}</script>
-<link rel="stylesheet" href="style.css?v=24150b10">
-</head><body>
-<nav class="top"><a href="index.html">Home</a><span class="dd"><a href="#" class="ddbtn" aria-haspopup="true">The atlas <span class="caret">&#9662;</span></a><span class="ddmenu"><a href="atlas-app.html" target="_blank" rel="noopener">Open the atlas</a><a href="atlas.html">About the atlas</a><a href="model.html">How the model works</a><a href="library.html">Figures</a></span></span><span class="dd"><a href="#" class="ddbtn" aria-haspopup="true">Energy <span class="caret">&#9662;</span></a><span class="ddmenu"><a href="heat.html">Industrial heat break-even</a><a href="storage.html">Battery revenue simulator</a></span></span><a href="climate-cost.html">Climate cost calculator</a><span class="dd"><a href="#" class="ddbtn on" aria-haspopup="true">Others <span class="caret">&#9662;</span></a><span class="ddmenu"><a href="longevity.html" class="on">Longevity quotient</a><a href="skyline.html">Skylines, played</a><a href="desktop.html">The bookshelf</a></span></span><a href="code.html">Code</a></nav>
+<link rel="stylesheet" href="style.css?v=7e99f6a7">
+</head><body class="bg-own-scene">
+<nav class="top"><a href="index.html">Home</a><span class="dd"><a href="#" class="ddbtn" aria-haspopup="true">The atlas <span class="caret">&#9662;</span></a><span class="ddmenu"><a href="atlas-app.html" target="_blank" rel="noopener">Open the atlas</a><a href="atlas.html">About the atlas</a><a href="model.html">How the model works</a><a href="library.html">Figures</a></span></span><span class="dd"><a href="#" class="ddbtn" aria-haspopup="true">Energy <span class="caret">&#9662;</span></a><span class="ddmenu"><a href="heat.html">Industrial heat break-even</a><a href="storage.html">Battery revenue simulator</a><a href="climate-cost.html">Climate cost calculator</a></span></span><span class="dd"><a href="#" class="ddbtn on" aria-haspopup="true">Others <span class="caret">&#9662;</span></a><span class="ddmenu"><a href="longevity.html" class="on">Longevity quotient</a><a href="skyline.html">Skylines, played</a><a href="desktop.html">The bookshelf</a></span></span><a href="code.html">Code</a></nav>
 <main>
 
 <h1>Longevity quotient</h1>
@@ -19,7 +19,7 @@ try{var m=localStorage.getItem('motion');if(m!=='on'&&m!=='off')m=matchMedia('(p
 size should live.</p>
 
 <p>Body mass predicts lifespan. The 7,873 species in this model run from a
-nematode at a microgram to a blue whale at 150 tonnes, twenty orders of
+nematode at a microgram to a blue whale at 150 tonnes, 14.5 orders of
 magnitude of body size. Across that whole range each tenfold increase in mass
 buys roughly a 1.5-fold increase in maximum lifespan. The relationship is strong
 enough to be worth dividing out. What remains is the longevity quotient:</p>
@@ -27,7 +27,7 @@ enough to be worth dividing out. What remains is the longevity quotient:</p>
 <p style="text-align:center;font-size:16px"><code>LQ = observed lifespan ÷
 lifespan predicted from body mass</code></p>
 
-<img class="fig wide" src="assets/lq_explained.png?v=6c856fa3" alt="Three animals of increasing mass, with the lifespan the allometry predicts beside the lifespan actually observed, and the quotient that falls out.">
+<img class="fig wide" src="assets/lq_explained.png?v=6c856fa3" loading="lazy" width="2108" height="1394" alt="Three animals of increasing mass, with the lifespan the allometry predicts beside the lifespan actually observed, and the quotient that falls out.">
 <p class="small">Mass rises left to right and so does the prediction, because the fit can only go up. What the animals do is not monotonic, and the quotient is what is left once size has been divided out.</p>
 
 <p>It is built by analogy with the encephalisation quotient<sup class="cite" id="cr1"><a href="#ref1">1</a></sup>, which does the
@@ -52,12 +52,20 @@ member or species count. Click a group to drop into the species inside it.</p>
 <a class="btn ghost" href="downloads/longevity-code.zip">Download code and data</a>
 </div>
 
-<img class="fig wide" src="assets/lq_allometry.png?v=43b17fa5"
+<img class="fig wide" src="assets/lq_allometry.png?v=a7a91e3c" loading="lazy" width="1425" height="990"
  alt="Maximum lifespan against adult body mass on logarithmic axes, coloured by
  class, with the fitted global relationship and labelled outliers">
 <p class="small">Lifespan against body mass. The dashed line is the fit across
 every animal in the table. Distance above or below that line, measured within a
 species' own class, is the quotient.</p>
+
+<img class="fig wide" src="assets/lq_ranked.png?v=289af425" loading="lazy" width="1350" height="1320"
+ alt="Species ranked by longevity quotient, from the twelve furthest below
+ prediction to the eighteen furthest above">
+<p class="small">The twelve species furthest below their predicted lifespan and
+the eighteen furthest above, coloured by pool. The dashed line is parity, where
+an animal lives exactly as long as its mass predicts. Colonial animals are
+excluded, because a colony is not an individual.</p>
 
 <h2>Comparing whole groups</h2>
 
@@ -67,19 +75,41 @@ faint line spanning its lowest to its highest. The geometric mean is the correct
 average for ratios: a species at four times prediction and one at a quarter of
 it should average to one, not to 2.1.</p>
 
-<p>At order rank the bats of Chiroptera<sup class="cite" id="cr2"><a href="#ref2">2</a></sup> lead at two and a half times prediction,
-followed by the perch-like fishes, the parrots, the primates at 1.8, and the
-albatrosses and petrels. At the bottom sit the shrews, moles and hedgehogs of
-Eulipotyphla at 0.37, and the ground birds of Galliformes at 0.43. At family rank
-the bats of Vespertilionidae reach 3.1 and the rockfishes of Sebastidae<sup class="cite" id="cr3"><a href="#ref3">3</a></sup> 3.5.
-Flight, burrowing, venom, armour and simply being difficult to swallow all
-register as raised quotients. Being a ground bird or a small terrestrial
-insectivore registers as the reverse.</p>
+<p>Of the 112 orders holding four or more species, the dories of
+<a href="longevity-app.html#view=gr&amp;rank=or&amp;fRank=or&amp;fVal=Zeiformes&amp;grade=all" target="_blank" rel="noopener">Zeiformes</a>
+top the list at 3.95 and the egg-laying
+<a href="longevity-app.html#view=gr&amp;rank=or&amp;fRank=or&amp;fVal=Monotremata&amp;grade=all" target="_blank" rel="noopener">Monotremata</a>
+follow at 2.73 &mdash; but
+both rest on a handful of species, seven and four respectively, and a
+geometric mean over four animals is a claim about four animals. The two large
+groups near the top are the ones worth the weight: the bats of
+<a href="longevity-app.html#view=gr&amp;rank=or&amp;fRank=or&amp;fVal=Chiroptera&amp;grade=all" target="_blank" rel="noopener">Chiroptera</a><sup class="cite" id="cr2"><a href="#ref2">2</a></sup> at 2.68 across
+267 species, and the
+<a href="longevity-app.html#view=gr&amp;rank=or&amp;fRank=or&amp;fVal=Primates&amp;grade=all" target="_blank" rel="noopener">primates</a>
+at 2.12 across 350. At the bottom sit the
+tinamous at 0.32, the needlefishes at 0.39 and the jacks at 0.43; the ground
+birds of
+<a href="longevity-app.html#view=gr&amp;rank=or&amp;fRank=or&amp;fVal=Galliformes&amp;grade=all" target="_blank" rel="noopener">Galliformes</a>
+come in at 0.51 and the shrews, moles and hedgehogs of
+<a href="longevity-app.html#view=gr&amp;rank=or&amp;fRank=or&amp;fVal=Eulipotyphla&amp;grade=all" target="_blank" rel="noopener">Eulipotyphla</a>
+at 0.58. At family rank the bats of
+<a href="longevity-app.html#view=gr&amp;rank=fa&amp;fRank=fa&amp;fVal=Vespertilionidae&amp;grade=all" target="_blank" rel="noopener">Vespertilionidae</a>
+reach 3.43
+over 126 species, and the horseshoe bats of
+<a href="longevity-app.html#view=gr&amp;rank=fa&amp;fRank=fa&amp;fVal=Rhinolophidae&amp;grade=all" target="_blank" rel="noopener">Rhinolophidae</a>
+3.18, while the
+rockfishes of
+<a href="longevity-app.html#view=gr&amp;rank=fa&amp;fRank=fa&amp;fVal=Sebastidae&amp;grade=all" target="_blank" rel="noopener">Sebastidae</a><sup class="cite" id="cr3"><a href="#ref3">3</a></sup>
+sit at 2.76. Flight, burrowing, venom, armour and simply being difficult to
+swallow all register as raised quotients. Being a ground bird or a small
+terrestrial insectivore registers as the reverse.</p>
 
-<img class="fig wide" src="assets/lq_orders.png?v=30b1f34a"
+<img class="fig wide" src="assets/lq_orders.png?v=6794fffe" loading="lazy" width="1950" height="1638"
  alt="Bar chart of taxonomic orders ranked by geometric mean longevity quotient">
-<p class="small">Every order holding four or more species, ranked by geometric
-mean quotient. The dashed line is parity with prediction.</p>
+<p class="small">All 112 orders holding four or more species, ranked by
+geometric mean quotient and read left column first. The dashed line is parity
+with prediction: everything in the right-hand column falls short of what its
+members&rsquo; body masses predict.</p>
 
 <h2>Colonies are not individuals</h2>
 
@@ -118,7 +148,7 @@ it appears the moment body mass is divided out.</p>
 quahog 45&times; above it (a real 507-year lifespan), the giant Pacific
 octopus about a twentieth below (dead in five real years).</p>
 
-<img class="fig wide" src="assets/lq_wild_captive.png?v=1972ddb8"
+<img class="fig wide" src="assets/lq_wild_captive.png?v=74cca569" loading="lazy" width="1350" height="1170"
  alt="Dumbbell chart comparing wild and captive maximum lifespan by species">
 <p class="small">Wild against captive, sorted by the size of the gap. Where
 protection helps most, and where it does not help at all.</p>
@@ -254,13 +284,14 @@ It is worth reading whether or not you care about the arithmetic.</p>
 <h2>Sources</h2>
 <p class="small">Numbered markers in the text above point here. Emission factors, cost ranges and lifespan figures are representative values from these sources, not measurements made for this project.</p>
 <ol class="refs"><li id="ref1"><span class="src">Jerison, <i>Evolution of the Brain and Intelligence</i>, Academic Press, 1973.</span><span class="what">The quotient construction this model borrows.</span></li><li id="ref2"><span class="src">Wilkinson &amp; Adams, <i>Biology Letters</i>, 2019 - recent advances in the biology of bat ageing.</span><span class="what">Why flight and longevity travel together.</span></li><li id="ref3"><span class="src">Nielsen <i>et al.</i>, <i>Science</i> 353:702, 2016 (Greenland shark, eye-lens radiocarbon); Cailliet <i>et al.</i>, <i>Experimental Gerontology</i> 36:739, 2001 (rockfish otolith ageing).</span><span class="what">The extreme fish lifespans, and the dating methods behind them.</span></li><li id="ref4"><span class="src">Butler <i>et al.</i>, <i>Palaeogeography, Palaeoclimatology, Palaeoecology</i>, 2013 - the 507-year <i>Arctica islandica</i>.</span><span class="what">The longest-lived non-colonial animal recorded.</span></li><li id="ref5"><span class="src">Tacutu <i>et al.</i>, <i>Nucleic Acids Research</i> 46:D1083, 2018 - the AnAge database of animal ageing and longevity.</span><span class="what">Maximum lifespan and adult body mass for most species in the table.</span></li><li id="ref6"><span class="src">Myhrvold <i>et al.</i>, <i>Ecology</i> 96:3109, 2015 - an amniote life-history database for comparative analyses with birds, mammals and reptiles.</span><span class="what">Lifespan and body mass for most birds, mammals and reptiles here.</span></li><li id="ref7"><span class="src">Jones <i>et al.</i>, <i>Ecology</i> 90:2648, 2009 - PanTHERIA, a species-level database of life history, ecology and geography of extant and recently extinct mammals.</span><span class="what">Mammalian maximum longevity and adult body mass.</span></li><li id="ref8"><span class="src">Oliveira <i>et al.</i>, <i>Scientific Data</i> 4:170123, 2017 - AmphiBIO, a global database for amphibian ecological traits.</span><span class="what">Amphibian longevity and body mass.</span></li><li id="ref9"><span class="src">Froese &amp; Pauly (eds.), <i>FishBase</i>, v25.04 snapshot, distributed as parquet by rOpenSci. CC BY-NC.</span><span class="what">Maximum age and weight for fish, graded C throughout.</span></li><li id="ref10"><span class="src">Tobias <i>et al.</i>, <i>Ecology Letters</i> 25:581, 2022 - AVONET, morphological, ecological and geographical data for all birds.</span><span class="what">Body mass used only to fill gaps for birds already aged.</span></li></ol>
-<p class="small">Octopus, bat, snail and shell icons in the margin scene: <a href="https://openmoji.org" target="_blank" rel="noopener">OpenMoji</a>, licensed <a href="https://creativecommons.org/licenses/by-sa/4.0/" target="_blank" rel="noopener">CC BY-SA 4.0</a>, recoloured to this page's own palette.</p>
+<p class="small">Animal icons in the margin scene: <a href="https://openmoji.org" target="_blank" rel="noopener">OpenMoji</a>, licensed <a href="https://creativecommons.org/licenses/by-sa/4.0/" target="_blank" rel="noopener">CC BY-SA 4.0</a>, recoloured to this page&rsquo;s own palette. The chameleon and the tubeworm have no emoji and are drawn by hand to match. Every quotient beside a creature is that species&rsquo; own figure from the table above.</p>
 
 <footer>Andrew Silvestri · energy systems modelling ·
 <a href="mailto:dasilvestri@utexas.edu">dasilvestri@utexas.edu</a> &middot;
 <button type="button" class="motion-toggle" hidden>Motion: <span class="motion-state">on</span></button></footer>
 </main>
 <script src="assets/motion.js?v=4cbbdec3"></script>
-<script src="assets/bgloop.js"></script>
-<script src="assets/biome-scene.js"></script>
+<script src="assets/lightbox.js?v=0bce1245"></script>
+<script src="assets/bgloop.js?v=d269be40"></script>
+<script src="assets/biome-scene.js?v=db08d31a"></script>
 </body></html>

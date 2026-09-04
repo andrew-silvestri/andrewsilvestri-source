@@ -506,6 +506,13 @@ def figures(rows, summary, fit_rows):
     # (dark) site.
     BG = "#070a12"
     plt.rcParams.update({
+        # The page is set in the site's own sans stack; the figures were left
+        # on matplotlib's DejaVu Sans, so every label under every chart was in
+        # a different typeface from the caption beside it. Named as a
+        # sans-serif list so a reader running this on a machine without Segoe
+        # UI still gets a sane fallback rather than boxes.
+        "font.family": "sans-serif",
+        "font.sans-serif": ["Segoe UI", "Selawik", "DejaVu Sans", "Arial"],
         "figure.facecolor": BG, "axes.facecolor": BG, "savefig.facecolor": BG,
         "text.color": INK, "axes.labelcolor": INK, "axes.titlecolor": INK,
         "xtick.color": DIM, "ytick.color": DIM,
@@ -514,8 +521,11 @@ def figures(rows, summary, fit_rows):
     })
 
     ga, gb = summary["global_fit"]["a"], summary["global_fit"]["b"]
+    # Amphibia was #a98fd8 and Pisces #6f7fd8, which put three violets
+    # (with Mammalia's #8b7ff2) in one legend; at scatter-dot size they were
+    # the same colour. Both moved to hues already in the site's cycle.
     colors = {"Mammalia": "#8b7ff2", "Aves": "#5aa8d8", "Reptilia": "#4f9d84",
-              "Amphibia": "#a98fd8", "Pisces": "#6f7fd8",
+              "Amphibia": "#c9a227", "Pisces": "#6e8096",
               "Invertebrata": "#d86a86"}
 
     fig, ax = plt.subplots(figsize=(9.5, 6.6))
@@ -562,8 +572,13 @@ def figures(rows, summary, fit_rows):
         px, py = ax.transData.transform((r["mass_g"], r["maximum"]))
         right = px > (x0ax + x1ax) / 2          # label inward near the edge
         ha, dx = ("right", -5) if right else ("left", 5)
+        # Eight thousand dots sit behind these names. Without a plate behind
+        # the text, the labels over the dense middle of the cloud were
+        # unreadable; the box is the panel colour, so it reads as a gap.
         t = ax.annotate(r["name"], (r["mass_g"], r["maximum"]), fontsize=7,
-                        xytext=(dx, 4), textcoords="offset points", ha=ha)
+                        xytext=(dx, 4), textcoords="offset points", ha=ha,
+                        bbox=dict(boxstyle="round,pad=0.16", facecolor=BG,
+                                  edgecolor="none"))
         bb = t.get_window_extent(renderer=ren)
         if any(bb.overlaps(o) for o in taken) or bb.x0 < x0ax or bb.x1 > x1ax:
             t.remove()
@@ -575,14 +590,28 @@ def figures(rows, summary, fit_rows):
                      and not r["colonial"]],
                     key=lambda r: r["lq_class_maximum"])
     sel = ranked[:12] + ranked[-18:]
+    # Bars from zero on a linear axis, with the ocean quahog out at 48, drew
+    # the twelve species below parity as nothing at all - the entire "and who
+    # does not" half of the title was twelve blank rows. A quotient is a
+    # ratio, so the axis is logarithmic and every bar runs from parity rather
+    # than from zero: short to the left is half as long as predicted, short to
+    # the right is twice.
     fig, ax = plt.subplots(figsize=(9, 8.8))
-    ax.barh([r["name"] for r in sel], [r["lq_class_maximum"] for r in sel],
-            color=[colors.get(r["pool"], "#888") for r in sel])
+    ys = range(len(sel))
+    ax.hlines(list(ys), 1, [r["lq_class_maximum"] for r in sel],
+              color=[colors.get(r["pool"], "#888") for r in sel], lw=3.4)
+    ax.scatter([r["lq_class_maximum"] for r in sel], list(ys), s=26, zorder=3,
+               color=[colors.get(r["pool"], "#888") for r in sel])
+    ax.set_yticks(list(ys))
+    ax.set_yticklabels([r["name"] for r in sel])
+    ax.set_xscale("log")
     ax.axvline(1, color=DIM, lw=1.2, ls="--")
-    ax.set_xlabel("longevity quotient (observed ÷ predicted for its group)")
+    ax.set_xlabel("longevity quotient (observed ÷ predicted for its group, "
+                  "log scale)")
     ax.set_title("Who beats their body mass, and who does not")
     ax.tick_params(labelsize=8.5)
-    ax.grid(axis="x", alpha=.18)
+    ax.grid(axis="x", alpha=.18, which="both")
+    ax.set_axisbelow(True)
     fig.tight_layout()
     _save(fig, "fig2_lq_ranked.png")
 
@@ -612,15 +641,30 @@ def figures(rows, summary, fit_rows):
     groups = rank_summary(rows)
     ords = [g for g in groups["order"] if g["n"] >= 4 and g["geo_lq"]]
     ords.sort(key=lambda g: g["geo_lq"])
-    fig, ax = plt.subplots(figsize=(9, max(5, .3 * len(ords) + 1.5)))
-    ax.barh([g["group"] for g in ords], [g["geo_lq"] for g in ords],
-            color="#5a4fb0")
-    ax.axvline(1, color=DIM, lw=1.2, ls="--")
-    ax.set_xlabel("geometric mean longevity quotient")
-    ax.set_title("Orders compared (four or more species each)")
-    ax.tick_params(labelsize=8.5)
-    ax.grid(axis="x", alpha=.18)
-    fig.tight_layout()
+    # One column of every qualifying order made a figure 1350x5265 px - a
+    # four-to-one sliver that the page had to scale to a thumbnail before it
+    # fitted, at which point no label could be read. Same orders, two columns,
+    # best at the top left: an aspect a page can actually show.
+    ords.sort(key=lambda g: -g["geo_lq"])
+    half = (len(ords) + 1) // 2
+    cols = [ords[:half], ords[half:]]
+    hi = max(g["geo_lq"] for g in ords) * 1.06
+    fig, axes = plt.subplots(1, 2, figsize=(13, max(4.5, .17 * half + 1.4)))
+    for ax, part in zip(axes, cols):
+        ys = range(len(part))
+        ax.barh(list(ys), [g["geo_lq"] for g in part], color="#5a4fb0",
+                height=.72)
+        ax.set_yticks(list(ys))
+        ax.set_yticklabels([g["group"] for g in part], fontsize=7)
+        ax.invert_yaxis()
+        ax.set_xlim(0, hi)
+        ax.axvline(1, color=DIM, lw=1.2, ls="--")
+        ax.set_xlabel("geometric mean longevity quotient")
+        ax.grid(axis="x", alpha=.18)
+        ax.set_axisbelow(True)
+        ax.tick_params(axis="x", labelsize=8.5)
+    fig.suptitle("Orders compared (four or more species each)", y=.985)
+    fig.tight_layout(rect=(0, 0, 1, .975))
     _save(fig, "fig4_orders.png")
     print("\nfigures written to outputs/")
 

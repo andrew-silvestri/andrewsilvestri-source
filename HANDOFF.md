@@ -12,7 +12,7 @@ wins — see "Never trust a number in prose" below.
 ## 1. The one-paragraph version
 
 `00 PUBLISH/` is the only folder that matters for the website. Inside it,
-`site/` **is** the website: plain HTML, one stylesheet, three JavaScript files,
+`site/` **is** the website: plain HTML, one stylesheet, thirteen JavaScript files,
 no build step, no framework, no dependencies. Everything else in `00 PUBLISH/`
 is a Python script that generates or verifies part of `site/`. The numbered
 folders `01`–`24` outside it are working archives; treat them as read-only
@@ -32,22 +32,24 @@ source material unless told otherwise.
     model.html              how the model works (the long method page)
     library.html            figure library
     code.html               downloads index
-    heat.html storage.html  project pages (Energy)
-    dac.html holdup.html    project pages (Chemical)
-    climate-cost.html beans.html running-shoes.html              Climate research
-    longevity.html skyline.html desktop.html                      project pages (Others)
-    *-app.html              full-screen interactive apps, opened in a new tab
-                            (running-shoes-app.html is a three.js model whose
-                             opening state can be set from the query string:
-                             ?shoe=1&part=2&explode=1&az=&el=)
+    heat.html storage.html climate-cost.html    project pages (Energy)
+    longevity.html skyline.html desktop.html    project pages (Others)
+    atlas-app.html longevity-app.html skyline-app.html
+    bookshelf-app.html climate-cost-app.html    full-screen interactive apps,
+                                                opened in a new tab
     style.css               the ONLY stylesheet for all non-app pages
-    assets/                 figures (.png) + the three JS files + the payloads
+    assets/                 figures (.png/.webp), video explainers (.mp4) and
+                            their posters, 13 JS files, the payloads, fonts/
     downloads/              per-project source .zip archives
     CNAME .nojekyll         GitHub Pages config — do not delete either
   tests/                    node test harnesses (see §7)
   climate-cost/             sub-project: LCA engine, data, tests, template
   longevity-quotient/       sub-project: model, data, tests, template
-  unpublished/              retired pages kept but not linked
+  unpublished/              retired pages kept but not linked: dac, holdup, beans,
+                            running-shoes and its three.js app (opening state from
+                            ?shoe=1&part=2&explode=1&az=&el=), energy-web, hobbies,
+                            navigator. Corrected 2026-09-04: this file used to list
+                            four of them as live pages.
   *.py                      the build and verification scripts (see §5)
 ```
 
@@ -106,10 +108,18 @@ Do not hand-edit `<nav class="top">`. Edit the `NAV` list at the top of
 `rebuild_nav.py` and re-run it. It rewrites the nav on every page and marks the
 current page with `class="on"`.
 
+**This rule was broken once and the trap it left is worth knowing.** The
+2026-08-30 revamp moved "Climate cost calculator" under "Energy" by editing all
+eleven pages and left `NAV` with the old one-item "Climate research" group, so
+for five weeks running the generator would have silently reverted a deliberate
+change. `NAV` was brought back into line on 2026-09-04 (0 pages rewritten when
+re-run). Before you trust it: run it, and if it reports anything but
+"unchanged" for every page, stop and find out which side is right.
+
 ```python
 NAV = [("Home", "index.html"),
        ("The atlas", [("Open the atlas", "atlas-app.html"), …]),
-       ("Energy", […]), ("Chemical", […]), ("Others", […]),
+       ("Energy", […]), ("Others", […]),
        ("Code", "code.html")]
 ```
 
@@ -330,6 +340,20 @@ Read this section. Every item is a real bug that shipped.
    to come from geometry, density or brightness.
 10. **Additive blending saturates to white.** A bright sky blue stacks into
     white exactly where trails overlap most. Keep per-segment brightness low.
+    (It happened anyway, for a month, to the plant layer: 34,936 sprites over
+    Europe and the US east coast summed to solid white in both `hero-gl.js`
+    and `atlas-app.js`. Fixed 2026-09-04 by scaling the sprite output.)
+11. **Anything that describes the site can describe a state the site has left.**
+    Four instances in one session, 2026-09-04: `rebuild_nav.py`'s `NAV` list
+    still had a "Climate research" group five weeks after the pages dropped
+    it, so running the generator would have silently reverted a deliberate
+    change; this file listed four `unpublished/` pages as live and counted
+    "three" JS files when there were thirteen; and the deslop brief carried
+    "the palette passes AA" from an audit that never measured text on the
+    accent (it was 2.91:1 on every button). The check is cheap every time:
+    run the generator and diff, list the directory, compute the ratio.
+    Nobody ran it for a month. When a doc, a script and the tree disagree,
+    the tree is the fact and the other two are claims.
 
 ---
 
@@ -349,7 +373,7 @@ The pattern every existing project follows:
    `Sources`.
 5. If it is interactive, build `site/<project>-app.html` as a standalone
    full-screen page with inline CSS, and link it with `target="_blank"`.
-6. Add the page to `NAV` in `rebuild_nav.py` under Energy, Chemical or Others,
+6. Add the page to `NAV` in `rebuild_nav.py` under Energy or Others,
    and re-run it.
 7. Add a `downloads/<project>-code.zip` and a row in `code.html`.
 8. Run `add_citations.py`, then `bust_cache.py`, then `publish.sh --dry-run`.

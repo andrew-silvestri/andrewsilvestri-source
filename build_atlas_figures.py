@@ -19,9 +19,12 @@ import os
 import re
 
 import matplotlib
+import matplotlib.backends.backend_agg
 import matplotlib.ticker
 matplotlib.use("Agg")
 import matplotlib.pyplot as plt          # noqa: E402
+
+from fig_floor import floor_problems     # noqa: E402
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 DATA = os.path.join(HERE, "site", "assets", "atlas-data.js")
@@ -41,7 +44,13 @@ def style():
         "text.color": INK, "axes.labelcolor": INK,
         "xtick.color": DIM, "ytick.color": DIM,
         "axes.edgecolor": FAINT, "grid.color": FAINT,
-        "font.size": 10.5, "font.family": ["DejaVu Sans"],
+        "font.size": 10.5,
+        # Match the site, which sets its UI text in the system sans
+        # stack. Named as a list so this still renders sensibly on a
+        # machine without Segoe UI rather than falling back to boxes.
+        "font.family": "sans-serif",
+        "font.sans-serif": ["Segoe UI", "Selawik", "DejaVu Sans",
+                            "Arial"],
     })
 
 
@@ -57,6 +66,7 @@ def audit(fig):
     fig.canvas.draw()
     ren = fig.canvas.get_renderer()
     W, H = fig.canvas.get_width_height()
+    title_ids = {id(ax.title) for ax in fig.axes}
     items = [t for t in fig.texts if t.get_text().strip()]
     for ax in fig.axes:
         for t in [ax.title, ax.xaxis.label, ax.yaxis.label] + list(ax.texts):
@@ -103,6 +113,7 @@ def audit(fig):
                 fr = ox * oy / min(a.width * a.height, b.width * b.height)
                 if fr > 0.15:
                     bad.append(f"overlap {fr:.0%}: {la!r} / {lb!r}")
+    bad += floor_problems(fig, [(t, id(t) in title_ids) for t in items])
     return bad
 
 
@@ -246,7 +257,10 @@ def main():
     fig.tight_layout()
     problems += len(save(fig, "05_link_structure.png"))
 
-    # ---- 09 capacity against fuel -----------------------------------
+    # ---- 10 capacity by fuel ----------------------------------------
+    # The bar chart that used to be saved, wrongly, as 09. It is a fair
+    # figure about a different question, so it keeps its own file and its
+    # own card rather than being deleted along with the mislabelling.
     fuel = collections.defaultdict(list)
     pat = re.compile(r"\(([A-Za-z ]+), ([\d.]+) MW\)$")
     for i in range(N):
@@ -270,6 +284,64 @@ def main():
     ax.grid(axis="x", alpha=0.18)
     ax.set_axisbelow(True)
     fig.tight_layout()
+    problems += len(save(fig, "10_capacity_by_fuel.png"))
+
+    # ---- 09 system size against low-carbon share --------------------
+    # The only figure on the site drawn with a grammar of graphics rather
+    # than by commanding an axes object, which is the whole reason it is in
+    # the library. Both numbers come out of the payload's own node names:
+    # the grid layer carries each country's average load, the supply layer
+    # carries that country's fuel split as a share of its power.
+    import pandas as pd
+    from plotnine import (ggplot, aes, geom_point, geom_smooth, labs,
+                          scale_x_log10, theme, theme_minimal, element_rect,
+                          element_text, element_line, element_blank)
+
+    gw, share = {}, collections.defaultdict(float)
+    g_pat = re.compile(r"^([A-Z]{3}) grid \(([\d.]+) GW avg\)$")
+    s_pat = re.compile(r"^([A-Z]{3}) (\w+) supply \(([\d.]+)% of power\)$")
+    LOWC = ("nuclear", "hydro", "renew")
+    for i in range(N):
+        if kind[i] == "grid":
+            m = g_pat.match(D["name"][i])
+            if m:
+                gw[m.group(1)] = float(m.group(2))
+        elif kind[i] == "supply":
+            m = s_pat.match(D["name"][i])
+            if m and m.group(2) in LOWC:
+                share[m.group(1)] += float(m.group(3))
+    # WLD is the world total, not a country, and would sit an order of
+    # magnitude right of every real point and drag the trend with it.
+    df = pd.DataFrame(
+        [{"iso": k, "gw": v, "low": min(share.get(k, 0.0), 100.0)}
+         for k, v in gw.items() if k != "WLD" and v > 0])
+    # v > 0 drops the countries whose average load rounds to 0.0 GW; a log
+    # axis has nowhere to put them.
+
+    plot = (
+        ggplot(df, aes("gw", "low"))
+        + geom_point(color=ACC, alpha=0.55, size=1.9)
+        + geom_smooth(method="loess", span=0.75, se=False, color=DIM, size=1.0)
+        + scale_x_log10()
+        + labs(x="average system size (GW, log scale)",
+               y="low-carbon share of electricity (%)",
+               title=f"System size against low-carbon share  ·  "
+                     f"{len(df)} countries")
+        + theme_minimal()
+        + theme(figure_size=(9.5, 5.6),
+                plot_background=element_rect(fill=BG, color=BG),
+                panel_background=element_rect(fill=BG, color=BG),
+                panel_grid_major=element_line(color=FAINT, size=0.4),
+                panel_grid_minor=element_blank(),
+                axis_text=element_text(color=DIM, size=9.5),
+                axis_title=element_text(color=INK, size=10.5),
+                plot_title=element_text(color=INK, size=11.5, ha="center"))
+    )
+    # plot.draw() hands back a figure on the base canvas, which has no
+    # get_renderer, and audit() measures text against a renderer. Binding Agg
+    # lets this figure go through the same overlap check as every other one.
+    fig = plot.draw()
+    matplotlib.backends.backend_agg.FigureCanvasAgg(fig)
     problems += len(save(fig, "09_size_vs_lowcarbon.png"))
 
     # ---- 12 the event record ----------------------------------------

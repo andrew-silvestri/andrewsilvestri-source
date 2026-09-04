@@ -30,10 +30,18 @@ SITE = os.path.join(HERE, "site")
 ASSETS = os.path.join(SITE, "assets")
 
 # prefix on the site  ->  folder holding outputs/
+#
+# heat_ and storage_ used to point at "01 Industrial Heat Breakeven" and
+# "03 Storage Revenue Stack" in PARENT - folders that were never created.
+# model.py and figstyle.py existed only inside site/downloads/heat-code.zip
+# and storage-code.zip, so those two prefixes could never resolve. They now
+# point at heat/ and storage/, unpacked from those zips and tracked beside
+# longevity-quotient/ - see rezip_downloads.py, which rebuilds the zips from
+# these folders so the download always matches what ships.
 PREFIX_SOURCE = {
-    "heat_": os.path.join(PARENT, "01 Industrial Heat Breakeven"),
+    "heat_": os.path.join(HERE, "heat"),
     "dac_": os.path.join(PARENT, "02 DAC Adsorption TEA"),
-    "storage_": os.path.join(PARENT, "03 Storage Revenue Stack"),
+    "storage_": os.path.join(HERE, "storage"),
     "web_": os.path.join(PARENT, "10 World Energy Web"),
     "web5_": os.path.join(PARENT, "14 World Energy Web v5"),
 }
@@ -55,14 +63,26 @@ EXPLICIT = {
 
 
 def referenced():
-    """Every asset path the site asks for."""
+    """Every asset path the site asks for.
+
+    Scanning only href/src on the pages understated this badly enough to
+    delete live files: it missed poster= on the motion-gated <video> tags
+    (six poster frames), data-src= on the same tags, and everything a script
+    names rather than the markup - the OpenMoji SVGs the biome scene loads
+    are written as string literals in assets/biome-scene.js. Anything under
+    --apply's prune list has to be measured against all of those, so the
+    scripts are read too and any assets/... path in any of them counts.
+    """
     want = set()
-    for page in glob.glob(os.path.join(SITE, "*.html")):
-        html = open(page, encoding="utf-8", errors="ignore").read()
-        for m in re.findall(r'(?:href|src)="([^"]+)"', html):
-            m = m.split("#")[0].split("?")[0]
-            if m.startswith("assets/"):
-                want.add(m[len("assets/"):])
+    files = (glob.glob(os.path.join(SITE, "*.html"))
+             + glob.glob(os.path.join(SITE, "assets", "*.js")))
+    for page in files:
+        text = open(page, encoding="utf-8", errors="ignore").read()
+        for m in re.findall(r'''(?:href|src|data-src|poster)=["']([^"']+)["']'''
+                            r'''|["'](assets/[^"']+)["']''', text):
+            ref = (m[0] or m[1]).split("#")[0].split("?")[0]
+            if ref.startswith("assets/"):
+                want.add(ref[len("assets/"):])
     return want
 
 

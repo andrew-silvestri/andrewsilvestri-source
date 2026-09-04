@@ -22,6 +22,7 @@ Run:  python3 build_throughlines.py
 import collections
 import json
 import os
+import textwrap
 
 import matplotlib
 matplotlib.use("Agg")
@@ -29,6 +30,8 @@ import matplotlib.pyplot as plt
 import numpy as np
 import scipy.sparse as sp
 from matplotlib.patches import FancyArrowPatch, FancyBboxPatch
+
+from fig_floor import floor_problems
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 DATA = os.path.join(HERE, "site", "assets", "atlas-data.js")
@@ -58,6 +61,28 @@ LABEL = {"sun": "Sun", "insolation": "Insolation", "weather": "Weather",
          "grid": "National grid", "station": "Power station",
          "district": "District", "consumer": "Consumer group",
          "psych": "Behaviour"}
+
+
+def style():
+    """The typographic scale from figstyle.py (site/downloads/heat-code.zip,
+    lines ~68-88) - the house scale, and the only figure set on the site that
+    already reads well at web width. Only the sizes are pulled in here: every
+    label on this sheet is hand-placed with its own ax.text/fig.text call and
+    sets its own color, so rcParams cannot reach most of it the way it does a
+    normal axes-driven chart. What rcParams *does* reach - default tick and
+    label sizes on the few plain axes below - is worth setting anyway so
+    nothing silently falls back to matplotlib's own (smaller) default.
+    """
+    plt.rcParams.update({
+        "font.size": 12.5,
+        "font.family": "sans-serif",
+        "font.sans-serif": ["Segoe UI", "Selawik", "DejaVu Sans", "Arial"],
+        "axes.titlesize": 14.5,
+        "axes.labelsize": 12.5,
+        "xtick.labelsize": 11.5,
+        "ytick.labelsize": 11.5,
+        "legend.fontsize": 11.5,
+    })
 
 
 def load():
@@ -120,6 +145,7 @@ def audit(fig):
     """
     fig.canvas.draw()
     r = fig.canvas.get_renderer()
+    title_ids = {id(ax.title) for ax in fig.axes}
     items, problems = [], []
     for ax in fig.axes:
         for tx in ax.texts:
@@ -130,6 +156,16 @@ def audit(fig):
         # matplotlib keeps Text objects for ticks outside the axis limits and
         # never draws them. Counting those reports failures that are not on
         # the page, so only ticks inside the limits are considered.
+        if not ax.axison:
+            # ax.axis("off") - used by every diagram panel on this sheet -
+            # hides the frame and ticks visually but does not set
+            # xaxis.get_visible()/yaxis.get_visible() to False, so their
+            # (never-drawn) default tick labels were being measured as real
+            # text and reported as colliding with whatever a diagram actually
+            # placed at that same data position. ax.axison is the flag
+            # axis("off") does set, and is what build_atlas_figures.py's
+            # audit() already checks for this exact reason.
+            continue
         x0, x1 = sorted(ax.get_xlim())
         y0, y1 = sorted(ax.get_ylim())
         for axis, lo, hi in ((ax.xaxis, x0, x1), (ax.yaxis, y0, y1)):
@@ -168,10 +204,12 @@ def audit(fig):
                 problems.append(
                     f"overlap: {boxes[i][0].get_text()[:22]!r} / "
                     f"{boxes[j][0].get_text()[:22]!r}")
+    problems += floor_problems(fig, [(t, id(t) in title_ids) for t in items])
     return problems
 
 
 def main():
+    style()
     D = load()
     kind = [D["kinds"][k] for k in D["kind"]]
     nm = D["name"]
@@ -179,17 +217,48 @@ def main():
     run, A = engine(D)
     counts = collections.Counter(kind)
 
-    fig = plt.figure(figsize=(15.5, 17.5), facecolor=BG)
+    # 15.5in used to put the on-screen factor (pt * 1140 / (72 * width)) at
+    # ~1.02 - a 7.2pt label landed at 7.4px, under the 11px floor. 11x12.4
+    # keeps the aspect ratio and raises the factor to ~1.44.
+    # Height went from 12.4 to 13.3 on top of that. Width alone fixed the
+    # floor, but narrowing from 15.5in also narrowed panel B's row pitch in
+    # absolute terms without anything giving its wrapped two-line node
+    # labels more room, and shrank the band between the two grids below it
+    # until a wrapped label's second line and the next panel's title pad
+    # were nearly touching. The extra 0.9in funds both fixes below; it
+    # can't come out of panel A's or C-F's own share because both already
+    # audit clean at their current size.
+    fig = plt.figure(figsize=(11.0, 13.3), facecolor=BG)
     # Two grids rather than one. The upper panels are diagrams that start at
     # the left edge; the lower panels are charts whose category labels live
     # outside the axes and need the margin. Sharing one grid put those labels
     # off the canvas.
-    gs = fig.add_gridspec(2, 1, height_ratios=[1.05, 1.0],
+    # height_ratios used to be [1.05, 1.0] - almost even. Panel A is a row of
+    # single-line boxes; panel B packs a title, four rows of paired
+    # value/route-name text and two-line wrapped node names into the same
+    # span, and its bottom row's second label line was landing on the value
+    # of the row below. [0.845, 1.0] hands B about 25% more of this grid's
+    # pixels than before (verified against A: a first attempt that shrank
+    # A's own ratio to buy this, at the old figure height, put A's row-box
+    # text into itself - A needs to keep its old *absolute* height, not
+    # just a bigger slice of a fixed pie, which is why the figure grew
+    # instead). Stretching row_y's pitch without this would have just
+    # spread the same crowding over more data units for no gain.
+    gs = fig.add_gridspec(2, 1, height_ratios=[0.845, 1.0],
                           hspace=0.30, left=0.050, right=0.975,
-                          top=0.895, bottom=0.545)
+                          top=0.895, bottom=0.523)
+    # bottom raised from 0.045: panel E's rotated x tick labels sit right at
+    # the figure's bottom edge, and the smaller canvas left no room under
+    # them once their size came up to the floor.
+    # top dropped from 0.500 to 0.450: panel B's bottom row wraps to two
+    # lines whose second line hangs below the y=0 edge of B's own axes by
+    # design (the label is anchored near the row, not clipped to the
+    # panel), and at 0.500 that overflow ran straight into C/D's title pad.
+    # The gap between the two grids is now ~70pt, enough for that overflow
+    # plus a clearly visible gap plus the title's own pad and line height.
     gsb = fig.add_gridspec(2, 2, height_ratios=[1.0, 1.0],
                           hspace=0.55, wspace=0.42, left=0.135,
-                          right=0.965, top=0.500, bottom=0.045)
+                          right=0.965, top=0.450, bottom=0.085)
 
     fig.text(0.055, 0.978, "Throughlines: from the sun to the mind",
              color=INK, fontsize=21, fontweight="bold", va="top")
@@ -255,7 +324,7 @@ def main():
 
     starts = [("SUN_TSI", "The sun"), ("WX_ENSO", "El Nino"),
               ("MKT_BRENT", "The oil price"), ("CLIMATE_SYS", "The climate")]
-    row_y = [86, 62, 38, 12]
+    row_y = [88, 60, 32, 4]
     for (ident, title), y in zip(starts, row_y):
         if ident not in ids:
             continue
@@ -274,22 +343,34 @@ def main():
             route.append(nxt)
             seen.add(nxt)
             cur = nxt
-        axb.text(0, y + 11.5, title, color=INK, fontsize=11,
-                 fontweight="bold", va="center")
-        step = 100.0 / max(len(route), 1)
+        # The row title used to sit in its own band above the marker row,
+        # which is what collided with the wrapped node name of the row above
+        # it once that name stopped fitting on one line. Giving the title its
+        # own lane to the left of x=16 - clear of every marker in every row -
+        # lets it share the marker row's own y instead, freeing the vertical
+        # room the wrapped label actually needs.
+        axb.text(0, y, title, color=INK, fontsize=11, fontweight="bold",
+                 va="center")
+        # The route used to run its last marker out to x=100, the axis's own
+        # right edge, and the wrapped two-line label anchored there had
+        # nowhere to run but off the figure. Stopping short leaves it room.
+        start_x, end_x = 16, 86
+        step = (end_x - start_x) / max(len(route) - 1, 1)
         for j, n in enumerate(route):
-            x = j * step + 2
+            x = start_x + j * step
             axb.scatter([x], [y], s=95, color=KCOL.get(kind[n], DIM),
                         zorder=3, edgecolors=BG, linewidths=1.2)
-            label = nm[n]
-            if len(label) > 40:
-                label = label[:39].rsplit(" ", 1)[0].rstrip() + "…"
-            axb.text(x, y - 7, label, color=DIM, fontsize=8.2,
-                     ha="left", va="center", rotation=0)
-            axb.text(x, y + 4.5, f"{st[n]:+.3f}", color=INK, fontsize=8.4,
-                     ha="left", va="center")
+            # Used to truncate to 40 chars with an ellipsis at 8.2pt, which
+            # threw away the one piece of information the label exists for.
+            # Wrapping keeps the full name.
+            label = "\n".join(textwrap.wrap(
+                nm[n], width=20, max_lines=2, placeholder=" …"))
+            axb.text(x, y - 3.5, label, color=DIM, fontsize=8.6,
+                     ha="left", va="top", linespacing=1.2)
+            axb.text(x, y + 3.0, f"{st[n]:+.3f}", color=INK, fontsize=8.4,
+                     ha="left", va="bottom")
             if j + 1 < len(route):
-                axb.annotate("", xy=(x + step - 2.5, y), xytext=(x + 1.6, y),
+                axb.annotate("", xy=(x + step - 2.0, y), xytext=(x + 1.4, y),
                              arrowprops=dict(arrowstyle="-|>", color=RULE,
                                              linewidth=1.0))
 
@@ -325,20 +406,71 @@ def main():
     st, hist = run({ids["MKT_BRENT"]: 0.9})
     idx = {k: np.array([i for i, kk in enumerate(kind) if kk == k])
            for k in LABEL}
+    # Eight near-identical thin lines behind a two-column 8.4pt legend meant
+    # only one was ever identifiable. Which two (or more) actually carry the
+    # story is a question about this scenario's numbers, not a guess: pick by
+    # final value rather than assuming which layer matters, because for a
+    # large oil supply loss it is Fuel supply that dominates the panel, not
+    # the plant layer a first guess might reach for.
+    series_by_k = {}
     for k, ii in idx.items():
         if len(ii) == 0:
             continue
         series = [float(np.abs(h[ii]).mean()) for h in hist]
         if max(series) < 1e-4:
             continue
-        axd.plot(range(len(series)), series, color=KCOL[k], linewidth=1.7,
-                 label=LABEL[k])
+        series_by_k[k] = series
+
+    ranked = sorted(series_by_k.items(), key=lambda kv: kv[1][-1],
+                     reverse=True)
+    HILITE = [ranked[0][0]] if ranked else []
+    if len(ranked) > 1:
+        HILITE.append(ranked[1][0])
+    # A third line only earns a name if it is clearly its own thing rather
+    # than the top of the muted bunch: it has to still be a sizeable fraction
+    # of the #2 line, and at least twice whatever comes after it. Here that
+    # excludes market/consumer/district/station/psych, which finish within a
+    # tight band of each other and would read as one line no matter which of
+    # them got picked.
+    if len(ranked) > 3:
+        third, fourth = ranked[2][1][-1], ranked[3][1][-1]
+        second = ranked[1][1][-1]
+        if second > 0 and third / second > 0.3 and \
+                (fourth <= 0 or third / fourth > 2.0):
+            HILITE.append(ranked[2][0])
+
+    last_x = len(hist) - 1
+    end_pts, all_vals = {}, []
+    for k, series in series_by_k.items():
+        all_vals += series
+        if k in HILITE:
+            axd.plot(range(len(series)), series, color=KCOL[k],
+                     linewidth=2.1, zorder=3)
+            end_pts[k] = series[-1]
+        else:
+            axd.plot(range(len(series)), series, color=DIM, alpha=0.4,
+                     linewidth=1.0, zorder=1)
+
+    # Direct-label the highlighted lines at their right-hand end instead of a
+    # legend. Where two finish close enough together to collide, nudge them
+    # apart rather than let the names overlap.
+    span = (max(all_vals) - min(all_vals)) if all_vals else 1.0
+    ends = sorted(end_pts.items(), key=lambda kv: kv[1])
+    for i in range(len(ends) - 1):
+        if ends[i + 1][1] - ends[i][1] < 0.05 * span:
+            mid = (ends[i][1] + ends[i + 1][1]) / 2
+            ends[i] = (ends[i][0], mid - 0.035 * span)
+            ends[i + 1] = (ends[i + 1][0], mid + 0.035 * span)
+    axd.set_xlim(0, last_x * 1.30)
+    for k, y in ends:
+        axd.text(last_x * 1.04, y, LABEL[k], color=KCOL[k], fontsize=9.5,
+                 va="center", ha="left", fontweight="bold")
+
     axd.set_xlabel("step", color=DIM, fontsize=9.5)
     axd.set_ylabel("mean absolute effect in the layer", color=DIM,
                    fontsize=9.5)
     axd.set_title("D.  A large oil supply loss, step by step", color=INK,
                   fontsize=13, loc="left", pad=8)
-    axd.legend(frameon=False, fontsize=8.4, labelcolor=DIM, ncol=2)
     for sp_ in axd.spines.values():
         sp_.set_color(RULE)
     axd.tick_params(colors=DIM, labelsize=8.6)
@@ -375,11 +507,30 @@ def main():
             rows.append(acc / used)
             names.append(SHORTCAT.get(c["label"], c["label"]))
     M = np.array(rows)
-    im = axe.imshow(M, aspect="auto", cmap="magma",
+    # magma/inferno was the only off-palette figure on the site. This ramp is
+    # built from the site's own palette instead: the dark page ground through
+    # the two violet-blue accents used everywhere else. A plain sequential
+    # ramp still leaves "very small" and "exactly zero" looking the same, so
+    # true-zero cells get their own marker below rather than relying on the
+    # reader to tell two shades of near-black apart.
+    seq_cmap = matplotlib.colors.LinearSegmentedColormap.from_list(
+        "site_seq", [BG, "#6f7fd8", "#8b7ff2"])
+    im = axe.imshow(M, aspect="auto", cmap=seq_cmap,
                     norm=matplotlib.colors.PowerNorm(0.45))
+    # A 5x9 block of these at the old size read louder than the data beside
+    # it - a solid field of marks draws the eye before the color does, which
+    # is backwards for a mark that means "nothing happened here". Smaller,
+    # thinner and part-transparent so it still reads as absence up close.
+    zero_r, zero_c = np.where(M <= 1e-9)
+    if len(zero_r):
+        axe.scatter(zero_c, zero_r, marker="x", s=8, color=DIM, alpha=0.5,
+                    linewidths=0.7, zorder=3)
     axe.set_xticks(range(len(order)))
+    # Kept close to the old 7.2pt rather than jumping to the scale used
+    # elsewhere: 12 rotated labels share one narrow column, and the floor only
+    # needs 7.64pt here (this panel's labels are not read as headings).
     axe.set_xticklabels([SHORT[k] for k in order], rotation=68, ha="right",
-                        color=DIM, fontsize=7.2,
+                        color=DIM, fontsize=7.8,
                         rotation_mode="anchor")
     axe.set_yticks(range(len(names)))
     axe.set_yticklabels(names, color=DIM, fontsize=8.6)
@@ -393,6 +544,13 @@ def main():
     for sp_ in axe.spines.values():
         sp_.set_color(RULE)
     axe.tick_params(colors=DIM)
+    # A short caption under the panel instead of folding this into the
+    # colorbar's own label, which was already rotated and cramped enough
+    # without an eight-word aside stapled onto the end of it.
+    axe.annotate("×  =  exact zero, not missing data", xy=(0, 0),
+                 xycoords="axes fraction", xytext=(0, -0.40),
+                 textcoords="axes fraction", color=DIM, fontsize=8.2,
+                 ha="left", va="top", annotation_clip=False)
 
     # ---- F: the chain in words ------------------------------------------
     axf = fig.add_subplot(gsb[1, 1])
@@ -422,21 +580,45 @@ def main():
                      "less."),
         ("psych", "Behaviour decides how much less."),
     ]
-    y = 96
-    for k, txt in steps:
+    # A fixed 8.7-unit step per caption fit the old 17.5in-tall canvas at
+    # 9pt. On the smaller canvas the same step ran captions into each other
+    # the moment one needed a second line, and matplotlib's own wrap=True
+    # wraps to the axes box, not to a spacing this loop knows about, so it
+    # cannot see that coming. Wrapping the text here, and spacing by how many
+    # lines it actually produced, keeps every caption clear of its neighbours
+    # regardless of length. The floor only asks for 7.64pt at this figure
+    # width; 7.8pt is used because eleven captions do not fit at the site's
+    # normal body size in this panel's height.
+    # LINE_H/GAP are in this panel's data units (ylim is 0-100), not points,
+    # so they only hold their physical size if this panel's own pixel height
+    # is held constant. Widening the gap above panels C/D shrank gsb's own
+    # share of the (taller) figure a little more than the figure grew, which
+    # left F about 6% shorter in pixels than when 5.7/1.2 were tuned -
+    # enough for a caption's last line to touch the one below it. Scaled up
+    # by that same ~6% (1.453 old pt/data-unit over 1.371 new) instead of
+    # re-tuned from scratch, so the physical spacing on the page is
+    # unchanged from what already read clean.
+    FBODY, LINE_H, GAP = 7.8, 6.05, 1.3
+    wrapped = [textwrap.wrap(txt, width=60) or [txt] for _, txt in steps]
+    y = 97
+    for (k, _), lines in zip(steps, wrapped):
+        h = len(lines) * LINE_H
         axf.add_patch(FancyBboxPatch(
-            (0, y - 3.3), 3.0, 4.6,
+            (0, y - 2.2), 3.0, 3.4,
             boxstyle="round,pad=0.1,rounding_size=0.3",
             linewidth=0, facecolor=KCOL[k], zorder=2))
-        axf.text(5.0, y - 1.0, txt, color=DIM, fontsize=9.0, va="center",
-                 wrap=True)
-        y -= 8.7
+        axf.text(5.0, y, "\n".join(lines), color=DIM, fontsize=FBODY,
+                 va="top", linespacing=1.2)
+        y -= h + GAP
 
     for ax_ in fig.axes:
         ax_.set_facecolor(BG)
 
     problems = audit(fig)
-    fig.savefig(OUT, dpi=135, facecolor=BG)
+    # dpi is raised only to keep the bitmap's pixel count close to what it was
+    # at the old, wider figsize - it has no effect on the on-screen CSS size
+    # the floor check above is about, and was never touched to fix legibility.
+    fig.savefig(OUT, dpi=170, facecolor=BG)
     plt.close(fig)
     print(f"  wrote {os.path.basename(OUT)}")
     if problems:

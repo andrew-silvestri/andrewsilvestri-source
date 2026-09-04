@@ -17,7 +17,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 
 from build_throughlines import (BG, DIM, INK, KCOL, LABEL, RULE, SHORT,
-                                audit, engine)
+                                audit, engine, style)
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 DATA = os.path.join(HERE, "site", "assets", "atlas-data.js")
@@ -28,6 +28,7 @@ ORDER = ["sun", "insolation", "weather", "climate", "event", "market",
 
 
 def main():
+    style()
     raw = open(DATA, encoding="utf-8").read()
     D = json.loads(raw[raw.index("=") + 1:raw.rindex(";")])
     kind = [D["kinds"][k] for k in D["kind"]]
@@ -35,13 +36,26 @@ def main():
     ids = {k: int(v) for k, v in D["idMap"].items()}
     run, _ = engine(D)
 
-    fig = plt.figure(figsize=(14.4, 8.6), facecolor=BG)
+    # 14.4in put the on-screen factor (pt * 1140 / (72 * width)) at ~1.10 -
+    # the 8.0pt donut legend landed at 8.8px, under the 11px floor. 10.2x6.1
+    # keeps the aspect ratio and raises the factor to ~1.55, clearing every
+    # label already on this sheet without touching a single fontsize=.
+    # Height went from 6.1 to 6.6 on top of that: narrowing the figure while
+    # leaving the header text at the same fontsize meant the title+subtitle
+    # block took a bigger bite out of a shorter canvas, and gs's old
+    # top=0.845 didn't move to compensate - the subtitle and the right
+    # panel's title ("Where the numbers come from") ended up in the same
+    # horizontal band, and the left panel's title sat almost flush under
+    # the subtitle. The extra 0.5in, spent below via gs's top=, buys a
+    # header strip tall enough for both lines of text plus a clear gap
+    # before any panel title starts.
+    fig = plt.figure(figsize=(10.2, 6.6), facecolor=BG)
     gs = fig.add_gridspec(2, 2, hspace=0.72, wspace=0.28,
-                          left=0.115, right=0.955, top=0.845, bottom=0.085)
+                          left=0.115, right=0.955, top=0.79, bottom=0.079)
 
-    fig.text(0.055, 0.955, "The world energy model", color=INK, fontsize=20,
+    fig.text(0.055, 0.965, "The world energy model", color=INK, fontsize=20,
              fontweight="600", va="top")
-    fig.text(0.055, 0.905,
+    fig.text(0.055, 0.900,
              f"{D['n']:,} nodes and {len(D['es']):,} weighted links. "
              f"Every parameter comes from a public data set.",
              color=DIM, fontsize=11.5, va="top")
@@ -163,7 +177,10 @@ def main():
     ax2.set_facecolor(BG)
 
     problems = audit(fig)
-    fig.savefig(OUT, dpi=140, facecolor=BG)
+    # dpi raised to keep the bitmap's pixel count close to what it was at the
+    # old, wider figsize - it has no effect on the on-screen CSS size the
+    # floor check above is about, and was never touched to fix legibility.
+    fig.savefig(OUT, dpi=198, facecolor=BG)
     plt.close(fig)
     print(f"  wrote {os.path.basename(OUT)}")
     print("  0 layout problems" if not problems

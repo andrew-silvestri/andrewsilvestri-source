@@ -20,6 +20,12 @@
   --acc:     #8b7ff2;   /* violet — links, emphasis */
   --acc-dim: #5a4fb0;
   --acc-ink: #f2f0ff;   /* text on a violet ground */
+  /* A violet ground that carries --acc-ink text. --acc itself is 2.91:1
+     under #f2f0ff, which fails AA; this darker fill is 5.88:1 and its
+     hover 6.96:1. Every filled surface with text on it (nav pill, .btn)
+     uses these, never --acc. Corrected 2026-09-04. */
+  --acc-fill: #5a4fb0;
+  --acc-fill-hover: #4c3fb5;
   --moss:    #4f9d84;   /* dark green, second data accent */
   --cool:    #5aa8d8;   /* blue, for data */
   --shadow:  0 18px 50px rgba(2, 4, 12, .62);
@@ -51,6 +57,8 @@
     --acc:     #4c3fb5;
     --acc-dim: #7a6fd8;
     --acc-ink: #ffffff;
+    --acc-fill: #4c3fb5;      /* 7.82:1 under white */
+    --acc-fill-hover: #3d329a; /* 9.90:1 */
     --cool:    #2a6a96;
     --moss:    #2f6f5c;
     --shadow:  0 14px 34px rgba(30, 34, 60, .12);
@@ -94,6 +102,27 @@ body::before {
   background-repeat: no-repeat, no-repeat, repeat;
 }
 @media (prefers-color-scheme: light) { body::before { opacity: .5; } }
+/* code.html is a plain index of downloads and asked for nothing behind it:
+   no margin scene (it loads no scene script) and no background layer at all,
+   not even the soft radial wash the rest of the site carries. content:none
+   removes the pseudo-element outright rather than blanking its paint, so
+   there is nothing composited over the page at all. */
+body.bg-bare::before { content: none; }
+
+/* Pages that draw a scene of their own - longevity's biome descent, the
+   bookshelf's spines, the skyline's towers - had the sitewide node/edge tile
+   sitting behind that scene as a second, unrelated background competing with
+   it. This keeps the two soft radial washes, which are what stop the black
+   being a void, and drops only the graph tile. What a reader sees behind the
+   text on those pages is the page's own scene. */
+body.bg-own-scene::before {
+  background:
+    radial-gradient(1100px 640px at 50% -8%,
+                    rgba(110, 128, 240, .075), transparent 70%),
+    radial-gradient(900px 520px at 86% 6%,
+                    rgba(79, 157, 132, .05), transparent 68%);
+  background-repeat: no-repeat, no-repeat;
+}
 /* @generated:bg-curve-heat */
 body.bg-curve-heat::before {
   background: radial-gradient(1100px 640px at 50% -8%,rgba(110, 128, 240, .075), transparent 70%),radial-gradient(900px 520px at 86% 6%,rgba(79, 157, 132, .05), transparent 68%),
@@ -160,14 +189,14 @@ nav.top a:hover { color: var(--ink); }
 nav.top a.on,
 nav.top a[aria-current="page"] {
   color: var(--acc-ink);
-  background: var(--acc);
+  background: var(--acc-fill);
   font-weight: 600;
   border-radius: 3px;
   text-decoration: none;
 }
 /* the dropdowns are their own inline-block, so they need the same rhythm */
 nav.top .dd { margin: 0; }
-.ddmenu a.on { color: var(--acc-ink); background: var(--acc); }
+.ddmenu a.on { color: var(--acc-ink); background: var(--acc-fill); }
 
 
 /* dropdown */
@@ -318,11 +347,66 @@ th.n, td.n { text-align: right; font-variant-numeric: tabular-nums; }
 img.fig, video.fig {
   width: 100%;
   max-width: 100%;
+  height: auto;          /* see the note on .cardgrid .card img */
   border: 1px solid var(--rule);
   border-radius: 2px;
   margin: 18px 0 8px;
   background: var(--card);
   display: block;
+}
+/* img.fig is also the lightbox trigger (assets/lightbox.js) - video.fig is
+   not, so only the image gets the affordance and the focus ring. */
+img.fig { cursor: zoom-in; }
+img.fig:focus-visible { outline: 2px solid var(--acc); outline-offset: 2px; }
+
+/* ----------------------------------------------------------- lightbox --- */
+/* One overlay, built once by lightbox.js and reused for every img.fig on the
+   page. Sits above everything, including nav's z-index:50. */
+.lightbox {
+  position: fixed;
+  inset: 0;
+  z-index: 500;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: clamp(20px, 5vw, 60px);
+  background: rgba(4, 6, 14, .88);
+  opacity: 0;
+  transition: opacity .18s ease;
+}
+.lightbox[hidden] { display: none; }
+.lightbox.on { opacity: 1; }
+.lightbox-img {
+  /* No width/height set at all: an image smaller than the viewport shows at
+     its own natural size, which is the point, and one larger is capped
+     rather than cropped. */
+  max-width: 100%;
+  max-height: 100%;
+  border: 1px solid var(--rule);
+  border-radius: 2px;
+  box-shadow: var(--shadow);
+  background: var(--card);
+}
+.lightbox-close {
+  position: absolute;
+  top: 18px;
+  right: 22px;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  border: 1px solid var(--rule);
+  background: var(--card);
+  color: var(--ink);
+  font: 22px/1 var(--sans);
+  cursor: pointer;
+  transition: border-color .18s, color .18s;
+}
+.lightbox-close:hover, .lightbox-close:focus-visible {
+  border-color: var(--acc-dim);
+  color: var(--acc);
+}
+@media (max-width: 620px) {
+  .lightbox-close { top: 10px; right: 10px; width: 36px; height: 36px; }
 }
 
 /* --------------------------------------------------------------- grid --- */
@@ -349,7 +433,7 @@ img.fig, video.fig {
 }
 .card:hover { border-color: var(--acc-dim); }
 .card .tag {
-  font: 10.5px var(--sans);
+  font: 12px var(--sans);
   color: var(--acc);
   text-transform: uppercase;
   letter-spacing: .16em;
@@ -358,21 +442,41 @@ img.fig, video.fig {
 .card h3 { margin-top: 4px; }
 .card h3 a { border: 0; color: var(--ink); }
 .card h3 a:hover { color: var(--acc); }
+/* A thumbnail for a card that has an obvious hero figure - home page tool
+   cards only, not every card on the site. Sized to the card rather than
+   promoted to the wide track: two-up at 330px+ (.cardgrid above), full width
+   of one column at the 760px breakpoint below. */
+.cardgrid .card img {
+  width: 100%;
+  max-width: 100%;
+  /* The markup carries real width/height so the browser can reserve the box
+     and the page does not shift as figures arrive. Those attributes are a
+     presentational hint as well as an aspect ratio, so without this the
+     height one wins and every figure is squashed to its full pixel height
+     inside a card a third as wide. auto keeps the reservation and restores
+     the aspect. */
+  height: auto;
+  border: 1px solid var(--rule);
+  border-radius: 2px;
+  margin: 12px 0 4px;
+  background: var(--card);
+  display: block;
+}
 
 /* --------------------------------------------------------------- btns --- */
 .btn {
   display: inline-block;
-  background: var(--acc);
+  background: var(--acc-fill);
   color: var(--acc-ink);
   padding: 10px 20px;
   border-radius: 2px;
   font: 600 14px var(--sans);
   letter-spacing: .01em;
   margin: 12px 10px 0 0;
-  border: 1px solid var(--acc);
+  border: 1px solid var(--acc-fill);
   transition: filter .18s;
 }
-.btn:hover { background: var(--acc-dim); border-color: var(--acc-dim);
+.btn:hover { background: var(--acc-fill-hover); border-color: var(--acc-fill-hover);
              color: var(--acc-ink); }
 .btn.ghost {
   background: transparent;
@@ -457,6 +561,28 @@ footer {
 }
 
 .grid { display: grid; grid-template-columns: 1fr; gap: 26px; }
+/* library.html's cards sit inside .grid.wide so their figures can reach the
+   full wide track (main > .wide promotes the grid itself, not the images
+   nested two levels inside it). A heading keeps a short measure. A caption
+   cannot: capping it at 72ch left every caption in the left half of a 1082px
+   card with the right half empty, which reads as a layout fault rather than
+   as margin. Setting it in two columns uses the width the figure already
+   claims and keeps each line about 55 characters, which is a better measure
+   than the 72 it had. These captions run 186 to 636 characters, so every one
+   of them has the body to fill two columns. */
+.grid.wide .card > h3, .grid.wide .card > .tag {
+  max-width: 72ch;
+}
+.grid.wide .card > p {
+  columns: 2;
+  column-gap: 44px;
+  orphans: 2;
+  widows: 2;
+}
+@media (max-width: 760px) {
+  /* the grid is one column here and the card is back to prose width */
+  .grid.wide .card > p { columns: 1; }
+}
 
 /* --------------------------------------------------------------- mosaic --- */
 /* A strip of already-generated figures at thumbnail scale - real data used
@@ -603,7 +729,10 @@ footer {
   nav.top { gap: 0; padding: 16px 20px 6px;
             flex-direction: column; align-items: stretch; }
   nav.top > a, nav.top > .dd { width: 100%; }
-  nav.top a { padding: 9px 4px; font-size: 15px; display: block; }
+  /* 14.5px top and bottom plus the 15px line box (nav.top's own font shorthand
+     sets line-height:1, so the box is exactly font-size tall) clears the
+     44px touch-target floor instead of the 33px box the old 9px padding left. */
+  nav.top a { padding: 14.5px 4px; font-size: 15px; display: block; }
   /* The current-page highlight hugs its own text rather than running the
      width of the bar, which in a column layout stretch would otherwise do. */
   nav.top a.on { align-self: flex-start; width: auto; }

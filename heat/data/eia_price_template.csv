@@ -1,0 +1,5 @@
+month,tx_industrial_electricity_cents_per_kwh,tx_industrial_gas_usd_per_mcf,henry_hub_usd_per_mmbtu
+# Fill from: EIA EPM Table 5.6.A (electricity), EIA N3035TX3M (gas), EIA RNGWHHDM (Henry Hub)
+# Gas $/Mcf -> $/MMBtu: divide by ~1.037 (TX heat content). Keep dollar-year consistent (CPI).
+# Example row (format only, not real data):
+2025-01,6.5,3.6,3.2
