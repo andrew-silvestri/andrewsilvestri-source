@@ -9,3 +9,6 @@ _audit-skyline/
 _audit-longevity/
 _audit-climate-cost/
 _audit-bookshelf/
+skyline/skyline-app.html
+skyline/package.json
+skyline/package-lock.json

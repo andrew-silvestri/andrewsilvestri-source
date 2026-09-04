@@ -113,6 +113,8 @@ which takes between twenty and fifty steps.</p>
 
 <h2>The nine layers</h2>
 
+{layerfig}
+
 {table}
 
 <p>Seven of the nine layers are drawn on a sphere. Mercator inflates Greenland
@@ -279,8 +281,26 @@ a threshold that hides everything below a chosen weight. Weight is generating
 capacity for a power plant and resilience for everything else, which is the
 quantity the propagation already uses. Hidden nodes still take part in a run.
 The threshold changes the view, not the answer.</p>
+"""
 
-<h2>Limits</h2>
+# The layer diagram and its caption, as shipped since a402b9f (2026-09-04).
+# The generator takes the stamped tag from the page it is rewriting when one
+# is there, so bust_cache.py's stamp survives a regeneration; this is the
+# fallback for a page that has lost it.
+LAYER_FIG = (
+    '<img src="assets/atlas_layers.png" class="fig wide" loading="lazy" '
+    'width="2280" height="1379" alt="The nine layers of the atlas drawn as '
+    'boxes with their live node counts. Sun, insolation, weather, climate and '
+    'recorded events push forward only; markets, grids, plants, districts, '
+    'consumers and behaviour trade back and forth.">\n'
+    '<p class="small">Every count is read live from the published model. A single arrowhead\n'
+    'pushes one way; a double head trades an influence back and forth.</p>')
+
+# Written for the page but never shipped: no committed atlas.html has carried
+# it (git log -S "Kirchhoff" is empty). Found 2026-09-04 when the generator
+# was first diffed against the tree. Kept here, out of BODY, until someone
+# decides to ship it; the tree is the fact and this is a draft.
+LIMITS_UNSHIPPED = """<h2>Limits</h2>
 
 <p>Coverage follows the source databases rather than reality. Wikidata and the
 World Resources Institute are better on countries that publish in English, so
@@ -300,18 +320,28 @@ def main(apply=False):
     p = os.path.join(SITE, "atlas.html")
     t = open(p, encoding="utf-8").read()
 
-    head = t[:t.index("<main>") + len("<main>")]
+    # "<main" with whatever class it carries: the deslop pass (2026-09-04)
+    # gave every page's <main> a class, and t.index("<main>") then raised on
+    # every run - the generator was broken for as long as nobody ran it.
+    m = re.search(r"<main[^>]*>", t)
+    if not m:
+        raise SystemExit("atlas.html has no <main>")
+    head = t[:m.end()]
     tail = t[t.index("<footer"):]
     card = re.search(r'<div class="card">.*?</div>\s*\n', t, re.S)
     card = card.group(0) if card else ""
+    fig = re.search(r'<img src="assets/atlas_layers\.png[^>]*>\n<p class="small">.*?</p>', t, re.S)
+    layerfig = fig.group(0) if fig else LAYER_FIG
 
     body = BODY.format(
         nscen=f(s["nscen"]), scentable=SCEN_TABLE,
         n=f(s["n"]), edges=f(s["edges"]), card=card, table=atlas_page(s),
+        layerfig=layerfig,
         psych=f(s["psych"]), anatomy=f(s["anatomy"]),
         isolated=f(s["isolated"]),
         isopct=f"{100 * s['isolated'] / s['n']:.2f}")
-    new = head + "\n\n" + body + "\n" + tail
+    # an empty slot (no card on the page) must not leave a run of blank lines
+    new = re.sub(r"\n{3,}", "\n\n", head + "\n\n" + body + "\n" + tail)
 
     changes = [f"atlas.html rewritten from the model ({f(s['n'])} nodes)"]
 

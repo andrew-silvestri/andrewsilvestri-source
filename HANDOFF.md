@@ -38,13 +38,19 @@ source material unless told otherwise.
     bookshelf-app.html climate-cost-app.html    full-screen interactive apps,
                                                 opened in a new tab
     style.css               the ONLY stylesheet for all non-app pages
-    assets/                 figures (.png/.webp), video explainers (.mp4) and
-                            their posters, 13 JS files, the payloads, fonts/
-    downloads/              per-project source .zip archives
+    assets/                 figures (.png/.webp) and their -thumb.png, 7 JS files
+                            (atlas-app, atlas-data, hero, hero-data, hero-gl,
+                            lightbox, motion), fonts/ (IBM Plex, OFL). No video
+                            since 2026-09-04.
+    downloads/              per-project source .zip archives (gitignored; four
+                            of the twelve are rebuilt by rezip_downloads.py)
     CNAME .nojekyll         GitHub Pages config — do not delete either
-  tests/                    node test harnesses (see §7)
+  tests/                    the test suites (see §7) and their Playwright
   climate-cost/             sub-project: LCA engine, data, tests, template
   longevity-quotient/       sub-project: model, data, tests, template
+  heat/ storage/            the two calculator models (see the table below)
+  skyline/ bookshelf/       the skyline generator; the bookshelf download's README
+  fonts/                    Plex OTFs for the figure builders (sitefig.py)
   unpublished/              retired pages kept but not linked: dac, holdup, beans,
                             running-shoes and its three.js app (opening state from
                             ?shoe=1&part=2&explode=1&az=&el=), energy-web, hobbies,
@@ -53,18 +59,25 @@ source material unless told otherwise.
   *.py                      the build and verification scripts (see §5)
 ```
 
-### Archives outside `00 PUBLISH`
+### Project sources and archives
+
+Corrected 2026-09-04. Every row of this table used to name a folder at the
+workspace root; the numbered ones moved into `01 ARCHIVE/` in July or are no
+longer in the workspace at all, and three projects now live inside
+`00 PUBLISH/`. Paths are relative to the workspace root, `50 - ENERGY MODEL/`.
+`01 ARCHIVE/INDEX.md` still lists folders `00`–`15` as present; only `10`,
+`11`, `13`–`18`, `20`, `21` are.
 
 | Folder | What it is |
 |---|---|
 | `19 Atlas v6/raw/` | **The raw data the atlas is built from.** WRI power plants, GeoNames cities15000 + admin1 + countryInfo, USGS quakes, World Port Index, Allen brain atlas. |
-| `01`–`03`, `12` | The chemical/energy calculator projects behind heat, dac, storage, holdup pages. |
-| `10`, `11`, `13`, `14` | World Energy Web v3/v4/v5 — **retired** model generations. Source of some legacy code the atlas still inherits. |
-| `18 Final Deliverables/` | A snapshot of the **retired 7,192-node model**. Do not copy figures out of here; see the trap in §8. |
-| `24 Skyline Sonifier/` | The skyline project. Builds `site/skyline-app.html`. Austin, Nashville and Fort Worth are carried in `supplement.py` from each city's published tallest-buildings list; above each list's stated floor the list overrules Wikidata. The instrument has one rendering, the musical one; the old realistic mode and its control are gone, so `S.mode` no longer exists. |
-| `25 Desktop Gallery/` | The bookshelf app behind `site/desktop.html` (`site/bookshelf-app.html`, fully client-side; demo screenshots in `site/assets/`), plus a config-driven museum-wallpaper generator that is **deliberately unpublished** — see its `PUBLISHING-NOTE.md` for the image permissions required before any of it goes on the site. |
-| `PyProjects/` | Personal desktop apps (Philbrook museum wall, Desktop Gazette), not published. Install contract: one folder, optional Startup shortcut, tray-icon quit, nothing in the registry. |
-| `16 Presentation Architecture/` | 13 GB. Do not walk it casually. |
+| `00 PUBLISH/heat/`, `00 PUBLISH/storage/` | The heat and storage calculator models: `model.py`, `figstyle.py`, Julia and Octave ports, the formula workbook, README. Unpacked from their own download zips on 2026-08-30; the zips are rebuilt from them by `rezip_downloads.py`. The `01`–`03` model folders this table used to point at are not in the workspace. The DAC and holdup models (`02`, `12`) have no folder here; their pages sit in `unpublished/`. |
+| `01 ARCHIVE/10 World Energy Web/`, `11 …`, `13 World Energy Web v4/`, `14 World Energy Web v5/` | World Energy Web v3/v4/v5 — **retired** model generations. Source of some legacy code the atlas still inherits. |
+| `01 ARCHIVE/18 Final Deliverables/` | A snapshot of the **retired 7,192-node model**. Do not copy figures out of here; see the trap in §8. |
+| `00 PUBLISH/skyline/` | The skyline project, unpacked from `skyline-code.zip` on 2026-09-04 (the zip had been the only copy). `build_app.py` builds `skyline/skyline-app.html`; the shipped copy is `site/skyline-app.html` and the two must be identical (`tests/test_generators.py` checks). Austin, Nashville and Fort Worth are carried in `supplement.py` from each city's published tallest-buildings list; above each list's stated floor the list overrules Wikidata. The instrument has one rendering, the musical one; the old realistic mode and its control are gone, so `S.mode` no longer exists. `24 Skyline Sonifier/` is not in the workspace. |
+| `00 PUBLISH/bookshelf/` | The README and the wallpaper setter for the bookshelf download; the app itself is `site/bookshelf-app.html` (fully client-side; demo screenshots in `site/assets/`). `25 Desktop Gallery/`, which also held a config-driven museum-wallpaper generator and its `PUBLISHING-NOTE.md` on image permissions, is not in the workspace; nothing from that generator is on the site. |
+| `dumpNew/PyProjects/` | Personal desktop apps (Philbrook museum wall, Desktop Gazette), not published. Install contract: one folder, optional Startup shortcut, tray-icon quit, nothing in the registry. |
+| `01 ARCHIVE/16 Presentation Architecture/` | 13 GB. Do not walk it casually. |
 
 ---
 
@@ -188,8 +201,11 @@ report first.**
 | `build_climate_figures.py` | The two climate-research diagrams (`nitrogen_fixation.png`, `running_shoe.png`). Boxes are drawn as text bboxes and arrows run underneath them, deliberately: a box sized by a guessed line height is a bug the layout audit cannot see. The shoe outline functions here are duplicated in `site/running-shoes-app.html`; if one changes, change both, because the flat figure and the 3D model are meant to be the same shoe. |
 | `add_citations.py` | Attaches superscript citations anchored to phrases, not positions. |
 | `sync_assets.py` | Copies figures from project folders into `site/assets/`. |
-| `bust_cache.py` | **Run before every publish.** Stamps `style.css`, the JS and every image with a content hash. |
-| `build_site.py` | The original generator. Mostly historical now. |
+| `bust_cache.py` | **Run before every publish.** Stamps `style.css`, the JS and every image with a content hash. Does not stamp what CSS `url()` references (the fonts). |
+| `sync_img_dims.py` | Keeps every `<img width height>` equal to the file's pixels. |
+| `rezip_downloads.py` | Rebuilds the heat, storage, bookshelf and skyline `-code.zip` from their source folders. One run at a time (lock file in `site/downloads/`); each archive is written beside itself and moved into place; `--verify` compares a fresh build against what is shipped without writing. Never ships `__pycache__/`, `outputs/`, node state or a built page — storage-code.zip did, on 2026-09-04. |
+| `tests/test_generators.py` | Runs every text generator into a copy of the tree and diffs the result against `site/`. **Run it before trusting any generator**, and run a generator for real only after the check says it agrees. |
+| `build_site.py` | **Retired. Never run it.** The original generator, last valid 2026-08-01: it writes pages that are no longer on the site (dac, holdup, energy-web), a nav from before the regrouping, and its own icons. `tests/test_generators.py --retired` shows what it would do to the tree. |
 | `publish.sh` | Mirrors `site/` into the Pages repo and commits. `--dry-run` first. |
 
 ### Typical loop after changing the model
@@ -282,10 +298,17 @@ grid's generation — the share is read from the node name.
 
 ```bash
 python3 tests/test_markup.py           # markdown that never became HTML
+python3 tests/test_units.py            # every climate-cost input against its declared unit
+python3 tests/test_generators.py       # every text generator run into a copy and diffed against site/
 node tests/test_atlas_interaction.js   # boots the real app against a three.js stub
+node tests/test_layout.js              # Playwright: marginalia, measure, hierarchy at 1440/1024/390
 node tests/probe_scene.js              # prints what is actually in the scene graph
 python3 build_atlas_figures.py         # must say "0 layout problem(s)"
 ```
+
+The first five are the suites; all of them must pass before a commit. The
+generator check needs nothing installed; the two node suites use the
+Playwright in `tests/package.json`.
 
 `tests/three-stub.js` is a hand-written partial three.js so the app can be
 booted headlessly. `window.__atlasUI` and `window.__atlasScene` are test hooks
@@ -383,6 +406,38 @@ Read this section. Every item is a real bug that shipped.
     than flattering claims: **claims nobody has a motive to check go
     unaudited.** `tests/test_units.py` now checks every input against its
     declared unit whether or not anyone is curious about it.
+13. **A generator is a claim about a shipped file, and it goes stale
+    silently.** Nothing fails when the tree moves on without the script; the
+    failure comes later, when someone trusts the script and it reverts the
+    change. Found on 2026-09-04 by running every generator into a copy of
+    the tree and diffing (`tests/test_generators.py`): `update_atlas_pages.py`
+    raised on its first line of work, because the deslop pass had given
+    `<main>` a class and it searched for the bare tag; its body also carried
+    a "Limits" section that has never been on the shipped page and lacked the
+    layer figure that has; `heat-code.zip` had been restored from a copy two
+    edits behind `heat/`; `storage-code.zip` shipped `__pycache__/` and
+    `outputs/` because the rezip walked a folder a builder had just run in;
+    the stamps on `longevity.html` were behind three figures. Earlier the
+    same day, `longevity-app.html` and `climate-cost-app.html` had been
+    edited in place while their `template.html` stood still, and
+    `skyline-code.zip` carried a template three lines behind `site/`; the
+    sessions that owned them caught the templates up, and the check now
+    confirms all three agree. The rule: run the check before the generator,
+    and run the generator for real only when the check says it agrees.
+14. **A brief's factual premises are leads, not facts.** A brief is written
+    from memory of the tree, and the tree moves. Corrections made on
+    2026-09-04 alone: "the palette passes AA" (2.91:1 on every button); "the
+    1,144 negative links line is on atlas.html" (it is on model.html); "Option
+    B has no gradients" (fourteen remained); "commit `c2d02aa` swept up
+    `skyline/skyline-app.html` and `package*.json`" (they were tracked by
+    `34cfe58` and `577d582`; what `c2d02aa` actually contains, under a
+    climate-cost message, is the bookshelf write-up and four longevity
+    lines); "add the flattering-claim trap" (item 12 was already here); and
+    this file's own §2, which pointed at folders that are not merely moved
+    but absent from the workspace. Each check cost seconds: a directory
+    listing, `git show --stat`, a grep. Check the premise before acting on
+    it, and when it is wrong, say so and quote it rather than quietly
+    building on the corrected version.
 
 ---
 
