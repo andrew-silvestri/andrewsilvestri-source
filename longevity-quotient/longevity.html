@@ -429,7 +429,9 @@ function encodeHash(){
    browser history — only the page's own back/forward would spam otherwise. */
 function syncHash(){
   const h=encodeHash();
-  history.replaceState(null,'',location.pathname+location.search+(h?'#'+h:''));
+  /* try: jsdom (test_perf.js) runs this page at about:blank, where
+     replaceState throws; a browser never does. */
+  try{ history.replaceState(null,'',location.pathname+location.search+(h?'#'+h:'')); }catch(e){}
 }
 /* `fVal` is free text, validated later by fillVals(), which already falls
    back to the first option when the wanted value is not present for the
