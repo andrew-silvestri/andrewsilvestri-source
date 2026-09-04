@@ -60,9 +60,13 @@ against "is this number in the unit the field is read as":
 - **`tyres_maint` and `road_infra`** on the bus (0.02 and 0.008 per
   "1,000 km") are per-passenger shares of bus-km, not slips.
 
-Two things that are not unit slips but were found by the same reading, and are
-**reported, not changed**, because each moves a published number by a
-modelling decision rather than a units correction:
+Two things that are not unit slips but were found by the same reading. They
+were first reported, not changed, because each moves a published number by a
+modelling decision rather than a units correction; **both were then corrected
+on instruction the same day** (see the follow-up in
+`CLIMATE_COST_FIX_2026-09-04.md`: `gas_boiler` for the cheesemaking flame,
+cheese +0.32 kg; `rail_infra` at UIC 2016's 6.5 g/pkm, train 0.56 → 1.00 kg
+per 100 pkm — the road proxy had understated rail threefold):
 
 1. **Cheesemaking burns gas with no combustion term.** `cheesemaking` takes
    `natgas_extraction` 0.12 kg gas with `direct=0.0`. Everywhere else the model
@@ -86,3 +90,12 @@ modelling decision rather than a units correction:
 does not scale, or not equal to 100 / lifetime default; a `freight_kg` on a
 non-transport stage, or outside 0.05–20,000 kg (the car delivery bug would
 have been 1.4 and would have failed the floor).
+
+**And the sweep itself now lives in `tests/test_units.py`**, not in anyone's
+head: every stage input and every process input is checked against a
+plausibility band for the unit its receiving process declares (211 checks),
+with the bands three to four orders of magnitude wide so they catch a wrong
+unit and never argue with a modelling choice. Run against the 2 August data
+it fails on exactly the two car delivery stages; against the current data it
+passes. A unit with no band is itself a failure, so a new process cannot
+arrive unchecked.

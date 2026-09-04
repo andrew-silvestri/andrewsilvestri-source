@@ -31,9 +31,10 @@ shelf is drawn here, the PNG is written here.</p>
 <div class="tag">Interactive</div>
 <h3 style="margin-top:4px">Bookshelf, yours</h3>
 <p>Drop in a Goodreads export, give it your screen size, and download the
-wallpaper. By default the page works with the network cable out; switch on
-real covers and the shelf becomes a wall of your books&rsquo; actual
-covers.</p>
+wallpaper. The page works with the network cable out. Tick <em>Real
+covers</em> and it sends each book&rsquo;s ISBN to Open Library to fetch
+its cover &mdash; the one thing it ever sends anywhere, and only when you
+ask.</p>
 <a class="btn" href="bookshelf-app.html" target="_blank" rel="noopener">Open it</a>
 <a class="btn ghost" href="downloads/bookshelf-code.zip">Download it to keep</a>
 </div>
@@ -44,7 +45,10 @@ covers.</p>
 and its dress follows its era &mdash; Victorians in banded leather with gilt
 rules, mid-century in cloth and paper labels, recent books in flat graphic
 colour. A five-star rating earns a gilt point at the foot. Everything is
-deterministic per title, so the same book always gets the same spine.</p>
+deterministic per title, so the same book always gets the same spine. Two
+values are assumed rather than read, and the caption counts each: a book
+whose export row has no page count is drawn at the library&rsquo;s median
+width, and one with no year is dressed plain, with no era to dress for.</p>
 
 
 <img class="fig wide" src="assets/bookshelf-demo-shelf.webp?v=8296c00f" loading="lazy" width="2200" height="1280"
@@ -53,14 +57,20 @@ deterministic per title, so the same book always gets the same spine.</p>
 1920&thinsp;&times;&thinsp;1080, spines sized by page count and dressed by
 era. Fully offline.</p>
 
-<p>Cover mode turns the shelf into a wall of the covers themselves, fetched
-from the Open Library covers service by the ISBNs in the export &mdash; the
-page&rsquo;s single use of the network, off by default, and the request
-carries the ISBN and nothing else. Scans of covers arrive in every vintage
-of exposure and colour, so each one is brought to a single matte finish:
-exposure pulled toward a common middle, saturation eased, one warm wash, one
-pass of grain. A book with no cover on file is left off the wall rather than
-faked &mdash; the caption says how many.</p>
+<p>Cover mode turns the shelf into a wall of the covers themselves. It is the
+page&rsquo;s one use of the network, and it is worth being exact about: when
+you tick <em>Real covers</em>, the page sends one request per book to Open
+Library, an Internet Archive project, carrying that book&rsquo;s ISBN from
+your export and nothing else from it &mdash; no title, no rating, no shelf,
+no cookie, not even which site sent it. But an ISBN is a book, and several
+hundred of them sent together are a list of your books, so the box is off
+until you tick it, switches itself off again whenever you load a file, and
+the panel reports what came back: how many covers, how many books had no
+ISBN to look up, how many Open Library has no cover for, how many could not
+be fetched. Scans of covers arrive in every vintage of exposure and colour,
+so each one is brought to a single matte finish: exposure pulled toward a
+common middle, saturation eased, one warm wash, one pass of grain. A book
+without a cover is left off the wall rather than faked.</p>
 
 <img class="fig wide" src="assets/bookshelf-demo-covers.webp?v=4c8decae" loading="lazy" width="2200" height="1280"
      alt="The bookshelf app in cover mode: a wall of real book covers, uniformly finished, on four shelves">

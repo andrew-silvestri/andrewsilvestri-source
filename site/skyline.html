@@ -50,26 +50,41 @@ bars, read as a spectrum instead of a skyline.</p>
 composed, so it is drawn sharply here.</p>
 
 <p><strong>Measured.</strong> Each building carries a published structural
-height and a published coordinate. The listener stands at a stated point, and
-each tower's bearing and apparent height follow from those two numbers by
-trigonometry. Where a tower stands behind a taller one it contributes nothing,
-which is what an eye does.</p>
+height and a published coordinate: from Wikidata for twenty-four cities, each
+tower linked to its record from the app; from the city's published
+tallest-buildings list (Wikipedia, retrieved 2026) for Austin, Nashville and
+Fort Worth, where Wikidata had three, fourteen and a handful of buildings on
+record. The order of the towers around the wheel is their true compass order
+from the height-weighted centre of the city, and the heights on the wheel are
+metres.</p>
 
-<p><strong>Assumed.</strong> Footprint width is not recorded anywhere usable,
-so each tower is given a width of eighteen per cent of its height, between
-twenty-five and seventy metres. That is about right for a slender tower and
-about wrong for a broad one.</p>
+<p><strong>Chosen.</strong> The listener stands at that centre. A tower
+closer than four hundred metres is held at four hundred, so a building you
+are standing under does not dwarf the rest; the app writes "under 0.4 km"
+rather than a number for those. The wheel takes the city's tallest buildings
+down to fifty-five metres, at most a hundred and twenty of them; the headline
+count uses eighty. For the three supplemented cities the published list
+overrules Wikidata above the height the list says it is complete to. Every
+one of these floors is shown in the app's side panel.</p>
 
-<p><strong>Rearranged.</strong> The spacing around the wheel, and nothing
-else. Buildings hold their true compass order, clockwise from north; the angle
-between any two of them does not survive. A downtown occupies perhaps forty degrees of a real horizon, and a wheel that
-reproduced that would be two-thirds empty. A transit map takes the same liberty
-with distance, for the same reason.</p>
+<p><strong>Rearranged.</strong> The spacing around the wheel. Buildings hold
+their true compass order, clockwise from north; the angle between any two of
+them does not survive. A downtown occupies perhaps forty degrees of a real
+horizon, and a wheel that reproduced that would be two-thirds empty. A transit
+map takes the same liberty with distance, for the same reason. One
+consequence is worth stating plainly: there is no empty horizon on a wheel,
+so turning changes the chord and never silences it.</p>
 
-<p><strong>Invented.</strong> The sound. There is no sense in which a city has
-a pitch. The mapping is a choice, it is written out in full below, and it is
-deterministic: the same city at the same bearing always makes the same
-sound.</p>
+<p><strong>Invented.</strong> The sound, all of it. There is no sense in which
+a city has a pitch. The mapping is a choice, it is written out in full below,
+and it is deterministic: the same city at the same bearing always makes the
+same sound.</p>
+
+<p class="small">Until 4 September 2026 this section described a different
+rendering: a true panorama from a viewpoint outside the city, with occlusion
+and silence off-axis. That rendering was retired before the page went up, but
+its data was still shipped and its behaviour was still labelled "measured"
+here. The data is gone from the app and the label with it.</p>
 
 <h2>The key</h2>
 
@@ -92,28 +107,65 @@ sound.</p>
 <tr><td>Nashville</td><td>G major</td><td class="dim">the Nashville Number System, the chord notation this city invented and still runs sessions on; G is the key its session players default to</td></tr>
 </table>
 <p class="small">The thirteen with the most skyline, then Fort Worth and
-Nashville. Nineteen distinct keys across eight modes in all.</p>
+Nashville. Nineteen distinct keys across eight modes in all, and the eight
+modes are voiced eight different ways (below), so no two of the nineteen
+sound alike.</p>
 
 <h2>How the bars become sound</h2>
 
-<p>Ninety-six bars is the right number to look at and the wrong number to play.
-Four octaves of a five-note scale is twenty pitches, so five or six adjacent
-bars would land on the same note and become five oscillators detuned by nothing,
-beating against each other. The bars are mapped onto the distinct pitches of the
-scale instead, and a pitch takes the loudest bar that feeds it: twenty-odd real
-partials, ninety-six bars, no unison mud.</p>
+<p>Every row of this table is a choice. None of it was measured, and the app
+says so where the sound is made.</p>
 
 <table>
 <tr><th>Property of the bar</th><th>Property of the sound</th><th>Why</th></tr>
-<tr><td>Position across the view</td><td>Pitch, four octaves of the city's
-scale</td><td>A skyline is not a melody, and there is no reason to make an
-arbitrary arrangement of towers sound like a mistake.</td></tr>
-<tr><td>Apparent height</td><td>Loudness of that partial, as height to the
-power 1.6</td><td>The exponent makes the peaks stand out in the ear the way
-they already do in the picture.</td></tr>
-<tr><td>Empty horizon</td><td>Silence</td><td>Which is why turning away from the
-towers quiets the instrument rather than merely changing it.</td></tr>
+<tr><td>Position across the view</td><td>Which note of the city's chord: nine
+to eleven notes over two and a half octaves, lowest on the left, with the root
+an octave down as a drone</td><td>Ninety-six bars is the right number to look
+at and the wrong number to play; adjacent bars on one note would be
+oscillators detuned by nothing, beating. A note takes the loudest bar that
+feeds it.</td></tr>
+<tr><td>Height, as a share of this city's tallest</td><td>Loudness of that
+note, as the share to the power 1.6</td><td>The exponent makes the peaks stand
+out in the ear the way they do in the picture. Normalising per city means
+every city's tallest tower is equally loud: Fort Worth is not quieter than
+New York for being shorter.</td></tr>
+<tr><td>How many bars are lit</td><td>At most seven notes sound at once, the
+loudest seven</td><td>A bearing that lights every note is a chord nobody
+wrote. Density is most of what makes an additive tone harsh.</td></tr>
+<tr><td>Which note it is</td><td>Higher notes are tilted quieter, by one over
+the square root of their index; every fourth voice is a triangle wave, the
+rest are sines</td><td>An instrument loses energy with height; a flat spectrum
+is a buzz. The triangles give the low voices a little edge.</td></tr>
+<tr><td>Everything</td><td>A shelf pulling down 1.8 kHz and above, a low-pass
+at 3.2 kHz, a limiter, and a fixed ceiling</td><td>So that no city at any
+bearing can line up its partials in the band the ear is most sensitive in.
+The mapping cannot know what hurts; the instrument is built so it cannot
+produce it.</td></tr>
 </table>
+
+<p>Which notes of each mode sound is also a choice, and until 4 September 2026
+it was the wrong one: the same four scale degrees were taken from every mode
+and then anything closer than a minor third to its neighbour was dropped,
+which took the flattened second out of hijaz and left eight modes sounding as
+five. Dubai in D hijaz was Vienna in D major, note for note. Each mode is now
+voiced on its own terms, with the tone that makes it itself placed an octave
+up, where it colours the chord instead of clashing with the root beside it.
+No two sounding notes are ever closer than a minor third.</p>
+
+<table>
+<tr><th>Mode</th><th>Lowest octave</th><th>Octaves above</th><th>Cities</th></tr>
+<tr><td>major</td><td class="dim">root, third, fifth</td><td class="dim">the same</td><td class="dim">Paris, Toronto, Moscow, London, Los Angeles, Auckland, Nashville, Calgary, Vienna, Brussels, Fort Worth</td></tr>
+<tr><td>minor</td><td class="dim">root, minor third, fifth</td><td class="dim">the same</td><td class="dim">Frankfurt, Warsaw, Miami, Rotterdam</td></tr>
+<tr><td>hijaz</td><td class="dim">root, third, fifth</td><td class="dim">flattened second, third, fifth</td><td class="dim">Dubai, Tel Aviv, Madrid</td></tr>
+<tr><td>pentatonic major</td><td class="dim">root, third, sixth</td><td class="dim">the same</td><td class="dim">Shenzhen, Seoul</td></tr>
+<tr><td>yo</td><td class="dim">root, fourth, sixth</td><td class="dim">the same</td><td class="dim">Tokyo</td></tr>
+<tr><td>pentatonic minor</td><td class="dim">root, minor third, fifth, flattened seventh</td><td class="dim">minor third, fifth, flattened seventh</td><td class="dim">Taipei, Hong Kong</td></tr>
+<tr><td>blues</td><td class="dim">root, minor third, fifth, flattened seventh</td><td class="dim">minor third, flattened fifth, flattened seventh</td><td class="dim">New York, Chicago, Austin</td></tr>
+<tr><td>insen</td><td class="dim">root, fourth, flattened seventh</td><td class="dim">flattened second, fourth, flattened seventh</td><td class="dim">Osaka</td></tr>
+</table>
+
+<p class="small">The app names the notes sounding at any moment in a line
+under the meter, so the instrument can be read as well as heard.</p>
 
 <footer>Andrew Silvestri · energy systems modelling ·
 <a href="mailto:dasilvestri@utexas.edu">dasilvestri@utexas.edu</a></footer>

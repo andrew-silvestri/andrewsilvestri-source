@@ -1,0 +1,16 @@
+{
+  "name": "longevity-quotient",
+  "version": "1.0.0",
+  "description": "How long an animal lives, against how long an animal of its size should live.",
+  "main": "test_perf.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "devDependencies": {
+    "jsdom": "^29.1.1"
+  }
+}

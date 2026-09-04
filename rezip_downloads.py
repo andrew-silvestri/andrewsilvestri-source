@@ -1,6 +1,6 @@
 """
-Rebuild heat-code.zip and storage-code.zip from the tracked heat/ and
-storage/ folders.
+Rebuild heat-code.zip, storage-code.zip and bookshelf-code.zip from the
+tracked heat/, storage/ and bookshelf/ folders.
 
 figstyle.py and both projects' model.py used to exist only inside
 site/downloads/heat-code.zip and storage-code.zip - the sibling source
@@ -37,6 +37,11 @@ DOWNLOADS = os.path.join(HERE, "site", "downloads")
 TARGETS = [
     ("heat", os.path.join(DOWNLOADS, "heat-code.zip")),
     ("storage", os.path.join(DOWNLOADS, "storage-code.zip")),
+    # bookshelf/ holds the README and the wallpaper setter; the application
+    # itself is the shipped file, pulled in by name so the download can never
+    # drift from what the site runs (2026-09-04: it had, by one line).
+    ("bookshelf", os.path.join(DOWNLOADS, "bookshelf-code.zip"),
+     {"bookshelf-app.html": os.path.join(HERE, "site", "bookshelf-app.html")}),
 ]
 
 
@@ -56,16 +61,20 @@ def _all_paths(src_dir):
     return dirs, files
 
 
-def rezip(src_dir, zip_path):
+def rezip(src_dir, zip_path, extras=None):
     """Rebuild zip_path from src_dir. If zip_path already exists, its current
     entry order is kept for every name still present in src_dir - anything
     new in src_dir is appended (directories first, then files, each sorted),
     and anything the zip had that no longer exists in src_dir is dropped with
     a warning, since silently losing a file out of a shipped download is
     exactly the kind of drift this script exists to prevent.
+
+    extras maps an archive name to a path outside src_dir - for a download
+    whose main file is the shipped file itself.
     """
+    extras = extras or {}
     dirs, files = _all_paths(src_dir)
-    all_names = set(dirs) | set(files)
+    all_names = set(dirs) | set(files) | set(extras)
 
     order = []
     if os.path.exists(zip_path):
@@ -86,11 +95,11 @@ def rezip(src_dir, zip_path):
                 zi = zipfile.ZipInfo(name)
                 z.writestr(zi, "")
             else:
-                z.write(os.path.join(src_dir, name), name)
+                z.write(extras.get(name, os.path.join(src_dir, name)), name)
     return order
 
 
-def verify(src_dir, zip_path):
+def verify(src_dir, zip_path, extras=None):
     """Copy the current zip aside, rebuild it, and confirm the rebuilt
     namelist() matches the original's exactly - the round-trip check this
     module exists to make possible."""
@@ -102,7 +111,7 @@ def verify(src_dir, zip_path):
         shutil.copy2(zip_path, backup)
         with zipfile.ZipFile(backup) as z:
             before = z.namelist()
-        rezip(src_dir, zip_path)
+        rezip(src_dir, zip_path, extras)
         with zipfile.ZipFile(zip_path) as z:
             after = z.namelist()
         ok = before == after
@@ -123,12 +132,14 @@ def main():
     args = ap.parse_args()
 
     ok = True
-    for folder, zip_path in TARGETS:
+    for target in TARGETS:
+        folder, zip_path = target[0], target[1]
+        extras = target[2] if len(target) > 2 else None
         src = os.path.join(HERE, folder)
         if args.verify:
-            ok = verify(src, zip_path) and ok
+            ok = verify(src, zip_path, extras) and ok
         else:
-            names = rezip(src, zip_path)
+            names = rezip(src, zip_path, extras)
             print(f"  wrote {os.path.relpath(zip_path, HERE)}  "
                   f"({len(names)} entries)")
     return 0 if ok else 1

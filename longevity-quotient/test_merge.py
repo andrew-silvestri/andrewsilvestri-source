@@ -85,7 +85,7 @@ ok(not bad_mass, "every mass is positive and below 200 tonnes",
 # allowed to widen the bound for everything else.
 solo, colony = [], []
 for r in rows:
-    for k in ("wild_yr", "captive_yr"):
+    for k in ("wild_yr", "captive_yr", "unknown_yr"):
         if r[k].strip():
             (colony if r["colonial"].strip().lower() == "yes"
              else solo).append(float(r[k]))
@@ -95,7 +95,8 @@ ok(all(0 < v <= 600 for v in solo),
    f"are the ceiling)")
 ok(all(0 < v < 20000 for v in colony), "colony ages are bounded too",
    f"{len(colony)} colonial records, max {max(colony):.0f} yr")
-ok(all(r["wild_yr"].strip() or r["captive_yr"].strip() for r in rows),
+ok(all(r["wild_yr"].strip() or r["captive_yr"].strip()
+       or r["unknown_yr"].strip() for r in rows),
    "every row has at least one lifespan")
 
 print("\n  The seed table is not overwritten")
@@ -129,20 +130,31 @@ print("\n  Unit sanity, source by source")
 # PanTHERIA stores maximum longevity in months. Read as years it makes every
 # mammal twelve times too long-lived, which would not crash anything and would
 # move the mammalian intercept by more than a decimal order.
-mam = [float(r["wild_yr"] or r["captive_yr"]) for r in rows
-       if r["class"] == "Mammalia"]
+mam = [float(r["wild_yr"] or r["captive_yr"] or r["unknown_yr"])
+       for r in rows if r["class"] == "Mammalia"]
 med = sorted(mam)[len(mam) // 2]
 ok(3 < med < 40, "mammal median lifespan is in years, not months",
    f"median {med:.1f} yr across {len(mam):,} mammals")
 
-fish = [float(r["wild_yr"] or r["captive_yr"]) for r in rows
-        if r["class"] in build_lq.FISH]
+fish = [float(r["wild_yr"] or r["captive_yr"] or r["unknown_yr"])
+        for r in rows if r["class"] in build_lq.FISH]
 ok(fish and 1 < sorted(fish)[len(fish) // 2] < 40,
    "fish maxima are plausible",
    f"median {sorted(fish)[len(fish)//2]:.1f} yr across {len(fish):,} fish")
 
 print("\n  Provenance")
 ok(len(prov) == len(rows), "one provenance row per species")
+# The wild column must only hold what a source labelled wild. Amniote,
+# PanTHERIA and AmphiBIO never do, so a wild figure on one of their rows
+# means the 2026-09-04 relabelling has regressed.
+prov_by = {p["scientific_name"]: p for p in prov}
+leak = [r["scientific_name"] for r in rows
+        if r["wild_yr"].strip() and prov_by.get(r["scientific_name"], {})
+        .get("taken_from") in ("amniote", "pantheria", "amphibio")]
+ok(not leak, "no unlabelled-origin source lands in the wild column",
+   f"{len(leak)} rows" if leak else
+   f"{sum(1 for r in rows if r['unknown_yr'].strip()):,} rows carry a "
+   "maximum of unrecorded origin")
 srcs = collections.Counter(p["taken_from"] for p in prov)
 ok(set(srcs) <= set(["seed", "anage", "amniote", "pantheria", "amphibio",
                      "fishbase"]), "every record names a known source",

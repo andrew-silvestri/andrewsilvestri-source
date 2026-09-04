@@ -244,8 +244,14 @@ and used in the page prose and nowhere is any other multiple used.
 
 | product | published bases shown | lowest | highest | spread |
 |---|---|---|---|---|
-| Cheese, hard, France → New York | 63 % … 100 % milk (Flysjö 2011; IDF 2015) | 9.67 kg | 15.03 kg | **×1.55** |
+| Cheese, hard, France → New York | 63 % … 100 % milk (Flysjö 2011; IDF 2015) | 9.99 kg | 15.35 kg | **×1.54** |
 | Shoes, leather, Italy → New York | 2.7 % … 6.9 % hide (Lunesu 2025) | 3.74 kg | 4.39 kg | **×1.17** |
+
+(The first Phase 2 pass printed ×1.55 on 9.67–15.03 kg; the cheesemaking
+combustion fix below added a flat 0.32 kg to every cheese bar and the spread
+became ×1.54. The generator's guard caught the change — "cheese: model gives
+13.18, page table says 12.86; regenerate the table before this figure" — before
+anything was redrawn, which is what it is for.)
 
 The Phase 1 report's "nothing moves more than ×1.20 between any two published
 bases" was the narrower quantity (excluding system expansion and no-allocation
@@ -254,10 +260,10 @@ shipped 2.2 % is an assumption, not a published value: it is drawn in grey and
 not counted in the spread.
 
 **The sentence the page now makes and I would defend:** *the same kilogram of
-French cheese is 9.7 kg CO2e if the cow's meat is credited by system
-expansion, 12.9 under the International Dairy Federation's physical split
-(the model's default), and 15.0 if milk carries the whole cow; the spread
-across the published bases is ×1.55, and for the leather shoe, where the
+French cheese is 10.0 kg CO2e if the cow's meat is credited by system
+expansion, 13.2 under the International Dairy Federation's physical split
+(the model's default), and 15.4 if milk carries the whole cow; the spread
+across the published bases is ×1.54, and for the leather shoe, where the
 hide is 9 % of the pair, the same exercise gives ×1.17.*
 
 ## What was done
@@ -318,17 +324,58 @@ hide is 9 % of the pair, the same exercise gives ×1.17.*
 8. `bust_cache.py` run (figure stamped `?v=24bb8306`). `HANDOFF.md` §8 gained
    trap 12. **Not published.**
 
-## Left for a decision (found, not changed)
+## Follow-up, same day: the two found-not-changed items, changed
 
-- **Cheesemaking gas has no combustion term** (0.12 kg gas, `direct=0.0`;
-  every other gas use in the model charges 2.75 kg/kg for burning it). If it
-  is burned, the cheese is 0.33 kg (+2.6 %) low. On the showcase product, so
-  worth deciding before Phase 3c ships. Details in
-  `CLIMATE_COST_UNITS_2026-09-04.md`.
-- **Rail track borrows `road_infra`** at a 150× scale as "road-equivalent";
-  should be its own process.
-- The `D.runs` dead block (45 % of the app's weight) and the audit's other
-  app findings are untouched; this brief was the false claim.
+Both corrected on instruction, cheese first because it is the showcase.
+
+**Cheesemaking gas.** A new process `gas_boiler` ("Natural gas, burned for
+heat": 2.75 kg CO2 per kg burned, quality A, with `natgas_extraction` as its
+input — the same shape as `greenhouse_heat`). Cheesemaking now takes
+`gas_boiler 0.12` instead of `natgas_extraction 0.12`. The input was fixed
+and the figure regenerated; no number was hand-edited. Cheese 12.858 →
+13.181 kg (+2.5 %); every cheese bar +0.32 kg; spread ×1.55 → ×1.54; herd
+share of the total 95.8 % → 93.4 %. The page table, prose (10.0 / 13.2 /
+15.4, 93 %, ×1.54), caption and alt text follow. The guard fired first.
+
+**Rail track.** Sourced. UIC, *Carbon Footprint of Railway Infrastructure*,
+June 2016 (saved in `_audit-climate-cost/fix/`), p. 28: the IFEU methodology
+"has been identified as the most accurate and consistent … a value of 50
+tCO2/km/year is acceptable as an order of magnitude"; p. 32: "an approximate
+emission factor of around 50 tCO2/km/year of rail line can be assumed and
+approximated to a value of around 6 to 7 gCO2/pkm or tkm" for lines with
+under 30 % of their length on structures. New process `rail_infra`
+(unit passenger-km, direct 0.0065 kg, quality B, `source=` field carrying the
+citation the way `basis=` does for shares); the track stage takes 100 of
+them per 100 pkm. Train 0.563 → 1.003 kg per 100 pkm (+78 %), still inside
+its 0.2–4 band. The road proxy had charged 2.1 g/pkm: **it understated rail
+by about three times**, the opposite of the expected direction. The DEFRA
+rail *freight* factor (0.028 kg/tkm) was never in question; the issue was
+passenger-rail infrastructure.
+
+**The unit check lives in `tests/test_units.py`.** Every stage input and
+process input is checked against a plausibility band for the unit its
+receiving process declares (211 checks; bands three to four orders of
+magnitude wide so they only catch a wrong unit, never a modelling choice),
+plus `freight_kg` and `amortise` bands. Run against the 2 August data it
+fails on exactly the two car delivery stages ("freight_kg 0.0007 is not
+kilograms"); on the current data it passes.
+
+**The 3b restyle, checked before regenerating.** The 3b pass had edited the
+generator's titles to mono by hand but left `ax.set_title` and the subtitle
+in place, bypassing `sitefig.panel()`. Regenerating as it stood would have
+made this the only titled figure on the site. The generator now calls
+`sitefig.panel()` for its two panel labels and carries no title and no
+subtitle; 0 audit problems.
+
+**Re-run after all of it:** `test_lca.py` 0 failures; `tests/test_units.py`
+ok; `test_scene.js` 25/25, parity 2.2×10⁻¹⁶; 92-route shipped-app parity
+3.8×10⁻¹⁶; live check of the shipped app shows the basis text, freight at
+100 %, cheese herd at 58.9 % of the item, no console errors; page serves the
+figure (`?v=8521385e`), 8 sources, no video; download zip rebuilt and
+byte-identical to source (8 files). `bust_cache.py` run. **Not published.**
+
+Still untouched, and outside this brief: the `D.runs` dead block (45 % of
+the app's weight) and the audit's other app findings.
 
 ## Files touched in Phase 2
 

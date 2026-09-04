@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Skylines, played</title>
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="alternate icon" href="favicon.png">
+<meta name="theme-color" content="#070a12">
+<script>/* the motion contract - set before first paint, from the system preference alone. Mirrors assets/motion.js, which the apps do not load; the app reads data-motion and listens for "motionchange". */
+(function(){var r=document.documentElement,m=window.matchMedia?matchMedia('(prefers-reduced-motion: reduce)'):null;function a(){var s=m&&m.matches?'off':'on';if(r.dataset.motion===s)return;r.dataset.motion=s;document.dispatchEvent(new CustomEvent('motionchange',{detail:s}));}try{a();if(m){if(m.addEventListener)m.addEventListener('change',a);else if(m.addListener)m.addListener(a);}}catch(e){r.dataset.motion='on';}})();</script>
+<style>
+:root{
+  --bg:#070a12; --panel:#0c1020; --card:#10152a; --ink:#e3e6f2;
+  --dim:#8b93b0; --faint:#1a2038; --rule:#232a45; --acc:#8b7ff2;--acc-fill:#5a4fb0;--acc-fill-hover:#4c3fb5;
+  --acc-dim:#5a4fb0; --acc-ink:#f2f0ff; --cool:#5aa8d8; --moss:#4f9d84;
+  --rose:#d86a86;
+  --sans:ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif;
+  --mono:ui-monospace,"SF Mono","Cascadia Mono",Consolas,monospace;
+  --serif:"Iowan Old Style","Palatino Linotype",Palatino,Georgia,serif;
+  /* the site's type scale (style.css), the three steps this chrome uses;
+     12 px is the floor and nothing here goes under it */
+  --fs-2:12px; --fs-1:14.5px; --fs1:21px;
+}
+@media (prefers-color-scheme: light){
+  :root{--bg:#f4f5fa;--panel:#ecedf6;--card:#fff;--ink:#161a26;--dim:#5c6480;
+        --faint:#e0e3ef;--rule:#d2d7e6;--acc:#4c3fb5;--acc-fill:#4c3fb5;--acc-fill-hover:#3d329a;--acc-dim:#7a6fd8;
+        --acc-ink:#fff;--cool:#2a6a96;--moss:#2f6f5c;--rose:#a83a58;}
+}
+*{box-sizing:border-box}
+html,body{height:100%}
+body{margin:0;background:var(--bg);color:var(--ink);
+  font:var(--fs-1)/1.6 var(--sans);-webkit-font-smoothing:antialiased}
+#app{position:fixed;inset:0;display:grid;
+  grid-template-columns:330px 1fr;grid-template-rows:100%}
+
+#side{overflow:auto;background:var(--panel);
+  border-right:1px solid var(--rule);padding:16px 18px 40px}
+h1{font:500 var(--fs1)/1.25 var(--serif);margin:0 0 2px}
+.sub{color:var(--dim);font-size:var(--fs-1);margin:0 0 14px}
+
+label.f{display:block;font:var(--fs-2) var(--sans);text-transform:uppercase;
+  letter-spacing:.11em;color:var(--dim);margin:0 0 3px}
+select,input[type=range]{width:100%}
+select{padding:7px 9px;background:var(--card);color:var(--ink);
+  border:1px solid var(--rule);border-radius:7px;font:var(--fs-1) var(--sans);
+  appearance:none;-webkit-appearance:none;cursor:pointer;
+  background-image:linear-gradient(45deg,transparent 50%,var(--dim) 50%),
+    linear-gradient(135deg,var(--dim) 50%,transparent 50%);
+  background-position:calc(100% - 15px) 52%,calc(100% - 10px) 52%;
+  background-size:5px 5px,5px 5px;background-repeat:no-repeat}
+select:focus{outline:none;border-color:var(--acc-dim)}
+input[type=range]{accent-color:var(--acc);margin:6px 0 0}
+
+.btns{display:flex;gap:8px;margin:14px 0 0}
+/* Play is the filled button, on --acc-fill: 5.88:1 dark, 7.82:1 light (the
+   bare accent was 2.91 in the dark scheme - the failure the 2026-09-04
+   palette pass fixed everywhere but here). Outlines are on --acc, 5.78 dark
+   and 6.71 light, because --rule against the panel is 1.34 and a control
+   boundary needs 3. */
+.btns button{flex:1;padding:11px 0;border-radius:9px;
+  background:var(--acc-fill);color:var(--acc-ink);border:1px solid var(--acc-fill);
+  font:600 var(--fs-1) var(--sans);cursor:pointer}
+.btns button:hover{background:var(--acc-fill-hover);border-color:var(--acc-fill-hover)}
+.btns button.on{background:transparent;color:var(--ink);
+  border-color:var(--acc)}
+#spin{background:transparent;color:var(--ink);border-color:var(--acc)}
+#spin:hover{background:var(--faint)}
+#spin.on{background:var(--acc-fill);color:var(--acc-ink);border-color:var(--acc-fill)}
+#spin[hidden]{display:none}
+.tier{display:inline-block;font-size:var(--fs-2);text-transform:uppercase;
+  letter-spacing:.12em;color:var(--moss);border:1px solid var(--moss);
+  border-radius:20px;padding:0 7px;margin-left:2px}
+
+h2{font:600 var(--fs-2) var(--sans);text-transform:uppercase;letter-spacing:.14em;
+  color:var(--dim);margin:22px 0 8px;padding-bottom:6px;
+  border-bottom:1px solid var(--rule)}
+dl{display:grid;grid-template-columns:auto 1fr;gap:3px 10px;margin:8px 0;
+  font-size:var(--fs-1)}
+dt{color:var(--dim);font-size:var(--fs-2);text-transform:uppercase;
+  letter-spacing:.08em}
+dd{margin:0;font-variant-numeric:tabular-nums}
+.note{color:var(--dim);font-size:var(--fs-1);margin:9px 0 0}
+ol.tow{margin:6px 0 0;padding-left:20px;font-size:var(--fs-1);color:var(--dim)}
+ol.tow li{margin:3px 0}
+ol.tow b{color:var(--dim);font-weight:500}
+ol.tow li.in b{color:var(--acc)}
+ol.tow a{color:inherit;text-decoration:none;border-bottom:1px solid var(--faint)}
+ol.tow a:hover{color:var(--acc);border-bottom-color:var(--acc)}
+ol.tow span{display:block;font-size:var(--fs-2)}
+
+#stage{position:relative;overflow:hidden;
+  background:linear-gradient(180deg,#070a12 0%,#0b1024 62%,#111838 100%)}
+@media (prefers-color-scheme: light){
+  #stage{background:linear-gradient(180deg,#eef0fa 0%,#e2e6f6 62%,#d6dcf0 100%)}
+}
+canvas{position:absolute;inset:0;width:100%;height:100%;display:block;
+  cursor:ew-resize;touch-action:none}
+#foot{position:absolute;left:0;right:0;bottom:0;display:flex;
+  align-items:flex-end;justify-content:space-between;gap:14px;
+  padding:10px 16px 12px;pointer-events:none;
+  background:linear-gradient(180deg,transparent,rgba(7,10,18,.55))}
+@media (prefers-color-scheme: light){
+  #foot{background:linear-gradient(180deg,transparent,rgba(238,240,250,.65))}
+}
+#left{min-width:0;display:flex;flex-direction:column;gap:3px}
+/* the notes sounding now: the meter as names, for anyone who cannot hear it
+   (or has it muted). --ink, not --dim, because it is a reading, not a hint */
+#notes{font:var(--fs-2) var(--mono);color:var(--ink);white-space:nowrap;
+  overflow:hidden;text-overflow:ellipsis}
+#hint{font-size:var(--fs-2);color:var(--dim);letter-spacing:.03em;
+  min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+#az{font:var(--fs-2) var(--mono);color:var(--dim);flex:none;white-space:nowrap;
+  margin-left:auto}
+/* Below the point where the panel stacks, the hint goes: it talks about
+   dragging, arrow keys and the space bar, two of which a phone does not
+   have, and it was the thing running into the bearing readout. The bearing
+   stays, because it is the one reading that changes as you turn. */
+@media (max-width:760px){ #hint{display:none} }
+#tip{position:absolute;pointer-events:none;display:none;padding:6px 10px;
+  background:var(--card);border:1px solid var(--rule);border-radius:8px;
+  font-size:var(--fs-1);box-shadow:0 12px 30px rgba(2,4,12,.5)}
+#noaudio{position:absolute;left:50%;top:14px;transform:translateX(-50%);
+  max-width:calc(100% - 32px);text-align:center;
+  font-size:var(--fs-2);color:var(--ink);background:var(--card);
+  border:1px solid var(--rule);border-radius:20px;padding:5px 14px;
+  display:none}
+@media (max-width:900px){
+  #app{grid-template-columns:100%;grid-template-rows:auto 1fr}
+  #side{border-right:0;border-bottom:1px solid var(--rule);max-height:44vh}
+}
+</style>
+</head><body>
+<div id="app">
+<aside id="side">
+  <h1>Skylines, played</h1>
+  <p class="sub">A skyline and a spectrum analyser are the same picture.
+  So the picture is played.</p>
+
+  <label class="f" for="city">City</label>
+  <select id="city"></select>
+
+  <label class="f" for="fov" style="margin-top:12px">Field of view</label>
+  <input type="range" id="fov" min="40" max="160" step="5" value="100">
+
+  <label class="f" for="vol" style="margin-top:12px">Volume</label>
+  <input type="range" id="vol" min="0" max="100" step="1" value="55">
+
+  <div class="btns">
+    <button id="play">Play</button>
+    <button id="spin">Spin</button>
+  </div>
+
+  <h2>The key</h2>
+  <p class="note" id="why"></p>
+  <p class="note" id="voice"></p>
+
+  <h2>How it sounds</h2>
+  <p class="note">All of this is invented &mdash; chosen, not measured.
+  Position across the view picks a note of the city&rsquo;s chord, lowest on
+  the left. A tower&rsquo;s height, as a share of this city&rsquo;s tallest,
+  to the power 1.6, sets how loud its note is; every city&rsquo;s tallest
+  tower is equally loud. The seven loudest notes sound at once, higher ones
+  tilted quieter; every fourth voice is a triangle wave, the rest sine; a
+  shelf, a low-pass at 3.2&nbsp;kHz and a limiter sit before the output. No
+  two sounding notes are closer than a minor third. There is no empty horizon
+  on a wheel, so turning changes the chord and never silences it. The line
+  under the meter names the notes sounding now.</p>
+
+  <h2>This skyline</h2>
+  <dl id="stats"></dl>
+
+  <h2>On the wheel</h2>
+  <ol class="tow" id="towers"></ol>
+</aside>
+
+<div id="stage">
+  <canvas id="c" role="img" aria-label="The city's towers on a wheel, and the same ring as a meter. Turn with drag, arrow keys or Spin; the towers and the notes sounding are listed as text in the panel and under the meter."></canvas>
+  <div id="tip"></div>
+  <div id="noaudio">This browser did not offer Web Audio, so the skyline is
+    drawn but not played.</div>
+  <div id="foot">
+    <div id="left">
+      <div id="notes"></div>
+      <div id="hint">drag to turn &middot; arrow keys nudge &middot; space to
+        spin &middot; the top panel is the city, the bottom is the same ring
+        as a meter</div>
+    </div>
+    <div id="az"></div>
+  </div>
+</div>
+</div>
+
+<script>const D = JSON.parse(/*DATA*/);</script>
+<script>/*APP*/</script>
+</body></html>

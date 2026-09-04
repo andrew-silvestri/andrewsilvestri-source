@@ -19,6 +19,12 @@
     "B": 6250,
     "A": 149
   },
+  "origins": {
+    "unrecorded": 3482,
+    "wild": 2596,
+    "captive": 1486,
+    "wild+captive": 309
+  },
   "classes": {
     "Actinopterygii": 1966,
     "Amphibia": 207,

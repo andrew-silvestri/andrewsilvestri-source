@@ -60,7 +60,7 @@ including the absurd ones. Those are often the instructive ones.</p>
 <tr><th>Item</th><th class="n">kg CO<sub>2</sub>e</th><th>Per</th><th>Default route</th></tr>
 <tr><td colspan="4" class="dim"><b>Food</b></td></tr>
 <tr><td>Beef, from a dedicated herd</td><td class="n">75.49</td><td>1 kg as eaten</td><td>Brazil to Texas</td></tr>
-<tr><td>Cheese, hard</td><td class="n">12.86</td><td>1 kg as eaten</td><td>France to New York</td></tr>
+<tr><td>Cheese, hard</td><td class="n">13.18</td><td>1 kg as eaten</td><td>France to New York</td></tr>
 <tr><td>Chicken</td><td class="n">5.02</td><td>1 kg as eaten</td><td>Brazil to Texas</td></tr>
 <tr><td>Rice</td><td class="n">3.39</td><td>1 kg as eaten</td><td>India to California</td></tr>
 <tr><td>Coffee, roasted beans</td><td class="n">3.05</td><td>1 kg roasted</td><td>Colombia to Texas</td></tr>
@@ -74,7 +74,7 @@ including the absurd ones. Those are often the instructive ones.</p>
 <tr><td>Flight, long haul</td><td class="n">15.81</td><td>100 passenger-km</td><td>New York to China</td></tr>
 <tr><td>Car, battery electric</td><td class="n">12.81</td><td>100 km, one occupant</td><td>China to Texas</td></tr>
 <tr><td>Bus, city diesel</td><td class="n">9.52</td><td>100 passenger-km</td><td>Germany to Texas</td></tr>
-<tr><td>Train, electric intercity</td><td class="n">0.56</td><td>100 passenger-km</td><td>France to France</td></tr>
+<tr><td>Train, electric intercity</td><td class="n">1.00</td><td>100 passenger-km</td><td>France to France</td></tr>
 <tr><td colspan="4" class="dim"><b>Clothing</b></td></tr>
 <tr><td>Jeans, denim</td><td class="n">14.85</td><td>1 pair, whole life</td><td>China to California</td></tr>
 <tr><td>Trainers, synthetic</td><td class="n">10.09</td><td>1 pair, whole life</td><td>Vietnam to New York</td></tr>
@@ -98,13 +98,13 @@ consumption electricity are charged separately, so the model already
 distinguishes them. The <b>cheese</b> is the allocation<sup class="cite" id="cr3"><a href="#ref3">3</a></sup> argument in its purest
 form. A dairy cow yields milk and, eventually, meat, and how much of her methane
 belongs to the milk is a judgement rather than a measurement. For cheese that
-judgement is the whole answer, because the herd stages are 96% of the kilogram.
+judgement is the whole answer, because the herd stages are 93% of the kilogram.
 Every published way of making it is in the figure below, from Flysjö<sup class="cite" id="cr4"><a href="#ref4">4</a></sup> and
 colleagues' comparison of the methods: the same kilogram of French cheese is
-9.7 kg CO<sub>2</sub>e if the cow's meat is credited by system expansion, 12.9
+10.0 kg CO<sub>2</sub>e if the cow's meat is credited by system expansion, 13.2
 under the International Dairy Federation<sup class="cite" id="cr5"><a href="#ref5">5</a></sup>'s physical split, which is the model's
-default, and 15.0 if milk carries the whole cow. The spread across the published
-bases, highest total over lowest, is &times;1.55, and nothing a farmer does in
+default, and 15.4 if milk carries the whole cow. The spread across the published
+bases, highest total over lowest, is &times;1.54, and nothing a farmer does in
 this model produces a swing that size. The <b>leather shoe</b> is the same
 argument where it barely applies. A hide is a co-product of a beef animal too,
 but the hide stage is 9% of a pair, so moving the hide's share from the economic
@@ -112,10 +112,10 @@ mean to the physical mean measured by Lunesu<sup class="cite" id="cr6"><a href="
 3.7 to 4.2 kg, a spread of &times;1.17. Allocation decides the answer where the
 shared stage <i>is</i> the answer, and nowhere else.</p>
 
-<img class="fig wide" src="assets/climate_allocation_bases.png?v=45a2584d" loading="lazy" width="2280" height="1341" alt="Two horizontal bar panels on one axis from 0 to 16 kg CO2e. Left, a kilogram of hard cheese from France to New York under eight published milk-to-meat allocation bases: 9.7 kg at 63% by system expansion rising to 15.0 kg at 100% with no allocation, the model's default of 12.9 kg at the 85% physical split highlighted; spread times 1.55, contested stage 96% of the total. Right, a pair of leather shoes from Italy to New York under four hide shares: 3.7 kg at 2.2% and 2.7% economic, 4.2 kg at 5.9% physical, 4.4 kg at 6.9%; spread times 1.17, contested stage 9% of the total.">
+<img class="fig wide" src="assets/climate_allocation_bases.png?v=8521385e" loading="lazy" width="2280" height="1341" alt="Two horizontal bar panels on one axis from 0 to 16 kg CO2e. Left, a kilogram of hard cheese from France to New York under eight published milk-to-meat allocation bases: 10.0 kg at 63% by system expansion rising to 15.4 kg at 100% with no allocation, the model's default of 13.2 kg at the 85% physical split highlighted; spread times 1.54, contested stage 93% of the total. Right, a pair of leather shoes from Italy to New York under four hide shares: 3.7 kg at 2.2% and 2.7% economic, 4.2 kg at 5.9% physical, 4.4 kg at 6.9%; spread times 1.17, contested stage 9% of the total.">
 <p class="small">Two panels, one axis, one definition. Spread is the highest
 total divided by the lowest across the published bases shown: cheese
-&times;1.55, shoes &times;1.17. Every bar is one run of the calculator's own
+&times;1.54, shoes &times;1.17. Every bar is one run of the calculator's own
 engine with a single number changed on the contested edge. Drawn by
 <code>climate-cost/build_allocation_figure.py</code> from
 <code>lca.py</code>, with each factor written beside the publication it comes

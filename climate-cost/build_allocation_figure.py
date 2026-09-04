@@ -8,9 +8,9 @@ way of splitting a beef animal between its meat and its hide. Same model, same
 engine, same scale; the only thing that changes between bars is the one number
 on the contested edge.
 
-The point of the pair: for the cheese the split *is* the answer (96% of the
-kilogram sits on the herd stages), for the shoe it barely moves it (the hide
-is 9% of the pair). This replaces a video that claimed the shoe "nearly
+The point of the pair: for the cheese the split *is* the answer (about 93% of
+the kilogram sits on the herd stages; the figure prints the live value), for
+the shoe it barely moves it (the hide is 9% of the pair). This replaces a video that claimed the shoe "nearly
 tripled" under mass allocation. It did not; the video scaled the whole shoe by
 the ratio of two factors, and no script in the repository could regenerate it.
 That is why this file exists: the figure is built here, from `lca.py`, with
@@ -63,8 +63,7 @@ OUT = os.path.join(ROOT, "site", "assets", "climate_allocation_bases.png")
 # together because they are one decision.
 CHEESE = dict(
     item="cheese", stages=("enteric", "feed", "manure", "dairy"),
-    title="Cheese, hard — 1 kg, France to New York",
-    sub="the cow’s burden split between milk and meat",
+    label="cheese, hard · 1 kg · France → New York\nthe cow split between milk and meat",
     bases=[
         ("system expansion, low",   0.63, "Flysjö 2011: 63–76%", False),
         ("system expansion, high",  0.76, "Flysjö 2011",             False),
@@ -84,8 +83,7 @@ CHEESE = dict(
 # drawn as the default; it is not a published value and is labelled so.
 SHOES = dict(
     item="leather_shoes", stages=("hide",),
-    title="Shoes, leather — 1 pair, Italy to New York",
-    sub="the beef animal’s burden split between meat and hide",
+    label="shoes, leather · 1 pair · Italy → New York\nthe animal split between meat and hide",
     bases=[
         ("economic, model default", 0.022, "assumed", True),
         ("economic, 2023 mean",     0.027, "Lunesu et al. 2025",      False),
@@ -95,7 +93,7 @@ SHOES = dict(
 
 # The numbers the page's table publishes for the two defaults. If the model
 # no longer reproduces them the data has moved and the figure would be stale.
-PUBLISHED = {"cheese": 12.86, "leather_shoes": 3.66}
+PUBLISHED = {"cheese": 13.18, "leather_shoes": 3.66}
 
 
 def total_at(item, stages, share):
@@ -170,10 +168,12 @@ def draw(cheese, shoes, out):
         ax.set_xlabel("kg CO₂e per functional unit", fontsize=FS_2, color=DIM)
         ax.xaxis.grid(True, color=FAINT, linewidth=0.8)
         ax.set_axisbelow(True)
-        texts.append(ax.set_title(textwrap.fill(panel["title"], 30), loc="left", fontsize=FS_1, fontfamily=MONO,
-                                  color=INK, pad=36))
-        texts.append(ax.text(0, 1.045, panel["sub"], transform=ax.transAxes,
-                             fontsize=FS_2, color=DIM, va="bottom"))
+        # No figure title and no subtitle: the page heading and caption do that
+        # job (sitefig: "a figure carries none; a sheet labels its panels").
+        # A two-panel sheet keeps one short label per panel, set through
+        # sitefig.panel() so it is the same furniture as every other sheet.
+        sitefig.panel(ax, panel["label"], pad=10)
+        texts.append(ax.title)
         texts.append(ax.text(1.0, -0.2, f"spread ×{spread:.2f}",
                              transform=ax.transAxes, ha="right", va="top",
                              fontsize=FS_1, color=INK))

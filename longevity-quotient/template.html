@@ -2,14 +2,18 @@
 <html lang="en"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Longevity quotient — how long animals live for their size</title>
+<script>/* the motion contract — set before first paint, from the system
+   preference alone; the app opens in its own tab and never saw the site's
+   attribute until this was added */
+try{document.documentElement.dataset.motion=matchMedia('(prefers-reduced-motion: reduce)').matches?'off':'on';}catch(e){document.documentElement.dataset.motion='on';}</script>
 <style>
-:root{--ink:#161a26;--dim:#5c6480;--faint:#e0e3ef;--bg:#f4f5fa;--acc:#4c3fb5;
- --card:#fff;--wild:#2f6f5c;--cap:#4c3fb5;--avg:#161a26;--rule:#d2d7e6;
- --grp:#7a6a92}
+:root{--ink:#161a26;--dim:#5c6480;--faint:#e0e3ef;--bg:#f4f5fa;--acc:#4c3fb5;--acc-fill:#4c3fb5;--acc-fill-hover:#3d329a;
+ --card:#fff;--wild:#2f6f5c;--cap:#4c3fb5;--unk:#6b7186;--avg:#161a26;--rule:#c4cadb;
+ --grp:#7a6a92;--line:#8b93b0}
 @media (prefers-color-scheme:dark){
- :root{--ink:#e3e6f2;--dim:#8b93b0;--faint:#1a2038;--bg:#070a12;--acc:#8b7ff2;
-  --card:#10152a;--wild:#4f9d84;--cap:#8b7ff2;--avg:#e3e6f2;--rule:#232a45;
-  --grp:#a992c9}}
+ :root{--ink:#e3e6f2;--dim:#8b93b0;--faint:#1a2038;--bg:#070a12;--acc:#8b7ff2;--acc-fill:#5a4fb0;--acc-fill-hover:#4c3fb5;
+  --card:#10152a;--wild:#4f9d84;--cap:#8b7ff2;--unk:#7d849c;--avg:#e3e6f2;--rule:#3a4463;
+  --grp:#a992c9;--line:#6a7390}}
 *{box-sizing:border-box}
 body{margin:0;background:var(--bg);color:var(--ink);
  font:16px/1.6 Georgia,"Times New Roman",serif}
@@ -22,29 +26,29 @@ p{margin:11px 0}
 a{color:var(--acc)}
 hr{border:0;border-top:1px solid var(--faint);margin:26px 0}
 code{font:13.5px ui-monospace,Consolas,monospace;background:var(--faint);
- padding:2px 6px;border-radius:4px}
+ padding:2px 6px;border-radius:2px}
 .panel{display:flex;flex-wrap:wrap;gap:18px;align-items:flex-start;
- border:1px solid var(--faint);border-radius:9px;padding:14px 16px;
+ border:1px solid var(--faint);border-radius:2px;padding:14px 16px;
  background:var(--card);margin:20px 0 6px;position:sticky;top:0;z-index:20}
 .grp{display:flex;flex-direction:column;gap:5px}
 .grp.off{display:none}
-.lab{font-size:10.5px;letter-spacing:.09em;text-transform:uppercase;
+.lab{font-size:12px;letter-spacing:.08em;text-transform:uppercase;
  color:var(--dim);font-family:system-ui,sans-serif}
-.seg{display:flex;border:1px solid var(--faint);border-radius:7px;
+.seg{display:flex;border:1px solid var(--line);border-radius:2px;
  overflow:hidden;flex-wrap:wrap}
 .seg button{border:0;background:transparent;color:var(--dim);cursor:pointer;
  padding:6px 11px;font:13px system-ui,sans-serif;white-space:nowrap}
-.seg button+button{border-left:1px solid var(--faint)}
+.seg button+button{border-left:1px solid var(--line)}
 .seg button:hover{color:var(--ink)}
-.seg button[aria-pressed=true]{background:var(--acc);color:#fff}
+.seg button[aria-pressed=true]{background:var(--acc-fill);color:#fff}
 input[type=search],select{font:13.5px system-ui,sans-serif;padding:6px 9px;
- border:1px solid var(--faint);border-radius:7px;background:var(--bg);
+ border:1px solid var(--line);border-radius:2px;background:var(--bg);
  color:var(--ink)}
 input[type=search]{width:160px}
 select{max-width:200px}
 .legend{display:flex;gap:18px;flex-wrap:wrap;font-size:12.5px;color:var(--dim);
  font-family:system-ui,sans-serif;margin:14px 0 4px;align-items:center}
-.sw{display:inline-block;width:13px;height:8px;border-radius:2px;
+.sw{display:inline-block;width:14px;height:6px;border-radius:1px;box-sizing:border-box;
  margin-right:6px;vertical-align:middle}
 #chart{position:relative;margin-top:8px;transition:height .45s
  cubic-bezier(.22,.72,.24,1)}
@@ -56,35 +60,43 @@ select{max-width:200px}
  white-space:nowrap;padding-right:10px;font-family:system-ui,sans-serif}
 .nm .com{color:var(--dim)}
 .row:hover .nm{color:var(--acc)}
-.nm .cnt{color:var(--dim);font-size:11.5px}
-.nm .colb{color:var(--dim);font-size:10px;border:1px solid var(--faint);
- border-radius:3px;padding:0 3px;margin-left:4px}
+.nm .cnt{color:var(--dim);font-size:12px}
+.nm .colb{color:var(--dim);font-size:12px;border:1px solid var(--line);
+ border-radius:2px;padding:0 3px;margin-left:4px}
 .track{position:relative;flex:1;height:22px}
-.bar{position:absolute;height:8px;border-radius:2px;
- transition:width .58s cubic-bezier(.22,.72,.24,1),background .3s}
-.bw{top:2px;background:var(--wild)}
-.bc{top:12px;background:var(--cap)}
+/* Three origins, three shapes. Wild is a solid bar, captive a hollow one,
+   origin-not-recorded a hatched one: the two colours are the same luminance
+   in dark mode, so hue alone was not telling them apart. */
+.bar{position:absolute;height:6px;border-radius:1px;box-sizing:border-box;
+ transition:width .58s cubic-bezier(.22,.72,.24,1),left .58s cubic-bezier(.22,.72,.24,1),background .3s}
+.bw{top:1px;background:var(--wild)}
+.bu{top:8px;background:repeating-linear-gradient(90deg,var(--unk) 0 3px,transparent 3px 5px)}
+.bc{top:15px;background:transparent;border:2px solid var(--cap)}
 .bg1{top:7px;height:9px;background:var(--grp)}
 .avg{position:absolute;top:0;height:22px;width:2px;background:var(--avg);
- opacity:.55;transition:left .58s cubic-bezier(.22,.72,.24,1)}
-.rng{position:absolute;top:10.5px;height:2px;background:var(--grp);opacity:.32;
+ opacity:.75;transition:left .58s cubic-bezier(.22,.72,.24,1)}
+.rng{position:absolute;top:10.5px;height:2px;background:var(--grp);opacity:.6;
  transition:left .58s cubic-bezier(.22,.72,.24,1),
  width .58s cubic-bezier(.22,.72,.24,1)}
-.val{position:absolute;top:3px;font:11.5px system-ui,sans-serif;
+.val{position:absolute;top:3px;font:12px system-ui,sans-serif;
  color:var(--dim);white-space:nowrap;
  transition:left .58s cubic-bezier(.22,.72,.24,1)}
 .gl{position:absolute;top:0;bottom:0;width:1px;background:var(--rule);
  transition:left .5s cubic-bezier(.22,.72,.24,1)}
-.gl span{position:absolute;top:-16px;left:3px;font:10.5px system-ui,sans-serif;
- color:var(--dim)}
-.gl.one{background:var(--acc);opacity:.55;width:1.5px}
+.gl span{position:absolute;top:-17px;left:3px;font:12px system-ui,sans-serif;
+ color:var(--dim);white-space:nowrap}
+.gl.one{background:var(--acc);opacity:.9;width:2px}
 #axis{position:relative;height:18px;margin-left:300px}
 #detail{position:fixed;right:16px;bottom:16px;width:340px;
  max-width:calc(100vw - 32px);background:var(--card);
- border:1px solid var(--faint);border-radius:10px;padding:15px 17px;
+ border:1px solid var(--faint);border-radius:2px;padding:15px 17px;
  box-shadow:0 14px 42px rgba(0,0,0,.22);z-index:40;display:none;
  max-height:70vh;overflow:auto}
 #detail.on{display:block}
+button:focus-visible,select:focus-visible,input:focus-visible{outline:2px solid var(--acc);outline-offset:2px}
+.row:focus-visible{outline:none}
+.row:focus-visible .nm{outline:2px solid var(--acc);outline-offset:1px;border-radius:2px}
+.ptog{display:none}
 #detail h3{margin:0 0 2px;font-size:16px}
 #detail .x{position:absolute;top:9px;right:12px;cursor:pointer;color:var(--dim);
  font:16px system-ui;border:0;background:none}
@@ -98,15 +110,41 @@ table.fits{width:100%;border-collapse:collapse;font:13px system-ui,sans-serif;
  margin:10px 0}
 table.fits th,table.fits td{padding:6px 9px;text-align:left;
  border-bottom:1px solid var(--faint)}
-table.fits th{font-size:11px;text-transform:uppercase;letter-spacing:.05em;
+table.fits th{font-size:12px;text-transform:uppercase;letter-spacing:.05em;
  color:var(--dim)}
 .crumb{font:12.5px system-ui,sans-serif;color:var(--dim);margin:10px 0 0}
 .crumb b{color:var(--ink);font-weight:600}
-.crumb button{border:1px solid var(--faint);background:transparent;
- color:var(--dim);border-radius:6px;padding:3px 9px;cursor:pointer;
+.crumb button{border:1px solid var(--line);background:transparent;
+ color:var(--dim);border-radius:2px;padding:3px 9px;cursor:pointer;
  font:12px system-ui,sans-serif;margin-left:8px}
-@media (max-width:700px){.nm{width:150px}#axis{margin-left:150px}
- #detail{left:16px;right:16px;width:auto}}
+/* Phones. The panel used to be sticky at 724px tall in an 844px viewport,
+   which left four rows of chart visible. Below 700px it is a normal block,
+   collapsed behind one sticky button, and each row gives its name the full
+   width on a line of its own so nothing truncates. */
+@media (max-width:700px){
+ .wrap{padding:22px 14px 70px}
+ .ptog{display:block;position:sticky;top:0;z-index:30;width:100%;margin:16px 0 0;
+  padding:10px 12px;border:1px solid var(--line);border-radius:2px;background:var(--card);
+  color:var(--ink);font:14px system-ui,sans-serif;text-align:left;cursor:pointer}
+ .ptog b{float:right;color:var(--dim);font-weight:400}
+ .panel{position:static;margin-top:0;border-top:0;border-radius:0 0 2px 2px}
+ .panel.closed{display:none}
+ .seg button{padding:10px 12px;min-height:44px}
+ input[type=search],select{min-height:44px}
+ .row{height:48px;flex-wrap:wrap;align-items:flex-start}
+ .nm{width:100%;padding:3px 0 0;line-height:18px}
+ .track{flex:none;width:100%;height:22px}
+ #axis{margin-left:0}
+ #detail{left:16px;right:16px;width:auto;max-height:60vh}}
+/* Motion. Nothing here moves under the site's contract or the system
+   preference. Both are honoured: the attribute is set before first paint
+   from the media query, and the media query is also matched directly in
+   case the script did not run. */
+html[data-motion="off"] #chart,html[data-motion="off"] .row,html[data-motion="off"] .bar,
+html[data-motion="off"] .avg,html[data-motion="off"] .rng,html[data-motion="off"] .val,
+html[data-motion="off"] .gl{transition:none!important}
+@media (prefers-reduced-motion:reduce){
+ #chart,.row,.bar,.avg,.rng,.val,.gl{transition:none!important}}
 </style>
 </head><body><div class="wrap">
 
@@ -114,16 +152,17 @@ table.fits th{font-size:11px;text-transform:uppercase;letter-spacing:.05em;
 <p class="dim">How long an animal lives, against how long an animal of its size
 should live.</p>
 
-<p>Body mass predicts lifespan. Across the species below — from a nematode at a
-microgram to a blue whale at 150 tonnes, fourteen orders of magnitude — each
-tenfold increase in mass buys roughly a 1.5-fold increase in maximum lifespan,
-and the relationship holds across the whole animal kingdom. The longevity
-quotient is what is left once that relationship is divided out: observed
-lifespan over the lifespan predicted for that mass. A quotient of one is exactly
-as long as expected. The interesting animals, and the interesting groups, are
-the ones far from one.</p>
+<p>Body mass predicts lifespan. Across the species below — from a rotifer at
+half a microgram to a blue whale at 150 tonnes, fourteen and a half orders of
+magnitude — each tenfold increase in mass buys roughly a 1.5-fold increase in
+maximum lifespan, and the relationship holds across the whole animal kingdom.
+The longevity quotient is what is left once that relationship is divided out:
+observed maximum lifespan over the lifespan predicted for that mass. A quotient
+of one is exactly as long as expected. The interesting animals, and the
+interesting groups, are the ones far from one.</p>
 
-<div class="panel">
+<button class="ptog" id="ptog" aria-expanded="false" aria-controls="panel">Adjust the view <b>show ▾</b></button>
+<div class="panel closed" id="panel">
  <div class="grp"><span class="lab">View</span>
   <div class="seg" id="viewSeg">
    <button data-k="sp" aria-pressed="true">Species</button>
@@ -182,10 +221,10 @@ the ones far from one.</p>
   </div></div>
  <div class="grp"><span class="lab">Lifespan used</span>
   <div class="seg" id="metSeg">
-   <button data-k="a" aria-pressed="true">Average</button>
-   <button data-k="w">Wild</button>
-   <button data-k="p">Captive</button>
-   <button data-k="mx">Longest</button>
+   <button data-k="mx" aria-pressed="true">Longest</button>
+   <button data-k="a">Average</button>
+   <button data-k="w">Wild only</button>
+   <button data-k="p">Captive only</button>
   </div></div>
  <div class="grp"><span class="lab">Baseline</span>
   <div class="seg" id="baseSeg">
@@ -194,12 +233,12 @@ the ones far from one.</p>
   </div></div>
  <div class="grp"><span class="lab">Filter to</span>
   <div style="display:flex;gap:6px">
-   <select id="filtRank">
+   <select id="filtRank" aria-label="Filter rank">
     <option value="">— all —</option>
     <option value="ph">Phylum</option><option value="cl">Class</option>
     <option value="or">Order</option><option value="fa">Family</option>
     <option value="ge">Genus</option>
-   </select><select id="filtVal"></select></div></div>
+   </select><select id="filtVal" aria-label="Filter to taxon"></select></div></div>
  <div class="grp" id="namesBox"><span class="lab">Names</span>
   <div class="seg" id="namesSeg">
    <button data-k="both" aria-pressed="true">Both</button>
@@ -207,7 +246,7 @@ the ones far from one.</p>
    <button data-k="sci">Scientific</button>
   </div></div>
  <div class="grp"><span class="lab">Search</span>
-  <input type="search" id="q" placeholder="name…"></div>
+  <input type="search" id="q" placeholder="name…" aria-label="Search by name"></div>
  <div class="grp"><span class="lab">Scale</span>
   <div class="seg" id="scaleSeg">
    <button data-k="log" aria-pressed="true">Log</button>
@@ -265,6 +304,15 @@ and they pile up at the bottom of the ranking looking like a discovery. They are
 not a discovery. They are the sampling effort showing through. Switch to
 <b>Include C</b> to see them, and read the bottom of that ranking as a map of
 what is understudied rather than what is short-lived.</p>
+<p>One more kind of record is graded C by rule rather than by its source.
+<span id="outlierN"></span> A compilation figure that far from every other
+animal of its size and kind is a unit or field error, not an observation — the
+lowest of them was a 2.2-kilogram hare with a maximum lifespan of one month —
+and it was sitting at the bottom of every sort graded B. The rule runs in both
+directions, so a figure ten times too long is treated the same as one ten times
+too short, and it never touches a grade-A record, which was checked by hand
+against a citation. Nothing is deleted: a demoted record keeps its row, its
+note says why, and Include C shows it.</p>
 
 <h2>Colonial organisms</h2>
 <p>Four entries are colonies rather than individuals: a black coral, a boulder
@@ -276,29 +324,39 @@ the same reason: an eleven-thousand-year colony sits at the top of every
 ranking and buries the actual result. Switch <b>Colony ages</b> to Include to
 see them, marked <span class="dim">colonial</span>.</p>
 
-<h2>What the wild and captive numbers mean, and do not mean</h2>
+<h2>Wild, captive, and not recorded</h2>
+<p>Each species carries up to three maxima, and the bars say which is which:
+a solid bar is a <b>wild</b> maximum, a hollow bar a <b>captive</b> one, and a
+hatched bar a maximum whose source <b>did not say</b> where the animal lived.
+That third kind is the largest: <span id="origN"></span>. It comes from the
+Amniote and AmphiBIO compilations, which report one figure per species without
+an origin, from FishBase population records, and from the AnAge rows whose
+specimen origin is listed as unknown. Until September 2026 every one of those
+was drawn here as a wild maximum. It is not, and it is not relabelled as
+captive either; it is drawn as what it is.</p>
+<p><b>Longest</b>, the default, takes the largest of whatever a species has and
+is the figure the baselines are fitted on. <b>Average</b> takes the mean of the
+recorded maxima. <b>Wild only</b> and <b>Captive only</b> use nothing but a
+figure a source labelled as such, so they shrink the table to the species that
+have one.</p>
 <p>These are maxima, not averages. A maximum is the oldest individual anyone
 recorded, which makes it sensitive to how many individuals were watched and for
 how long. Captive maxima are better documented than wild maxima for nearly every
-species here, because captive animals are counted and wild ones are not. That
-asymmetry inflates the apparent captive advantage. It is real for small prey
-animals, which mostly die of being eaten, and it reverses for large social
-mammals: elephants and killer whales have lower median lifespans in captivity
-than in the wild, whatever their record holders show.</p>
-<p>A missing wild or captive bar means no dependable figure exists, usually
-because the species has never been held, or never been followed. The average
-then falls back to whichever measurement exists rather than treating the missing
-one as zero.</p>
+species that has both, because captive animals are counted and wild ones are
+not. That asymmetry inflates the apparent captive advantage. It is real for
+small prey animals, which mostly die of being eaten, and it reverses for large
+social mammals: elephants and killer whales have lower median lifespans in
+captivity than in the wild, whatever their record holders show.</p>
 <p class="small">Data quality is graded per species: A is documented and
-verified, B is a defensible literature estimate, C is uncertain. The grade
-appears in the panel when a species is selected. Disputed records — the
-226-year koi, the 120-year cockatoo — are excluded in favour of the verified
-figure.</p>
+verified, B is a defensible literature estimate, C is uncertain. The grade and
+the source appear in the panel when a species is selected. Disputed records —
+the 226-year koi, the 120-year cockatoo — are excluded in favour of the
+verified figure.</p>
 
 <hr>
 <p class="small">Andrew Silvestri · lifespan and mass compiled from the
-comparative longevity literature; rebuild or extend the table from AnAge with
-<code>data/load_anage.py</code>.</p>
+comparative longevity literature; the merge that builds the table is
+<code>data/ingest.py</code> and the model is <code>build_lq.py</code>.</p>
 </div>
 
 <script>
@@ -311,22 +369,86 @@ comparative longevity literature; rebuild or extend the table from AnAge with
 const RAW = (function () {
   const P = JSON.parse(/*DATA*/);
   const D = P.dict, F = P.dictFields, C = P.cols, out = new Array(P.n);
-  const plain = ["n", "s", "m", "w", "p", "a", "mx", "pg", "pc", "col"];
+  const plain = ["n", "s", "m", "w", "p", "u", "a", "mx", "pg", "pc", "col"];
   for (let i = 0; i < P.n; i++) {
     const o = {};
     for (const k of plain) o[k] = C[k][i];
     for (const k of F) o[k] = D[k][C[k][i]];
+    /* AnAge's missing-value sentinel for common name arrives as the literal
+       string "-999" (127 rows); blank/whitespace-only common names show up
+       too. Normalize both to "" here, once, so label2() and the search index
+       built below never see either. */
+    if (typeof o.n === "string") {
+      const t = o.n.trim();
+      if (t === "" || t === "-999") o.n = "";
+    }
     out[i] = o;
   }
   return out;
 })();
 const FITS = /*FITS*/;
-const ROWH = 30;
+/* Row height follows the phone layout, where the name takes its own line. */
+const rowH = () => matchMedia('(max-width:700px)').matches ? 48 : 30;
+let ROWH = rowH();
 const RANKNAME = {ki:'kingdom',ph:'phylum',cl:'class',or:'order',
                   fa:'family',ge:'genus'};
-let S = {view:'sp', rank:'cl', sort:'lq', gmet:'lq', minn:3, met:'a',
+let S = {view:'sp', rank:'cl', sort:'lq', gmet:'lq', minn:3, met:'mx',
          base:'c', q:'', scale:'log', fRank:'', fVal:'', col:'hide',
          dir:'desc', cap:400, names:'both', grade:'ab'};
+
+/* ---------- URL state ----------
+   The view lives in location.hash so it can be linked and survives a reload.
+   FORMAT (this is the contract other pages link against — keep it stable):
+   a URLSearchParams query string after "#", one key=value pair per S
+   property that differs from its default, e.g.
+     #fRank=or&fVal=Chiroptera&sort=life
+   for the species view filtered to order Chiroptera, sorted by longevity.
+   The default lifespan metric changed from 'a' (average) to 'mx' (longest)
+   on 2026-09-04 so the app agrees with the page and the outputs; links that
+   say met=a still work and still mean average.
+   Keys are exactly the S property names: view, rank, sort, gmet, minn, met,
+   base, q, scale, fRank, fVal, col, dir, cap, names, grade. Any key that is
+   absent, unparseable, or outside its known set of values keeps its default,
+   so a partial or malformed hash never produces a broken view — worst case
+   it degrades to the default view plus whatever keys did parse. */
+const DEFAULTS = {...S};
+const ENUM_OPTS = {
+  view:['sp','gr'], rank:['ph','cl','or','fa','ge'], sort:['lq','life','mass','name'],
+  gmet:['lq','med','max','n'], minn:[1,3,5,10], met:['mx','a','w','p'],
+  base:['c','g'], scale:['log','lin'], fRank:['','ph','cl','or','fa','ge'],
+  col:['hide','show'], dir:['desc','asc'], cap:[200,400,1000,99999],
+  names:['both','common','sci'], grade:['ab','all'],
+};
+function encodeHash(){
+  const p=new URLSearchParams();
+  for(const k in DEFAULTS) if(S[k]!==DEFAULTS[k]) p.set(k,S[k]);
+  return p.toString();
+}
+/* Called from render(), so the hash always reflects the state currently on
+   screen. replaceState (not pushState) keeps every control tweak out of
+   browser history — only the page's own back/forward would spam otherwise. */
+function syncHash(){
+  const h=encodeHash();
+  history.replaceState(null,'',location.pathname+location.search+(h?'#'+h:''));
+}
+/* `fVal` is free text, validated later by fillVals(), which already falls
+   back to the first option when the wanted value is not present for the
+   chosen fRank — so it needs no check here. */
+function decodeHash(){
+  const next={...DEFAULTS};
+  const p=new URLSearchParams(location.hash.slice(1));
+  for(const k in DEFAULTS){
+    if(!p.has(k)) continue;
+    const raw=p.get(k), opts=ENUM_OPTS[k];
+    if(typeof DEFAULTS[k]==='number'){
+      const v=Number(raw);
+      if(Number.isFinite(v) && (!opts||opts.includes(v))) next[k]=v;
+    } else if(opts){
+      if(opts.includes(raw)) next[k]=raw;
+    } else next[k]=raw;
+  }
+  return next;
+}
 
 const chart=document.getElementById('chart'), axis=document.getElementById('axis');
 const nodes=new Map();
@@ -393,11 +515,19 @@ let _grpKey=null, _grp=null;
 function groups(){
   /* Bucketing and summarising every group is the most expensive thing this
      page does, and changing the sort metric or the bar mode does not change
-     any of it. Cached on the inputs that actually feed it. */
+     any of it. Cached on the inputs that actually feed it.
+
+     speciesPool() is called before the key is built, not after. _poolKey is
+     only refreshed inside speciesPool(), so reading it first meant a filter
+     change - grade, taxon, search - produced a key identical to the previous
+     one, hit this cache, and returned the previous groups. The bug was quiet
+     because it needs two renders in one session to show: a fresh load always
+     misses the cache and is always right. */
+  const pool=speciesPool();
   const gkey=_poolKey+'|'+S.rank+'|'+S.met+'|'+S.minn;
   if(gkey===_grpKey) return _grp;
   const rk=S.rank, buckets=new Map();
-  speciesPool().forEach(d=>{
+  pool.forEach(d=>{
     const k=d[rk]; if(!k) return;
     if(!buckets.has(k)) buckets.set(k,[]);
     buckets.get(k).push(d);
@@ -428,8 +558,14 @@ function groupVal(g){
 }
 
 /* ---------- scale ---------- */
+/* In quotient mode the domain always contains 1, because the bars are drawn
+   from parity: a species at 0.5x extends left of the line, one at 2x extends
+   right, and bar length means something. The old scale ran from 0.85 x the
+   smallest visible value, so in the default view (all above 1) the parity
+   line was off the left edge and a 10x species drew at 60% of a 47x one. */
 function makeScale(vals){
   vals=vals.filter(v=>v&&v>0);
+  if(barMode()==='lq') vals.push(1/1.3, 1.3);
   if(!vals.length) vals=[1];
   const hi=Math.max(...vals), lo=Math.min(...vals);
   if(S.scale==='log'){
@@ -463,11 +599,12 @@ function render(){
   document.getElementById('capBox').classList.toggle('off',S.view==='gr');
   document.getElementById('namesBox').classList.toggle('off',S.view==='gr');
   document.getElementById('legend').innerHTML = S.view==='sp'
-   ? '<span><i class="sw" style="background:var(--wild)"></i>wild</span>'+
-     '<span><i class="sw" style="background:var(--cap)"></i>captive</span>'+
+   ? '<span><i class="sw" style="background:var(--wild)"></i>wild maximum</span>'+
+     '<span><i class="sw" style="border:2px solid var(--cap)"></i>captive maximum</span>'+
+     '<span><i class="sw" style="background:repeating-linear-gradient(90deg,var(--unk) 0 3px,transparent 3px 5px)"></i>maximum, origin not recorded</span>'+
      '<span><i class="sw" style="background:var(--avg);width:2px;height:12px">'+
-     '</i>average of the two</span>'+
-     '<span>'+(barMode()==='lq'?'bar length: quotient':'bar length: years')+'</span>'
+     '</i>average of the recorded maxima</span>'+
+     '<span>'+(barMode()==='lq'?'bar length: quotient, from parity':'bar length: years')+'</span>'
    : '<span><i class="sw" style="background:var(--grp)"></i>group value</span>'+
      '<span><i class="sw" style="background:var(--grp);opacity:.32;height:2px">'+
      '</i>range across the group</span>'+
@@ -476,6 +613,7 @@ function render(){
 
   S.view==='sp' ? renderSpecies() : renderGroups();
   crumb();
+  syncHash();
 }
 
 function crumb(){
@@ -519,7 +657,7 @@ function renderSpecies(){
   const list=all.slice(0,S.cap);
   const truncated=all.length-list.length;
   const vals=[];
-  list.forEach(d=>['w','p','a'].forEach(kk=>{
+  list.forEach(d=>['w','p','u','a'].forEach(kk=>{
     const v=barMode()==='lq'?lqOf(d,kk):lifeOf(d,kk); if(v) vals.push(v);}));
   const sc=makeScale(vals);
   document.getElementById('count').textContent=
@@ -541,15 +679,18 @@ function renderSpecies(){
       label2(d)+(d.col?' <span class="colb">colonial</span>':''));
     const vw=barMode()==='lq'?lqOf(d,'w'):d.w;
     const vp=barMode()==='lq'?lqOf(d,'p'):d.p;
+    const vu=barMode()==='lq'?lqOf(d,'u'):d.u;
     const va=barMode()==='lq'?lqOf(d,'a'):d.a;
-    setBar(el,'.bw',vw?sc.f(vw):0,!!vw);
-    setBar(el,'.bc',vp?sc.f(vp):0,!!vp);
-    setBar(el,'.bg1',0,false);
+    const o=origin(sc);
+    setBar(el,'.bw',o,vw?sc.f(vw):o,!!vw);
+    setBar(el,'.bc',o,vp?sc.f(vp):o,!!vp);
+    setBar(el,'.bu',o,vu?sc.f(vu):o,!!vu);
+    setBar(el,'.bg1',0,0,false);
     const av=el.$.avg;
     put(av,'left',(va?sc.f(va):0)+'%');
-    put(av,'opacity',(va&&vw&&vp)?'1':'0');
+    put(av,'opacity',(va&&((vw?1:0)+(vp?1:0)+(vu?1:0))>1)?'1':'0');
     put(el.$.rng,'opacity','0');
-    const lead=Math.max(vw?sc.f(vw):0,vp?sc.f(vp):0);
+    const lead=Math.max(o,vw?sc.f(vw):0,vp?sc.f(vp):0,vu?sc.f(vu):0);
     const cur=barVal(d,S.met);
     label(el,lead,barMode()==='lq'?(cur!=null?cur.toFixed(2)+'×':'')
                                   :(cur!=null?fmt(cur)+' yr':''));
@@ -587,8 +728,9 @@ function renderGroups(){
       (g.nCol?` <span class="colb">${g.nCol} colonial</span>`:''));
 
     const v=groupVal(g);
-    setBar(el,'.bw',0,false); setBar(el,'.bc',0,false);
-    setBar(el,'.bg1',sc.f(v),true);
+    const o=origin(sc);
+    setBar(el,'.bw',0,0,false); setBar(el,'.bc',0,0,false); setBar(el,'.bu',0,0,false);
+    setBar(el,'.bg1',o,sc.f(v),true);
     put(el.$.avg,'opacity','0');
     const rng=el.$.rng;
     if(S.gmet==='lq'&&g.lqMin&&g.lqMax&&g.n>1){
@@ -596,7 +738,7 @@ function renderGroups(){
       put(rng,'width',Math.max(0,sc.f(g.lqMax)-sc.f(g.lqMin))+'%');
       put(rng,'opacity','1');
     } else put(rng,'opacity','0');
-    const end=Math.max(sc.f(v),S.gmet==='lq'&&g.lqMax?sc.f(g.lqMax):0);
+    const end=Math.max(o,sc.f(v),S.gmet==='lq'&&g.lqMax?sc.f(g.lqMax):0);
     label(el,end, S.gmet==='lq'?v.toFixed(2)+'×'
       : S.gmet==='n'?v+' species' : fmt(v)+' yr');
   });
@@ -615,13 +757,16 @@ function getRow(key,onClick){
   if(!el){
     el=document.createElement('div');
     el.className='row';
+    el.setAttribute('role','button'); el.tabIndex=0;
     el.innerHTML='<div class="nm"></div><div class="track">'+
       '<div class="rng"></div><div class="bar bw"></div>'+
+      '<div class="bar bu"></div>'+
       '<div class="bar bc"></div><div class="bar bg1"></div>'+
       '<div class="avg"></div><div class="val"></div></div>';
     const qs=s=>el.querySelector(s);
-    el.$={nm:qs('.nm'), rng:qs('.rng'), bw:qs('.bw'), bc:qs('.bc'),
+    el.$={nm:qs('.nm'), rng:qs('.rng'), bw:qs('.bw'), bc:qs('.bc'), bu:qs('.bu'),
           bg1:qs('.bg1'), avg:qs('.avg'), val:qs('.val')};
+    el.onkeydown=e=>{ if(e.key==='Enter'||e.key===' '){ e.preventDefault(); el.click(); } };
     chart.appendChild(el); nodes.set(key,el);
   }
   el.onclick=onClick;
@@ -650,9 +795,14 @@ function putHTML(el,v){
   el._h=v; el.innerHTML=v;
 }
 function place(el,i){ put(el,'transform','translateY('+(i*ROWH)+'px)'); }
-function setBar(el,sel,w,on){
+/* Where bars start: parity in quotient mode, the axis origin otherwise. */
+function origin(sc){ return barMode()==='lq' ? sc.f(1) : 0; }
+/* A bar runs from `from` to `to` in percent of the track, whichever way
+   round they are; a species below parity extends leftward. */
+function setBar(el,sel,from,to,on){
   const b=el.$[sel.replace('.','')];
-  put(b,'width',w+'%'); put(b,'opacity',on?'1':'0');
+  const l=Math.min(from,to), w=Math.abs(to-from);
+  put(b,'left',l+'%'); put(b,'width',w+'%'); put(b,'opacity',on?'1':'0');
 }
 function label(el,leftPct,text){
   const v=el.$.val;
@@ -680,13 +830,15 @@ function sweep(shown,n){
 }
 function drawAxis(sc){
   axis.innerHTML='';
+  const parity=barMode()==='lq'&&1>=sc.lo&&1<=sc.hi;
   ticks(sc).forEach(v=>{
+    if(parity&&v===1) return;   /* the parity line carries its own label */
     const g=document.createElement('div');
     g.className='gl'; g.style.left=sc.f(v)+'%';
     g.innerHTML='<span>'+(v>=1?fmt(v):v.toPrecision(1))+'</span>';
     axis.appendChild(g);
   });
-  if(barMode()==='lq'&&1>=sc.lo&&1<=sc.hi){
+  if(parity){
     const g=document.createElement('div');
     g.className='gl one'; g.style.left=sc.f(1)+'%';
     g.innerHTML='<span>1 · as predicted</span>';
@@ -706,12 +858,14 @@ function detail(d){
     `<div class="small" style="font-style:italic">${d.s}</div>`+`
     <table>${tax}
      <tr><td>adult body mass</td><td>${fmtMass(d.m)}</td></tr>
-     <tr><td>wild maximum</td><td>${d.w?fmt(d.w)+' yr':'no dependable figure'}</td></tr>
-     <tr><td>captive maximum</td><td>${d.p?fmt(d.p)+' yr':'no dependable figure'}</td></tr>
-     <tr><td>average of the two</td><td>${fmt(d.a)} yr</td></tr>
-     <tr><td>predicted, own group</td><td>${d.pc?fmt(d.pc)+' yr':'—'}</td></tr>
+     <tr><td>wild maximum</td><td>${d.w?fmt(d.w)+' yr':'none recorded'}</td></tr>
+     <tr><td>captive maximum</td><td>${d.p?fmt(d.p)+' yr':'none recorded'}</td></tr>
+     <tr><td>maximum, origin not recorded</td><td>${d.u?fmt(d.u)+' yr':'—'}</td></tr>
+     <tr><td>longest of those</td><td>${fmt(d.mx)} yr</td></tr>
+     <tr><td>average of those</td><td>${fmt(d.a)} yr</td></tr>
+     <tr><td>predicted, own group</td><td>${d.pc?fmt(d.pc)+' yr':'no group fit — uses all animals'}</td></tr>
      <tr><td>predicted, all animals</td><td>${fmt(d.pg)} yr</td></tr>
-     <tr><td><b>quotient, own group</b></td><td><b>${lqc?lqc.toFixed(2)+'×':'—'}</b></td></tr>
+     <tr><td><b>quotient, own group</b></td><td><b>${lqc?lqc.toFixed(2)+'×':(lqg?lqg.toFixed(2)+'× (all animals)':'—')}</b></td></tr>
      <tr><td>quotient, all animals</td><td>${lqg?lqg.toFixed(2)+'×':'—'}</td></tr>
      <tr><td>data quality</td><td>${q}</td></tr>
      ${d.col?'<tr><td>colonial</td><td>yes — excluded from fits</td></tr>':''}
@@ -734,10 +888,20 @@ function seg(id,key,cast){
     render();
   });
 }
-seg('viewSeg','view'); seg('rankSeg','rank'); seg('sortSeg','sort');
-seg('gmetSeg','gmet'); seg('minnSeg','minn',Number); seg('metSeg','met');
-seg('baseSeg','base'); seg('scaleSeg','scale'); seg('colSeg','col');
-seg('dirSeg','dir'); seg('capSeg','cap',Number); seg('namesSeg','names'); seg('gradeSeg','grade');
+/* Listed once so the hash restore below can walk the same table and press
+   the right button in each group without repeating it. */
+const SEGS = [
+  ['viewSeg','view'], ['rankSeg','rank'], ['sortSeg','sort'],
+  ['gmetSeg','gmet'], ['minnSeg','minn',Number], ['metSeg','met'],
+  ['baseSeg','base'], ['scaleSeg','scale'], ['colSeg','col'],
+  ['dirSeg','dir'], ['capSeg','cap',Number], ['namesSeg','names'], ['gradeSeg','grade'],
+];
+SEGS.forEach(([id,key,cast])=>seg(id,key,cast));
+/* Each segment group is named by the label above it, for screen readers. */
+document.querySelectorAll('.grp').forEach(g=>{
+  const lab=g.querySelector('.lab'), s=g.querySelector('.seg');
+  if(lab&&s){ s.setAttribute('role','group'); s.setAttribute('aria-label',lab.textContent); }
+});
 document.getElementById('q').addEventListener('input',e=>{
   S.q=e.target.value; render(); });
 
@@ -784,10 +948,48 @@ document.getElementById('filtVal').addEventListener('change',e=>{
        `rejected: ${FITS.rejected_fits[k]} — uses the global baseline</td></tr>`;
   });
   document.getElementById('fitTable').innerHTML=h;
+  const o=FITS.outlier_rule, oc=FITS.origin_census;
+  if(o) document.getElementById('outlierN').textContent=
+    `${o.demoted} grade-B records sit more than ${o.sigma} residual standard `+
+    `deviations from their own group's fit and are demoted to C before the `+
+    `final fit is run (`+Object.keys(o.by_pool).sort().map(k=>`${nice[k]||k} ${o.by_pool[k]}`).join(', ')+`).`;
+  if(oc) document.getElementById('origN').textContent=
+    `${oc.unrecorded.toLocaleString()} species carry a maximum of unrecorded origin, `+
+    `against ${oc.wild.toLocaleString()} with a wild maximum and ${oc.captive.toLocaleString()} with a captive one`;
 })();
 
-fillVals();
-render();
+/* Phones: the panel opens on demand. */
+(function(){
+  const b=document.getElementById('ptog'), p=document.getElementById('panel');
+  const mob=()=>matchMedia('(max-width:700px)').matches;
+  const set=open=>{ p.classList.toggle('closed', mob() && !open);
+    b.setAttribute('aria-expanded', open?'true':'false');
+    b.innerHTML='Adjust the view <b>'+(open?'hide ▴':'show ▾')+'</b>'; };
+  let open=!mob();
+  b.onclick=()=>{ open=!open; set(open); };
+  set(open);
+  addEventListener('resize',()=>{ if(!mob()) p.classList.remove('closed'); else set(open);
+    const h=rowH(); if(h!==ROWH){ ROWH=h; render(); } });
+})();
+
+/* Restore a linked view from the hash before the first paint, then sync
+   every control to match it. decodeHash() already guards each key, so an
+   absent or malformed hash falls back cleanly to the page's own defaults. */
+function restoreFromHash(){
+  S = decodeHash();
+  SEGS.forEach(([id,key])=>press(id,String(S[key])));
+  document.getElementById('q').value = S.q;
+  document.getElementById('filtRank').value = S.fRank;
+  fillVals(S.fVal);
+  render();
+}
+restoreFromHash();
+
+/* Arriving at a second link on a page already showing this one changes the
+   fragment without reloading the document, so the block above never runs
+   again and the view silently keeps the old state. syncHash() uses
+   replaceState, which does not fire this event, so there is no loop. */
+window.addEventListener('hashchange', restoreFromHash);
 
 /* A handle for the test harness. Top-level const does not land on window, and
    the performance checks need to measure the real pool and the real grouping

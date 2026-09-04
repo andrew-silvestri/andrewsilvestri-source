@@ -197,15 +197,21 @@ def load(path=DATA):
                 renames[(rank, old, new)] = renames.get((rank, old, new), 0) + 1
             wild = float(r["wild_yr"]) if r["wild_yr"].strip() else None
             cap = float(r["captive_yr"]) if r["captive_yr"].strip() else None
-            if wild is None and cap is None:
+            unk = (float(r["unknown_yr"])
+                   if (r.get("unknown_yr") or "").strip() else None)
+            if wild is None and cap is None and unk is None:
                 continue
-            vals = [v for v in (wild, cap) if v is not None]
+            vals = [v for v in (wild, cap, unk) if v is not None]
             row = {
                 "name": r["common_name"],
                 "sci": r["scientific_name"],
                 "mass_g": float(r["mass_g"]),
                 "wild": wild,
                 "captive": cap,
+                # A maximum the source reports without saying where the animal
+                # lived. Kept apart from wild and captive so the visualiser can
+                # say so; it still counts in the average and the maximum.
+                "unrecorded": unk,
                 # The average is over whichever measurements exist. A species
                 # never held in captivity is not penalised with a zero; its
                 # average is its wild value.
@@ -304,8 +310,70 @@ def median(vals):
     return vals[n // 2] if n % 2 else (vals[n // 2 - 1] + vals[n // 2]) / 2
 
 
+OUTLIER_SIGMA = 3.0
+
+
+def demote_outliers(rows):
+    """Grade-B records more than OUTLIER_SIGMA residual standard deviations
+    from a preliminary fit of their own pool are demoted to grade C.
+
+    The bottom of the ranking used to be twenty-eight Amniote records with
+    maximum lifespans of one to three months at body masses up to five
+    kilograms - an Indian hare at one month and 2.2 kg. Those are unit or
+    field errors in the compilation, not observations, and they were graded B
+    by construction (every Amniote row is), so the grade-C filter that keeps
+    thin records out of the regressions never saw them. They sat at the low
+    end of every sort and were the whole "who does not" half of the published
+    ranked figure.
+
+    The rule is the ordinary one for a regression: a residual more than three
+    standard deviations from the fit is not drawn from the same population as
+    the fit. It is applied in both directions - a compilation figure ten times
+    too long is no more trustworthy than one ten times too short - and only to
+    grade B. Grade A records are hand-verified with a citation each and are
+    exempt: Labord's chameleon at 0.13x and the ocean quahog at 47x are real,
+    and the rule must not eat the results it exists to protect. The
+    preliminary fit is on A and B non-colonial rows, per pool, with the global
+    fit standing in for a pool too small or too weak to fit on its own (the
+    same test the final fit applies). Nothing is deleted: a demoted record
+    keeps its row, its grade becomes C, its note says why, and the visualiser
+    shows it under "Include C" like every other uncertain record.
+    """
+    pre = [r for r in rows if in_fit(r)]
+    ga, gb, _, _ = ols_loglog(pre)
+    pools = {}
+    for r in pre:
+        pools.setdefault(r["pool"], []).append(r)
+    fits = {}
+    for pool, members in pools.items():
+        if len(members) < MIN_CLASS_N:
+            continue
+        a, b, r2, _ = ols_loglog(members)
+        if b > 0 and r2 >= MIN_CLASS_R2:
+            fits[pool] = (a, b)
+    sd, demoted = {}, {}
+    for pool, members in pools.items():
+        a, b = fits.get(pool, (ga, gb))
+        res = [math.log10(r["maximum"]) - (a + b * math.log10(r["mass_g"]))
+               for r in members]
+        mean = sum(res) / len(res)
+        sd[pool] = math.sqrt(sum((x - mean) ** 2 for x in res) / len(res))
+        for r, x in zip(members, res):
+            if r["quality"] == "B" and abs(x - mean) > OUTLIER_SIGMA * sd[pool]:
+                r["quality"] = "C"
+                r["note"] = ((r["note"] + "; ") if r["note"] else "") + (
+                    f"demoted to C: {10 ** abs(x - mean):.0f}x "
+                    f"{'below' if x < mean else 'above'} its group's fit, "
+                    f"past {OUTLIER_SIGMA:g} sd")
+                demoted[pool] = demoted.get(pool, 0) + 1
+    return {"sigma": OUTLIER_SIGMA, "applies_to": "grade B, non-colonial",
+            "demoted": sum(demoted.values()), "by_pool": demoted,
+            "residual_sd_log10": {k: round(v, 4) for k, v in sd.items()}}
+
+
 def build(path=DATA):
     rows = load(path)
+    outliers = demote_outliers(rows)
     fit_rows = [r for r in rows if in_fit(r)]
     grade_census = {}
     for r in rows:
@@ -345,9 +413,9 @@ def build(path=DATA):
 
     # ---- species table --------------------------------------------------
     cols = (["name", "sci"] + RANKS +
-            ["mass_g", "wild", "captive", "average", "maximum", "colonial",
-             "pred_global", "pred_class", "lq_global_maximum",
-             "lq_class_maximum", "quality"])
+            ["mass_g", "wild", "captive", "unrecorded", "average", "maximum",
+             "colonial", "pred_global", "pred_class", "lq_global_maximum",
+             "lq_class_maximum", "quality", "note"])
     with open(os.path.join(OUT, "lq_table.csv"), "w", newline="",
               encoding="utf-8") as fh:
         w = csv.writer(fh)
@@ -357,7 +425,13 @@ def build(path=DATA):
                         else r.get(c) for c in cols])
 
     # ---- group table ----------------------------------------------------
-    groups = rank_summary(rows)
+    # Ranked over A and B only, which is what the visualiser shows by default
+    # and what the page quotes. Grade C is uncertain by definition, and since
+    # the outlier rule it is also where a compilation figure the fit cannot
+    # account for is parked; averaging it into a group statistic would put the
+    # artefact back into the number the page is built to report.
+    ranked_rows = [r for r in rows if r["quality"] != "C"]
+    groups = rank_summary(ranked_rows)
     with open(os.path.join(OUT, "group_summary.csv"), "w", newline="",
               encoding="utf-8") as fh:
         w = csv.writer(fh)
@@ -383,6 +457,10 @@ def build(path=DATA):
         "class_fits": {k: {"a": v[0], "b": v[1], "r2": v[2], "n": v[3]}
                        for k, v in fits.items()},
         "rejected_fits": rejected,
+        "outlier_rule": outliers,
+        "origin_census": {
+            k: sum(1 for r in rows if r[k]) for k in
+            ("wild", "captive", "unrecorded")},
     }
     with open(os.path.join(OUT, "summary.json"), "w", encoding="utf-8") as fh:
         json.dump(summary, fh, indent=2)
@@ -433,6 +511,13 @@ def report(rows, summary, fits, rejected, groups):
     gc = summary["grade_census"]
     print(f"{summary['n_colonial_excluded_from_fits']} colonial organisms "
           f"excluded from every fit.")
+    o = summary["outlier_rule"]
+    print(f"{o['demoted']} grade-B records demoted to C for sitting more than "
+          f"{o['sigma']:g} sd from their group's fit: "
+          + "  ".join(f"{k} {v}" for k, v in sorted(o["by_pool"].items())))
+    oc = summary["origin_census"]
+    print(f"lifespan origin: wild {oc['wild']}  captive {oc['captive']}  "
+          f"unrecorded {oc['unrecorded']}")
     print(f"fit strategy: {FIT_STRATEGY}  "
           + {"filter": "(grade C dropped from the regressions)",
              "weighted": "(grade C kept, down-weighted)",
@@ -467,11 +552,13 @@ def report(rows, summary, fits, rejected, groups):
         print(f"  {gr['group']:18s} n={gr['n']:3d}  LQ {gr['geo_lq']:5.2f}"
               f"   longest: {gr['top_name']} ({gr['top_life']:g} yr)")
     top = sorted([r for r in rows if r["lq_class_maximum"] and
-                  not r["colonial"]], key=lambda r: -r["lq_class_maximum"])[:8]
+                  not r["colonial"] and r["quality"] != "C"],
+                 key=lambda r: -r["lq_class_maximum"])[:8]
     print("\nHighest LQ against own group:")
     for r in top:
         print(f"  {r['name']:32s} {r['lq_class_maximum']:6.2f}")
-    bot = sorted([r for r in rows if r["lq_class_maximum"]],
+    bot = sorted([r for r in rows if r["lq_class_maximum"]
+                  and r["quality"] != "C"],
                  key=lambda r: r["lq_class_maximum"])[:5]
     print("Lowest LQ against own group:")
     for r in bot:
@@ -586,7 +673,7 @@ def figures(rows, summary, fit_rows):
     _save(fig, "fig1_allometry.png")
 
     ranked = sorted([r for r in rows if r["lq_class_maximum"]
-                     and not r["colonial"]],
+                     and not r["colonial"] and r["quality"] != "C"],
                     key=lambda r: r["lq_class_maximum"])
     sel = ranked[:12] + ranked[-18:]
     # Bars from zero on a linear axis, with the ocean quahog out at 48, drew
@@ -633,8 +720,8 @@ def figures(rows, summary, fit_rows):
     fig.tight_layout()
     _save(fig, "fig3_wild_vs_captive.png")
 
-    # order-level comparison
-    groups = rank_summary(rows)
+    # order-level comparison, A and B only (see build())
+    groups = rank_summary([r for r in rows if r["quality"] != "C"])
     ords = [g for g in groups["order"] if g["n"] >= 4 and g["geo_lq"]]
     ords.sort(key=lambda g: g["geo_lq"])
     # One column of every qualifying order made a figure 1350x5265 px - a
@@ -684,7 +771,7 @@ def write_html(rows, summary):
     """
     # dictionary-encoded fields: a few hundred distinct values, thousands of uses
     DICT = ["c", "q", "note"] + [rk[:2] for rk in RANKS]
-    NUM = ["m", "w", "p", "a", "mx", "pg", "pc", "col"]
+    NUM = ["m", "w", "p", "u", "a", "mx", "pg", "pc", "col"]
     COLS = ["n", "s"] + NUM + DICT
 
     tables = {k: {} for k in DICT}
@@ -703,6 +790,7 @@ def write_html(rows, summary):
         cols["m"].append(r["mass_g"])
         cols["w"].append(r["wild"])
         cols["p"].append(r["captive"])
+        cols["u"].append(r["unrecorded"])
         cols["a"].append(round(r["average"], 3))
         cols["mx"].append(r["maximum"])
         cols["pg"].append(round(r["pred_global"], 4))

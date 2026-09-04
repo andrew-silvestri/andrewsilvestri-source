@@ -160,6 +160,14 @@ PROCESSES = {
         name="Cold storage at origin", unit="kWh", direct=0.0,
         note="Chilling before export, charged at the producing grid.",
         quality="A", inputs=[], grid_scaled=True),
+    "gas_boiler": dict(
+        name="Natural gas, burned for heat", unit="kg gas burned", direct=2.75,
+        note="Combustion of one kilogram of gas (2.75 kg CO2), with the "
+             "extraction and leakage behind it as an input. Until 2026-09-04 "
+             "cheesemaking took its gas as `natgas_extraction` alone, which "
+             "charged the leak and not the flame: 0.33 kg CO2e per kilogram "
+             "of cheese was missing.",
+        quality="A", inputs=[("natgas_extraction", 1.0, 1.0)]),
     "greenhouse_heat": dict(
         name="Greenhouse heating", unit="kg gas burned", direct=2.75,
         note="Combustion only. Heated winter production in northern Europe "
@@ -238,6 +246,21 @@ PROCESSES = {
              "out of a per-kilometre figure, which is why per-kilometre "
              "figures for cars and for trains are rarely comparable.",
         quality="C", inputs=[]),
+
+    "rail_infra": dict(
+        name="Track, structures and signalling", unit="passenger-km",
+        direct=0.0065,
+        note="Construction and maintenance of the line, amortised over its "
+             "traffic. UIC 2016 reviews the published methodologies and "
+             "settles on the IFEU approach: about 50 tonnes CO2 per line-km "
+             "per year, which is 'around 6 to 7 gCO2/pkm or tkm' for a line "
+             "with under 30% of its length on bridges and in tunnels. The "
+             "midpoint, 6.5 g, is used. Until 2026-09-04 this stage borrowed "
+             "the road process at a scaled amount, 2.1 g/pkm, which "
+             "understated rail's infrastructure by about three times.",
+        source="UIC, Carbon Footprint of Railway Infrastructure, June 2016, "
+               "p. 32 (50 tCO2/km/year; 6-7 gCO2/pkm); IFEU methodology, p. 28",
+        quality="B", inputs=[]),
 
     "cotton_fibre": dict(
         name="Cotton, field to bale", unit="kg fibre", direct=0.9,
@@ -677,7 +700,7 @@ PRODUCTS = {
                 basis="physical, IDF feed-energy (Flysjo et al. 2011, Sweden)",
                 note="On-farm chilling is continuous."),
             dict(id="cheesemaking", name="Cheesemaking", inputs=[
-                ("natgas_extraction", 0.12, 1.0),
+                ("gas_boiler", 0.12, 1.0),
                 ("process_kwh", 0.55, 1.0)], direct=0.0, share=0.90,
                 basis="unstated (assumed)",
                 note="Allocation: whey leaves as a saleable protein stream, so "
@@ -886,11 +909,10 @@ PRODUCTS = {
                  note="4.4 kWh per 100 passenger-km at the pantograph, "
                       "including distribution losses."),
             dict(id="track", name="Track and signalling",
-                 inputs=[("road_infra", 0.05, 1.0)], direct=0.0,
-                 note="Rail infrastructure is heavier per kilometre than road "
-                      "and carries far more traffic, so per passenger it is "
-                      "smaller. Included for the same reason it is included "
-                      "for the car: so the comparison is honest."),
+                 inputs=[("rail_infra", 100.0, 1.0)], direct=0.0,
+                 note="Included for the same reason the road is included for "
+                      "the car: so the comparison is honest. A hundred "
+                      "passenger-kilometres of line, at the UIC 2016 figure."),
         ]),
 
     "flight_short": dict(

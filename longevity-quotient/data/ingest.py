@@ -54,7 +54,27 @@ REPORT = os.path.join(HERE, "..", "outputs", "ingest_report.json")
 
 FIELDS = ["common_name", "scientific_name", "kingdom", "phylum", "class",
           "order", "family", "genus", "mass_g", "wild_yr", "captive_yr",
-          "colonial", "quality", "note"]
+          "unknown_yr", "colonial", "quality", "note"]
+
+# Three lifespan columns, not two. wild_yr and captive_yr hold maxima whose
+# source says where the record-holder lived. unknown_yr holds a maximum the
+# source reports without saying - which is every Amniote, PanTHERIA and
+# AmphiBIO figure, every FishBase figure not taken from its LongevityWild
+# field, and AnAge rows whose "Specimen origin" is unknown. Until 2026-09-04
+# all of those were written into wild_yr, so 63% of what the visualiser drew
+# as a wild maximum was nothing of the kind. Captive maxima run longer than
+# wild ones, so the mislabelling inflated exactly the quotient the page is
+# about. A number the source did not label is not relabelled here either.
+
+def origin_of(r):
+    """Which of the three lifespan columns a record fills: 'wild', 'captive',
+    'wild+captive', or 'unrecorded' (possibly combined). This is what the
+    provenance file and the page report, so the reader can count how much of
+    the wild column is actually wild."""
+    parts = [k for k, col in (("wild", "wild_yr"), ("captive", "captive_yr"),
+                              ("unrecorded", "unknown_yr")) if r.get(col)]
+    return "+".join(parts) or "none"
+
 
 # Highest precedence first. The index is the tie-break.
 ORDER = ["seed", "anage", "amniote", "pantheria", "amphibio", "fishbase"]
@@ -105,13 +125,14 @@ def num(v):
 
 def rec(source, sci, cls="", order="", family="", genus="", common="",
         mass=None, wild=None, captive=None, quality="C", phylum="Chordata",
-        kingdom="Animalia", colonial=False, note=""):
+        kingdom="Animalia", colonial=False, note="", unknown=None):
     sci = " ".join(str(sci).split())
     return dict(source=source, scientific_name=sci, common_name=common or "",
                 kingdom=kingdom, phylum=phylum, class_=cls.strip(),
                 order=order.strip(), family=family.strip(),
                 genus=(genus or sci.split(" ")[0]).strip(),
                 mass_g=mass, wild_yr=wild, captive_yr=captive,
+                unknown_yr=unknown,
                 quality=quality, colonial=colonial, note=note)
 
 
@@ -126,7 +147,8 @@ def load_seed():
                            num(r["wild_yr"]), num(r["captive_yr"]),
                            r["quality"], r["phylum"], r["kingdom"],
                            r.get("colonial", "no").strip().lower() == "yes",
-                           r.get("note", "")))
+                           r.get("note", ""),
+                           unknown=num(r.get("unknown_yr"))))
     return out
 
 
@@ -168,8 +190,9 @@ def load_anage():
         origin = (r.get("Specimen origin") or "").strip().lower()
         wild = life if origin == "wild" else None
         cap = life if origin in ("captivity", "captive") else None
-        if wild is None and cap is None:      # origin unknown or 'unknown'
-            wild = life
+        # Origin unknown (121 rows in build 15) used to be written as wild.
+        # It is not wild; it is unrecorded, and it goes in that column.
+        unknown = life if (wild is None and cap is None) else None
         grade = ANAGE_GRADE.get((r.get("Data quality") or "").strip().lower(),
                                 "C")
         out.append(rec("anage", f"{r['Genus']} {r['Species']}",
@@ -177,7 +200,7 @@ def load_anage():
                        r.get("Family", ""), r.get("Genus", ""),
                        r.get("Common name", ""), mass, wild, cap, grade,
                        r.get("Phylum", "Chordata"),
-                       r.get("Kingdom", "Animalia")))
+                       r.get("Kingdom", "Animalia"), unknown=unknown))
     return out
 
 
@@ -202,7 +225,7 @@ def load_amniote():
             out.append(rec("amniote", f"{r['genus']} {sp}", r.get("class", ""),
                            r.get("order", ""), r.get("family", ""),
                            r.get("genus", ""), r.get("common_name", ""),
-                           mass, life, None, "B"))
+                           mass, None, None, "B", unknown=life))
     return out
 
 
@@ -222,7 +245,7 @@ def load_pantheria():
                            r.get("MSW05_Family", ""),
                            r.get("MSW05_Genus", ""), "",
                            num(r.get("5-1_AdultBodyMass_g")),
-                           months / 12.0, None, "B"))
+                           None, None, "B", unknown=months / 12.0))
     return out
 
 
@@ -243,7 +266,8 @@ def load_amphibio():
             continue
         out.append(rec("amphibio", r.get("Species", ""), "Amphibia",
                        r.get("Order", ""), r.get("Family", ""), "", "",
-                       num(r.get("Body_mass_g")), life, None, "C"))
+                       num(r.get("Body_mass_g")), None, None, "C",
+                       unknown=life))
     return out
 
 
@@ -293,8 +317,13 @@ def load_fishbase():
             for s, v in zip(df[code], df[wcol]):
                 bump(wt, s, v)
 
+    # LongevityWild is the one FishBase field that says where the fish lived.
+    # The per-population tmax fields do not (growth studies include farmed
+    # stock), so a maximum taken from them is recorded as origin unrecorded.
+    age_wild = {}
     for s, v in zip(sp["SpecCode"], sp.get("LongevityWild")):
         bump(age, s, v)
+        bump(age_wild, s, v)
     for s, v in zip(sp["SpecCode"], sp.get("Weight")):
         bump(wt, s, v)
 
@@ -341,9 +370,11 @@ def load_fishbase():
             note = ("mass estimated from maximum length by FishBase's "
                     "length-weight relationship, not weighed")
         f_, o_, cl = fam.get(r.get("FamCode"), ("", "", "Actinopterygii"))
+        from_wild = age_wild.get(code) == life
         out.append(rec("fishbase", f"{g} {s}", cl or "Actinopterygii", o_, f_,
-                       g, str(r.get("FBname") or "").strip(), mass, life,
-                       None, "C", note=note))
+                       g, str(r.get("FBname") or "").strip(), mass,
+                       life if from_wild else None, None, "C", note=note,
+                       unknown=None if from_wild else life))
     return out
 
 
@@ -491,8 +522,10 @@ def merge(apply=False):
     print(f"  {dropped_nomass:,} dropped: a lifespan but no mass anywhere")
     print(f"  {len(final):,} species in the merged table\n")
 
-    grades, classes, srcs = {}, {}, {}
+    grades, classes, srcs, origins = {}, {}, {}, {}
     for r in final:
+        o = origin_of(r)
+        origins[o] = origins.get(o, 0) + 1
         grades[r["quality"]] = grades.get(r["quality"], 0) + 1
         classes[r["class_"] or "?"] = classes.get(r["class_"] or "?", 0) + 1
         srcs[r["source"]] = srcs.get(r["source"], 0) + 1
@@ -500,6 +533,9 @@ def merge(apply=False):
                                    sorted(grades.items())))
     print("  source: " + "  ".join(f"{k} {v:,}" for k, v in
                                    sorted(srcs.items(), key=lambda kv: -kv[1])))
+    print("  origin: " + "  ".join(f"{k} {v:,}" for k, v in
+                                   sorted(origins.items(),
+                                          key=lambda kv: -kv[1])))
     print("  class:  " + "  ".join(f"{k} {v:,}" for k, v in
                                    sorted(classes.items(),
                                           key=lambda kv: -kv[1])[:10]))
@@ -523,6 +559,8 @@ def merge(apply=False):
                 "wild_yr": f"{r['wild_yr']:.6g}" if r["wild_yr"] else "",
                 "captive_yr": (f"{r['captive_yr']:.6g}"
                                if r["captive_yr"] else ""),
+                "unknown_yr": (f"{r['unknown_yr']:.6g}"
+                               if r.get("unknown_yr") else ""),
                 "colonial": "yes" if r["colonial"] else "no",
                 "quality": r["quality"],
                 "note": r["note"],
@@ -533,12 +571,12 @@ def merge(apply=False):
     with open(PROV, "w", newline="", encoding="utf-8") as fh:
         w = csv.writer(fh)
         w.writerow(["scientific_name", "taken_from", "grade",
-                    "corroborating_sources", "mass_from"])
+                    "corroborating_sources", "mass_from", "origin"])
         for r in final:
             w.writerow([r["scientific_name"], r["source"], r["quality"],
                         ";".join(s for s in r["sources"]
                                  if s != r["source"]),
-                        r.get("mass_src", r["source"])])
+                        r.get("mass_src", r["source"]), origin_of(r)])
     print(f"  wrote {os.path.normpath(PROV)}")
 
     # The page is generated from this, so what a reader sees under "where the
@@ -549,6 +587,7 @@ def merge(apply=False):
             "pulled": pulled,
             "kept_by_source": srcs,
             "grades": grades,
+            "origins": origins,
             "classes": classes,
             "mass_index": len(masses),
             "species_with_a_lifespan": len(best),

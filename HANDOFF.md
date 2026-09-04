@@ -371,6 +371,18 @@ Read this section. Every item is a real bug that shipped.
     carries its `basis`, and the showcase moved to the product where the
     claim is true (cheese). The check: when a number makes the page's
     point unusually well, recompute it before admiring it.
+    The same sweep found the opposite case, and it sharpens the lesson.
+    The train's track was charged through the road process at a scaled
+    amount, 2.1 g CO2e per passenger-km; UIC's 2016 review of rail
+    infrastructure puts it at 6-7 g. A proxy nobody sourced, in the one
+    entry whose whole point is to look absurdly good, and it survived for
+    the same reason the shoe did: nobody had a motive to check it. (It
+    was expected to run against the page - rail priced as road ought to
+    overstate rail - and it turned out to flatter it after all; the
+    direction is not knowable without the source.) So the trap is wider
+    than flattering claims: **claims nobody has a motive to check go
+    unaudited.** `tests/test_units.py` now checks every input against its
+    declared unit whether or not anyone is curious about it.
 
 ---
 
