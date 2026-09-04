@@ -5,11 +5,11 @@
 <link rel="icon" href="favicon.svg" type="image/svg+xml">
 <link rel="alternate icon" href="favicon.png">
 <link rel="apple-touch-icon" href="apple-touch-icon.png">
-<meta name="theme-color" content="#070a12">
+<meta name="theme-color" content="#F2F0EF">
 <link rel="canonical" href="https://andrewsilvestri.com/library.html">
 <script>/* the motion contract — set before first paint */
 try{var m=localStorage.getItem('motion');if(m!=='on'&&m!=='off')m=matchMedia('(prefers-reduced-motion: reduce)').matches?'off':'on';document.documentElement.dataset.motion=m;}catch(e){document.documentElement.dataset.motion='on';}</script>
-<link rel="stylesheet" href="style.css?v=7e99f6a7">
+<link rel="stylesheet" href="style.css?v=8706b1b1">
 </head><body>
 <nav class="top"><a href="index.html">Home</a><span class="dd"><a href="#" class="ddbtn on" aria-haspopup="true">The atlas <span class="caret">&#9662;</span></a><span class="ddmenu"><a href="atlas-app.html" target="_blank" rel="noopener">Open the atlas</a><a href="atlas.html">About the atlas</a><a href="model.html">How the model works</a><a href="library.html" class="on">Figures</a></span></span><span class="dd"><a href="#" class="ddbtn" aria-haspopup="true">Energy <span class="caret">&#9662;</span></a><span class="ddmenu"><a href="heat.html">Industrial heat break-even</a><a href="storage.html">Battery revenue simulator</a><a href="climate-cost.html">Climate cost calculator</a></span></span><span class="dd"><a href="#" class="ddbtn" aria-haspopup="true">Others <span class="caret">&#9662;</span></a><span class="ddmenu"><a href="longevity.html">Longevity quotient</a><a href="skyline.html">Skylines, played</a><a href="desktop.html">The bookshelf</a></span></span><a href="code.html">Code</a></nav>
 <main>
@@ -113,25 +113,4 @@ all; it is drawn live in WebGL. Each figure names its method above the title.</p
 </main>
 <script src="assets/motion.js?v=4cbbdec3"></script>
 <script src="assets/lightbox.js?v=0bce1245"></script>
-<script>
-/* this page's own 13 figure cards, real method tag + real title, in the
-   page's own order - drifting motes, not a data claim. Each line is a
-   copy of a tag above; change a card's method and change it here too. */
-window.MARGIN_SCENE = { kind: 'cards', items: [
-  { text: 'matplotlib histogram, log-log', sub: 'Plant capacity spans five orders' },
-  { text: 'matplotlib box plot', sub: 'How strongly each node type resists change' },
-  { text: 'matplotlib scatter, log-log', sub: 'The structure of the links' },
-  { text: 'matplotlib bar, annotated, log', sub: 'How far one change travels' },
-  { text: 'matplotlib, log count axis', sub: 'When the effect arrives' },
-  { text: 'matplotlib, twin axes', sub: 'The model saturates' },
-  { text: 'plotnine, grammar of graphics', sub: 'Size against low-carbon share' },
-  { text: 'matplotlib, horizontal bar', sub: 'Where capacity sits, by fuel' },
-  { text: 'the atlas itself', sub: 'Every power plant in the model' },
-  { text: 'matplotlib, stacked time series', sub: 'The two climate series' },
-  { text: 'matplotlib histogram, log count', sub: 'The earthquakes the model carries' },
-  { text: 'matplotlib, computed field', sub: 'The space layer' },
-  { text: 'matplotlib, log-scale bar', sub: 'Every node names its source' }
-] };
-</script>
-<script src="assets/margin-scene.js?v=0bfbcbb7"></script>
 </body></html>

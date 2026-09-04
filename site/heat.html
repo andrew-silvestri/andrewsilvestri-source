@@ -6,18 +6,20 @@
 <link rel="icon" href="favicon.svg" type="image/svg+xml">
 <link rel="alternate icon" href="favicon.png">
 <link rel="apple-touch-icon" href="apple-touch-icon.png">
-<meta name="theme-color" content="#070a12">
+<meta name="theme-color" content="#F2F0EF">
 <link rel="canonical" href="https://andrewsilvestri.com/heat.html">
 <script>/* the motion contract — set before first paint */
 try{var m=localStorage.getItem('motion');if(m!=='on'&&m!=='off')m=matchMedia('(prefers-reduced-motion: reduce)').matches?'off':'on';document.documentElement.dataset.motion=m;}catch(e){document.documentElement.dataset.motion='on';}</script>
-<link rel="stylesheet" href="style.css?v=7e99f6a7">
-</head><body class="bg-curve-heat">
+<link rel="stylesheet" href="style.css?v=8706b1b1">
+</head><body>
 <nav class="top"><a href="index.html">Home</a><span class="dd"><a href="#" class="ddbtn" aria-haspopup="true">The atlas <span class="caret">&#9662;</span></a><span class="ddmenu"><a href="atlas-app.html" target="_blank" rel="noopener">Open the atlas</a><a href="atlas.html">About the atlas</a><a href="model.html">How the model works</a><a href="library.html">Figures</a></span></span><span class="dd"><a href="#" class="ddbtn on" aria-haspopup="true">Energy <span class="caret">&#9662;</span></a><span class="ddmenu"><a href="heat.html" class="on">Industrial heat break-even</a><a href="storage.html">Battery revenue simulator</a><a href="climate-cost.html">Climate cost calculator</a></span></span><span class="dd"><a href="#" class="ddbtn" aria-haspopup="true">Others <span class="caret">&#9662;</span></a><span class="ddmenu"><a href="longevity.html">Longevity quotient</a><a href="skyline.html">Skylines, played</a><a href="desktop.html">The bookshelf</a></span></span><a href="code.html">Code</a></nav>
 <main>
 
 <h1>Industrial heat electrification break-even</h1>
 <p class="dim">Levelised cost of heat from a resistive electric boiler<sup class="cite" id="cr1"><a href="#ref1">1</a></sup> against a
 natural-gas boiler, for process steam in Texas.</p>
+<aside class="marginalia" aria-label="On this page"><h4>On this page</h4><ul><li>gas: 5.13 dollars/MMBtu</li><li>break-even: 1.53 cents/kWh</li><li>today: 6.5 cents to $20.00</li><li>fuel-only break-even: 1.38 c/kWh</li><li>capital ±50%: break-even ±0.15 c</li><li>emissions parity: 0.209 t CO2/MWh</li></ul></aside>
+<aside class="marginalia right"><ul><li>ERCOT grid: 0.333 t CO2/MWh</li><li>electric boiler: 99.6 kg/MMBtu</li><li>gas boiler: 62.4 kg/MMBtu</li><li>gas fuel: $4.12 of $5.13</li><li>electric fuel: $19.44 of $20.00</li></ul></aside>
 
 <p>A chemical plant that wants to stop burning gas for process steam has one
 obvious substitute. Put an electric resistance heater where the burner was. No
@@ -131,27 +133,4 @@ data. Each model runs from its own <code>README.md</code>.</p>
 <script src="assets/motion.js?v=4cbbdec3"></script>
 <script src="assets/lightbox.js?v=0bce1245"></script>
 <script src="assets/bgloop.js?v=d269be40"></script>
-<script>
-/* this page's own break-even numbers: the flat gas line and the rising
-   electric line, speed set by the real crossing (1.53) and real operating
-   point (6.5) so the electric path visibly moves faster past break-even.
-   Added paths are the same page's fuel-only break-even, its capital/fixed-
-   ops sensitivity, the emissions parity threshold and ERCOT grid average,
-   the two boilers' own emissions, and the fuel share of each boiler's cost
-   (all from "What the model finds" and the LCOH stacked-bar caption). */
-window.MARGIN_SCENE = { kind: 'flowpulse', paths: [
-  { label: 'gas: 5.13 dollars/MMBtu',        weight: 0.20 },
-  { label: 'break-even: 1.53 cents/kWh',     weight: 0.35 },
-  { label: 'today: 6.5 cents to $20.00',     weight: 0.55 },
-  { label: 'fuel-only break-even: 1.38 c/kWh', weight: 0.30 },
-  { label: 'capital ±50%: break-even ±0.15 c', weight: 0.25 },
-  { label: 'emissions parity: 0.209 t CO2/MWh', weight: 0.40 },
-  { label: 'ERCOT grid: 0.333 t CO2/MWh',      weight: 0.45 },
-  { label: 'electric boiler: 99.6 kg/MMBtu',   weight: 0.50 },
-  { label: 'gas boiler: 62.4 kg/MMBtu',        weight: 0.42 },
-  { label: 'gas fuel: $4.12 of $5.13',         weight: 0.28 },
-  { label: 'electric fuel: $19.44 of $20.00',  weight: 0.60 }
-] };
-</script>
-<script src="assets/margin-scene.js?v=0bfbcbb7"></script>
 </body></html>

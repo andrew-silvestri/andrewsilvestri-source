@@ -6,18 +6,20 @@
 <link rel="icon" href="favicon.svg" type="image/svg+xml">
 <link rel="alternate icon" href="favicon.png">
 <link rel="apple-touch-icon" href="apple-touch-icon.png">
-<meta name="theme-color" content="#070a12">
+<meta name="theme-color" content="#F2F0EF">
 <link rel="canonical" href="https://andrewsilvestri.com/storage.html">
 <script>/* the motion contract — set before first paint */
 try{var m=localStorage.getItem('motion');if(m!=='on'&&m!=='off')m=matchMedia('(prefers-reduced-motion: reduce)').matches?'off':'on';document.documentElement.dataset.motion=m;}catch(e){document.documentElement.dataset.motion='on';}</script>
-<link rel="stylesheet" href="style.css?v=7e99f6a7">
-</head><body class="bg-curve-storage">
+<link rel="stylesheet" href="style.css?v=8706b1b1">
+</head><body>
 <nav class="top"><a href="index.html">Home</a><span class="dd"><a href="#" class="ddbtn" aria-haspopup="true">The atlas <span class="caret">&#9662;</span></a><span class="ddmenu"><a href="atlas-app.html" target="_blank" rel="noopener">Open the atlas</a><a href="atlas.html">About the atlas</a><a href="model.html">How the model works</a><a href="library.html">Figures</a></span></span><span class="dd"><a href="#" class="ddbtn on" aria-haspopup="true">Energy <span class="caret">&#9662;</span></a><span class="ddmenu"><a href="heat.html">Industrial heat break-even</a><a href="storage.html" class="on">Battery revenue simulator</a><a href="climate-cost.html">Climate cost calculator</a></span></span><span class="dd"><a href="#" class="ddbtn" aria-haspopup="true">Others <span class="caret">&#9662;</span></a><span class="ddmenu"><a href="longevity.html">Longevity quotient</a><a href="skyline.html">Skylines, played</a><a href="desktop.html">The bookshelf</a></span></span><a href="code.html">Code</a></nav>
 <main>
 
 <h1>Battery revenue simulator</h1>
 <p class="dim">A linear program over a year of hourly prices<sup class="cite" id="cr1"><a href="#ref1">1</a></sup>, and what it says
 about how long a battery should be.</p>
+<aside class="marginalia" aria-label="On this page"><h4>On this page</h4><ul><li>2h · $98.1/kW-yr</li><li>4h · $107.1/kW-yr</li><li>8h · $111.0/kW-yr</li><li>2h · 1,361 cycles/yr</li><li>4h · 786 cycles/yr</li></ul></aside>
+<aside class="marginalia right"><ul><li>8h · 424 cycles/yr</li><li>2h · 1.85 h at rated output</li><li>4h · 3.71 h at rated output</li><li>8h · 7.42 h at rated output</li><li>4h capex ref · $242/kW-yr</li></ul></aside>
 
 <p>A grid battery makes its living the way a hibernating ground squirrel does. It
 takes in more than it needs when the taking is good, sits on the surplus, and
@@ -119,22 +121,4 @@ data. Each model runs from its own <code>README.md</code>.</p>
 <script src="assets/motion.js?v=4cbbdec3"></script>
 <script src="assets/lightbox.js?v=0bce1245"></script>
 <script src="assets/bgloop.js?v=d269be40"></script>
-<script>
-/* this page's own duration-value table: real $/kW-yr revenue, real
-   equivalent cycles/yr and real hours-at-rated-output per duration, plus
-   the annualised capex reference from ref5's own footnote figure. */
-window.MARGIN_SCENE = { kind: 'bars', items: [
-  { label: '2h · $98.1/kW-yr',  n: 98.1 },
-  { label: '4h · $107.1/kW-yr', n: 107.1 },
-  { label: '8h · $111.0/kW-yr', n: 111.0 },
-  { label: '2h · 1,361 cycles/yr', n: 1361 },
-  { label: '4h · 786 cycles/yr',   n: 786 },
-  { label: '8h · 424 cycles/yr',   n: 424 },
-  { label: '2h · 1.85 h at rated output', n: 1.85 },
-  { label: '4h · 3.71 h at rated output', n: 3.71 },
-  { label: '8h · 7.42 h at rated output', n: 7.42 },
-  { label: '4h capex ref · $242/kW-yr',   n: 242 }
-] };
-</script>
-<script src="assets/margin-scene.js?v=0bfbcbb7"></script>
 </body></html>
