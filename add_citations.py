@@ -139,6 +139,23 @@ PAGES = {
          'ISO 14044:2006, <i>Environmental management - Life cycle assessment '
          '- Requirements and guidelines</i>, clause 4.3.4.',
          "The allocation hierarchy: avoid, then physical, then economic."),
+        ("Flysjö",
+         'Flysjö, Cederberg, Henriksson &amp; Ledgard, <i>International '
+         'Journal of Life Cycle Assessment</i> 16:420, 2011 - how does '
+         'co-product handling affect the carbon footprint of milk? Table 1.',
+         "Milk-to-meat allocation by physical (85-86%), economic (88-92%), "
+         "protein (93-94%) and mass (98%) bases, and 63-76% by system "
+         "expansion."),
+        ("International Dairy Federation",
+         'International Dairy Federation, <i>A common carbon footprint '
+         'approach for the dairy sector</i>, Bulletin 479, 2015, pp. 34-36.',
+         "The physical allocation formula AF = 1 - 6.04 x BMR and the 88% "
+         "milk share at a typical beef-to-milk ratio of 0.02."),
+        ("Lunesu",
+         'Lunesu, Correddu, Carta, Sechi, Farina &amp; Pulina, <i>Animals</i> '
+         '15:3546, 2025 - attributing farm-to-slaughter emissions to hides.',
+         "Hide share of the animal: 2.7% by economic allocation (2023 mean), "
+         "5.9% by live weight (range 4.2-6.9%)."),
     ],
 }
 
@@ -176,7 +193,9 @@ def build(page, refs):
         spans.append((depth_pos, len(body)))
 
     # ...and only inside <main>, so nothing in the nav or head is annotated.
-    main_at = t.find("<main>")
+    # "<main", not "<main>": the deslop pass gave <main> a class, and an exact
+    # match then failed silently, which let the nav become eligible for markers.
+    main_at = t.find("<main")
     spans = [(a, b) for a, b in spans if main_at < 0 or a >= main_at]
 
     def find_in_text(phrase):

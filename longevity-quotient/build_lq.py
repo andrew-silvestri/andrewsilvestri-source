@@ -39,6 +39,10 @@ import math
 import os
 
 import matplotlib
+import sys as _sys, os as _os; _sys.path.insert(0, _os.path.dirname(_os.path.dirname(_os.path.abspath(__file__))))
+from sitefig import BG, INK, DIM, RULE, FAINT, ACC, COOL, MOSS, ROSE, SLATE, DISTRICT, SUPPLY, PSYCH, SUN, INSOL, GOLD, GREY, VIOLET, BLUE, GREEN, WARM, ARROW, ONE_WAY_COL, TWO_WAY_COL, NODE_COL, WARM2, KCOL, CYCLE, FS_2, FS_1, FS0, FS1, FS2, FONT, MONO, NOTES, PROSE, CARD, THUMB, fig_size, save, WIDE, PLOT, SQUARE, TALL, row_aspect, panel  # noqa: E402,F401
+import sitefig  # noqa: E402
+
 matplotlib.use("Agg")
 import matplotlib.pyplot as plt  # noqa: E402 - needed at module level so
                                   # _save() (defined before figures()) can
@@ -57,8 +61,6 @@ OUT = os.path.join(HERE, "outputs")
 
 # The site palette. Black is not in it: these figures are read on a
 # dark page, and a black rule or marker on that page is invisible.
-INK, DIM = "#e3e6f2", "#8b93b0"
-
 MIN_CLASS_N = 6
 MIN_CLASS_R2 = 0.15
 
@@ -491,7 +493,7 @@ def _save(fig, name):
         print(f"  LAYOUT  {name}")
         for b in bad[:5]:
             print(f"            {b}")
-    fig.savefig(os.path.join(OUT, name), dpi=150)
+    sitefig.save(fig, os.path.join(OUT, name), close=False)
     plt.close(fig)
     return bad
 
@@ -504,19 +506,17 @@ def figures(rows, summary, fit_rows):
     # the rcParams to realize it were simply never set, so every one of them
     # rendered as a light matplotlib-default figure next to the rest of the
     # (dark) site.
-    BG = "#070a12"
-    plt.rcParams.update({
+    sitefig.style(); plt.rcParams.update({
         # The page is set in the site's own sans stack; the figures were left
         # on matplotlib's DejaVu Sans, so every label under every chart was in
         # a different typeface from the caption beside it. Named as a
         # sans-serif list so a reader running this on a machine without Segoe
         # UI still gets a sane fallback rather than boxes.
-        "font.family": "sans-serif",
-        "font.sans-serif": ["Segoe UI", "Selawik", "DejaVu Sans", "Arial"],
+        "font.family": FONT,
         "figure.facecolor": BG, "axes.facecolor": BG, "savefig.facecolor": BG,
         "text.color": INK, "axes.labelcolor": INK, "axes.titlecolor": INK,
         "xtick.color": DIM, "ytick.color": DIM,
-        "axes.edgecolor": "#232a45", "grid.color": "#232a45",
+        "axes.edgecolor": RULE, "grid.color": RULE,
         "axes.spines.top": False, "axes.spines.right": False,
     })
 
@@ -524,11 +524,11 @@ def figures(rows, summary, fit_rows):
     # Amphibia was #a98fd8 and Pisces #6f7fd8, which put three violets
     # (with Mammalia's #8b7ff2) in one legend; at scatter-dot size they were
     # the same colour. Both moved to hues already in the site's cycle.
-    colors = {"Mammalia": "#8b7ff2", "Aves": "#5aa8d8", "Reptilia": "#4f9d84",
-              "Amphibia": "#c9a227", "Pisces": "#6e8096",
-              "Invertebrata": "#d86a86"}
+    colors = {"Mammalia": ACC, "Aves": COOL, "Reptilia": MOSS,
+              "Amphibia": GOLD, "Pisces": GREY,
+              "Invertebrata": ROSE}
 
-    fig, ax = plt.subplots(figsize=(9.5, 6.6))
+    fig, ax = plt.subplots(figsize=fig_size(NOTES, PLOT))
     for pool in sorted({r["pool"] for r in rows}):
         sel = [r for r in rows if r["pool"] == pool and not r["colonial"]]
         ax.scatter([r["mass_g"] for r in sel], [r["maximum"] for r in sel],
@@ -537,7 +537,7 @@ def figures(rows, summary, fit_rows):
     col = [r for r in rows if r["colonial"]]
     if col:
         ax.scatter([r["mass_g"] for r in col], [r["maximum"] for r in col],
-                   s=42, facecolor="none", edgecolor="#d86a86", lw=1.3,
+                   s=42, facecolor="none", edgecolor=ROSE, lw=1.3,
                    label="colonial (excluded from fit)")
     xs = [10 ** (i / 4) for i in range(-28, 34)]
     ax.plot(xs, [predict(ga, gb, x) for x in xs], "--", color=INK, lw=1.2,
@@ -545,10 +545,9 @@ def figures(rows, summary, fit_rows):
     ax.set_xscale("log"); ax.set_yscale("log")
     ax.set_xlabel("adult body mass (g)")
     ax.set_ylabel("maximum lifespan (years)")
-    ax.set_title(f"Lifespan against body mass — {len(rows)} species")
     # The legend goes outside the axes. Inside, the bottom right corner is
     # occupied by the densest part of the cloud, so the key covered the data.
-    ax.legend(fontsize=8, frameon=False, loc="upper left",
+    ax.legend(fontsize=FS_2, frameon=False, loc="upper left",
               bbox_to_anchor=(1.01, 1.0), borderaxespad=0)
     ax.grid(alpha=.18, which="both")
     fig.tight_layout()
@@ -575,7 +574,7 @@ def figures(rows, summary, fit_rows):
         # Eight thousand dots sit behind these names. Without a plate behind
         # the text, the labels over the dense middle of the cloud were
         # unreadable; the box is the panel colour, so it reads as a gap.
-        t = ax.annotate(r["name"], (r["mass_g"], r["maximum"]), fontsize=7,
+        t = ax.annotate(r["name"], (r["mass_g"], r["maximum"]), fontsize=FS_2,
                         xytext=(dx, 4), textcoords="offset points", ha=ha,
                         bbox=dict(boxstyle="round,pad=0.16", facecolor=BG,
                                   edgecolor="none"))
@@ -596,7 +595,7 @@ def figures(rows, summary, fit_rows):
     # ratio, so the axis is logarithmic and every bar runs from parity rather
     # than from zero: short to the left is half as long as predicted, short to
     # the right is twice.
-    fig, ax = plt.subplots(figsize=(9, 8.8))
+    fig, ax = plt.subplots(figsize=fig_size(NOTES, row_aspect(30)))
     ys = range(len(sel))
     ax.hlines(list(ys), 1, [r["lq_class_maximum"] for r in sel],
               color=[colors.get(r["pool"], "#888") for r in sel], lw=3.4)
@@ -608,8 +607,7 @@ def figures(rows, summary, fit_rows):
     ax.axvline(1, color=DIM, lw=1.2, ls="--")
     ax.set_xlabel("longevity quotient (observed ÷ predicted for its group, "
                   "log scale)")
-    ax.set_title("Who beats their body mass, and who does not")
-    ax.tick_params(labelsize=8.5)
+    ax.tick_params(labelsize=FS_2)
     ax.grid(axis="x", alpha=.18, which="both")
     ax.set_axisbelow(True)
     fig.tight_layout()
@@ -618,21 +616,19 @@ def figures(rows, summary, fit_rows):
     pair = [r for r in rows if r["wild"] and r["captive"]]
     pair.sort(key=lambda r: r["captive"] / r["wild"])
     sel = pair[:10] + pair[-16:]
-    fig, ax = plt.subplots(figsize=(9, 7.8))
+    fig, ax = plt.subplots(figsize=fig_size(NOTES, PLOT))
     for i, r in enumerate(sel):
         ax.plot([r["wild"], r["captive"]], [i, i], color="#bbb", lw=1.4,
                 zorder=1)
     ax.scatter([r["wild"] for r in sel], range(len(sel)), s=32,
-               color="#4f9d84", label="wild", zorder=2)
+               color=MOSS, label="wild", zorder=2)
     ax.scatter([r["captive"] for r in sel], range(len(sel)), s=32,
-               color="#8b7ff2", label="captive", zorder=2)
+               color=ACC, label="captive", zorder=2)
     ax.set_yticks(range(len(sel)))
-    ax.set_yticklabels([r["name"] for r in sel], fontsize=8.5)
+    ax.set_yticklabels([r["name"] for r in sel], fontsize=FS_2)
     ax.set_xscale("log")
     ax.set_xlabel("maximum lifespan (years, log scale)")
-    ax.set_title("Wild against captive — where protection helps, and where it "
-                 "does not")
-    ax.legend(fontsize=9, frameon=False)
+    ax.legend(fontsize=FS_2, frameon=False)
     ax.grid(axis="x", alpha=.18, which="both")
     fig.tight_layout()
     _save(fig, "fig3_wild_vs_captive.png")
@@ -649,21 +645,20 @@ def figures(rows, summary, fit_rows):
     half = (len(ords) + 1) // 2
     cols = [ords[:half], ords[half:]]
     hi = max(g["geo_lq"] for g in ords) * 1.06
-    fig, axes = plt.subplots(1, 2, figsize=(13, max(4.5, .17 * half + 1.4)))
+    fig, axes = plt.subplots(1, 2, figsize=(NOTES / 72, max(4.5, 0.235 * half + 1.6)))
     for ax, part in zip(axes, cols):
         ys = range(len(part))
-        ax.barh(list(ys), [g["geo_lq"] for g in part], color="#5a4fb0",
+        ax.barh(list(ys), [g["geo_lq"] for g in part], color=ACC,
                 height=.72)
         ax.set_yticks(list(ys))
-        ax.set_yticklabels([g["group"] for g in part], fontsize=7)
+        ax.set_yticklabels([g["group"] for g in part], fontsize=FS_2)
         ax.invert_yaxis()
         ax.set_xlim(0, hi)
         ax.axvline(1, color=DIM, lw=1.2, ls="--")
         ax.set_xlabel("geometric mean longevity quotient")
         ax.grid(axis="x", alpha=.18)
         ax.set_axisbelow(True)
-        ax.tick_params(axis="x", labelsize=8.5)
-    fig.suptitle("Orders compared (four or more species each)", y=.985)
+        ax.tick_params(axis="x", labelsize=FS_2)
     fig.tight_layout(rect=(0, 0, 1, .975))
     _save(fig, "fig4_orders.png")
     print("\nfigures written to outputs/")

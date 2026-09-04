@@ -25,6 +25,9 @@ import os
 import textwrap
 
 import matplotlib
+from sitefig import BG, INK, DIM, RULE, FAINT, ACC, COOL, MOSS, ROSE, SLATE, DISTRICT, SUPPLY, PSYCH, SUN, INSOL, GOLD, GREY, VIOLET, BLUE, GREEN, WARM, ARROW, ONE_WAY_COL, TWO_WAY_COL, NODE_COL, WARM2, KCOL, CYCLE, FS_2, FS_1, FS0, FS1, FS2, FONT, MONO, NOTES, PROSE, CARD, THUMB, fig_size, save, WIDE, PLOT, SQUARE, TALL, row_aspect, panel  # noqa: E402,F401
+import sitefig  # noqa: E402
+
 matplotlib.use("Agg")
 import matplotlib.pyplot as plt
 import numpy as np
@@ -37,12 +40,6 @@ HERE = os.path.dirname(os.path.abspath(__file__))
 DATA = os.path.join(HERE, "site", "assets", "atlas-data.js")
 OUT = os.path.join(HERE, "site", "assets", "energy_model_throughlines.png")
 
-BG, INK, DIM = "#0a0d18", "#e3e6f2", "#8b93b0"
-FAINT, RULE = "#151b30", "#232a45"
-KCOL = {"sun": "#f2d98b", "insolation": "#e8c98f", "weather": "#4f9d84",
-        "climate": "#cfd6f0", "event": "#d86a86", "market": "#4f9d84",
-        "supply": "#6f7fd8", "grid": "#5aa8d8", "station": "#8b7ff2",
-        "district": "#5c6a8c", "consumer": "#8b93b0", "psych": "#a98fd8"}
 SHORT = {"sun": "Sun", "insolation": "Insolation", "weather": "Weather",
          "climate": "Climate", "event": "Event", "market": "Market",
          "supply": "Fuel", "grid": "Grid", "station": "Plant",
@@ -73,15 +70,14 @@ def style():
     label sizes on the few plain axes below - is worth setting anyway so
     nothing silently falls back to matplotlib's own (smaller) default.
     """
-    plt.rcParams.update({
-        "font.size": 12.5,
-        "font.family": "sans-serif",
-        "font.sans-serif": ["Segoe UI", "Selawik", "DejaVu Sans", "Arial"],
-        "axes.titlesize": 14.5,
-        "axes.labelsize": 12.5,
-        "xtick.labelsize": 11.5,
-        "ytick.labelsize": 11.5,
-        "legend.fontsize": 11.5,
+    sitefig.style(); plt.rcParams.update({
+        "font.size": FS_1,
+        "font.family": FONT,
+        "axes.titlesize": FS0,
+        "axes.labelsize": FS_1,
+        "xtick.labelsize": FS_1,
+        "ytick.labelsize": FS_1,
+        "legend.fontsize": FS_1,
     })
 
 
@@ -228,7 +224,7 @@ def main():
     # were nearly touching. The extra 0.9in funds both fixes below; it
     # can't come out of panel A's or C-F's own share because both already
     # audit clean at their current size.
-    fig = plt.figure(figsize=(11.0, 13.3), facecolor=BG)
+    fig = plt.figure(figsize=fig_size(PROSE, 0.55), facecolor=BG)
     # Two grids rather than one. The upper panels are diagrams that start at
     # the left edge; the lower panels are charts whose category labels live
     # outside the axes and need the margin. Sharing one grid put those labels
@@ -244,9 +240,9 @@ def main():
     # just a bigger slice of a fixed pie, which is why the figure grew
     # instead). Stretching row_y's pitch without this would have just
     # spread the same crowding over more data units for no gain.
-    gs = fig.add_gridspec(2, 1, height_ratios=[0.845, 1.0],
+    gs = fig.add_gridspec(2, 1, height_ratios=[1.3, 1.0],
                           hspace=0.30, left=0.050, right=0.975,
-                          top=0.895, bottom=0.523)
+                          top=0.965, bottom=0.523)
     # bottom raised from 0.045: panel E's rotated x tick labels sit right at
     # the figure's bottom edge, and the smaller canvas left no room under
     # them once their size came up to the floor.
@@ -260,12 +256,6 @@ def main():
                           hspace=0.55, wspace=0.42, left=0.135,
                           right=0.965, top=0.450, bottom=0.085)
 
-    fig.text(0.055, 0.978, "Throughlines: from the sun to the mind",
-             color=INK, fontsize=21, fontweight="bold", va="top")
-    fig.text(0.055, 0.951,
-             "Every number on this sheet is read from the published model and "
-             "computed with the propagation the atlas runs.",
-             color=DIM, fontsize=11.5, va="top")
 
     # ---- A: the layer chain --------------------------------------------
     ax = fig.add_subplot(gs[0, 0])
@@ -273,8 +263,7 @@ def main():
     ax.set_xlim(0, 100)
     ax.set_ylim(0, 34)
     ax.axis("off")
-    ax.set_title("A.  The layers, and what carries between them", color=INK,
-                 fontsize=13, loc="left", pad=8)
+    sitefig.panel(ax, "A.  The layers, and what carries between them")
 
     # a clean left-to-right chain: no crossing arrows, so no label collisions
     chain = [("sun", 6, 25), ("insolation", 20, 25), ("weather", 20, 8),
@@ -289,9 +278,9 @@ def main():
             boxstyle="round,pad=0.25,rounding_size=0.4",
             linewidth=1.2, edgecolor=KCOL[k], facecolor=FAINT, zorder=2))
         ax.text(x, y + 1.0, LABEL[k], ha="center", va="center", color=INK,
-                fontsize=9.6, fontweight="bold", zorder=3)
+                fontsize=FS_2, fontweight="bold", zorder=3)
         ax.text(x, y - 1.3, f"{counts[k]:,}", ha="center", va="center",
-                color=DIM, fontsize=9.0, zorder=3)
+                color=DIM, fontsize=FS_2, zorder=3)
         at[k] = (x, y, w, h)
 
     links = [("sun", "insolation"), ("insolation", "grid"),
@@ -319,8 +308,7 @@ def main():
     axb.axis("off")
     axb.set_xlim(0, 100)
     axb.set_ylim(0, 100)
-    axb.set_title("B.  The strongest route out of four starting points",
-                  color=INK, fontsize=13, loc="left", pad=8)
+    sitefig.panel(axb, "B.  The strongest route out of four starting points")
 
     starts = [("SUN_TSI", "The sun"), ("WX_ENSO", "El Nino"),
               ("MKT_BRENT", "The oil price"), ("CLIMATE_SYS", "The climate")]
@@ -349,7 +337,7 @@ def main():
         # own lane to the left of x=16 - clear of every marker in every row -
         # lets it share the marker row's own y instead, freeing the vertical
         # room the wrapped label actually needs.
-        axb.text(0, y, title, color=INK, fontsize=11, fontweight="bold",
+        axb.text(0, y, title, color=INK, fontsize=FS_1, fontweight="bold",
                  va="center")
         # The route used to run its last marker out to x=100, the axis's own
         # right edge, and the wrapped two-line label anchored there had
@@ -365,9 +353,9 @@ def main():
             # Wrapping keeps the full name.
             label = "\n".join(textwrap.wrap(
                 nm[n], width=20, max_lines=2, placeholder=" …"))
-            axb.text(x, y - 3.5, label, color=DIM, fontsize=8.6,
+            axb.text(x, y - 3.5, label, color=DIM, fontsize=FS_2,
                      ha="left", va="top", linespacing=1.2)
-            axb.text(x, y + 3.0, f"{st[n]:+.3f}", color=INK, fontsize=8.4,
+            axb.text(x, y + 3.0, f"{st[n]:+.3f}", color=INK, fontsize=FS_2,
                      ha="left", va="bottom")
             if j + 1 < len(route):
                 axb.annotate("", xy=(x + step - 2.0, y), xytext=(x + 1.4, y),
@@ -383,20 +371,19 @@ def main():
     top = sorted(pair.items(), key=lambda kv: -kv[1])[:9][::-1]
     labs = [f"{SHORT[a]} → {SHORT[b]}" for (a, b), _ in top]
     vals = [v for _, v in top]
-    axc.barh(range(len(vals)), vals, color="#5a63c8", alpha=0.9, height=0.62)
+    axc.barh(range(len(vals)), vals, color=SLATE, alpha=0.9, height=0.62)
     axc.set_yticks(range(len(vals)))
-    axc.set_yticklabels(labs, color=DIM, fontsize=9)
+    axc.set_yticklabels(labs, color=DIM, fontsize=FS_2)
     for i, v in enumerate(vals):
         axc.text(v + 0.012, i, f"{v:.2f}", va="center", color=DIM,
-                 fontsize=8.6)
+                 fontsize=FS_2)
     axc.set_xlim(0, max(vals) * 1.22)
     axc.set_xlabel("heaviest single link between the layers", color=DIM,
-                   fontsize=9.5)
-    axc.set_title("C.  The links that carry the most", color=INK,
-                  fontsize=13, loc="left", pad=8)
+                   fontsize=FS_2)
+    sitefig.panel(axc, "C.  The links that carry the most")
     for sp_ in axc.spines.values():
         sp_.set_color(RULE)
-    axc.tick_params(colors=DIM, labelsize=8.6)
+    axc.tick_params(colors=DIM, labelsize=FS_2)
     axc.grid(axis="x", alpha=0.14)
     axc.set_axisbelow(True)
 
@@ -463,17 +450,16 @@ def main():
             ends[i + 1] = (ends[i + 1][0], mid + 0.035 * span)
     axd.set_xlim(0, last_x * 1.30)
     for k, y in ends:
-        axd.text(last_x * 1.04, y, LABEL[k], color=KCOL[k], fontsize=9.5,
+        axd.text(last_x * 1.04, y, LABEL[k], color=KCOL[k], fontsize=FS_2,
                  va="center", ha="left", fontweight="bold")
 
-    axd.set_xlabel("step", color=DIM, fontsize=9.5)
+    axd.set_xlabel("step", color=DIM, fontsize=FS_2)
     axd.set_ylabel("mean absolute effect in the layer", color=DIM,
-                   fontsize=9.5)
-    axd.set_title("D.  A large oil supply loss, step by step", color=INK,
-                  fontsize=13, loc="left", pad=8)
+                   fontsize=FS_2)
+    sitefig.panel(axd, "D.  A large oil supply loss, step by step")
     for sp_ in axd.spines.values():
         sp_.set_color(RULE)
-    axd.tick_params(colors=DIM, labelsize=8.6)
+    axd.tick_params(colors=DIM, labelsize=FS_2)
     axd.grid(alpha=0.14)
     axd.set_axisbelow(True)
 
@@ -514,7 +500,7 @@ def main():
     # true-zero cells get their own marker below rather than relying on the
     # reader to tell two shades of near-black apart.
     seq_cmap = matplotlib.colors.LinearSegmentedColormap.from_list(
-        "site_seq", [BG, "#6f7fd8", "#8b7ff2"])
+        "site_seq", [BG, SLATE, ACC])
     im = axe.imshow(M, aspect="auto", cmap=seq_cmap,
                     norm=matplotlib.colors.PowerNorm(0.45))
     # A 5x9 block of these at the old size read louder than the data beside
@@ -529,17 +515,15 @@ def main():
     # Kept close to the old 7.2pt rather than jumping to the scale used
     # elsewhere: 12 rotated labels share one narrow column, and the floor only
     # needs 7.64pt here (this panel's labels are not read as headings).
-    axe.set_xticklabels([SHORT[k] for k in order], rotation=68, ha="right",
-                        color=DIM, fontsize=7.8,
+    axe.set_xticklabels([SHORT[k] for k in order], rotation=90, ha="center",
+                        color=DIM, fontsize=FS_2,
                         rotation_mode="anchor")
     axe.set_yticks(range(len(names)))
-    axe.set_yticklabels(names, color=DIM, fontsize=8.6)
-    axe.set_title("E.  Which kind of change reaches which layer",
-                  color=INK,
-                  fontsize=13, loc="left", pad=8)
+    axe.set_yticklabels(names, color=DIM, fontsize=FS_2)
+    sitefig.panel(axe, "E.  Which kind of change reaches which layer")
     cb = fig.colorbar(im, ax=axe, fraction=0.036, pad=0.02)
-    cb.set_label("mean absolute effect", color=DIM, fontsize=8.6)
-    cb.ax.tick_params(colors=DIM, labelsize=7.8)
+    cb.set_label("mean absolute effect", color=DIM, fontsize=FS_2)
+    cb.ax.tick_params(colors=DIM, labelsize=FS_2)
     cb.outline.set_edgecolor(RULE)
     for sp_ in axe.spines.values():
         sp_.set_color(RULE)
@@ -549,7 +533,7 @@ def main():
     # without an eight-word aside stapled onto the end of it.
     axe.annotate("×  =  exact zero, not missing data", xy=(0, 0),
                  xycoords="axes fraction", xytext=(0, -0.40),
-                 textcoords="axes fraction", color=DIM, fontsize=8.2,
+                 textcoords="axes fraction", color=DIM, fontsize=FS_2,
                  ha="left", va="top", annotation_clip=False)
 
     # ---- F: the chain in words ------------------------------------------
@@ -558,8 +542,7 @@ def main():
     axf.axis("off")
     axf.set_xlim(0, 100)
     axf.set_ylim(0, 100)
-    axf.set_title("F.  The same chain, in words", color=INK, fontsize=13,
-                  loc="left", pad=8)
+    sitefig.panel(axf, "F.  The same chain, in words")
     steps = [
         ("sun", "The sun delivers %.2f W/m2, measured." %
          next(float(nm[i].split()[-2]) for i in range(len(nm))
@@ -598,7 +581,7 @@ def main():
     # by that same ~6% (1.453 old pt/data-unit over 1.371 new) instead of
     # re-tuned from scratch, so the physical spacing on the page is
     # unchanged from what already read clean.
-    FBODY, LINE_H, GAP = 7.8, 6.05, 1.3
+    FBODY, LINE_H, GAP = FS_2, 6.05 * FS_2 / 7.8, 1.3 * FS_2 / 7.8   # caption body at the site floor, line pitch scaled with it
     wrapped = [textwrap.wrap(txt, width=60) or [txt] for _, txt in steps]
     y = 97
     for (k, _), lines in zip(steps, wrapped):
@@ -618,7 +601,7 @@ def main():
     # dpi is raised only to keep the bitmap's pixel count close to what it was
     # at the old, wider figsize - it has no effect on the on-screen CSS size
     # the floor check above is about, and was never touched to fix legibility.
-    fig.savefig(OUT, dpi=170, facecolor=BG)
+    sitefig.save(fig, OUT, close=False)
     plt.close(fig)
     print(f"  wrote {os.path.basename(OUT)}")
     if problems:

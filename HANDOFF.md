@@ -354,6 +354,23 @@ Read this section. Every item is a real bug that shipped.
     run the generator and diff, list the directory, compute the ratio.
     Nobody ran it for a month. When a doc, a script and the tree disagree,
     the tree is the fact and the other two are claims.
+12. **A claim that flatters the page's own argument is the one nobody
+    audits.** `climate-cost.html` argued for a month that allocation decides
+    the answer, and illustrated it with a leather shoe going from 3.66 to
+    11.65 kg CO2e under mass allocation, "nearly tripled". The model gives
+    4.40. The 11.65 was the whole shoe scaled by the ratio of two allocation
+    factors, as if every gram of it were hide, when the hide is 9% of it;
+    the video carrying the number had no generator in the repo, so nobody
+    could re-run it, and two audits looked straight at it and discussed
+    its layout. Three things let it survive: the number agreed with the
+    thesis, it lived in an asset no script produced, and the field it
+    scaled meant three different things (share, amortisation, shipment
+    mass) so "scale the allocation" was not a defined operation. Fixed
+    2026-09-04 (`CLIMATE_COST_FIX_2026-09-04.md`): every figure on a page is
+    built by a script in the repo from the model, every allocation share
+    carries its `basis`, and the showcase moved to the product where the
+    claim is true (cheese). The check: when a number makes the page's
+    point unusually well, recompute it before admiring it.
 
 ---
 

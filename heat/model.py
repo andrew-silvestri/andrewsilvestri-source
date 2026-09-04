@@ -19,6 +19,10 @@ Run:  python3 model.py     (writes PNGs to outputs/ and results CSVs)
 """
 import numpy as np
 import matplotlib
+import sys as _sys, os as _os; _sys.path.insert(0, _os.path.dirname(_os.path.dirname(_os.path.abspath(__file__))))
+from sitefig import BG, INK, DIM, RULE, FAINT, ACC, COOL, MOSS, ROSE, SLATE, DISTRICT, SUPPLY, PSYCH, SUN, INSOL, GOLD, GREY, VIOLET, BLUE, GREEN, WARM, ARROW, ONE_WAY_COL, TWO_WAY_COL, NODE_COL, WARM2, KCOL, CYCLE, FS_2, FS_1, FS0, FS1, FS2, FONT, MONO, NOTES, PROSE, CARD, THUMB, fig_size, save, WIDE, PLOT, SQUARE, TALL, row_aspect, panel  # noqa: E402,F401
+import sitefig  # noqa: E402
+
 matplotlib.use("Agg")
 import matplotlib.pyplot as plt
 import figstyle
@@ -116,14 +120,12 @@ def fig_breakeven_line(p: Params):
     retail = p.P_e * 100
     here = breakeven_Pe(p) * 100
 
-    fig, ax = plt.subplots(figsize=(9, 5.4))
+    fig, ax = plt.subplots(figsize=fig_size(NOTES, WIDE))
 
-    # The gap between what electricity costs and what it would have to cost is
-    # the entire result, so it is the thing that gets the ink. Shading it makes
-    # the figure legible at a glance instead of requiring the reader to measure
-    # the distance between two lines by eye.
-    ax.fill_between(Pg, be_full, retail, color=figstyle.WARM, alpha=0.10,
-                    lw=0)
+    # No region fill above the break-even line: the shaded gap pulled the eye
+    # to empty area and flattened the two lines the result rests on. The
+    # dotted gap at the operating price, and its label, mark the one boundary
+    # that matters (2026-09-04).
     ax.axhline(retail, color=figstyle.WARM, lw=1.6)
     ax.plot(Pg, be_full, color=figstyle.ACC, lw=2.6)
     ax.plot(Pg, be_fuel, color=figstyle.COOL, lw=2.0, ls="--")
@@ -132,14 +134,14 @@ def fig_breakeven_line(p: Params):
     # the commonest thing for it to land on is the data.
     ax.annotate("break-even, full cost", xy=(Pg[-1], be_full[-1]),
                 xytext=(-6, 9), textcoords="offset points", ha="right",
-                color=figstyle.ACC, fontsize=12)
+                color=figstyle.ACC, fontsize=FS_1)
     ax.annotate("fuel only", xy=(Pg[-1], be_fuel[-1]), xytext=(-6, -18),
                 textcoords="offset points", ha="right",
-                color=figstyle.COOL, fontsize=12)
+                color=figstyle.COOL, fontsize=FS_1)
     ax.annotate(f"Texas industrial retail, {retail:.1f} ¢/kWh",
                 xy=(Pg[0], retail), xytext=(5, -17),
                 textcoords="offset points", ha="left",
-                color=figstyle.WARM, fontsize=12)
+                color=figstyle.WARM, fontsize=FS_1)
 
     # The answer, stated once, in the middle of the shaded gap where there is
     # guaranteed room for it.
@@ -147,7 +149,7 @@ def fig_breakeven_line(p: Params):
                 f"to {here:.2f} ¢/kWh at ${p.P_g:.2f} gas",
                 xy=(p.P_g, (here + retail) / 2), xytext=(p.P_g + 0.45,
                                                          (here + retail) / 2),
-                color=figstyle.INK, fontsize=12.5, va="center",
+                color=figstyle.INK, fontsize=FS_1, va="center",
                 arrowprops=dict(arrowstyle="-|>", color=figstyle.DIM, lw=1.2,
                                 shrinkA=2, shrinkB=2))
     ax.plot([p.P_g], [here], "o", color=figstyle.ACC, ms=7, zorder=5)
@@ -169,7 +171,7 @@ def fig_lcoh_bars(p: Params):
     fuel = [r["gas"]["fuel"], r["elec"]["fuel"]]
     cap = [r["gas"]["capex"], r["elec"]["capex"]]
     fom = [r["gas"]["fom"], r["elec"]["fom"]]
-    fig, ax = plt.subplots(figsize=(7, 5.5))
+    fig, ax = plt.subplots(figsize=fig_size(NOTES, PLOT))
     b1 = ax.bar(labels, fuel, label="Fuel/energy", color=figstyle.COOL)
     b2 = ax.bar(labels, cap, bottom=fuel, label="Levelized capex", color=figstyle.WARM)
     ax.bar(labels, fom, bottom=np.array(fuel) + np.array(cap), label="Fixed O&M", color=figstyle.GREEN)
@@ -201,7 +203,7 @@ def fig_contour(p: Params):
             q = Params(**{**base, "P_e": PE[i, j], "P_g": PG[i, j]})
             r = lcoh(q)
             gap[i, j] = r["elec"]["total"] - r["gas"]["total"]
-    fig, ax = plt.subplots(figsize=(8, 6))
+    fig, ax = plt.subplots(figsize=fig_size(NOTES, WIDE))
     lim = np.nanmax(np.abs(gap))
     cs = ax.contourf(PE * 100, PG, gap, levels=21, cmap="RdBu_r", vmin=-lim, vmax=lim)
     zero = ax.contour(PE * 100, PG, gap, levels=[0], colors=figstyle.INK, linewidths=2)
@@ -211,7 +213,6 @@ def fig_contour(p: Params):
     fig.colorbar(cs, label="LCOH(elec) − LCOH(gas)  [$/MMBtu]")
     ax.set_xlabel("Electricity price  [¢/kWh]")
     ax.set_ylabel("Natural gas price  [$/MMBtu]")
-    ax.set_title("Cost-gap surface (blue = electric cheaper)")
     figstyle.finish(fig, f"{OUT}/fig3_costgap_contour.png")
 
 
@@ -235,16 +236,15 @@ def fig_tornado(p: Params):
             Params(**{**asdict(p), k: hi}))
         rows.append((label, g_lo, g_hi))
     rows.sort(key=lambda t: abs(t[2] - t[1]))
-    fig, ax = plt.subplots(figsize=(9, 5.5))
+    fig, ax = plt.subplots(figsize=fig_size(NOTES, WIDE))
     for i, (label, lo, hi) in enumerate(rows):
         ax.barh(i, hi - lo, left=lo, color=figstyle.COOL if hi >= lo else figstyle.ACC, alpha=0.85)
-        ax.text(min(lo, hi) - 0.1, i, label, ha="right", va="center", fontsize=9)
+        ax.text(min(lo, hi) - 0.1, i, label, ha="right", va="center", fontsize=FS_2)
     ax.axvline(base_gap, color=figstyle.INK, lw=1.5, label=f"baseline gap = ${base_gap:.2f}")
     ax.axvline(0, color=figstyle.WARM, ls="--", lw=1.2, label="parity")
     ax.set_yticks([])
     ax.set_xlabel("LCOH(elec) − LCOH(gas)  [$/MMBtu delivered]")
-    ax.set_title("Sensitivity of the cost gap (one-at-a-time)")
-    ax.legend(loc="lower right", fontsize=9)
+    ax.legend(loc="lower right", fontsize=FS_2)
     ax.grid(axis="x", alpha=0.3)
     figstyle.finish(fig, f"{OUT}/fig4_tornado.png")
 
@@ -253,23 +253,22 @@ def fig_emissions(p: Params):
     ci = np.linspace(0, 0.6, 200)  # tCO2/MWh
     e_el = ci * KWH_PER_MMBTU / p.eta_e  # kg/MMBtu (t/MWh == kg/kWh)
     em = emissions(p)
-    fig, ax = plt.subplots(figsize=(8, 5.5))
+    fig, ax = plt.subplots(figsize=fig_size(NOTES, WIDE))
     ax.plot(ci, e_el, lw=2.5, label="Electric boiler (avg grid CI)")
     ax.axhline(em["gas"], color=figstyle.WARM, lw=2.5, label=f"Gas boiler = {em['gas']:.1f} kg/MMBtu")
     ax.axvline(em["parity_grid_ci"], color=figstyle.DIM, ls="--", lw=1.5)
     ax.annotate(f"parity @ {em['parity_grid_ci']:.3f} tCO₂/MWh",
-                (em["parity_grid_ci"] + 0.01, 10), fontsize=10)
+                (em["parity_grid_ci"] + 0.01, 10), fontsize=FS_1)
     ax.plot(p.grid_ci, p.grid_ci * KWH_PER_MMBTU / p.eta_e, "*", color=figstyle.INK, ms=15)
     # left of the star, not right: the label is long enough that the old
     # right-hand offset ran it off the canvas
     ax.annotate(f"ERCOT average, eGRID2023 ({p.grid_ci:g})",
                 (p.grid_ci, p.grid_ci * KWH_PER_MMBTU / p.eta_e),
                 xytext=(12, -16), textcoords="offset points", ha="left",
-                fontsize=9.5, color=figstyle.INK)
+                fontsize=FS_2, color=figstyle.INK)
     ax.set_xlabel("Grid carbon intensity  [tCO₂/MWh]")
     ax.set_ylabel("Emissions  [kgCO₂ / MMBtu delivered]")
-    ax.set_title("Emissions parity: e-boiler beats gas below the dashed line")
-    ax.legend(fontsize=9)
+    ax.legend(fontsize=FS_2)
     ax.grid(alpha=0.3)
     figstyle.finish(fig, f"{OUT}/fig5_emissions_parity.png")
 

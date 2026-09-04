@@ -12,6 +12,27 @@
  * is a block of overrides, not a rewrite - see the note under :root.
  * (Yacht club palette and Option B structure, folded in 2026-09-04; the
  * dark-ground stylesheet this replaces is in git before that date.)
+ *
+ * Type scale. One base, one ratio (1.2, a minor third), seven steps, every
+ * step a token, every role set from a token. Nothing on the site is set in
+ * pixels outside this table.
+ *
+ *   step  token    px    roles
+ *   -2    --fs-2   12    table heads, kickers, marginalia and its label (a <p>, not a
+ *                        heading: nothing in the outline is smaller than body), carets,
+ *                        superscripts and subscripts, hero caption, reference notes
+ *   -1    --fs-1   14.5  nav, menus, captions (.small), tables, code, buttons,
+ *                        footer, references
+ *    0    --fs0    17.5  body
+ *    1    --fs1    21    h3; the standfirst (regular weight, muted), the lightbox close
+ *    2    --fs2    25    h2 (semibold, one rule above)
+ *    3    --fs3    30    h1 on a phone
+ *    4    --fs4    36    h1
+ *
+ * Measure. Prose pages (main.prose: atlas, model, library, code) run two
+ * tracks and a wider column; pages with marginalia keep three tracks so the
+ * gutters earn their space. Both are set in ch below and reported in
+ * characters per line in DESLOP_3B_2026-09-04.md.
  */
 
 :root {
@@ -31,19 +52,22 @@
   --acc-fill-hover: #1B4A5B;
   --moss:     #733E24;   /* brown (swatch): the second data colour */
   --cool:     #245F73;   /* code and inline numbers share the accent */
-  --hero-ground: #0A1024;              /* the globe canvases draw on a dark disc */
   --overlay:  rgba(36, 30, 26, .82);   /* lightbox backdrop, from --ink */
   --shadow:   0 14px 34px rgba(36, 30, 26, .12);
   /* Three widths, not one. Prose stays at a readable measure because line
      length is a legibility constraint, not a stylistic one. Everything that
      is not prose has no such limit, so figures, tables and the hero break
      out of the text column and use the screen. */
-  --text:    min(68ch, 100%);
+  --text:    min(72ch, 100%);   /* prose pages; main.notes narrows it to make room for marginalia */
+  --gutter:  calc((var(--wide) - var(--text)) / 2);
   --wide:    min(1140px, 100%);
   --shell:   1440px;
   --sans:    "IBM Plex Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
   --mono:    "IBM Plex Mono", ui-monospace, "Cascadia Mono", Consolas, monospace;
   --serif:   var(--sans);   /* kept as a name so nothing that asks for it breaks */
+  /* ---- the type scale: see the table in the header --------------------- */
+  --fs-2: 12px; --fs-1: 14.5px; --fs0: 17.5px; --fs1: 21px; --fs2: 25px; --fs3: 30px; --fs4: 36px;
+  --lh: 1.6;
 }
 /* A second theme goes here as overrides, not a rewrite - for example
    [data-theme="dark"] { --bg: #000000; --ink: #D1D0D0; --dim: #988686;
@@ -66,7 +90,7 @@ body {
   color: var(--ink);
   /* Plain fixed fallback for a browser without container query support -
      main below overrides this for everything that reads it. */
-  font: 16.5px/1.62 var(--sans);
+  font: var(--fs0)/var(--lh) var(--sans);
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
 }
@@ -86,7 +110,7 @@ nav.top {
   align-items: center;
   gap: 10px;
   flex-wrap: wrap;
-  font: 13.5px/1 var(--sans);
+  font: var(--fs-1)/1 var(--sans);
   position: relative;
   z-index: 50;
 }
@@ -118,7 +142,7 @@ nav.top .dd { margin: 0; }
 /* dropdown */
 .dd { position: relative; display: inline-block; margin-right: 22px; }
 .dd > .ddbtn { margin-right: 0; cursor: pointer; }
-.caret { font-size: 11px; opacity: .65; }
+.caret { font-size: var(--fs-2); opacity: .65; }
 .ddmenu {
   display: none;
   position: absolute;
@@ -137,7 +161,7 @@ nav.top .dd { margin: 0; }
   margin: 0;
   padding: 8px 18px;
   color: var(--dim);
-  font-size: 13.5px;
+  font-size: var(--fs-1);
   white-space: nowrap;
   border: 0;
 }
@@ -155,54 +179,65 @@ main {
   padding: clamp(30px, 22.9px + 1.9vw, 40px) 0
            clamp(90px, 68.6px + 5.71vw, 120px);
   max-width: var(--shell);
-  /* Type sizes off main's own rendered width, not the raw viewport - a
-     narrow browser window on a huge monitor and the same window width on a
-     small laptop now read identically, which a vw unit cannot express. */
   container-type: inline-size;
   grid-template-columns:
     [full-start] minmax(34px, 1fr)
-    [wide-start] minmax(0, calc((var(--wide) - var(--text)) / 2))
+    [wide-start] minmax(0, var(--gutter))
     [text-start] minmax(0, var(--text)) [text-end]
-    minmax(0, calc((var(--wide) - var(--text)) / 2)) [wide-end]
+    minmax(0, var(--gutter)) [wide-end]
     minmax(34px, 1fr) [full-end];
 }
-/* cqw has to be set on a descendant of the container, not the container
-   itself - main sizing its own font off its own inline-size is circular,
-   so the fluid size lives here instead and main's children inherit it. */
 main > * {
   grid-column: text;
   min-width: 0;
-  font-size: clamp(16px, 15.6px + .12cqw, 17px);
+}
+/* Two kinds of page. main.prose (atlas, model, library, code) has nothing in
+   the gutters, so the wide track sits outside the text and figures break out
+   through it. main.notes (the seven pages with marginalia) cannot have both
+   text in the gutter and figures through it, so there the wide track IS the
+   text track and the gutters are two named tracks that only the asides use:
+   figures stop at the column, the marginalia has the gutter to itself, and
+   nothing can paint over anything. The 2026-08-30 audit's finding 4 was
+   this collision in canvas form; the clamp that fixed it lived in the script
+   3a deleted, so it is now in the grid, where a deleted file cannot take it. */
+main.notes {
+  --text: min(68ch, 100%);
+  grid-template-columns:
+    [full-start] minmax(34px, 1fr)
+    [gutter-l-start] minmax(0, var(--gutter))
+    [gutter-l-end wide-start text-start] minmax(0, var(--text)) [text-end wide-end gutter-r-start]
+    minmax(0, var(--gutter)) [gutter-r-end]
+    minmax(34px, 1fr) [full-end];
 }
 main > .wide, main > table, main > img.fig, main > video.fig, main > #hero,
 main > .cardgrid, main > .mosaic { grid-column: wide; }
 main > .full { grid-column: full; }
 
 h1 {
-  font: 600 clamp(26px, 23px + 1cqw, 32px)/1.15 var(--sans);
+  font: 600 var(--fs4)/1.12 var(--sans);
   letter-spacing: -.02em;
   margin: 0 0 10px;
 }
 h2 {
   /* a sentence-case heading with one rule above it; the old uppercase
      tracked kicker was the most template-looking rule in the file */
-  font: 600 16px/1.3 var(--sans);
-  letter-spacing: -.005em;
+  font: 600 var(--fs2)/1.25 var(--sans);
+  letter-spacing: -.012em;
   color: var(--ink);
-  margin: 54px 0 14px;
-  padding: 12px 0 0;
+  margin: 52px 0 14px;
+  padding: 14px 0 0;
   border-top: 1px solid var(--rule);
 }
 h3 {
-  font: 600 17.5px/1.3 var(--sans);
+  font: 600 var(--fs1)/1.25 var(--sans);
   letter-spacing: -.01em;
-  margin: 22px 0 4px;
+  margin: 26px 0 6px;
 }
 
 p { margin: 15px 0; }
 .dim { color: var(--dim); }
-p.dim { font-size: 18px; line-height: 1.5; }
-.small { font: 14px/1.55 var(--sans); color: var(--dim); }
+p.dim { font-size: var(--fs1); line-height: 1.45; }
+.small { font: var(--fs-1)/1.5 var(--sans); color: var(--dim); }
 
 a {
   color: var(--acc);
@@ -217,7 +252,7 @@ ul { padding-left: 22px; }
 li { margin: 8px 0; }
 
 code {
-  font: 13.5px var(--mono);
+  font: var(--fs-1) var(--mono);
   background: var(--bg-lift);
   padding: 2px 6px;
   color: var(--cool);
@@ -227,7 +262,7 @@ code {
 table {
   width: 100%;
   border-collapse: collapse;
-  font: 14px/1.5 var(--mono);
+  font: var(--fs-1)/1.5 var(--mono);
   margin: 20px 0;
   font-variant-numeric: tabular-nums;
 }
@@ -239,7 +274,7 @@ th, td {
 }
 th {
   color: var(--dim);
-  font: 600 12px/1.4 var(--mono);
+  font: 600 var(--fs-2)/1.4 var(--mono);
   border-bottom-color: var(--rule);
 }
 tr:hover td { background: var(--bg-lift); }
@@ -304,7 +339,7 @@ img.fig:focus-visible { outline: 2px solid var(--acc); outline-offset: 2px; }
   border: 1px solid var(--rule);
   background: var(--card);
   color: var(--ink);
-  font: 22px/1 var(--sans);
+  font: var(--fs1)/1 var(--sans);
   cursor: pointer;
   transition: border-color .18s, color .18s;
 }
@@ -312,8 +347,13 @@ img.fig:focus-visible { outline: 2px solid var(--acc); outline-offset: 2px; }
   border-color: var(--acc-dim);
   color: var(--acc);
 }
-@media (max-width: 620px) {
-  .lightbox-close { top: 10px; right: 10px; width: 36px; height: 36px; }
+@media (max-width: 760px) {
+  /* On a phone the inline figure is a preview. The lightbox shows it at
+     1100 CSS px and lets it scroll, so a 12 px label reads at about 18 px
+     instead of the 6 px the column allows (audit F4). */
+  .lightbox { align-items: flex-start; justify-content: flex-start; overflow: auto; padding: 56px 16px 24px; }
+  .lightbox-img { max-width: none; max-height: none; width: 1100px; }
+  .lightbox-close { position: fixed; top: 10px; right: 10px; width: 36px; height: 36px; }
 }
 
 /* --------------------------------------------------------------- grid --- */
@@ -350,7 +390,7 @@ img.fig:focus-visible { outline: 2px solid var(--acc); outline-offset: 2px; }
 }
 .card:hover { border-color: var(--acc-dim); }
 .card .tag {
-  font: 12.5px/1.4 var(--mono);
+  font: var(--fs-2)/1.4 var(--mono);
   color: var(--dim);
   margin-bottom: 4px;
 }
@@ -366,7 +406,9 @@ img.fig:focus-visible { outline: 2px solid var(--acc); outline-offset: 2px; }
   grid-row: 1 / span 4;
   width: 100%;
   max-width: 100%;
-  height: auto;   /* the width/height attributes reserve the box; this restores the aspect */
+  aspect-ratio: 3 / 2;   /* the site's one thumbnail shape; overrides the width/height attributes */
+  height: auto;
+  object-fit: cover;
   margin: 4px 0 0;
   display: block;
 }
@@ -377,7 +419,7 @@ img.fig:focus-visible { outline: 2px solid var(--acc); outline-offset: 2px; }
   background: var(--acc-fill);
   color: var(--acc-ink);
   padding: 9px 14px;
-  font: 600 13.5px var(--mono);
+  font: 600 var(--fs-1) var(--mono);
   margin: 12px 10px 0 0;
   border: 1px solid var(--acc-fill);
   transition: filter .18s;
@@ -398,16 +440,14 @@ img.fig:focus-visible { outline: 2px solid var(--acc); outline-offset: 2px; }
   height: clamp(300px, 46vh, 560px);
   margin: 14px 0 22px;
   overflow: hidden;
-  /* the globe canvases draw light on a dark disc; on this ground it is a
-     picture in a frame, and the frame is the same hairline as a figure */
-  background: var(--hero-ground);
-  border: 1px solid var(--rule);
+  /* The globe canvases draw a dark sphere with its own limb and rim; on this
+     ground it is an object on the page, so there is no box and no frame. */
 }
 .hero-layer { position: absolute; inset: 0; display: block; }
 /* the WebGL canvas fades in over the 2D pair, then they are stopped */
 .hero-gl { z-index: 2; }
 .hero-cap {
-  font: 12.5px var(--mono);
+  font: var(--fs-2) var(--mono);
   color: var(--dim);
   margin: 10px 0 0;
 }
@@ -416,7 +456,8 @@ img.fig:focus-visible { outline: 2px solid var(--acc); outline-offset: 2px; }
 /* ----------------------------------------------------------- citations --- */
 /* Superscript markers in the prose, and the list they point at. Clicking a
    marker jumps to the entry and highlights it; clicking back returns. */
-sup.cite { font-size: 11px; line-height: 0; vertical-align: super; }
+sup, sub { font-size: var(--fs-2); line-height: 0; }
+sup.cite { vertical-align: super; }
 sup.cite a {
   color: var(--acc);
   border: 0;
@@ -430,7 +471,7 @@ ol.refs {
   list-style: none;
   padding: 0;
   margin: 14px 0 0;
-  font: 13.5px/1.55 var(--sans);
+  font: var(--fs-1)/1.5 var(--sans);
   color: var(--dim);
 }
 ol.refs li {
@@ -452,13 +493,13 @@ ol.refs li::before {
 }
 ol.refs li:target { background: var(--bg-lift); }
 ol.refs .src { color: var(--ink); }
-ol.refs .what { display: block; margin-top: 2px; font-size: 13px; }
+ol.refs .what { display: block; margin-top: 2px; font-size: var(--fs-2); }
 
 footer {
   margin-top: 74px;
   padding-top: 22px;
   border-top: 1px solid var(--rule);
-  font: 13px var(--mono);
+  font: var(--fs-1) var(--mono);
   color: var(--dim);
 }
 
@@ -492,23 +533,23 @@ footer {
    in its own right. */
 .mosaic {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+  grid-template-columns: repeat(3, 1fr);   /* six tiles: three by two, not what auto-fit lands on */
   gap: 6px;
   margin: 4px 0 6px;
 }
+/* One aspect for every thumbnail on the site, 3:2. Part 2 renders the
+   mosaic and card thumbnails at exactly this shape, so nothing is boxed or
+   cropped; until then the stale dark figures are cropped to it. */
 .mosaic a {
   display: block;
-  aspect-ratio: 4 / 3;
+  aspect-ratio: 3 / 2;
   overflow: hidden;
   border: 1px solid var(--rule);
 }
 .mosaic img {
   width: 100%;
   height: 100%;
-  /* contain, not cover: these figures range from 1.15:1 to 1.83:1 against a
-     4:3 tile, and a centred cover-crop was cutting whole panels and axis
-     labels off rather than showing a recognisable slice of the chart. */
-  object-fit: contain;
+  object-fit: cover;
   display: block;
   transition: transform .25s ease;
 }
@@ -521,17 +562,22 @@ footer {
    its own, so it sits alongside the content instead of pushing it down;
    sticky within that span so a short list follows the reader. A long list
    (.long) scrolls with the page instead, because a sticky block taller than
-   the viewport can never be read to the end. Nothing here moves. */
-aside.marginalia { grid-column: wide-start / text-start; grid-row: span 60; align-self: start; position: sticky;
-                   top: 34px; z-index: 2; padding-right: 30px; font: 12.5px/1.45 var(--mono); color: var(--dim); }
-aside.marginalia.right { grid-column: text-end / wide-end; padding: 0 0 0 30px; }
+   the viewport can never be read to the end. Nothing here moves. Below
+   1100px the gutters are too narrow for words, and the asides sit above the
+   prose as a two-column list instead. */
+aside.marginalia { grid-column: gutter-l; align-self: start; position: sticky; top: 34px;
+                   padding-right: 22px; font: var(--fs-2)/1.45 var(--mono); color: var(--dim); }
+aside.marginalia.right { grid-column: gutter-r; padding: 0 0 0 22px; }
+/* each aside carries grid-row: span N inline, N being the number of rows that
+   follow it on that page, written by the page build; no fixed number here */
 aside.marginalia.long { position: static; }
 aside.marginalia ul { list-style: none; margin: 0; padding: 0; }
 aside.marginalia li { margin: 0 0 10px; padding-left: 10px; border-left: 2px solid var(--faint); }
 aside.marginalia b { display: block; color: var(--ink); font-weight: 400; }
+aside.marginalia .v { display: block; }
 aside.marginalia a { border: 0; }
 aside.marginalia a:hover { border-bottom: 1px solid var(--acc); }
-aside.marginalia h4 { font: 600 11px/1.4 var(--mono); color: var(--dim); margin: 0 0 8px; letter-spacing: .04em; }
+aside.marginalia .lab { font: 600 var(--fs-2)/1.4 var(--mono); color: var(--dim); margin: 0 0 8px; letter-spacing: .04em; }
 aside.marginalia img { width: 18px; height: 18px; vertical-align: -4px; margin-right: 6px; }
 
 /* the home page's name and standfirst; nothing else on the site has a masthead */
@@ -550,20 +596,13 @@ aside.marginalia img { width: 18px; height: 18px; vertical-align: -4px; margin-r
   scroll-behavior: auto !important;
 }
 
-/* A button, not a link: it changes this page rather than going anywhere. Plain
-   words rather than an icon, because an icon for this has no convention to lean
-   on. Hidden until motion.js reveals it, so it never appears without JS. */
-.motion-toggle {
-  font: inherit;
-  color: var(--dim);
-  background: none;
-  border: 0;
-  border-bottom: 1px solid var(--faint);
-  padding: 0;
-  cursor: pointer;
+
+@media (max-width: 1100px) {
+  /* the gutters shrink below what a value needs; the notes go above the prose */
+  aside.marginalia, aside.marginalia.right { position: static; grid-row: auto !important; grid-column: text; padding: 0;
+                                            columns: 2; column-gap: 20px; margin: 6px 0 14px; }
+  aside.marginalia li { break-inside: avoid; }
 }
-.motion-toggle:hover { color: var(--ink); border-bottom-color: var(--acc); }
-.motion-toggle .motion-state { color: var(--acc); }
 
 /* ------------------------------------------------------------- mobile --- */
 @media (max-width: 760px) {
@@ -575,9 +614,6 @@ aside.marginalia img { width: 18px; height: 18px; vertical-align: -4px; margin-r
   .cardgrid .card { grid-template-columns: 1fr; }
   .cardgrid .card img { grid-column: 1; grid-row: auto; margin: 10px 0 4px; }
   .cardgrid .card .tag, .cardgrid .card h3, .cardgrid .card p, .cardgrid .card a.btn { grid-column: 1; }
-  aside.marginalia, aside.marginalia.right { position: static; grid-row: auto; grid-column: text; padding: 0;
-                                            columns: 2; column-gap: 20px; margin: 6px 0 14px; }
-  aside.marginalia li { break-inside: avoid; }
   /* Nothing may be wider than the screen. One over-wide child gives the
      whole document a horizontal scroll, and every block then reads as
      though it has been cut off down the right edge. */
@@ -606,7 +642,7 @@ aside.marginalia img { width: 18px; height: 18px; vertical-align: -4px; margin-r
     background: transparent;
   }
   .dd:focus-within > .ddmenu { display: block; }
-  .ddmenu a { padding: 9px 0 9px 18px; font-size: 15px; }
+  .ddmenu a { padding: 9px 0 9px 18px; font-size: var(--fs-1); }
   .dd { display: block; margin: 2px 0; width: 100%; }
   /* One item per row. The bar is a wrapping flex row, so the groups — which
      are block-level — took a line each while the plain links flowed
@@ -619,11 +655,12 @@ aside.marginalia img { width: 18px; height: 18px; vertical-align: -4px; margin-r
   /* 14.5px top and bottom plus the 15px line box (nav.top's own font shorthand
      sets line-height:1, so the box is exactly font-size tall) clears the
      44px touch-target floor instead of the 33px box the old 9px padding left. */
-  nav.top a { padding: 14.5px 4px; font-size: 15px; display: block; }
+  nav.top a { padding: 14.5px 4px; font-size: var(--fs-1); display: block; }
   /* The current-page highlight hugs its own text rather than running the
      width of the bar, which in a column layout stretch would otherwise do. */
   nav.top a.on { align-self: flex-start; width: auto; }
   .dd > .ddbtn { display: block; }
-  .caret { float: right; font-size: 11px; opacity: .8; }
+  .caret { float: right; font-size: var(--fs-2); opacity: .8; }
   .card { padding: 20px; }
+  h1 { font-size: var(--fs3); }
 }

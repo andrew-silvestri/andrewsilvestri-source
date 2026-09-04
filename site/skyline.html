@@ -8,18 +8,18 @@
 <link rel="apple-touch-icon" href="apple-touch-icon.png">
 <meta name="theme-color" content="#F2F0EF">
 <link rel="canonical" href="https://andrewsilvestri.com/skyline.html">
-<script>/* the motion contract — set before first paint */
-try{var m=localStorage.getItem('motion');if(m!=='on'&&m!=='off')m=matchMedia('(prefers-reduced-motion: reduce)').matches?'off':'on';document.documentElement.dataset.motion=m;}catch(e){document.documentElement.dataset.motion='on';}</script>
-<link rel="stylesheet" href="style.css?v=8706b1b1">
+<script>/* the motion contract — set before first paint, from the system preference alone */
+try{document.documentElement.dataset.motion=matchMedia('(prefers-reduced-motion: reduce)').matches?'off':'on';}catch(e){document.documentElement.dataset.motion='on';}</script>
+<link rel="stylesheet" href="style.css?v=ec676571">
 </head><body>
 <nav class="top"><a href="index.html">Home</a><span class="dd"><a href="#" class="ddbtn" aria-haspopup="true">The atlas <span class="caret">&#9662;</span></a><span class="ddmenu"><a href="atlas-app.html" target="_blank" rel="noopener">Open the atlas</a><a href="atlas.html">About the atlas</a><a href="model.html">How the model works</a><a href="library.html">Figures</a></span></span><span class="dd"><a href="#" class="ddbtn" aria-haspopup="true">Energy <span class="caret">&#9662;</span></a><span class="ddmenu"><a href="heat.html">Industrial heat break-even</a><a href="storage.html">Battery revenue simulator</a><a href="climate-cost.html">Climate cost calculator</a></span></span><span class="dd"><a href="#" class="ddbtn on" aria-haspopup="true">Others <span class="caret">&#9662;</span></a><span class="ddmenu"><a href="longevity.html">Longevity quotient</a><a href="skyline.html" class="on">Skylines, played</a><a href="desktop.html">The bookshelf</a></span></span><a href="code.html">Code</a></nav>
-<main>
+<main class="notes">
 
 <h1>Skylines, played</h1>
 <p class="dim">A skyline and a spectrum analyser are the same picture. So the
 picture is played.</p>
-<aside class="marginalia long" aria-label="On this page"><h4>On this page</h4><ul><li>New York · Bb blues</li><li>Paris · C major</li><li>Tokyo · D yo</li><li>Austin · E blues</li><li>Chicago · E blues</li><li>Tel Aviv · D hijaz</li><li>Frankfurt · C minor</li><li>London · Eb major</li><li>Dubai · D hijaz</li><li>Shenzhen · D pent maj.</li><li>Toronto · G major</li><li>Taipei · G pent min.</li><li>Nashville · G major</li><li>Warsaw · F minor</li></ul></aside>
-<aside class="marginalia right long"><ul><li>Auckland · E major</li><li>Osaka · A insen</li><li>Los Angeles · Bb major</li><li>Moscow · Eb major</li><li>Brussels · Bb major</li><li>Hong Kong · E pent min.</li><li>Seoul · G pent maj.</li><li>Calgary · C major</li><li>Rotterdam · A minor</li><li>Miami · A minor</li><li>Madrid · E hijaz</li><li>Vienna · D major</li><li>Fort Worth · C major</li></ul></aside>
+<aside class="marginalia long" style="grid-row: span 18" aria-label="On this page"><p class="lab">On this page</p><ul><li>New York · Bb blues</li><li>Paris · C major</li><li>Tokyo · D yo</li><li>Austin · E blues</li><li>Chicago · E blues</li><li>Tel Aviv · D hijaz</li><li>Frankfurt · C minor</li><li>London · Eb major</li><li>Dubai · D hijaz</li><li>Shenzhen · D pent maj.</li><li>Toronto · G major</li><li>Taipei · G pent min.</li><li>Nashville · G major</li><li>Warsaw · F minor</li></ul></aside>
+<aside class="marginalia right long" style="grid-row: span 18"><ul><li>Auckland · E major</li><li>Osaka · A insen</li><li>Los Angeles · Bb major</li><li>Moscow · Eb major</li><li>Brussels · Bb major</li><li>Hong Kong · E pent min.</li><li>Seoul · G pent maj.</li><li>Calgary · C major</li><li>Rotterdam · A minor</li><li>Miami · A minor</li><li>Madrid · E hijaz</li><li>Vienna · D major</li><li>Fort Worth · C major</li></ul></aside>
 
 <p>Both are a row of vertical bars of varying height. That is a coincidence of
 drawing conventions rather than of physics, but it is usable: if a skyline can
@@ -40,9 +40,7 @@ sounds. Drag to turn, or press Spin.</p>
 <a class="btn ghost" href="downloads/skyline-code.zip">Download code and data</a>
 </div>
 
-<video class="fig wide motion-video" muted loop playsinline aria-hidden="true"
- poster="assets/skyline_spectrum_poster.png?v=bc070c8b"
- data-src="assets/skyline_spectrum.mp4?v=4e10e985"></video>
+<img class="fig wide" src="assets/skyline_towers.png?v=186f7fe3" loading="lazy" alt="New York's eight tallest towers as bars, by height in metres, from One World Trade Center at 541 m to World Trade Center at 417 m.">
 <p class="small">The real top eight towers of New York, by height - the same
 bars, read as a spectrum instead of a skyline.</p>
 
@@ -118,10 +116,8 @@ towers quiets the instrument rather than merely changing it.</td></tr>
 </table>
 
 <footer>Andrew Silvestri · energy systems modelling ·
-<a href="mailto:dasilvestri@utexas.edu">dasilvestri@utexas.edu</a> &middot;
-<button type="button" class="motion-toggle" hidden>Motion: <span class="motion-state">on</span></button></footer>
+<a href="mailto:dasilvestri@utexas.edu">dasilvestri@utexas.edu</a></footer>
 </main>
-<script src="assets/motion.js?v=4cbbdec3"></script>
+<script src="assets/motion.js?v=6bf4b397"></script>
 <script src="assets/lightbox.js?v=0bce1245"></script>
-<script src="assets/bgloop.js?v=d269be40"></script>
 </body></html>

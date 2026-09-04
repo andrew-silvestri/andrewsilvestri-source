@@ -23,14 +23,21 @@ about what is actually on the page.
 """
 
 WIDE_TRACK_PX = 1140
-MIN_PX = 11.0
-MIN_TITLE_PX = 13.0
+MIN_PX = 12.0        # --fs-2, the smallest step of the site scale (2026-09-04)
+MIN_TITLE_PX = 14.5  # --fs-1
+KNOWN_DISPLAY = (714, 1082, 1140, 542)   # sitefig display widths, one point per pixel
 
 
 def on_screen_px(pt, figsize_w_in):
-    """What a `pt`-sized label in a figure `figsize_w_in` inches wide, placed
-    in the site's wide (1140px) track, actually measures on screen."""
-    return pt * WIDE_TRACK_PX / (72.0 * figsize_w_in)
+    """What a `pt`-sized label in a figure `figsize_w_in` inches wide
+    measures on screen. Since 2026-09-04 every builder sizes its figure with
+    sitefig.fig_size(display_px, aspect), i.e. width = display_px / 72, so a
+    figure's own width names the track it is displayed in and this reduces
+    to pt. A figure of any other width is assumed to sit in the 1140 track,
+    which is the old rule."""
+    w_px = round(figsize_w_in * 72.0)
+    display = w_px if w_px in KNOWN_DISPLAY else WIDE_TRACK_PX
+    return pt * display / (72.0 * figsize_w_in)
 
 
 def floor_problems(fig, items):

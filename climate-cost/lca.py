@@ -142,13 +142,17 @@ class Model:
         node["total"] = direct + sum(c["total"] for c in node["children"])
         return node
 
-    def transport_node(self, alloc):
+    def transport_node(self, mult, alloc, amount):
+        """The freight leg. `mult` is everything that scales the emission
+        (share x amortisation x waste scale x kilograms shipped); `alloc` is
+        the share x amortisation that reaches the product, reported the same
+        way every other node reports it; `amount` is the tonne-kilometres
+        actually moved for one functional unit."""
         t = TRANSPORT[self.mode]
-        # tonne-kilometres for one kilogram of product
-        kgco2 = t["ef"] * (self.km / 1000.0) * alloc
+        kgco2 = t["ef"] * (self.km / 1000.0) * mult
         return {
             "id": "freight_" + self.mode, "name": t["name"],
-            "unit": "tonne-km", "amount": self.km / 1000.0, "alloc": alloc,
+            "unit": "tonne-km", "amount": amount, "alloc": alloc,
             "direct": kgco2, "total": kgco2, "children": [],
             "quality": "A",
             "note": (f"{self.km:,.0f} km by {t['name']} at {t['ef']} kg CO2e "
@@ -175,13 +179,21 @@ class Model:
 
         spine = []
         for st in self.p["stages"]:
-            alloc = st.get("allocation", 1.0)
+            # Three multipliers, three meanings (see processes.py): a
+            # co-product share, a capital-good amortisation, and the mass
+            # shipped on a freight leg. Share and amortisation reach every
+            # node in the stage; the mass reaches only the freight node.
+            share = st.get("share", 1.0)
+            amort = st.get("amortise", 1.0)
             if st["id"] in self.life_stages:
-                alloc *= self.life_scale
+                amort *= self.life_scale
+            alloc = share * amort
             scale = 1.0 if st.get("waste") else overproduce
             kids = []
             if st.get("transport"):
-                kids.append(self.transport_node(alloc * scale))
+                kg = st.get("freight_kg", 1.0)
+                kids.append(self.transport_node(alloc * scale * kg, alloc,
+                                                self.km / 1000.0 * kg * scale))
             for cid, camt, calloc in st["inputs"]:
                 kids.append(self.expand(cid, camt * scale, alloc * calloc,
                                         1, rough))
@@ -191,6 +203,9 @@ class Model:
                 "direct": direct, "note": st.get("note", ""),
                 "children": kids,
                 "land_use": bool(st.get("land_use")),
+                # the allocation basis travels with the number, so the
+                # visualiser can say *which kind* of share this is
+                "basis": st.get("basis", ""),
             }
             if st.get("waste"):
                 # The wasted mass itself decays in landfill. Everything above

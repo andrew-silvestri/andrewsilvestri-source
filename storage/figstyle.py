@@ -20,6 +20,10 @@ import os
 import sys
 
 import matplotlib
+import sys as _sys, os as _os; _sys.path.insert(0, _os.path.dirname(_os.path.dirname(_os.path.abspath(__file__))))
+from sitefig import BG, INK, DIM, RULE, FAINT, ACC, COOL, MOSS, ROSE, SLATE, DISTRICT, SUPPLY, PSYCH, SUN, INSOL, GOLD, GREY, VIOLET, BLUE, GREEN, WARM, ARROW, ONE_WAY_COL, TWO_WAY_COL, NODE_COL, WARM2, KCOL, CYCLE, FS_2, FS_1, FS0, FS1, FS2, FONT, MONO, NOTES, PROSE, CARD, THUMB, fig_size, save, WIDE, PLOT, SQUARE, TALL, row_aspect, panel  # noqa: E402,F401
+import sitefig  # noqa: E402
+
 matplotlib.use("Agg")
 import matplotlib.pyplot as plt
 
@@ -31,21 +35,10 @@ import fig_floor
 # colors had drifted from an older brass/gold palette while the live site
 # moved to violet/blue, so figures regenerated from here were mismatched
 # against the page around them until this was brought back in sync.
-INK = "#e3e6f2"
-DIM = "#8b93b0"
-BG = "#070a12"
-RULE = "#232a45"
-ACC = "#8b7ff2"      # violet, the site accent (--acc)
-COOL = "#5aa8d8"     # blue, data accent (--cool)
-WARM = "#d86a86"     # pink-red, matches the site's "event" accent elsewhere
-GREEN = "#4f9d84"    # moss (--moss)
-VIOLET = "#a98fd8"
-
-CYCLE = [ACC, COOL, GREEN, WARM, VIOLET, "#c9a227", "#6e8096"]
 
 
 def use():
-    plt.rcParams.update({
+    sitefig.style(); plt.rcParams.update({
         "figure.facecolor": BG,
         "axes.facecolor": BG,
         "savefig.facecolor": BG,
@@ -69,19 +62,17 @@ def use():
         "axes.spines.top": False,
         "axes.spines.right": False,
 
-        "font.size": 12.5,
+        "font.size": FS_1,
         # Match the site, which sets its UI text in the system sans
         # stack. Named as a list so this still renders sensibly on a
         # machine without Segoe UI rather than falling back to boxes.
-        "font.family": "sans-serif",
-        "font.sans-serif": ["Segoe UI", "Selawik", "DejaVu Sans",
-                            "Arial"],
-        "axes.titlesize": 14.5,
+        "font.family": FONT,
+        "axes.titlesize": FS0,
         "axes.titleweight": "medium",
-        "axes.labelsize": 12.5,
-        "xtick.labelsize": 11.5,
-        "ytick.labelsize": 11.5,
-        "legend.fontsize": 11.5,
+        "axes.labelsize": FS_1,
+        "xtick.labelsize": FS_1,
+        "ytick.labelsize": FS_1,
+        "legend.fontsize": FS_1,
         "legend.frameon": False,
 
         "lines.linewidth": 2.2,
@@ -94,6 +85,11 @@ def use():
 
 
 def finish(fig, path, title=None, subtitle=None, footnote=None):
+    # Titles and subtitles are no longer drawn (2026-09-04): the page heading
+    # above the figure and the caption under it carry that; a title inside the
+    # frame at body size read as a third heading. The arguments are kept so
+    # the callers need not change. Footnotes stay, as figure furniture.
+    title = subtitle = None
     """Save with a consistent header block above the axes, and optionally a
     footnote block below it.
 
@@ -111,7 +107,7 @@ def finish(fig, path, title=None, subtitle=None, footnote=None):
         # and footnote left every such figure (including this one, before
         # this fix) unaudited on every run, silently.
         audit(fig, path)
-        fig.savefig(path)
+        sitefig.save(fig, path, close=False)
         plt.close(fig)
         return
 
@@ -121,24 +117,30 @@ def finish(fig, path, title=None, subtitle=None, footnote=None):
     # short paragraph.
     h = fig.get_size_inches()[1]
     top_strip = (0.42 if subtitle else 0.28) / h if title else 0.0
+    if footnote:
+        # wrap to the figure's own width: at one point per pixel a line of
+        # FS_1 text holds about width_px / (0.56 * FS_1) characters
+        import textwrap
+        cols = max(40, int(fig.get_size_inches()[0] * 72 / (FS_2 * 0.62)))
+        footnote = "\n".join(textwrap.fill(p, cols) for p in footnote.split("\n"))
     n_lines = footnote.count("\n") + 1 if footnote else 0
-    bottom_strip = (0.16 + 0.16 * n_lines) / h if footnote else 0.0
+    bottom_strip = (0.20 + 0.22 * n_lines) / h if footnote else 0.0   # FS_1 lines at 1.5 spacing, plus the tick labels above
     try:
         fig.get_layout_engine().set(rect=(0, bottom_strip, 1, 1 - top_strip))
     except AttributeError:                       # older matplotlib
         fig.subplots_adjust(top=1 - top_strip, bottom=bottom_strip)
 
     if title:
-        fig.text(0.028, 0.995, title, fontsize=15.5, color=INK, ha="left",
+        fig.text(0.028, 0.995, title, fontsize=FS0, color=INK, ha="left",
                  va="top", weight="medium")
         if subtitle:
-            fig.text(0.028, 0.995 - (0.235 / h), subtitle, fontsize=11.5,
+            fig.text(0.028, 0.995 - (0.235 / h), subtitle, fontsize=FS_1,
                      color=DIM, ha="left", va="top")
     if footnote:
-        fig.text(0.028, 0.012, footnote, fontsize=10.5, color=DIM,
+        fig.text(0.028, 0.012, footnote, fontsize=FS_2, color=DIM, fontfamily=MONO,
                  ha="left", va="bottom", linespacing=1.5)
     audit(fig, path)
-    fig.savefig(path)
+    sitefig.save(fig, path, close=False)
     plt.close(fig)
 
 
@@ -231,7 +233,7 @@ def note(ax, text, loc="upper left"):
     """A caption inside the axes, placed by the legend machinery so it cannot
     collide with the data."""
     from matplotlib.offsetbox import AnchoredText
-    at = AnchoredText(text, loc=loc, prop=dict(size=11, color=DIM),
+    at = AnchoredText(text, loc=loc, prop=dict(size=FS_1, color=DIM),
                       frameon=True, borderpad=0.5)
     at.patch.set_facecolor(BG)
     at.patch.set_edgecolor(RULE)

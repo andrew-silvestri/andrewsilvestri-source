@@ -55,6 +55,9 @@ import sys
 import textwrap
 
 import matplotlib
+from sitefig import BG, INK, DIM, RULE, FAINT, ACC, COOL, MOSS, ROSE, SLATE, DISTRICT, SUPPLY, PSYCH, SUN, INSOL, GOLD, GREY, VIOLET, BLUE, GREEN, WARM, ARROW, ONE_WAY_COL, TWO_WAY_COL, NODE_COL, WARM2, KCOL, CYCLE, FS_2, FS_1, FS0, FS1, FS2, FONT, MONO, NOTES, PROSE, CARD, THUMB, fig_size, save, WIDE, PLOT, SQUARE, TALL, row_aspect, panel  # noqa: E402,F401
+import sitefig  # noqa: E402
+
 matplotlib.use("Agg")
 import matplotlib.pyplot as plt
 from matplotlib.patches import FancyArrowPatch, FancyBboxPatch
@@ -69,16 +72,10 @@ sys.path.insert(0, CC)
 sys.path.insert(0, os.path.join(CC, "data"))
 import lca  # noqa: E402  the model of record; not edited, only imported
 
-BG, INK, DIM = "#0b0f1c", "#e3e6f2", "#8b93b0"
-FAINT, ARROW = "#151b30", "#4a5580"
-MOSS, ROSE, VIOLET, BLUE = "#4f9d84", "#d86a86", "#8b7ff2", "#5aa8d8"
-
-
 def style():
-    plt.rcParams.update({
-        "font.size": 11,
-        "font.family": "sans-serif",
-        "font.sans-serif": ["Segoe UI", "Selawik", "DejaVu Sans", "Arial"],
+    sitefig.style(); plt.rcParams.update({
+        "font.size": FS_1,
+        "font.family": FONT,
     })
 
 
@@ -165,23 +162,13 @@ def main():
     # Tall enough for the wrapped per-node captions (stage share, methane
     # note) below the boxes, plus one short closing line - not the taller
     # figure an earlier version needed to fit a three-line apology under it.
-    fig = plt.figure(figsize=(11.0, 4.9), facecolor=BG)
-    ax = fig.add_axes([0.02, 0.0984, 0.96, 0.5947])
+    fig = plt.figure(figsize=fig_size(NOTES, 2.1), facecolor=BG)
+    ax = fig.add_axes([0.02, 0.22, 0.96, 0.76])
     ax.set_facecolor(BG)
     ax.set_xlim(0, 100)
     ax.set_ylim(0, 42)
     ax.axis("off")
 
-    fig.text(0.02, 0.967,
-              "Four levels down: one tomato's fertiliser chain",
-              color=INK, fontsize=18, fontweight="bold", va="top")
-    fig.text(0.02, 0.897,
-              "Traced live from climate-cost/lca.py - the same engine the "
-              "calculator below runs - for 1 kg of field-grown tomato, Spain\n"
-              "to Texas. Each edge carries the physical amount that flows "
-              "into the next process; the total tapers by two orders of "
-              "magnitude in three steps.",
-              color=DIM, fontsize=10.8, va="top", linespacing=1.45)
 
     # A short bold title (must fit one line inside the box at this width)
     # plus a longer caption underneath, which has the box's full width to
@@ -203,12 +190,12 @@ def main():
             (x - w / 2, y - h / 2), w, h,
             boxstyle="round,pad=0.3,rounding_size=0.6",
             linewidth=1.6, edgecolor=col, facecolor=FAINT, zorder=2))
-        ax.text(x, y + 6.6, label, ha="center", va="top", color=INK,
-                fontsize=10.8, fontweight="bold", zorder=3)
+        ax.text(x, y + 6.6, textwrap.fill(label, 13), ha="center", va="top", color=INK,
+                fontsize=FS_1, fontweight="bold", zorder=3)
         ax.text(x, y - 3.0, g(node["total"]), ha="center", va="center",
-                color=INK, fontsize=15.5, fontweight="bold", zorder=3)
+                color=INK, fontsize=FS0, fontweight="bold", zorder=3)
         ax.text(x, y - 7.2, "CO2e per kg tomato", ha="center", va="center",
-                color=DIM, fontsize=8.6, zorder=3)
+                color=DIM, fontsize=FS_2, zorder=3)
         wrapped = "\n".join(textwrap.wrap(note, width=24))
         ha = "center"
         nx = x
@@ -218,7 +205,7 @@ def main():
             # instead of letting it run past the canvas.
             ha, nx = "right", x + w / 2
         ax.text(nx, y - h / 2 - 2.2, wrapped, ha=ha, va="top",
-                color=DIM, fontsize=8.8, linespacing=1.35, zorder=3)
+                color=DIM, fontsize=FS_2, linespacing=1.35, zorder=3)
 
     # Each edge carries the physical amount flowing into the next process -
     # what makes this a chain with branches, not a single multiplier. (An
@@ -233,18 +220,18 @@ def main():
             (x0, y), (x1, y), arrowstyle="-|>", mutation_scale=17,
             linewidth=1.8, color=ARROW, zorder=1))
         amt = child["amount"] * 1000.0
-        ax.text((x0 + x1) / 2, y + 3.6,
-                f"{amt:.3g} g {unit}", ha="center", va="bottom",
-                color=DIM, fontsize=9.2, zorder=3)
+        ax.text((x0 + x1) / 2, y - 2.4,
+                f"{amt:.3g} g {unit}", ha="center", va="top",
+                color=DIM, fontsize=FS_2, zorder=3)
 
-    fig.text(0.02, 0.11,
-              "Allocation is x1.00 on every edge here - none of these three "
+    fig.text(0.02, 0.15,
+              textwrap.fill("Allocation is x1.00 on every edge here - none of these three "
               "processes make a second product. The chain where it actually "
-              "shrinks a number is the leather shoe, further down this page.",
-              color=DIM, fontsize=9.4, va="top")
+              "shrinks a number is the leather shoe, further down this page.", 92),
+              color=DIM, fontsize=FS_2, va="top", fontfamily=MONO)
 
     problems = audit(fig)
-    fig.savefig(OUT, dpi=170, facecolor=BG)
+    sitefig.save(fig, OUT, close=False)
     plt.close(fig)
     print(f"  wrote {os.path.basename(OUT)}")
     if problems:

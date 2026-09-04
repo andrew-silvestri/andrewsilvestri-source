@@ -19,6 +19,9 @@ import os
 import re
 
 import matplotlib
+from sitefig import BG, INK, DIM, RULE, FAINT, ACC, COOL, MOSS, ROSE, SLATE, DISTRICT, SUPPLY, PSYCH, SUN, INSOL, GOLD, GREY, VIOLET, BLUE, GREEN, WARM, ARROW, ONE_WAY_COL, TWO_WAY_COL, NODE_COL, WARM2, KCOL, CYCLE, FS_2, FS_1, FS0, FS1, FS2, FONT, MONO, NOTES, PROSE, CARD, THUMB, fig_size, save, WIDE, PLOT, SQUARE, TALL, row_aspect, panel  # noqa: E402,F401
+import sitefig  # noqa: E402
+
 import matplotlib.backends.backend_agg
 import matplotlib.ticker
 matplotlib.use("Agg")
@@ -30,27 +33,19 @@ HERE = os.path.dirname(os.path.abspath(__file__))
 DATA = os.path.join(HERE, "site", "assets", "atlas-data.js")
 OUT = os.path.join(HERE, "site", "assets")
 
-INK, DIM, FAINT, BG = "#e3e6f2", "#8b93b0", "#232a45", "#0b0f1c"
-ACC, COOL, MOSS, ROSE, SLATE = ("#8b7ff2", "#5aa8d8", "#4f9d84",
-                                "#d86a86", "#6f7fd8")
-KCOL = {"station": ACC, "consumer": COOL, "event": ROSE, "market": MOSS,
-        "grid": SLATE, "district": "#5c6a8c", "supply": "#a98fd8",
-        "psych": "#cfd6f0", "climate": INK}
 
 
 def style():
-    plt.rcParams.update({
+    sitefig.style(); plt.rcParams.update({
         "figure.facecolor": BG, "axes.facecolor": BG, "savefig.facecolor": BG,
         "text.color": INK, "axes.labelcolor": INK,
         "xtick.color": DIM, "ytick.color": DIM,
         "axes.edgecolor": FAINT, "grid.color": FAINT,
-        "font.size": 10.5,
+        "font.size": FS_1,
         # Match the site, which sets its UI text in the system sans
         # stack. Named as a list so this still renders sensibly on a
         # machine without Segoe UI rather than falling back to boxes.
-        "font.family": "sans-serif",
-        "font.sans-serif": ["Segoe UI", "Selawik", "DejaVu Sans",
-                            "Arial"],
+        "font.family": FONT,
     })
 
 
@@ -117,9 +112,9 @@ def audit(fig):
     return bad
 
 
-def save(fig, name):
+def emit(fig, name):
     bad = audit(fig)
-    fig.savefig(os.path.join(OUT, name), dpi=150)
+    sitefig.save(fig, os.path.join(OUT, name), close=False)
     plt.close(fig)
     flag = "  LAYOUT: " + "; ".join(bad[:2]) if bad else ""
     print(f"  {name:32s} ok{flag}")
@@ -210,7 +205,7 @@ def main():
     problems = 0
 
     # ---- 04 resilience by layer -------------------------------------
-    fig, ax = plt.subplots(figsize=(9.5, 5.4))
+    fig, ax = plt.subplots(figsize=fig_size(CARD, 1.7593))
     order = ["station", "consumer", "event", "market", "supply", "grid",
              "district", "psych"]
     data, labs, cols = [], [], []
@@ -228,13 +223,12 @@ def main():
         patch.set_facecolor(c)
         patch.set_alpha(0.55)
         patch.set_edgecolor(c)
-    ax.set_xticklabels(labs, fontsize=9)
+    ax.set_xticklabels(labs, fontsize=FS_2)
     ax.set_ylabel("resilience (damping applied to what reaches a node)")
-    ax.set_title(f"How hard each layer resists a change  ·  {N:,} nodes")
     ax.grid(axis="y", alpha=0.18)
     ax.set_axisbelow(True)
     fig.tight_layout()
-    problems += len(save(fig, "04_inertia_by_type.png"))
+    problems += len(emit(fig, "04_inertia_by_type.png"))
 
     # ---- 05 link structure ------------------------------------------
     deg = collections.Counter()
@@ -242,7 +236,7 @@ def main():
         deg[s] += 1
         deg[t] += 1
     counts = collections.Counter(deg[i] for i in range(N))
-    fig, ax = plt.subplots(figsize=(9.5, 5.4))
+    fig, ax = plt.subplots(figsize=fig_size(CARD, 1.7593))
     xs = sorted(k for k in counts if k > 0)
     ax.scatter(xs, [counts[x] for x in xs], s=16, color=ACC, alpha=0.85,
                edgecolor="none")
@@ -251,11 +245,9 @@ def main():
     ax.set_xlabel("links on a node")
     ax.set_ylabel("number of nodes")
     iso = sum(1 for i in range(N) if deg[i] == 0)
-    ax.set_title(f"Link structure  ·  {len(D['es']):,} links  ·  "
-                 f"{iso:,} nodes with none ({100 * iso / N:.2f}%)")
     ax.grid(alpha=0.18, which="both")
     fig.tight_layout()
-    problems += len(save(fig, "05_link_structure.png"))
+    problems += len(emit(fig, "05_link_structure.png"))
 
     # ---- 10 capacity by fuel ----------------------------------------
     # The bar chart that used to be saved, wrongly, as 09. It is a fair
@@ -270,21 +262,20 @@ def main():
         if m:
             fuel[m.group(1).strip()].append(float(m.group(2)))
     top = sorted(fuel.items(), key=lambda kv: -sum(kv[1]))[:9]
-    fig, ax = plt.subplots(figsize=(9.5, 5.6))
+    fig, ax = plt.subplots(figsize=fig_size(CARD, 1.6964))
     ys = [k for k, _ in top][::-1]
     tot = [sum(v) / 1000.0 for _, v in top][::-1]
     cnt = [len(v) for _, v in top][::-1]
     ax.barh(ys, tot, color=ACC, alpha=0.85)
     for y, (a, c) in enumerate(zip(tot, cnt)):
         ax.text(a + max(tot) * 0.012, y, f"{a:,.0f} GW  ·  {c:,} units",
-                va="center", fontsize=9.5, color=DIM)
+                va="center", fontsize=FS_2, color=DIM)
     ax.set_xlim(0, max(tot) * 1.34)
     ax.set_xlabel("installed capacity (GW)")
-    ax.set_title("Where the world's generating capacity sits, by fuel")
     ax.grid(axis="x", alpha=0.18)
     ax.set_axisbelow(True)
     fig.tight_layout()
-    problems += len(save(fig, "10_capacity_by_fuel.png"))
+    problems += len(emit(fig, "10_capacity_by_fuel.png"))
 
     # ---- 09 system size against low-carbon share --------------------
     # The only figure on the site drawn with a grammar of graphics rather
@@ -333,16 +324,16 @@ def main():
                 panel_background=element_rect(fill=BG, color=BG),
                 panel_grid_major=element_line(color=FAINT, size=0.4),
                 panel_grid_minor=element_blank(),
-                axis_text=element_text(color=DIM, size=9.5),
-                axis_title=element_text(color=INK, size=10.5),
-                plot_title=element_text(color=INK, size=11.5, ha="center"))
+                axis_text=element_text(color=DIM, size=FS_2),
+                axis_title=element_text(color=INK, size=FS_1),
+                plot_title=element_text(color=INK, size=FS_1, ha="center"))
     )
     # plot.draw() hands back a figure on the base canvas, which has no
     # get_renderer, and audit() measures text against a renderer. Binding Agg
     # lets this figure go through the same overlap check as every other one.
     fig = plot.draw()
     matplotlib.backends.backend_agg.FigureCanvasAgg(fig)
-    problems += len(save(fig, "09_size_vs_lowcarbon.png"))
+    problems += len(emit(fig, "09_size_vs_lowcarbon.png"))
 
     # ---- 12 the event record ----------------------------------------
     mags = []
@@ -351,17 +342,15 @@ def main():
             m = re.match(r"M([\d.]+)", D["name"][i])
             if m:
                 mags.append(float(m.group(1)))
-    fig, ax = plt.subplots(figsize=(9.5, 5.2))
+    fig, ax = plt.subplots(figsize=fig_size(CARD, 1.8269))
     ax.hist(mags, bins=28, color=ROSE, alpha=0.85, edgecolor="none")
     ax.set_yscale("log")
     ax.set_xlabel("moment magnitude")
     ax.set_ylabel("events in the model")
-    ax.set_title(f"The event layer  ·  {len(mags):,} earthquakes that reach "
-                 f"infrastructure")
     ax.grid(alpha=0.18)
     ax.set_axisbelow(True)
     fig.tight_layout()
-    problems += len(save(fig, "12_recorded_events.png"))
+    problems += len(emit(fig, "12_recorded_events.png"))
 
     # ---- 13 provenance ----------------------------------------------
     # Group by source, not by source string. The admin-1 provenance carries
@@ -394,25 +383,24 @@ def main():
         s = D["srcDict"][D["src"][i]] if D.get("srcDict") else ""
         src[family(s)] += 1
     top = src.most_common(9)
-    fig, ax = plt.subplots(figsize=(11.0, 5.6))
+    fig, ax = plt.subplots(figsize=fig_size(CARD, 1.9643))
     ys = [k for k, _ in top][::-1]
     vs = [v for _, v in top][::-1]
     ax.barh(ys, vs, color=COOL, alpha=0.85)
     for y, v in enumerate(vs):
-        ax.text(v + max(vs) * 0.012, y, f"{v:,}", va="center", fontsize=9.5,
+        ax.text(v + max(vs) * 0.012, y, f"{v:,}", va="center", fontsize=FS_2,
                 color=DIM)
     ax.set_xlim(0, max(vs) * 1.2)
     ax.set_xlabel("nodes")
-    ax.set_title("Every node names where its number came from")
     ax.grid(axis="x", alpha=0.18)
     ax.set_axisbelow(True)
     fig.tight_layout()
-    problems += len(save(fig, "13_provenance.png"))
+    problems += len(emit(fig, "13_provenance.png"))
 
     # ---- 11 the climate record --------------------------------------
     co2, temp = D.get("co2", []), D.get("temp", [])
     if co2:
-        fig, (a1, a2) = plt.subplots(2, 1, figsize=(9.5, 6.2), sharex=True)
+        fig, (a1, a2) = plt.subplots(2, 1, figsize=fig_size(CARD, 1.5323), sharex=True)
         # co2 entries are [year, month, ppm], not [year, ppm] - plotting
         # p[0]/p[1] directly graphed year against month number (1-12) and
         # threw the real ppm value away, which is why the y-axis read 2-12
@@ -431,7 +419,7 @@ def main():
         a2.set_xlabel("year")
         a2.grid(alpha=0.18)
         fig.tight_layout()
-        problems += len(save(fig, "11_climate_record.png"))
+        problems += len(emit(fig, "11_climate_record.png"))
 
     # ---- 14 the space layer -----------------------------------------
     try:
@@ -447,14 +435,14 @@ def main():
         wts = np.cos(np.radians(lats))
         gmean = float((q * wts).sum() / wts.sum())
 
-        fig, (a1, a2) = plt.subplots(1, 2, figsize=(11.0, 4.9))
+        fig, (a1, a2) = plt.subplots(1, 2, figsize=fig_size(CARD, 2.2449))
         a1.plot(lats, q, color=ACC, lw=1.9)
         a1.axhline(s0 / 4.0, color=ROSE, lw=1.2, ls="--")
         a1.text(-88, s0 / 4.0 + 6, f"S$_0$/4 = {s0 / 4:.1f} W/m$^2$",
-                color=ROSE, fontsize=9.5)
+                color=ROSE, fontsize=FS_2)
         a1.text(-88, s0 / 4.0 - 26,
                 f"area-weighted mean of the curve: {gmean:.1f}",
-                color=DIM, fontsize=9.5)
+                color=DIM, fontsize=FS_2)
         a1.set_xlabel("latitude (degrees)")
         a1.set_ylabel("annual mean insolation (W/m$^2$)")
         a1.set_title("Sunlight above the atmosphere")
@@ -474,7 +462,7 @@ def main():
         a2.set_title("The measured solar constant, with its uncertainty")
         a2.grid(alpha=0.18)
         fig.tight_layout()
-        problems += len(save(fig, "14_space_layer.png"))
+        problems += len(emit(fig, "14_space_layer.png"))
 
     # ---- 06 and 07: what a run actually does ------------------------
     run = engine(D)
@@ -488,7 +476,7 @@ def main():
         if best >= 0:
             seeds.append((want, best))
 
-    fig, ax = plt.subplots(figsize=(9.8, 5.4))
+    fig, ax = plt.subplots(figsize=fig_size(CARD, 1.8148))
     reach_rows = []
     for lab, sd in seeds:
         st, hit, steps = run(sd)
@@ -503,29 +491,28 @@ def main():
     for y, r in enumerate(order):
         noun = "node" if r[1] == 1 else "nodes"
         ax.text(max(r[1], 1) * 1.18, y, f"{r[1]:,} {noun} in {r[2]} steps",
-                va="center", fontsize=9.5, color=DIM)
+                va="center", fontsize=FS_2, color=DIM)
     ax.set_xscale("log")
     ax.set_xlim(0.8, mx * 12)
     ax.set_xlabel("nodes moved by more than 0.02 (log scale)")
-    ax.set_title("How far one change travels, by the layer it starts in")
     ax.grid(axis="x", alpha=0.18, which="both")
     ax.set_axisbelow(True)
     fig.tight_layout()
-    problems += len(save(fig, "06_scenario_reach.png"))
+    problems += len(emit(fig, "06_scenario_reach.png"))
 
     # The layer colours are chosen for the globe, where psych and climate are
     # both near-white and sit far apart. On one set of axes they are the same
     # line, so the arrival plot uses its own distinguishable cycle.
     SERIES = {
-        "event":    ("an earthquake",   "#d86a86"),
-        "station":  ("a power plant",   "#8b7ff2"),
-        "consumer": ("a settlement",    "#5aa8d8"),
-        "psych":    ("a behaviour channel", "#c9a227"),
-        "market":   ("a port or price", "#4f9d84"),
-        "grid":     ("a national grid", "#6b74d6"),
-        "climate":  ("the climate",     "#e3e6f2"),
+        "event":    ("an earthquake",   ROSE),
+        "station":  ("a power plant",   ACC),
+        "consumer": ("a settlement",    COOL),
+        "psych":    ("a behaviour channel", GOLD),
+        "market":   ("a port or price", MOSS),
+        "grid":     ("a national grid", SLATE),
+        "climate":  ("the climate",     INK),
     }
-    fig, ax = plt.subplots(figsize=(9.8, 5.4))
+    fig, ax = plt.subplots(figsize=fig_size(CARD, 1.8148))
     drawn = 0
     for lab, moved, steps, hit in reach_rows:
         by = collections.Counter(int(h) for h in hit if h > 0)
@@ -543,11 +530,10 @@ def main():
     ax.set_xlabel("step")
     ax.set_ylabel("nodes reached for the first time")
     ax.set_yscale("log")
-    ax.set_title("When the effect arrives")
-    ax.legend(frameon=False, fontsize=9.5)
+    ax.legend(frameon=False, fontsize=FS_2)
     ax.grid(alpha=0.18, which="both")
     fig.tight_layout()
-    problems += len(save(fig, "07_arrival_order.png"))
+    problems += len(emit(fig, "07_arrival_order.png"))
 
     # ---- 08 response against the size of the change -----------------
     # The seed has to be a node whose reach actually varies with the size of
@@ -563,7 +549,7 @@ def main():
     print(f"     08 seed: the most connected {best_lab} "
           f"({D['name'][best_seed][:38]})")
 
-    fig, ax = plt.subplots(figsize=(9.8, 5.4))
+    fig, ax = plt.subplots(figsize=fig_size(CARD, 1.8148))
     amts = [0.05, 0.1, 0.2, 0.3, 0.45, 0.6, 0.75, 0.85, 0.95, 1.0]
     moved, mean_eff = [], []
     for a in amts:
@@ -579,28 +565,26 @@ def main():
     ax.tick_params(axis="y", colors=ACC)
 
     ax2 = ax.twinx()
-    ax2.plot(amts, mean_eff, marker="s", ms=4.0, color="#e8c98f", lw=1.9,
+    ax2.plot(amts, mean_eff, marker="s", ms=4.0, color=INSOL, lw=1.9,
              label="mean effect where it landed")
-    ax2.set_ylabel("mean effect among the nodes that moved", color="#e8c98f")
-    ax2.tick_params(axis="y", colors="#e8c98f")
-    ax2.spines["right"].set_color("#e8c98f")
+    ax2.set_ylabel("mean effect among the nodes that moved", color=INSOL)
+    ax2.tick_params(axis="y", colors=INSOL)
+    ax2.spines["right"].set_color(INSOL)
     ax2.set_facecolor("none")
     # twinx shares the x axis and draws its own copy of the tick labels on top
     # of the first set, which reads as a smudge and trips the layout audit
     ax2.xaxis.set_visible(False)
 
-    ax.set_title("The response saturates: tanh bounds every node inside "
-                 "(−1, 1)")
     ax.grid(alpha=0.18)
     ax.set_axisbelow(True)
     h1, l1 = ax.get_legend_handles_labels()
     h2, l2 = ax2.get_legend_handles_labels()
-    ax.legend(h1 + h2, l1 + l2, frameon=False, fontsize=9.5, loc="lower right")
+    ax.legend(h1 + h2, l1 + l2, frameon=False, fontsize=FS_2, loc="lower right")
     fig.tight_layout()
-    problems += len(save(fig, "08_response_curve.png"))
+    problems += len(emit(fig, "08_response_curve.png"))
 
     # ---- 02 the weight distribution ---------------------------------
-    fig, ax = plt.subplots(figsize=(9.5, 5.2))
+    fig, ax = plt.subplots(figsize=fig_size(CARD, 1.8269))
     mw = D.get("mwMap", {})
     caps = sorted(float(v) for v in mw.values())
     if caps:
@@ -609,12 +593,10 @@ def main():
         ax.set_yscale("log")
         ax.set_xlabel("plant capacity (MW)")
         ax.set_ylabel("plants")
-        ax.set_title(f"Capacity spans five orders of magnitude  ·  "
-                     f"{len(caps):,} plants, {sum(caps) / 1e6:.2f} TW")
         ax.grid(alpha=0.18, which="both")
         ax.set_axisbelow(True)
     fig.tight_layout()
-    problems += len(save(fig, "02_demand_distribution.png"))
+    problems += len(emit(fig, "02_demand_distribution.png"))
 
     print(f"\n  {problems} layout problem(s) across the set")
     return problems

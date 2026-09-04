@@ -51,6 +51,9 @@ import json
 import os
 
 import matplotlib
+from sitefig import BG, INK, DIM, RULE, FAINT, ACC, COOL, MOSS, ROSE, SLATE, DISTRICT, SUPPLY, PSYCH, SUN, INSOL, GOLD, GREY, VIOLET, BLUE, GREEN, WARM, ARROW, ONE_WAY_COL, TWO_WAY_COL, NODE_COL, WARM2, KCOL, CYCLE, FS_2, FS_1, FS0, FS1, FS2, FONT, MONO, NOTES, PROSE, CARD, THUMB, fig_size, save, WIDE, PLOT, SQUARE, TALL, row_aspect, panel  # noqa: E402,F401
+import sitefig  # noqa: E402
+
 matplotlib.use("Agg")
 import matplotlib.pyplot as plt
 from matplotlib.patches import FancyArrowPatch, FancyBboxPatch
@@ -61,10 +64,6 @@ HERE = os.path.dirname(os.path.abspath(__file__))
 DATA = os.path.join(HERE, "site", "assets", "atlas-data.js")
 OUT = os.path.join(HERE, "site", "assets", "atlas_layers.png")
 
-BG, INK, DIM = "#0b0f1c", "#e3e6f2", "#8b93b0"
-FAINT = "#151b30"
-ONE_WAY_COL = "#4a5580"    # muted slate - a link that only pushes forward
-TWO_WAY_COL = "#7fa8e0"    # brighter, cooler blue - a link that trades back
 
 # The propagation's own rank table (build_throughlines.py's engine(), which
 # mirrors atlas-app.js's run loop): a lower rank can push a higher one, never
@@ -95,9 +94,9 @@ GLABEL = {"space": "Space", "weather": "Weather", "climate": "Climate",
           "grids": "Grids", "plants": "Power plants", "demand": "Demand",
           "behaviour": "Behaviour"}
 
-GCOL = {"space": "#f2d98b", "weather": "#4f9d84", "climate": "#cfd6f0",
-        "events": "#d86a86", "markets": "#6f7fd8", "grids": "#5aa8d8",
-        "plants": "#8b7ff2", "demand": "#8b93b0", "behaviour": "#a98fd8"}
+GCOL = {"space": SUN, "weather": MOSS, "climate": PSYCH,
+        "events": ROSE, "markets": SLATE, "grids": COOL,
+        "plants": ACC, "demand": DIM, "behaviour": SUPPLY}
 
 # Position for each of the nine group boxes, x in [0,100], y in [0,36]. The
 # four exogenous layers (space, weather, climate, events) sit apart from the
@@ -116,10 +115,9 @@ POS = {"markets": (8, 27), "space": (28, 33), "plants": (48, 33),
 
 
 def style():
-    plt.rcParams.update({
-        "font.size": 12.5,
-        "font.family": "sans-serif",
-        "font.sans-serif": ["Segoe UI", "Selawik", "DejaVu Sans", "Arial"],
+    sitefig.style(); plt.rcParams.update({
+        "font.size": FS_1,
+        "font.family": FONT,
     })
 
 
@@ -249,22 +247,13 @@ def main():
     # 11.4in wide puts the on-screen factor (pt * 1140 / (72 * width)) at
     # ~1.39, comfortably above the 1.02 that made panel A's box labels read
     # small as a sub-panel of a poster.
-    fig = plt.figure(figsize=(11.4, 6.9), facecolor=BG)
+    fig = plt.figure(figsize=fig_size(PROSE, 1.6522), facecolor=BG)
     ax = fig.add_axes([0.035, 0.065, 0.93, 0.70])
     ax.set_facecolor(BG)
     ax.set_xlim(0, 100)
     ax.set_ylim(0, YMAX)
     ax.axis("off")
 
-    fig.text(0.035, 0.965, "The nine layers, and what carries between them",
-              color=INK, fontsize=19, fontweight="bold", va="top")
-    fig.text(0.035, 0.912,
-              "Every count below is read live from the published model, "
-              "grouped the same way the table beneath this figure is: Space,\n"
-              "Markets and fuel, and Grids each merge two of the payload's "
-              "twelve node kinds. One arrowhead pushes forward only; two "
-              "trade back and forth.",
-              color=DIM, fontsize=11.0, va="top", linespacing=1.4)
 
     at = {}
     for g, (x, y) in POS.items():
@@ -274,10 +263,10 @@ def main():
             boxstyle="round,pad=0.25,rounding_size=0.5",
             linewidth=1.6, edgecolor=GCOL[g], facecolor=FAINT, zorder=2))
         ax.text(x, y + 1.6, GLABEL[g], ha="center", va="center", color=INK,
-                fontsize=12.5, fontweight="bold", zorder=3)
+                fontsize=FS_1, fontweight="bold", zorder=3)
         n = counts[g]
         ax.text(x, y - 1.8, f"{n:,} node" + ("" if n == 1 else "s"),
-                ha="center", va="center", color=DIM, fontsize=10.8, zorder=3)
+                ha="center", va="center", color=DIM, fontsize=FS_1, zorder=3)
         at[g] = (x, y, w, h)
 
     for (ga, gb), one_way in group_links():
@@ -299,18 +288,18 @@ def main():
                                   color=ONE_WAY_COL))
     ax.text(lx0 + 12.5, ly, "one-way  —  space, weather, climate and "
             "events only push forward", color=DIM,
-            fontsize=10.8, va="center", ha="left")
+            fontsize=FS_1, va="center", ha="left")
     ly2 = -8.0
     ax.add_patch(FancyArrowPatch((lx0, ly2), (lx0 + 10, ly2),
                                   arrowstyle="<|-|>", mutation_scale=20,
                                   linewidth=2.1, color=TWO_WAY_COL))
     ax.text(lx0 + 12.5, ly2, "two-way  —  markets and fuel, grids, power "
             "plants, demand and behaviour trade back and forth",
-            color=DIM, fontsize=10.8, va="center", ha="left")
+            color=DIM, fontsize=FS_1, va="center", ha="left")
     ax.set_ylim(-11.0, YMAX)
 
     problems = audit(fig)
-    fig.savefig(OUT, dpi=160, facecolor=BG)
+    sitefig.save(fig, OUT, close=False)
     plt.close(fig)
     print(f"  wrote {os.path.basename(OUT)}")
     if problems:

@@ -88,9 +88,11 @@ PROCESSES = {
     # ---- energy and materials, the deep background ----------------------
     "natgas_extraction": dict(
         name="Natural gas extraction", unit="kg gas", direct=0.42,
-        note="Includes about 1.5% fugitive methane at 82x GWP20-equivalent "
-             "accounting on a 100-year basis; the leak rate is the single most "
-             "disputed number in the gas chain and ranges 0.5-3.5%.",
+        note="Includes about 1.5% fugitive methane at 28 kg CO2e per kg "
+             "(the AR5 100-year value; AR6 gives 29.8 for fossil methane). "
+             "The leak rate is the single most disputed number in the gas "
+             "chain and ranges 0.5-3.5%. Until 2026-09-04 this note said "
+             "82x, the 20-year value, which the figure does not use.",
         quality="B", inputs=[]),
     "ammonia": dict(
         name="Ammonia synthesis (Haber-Bosch)", unit="kg N", direct=1.9,
@@ -300,6 +302,28 @@ PROCESSES = {
 # Each product is a spine of life-cycle stages. A stage lists its inputs the
 # same way a process does. Amounts are per kilogram of product as eaten, so
 # losses along the chain are already folded into the amounts.
+#
+# Three multipliers can sit on a stage, and they are three different things.
+# Until 2026-09-04 all three lived in one field called `allocation`, which is
+# how a mass in kilograms came to be displayed as "allocation 160%".
+#
+#   share       Co-product allocation: the fraction of this stage's burden
+#               that belongs to this product because the stage also makes
+#               something else (hide, whey, bran, pulp). Always 0 < share <= 1.
+#   basis       Required beside every share: the allocation basis and its
+#               source ("physical, IDF feed-energy (Flysjo et al. 2011,
+#               Sweden)"), or "unstated (assumed)" when there is none. A
+#               number whose basis lives only in a comment is one refactor
+#               from being wrong again; test_lca.py fails if it is missing.
+#   amortise    Capital-good amortisation: the fraction of a vehicle charged
+#               to one functional unit, = functional unit / lifetime. This is
+#               the field the lifetime slider rescales.
+#   freight_kg  Mass shipped on a transport stage, in kilograms per functional
+#               unit. Food products ship one kilogram and omit it; a garment
+#               ships its own weight plus packaging.
+#
+# The engine multiplies share x amortise onto everything in the stage, and
+# freight_kg onto the freight leg only. Renaming changed no total.
 PRODUCTS = {
 
     "tomato_field": dict(
@@ -424,11 +448,12 @@ PRODUCTS = {
             dict(id="slaughter", name="Slaughter and processing", inputs=[
                 ("process_kwh", 0.55, 1.0),
                 ("cold_store_origin", 0.35, 1.0)], direct=0.0,
-                allocation=0.72,
+                share=0.72, basis="economic (assumed)",
                 note="Allocation: hide, tallow, offal and bone meal leave the "
                      "plant as saleable products, so not all of the plant's "
                      "burden belongs to the meat. 0.72 is an economic split; a "
-                     "mass split would give roughly 0.55 and a different total."),
+                     "mass split would give roughly 0.55 and a different total. "
+                     "Neither figure is from a named source."),
             dict(id="freight", name="Freight to market", inputs=[],
                  direct=0.0, transport=True, note="Frozen or chilled."),
             dict(id="distribution", name="Distribution and retail", inputs=[
@@ -470,8 +495,9 @@ PRODUCTS = {
             dict(id="slaughter", name="Slaughter and processing", inputs=[
                 ("process_kwh", 0.30, 1.0),
                 ("cold_store_origin", 0.25, 1.0)], direct=0.0,
-                allocation=0.78,
-                note="Allocation: feathers, offal and meal are co-products."),
+                share=0.78, basis="unstated (assumed)",
+                note="Allocation: feathers, offal and meal are co-products. "
+                     "The 0.78 is an assumption, not a published factor."),
             dict(id="freight", name="Freight to market", inputs=[],
                  direct=0.0, transport=True, note="Usually frozen."),
             dict(id="distribution", name="Distribution and retail", inputs=[
@@ -505,7 +531,7 @@ PRODUCTS = {
                     "here is an average land-use figure."),
             dict(id="wet_mill", name="Wet milling", inputs=[
                 ("process_kwh", 0.35, 1.0)], direct=0.62,
-                allocation=0.55,
+                share=0.55, basis="unstated (assumed)",
                 note="Allocation: pulp and mucilage are separated here and are "
                      "increasingly sold rather than dumped. The direct term is "
                      "methane from wastewater lagoons, which is the whole "
@@ -560,9 +586,11 @@ PRODUCTS = {
                     "is a live argument. Irrigation pumping is the largest "
                     "single line and scales with the Californian grid."),
             dict(id="hulling", name="Hulling and shelling", inputs=[
-                ("process_kwh", 0.28, 1.0)], direct=0.0, allocation=0.62,
+                ("process_kwh", 0.28, 1.0)], direct=0.0, share=0.62,
+                basis="unstated (assumed)",
                 note="Allocation: hulls and shells go to cattle feed and "
-                     "bedding, and are genuinely sold."),
+                     "bedding, and are genuinely sold. The 0.62 is an "
+                     "assumption, not a published factor."),
             dict(id="freight", name="Freight to market", inputs=[],
                  direct=0.0, transport=True, note="Ambient, shelf-stable."),
             dict(id="packing", name="Packing", inputs=[
@@ -622,30 +650,40 @@ PRODUCTS = {
         waste_frac=0.08, transport_mode="sea",
         stages=[
             dict(id="enteric", name="Enteric fermentation", inputs=[],
-                 direct=8.4, allocation=0.85,
+                 direct=8.4, share=0.85, basis="physical, IDF feed-energy (Flysjo et al. 2011, Sweden)",
                  note="Allocation: a dairy cow yields milk and, at the end, "
-                      "meat. 0.85 to milk is the IDF standard economic split. "
-                      "Charging her whole methane output to milk would raise "
-                      "this figure by nearly a fifth."),
+                      "meat. 0.85 to milk is the International Dairy "
+                      "Federation's physical (feed-energy) split as computed "
+                      "for Swedish milk by Flysjo et al. 2011, Int J LCA "
+                      "16:420. It is not an economic split: the same paper "
+                      "gives 0.88 (Sweden) and 0.92 (New Zealand) by economic "
+                      "value, 0.93-0.94 by protein, 0.98 by mass, and "
+                      "0.63-0.76 by system expansion. Charging her whole "
+                      "methane output to milk would raise this figure by "
+                      "nearly a fifth."),
             dict(id="feed", name="Feed production", inputs=[
                 ("field_n2o", 0.20, 1.0),
                 ("ammonia", 0.20, 1.0),
                 ("nitrate_fert", 0.07, 1.0),
                 ("tillage", 0.0009, 1.0),
                 ("diesel", 0.30, 1.0),
-            ], direct=0.0, allocation=0.85,
+            ], direct=0.0, share=0.85, basis="physical, IDF feed-energy (Flysjo et al. 2011, Sweden)",
                note="Concentrate and forage, carried at the same milk split."),
             dict(id="manure", name="Manure management", inputs=[], direct=2.1,
-                 allocation=0.85, note="Slurry storage."),
+                 share=0.85, basis="physical, IDF feed-energy (Flysjo et al. 2011, Sweden)", note="Slurry storage."),
             dict(id="dairy", name="Milking and cooling", inputs=[
                 ("process_kwh", 0.65, 1.0),
-                ("cold_store_origin", 0.40, 1.0)], direct=0.0, allocation=0.85,
+                ("cold_store_origin", 0.40, 1.0)], direct=0.0, share=0.85,
+                basis="physical, IDF feed-energy (Flysjo et al. 2011, Sweden)",
                 note="On-farm chilling is continuous."),
             dict(id="cheesemaking", name="Cheesemaking", inputs=[
                 ("natgas_extraction", 0.12, 1.0),
-                ("process_kwh", 0.55, 1.0)], direct=0.0, allocation=0.90,
+                ("process_kwh", 0.55, 1.0)], direct=0.0, share=0.90,
+                basis="unstated (assumed)",
                 note="Allocation: whey leaves as a saleable protein stream, so "
-                     "a tenth of the burden goes with it."),
+                     "a tenth of the burden goes with it. IDF 2015 recommends "
+                     "dry-matter allocation at the dairy plant; the 0.90 here "
+                     "is an assumption, not that calculation."),
             dict(id="ageing", name="Ageing", inputs=[
                 ("cold_store_origin", 1.10, 1.0)], direct=0.0,
                 note="Months in a temperature-controlled store. Time itself "
@@ -682,8 +720,10 @@ PRODUCTS = {
                 ("diesel", 0.10, 1.0),
             ], direct=0.0, note="Nitrogen and pumping."),
             dict(id="milling", name="Milling", inputs=[
-                ("process_kwh", 0.09, 1.0)], direct=0.0, allocation=0.80,
-                note="Allocation: bran and husk are sold for oil and fuel."),
+                ("process_kwh", 0.09, 1.0)], direct=0.0, share=0.80,
+                basis="unstated (assumed)",
+                note="Allocation: bran and husk are sold for oil and fuel. The "
+                     "0.80 is an assumption, not a published factor."),
             dict(id="freight", name="Freight to market", inputs=[],
                  direct=0.0, transport=True, note="Bagged, ambient."),
             dict(id="packing", name="Packing", inputs=[
@@ -727,16 +767,21 @@ PRODUCTS = {
         stages=[
             dict(id="manufacture", name="Building the vehicle",
                  inputs=[("vehicle_glider", 1400.0, 1.0)],
-                 direct=0.0, allocation=0.0005,
+                 direct=0.0, amortise=0.0005,
                  note="1,400 kg of car spread over 200,000 km, so 0.7 kg of "
                       "vehicle is charged to each 100 km. The allocation on "
                       "this edge is one divided by the lifetime, and shortening "
                       "the life is the most effective way to make any car "
                       "worse."),
             dict(id="delivery", name="Delivery to the buyer",
-                 inputs=[], direct=0.0, transport=True, allocation=0.0007,
-                 note="0.7 kg of vehicle moved from the factory to the "
-                      "market it is sold into."),
+                 inputs=[], direct=0.0, transport=True, amortise=0.0005,
+                 freight_kg=1400.0,
+                 note="1,400 kg of vehicle moved from the factory to the "
+                      "market it is sold into, charged to each 100 km as one "
+                      "part in the lifetime. Until 2026-09-04 this field held "
+                      "1.4: the mass typed in tonnes into a field the engine "
+                      "reads in kilograms, so the delivery leg was a "
+                      "thousandth of its size (0.0001 kg instead of 0.097)."),
             dict(id="fuel", name="Fuel, burned",
                  inputs=[("petrol", 7.0, 1.0)], direct=0.0,
                  note="Well-to-wheel, so extraction and refining are in here "
@@ -765,14 +810,18 @@ PRODUCTS = {
             dict(id="manufacture", name="Building the vehicle",
                  inputs=[("vehicle_glider", 1500.0, 1.0),
                          ("li_battery", 60.0, 1.0)],
-                 direct=0.0, allocation=0.0005,
+                 direct=0.0, amortise=0.0005,
                  note="The battery is built where the car is built, so its "
                       "carbon belongs to the producing country's grid. This "
                       "is why a battery made in Sichuan and a battery made in "
                       "Shanxi are not the same battery."),
             dict(id="delivery", name="Delivery to the buyer",
-                 inputs=[], direct=0.0, transport=True, allocation=0.0008,
-                 note="0.75 kg of vehicle per 100 km of its life."),
+                 inputs=[], direct=0.0, transport=True, amortise=0.0005,
+                 freight_kg=1500.0,
+                 note="1,500 kg of vehicle moved to market, charged to each "
+                      "100 km as one part in the lifetime. Carried the same "
+                      "tonnes-for-kilograms slip as the petrol car until "
+                      "2026-09-04 (0.0002 kg instead of 0.148)."),
             dict(id="charging", name="Charging",
                  inputs=[("home_kwh", 18.0, 1.0)], direct=0.0,
                  note="18 kWh at the wall, including charging losses, "
@@ -799,10 +848,13 @@ PRODUCTS = {
         stages=[
             dict(id="manufacture", name="Building the vehicle",
                  inputs=[("vehicle_glider", 12000.0, 1.0)],
-                 direct=0.0, allocation=0.0000063,
-                 note="12 tonnes of bus over 800,000 km and twelve seats "
-                      "filled, which is what makes shared vehicles cheap per "
-                      "person however heavy they are."),
+                 direct=0.0, amortise=0.0000063,
+                 note="12 tonnes of bus spread over its lifetime "
+                      "passenger-kilometres, which is what makes shared "
+                      "vehicles cheap per person however heavy they are. The "
+                      "amortisation implies 15.9 million passenger-km, which "
+                      "is 1.3 million bus-km at the twelve aboard the fuel "
+                      "line assumes; the figure is assumed, not measured."),
             dict(id="fuel", name="Fuel, burned",
                  inputs=[("diesel", 2.9, 1.0)], direct=0.0,
                  note="35 litres per 100 km divided among twelve people."),
@@ -826,7 +878,7 @@ PRODUCTS = {
         stages=[
             dict(id="manufacture", name="Building the train",
                  inputs=[("vehicle_glider", 400000.0, 1.0)],
-                 direct=0.0, allocation=0.00000008,
+                 direct=0.0, amortise=0.00000008,
                  note="400 tonnes of train over 40 years, spread across every "
                       "passenger it will ever carry."),
             dict(id="traction", name="Traction power",
@@ -856,7 +908,7 @@ PRODUCTS = {
         stages=[
             dict(id="manufacture", name="Building the aircraft",
                  inputs=[("aluminium", 42000.0, 1.0)],
-                 direct=0.0, allocation=0.0000002,
+                 direct=0.0, amortise=0.0000002,
                  note="Airframes fly for decades and carry a great many "
                       "people, so manufacture is a rounding error against the "
                       "fuel. This is the opposite of the car."),
@@ -888,7 +940,7 @@ PRODUCTS = {
         stages=[
             dict(id="manufacture", name="Building the aircraft",
                  inputs=[("aluminium", 180000.0, 1.0)],
-                 direct=0.0, allocation=0.00000009, note=""),
+                 direct=0.0, amortise=0.00000009, note=""),
             dict(id="fuel", name="Fuel, burned",
                  inputs=[("jet_fuel", 2.5, 1.0)], direct=0.0,
                  note="2.5 kg per 100 passenger-km, in economy. A business "
@@ -931,7 +983,7 @@ PRODUCTS = {
             dict(id="make", name="Cutting and sewing",
                  inputs=[("cut_sew", 1.0, 1.0)], direct=0.0, note=""),
             dict(id="freight", name="Freight to market",
-                 inputs=[], direct=0.0, transport=True, allocation=0.22,
+                 inputs=[], direct=0.0, transport=True, freight_kg=0.22,
                  note="220 g including its share of the carton."),
             dict(id="retail", name="Retail",
                  inputs=[("retail_kwh", 0.9, 1.0)], direct=0.0,
@@ -972,7 +1024,7 @@ PRODUCTS = {
             dict(id="make", name="Cutting and sewing",
                  inputs=[("cut_sew", 1.0, 1.0)], direct=0.0, note=""),
             dict(id="freight", name="Freight to market",
-                 inputs=[], direct=0.0, transport=True, allocation=0.20,
+                 inputs=[], direct=0.0, transport=True, freight_kg=0.20,
                  note=""),
             dict(id="retail", name="Retail",
                  inputs=[("retail_kwh", 0.9, 1.0)], direct=0.0, note=""),
@@ -1010,7 +1062,7 @@ PRODUCTS = {
                  inputs=[("cut_sew", 2.4, 1.0)], direct=0.0,
                  note="More pieces, more seams, heavier machines."),
             dict(id="freight", name="Freight to market",
-                 inputs=[], direct=0.0, transport=True, allocation=0.85,
+                 inputs=[], direct=0.0, transport=True, freight_kg=0.85,
                  note=""),
             dict(id="retail", name="Retail",
                  inputs=[("retail_kwh", 1.6, 1.0)], direct=0.0, note=""),
@@ -1047,7 +1099,7 @@ PRODUCTS = {
                       "joined by hand. This is where a shoe differs from a "
                       "shirt: the making costs more than the stuff."),
             dict(id="freight", name="Freight to market",
-                 inputs=[], direct=0.0, transport=True, allocation=1.6,
+                 inputs=[], direct=0.0, transport=True, freight_kg=1.6,
                  note="Shoes are bulky, so they are usually charged by volume "
                       "rather than by weight; this uses weight and therefore "
                       "understates the freight a little."),
@@ -1071,19 +1123,25 @@ PRODUCTS = {
         transport_mode="sea",
         stages=[
             dict(id="hide", name="The hide, from a beef animal",
-                 inputs=[("leather", 0.9, 1.0)], direct=8.4, allocation=0.022,
+                 inputs=[("leather", 0.9, 1.0)], direct=8.4, share=0.022,
+                 basis="economic (assumed; cf. Lunesu et al. 2025, 2.7%)",
                  note="The direct figure is the animal: enteric methane, "
                       "feed and land, for the share of a carcass that becomes "
                       "one pair of shoes. The 2.2% allocation is by economic "
-                      "value, following ISO 14044's preference order. By mass "
-                      "it would be about 7%, and the shoe would triple. This "
-                      "single number is why published leather footprints "
-                      "disagree by more than the manufacturing does."),
+                      "value, following ISO 14044's preference order; Lunesu "
+                      "et al. 2025 (Animals 15:3546) put the economic mean at "
+                      "2.7% and the physical, live-weight mean at 5.9% (range "
+                      "4.2-6.9%). The hide stage is about 9% of this shoe, so "
+                      "moving from the economic to the physical mean raises "
+                      "the pair by about a sixth, from 3.7 to 4.2 kg. Until "
+                      "2026-09-04 this note said the shoe would triple at 7%; "
+                      "that scaled the whole shoe by the ratio of the two "
+                      "factors, as if every gram of it were hide."),
             dict(id="make", name="Lasting and assembly",
                  inputs=[("cut_sew", 4.0, 1.0), ("rubber_sole", 0.25, 1.0)],
                  direct=0.0, note=""),
             dict(id="freight", name="Freight to market",
-                 inputs=[], direct=0.0, transport=True, allocation=1.2,
+                 inputs=[], direct=0.0, transport=True, freight_kg=1.2,
                  note=""),
             dict(id="retail", name="Retail",
                  inputs=[("retail_kwh", 2.2, 1.0)], direct=0.0, note=""),

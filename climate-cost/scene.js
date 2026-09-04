@@ -118,6 +118,7 @@
         src: src, id: src.id, name: src.name, total: src.total,
         direct: src.direct, alloc: src.alloc, amount: src.amount,
         unit: src.unit, note: src.note, quality: src.quality,
+        basis: src.basis || '',
         pos: pos, depth: depth, parent: parent, spine: !!spine,
         kids: [], r: radius(src.total, spine)
       };
@@ -701,6 +702,13 @@
         '<dt>Allocation</dt><dd>' + (nd.alloc * 100).toFixed(1) + '%' +
         (Math.abs(nd.alloc - 1) < 1e-6
           ? ' <span style="color:var(--dim)">(all of it)</span>' : '') +
+        /* The basis is the judgement behind the number - economic, mass,
+           physical - and it ships with the share rather than only in
+           prose, so a share cannot be shown without saying what kind it
+           is. Freight and capital-good stages carry no basis: theirs is
+           a mass or a lifetime, not a split. */
+        (nd.basis ? '<br><span style="color:var(--dim)">basis: ' +
+                    esc(nd.basis) + '</span>' : '') +
         '</dd>' : '') +
       '<dt>Branches</dt><dd>' + nd.kids.length + '</dd>' +
       '</dl>' +
@@ -857,7 +865,10 @@
       var share = r.total ? s.total / r.total * 100 : 0;
       return '<div class="stagehead"><h3>' + esc(s.name) + '</h3>' +
         '<span class="val">' + fmt(s.total) + ' kg &middot; ' +
-        share.toFixed(1) + '%</span></div>' +
+        share.toFixed(1) + '%</span>' +
+        (s.basis ? '<span class="alloc" title="share charged to the product, and on what basis">' +
+          '&times;' + s.alloc.toFixed(2) + ' ' + esc(s.basis) + '</span>' : '') +
+        '</div>' +
         (s.note ? '<div class="leafnote">' + esc(s.note) + '</div>' : '') +
         (kids.length ? '<ul class="tree">' +
           kids.map(function (k) { return branchHTML(k, max); }).join('') +

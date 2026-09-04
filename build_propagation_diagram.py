@@ -20,6 +20,9 @@ Run:  python3 build_propagation_diagram.py
 import os
 
 import matplotlib
+from sitefig import BG, INK, DIM, RULE, FAINT, ACC, COOL, MOSS, ROSE, SLATE, DISTRICT, SUPPLY, PSYCH, SUN, INSOL, GOLD, GREY, VIOLET, BLUE, GREEN, WARM, ARROW, ONE_WAY_COL, TWO_WAY_COL, NODE_COL, WARM2, KCOL, CYCLE, FS_2, FS_1, FS0, FS1, FS2, FONT, MONO, NOTES, PROSE, CARD, THUMB, fig_size, save, WIDE, PLOT, SQUARE, TALL, row_aspect, panel  # noqa: E402,F401
+import sitefig  # noqa: E402
+
 matplotlib.use("Agg")
 import matplotlib.pyplot as plt
 from matplotlib.patches import Circle, FancyArrowPatch, FancyBboxPatch
@@ -29,12 +32,7 @@ from fig_floor import floor_problems
 HERE = os.path.dirname(os.path.abspath(__file__))
 OUT = os.path.join(HERE, "site", "assets", "model_propagation_step.png")
 
-BG, INK, DIM = "#0a0d18", "#e3e6f2", "#8b93b0"
-RULE = "#232a45"
-DRIVER_COL = ["#8b7ff2", "#5aa8d8", "#4f9d84"]
-NODE_COL = "#8b7ff2"
-
-
+DRIVER_COL = [ACC, COOL, MOSS]
 def audit(fig):
     """Same routine as build_throughlines.py: walk every Text actually drawn
     and report overlaps or anything off the canvas."""
@@ -80,22 +78,22 @@ def box(ax, cx, cy, w, h, label, sub, fill=BG, edge=RULE):
                                  boxstyle="round,pad=0.02,rounding_size=0.06",
                                  linewidth=1.1, edgecolor=edge,
                                  facecolor=fill, zorder=3))
-    ax.text(cx, cy + 0.10, label, color=INK, fontsize=12.5, ha="center",
+    ax.text(cx, cy + 0.10, label, color=INK, fontsize=FS_1, ha="center",
             va="center", zorder=4)
     if sub:
-        ax.text(cx, cy - 0.20, sub, color=DIM, fontsize=8.6, ha="center",
+        ax.text(cx, cy - 0.20, sub, color=DIM, fontsize=FS_2, ha="center",
                 va="center", zorder=4)
 
 
 def step_tag(ax, cx, y, n, text):
-    ax.text(cx, y, f"{n}", color=DIM, fontsize=8.2, ha="center", va="top",
+    ax.text(cx, y, f"{n}", color=DIM, fontsize=FS_2, ha="center", va="top",
             fontweight="bold", zorder=4)
-    ax.text(cx, y - 0.30, text, color=DIM, fontsize=8.2, ha="center",
+    ax.text(cx, y - 0.30, text, color=DIM, fontsize=FS_2, ha="center",
             va="top", zorder=4)
 
 
 def main():
-    fig = plt.figure(figsize=(11.2, 4.6), facecolor=BG)
+    fig = plt.figure(figsize=fig_size(PROSE, 2.4348), facecolor=BG)
     ax = fig.add_axes([0, 0, 1, 1])
     ax.set_xlim(0, 11.2)
     ax.set_ylim(0, 4.6)
@@ -128,14 +126,14 @@ def main():
                                       ["w₁", "w₂", "w₃"]):
         ax.add_patch(Circle((dx, dy), 0.34, facecolor=col, edgecolor="none",
                              zorder=3))
-        ax.text(dx, dy - DRIVER_LABEL_DY, lab, color=DIM, fontsize=8.6,
+        ax.text(dx, dy - DRIVER_LABEL_DY, lab, color=DIM, fontsize=FS_2,
                 ha="center", va="center", zorder=4)
         mx, my = 2.55, cy
         arrow(ax, (dx + 0.32, dy), (mx - 0.62, my + (dy - cy) * 0.28),
               color=RULE, shrink=1)
         ax.text((dx + mx) / 2 - 0.25, (dy + cy) / 2 + 0.18 * (1 if dy > cy
                 else (-1 if dy < cy else 0)) + 0.05, w, color=DIM,
-                fontsize=8.2, ha="center", va="center", zorder=4)
+                fontsize=FS_2, ha="center", va="center", zorder=4)
 
     # Captions 1 and 2 used to sit at the midpoint of the arrow *after* the
     # box they describe (4.08 and 6.90 - the same trick used correctly
@@ -165,7 +163,7 @@ def main():
                                   arrowstyle="-|>", color=DIM, linewidth=1.1,
                                   linestyle=(0, (2, 2)), mutation_scale=10,
                                   zorder=2))
-    ax.text(7.90, 4.05, "applied change, if any", color=DIM, fontsize=8.2,
+    ax.text(7.90, 4.05, "applied change, if any", color=DIM, fontsize=FS_2,
             ha="center", va="bottom", zorder=4)
     box(ax, 7.90, cy, 1.35, 0.95, "tanh", None)
     step_tag(ax, 7.90, CAPTION_Y, 3, "apply the change,\nsquash with tanh")
@@ -173,7 +171,7 @@ def main():
     arrow(ax, (8.58, cy), (9.45, cy), shrink=2)
     ax.add_patch(Circle((9.95, cy), 0.46, facecolor=NODE_COL,
                          edgecolor="none", zorder=3))
-    ax.text(9.95, cy, "new\neffect", color="#0a0d18", fontsize=8.2,
+    ax.text(9.95, cy, "new\neffect", color=BG, fontsize=FS_2,
             ha="center", va="center", fontweight="bold", zorder=4)
     step_tag(ax, 9.95, CAPTION_Y, 4, "move the node most\nof the way there")
 
@@ -183,13 +181,13 @@ def main():
     # and was being cut by the canvas itself. 0.10in of margin on each side
     # (this axes' data units are exactly inches, since it spans [0,0,1,1]
     # over an 11.2x4.6in figure) clears that with room to spare.
-    ax.text(0.10, 4.45, "One node, one step", color=INK, fontsize=13,
+    ax.text(0.10, 4.45, "One node, one step", color=INK, fontsize=FS_1,
             ha="left", va="top", fontweight="bold", zorder=4)
-    ax.text(11.10, 4.45, "model.html §4.4", color=DIM, fontsize=8.6,
+    ax.text(11.10, 4.45, "model.html §4.4", color=DIM, fontsize=FS_2,
             ha="right", va="top", zorder=4)
 
     problems = audit(fig)
-    fig.savefig(OUT, dpi=150, facecolor=BG)
+    sitefig.save(fig, OUT, close=False)
     plt.close(fig)
     print(f"  wrote {os.path.basename(OUT)}")
     if problems:

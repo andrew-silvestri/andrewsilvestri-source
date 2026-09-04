@@ -160,6 +160,40 @@ print(f"  destination barely moves beef            {'ok' if ok else 'FAIL'}"
       f"  ({swing:.1%} across France to China)")
 fails += 0 if ok else 1
 
+# 10. the three stage multipliers mean three things, and say so.
+# Until 2026-09-04 one field called `allocation` held a co-product share, a
+# lifetime amortisation and a shipment mass, which is how "allocation 160%"
+# reached the screen and how a shoe came to "triple". A share is a fraction
+# and must carry its basis; an amortisation must be the functional unit over
+# the product's own lifetime default; a freight mass must be a plausible
+# number of kilograms, not tonnes (the car delivery leg shipped as 1.4).
+bad = []
+for pk, pp in PRODUCTS.items():
+    lt = pp.get("lifetime")
+    for st in pp["stages"]:
+        if "allocation" in st:
+            bad.append(f"{pk}/{st['id']}: legacy `allocation` field")
+        if "share" in st:
+            if not 0 < st["share"] <= 1:
+                bad.append(f"{pk}/{st['id']}: share {st['share']} outside (0,1]")
+            if not st.get("basis"):
+                bad.append(f"{pk}/{st['id']}: share without a basis")
+        if "amortise" in st:
+            if not lt or st["id"] not in lt["stages"]:
+                bad.append(f"{pk}/{st['id']}: amortise on a stage the lifetime does not scale")
+            elif abs(100.0 / st["amortise"] - lt["default"]) > 0.01 * lt["default"]:
+                bad.append(f"{pk}/{st['id']}: 100/amortise = {100/st['amortise']:,.0f} "
+                           f"but lifetime default is {lt['default']:,}")
+        if "freight_kg" in st:
+            if not st.get("transport"):
+                bad.append(f"{pk}/{st['id']}: freight_kg on a non-transport stage")
+            if not 0.05 <= st["freight_kg"] <= 20000:
+                bad.append(f"{pk}/{st['id']}: freight_kg {st['freight_kg']} is not kilograms")
+ok = not bad
+print(f"  share/amortise/freight_kg are what they claim {'ok' if ok else 'FAIL'}"
+      f"  {bad[:3] if bad else ''}")
+fails += 0 if ok else 1
+
 # 9. what the cutoff discards is genuinely small
 r = Model("beef","BR","US-TX").run()
 share = r["cut"]/r["total"]

@@ -21,6 +21,10 @@ Run: python3 model.py    (writes PNGs + CSVs to outputs/, ~1 min for 3 LPs)
 """
 import numpy as np
 import matplotlib
+import sys as _sys, os as _os; _sys.path.insert(0, _os.path.dirname(_os.path.dirname(_os.path.abspath(__file__))))
+from sitefig import BG, INK, DIM, RULE, FAINT, ACC, COOL, MOSS, ROSE, SLATE, DISTRICT, SUPPLY, PSYCH, SUN, INSOL, GOLD, GREY, VIOLET, BLUE, GREEN, WARM, ARROW, ONE_WAY_COL, TWO_WAY_COL, NODE_COL, WARM2, KCOL, CYCLE, FS_2, FS_1, FS0, FS1, FS2, FONT, MONO, NOTES, PROSE, CARD, THUMB, fig_size, save, WIDE, PLOT, SQUARE, TALL, row_aspect, panel  # noqa: E402,F401
+import sitefig  # noqa: E402
+
 matplotlib.use("Agg")
 import matplotlib.pyplot as plt
 import figstyle
@@ -192,7 +196,7 @@ def annualized_storage_cost_per_kw_yr():
 # --------------------------------------------------------------------- figures
 def fig_price_duration(prices, tag):
     srt = np.sort(prices)[::-1]
-    fig, (a1, a2) = plt.subplots(1, 2, figsize=(13, 4.8))
+    fig, (a1, a2) = plt.subplots(1, 2, figsize=fig_size(NOTES, 2.2))
     a1.plot(srt, lw=2)
     a1.set_yscale("symlog", linthresh=100)
     a1.set_xlabel("Hours (sorted)"); a1.set_ylabel("Price [$/MWh]")
@@ -200,11 +204,9 @@ def fig_price_duration(prices, tag):
     # colliding with each other and clipping off the right edge - shorter
     # text and a smaller size here, not just a wider figure, since the
     # figure width is capped by the site's own column width regardless.
-    a1.set_title(f"Price duration curve — {tag}", fontsize=12)
     a1.grid(alpha=0.3)
     a2.plot(np.arange(24), [prices[h::24].mean() for h in range(24)], lw=2.5, marker="o", ms=4)
     a2.set_xlabel("Hour of day"); a2.set_ylabel("Mean price [$/MWh]")
-    a2.set_title("Average diurnal shape (solar + evening peak)", fontsize=12)
     a2.grid(alpha=0.3)
     figstyle.finish(fig, f"{OUT}/fig1_prices.png")
 
@@ -212,10 +214,9 @@ def fig_price_duration(prices, tag):
 def fig_dispatch_week(res, prices, start_day=200):
     s, e = start_day * 24, (start_day + 7) * 24
     t = np.arange(s, e)
-    fig, (a1, a2) = plt.subplots(2, 1, figsize=(11, 6.5), sharex=True)
+    fig, (a1, a2) = plt.subplots(2, 1, figsize=fig_size(NOTES, PLOT), sharex=True)
     a1.plot(t, prices[s:e], color=figstyle.DIM, lw=1.5)
     a1.set_ylabel("Price [$/MWh]"); a1.set_yscale("symlog", linthresh=100)
-    a1.set_title(f"Sample summer week — {res['duration']}h battery dispatch")
     a1.grid(alpha=0.3)
     a2.bar(t, res["dis"][s:e], color=figstyle.GREEN, label="discharge [MW]")
     a2.bar(t, -res["ch"][s:e], color=figstyle.WARM, label="charge [MW]")
@@ -232,7 +233,7 @@ def fig_dispatch_week(res, prices, start_day=200):
     # accepts them - so the handles are pulled from a2 and handed to fig.)
     handles, labels = a2.get_legend_handles_labels()
     fig.legend(handles, labels, loc="outside lower center", ncol=3,
-               frameon=False, fontsize=11.5)
+               frameon=False, fontsize=FS_1)
     a2.set_xlabel("Hour of year"); a2.grid(alpha=0.3)
     figstyle.finish(fig, f"{OUT}/fig2_dispatch_week.png")
 
@@ -252,7 +253,7 @@ def fig_duration_value(results):
     # bottom of the panel. Giving the cost its own narrow companion axes lets
     # both be legible without either rescaling the other.
     fig, (a1, a2) = plt.subplots(
-        1, 2, figsize=(11.5, 6.0), gridspec_kw={"width_ratios": [3, 1]})
+        1, 2, figsize=fig_size(NOTES, 1.6), gridspec_kw={"width_ratios": [2.3, 1.3]})
 
     bars = a1.bar(x, revs, color=figstyle.COOL, alpha=0.9, width=0.55)
     a1.set_xticks(x)
@@ -260,7 +261,7 @@ def fig_duration_value(results):
     top = max(revs) * 1.45
     for b, r in zip(bars, revs):
         a1.text(b.get_x() + b.get_width() / 2, r + top * 0.02, f"${r:.1f}/kW-yr",
-                ha="center", va="bottom", fontsize=10.5)
+                ha="center", va="bottom", fontsize=FS_1)
 
     # The headline is the *step*, not the level: a dotted line holds the
     # previous bar's height out to the next bar's position, and a vertical
@@ -280,8 +281,8 @@ def fig_duration_value(results):
         a1.plot([x[i], x[i + 1]], [y0, y0], ls=":", color=figstyle.DIM, lw=1.3)
         a1.annotate("", xy=(x_mid, y1 - inset), xytext=(x_mid, y0 + inset),
                     arrowprops=dict(arrowstyle="-|>", color=figstyle.ACC, lw=1.8))
-        a1.text(x_mid, max(y0, y1) + top * 0.025, f"+${y1 - y0:.1f}/kW-yr",
-                ha="center", va="bottom", fontsize=10.5, color=figstyle.INK)
+        a1.text(x_mid, max(y0, y1) + top * 0.09, f"+${y1 - y0:.1f}/kW-yr",
+                ha="center", va="bottom", fontsize=FS_1, color=figstyle.INK)
 
     a1.set_ylabel("Arbitrage revenue [$/kW-yr]")
     a1.set_ylim(0, top)
@@ -305,14 +306,15 @@ def fig_duration_value(results):
     cvals = [best_rev, cap_cost]
     cbars = a2.bar(cx, cvals, color=[figstyle.COOL, figstyle.WARM],
                     alpha=0.9, width=0.6)
-    ctop = cap_cost * 1.2
+    ctop = cap_cost * 1.36   # headroom for the value label and the top tick, now that no title strip sits above
     for b, v in zip(cbars, cvals):
         a2.text(b.get_x() + b.get_width() / 2, v + ctop * 0.02, f"${v:.0f}",
-                ha="center", va="bottom", fontsize=10.5)
+                ha="center", va="bottom", fontsize=FS_1)
     a2.set_xticks(cx)
     a2.set_xticklabels([f"Best case\n({best_dur}h arbitrage)",
                         "Capital cost\n(4h system)"])
     a2.set_ylim(0, ctop)
+    a2.set_yticks([0, 100, 200])   # the locator would also own a tick at the frame's edge
     a2.set_xlim(-0.6, 1.6)
     a2.grid(axis="y", alpha=0.3)
 
@@ -335,13 +337,12 @@ def fig_duration_value(results):
 def fig_sensitivity(prices):
     rtes = [0.80, 0.86, 0.92]
     degs = [0.0, 2.0, 5.0, 10.0]
-    fig, ax = plt.subplots(figsize=(8.5, 5.5))
+    fig, ax = plt.subplots(figsize=fig_size(NOTES, PLOT))
     for rte in rtes:
         vals = [optimize(prices, 4, rte=rte, c_deg=cd)["rev_per_kw_yr"] for cd in degs]
         ax.plot(degs, vals, marker="o", lw=2.5, label=f"RTE {rte:.0%}")
     ax.set_xlabel("Degradation cost  [$/MWh throughput]")
     ax.set_ylabel("Revenue  [$/kW-yr]")
-    ax.set_title("4h battery: revenue vs round-trip efficiency and cycling cost")
     ax.legend(); ax.grid(alpha=0.3)
     figstyle.finish(fig, f"{OUT}/fig4_sensitivity.png")
 
@@ -351,7 +352,7 @@ def fig_monthly(res, prices):
     for m in range(12):
         s, e = m * 730, (m + 1) * 730
         rev_m.append(np.sum(prices[s:e] * (res["dis"][s:e] - res["ch"][s:e])) / 1000)
-    fig, ax = plt.subplots(figsize=(8.5, 5))
+    fig, ax = plt.subplots(figsize=fig_size(NOTES, WIDE))
     # Numeric positions, not the month letters as categories. Passing the
     # letters straight to bar() made matplotlib treat them as categories, and
     # because J, M and A each appear more than once it collapsed them: the
@@ -363,7 +364,6 @@ def fig_monthly(res, prices):
     ax.set_xticks(range(12))
     ax.set_xticklabels(months)
     ax.set_ylabel("Revenue [$k, 1 MW / 4 h]")
-    ax.set_title("Monthly arbitrage revenue — scarcity months dominate")
     ax.grid(axis="y", alpha=0.3)
     figstyle.finish(fig, f"{OUT}/fig5_monthly.png")
 

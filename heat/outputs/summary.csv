@@ -1,0 +1,9 @@
+metric,value
+LCOH_gas_$/MMBtu,5.133
+LCOH_elec_$/MMBtu,19.998
+gap_$/MMBtu,14.864
+breakeven_Pe_cents/kWh_fullLCOH,1.529
+breakeven_Pe_cents/kWh_fuelOnly,1.377
+emissions_gas_kg/MMBtu,62.42
+emissions_elec_kg/MMBtu,99.58
+emissions_parity_gridCI_t/MWh,0.2087

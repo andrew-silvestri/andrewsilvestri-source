@@ -62,11 +62,20 @@ Serve on a different port per instance if you run several at once —
   at the workspace root. **None of those paths exist.** The numbered archives
   now live under `01 ARCHIVE/` (10, 11, 13–18, 20, 21), and 24 and 25 are not
   anywhere in the workspace.
-- That means **`skyline-app.html` and `bookshelf-app.html` have no source in
-  this workspace.** The shipped HTML is the only artifact. Two of the four
-  audits have to work from the artifact alone, and that fact is itself worth
-  reporting.
+- **CORRECTED 2026-09-04, after the audits ran.** I concluded from that missing
+  folder that `skyline-app.html` and `bookshelf-app.html` had no source in the
+  workspace. **That was wrong.** `site/downloads/skyline-code.zip` holds the
+  full pipeline — `build_skylines.py`, `supplement.py`, `keys.py`,
+  `template.html`, `app.js`, tests and `skylines.json`. The bookshelf's museum
+  sibling survives under `dumpNew/PyProjects/`. Only the raw Wikidata pull
+  behind the skyline data is genuinely absent, so the 24 Wikidata cities cannot
+  be regenerated from scratch, but everything else can.
 
-This is the same class of defect as trap 11 in `HANDOFF.md` §8 — a document
-describing a state the repository has left. It is now the fifth and sixth
-instance found in one day. The archive table should be corrected or deleted.
+  I searched for a folder name and never looked in `site/downloads/` — the
+  directory the site's own Code page exists to publish. Both audits checked it
+  and found the source. Take this as the standing lesson: **a brief's factual
+  premises are leads, not facts**, including the ones about what is missing.
+
+The archive table in `HANDOFF.md` §2 is still stale and should be corrected or
+deleted — that part holds. It is the same class of defect as trap 11: a
+document describing a state the repository has left.

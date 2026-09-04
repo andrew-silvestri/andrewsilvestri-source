@@ -8,18 +8,18 @@
 <link rel="apple-touch-icon" href="apple-touch-icon.png">
 <meta name="theme-color" content="#F2F0EF">
 <link rel="canonical" href="https://andrewsilvestri.com/desktop.html">
-<script>/* the motion contract — set before first paint */
-try{var m=localStorage.getItem('motion');if(m!=='on'&&m!=='off')m=matchMedia('(prefers-reduced-motion: reduce)').matches?'off':'on';document.documentElement.dataset.motion=m;}catch(e){document.documentElement.dataset.motion='on';}</script>
-<link rel="stylesheet" href="style.css?v=8706b1b1">
+<script>/* the motion contract — set before first paint, from the system preference alone */
+try{document.documentElement.dataset.motion=matchMedia('(prefers-reduced-motion: reduce)').matches?'off':'on';}catch(e){document.documentElement.dataset.motion='on';}</script>
+<link rel="stylesheet" href="style.css?v=ec676571">
 </head><body>
 <nav class="top"><a href="index.html">Home</a><span class="dd"><a href="#" class="ddbtn" aria-haspopup="true">The atlas <span class="caret">&#9662;</span></a><span class="ddmenu"><a href="atlas-app.html" target="_blank" rel="noopener">Open the atlas</a><a href="atlas.html">About the atlas</a><a href="model.html">How the model works</a><a href="library.html">Figures</a></span></span><span class="dd"><a href="#" class="ddbtn" aria-haspopup="true">Energy <span class="caret">&#9662;</span></a><span class="ddmenu"><a href="heat.html">Industrial heat break-even</a><a href="storage.html">Battery revenue simulator</a><a href="climate-cost.html">Climate cost calculator</a></span></span><span class="dd"><a href="#" class="ddbtn on" aria-haspopup="true">Others <span class="caret">&#9662;</span></a><span class="ddmenu"><a href="longevity.html">Longevity quotient</a><a href="skyline.html">Skylines, played</a><a href="desktop.html" class="on">The bookshelf</a></span></span><a href="code.html">Code</a></nav>
-<main>
+<main class="notes">
 
 <h1>The bookshelf</h1>
 <p class="dim">A screen is wall space. This hangs a bookshelf on it &mdash;
 built from the books you have actually read, spine by spine.</p>
-<aside class="marginalia long" aria-label="On this page"><h4>On this page</h4><ul><li><b>Moby-Dick</b>Melville, 1851</li><li><b>Middlemarch</b>Eliot, 1871</li><li><b>War and Peace</b>Tolstoy, 1869</li><li><b>Anna Karenina</b>Tolstoy, 1877</li><li><b>Crime and Punishment</b>Dostoevsky, 1866</li><li><b>The Brothers Karamazov</b>Dostoevsky, 1880</li><li><b>Pride and Prejudice</b>Austen, 1813</li><li><b>Emma</b>Austen, 1815</li><li><b>Jane Eyre</b>C. Bronte, 1847</li><li><b>Wuthering Heights</b>E. Bronte, 1847</li><li><b>Great Expectations</b>Dickens, 1861</li><li><b>Bleak House</b>Dickens, 1853</li><li><b>Ulysses</b>Joyce, 1922</li><li><b>Mrs Dalloway</b>Woolf, 1925</li><li><b>To the Lighthouse</b>Woolf, 1927</li><li><b>The Great Gatsby</b>Fitzgerald, 1925</li><li><b>The Sun Also Rises</b>Hemingway, 1926</li><li><b>Beloved</b>Morrison, 1987</li><li><b>Invisible Man</b>Ellison, 1952</li><li><b>One Hundred Years of Solitude</b>Garcia Marquez, 1967</li><li><b>Don Quixote</b>Cervantes, 1605</li><li><b>The Odyssey</b>Homer, c. 700 BC</li></ul></aside>
-<aside class="marginalia right long"><ul><li><b>The Iliad</b>Homer, c. 750 BC</li><li><b>The Divine Comedy</b>Dante, 1320</li><li><b>Frankenstein</b>Shelley, 1818</li><li><b>Dracula</b>Stoker, 1897</li><li><b>The Count of Monte Cristo</b>Dumas, 1844</li><li><b>Les Miserables</b>Hugo, 1862</li><li><b>Madame Bovary</b>Flaubert, 1856</li><li><b>The Trial</b>Kafka, 1925</li><li><b>Lolita</b>Nabokov, 1955</li><li><b>Catch-22</b>Heller, 1961</li><li><b>Slaughterhouse-Five</b>Vonnegut, 1969</li><li><b>1984</b>Orwell, 1949</li><li><b>Brave New World</b>Huxley, 1932</li><li><b>Fahrenheit 451</b>Bradbury, 1953</li><li><b>The Grapes of Wrath</b>Steinbeck, 1939</li><li><b>East of Eden</b>Steinbeck, 1952</li><li><b>The Sound and the Fury</b>Faulkner, 1929</li><li><b>Their Eyes Were Watching God</b>Hurston, 1937</li><li><b>Things Fall Apart</b>Achebe, 1958</li><li><b>The Stranger</b>Camus, 1942</li><li><b>The Master and Margarita</b>Bulgakov, 1967</li><li><b>A Confederacy of Dunces</b>Toole, 1980</li></ul></aside>
+<aside class="marginalia long" style="grid-row: span 21" aria-label="On this page"><p class="lab">On this page</p><ul><li><b>Moby-Dick</b>Melville, 1851</li><li><b>Middlemarch</b>Eliot, 1871</li><li><b>War and Peace</b>Tolstoy, 1869</li><li><b>Anna Karenina</b>Tolstoy, 1877</li><li><b>Crime and Punishment</b>Dostoevsky, 1866</li><li><b>The Brothers Karamazov</b>Dostoevsky, 1880</li><li><b>Pride and Prejudice</b>Austen, 1813</li><li><b>Emma</b>Austen, 1815</li><li><b>Jane Eyre</b>C. Bronte, 1847</li><li><b>Wuthering Heights</b>E. Bronte, 1847</li><li><b>Great Expectations</b>Dickens, 1861</li><li><b>Bleak House</b>Dickens, 1853</li><li><b>Ulysses</b>Joyce, 1922</li><li><b>Mrs Dalloway</b>Woolf, 1925</li><li><b>To the Lighthouse</b>Woolf, 1927</li><li><b>The Great Gatsby</b>Fitzgerald, 1925</li><li><b>The Sun Also Rises</b>Hemingway, 1926</li><li><b>Beloved</b>Morrison, 1987</li><li><b>Invisible Man</b>Ellison, 1952</li><li><b>One Hundred Years of Solitude</b>Garcia Marquez, 1967</li><li><b>Don Quixote</b>Cervantes, 1605</li><li><b>The Odyssey</b>Homer, c. 700 BC</li></ul></aside>
+<aside class="marginalia right long" style="grid-row: span 21"><ul><li><b>The Iliad</b>Homer, c. 750 BC</li><li><b>The Divine Comedy</b>Dante, 1320</li><li><b>Frankenstein</b>Shelley, 1818</li><li><b>Dracula</b>Stoker, 1897</li><li><b>The Count of Monte Cristo</b>Dumas, 1844</li><li><b>Les Miserables</b>Hugo, 1862</li><li><b>Madame Bovary</b>Flaubert, 1856</li><li><b>The Trial</b>Kafka, 1925</li><li><b>Lolita</b>Nabokov, 1955</li><li><b>Catch-22</b>Heller, 1961</li><li><b>Slaughterhouse-Five</b>Vonnegut, 1969</li><li><b>1984</b>Orwell, 1949</li><li><b>Brave New World</b>Huxley, 1932</li><li><b>Fahrenheit 451</b>Bradbury, 1953</li><li><b>The Grapes of Wrath</b>Steinbeck, 1939</li><li><b>East of Eden</b>Steinbeck, 1952</li><li><b>The Sound and the Fury</b>Faulkner, 1929</li><li><b>Their Eyes Were Watching God</b>Hurston, 1937</li><li><b>Things Fall Apart</b>Achebe, 1958</li><li><b>The Stranger</b>Camus, 1942</li><li><b>The Master and Margarita</b>Bulgakov, 1967</li><li><b>A Confederacy of Dunces</b>Toole, 1980</li></ul></aside>
 
 <p>A desktop background is looked at more often than anything anyone hangs in
 a house, and it is usually a stock photograph. Goodreads exports a CSV of
@@ -46,12 +46,6 @@ rules, mid-century in cloth and paper labels, recent books in flat graphic
 colour. A five-star rating earns a gilt point at the foot. Everything is
 deterministic per title, so the same book always gets the same spine.</p>
 
-<video class="fig wide motion-video" muted loop playsinline aria-hidden="true"
- poster="assets/desktop_spines_poster.png?v=6d5c32a9"
- data-src="assets/desktop_spines.mp4?v=c1e586f5"></video>
-<p class="small">Eight real books from the demo library's own forty-four,
-spines drawn in by that exact rule: width from page count, colour from
-era.</p>
 
 <img class="fig wide" src="assets/bookshelf-demo-shelf.webp?v=8296c00f" loading="lazy" width="2200" height="1280"
      alt="The bookshelf app drawing the demo library as book spines on three walnut shelves">
@@ -115,10 +109,8 @@ nothing at startup; removal is deleting the folder.</p>
 alongside. The download is on the <a href="code.html">code page</a>.</p>
 
 <footer>Andrew Silvestri · energy systems modelling ·
-<a href="mailto:dasilvestri@utexas.edu">dasilvestri@utexas.edu</a> &middot;
-<button type="button" class="motion-toggle" hidden>Motion: <span class="motion-state">on</span></button></footer>
+<a href="mailto:dasilvestri@utexas.edu">dasilvestri@utexas.edu</a></footer>
 </main>
-<script src="assets/motion.js?v=4cbbdec3"></script>
+<script src="assets/motion.js?v=6bf4b397"></script>
 <script src="assets/lightbox.js?v=0bce1245"></script>
-<script src="assets/bgloop.js?v=d269be40"></script>
 </body></html>

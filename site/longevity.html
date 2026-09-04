@@ -7,18 +7,18 @@
 <link rel="apple-touch-icon" href="apple-touch-icon.png">
 <meta name="theme-color" content="#F2F0EF">
 <link rel="canonical" href="https://andrewsilvestri.com/longevity.html">
-<script>/* the motion contract — set before first paint */
-try{var m=localStorage.getItem('motion');if(m!=='on'&&m!=='off')m=matchMedia('(prefers-reduced-motion: reduce)').matches?'off':'on';document.documentElement.dataset.motion=m;}catch(e){document.documentElement.dataset.motion='on';}</script>
-<link rel="stylesheet" href="style.css?v=8706b1b1">
+<script>/* the motion contract — set before first paint, from the system preference alone */
+try{document.documentElement.dataset.motion=matchMedia('(prefers-reduced-motion: reduce)').matches?'off':'on';}catch(e){document.documentElement.dataset.motion='on';}</script>
+<link rel="stylesheet" href="style.css?v=ec676571">
 </head><body>
 <nav class="top"><a href="index.html">Home</a><span class="dd"><a href="#" class="ddbtn" aria-haspopup="true">The atlas <span class="caret">&#9662;</span></a><span class="ddmenu"><a href="atlas-app.html" target="_blank" rel="noopener">Open the atlas</a><a href="atlas.html">About the atlas</a><a href="model.html">How the model works</a><a href="library.html">Figures</a></span></span><span class="dd"><a href="#" class="ddbtn" aria-haspopup="true">Energy <span class="caret">&#9662;</span></a><span class="ddmenu"><a href="heat.html">Industrial heat break-even</a><a href="storage.html">Battery revenue simulator</a><a href="climate-cost.html">Climate cost calculator</a></span></span><span class="dd"><a href="#" class="ddbtn on" aria-haspopup="true">Others <span class="caret">&#9662;</span></a><span class="ddmenu"><a href="longevity.html" class="on">Longevity quotient</a><a href="skyline.html">Skylines, played</a><a href="desktop.html">The bookshelf</a></span></span><a href="code.html">Code</a></nav>
-<main>
+<main class="notes">
 
 <h1>Longevity quotient</h1>
 <p class="dim">How long an animal lives, against how long an animal of its
 size should live.</p>
-<aside class="marginalia long" aria-label="Species in the margin"><h4>Species in the margin</h4><ul><li><img src="assets/openmoji/1F987.svg" alt=""><b>Brandt's bat</b>12.75× prediction (41 years at 7 grams)</li><li><img src="assets/openmoji/1F41D.svg" alt=""><b>honey bee queen</b>1.98× prediction (5 years)</li><li><img src="assets/openmoji/1F99C.svg" alt=""><b>pink cockatoo</b>4.55× prediction (83 years)</li><li><img src="assets/openmoji/1F426.svg" alt=""><b>Laysan albatross</b>2.60× prediction (74 years)</li><li><img src="assets/openmoji/1F41C.svg" alt=""><b>black garden ant queen</b>28.72× prediction (29 years)</li><li><img src="assets/openmoji/1F577.svg" alt=""><b>Mexican redknee tarantula</b>3.55× prediction (30 years)</li><li><b>Labord's chameleon</b>0.13× prediction (one year, size predicts eight)</li><li><img src="assets/openmoji/1F418.svg" alt=""><b>African bush elephant</b>1.31× prediction (80 years)</li><li><img src="assets/openmoji/1F992.svg" alt=""><b>giraffe</b>0.84× prediction (39 years)</li><li><img src="assets/openmoji/1F400.svg" alt=""><b>naked mole-rat</b>6.75× prediction (31 years at 35 grams)</li><li><img src="assets/openmoji/1F422.svg" alt=""><b>Galapagos tortoise</b>3.21× prediction (177 years)</li><li><img src="assets/openmoji/1F40C.svg" alt=""><b>Roman snail</b>3.91× prediction (35 years)</li></ul></aside>
-<aside class="marginalia right long"><ul><li><img src="assets/openmoji/1F427.svg" alt=""><b>African penguin</b>1.41× prediction (40 years)</li><li><img src="assets/openmoji/1F9AD.svg" alt=""><b>Baikal seal</b>2.13× prediction (56 years)</li><li><img src="assets/openmoji/1F40B.svg" alt=""><b>bowhead whale</b>1.78× prediction (211 years)</li><li><img src="assets/openmoji/1F988.svg" alt=""><b>Greenland shark</b>6.34× prediction (392 years)</li><li><img src="assets/openmoji/1F41F.svg" alt=""><b>rougheye rockfish</b>12.90× prediction (205 years)</li><li><img src="assets/openmoji/1FABC.svg" alt=""><b>moon jellyfish</b>0.07× prediction (one year)</li><li><b>cold-seep tubeworm</b>23.41× prediction (250 years)</li><li><img src="assets/openmoji/1F99E.svg" alt=""><b>American lobster</b>3.04× prediction (70 years)</li><li><img src="assets/openmoji/1F9AA.svg" alt=""><b>freshwater pearl mussel</b>15.78× prediction (190 years)</li><li><img src="assets/openmoji/1F41A.svg" alt=""><b>ocean quahog</b>47.48× prediction (a real 507-year lifespan)</li><li><img src="assets/openmoji/1F419.svg" alt=""><b>common octopus</b>0.07× prediction (two years)</li><li><img src="assets/openmoji/1FAB8.svg" alt=""><b>black coral</b>122.84× prediction (4,265 years)</li></ul></aside>
+<aside class="marginalia long" style="grid-row: span 50" aria-label="Species in the margin"><p class="lab">Species in the margin</p><ul><li><img src="assets/openmoji/1F987.svg" alt=""><b>Brandt's bat</b>12.75× prediction (41 years at 7 grams)</li><li><img src="assets/openmoji/1F41D.svg" alt=""><b>honey bee queen</b>1.98× prediction (5 years)</li><li><img src="assets/openmoji/1F99C.svg" alt=""><b>pink cockatoo</b>4.55× prediction (83 years)</li><li><img src="assets/openmoji/1F426.svg" alt=""><b>Laysan albatross</b>2.60× prediction (74 years)</li><li><img src="assets/openmoji/1F41C.svg" alt=""><b>black garden ant queen</b>28.72× prediction (29 years)</li><li><img src="assets/openmoji/1F577.svg" alt=""><b>Mexican redknee tarantula</b>3.55× prediction (30 years)</li><li><b>Labord's chameleon</b>0.13× prediction (one year, size predicts eight)</li><li><img src="assets/openmoji/1F418.svg" alt=""><b>African bush elephant</b>1.31× prediction (80 years)</li><li><img src="assets/openmoji/1F992.svg" alt=""><b>giraffe</b>0.84× prediction (39 years)</li><li><img src="assets/openmoji/1F400.svg" alt=""><b>naked mole-rat</b>6.75× prediction (31 years at 35 grams)</li><li><img src="assets/openmoji/1F422.svg" alt=""><b>Galapagos tortoise</b>3.21× prediction (177 years)</li><li><img src="assets/openmoji/1F40C.svg" alt=""><b>Roman snail</b>3.91× prediction (35 years)</li></ul></aside>
+<aside class="marginalia right long" style="grid-row: span 50"><ul><li><img src="assets/openmoji/1F427.svg" alt=""><b>African penguin</b>1.41× prediction (40 years)</li><li><img src="assets/openmoji/1F9AD.svg" alt=""><b>Baikal seal</b>2.13× prediction (56 years)</li><li><img src="assets/openmoji/1F40B.svg" alt=""><b>bowhead whale</b>1.78× prediction (211 years)</li><li><img src="assets/openmoji/1F988.svg" alt=""><b>Greenland shark</b>6.34× prediction (392 years)</li><li><img src="assets/openmoji/1F41F.svg" alt=""><b>rougheye rockfish</b>12.90× prediction (205 years)</li><li><img src="assets/openmoji/1FABC.svg" alt=""><b>moon jellyfish</b>0.07× prediction (one year)</li><li><b>cold-seep tubeworm</b>23.41× prediction (250 years)</li><li><img src="assets/openmoji/1F99E.svg" alt=""><b>American lobster</b>3.04× prediction (70 years)</li><li><img src="assets/openmoji/1F9AA.svg" alt=""><b>freshwater pearl mussel</b>15.78× prediction (190 years)</li><li><img src="assets/openmoji/1F41A.svg" alt=""><b>ocean quahog</b>47.48× prediction (a real 507-year lifespan)</li><li><img src="assets/openmoji/1F419.svg" alt=""><b>common octopus</b>0.07× prediction (two years)</li><li><img src="assets/openmoji/1FAB8.svg" alt=""><b>black coral</b>122.84× prediction (4,265 years)</li></ul></aside>
 
 <p>Body mass predicts lifespan. The 7,873 species in this model run from a
 nematode at a microgram to a blue whale at 150 tonnes, 14.5 orders of
@@ -29,7 +29,7 @@ enough to be worth dividing out. What remains is the longevity quotient:</p>
 <p style="text-align:center;font-size:16px"><code>LQ = observed lifespan ÷
 lifespan predicted from body mass</code></p>
 
-<img class="fig wide" src="assets/lq_explained.png?v=6c856fa3" loading="lazy" width="2108" height="1394" alt="Three animals of increasing mass, with the lifespan the allometry predicts beside the lifespan actually observed, and the quotient that falls out.">
+<img class="fig wide" src="assets/lq_explained.png?v=cadadeb0" loading="lazy" width="1428" height="1241" alt="Three animals of increasing mass, with the lifespan the allometry predicts beside the lifespan actually observed, and the quotient that falls out.">
 <p class="small">Mass rises left to right and so does the prediction, because the fit can only go up. What the animals do is not monotonic, and the quotient is what is left once size has been divided out.</p>
 
 <p>It is built by analogy with the encephalisation quotient<sup class="cite" id="cr1"><a href="#ref1">1</a></sup>, which does the
@@ -54,14 +54,14 @@ member or species count. Click a group to drop into the species inside it.</p>
 <a class="btn ghost" href="downloads/longevity-code.zip">Download code and data</a>
 </div>
 
-<img class="fig wide" src="assets/lq_allometry.png?v=a7a91e3c" loading="lazy" width="1425" height="990"
+<img class="fig wide" src="assets/lq_allometry.png?v=24d316b1" loading="lazy" width="1428" height="984"
  alt="Maximum lifespan against adult body mass on logarithmic axes, coloured by
  class, with the fitted global relationship and labelled outliers">
 <p class="small">Lifespan against body mass. The dashed line is the fit across
 every animal in the table. Distance above or below that line, measured within a
 species' own class, is the quotient.</p>
 
-<img class="fig wide" src="assets/lq_ranked.png?v=289af425" loading="lazy" width="1350" height="1320"
+<img class="fig wide" src="assets/lq_ranked.png?v=6b4ae222" loading="lazy" width="1428" height="1620"
  alt="Species ranked by longevity quotient, from the twelve furthest below
  prediction to the eighteen furthest above">
 <p class="small">The twelve species furthest below their predicted lifespan and
@@ -106,7 +106,7 @@ sit at 2.76. Flight, burrowing, venom, armour and simply being difficult to
 swallow all register as raised quotients. Being a ground bird or a small
 terrestrial insectivore registers as the reverse.</p>
 
-<img class="fig wide" src="assets/lq_orders.png?v=6794fffe" loading="lazy" width="1950" height="1638"
+<img class="fig wide" src="assets/lq_orders.png?v=36987102" loading="lazy" width="1428" height="2125"
  alt="Bar chart of taxonomic orders ranked by geometric mean longevity quotient">
 <p class="small">All 112 orders holding four or more species, ranked by
 geometric mean quotient and read left column first. The dashed line is parity
@@ -143,14 +143,8 @@ shortest life of any four-limbed vertebrate, in a body whose size predicts eight
 years. None of this is visible in a table of lifespans sorted by years. All of
 it appears the moment body mass is divided out.</p>
 
-<video class="fig wide motion-video" muted loop playsinline aria-hidden="true"
- poster="assets/longevity_quotient_poster.png?v=8e027b9b"
- data-src="assets/longevity_quotient.mp4?v=aff98c8e"></video>
-<p class="small">The quotient as distance from the global fit: the ocean
-quahog 45&times; above it (a real 507-year lifespan), the giant Pacific
-octopus about a twentieth below (dead in five real years).</p>
 
-<img class="fig wide" src="assets/lq_wild_captive.png?v=74cca569" loading="lazy" width="1350" height="1170"
+<img class="fig wide" src="assets/lq_wild_captive.png?v=504de6fe" loading="lazy" width="1428" height="984"
  alt="Dumbbell chart comparing wild and captive maximum lifespan by species">
 <p class="small">Wild against captive, sorted by the size of the gap. Where
 protection helps most, and where it does not help at all.</p>
@@ -289,10 +283,8 @@ It is worth reading whether or not you care about the arithmetic.</p>
 <p class="small">Animal icons in the margin scene: <a href="https://openmoji.org" target="_blank" rel="noopener">OpenMoji</a>, licensed <a href="https://creativecommons.org/licenses/by-sa/4.0/" target="_blank" rel="noopener">CC BY-SA 4.0</a>, recoloured to this page&rsquo;s own palette. The chameleon and the tubeworm have no emoji and are drawn by hand to match. Every quotient beside a creature is that species&rsquo; own figure from the table above.</p>
 
 <footer>Andrew Silvestri · energy systems modelling ·
-<a href="mailto:dasilvestri@utexas.edu">dasilvestri@utexas.edu</a> &middot;
-<button type="button" class="motion-toggle" hidden>Motion: <span class="motion-state">on</span></button></footer>
+<a href="mailto:dasilvestri@utexas.edu">dasilvestri@utexas.edu</a></footer>
 </main>
-<script src="assets/motion.js?v=4cbbdec3"></script>
+<script src="assets/motion.js?v=6bf4b397"></script>
 <script src="assets/lightbox.js?v=0bce1245"></script>
-<script src="assets/bgloop.js?v=d269be40"></script>
 </body></html>

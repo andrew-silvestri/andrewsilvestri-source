@@ -12,6 +12,9 @@ import json
 import os
 
 import matplotlib
+from sitefig import BG, INK, DIM, RULE, FAINT, ACC, COOL, MOSS, ROSE, SLATE, DISTRICT, SUPPLY, PSYCH, SUN, INSOL, GOLD, GREY, VIOLET, BLUE, GREEN, WARM, ARROW, ONE_WAY_COL, TWO_WAY_COL, NODE_COL, WARM2, KCOL, CYCLE, FS_2, FS_1, FS0, FS1, FS2, FONT, MONO, NOTES, PROSE, CARD, THUMB, fig_size, save, WIDE, PLOT, SQUARE, TALL, row_aspect, panel  # noqa: E402,F401
+import sitefig  # noqa: E402
+
 matplotlib.use("Agg")
 import matplotlib.pyplot as plt
 import numpy as np
@@ -49,16 +52,12 @@ def main():
     # the subtitle. The extra 0.5in, spent below via gs's top=, buys a
     # header strip tall enough for both lines of text plus a clear gap
     # before any panel title starts.
-    fig = plt.figure(figsize=(10.2, 6.6), facecolor=BG)
-    gs = fig.add_gridspec(2, 2, hspace=0.72, wspace=0.28,
-                          left=0.115, right=0.955, top=0.79, bottom=0.079)
+    fig = plt.figure(figsize=fig_size(NOTES, 0.95), facecolor=BG)
+    # 714 px wide: room on the left for the longest kind label at 12 px,
+    # and under the donut for its two-column legend
+    gs = fig.add_gridspec(2, 2, hspace=0.6, wspace=0.62,
+                          left=0.2, right=0.985, top=0.94, bottom=0.08)
 
-    fig.text(0.055, 0.965, "The world energy model", color=INK, fontsize=20,
-             fontweight="600", va="top")
-    fig.text(0.055, 0.900,
-             f"{D['n']:,} nodes and {len(D['es']):,} weighted links. "
-             f"Every parameter comes from a public data set.",
-             color=DIM, fontsize=11.5, va="top")
 
     # ---- what the model contains ---------------------------------------
     ax = fig.add_subplot(gs[0, 0])
@@ -67,14 +66,13 @@ def main():
     ax.barh(range(len(ks)), vals, color=[KCOL[k] for k in ks], height=0.66,
             alpha=0.92)
     ax.set_yticks(range(len(ks)))
-    ax.set_yticklabels([LABEL[k] for k in ks], fontsize=8.8)
+    ax.set_yticklabels([LABEL[k] for k in ks], fontsize=FS_2)
     ax.set_xscale("log")
     ax.set_xlim(0.7, max(vals) * 9)
     for i, v in enumerate(vals):
-        ax.text(v * 1.25, i, f"{v:,}", va="center", color=DIM, fontsize=8.4)
-    ax.set_xlabel("nodes (log scale)", color=DIM, fontsize=9.5)
-    ax.set_title("What the model contains", color=INK, fontsize=12.5,
-                 loc="left", pad=8)
+        ax.text(v * 1.25, i, f"{v:,}", va="center", color=DIM, fontsize=FS_2)
+    ax.set_xlabel("nodes (log scale)", color=DIM, fontsize=FS_2)
+    sitefig.panel(ax, "What the model contains")
     ax.invert_yaxis()
 
     # ---- where the numbers come from ------------------------------------
@@ -90,33 +88,32 @@ def main():
     if other:
         labs.append(f"everything else — {other:,}")
         vals2.append(other)
-    cols = ["#8b7ff2", "#5aa8d8", "#4f9d84", "#d86a86", "#6f7fd8",
-            "#cfd6f0", "#a98fd8", "#5c6a8c"][:len(vals2)]
+    cols = [ACC, COOL, MOSS, ROSE, SLATE,
+            PSYCH, SUPPLY, DISTRICT][:len(vals2)]
     w, _ = ax2.pie(vals2, colors=cols, startangle=90,
                    wedgeprops=dict(width=0.42, edgecolor=BG, linewidth=1.4))
     # under the donut, not beside it: beside it the longest source name ran
     # off the right edge of the sheet
-    ax2.legend(w, labs, loc="upper center", bbox_to_anchor=(0.5, -0.02),
-               frameon=False, fontsize=8.0, labelcolor=DIM, ncol=2)
-    ax2.set_title("Where the numbers come from", color=INK, fontsize=12.5,
-                  loc="left", pad=8)
+    ax2.legend(w, labs, loc="upper left", bbox_to_anchor=(-0.42, -0.02),
+               frameon=False, fontsize=FS_2, labelcolor=DIM, ncol=1)
+    sitefig.panel(ax2, "Where the numbers\ncome from")
 
     # ---- link weights ----------------------------------------------------
     ax3 = fig.add_subplot(gs[1, 0])
     ew = np.asarray(D["ew"], dtype=float)
-    ax3.hist(ew[ew > 0], bins=46, color="#4f9d84", alpha=0.9, label="positive")
+    ax3.hist(ew[ew > 0], bins=46, color=MOSS, alpha=0.9, label="positive")
     if (ew < 0).any():
-        ax3.hist(ew[ew < 0], bins=24, color="#d86a86", alpha=0.9,
+        ax3.hist(ew[ew < 0], bins=24, color=ROSE, alpha=0.9,
                  label="negative")
     ax3.set_yscale("log")
     # matplotlib offers decades well outside the data on a log count axis,
     # and those labels land outside the panel. Bound the axis to the data.
     hi = max(np.histogram(ew[ew > 0], bins=46)[0].max(), 1)
     ax3.set_ylim(0.8, hi * 3)
-    ax3.set_xlabel("link weight", color=DIM, fontsize=9.5)
-    ax3.set_ylabel("links", color=DIM, fontsize=9.5)
-    ax3.set_title("Link weights", color=INK, fontsize=12.5, loc="left", pad=8)
-    ax3.legend(frameon=False, fontsize=8.6, labelcolor=DIM)
+    ax3.set_xlabel("link weight", color=DIM, fontsize=FS_2)
+    ax3.set_ylabel("links", color=DIM, fontsize=FS_2)
+    sitefig.panel(ax3, "Link weights")
+    ax3.legend(frameon=False, fontsize=FS_2, labelcolor=DIM)
 
     # ---- how far the prepared changes travel, by category ------------------
     # One bar per scenario was sixty bars in a panel that holds about ten.
@@ -144,7 +141,7 @@ def main():
     for i, (lab, reach) in enumerate(rows):
         ax4.plot([min(reach), max(reach)], [i, i], color=RULE, lw=3.0,
                  solid_capstyle="round", zorder=1)
-        ax4.scatter(reach, [i] * len(reach), s=26, color="#5a63c8",
+        ax4.scatter(reach, [i] * len(reach), s=26, color=SLATE,
                     alpha=0.95, zorder=2, edgecolors=BG, linewidths=0.7)
     ax4.set_yticks(range(len(rows)))
     # The longest category name reaches across the gutter into the histogram
@@ -159,19 +156,18 @@ def main():
                 "Global pandemics": "Pandemics",
                 "Natural disasters": "Disasters"}
     ax4.set_yticklabels([SHORTCAT.get(r[0], r[0]) for r in rows],
-                        fontsize=8.4)
+                        fontsize=FS_2)
     ax4.set_xscale("log")
     ax4.set_xlim(0.7, max(max(r[1]) for r in rows) * 4)
     ax4.set_xlabel("nodes moved by more than 0.02 (log scale)", color=DIM,
-                   fontsize=9.5)
-    ax4.set_title(f"How far the {len(D['scenarios'])} prepared changes travel",
-                  color=INK, fontsize=12.5, loc="left", pad=8)
+                   fontsize=FS_2)
+    sitefig.panel(ax4, f"How far the {len(D['scenarios'])} prepared\nchanges travel")
 
     for a in (ax, ax3, ax4):
         a.set_facecolor(BG)
         a.grid(axis="x", alpha=0.15, which="both")
         a.set_axisbelow(True)
-        a.tick_params(colors=DIM, labelsize=8.4)
+        a.tick_params(colors=DIM, labelsize=FS_2)
         for s in a.spines.values():
             s.set_color(RULE)
     ax2.set_facecolor(BG)
@@ -180,7 +176,7 @@ def main():
     # dpi raised to keep the bitmap's pixel count close to what it was at the
     # old, wider figsize - it has no effect on the on-screen CSS size the
     # floor check above is about, and was never touched to fix legibility.
-    fig.savefig(OUT, dpi=198, facecolor=BG)
+    sitefig.save(fig, OUT, close=False)
     plt.close(fig)
     print(f"  wrote {os.path.basename(OUT)}")
     print("  0 layout problems" if not problems

@@ -1,0 +1,27 @@
+{
+  "params": {
+    "eta_e": 0.98,
+    "eta_g": 0.85,
+    "P_e": 0.065,
+    "P_g": 3.5,
+    "capex_g": 50000.0,
+    "capex_e": 30000.0,
+    "fom_e": 0.01,
+    "fom_g": 0.02,
+    "r": 0.08,
+    "life": 20,
+    "hours": 6000.0,
+    "ef_gas": 53.06,
+    "grid_ci": 0.333
+  },
+  "results": {
+    "LCOH_gas_$/MMBtu": 5.133,
+    "LCOH_elec_$/MMBtu": 19.998,
+    "gap_$/MMBtu": 14.864,
+    "breakeven_Pe_cents/kWh_fullLCOH": 1.529,
+    "breakeven_Pe_cents/kWh_fuelOnly": 1.377,
+    "emissions_gas_kg/MMBtu": 62.42,
+    "emissions_elec_kg/MMBtu": 99.58,
+    "emissions_parity_gridCI_t/MWh": 0.2087
+  }
+}

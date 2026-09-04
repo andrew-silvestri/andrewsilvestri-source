@@ -42,6 +42,10 @@ import math
 import os
 
 import matplotlib
+import sys as _sys, os as _os; _sys.path.insert(0, _os.path.dirname(_os.path.dirname(_os.path.abspath(__file__))))
+from sitefig import BG, INK, DIM, RULE, FAINT, ACC, COOL, MOSS, ROSE, SLATE, DISTRICT, SUPPLY, PSYCH, SUN, INSOL, GOLD, GREY, VIOLET, BLUE, GREEN, WARM, ARROW, ONE_WAY_COL, TWO_WAY_COL, NODE_COL, WARM2, KCOL, CYCLE, FS_2, FS_1, FS0, FS1, FS2, FONT, MONO, NOTES, PROSE, CARD, THUMB, fig_size, save, WIDE, PLOT, SQUARE, TALL, row_aspect, panel  # noqa: E402,F401
+import sitefig  # noqa: E402
+
 matplotlib.use("Agg")
 import matplotlib.pyplot as plt          # noqa: E402
 from matplotlib.patches import Circle    # noqa: E402
@@ -50,27 +54,19 @@ HERE = os.path.dirname(os.path.abspath(__file__))
 OUT = os.path.join(HERE, "outputs")
 
 # Site palette. No amber anywhere: these figures sit on a violet page.
-INK = "#e3e6f2"
-DIM = "#8b93b0"
-FAINT = "#232a45"
-BG = "#0b0f1c"
-ACC = "#8b7ff2"       # violet, for what was observed
-COOL = "#5aa8d8"      # blue
-MOSS = "#4f9d84"      # green
-ROSE = "#d86a86"      # rose, for falling short
 
 SUBJECTS = ["Human", "Greenland shark", "African bush elephant"]
 
 
 def style():
-    plt.rcParams.update({
+    sitefig.style(); plt.rcParams.update({
         "figure.facecolor": BG, "axes.facecolor": BG,
         "savefig.facecolor": BG,
         "text.color": INK, "axes.labelcolor": INK,
         "xtick.color": DIM, "ytick.color": DIM,
         "axes.edgecolor": FAINT, "grid.color": FAINT,
-        "font.size": 10.5,
-        "font.family": ["DejaVu Sans"],
+        "font.size": FS_1,
+        "font.family": FONT,
     })
 
 
@@ -92,14 +88,14 @@ def explain(rows, summary, path=None):
     pred = [10 ** (a + b * math.log10(r["mass_g"])) for r in picked]
     lq = [o / p for o, p in zip(obs, pred)]
 
-    fig = plt.figure(figsize=(12.4, 8.2))
+    fig = plt.figure(figsize=fig_size(NOTES, 1.15))
     # The header strip is reserved rather than hoped for: three lines of text
     # at the top of a figure will happily sit on the first row of axes unless
     # the layout is told they exist.
     gs = fig.add_gridspec(
-        3, 3, height_ratios=[1.45, 1.0, 0.40],
+        3, 3, height_ratios=[1.45, 1.0, 0.55],
         hspace=0.42, wspace=0.15,
-        left=0.078, right=0.975, top=0.775, bottom=0.055)
+        left=0.078, right=0.975, top=0.82, bottom=0.04)
 
     # --- row 1: the animals, drawn as spheres of the right relative volume --
     # radius goes as the cube root of mass, since an animal is about the
@@ -118,10 +114,10 @@ def explain(rows, summary, path=None):
         ax.axis("off")
         kg = r["mass_g"] / 1000.0
         ax.text(0, 2.70, r["name"], ha="center", va="top",
-                fontsize=14, color=INK)
+                fontsize=FS0, color=INK)
         ax.text(0, 2.44,
                 f"{kg:,.0f} kg" if kg >= 1 else f"{r['mass_g']:,.0f} g",
-                ha="center", va="top", fontsize=11.5, color=DIM)
+                ha="center", va="top", fontsize=FS_1, color=DIM)
         ax.plot([-1.16, 1.16], [-0.06, -0.06], color=FAINT, lw=1)
 
     # --- row 2: what the allometry predicts, and what the animal does -------
@@ -135,13 +131,13 @@ def explain(rows, summary, path=None):
                color=colours[i] if good else ROSE, alpha=0.92)
 
         ax.text(0, pred[i] + ymax * 0.035, f"{pred[i]:.0f} yr",
-                ha="center", fontsize=10.5, color=DIM)
+                ha="center", fontsize=FS_1, color=DIM)
         ax.text(1, obs[i] + ymax * 0.035, f"{obs[i]:.0f} yr", ha="center",
-                fontsize=11.5, color=colours[i] if good else ROSE)
+                fontsize=FS_1, color=colours[i] if good else ROSE)
 
         ax.set_xticks([0, 1])
         ax.set_xticklabels(["predicted\nfrom mass", "actually\nobserved"],
-                           fontsize=10, color=DIM)
+                           fontsize=FS_1, color=DIM)
         ax.set_ylim(0, ymax)
         ax.set_xlim(-0.62, 1.62)
         for s in ("top", "right", "bottom"):
@@ -149,7 +145,7 @@ def explain(rows, summary, path=None):
         ax.spines["left"].set_color(FAINT)
         ax.tick_params(axis="x", length=0)
         if i == 0:
-            ax.set_ylabel("maximum lifespan (years)", fontsize=10.5,
+            ax.set_ylabel("maximum lifespan (years)", fontsize=FS_1,
                           color=DIM)
         else:
             ax.set_yticklabels([])
@@ -163,33 +159,25 @@ def explain(rows, summary, path=None):
         good = lq[i] >= 1
         col = colours[i] if good else ROSE
         ax.text(0.5, 0.66, f"LQ {lq[i]:.2f}", ha="center", va="center",
-                fontsize=23, color=col, transform=ax.transAxes)
-        verdict = (f"lives {lq[i]:.1f} times longer than its size predicts"
+                fontsize=FS2, color=col, transform=ax.transAxes)
+        # two lines: a third of 714 px holds about 30 characters at FS_2
+        verdict = (f"lives {lq[i]:.1f} times longer\nthan its size predicts"
                    if lq[i] >= 1.05 else
-                   f"lives {1 / lq[i]:.1f} times shorter than its size "
-                   f"predicts" if lq[i] <= 0.95 else
-                   "lives about exactly as long as its size predicts")
-        ax.text(0.5, 0.10, verdict, ha="center", va="center",
-                fontsize=10.5, color=DIM, transform=ax.transAxes)
+                   f"lives {1 / lq[i]:.1f} times shorter\nthan its size predicts" if lq[i] <= 0.95 else
+                   "lives about exactly as long\nas its size predicts")
+        ax.text(0.5, 0.22, verdict, ha="center", va="center",
+                fontsize=FS_2, color=DIM, transform=ax.transAxes, linespacing=1.35)
 
-    fig.text(0.078, 0.972, "What a longevity quotient is",
-             fontsize=18, color=INK, ha="left", va="top")
-    fig.text(0.078, 0.925,
-             "Mass rises left to right, and so does the prediction, because "
-             "the fit can only go up. What the animals do is not monotonic.",
-             fontsize=11.5, color=DIM, ha="left", va="top")
-    fig.text(0.078, 0.888,
-             "The quotient is what is left once size has been divided out.",
-             fontsize=11.5, color=DIM, ha="left", va="top")
-    fig.text(0.078, 0.848,
-             f"predicted lifespan  =  10^({a:.3f} + {b:.3f} × log\u2081\u2080 "
-             "mass in grams)          LQ  =  observed \u00f7 predicted",
-             fontsize=11.5, color=COOL, ha="left", va="top",
-             family="DejaVu Sans")
+    # header lines broken to the 714 px width by hand: at one point per
+    # pixel a line of FS_1 holds about 85 characters
+    fig.text(0.078, 0.955,
+             f"predicted lifespan  =  10^({a:.3f} + {b:.3f} × log₁₀ mass in grams)\n"
+             "LQ  =  observed ÷ predicted",
+             fontsize=FS_1, color=COOL, ha="left", va="top", linespacing=1.4, fontfamily=MONO)
 
     out = path or os.path.join(OUT, "fig0_lq_explained.png")
     bad = audit(fig)
-    fig.savefig(out, dpi=170)
+    sitefig.save(fig, out, close=False)
     plt.close(fig)
     if bad:
         print("  LAYOUT PROBLEMS")

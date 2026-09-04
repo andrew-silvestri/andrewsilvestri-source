@@ -75,15 +75,22 @@ function model(item, origin, dest, mode, life){
     cut = 0;
     const w = p.waste_frac, over = 1/(1-w);
     const spine = p.stages.map(st => {
-      let alloc = st.allocation != null ? st.allocation : 1.0;
-      if (scalesWithLife(st.id)) alloc *= lifeScale;
+      /* Three multipliers, three meanings (see processes.py): a co-product
+         share, a capital-good amortisation, and the mass shipped on a
+         freight leg. Share and amortisation reach every node in the stage;
+         the mass reaches only the freight node. */
+      const share = st.share != null ? st.share : 1.0;
+      let amort = st.amortise != null ? st.amortise : 1.0;
+      if (scalesWithLife(st.id)) amort *= lifeScale;
+      const alloc = share * amort;
       const scale = st.waste ? 1.0 : over;
       const kids = [];
       if (st.transport){
         const tm = D.transport[mode];
-        const e = tm.ef*(km/1000)*alloc*scale;
+        const kg = st.freight_kg != null ? st.freight_kg : 1.0;
+        const e = tm.ef*(km/1000)*alloc*scale*kg;
         kids.push({id:"freight_"+mode, name:tm.name, unit:"tonne-km",
-                   amount:km/1000, alloc:alloc*scale, direct:e, total:e,
+                   amount:km/1000*kg*scale, alloc:alloc, direct:e, total:e,
                    children:[], quality:"A",
                    note:`${Math.round(km).toLocaleString()} km by ${tm.name} `
                       + `at ${tm.ef} kg CO2e per tonne-kilometre. ${tm.note}`});
@@ -103,7 +110,7 @@ function model(item, origin, dest, mode, life){
       }
       const total = direct + kids.reduce((s,c)=>s+c.total, 0);
       return {id:st.id, name:st.name, alloc, direct, note, children:kids,
-              total, land_use:!!st.land_use};
+              total, land_use:!!st.land_use, basis:st.basis||""};
     });
     return {spine, total:spine.reduce((s,x)=>s+x.total,0), km, cut,
             over, waste:w};

@@ -8,20 +8,20 @@
 <link rel="apple-touch-icon" href="apple-touch-icon.png">
 <meta name="theme-color" content="#F2F0EF">
 <link rel="canonical" href="https://andrewsilvestri.com/">
-<script>/* the motion contract — set before first paint */
-try{var m=localStorage.getItem('motion');if(m!=='on'&&m!=='off')m=matchMedia('(prefers-reduced-motion: reduce)').matches?'off':'on';document.documentElement.dataset.motion=m;}catch(e){document.documentElement.dataset.motion='on';}</script>
-<link rel="stylesheet" href="style.css?v=8706b1b1">
+<script>/* the motion contract — set before first paint, from the system preference alone */
+try{document.documentElement.dataset.motion=matchMedia('(prefers-reduced-motion: reduce)').matches?'off':'on';}catch(e){document.documentElement.dataset.motion='on';}</script>
+<link rel="stylesheet" href="style.css?v=ec676571">
 </head><body>
 <nav class="top"><a href="index.html" class="on">Home</a><span class="dd"><a href="#" class="ddbtn" aria-haspopup="true">The atlas <span class="caret">&#9662;</span></a><span class="ddmenu"><a href="atlas-app.html" target="_blank" rel="noopener">Open the atlas</a><a href="atlas.html">About the atlas</a><a href="model.html">How the model works</a><a href="library.html">Figures</a></span></span><span class="dd"><a href="#" class="ddbtn" aria-haspopup="true">Energy <span class="caret">&#9662;</span></a><span class="ddmenu"><a href="heat.html">Industrial heat break-even</a><a href="storage.html">Battery revenue simulator</a><a href="climate-cost.html">Climate cost calculator</a></span></span><span class="dd"><a href="#" class="ddbtn" aria-haspopup="true">Others <span class="caret">&#9662;</span></a><span class="ddmenu"><a href="longevity.html">Longevity quotient</a><a href="skyline.html">Skylines, played</a><a href="desktop.html">The bookshelf</a></span></span><a href="code.html">Code</a></nav>
-<main>
+<main class="notes">
 
 <header class="masthead">
 <h1>Andrew Silvestri</h1>
 <p class="dim">Energy systems modelling: techno-economics, optimisation, and a
 calibrated model of the world energy system.</p>
 </header>
-<aside class="marginalia" aria-label="From the projects"><h4>From the projects</h4><ul><li><a href="heat.html">gas: 5.13 dollars/MMBtu</a></li><li><a href="heat.html">break-even: 1.53 cents/kWh</a></li><li><a href="heat.html">today: 6.5 cents to $20.00</a></li><li><a href="storage.html">4h battery: $107.1/kW-yr</a></li><li><a href="climate-cost.html">beef, Brazil to Texas</a></li><li><a href="climate-cost.html">jeans, China to California</a></li></ul></aside>
-<aside class="marginalia right"><ul><li><a href="climate-cost.html">cheese, France to New York</a></li><li><a href="longevity.html">ocean quahog, 47.48x</a></li><li><a href="longevity.html">black coral, 122.84x</a></li><li><a href="longevity.html">7,873 species</a></li><li><a href="skyline.html">27 cities</a></li></ul></aside>
+<aside class="marginalia" style="grid-row: span 18" aria-label="From the projects"><p class="lab">From the projects</p><ul><li><a href="heat.html"><b>gas</b><span class="v">5.13&nbsp;dollars/MMBtu</span></a></li><li><a href="heat.html"><b>break-even</b><span class="v">1.53&nbsp;cents/kWh</span></a></li><li><a href="heat.html"><b>today</b><span class="v">6.5&nbsp;cents to $20.00</span></a></li><li><a href="storage.html"><b>4h battery</b><span class="v">$107.1/kW-yr</span></a></li><li><a href="climate-cost.html">beef, Brazil to Texas</a></li><li><a href="climate-cost.html">jeans, China to California</a></li></ul></aside>
+<aside class="marginalia right" style="grid-row: span 18"><ul><li><a href="climate-cost.html">cheese, France to New York</a></li><li><a href="longevity.html">ocean quahog, 47.48x</a></li><li><a href="longevity.html">black coral, 122.84x</a></li><li><a href="longevity.html">7,873&nbsp;species</a></li><li><a href="skyline.html">27&nbsp;cities</a></li></ul></aside>
 <div id="hero" aria-hidden="true"></div>
 <div class="card">
 <div class="tag">Main project</div>
@@ -34,15 +34,15 @@ calibrated model of the world energy system.</p>
 </div>
 
 <div class="mosaic" aria-hidden="true">
-<a href="library.html" tabindex="-1"><img src="assets/07_arrival_order.png?v=eec92298" loading="lazy" width="1470" height="810" alt=""></a>
-<a href="library.html" tabindex="-1"><img src="assets/02_demand_distribution.png?v=44a64d50" loading="lazy" width="1425" height="780" alt=""></a>
-<a href="library.html" tabindex="-1"><img src="assets/09_size_vs_lowcarbon.png?v=452c5f2d" loading="lazy" width="1425" height="840" alt=""></a>
-<a href="library.html" tabindex="-1"><img src="assets/04_inertia_by_type.png?v=f939f6a0" loading="lazy" width="1425" height="810" alt=""></a>
-<a href="library.html" tabindex="-1"><img src="assets/05_link_structure.png?v=5562a660" loading="lazy" width="1425" height="810" alt=""></a>
-<a href="library.html" tabindex="-1"><img src="assets/06_scenario_reach.png?v=ce0ffe35" loading="lazy" width="1470" height="810" alt=""></a>
+<a href="library.html" tabindex="-1"><img src="assets/07_arrival_order-thumb.png?v=fca484c0" loading="lazy" width="542" height="361" alt=""></a>
+<a href="library.html" tabindex="-1"><img src="assets/02_demand_distribution-thumb.png?v=2c3180d8" loading="lazy" width="542" height="361" alt=""></a>
+<a href="library.html" tabindex="-1"><img src="assets/09_size_vs_lowcarbon-thumb.png?v=52ae7303" loading="lazy" width="542" height="361" alt=""></a>
+<a href="library.html" tabindex="-1"><img src="assets/04_inertia_by_type-thumb.png?v=c3a2a9c5" loading="lazy" width="542" height="361" alt=""></a>
+<a href="library.html" tabindex="-1"><img src="assets/05_link_structure-thumb.png?v=adf5c2fc" loading="lazy" width="542" height="361" alt=""></a>
+<a href="library.html" tabindex="-1"><img src="assets/06_scenario_reach-thumb.png?v=232ef76f" loading="lazy" width="542" height="361" alt=""></a>
 </div>
 
-<img class="fig wide" src="assets/energy_model_chart.png?v=79723cae"
+<img class="fig wide" src="assets/energy_model_chart.png?v=28e8f0ce"
  alt="Overview chart of the world energy model">
 <p class="small">The model at a glance: what it contains, how it is weighted,
 and how it behaves. <a href="library.html">All figures</a>.</p>
@@ -55,7 +55,7 @@ and how it behaves. <a href="library.html">All figures</a>.</p>
 <div class="tag">Techno-economics</div>
 <h3 style="margin-top:4px"><a href="heat.html">Industrial heat electrification
 break-even</a></h3>
-<img src="assets/heat_fig1_breakeven_price.png?v=16164e8f" loading="lazy" width="1350" height="810" alt="Break-even electricity price as a function of the gas price. The line is the locus where the two routes cost the same; below it the electric boiler wins.">
+<img src="assets/heat_fig1_breakeven_price-thumb.png?v=4e33c566" loading="lazy" width="542" height="361" alt="Break-even electricity price as a function of the gas price. The line is the locus where the two routes cost the same; below it the electric boiler wins.">
 <p>Cost of heat from an electric boiler against a gas boiler in Texas. The gap
 between the fuel prices decides the outcome. Break-even electricity is about
 1.5 cents per kilowatt hour at $3.50 gas, and capital cost moves it very
@@ -65,7 +65,7 @@ little.</p>
 <div class="tag">Optimisation</div>
 <h3 style="margin-top:4px"><a href="storage.html">Battery revenue
 simulator</a></h3>
-<img src="assets/storage_fig3_duration_value.png?v=9316e02c" loading="lazy" width="1725" height="900" alt="Revenue against storage duration. The curve bends at about four hours.">
+<img src="assets/storage_fig3_duration_value-thumb.png?v=76fdf4fc" loading="lazy" width="542" height="361" alt="Revenue against storage duration. The curve bends at about four hours.">
 <p>Linear program over 8,760 hours. Value flattens above four hours of storage
 duration, which is the expected result, now measured.</p>
 </div>
@@ -79,7 +79,7 @@ duration, which is the expected result, now measured.</p>
 <div class="tag">Life-cycle · interactive</div>
 <h3 style="margin-top:4px"><a href="climate-cost.html">The true climate
 cost</a></h3>
-<img src="assets/climate_chain_tomato.png?v=e34c9b2b" loading="lazy" width="1870" height="833" alt="A tomato traced four supply-chain stages deep, from field-grown cultivation back through fertiliser, ammonia synthesis and natural gas extraction, with the CO2e and allocation factor on every edge.">
+<img src="assets/climate_chain_tomato-thumb.png?v=b9b514c1" loading="lazy" width="542" height="361" alt="A tomato traced four supply-chain stages deep, from field-grown cultivation back through fertiliser, ammonia synthesis and natural gas extraction, with the CO2e and allocation factor on every edge.">
 <p>Twenty products taken apart stage by stage, with the allocation on every
 edge and the lifetime of every vehicle exposed rather than buried. Change the
 route and it recomputes instead of looking up an answer somebody prepared.</p>
@@ -93,7 +93,7 @@ route and it recomputes instead of looking up an answer somebody prepared.</p>
 <div class="card">
 <div class="tag">Sonification · interactive</div>
 <h3 style="margin-top:4px"><a href="skyline.html">Skylines, played</a></h3>
-<img src="assets/skyline_spectrum_poster.png?v=bc070c8b" loading="lazy" width="1920" height="1080" alt="A city skyline drawn as a frequency spectrum, building heights standing in for the bars of an analyser.">
+<img src="assets/skyline_towers-thumb.png?v=c5fac779" loading="lazy" width="542" height="361" alt="A city skyline drawn as a frequency spectrum, building heights standing in for the bars of an analyser.">
 <p>A skyline and a spectrum analyser are the same picture, so the picture is
 played. Twenty-seven cities built from real building heights and coordinates;
 turn on the spot and the sound turns with you. What is measured, what is
@@ -102,7 +102,7 @@ assumed and what is invented are each labelled.</p>
 <div class="card">
 <div class="tag">Allometry · interactive</div>
 <h3 style="margin-top:4px"><a href="longevity.html">Longevity quotient</a></h3>
-<img src="assets/lq_ranked.png?v=289af425" loading="lazy" width="1350" height="1320" alt="Species ranked by longevity quotient, from the twelve furthest below prediction to the eighteen furthest above.">
+<img src="assets/lq_ranked-thumb.png?v=2cf53949" loading="lazy" width="542" height="361" alt="Species ranked by longevity quotient, from the twelve furthest below prediction to the eighteen furthest above.">
 <p>How long an animal lives, against how long an animal of its size should
 live. Body mass predicts lifespan across fourteen orders of magnitude; the
 quotient is what is left once that relationship is divided out.</p>
@@ -110,7 +110,7 @@ quotient is what is left once that relationship is divided out.</p>
 <div class="card">
 <div class="tag">Desktop · interactive</div>
 <h3 style="margin-top:4px"><a href="desktop.html">The bookshelf</a></h3>
-<img src="assets/desktop_spines_poster.png?v=6d5c32a9" loading="lazy" width="1920" height="1080" alt="A desktop wallpaper of drawn book spines, built from a Goodreads export.">
+<img src="assets/bookshelf-demo-shelf-thumb.png?v=37559577" loading="lazy" width="542" height="361" alt="A desktop wallpaper of drawn book spines, built from a Goodreads export.">
 <p>A wallpaper built from a Goodreads export: your books as drawn spines, or
 as a wall of their real covers brought to one finish. The CSV is parsed in the
 browser and never leaves it.</p>
@@ -123,12 +123,11 @@ browser and never leaves it.</p>
 
 
 <footer>Andrew Silvestri · energy systems modelling ·
-<a href="mailto:dasilvestri@utexas.edu">dasilvestri@utexas.edu</a> &middot;
-<button type="button" class="motion-toggle" hidden>Motion: <span class="motion-state">on</span></button></footer>
+<a href="mailto:dasilvestri@utexas.edu">dasilvestri@utexas.edu</a></footer>
 </main>
 <script src="assets/hero-data.js?v=0d2d5608"></script>
 <script src="assets/hero.js?v=b435c79e"></script>
 <script src="assets/hero-gl.js?v=54d76673"></script>
-<script src="assets/motion.js?v=4cbbdec3"></script>
+<script src="assets/motion.js?v=6bf4b397"></script>
 <script src="assets/lightbox.js?v=0bce1245"></script>
 </body></html>
