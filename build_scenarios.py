@@ -567,45 +567,16 @@ def main(apply=False):
     for cid, label in CATEGORIES:
         print(f"     {label:<32} {by.get(cid, 0)}")
 
-    # every scenario has to actually move something
-    N = D["n"]
-    s = np.asarray(D["es"], dtype=np.int64)
-    t = np.asarray(D["et"], dtype=np.int64)
-    w = np.asarray(D["ew"], dtype=float)
-    kind = [D["kinds"][k] for k in D["kind"]]
-    RANK = {"sun": 0, "insolation": 1, "weather": 2, "climate": 3, "event": 4}
-    rank = np.array([RANK.get(k, 5) for k in kind])
-    one = rank[s] != rank[t]
-    cnt = collections.Counter()
-    for a, b in zip(s, t):
-        cnt[(int(b), kind[a])] += 1
-        if rank[a] == rank[b]:
-            cnt[(int(a), kind[b])] += 1
-    fw = np.array([w[i] / cnt[(int(t[i]), kind[s[i]])] for i in range(len(w))])
-    bw = np.array([0.0 if one[i] else w[i] / cnt[(int(s[i]), kind[t[i]])]
-                   for i in range(len(w))])
-    deg = np.zeros(N)
-    np.add.at(deg, t, np.abs(fw))
-    np.add.at(deg, s[~one], np.abs(bw[~one]))
-    deg[deg == 0] = 1.0
-    fw, bw[~one] = fw / deg[t], bw[~one] / deg[s[~one]]
-    A = sp.csr_matrix((np.concatenate([fw, bw[~one]]),
-                       (np.concatenate([t, s[~one]]),
-                        np.concatenate([s, t[~one]]))), shape=(N, N))
-    damp = 1.0 - np.asarray(D["res"], dtype=float) * 0.6
+    # every scenario has to actually move something. The engine is the
+    # figures' copy, imported: until 2026-09-05 this file carried a third
+    # copy of it, which is one more than "both engines" and one more than
+    # tests/test_parity.py checks.
+    from build_throughlines import engine
+    run, _ = engine(D)
 
     def reach(shocks):
-        b = np.zeros(N)
-        for k, v in shocks.items():
-            b[int(ids[k])] = v
-        st = b.copy()
-        for r in range(1, 61):
-            nx = 0.05 * st + 0.95 * np.tanh(b + damp * A.dot(st))
-            d = np.abs(nx - st).max()
-            st = nx
-            if d < 1e-5:
-                break
-        return int((np.abs(st) >= 0.02).sum()), r
+        st, hist = run({int(ids[k]): v for k, v in shocks.items()})
+        return int((np.abs(st) >= 0.02).sum()), len(hist) - 1
 
     print("\n  reach of every scenario:")
     inert = []
