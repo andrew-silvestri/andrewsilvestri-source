@@ -52,6 +52,7 @@ source material unless told otherwise.
   tests/                    the test suites (see §7) and their Playwright
   climate-cost/             sub-project: LCA engine, data, tests, template
   longevity-quotient/       sub-project: model, data, tests, template
+  food/                     sub-project: USDA fetch, the hyper-palatable rule and its nulls, figures, template, tests
   heat/ storage/            the two calculator models (see the table below)
   skyline/ bookshelf/       the skyline generator; the retired bookshelf app's README,
                             wallpaper setter and demo render (see unpublished/)
@@ -631,7 +632,7 @@ All of these must pass before a publish; `./publish.sh --dry-run` after.
 
 | Test | Catches |
 |---|---|
-| `tests/test_generators.py` | Any of the 11 text generators drifting from what is shipped: nav, atlas and model pages, longevity page and app, climate-cost app, skyline app, the five generated download archives, thumbnails, the layer diagram, image dimensions, cache stamps. Run before trusting any generator. |
+| `tests/test_generators.py` | Any of the 12 text generators drifting from what is shipped: nav, atlas and model pages, longevity page and app, food page, climate-cost app, skyline app, the six generated download archives, thumbnails, the layer diagram, image dimensions, cache stamps. Run before trusting any generator. |
 | `tests/test_parity.py` | The two engines disagreeing: all 60 scenarios, every node, to 1e-12 (measured 2.2e-15), and the round counts. |
 | `tests/test_demand_response.py` | Property 5 regressing: push a consumer group, its district must fall. 40 sampled, `--all` for 1,142. |
 | `tests/test_payload.py` | The payload changing without anyone re-recording it. |
@@ -699,6 +700,23 @@ generated list above, it was typed.
 - **The museum generator** under `dumpNew/PyProjects/` must not be
   published (image rights; section 2). The warning is the only thing
   keeping it that way.
+
+### Fat, sugar, salt (2026-09-05)
+
+`food/` and `site/food.html`, the first of the six projects in
+`prompts/NEW_PROJECTS.md` (its section 3) to be built; the research memo is
+`food/RESEARCH.md`, the only copy (`03 RESEARCH/food/` is a pointer plus the
+Stage 1 scratch scripts the project's generators superseded). One public-domain
+download (USDA SR Legacy, pinned by hash in `fetch_data.py`), the published
+hyper-palatable-food thresholds applied to every solid food, a raw / prepared
+split that is the page's own rule and is labelled assumed, and three nulls
+that separate the fat-sugar exclusion from the share-of-energy arithmetic.
+Static figures only; the page says the rule was drawn by eye from 75 foods
+and that two rating studies find it does not predict liking. `test_food.py`
+guards the raw group against USDA's "raw" sausage, brine-injected pork and
+salted egg, the human-milk exception, the null's seed, the pairs' salt
+exclusion and page-payload agreement. Everything on the page is written by
+`update_page.py` from `outputs/food_payload.json`, and the drift check runs it.
 
 Known gaps in the model, deliberately left and unchanged since August: the
 NAO reaches only Great Britain and Ireland (the only quantified NAO-to-demand

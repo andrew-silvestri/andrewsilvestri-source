@@ -46,6 +46,60 @@ PAGES = {
          'NREL, <i>Annual Technology Baseline</i> 2024, financial assumptions.',
          "Discount rate, economic life and the levelisation method."),
     ],
+    "food.html": [
+        ("Anchor phrase", "Source", "What it supports"),
+        ("quantitative definition",
+         'Fazzino, Rohde &amp; Sullivan, <i>Obesity</i> 27(11):1761-1768, 2019, '
+         'doi:10.1002/oby.22639.',
+         "The three threshold pairs, how they were drawn from 75 named foods, "
+         "and the 62% of FNDDS 2015-16 items, the fresh foods not captured and "
+         "the reduced-content products that were."),
+        ("Human milk, the one whole food",
+         'DiFeliceantonio <i>et al.</i>, <i>Cell Metabolism</i> 28(1):33-44, 2018, '
+         'doi:10.1016/j.cmet.2018.05.018.',
+         "Foods combining fat and carbohydrate are valued above equally liked "
+         "fat-only or carbohydrate-only foods; the authors name breast milk as "
+         "the natural exception."),
+        ("rated 52 foods",
+         'Rogers, Vural, Flynn &amp; Brunstrom, <i>Appetite</i> 201:107596, 2024, '
+         'doi:10.1016/j.appet.2024.107596.',
+         "No difference in rated palatability between foods meeting the "
+         "hyper-palatable rule and foods not meeting it."),
+        ("rate 436 foods",
+         'Finlayson <i>et al.</i>, <i>Appetite</i> 213:108029, 2025.',
+         "Nutrient content explains about a fifth of rated liking."),
+        ("1988 to 2018",
+         'Demeke, Rohde, Chollet-Hinton, Sutton, L&rsquo;Insalata &amp; Fazzino, '
+         '<i>Public Health Nutrition</i> 26(1):182-189, 2023, '
+         'doi:10.1017/S1368980022001227.',
+         "Share of items meeting the rule in the 1988, 2001 and 2017-18 US "
+         "survey databases, and the odds for items present in all three."),
+        ("store shelves met the rule",
+         'Fazzino, Bristi, Chollet-Hinton &amp; Sutton, <i>Public Health '
+         'Nutrition</i> 29(1):e110, 2026, doi:10.1017/S1368980026102614.',
+         "Share of store items and of household purchases meeting the rule, "
+         "Circana scanner data 2015-2018."),
+        ("moderate overlap",
+         'Sutton, Stratton, L&rsquo;Insalata &amp; Fazzino, <i>Obesity</i> 32(1):166-175, '
+         '2024, doi:10.1002/oby.23897.',
+         "The 40-70% overlap between the hyper-palatable rule, the NOVA "
+         "ultra-processed class and high energy density."),
+        ("SR Legacy release of April 2018",
+         'U.S. Department of Agriculture, Agricultural Research Service, '
+         '<i>FoodData Central</i>, SR Legacy, April 2018 release (CC0).',
+         "Every computed number on the page: energy, fat, carbohydrate, sugar, "
+         "fibre and sodium per 100 g for each food, and the food groups."),
+        ("pleasantness peaks",
+         'Moskowitz, Kluter, Westerling &amp; Jacobs, <i>Science</i> '
+         '184(4136):583-585, 1974.',
+         "Perceived sweetness rises with sucrose concentration while "
+         "pleasantness rises and then falls."),
+        ("Sadler and colleagues",
+         'Sadler, McNulty &amp; Gibson, <i>Critical Reviews in Food Science and '
+         'Nutrition</i> 55(3):338-356, 2015.',
+         "The inverse fat-sugar relation in diets on a share-of-energy basis "
+         "is partly arithmetic."),
+    ],
     "storage.html": [
         ("Anchor phrase", "Source", "What it supports"),
         ("hourly prices",

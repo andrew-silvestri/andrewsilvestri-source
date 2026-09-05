@@ -74,6 +74,8 @@ GENERATORS = [
      ["update_atlas_pages.py", "--apply"], ".", "site"),
     ("longevity page: longevity-quotient/update_page.py --apply",
      ["update_page.py", "--apply"], "longevity-quotient", "site"),
+    ("food page: food/update_page.py --apply",
+     ["update_page.py", "--apply"], "food", "site"),
     ("longevity app: longevity-quotient/build_lq.py",
      ["build_lq.py"], "longevity-quotient",
      [("longevity-quotient/longevity.html", "site/longevity-app.html")]),

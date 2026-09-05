@@ -145,6 +145,11 @@ TARGETS = [
     target("longevity-quotient", "longevity-code.zip",
            keep={"outputs"},
            skip=("data/raw", "data/raw/*", "outputs/*.png")),
+    # Fat, sugar, salt: the three scripts, the slimmed USDA table and the
+    # payload the page is written from; not the 6 MB USDA zip (fetch_data.py
+    # re-downloads and hash-checks it), not the figures (the site's assets).
+    target("food", "food-code.zip", keep={"outputs"},
+           skip=("data/raw", "data/raw/*", "outputs/*.png")),
 ]
 
 
