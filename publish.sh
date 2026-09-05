@@ -115,6 +115,10 @@ fi
 step "Replacing the contents"
 find "$REPO" -mindepth 1 -maxdepth 1 ! -name .git -exec rm -rf {} +
 cp -a "$SITE/." "$REPO/"
+# site/_preview/ holds option renderings for review (gitignored); it is
+# served locally beside the site so they can use its assets, and it must
+# never be published. Removed here rather than trusted to be absent.
+rm -rf "$REPO/_preview"
 [ -n "$license_tmp" ] && cp "$license_tmp" "$REPO/LICENSE" && rm -f "$license_tmp"
 
 [ -f "$REPO/index.html" ] || die "index.html did not land at the repository root. Nothing pushed."
