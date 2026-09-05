@@ -592,12 +592,17 @@ footer {
    the viewport can never be read to the end. Nothing here moves. Below
    1100px the gutters are too narrow for words, and the asides sit above the
    prose as a two-column list instead. */
-aside.marginalia { grid-column: gutter-l; align-self: start; position: sticky; top: 34px;
+/* One rule: a margin note scrolls with the page. It earns its column by
+   sitting beside the thing it annotates; a note that stays put while the
+   prose moves is a sidebar. Until 2026-09-04 the short asides were sticky
+   and the long ones (.long) static, which read as two behaviours for no
+   reason a reader could see. Do not put sticky back on the short ones. */
+aside.marginalia { grid-column: gutter-l; align-self: start; position: static;
                    padding-right: 22px; font: var(--fs-2)/1.45 var(--mono); color: var(--dim); }
 aside.marginalia.right { grid-column: gutter-r; padding: 0 0 0 22px; }
 /* each aside carries grid-row: span N inline, N being the number of rows that
    follow it on that page, written by the page build; no fixed number here */
-aside.marginalia.long { position: static; }
+/* .long is still on the markup of four pages; it no longer changes anything */
 aside.marginalia ul { list-style: none; margin: 0; padding: 0; }
 aside.marginalia li { margin: 0 0 10px; padding-left: 10px; border-left: 2px solid var(--faint);
   /* A 192px gutter holds about 26 characters, so "cheese, France to New
