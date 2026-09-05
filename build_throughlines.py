@@ -86,8 +86,24 @@ def load():
     return json.loads(raw[raw.index("=") + 1:raw.rindex(";")])
 
 
+def response_pairs(s, t, w, rank):
+    """Property FIVE of the engine. A negative edge within a rank is a
+    response (the site's own definition: a negative link carries relief
+    rather than stress), and the edge it answers - the reverse edge, the
+    coupling - is not promoted to two-way, because the response IS its
+    back-channel. Returns a mask over the edges: True for every response
+    edge and every edge whose reverse is a response. Same-rank only; a
+    cross-rank edge is one-way already. Mirrors atlas-app.js."""
+    same = rank[s] == rank[t]
+    neg = {(int(a), int(b)) for a, b, x, sm in zip(s, t, w, same) if sm and x < 0}
+    return np.array([(int(a), int(b)) in neg or (int(b), int(a)) in neg
+                     for a, b in zip(s, t)])
+
+
 def engine(D):
-    """The published propagation, in sparse linear algebra."""
+    """The published propagation, in sparse linear algebra. Mirrors the
+    browser's (site/assets/atlas-app.js); tests/test_parity.py holds the
+    two equal."""
     N = D["n"]
     s = np.asarray(D["es"], dtype=np.int64)
     t = np.asarray(D["et"], dtype=np.int64)
@@ -96,10 +112,18 @@ def engine(D):
     RANK = {"sun": 0, "insolation": 1, "weather": 2, "climate": 3, "event": 4}
     rank = np.array([RANK.get(k, 5) for k in kind])
     one = rank[s] != rank[t]
+    # FIVE (HANDOFF section 6): a negative edge is a response, and a
+    # coupling that has a response is not promoted to two-way. Making every
+    # same-rank edge two-way gave the district->consumer demand edge a
+    # back-channel that the fan-in filed beside the consumer's -0.01
+    # response, and +0.50 won: demand response was in the payload and never
+    # in a run (2026-09-05). Where the payload supplies the answer, the
+    # engine does not invent one.
+    one = one | response_pairs(s, t, w, rank)
     cnt = collections.Counter()
-    for a, b in zip(s, t):
+    for a, b, o in zip(s, t, one):
         cnt[(int(b), kind[a])] += 1
-        if rank[a] == rank[b]:
+        if not o:
             cnt[(int(a), kind[b])] += 1
     fw = np.array([w[i] / cnt[(int(t[i]), kind[s[i]])] for i in range(len(w))])
     bw = np.array([0.0 if one[i] else w[i] / cnt[(int(s[i]), kind[t[i]])]
@@ -141,14 +165,16 @@ def audit(fig):
     """
     fig.canvas.draw()
     r = fig.canvas.get_renderer()
-    title_ids = {id(ax.title) for ax in fig.axes}
+    title_ids = {id(t) for ax in fig.axes for t in sitefig.titles(ax)}
     items, problems = [], []
     for ax in fig.axes:
         for tx in ax.texts:
             if tx.get_text().strip():
                 items.append(tx)
-        if ax.title.get_text().strip():
-            items.append(ax.title)
+        # all three title slots. A panel() label is the *left* title, and
+        # ax.title is only the centre one, so this audit passed a sheet whose
+        # panel label sat on a legend (energy_model_chart.png, 2026-09-04).
+        items += sitefig.titles(ax)
         # matplotlib keeps Text objects for ticks outside the axis limits and
         # never draws them. Counting those reports failures that are not on
         # the page, so only ticks inside the limits are considered.
@@ -193,6 +219,19 @@ def audit(fig):
         boxes.append((tx, bb))
         if bb.x0 < -2 or bb.y0 < -2 or bb.x1 > W + 2 or bb.y1 > H + 2:
             problems.append(f"off canvas: {tx.get_text()[:36]!r}")
+    # a legend is a box, not only its words: its colour patches covered the
+    # "18" beside a bar on energy_model_chart.png (2026-09-04) with no text
+    # touching text. The whole legend box is checked against every text
+    # that is not its own.
+    for ax in fig.axes:
+        lg = ax.get_legend()
+        if lg is None:
+            continue
+        own = {id(t) for t in lg.get_texts()}
+        lb = lg.get_window_extent(renderer=r)
+        for tx, bb in boxes:
+            if id(tx) not in own and lb.x1 > bb.x0 and bb.x1 > lb.x0                     and lb.y1 > bb.y0 and bb.y1 > lb.y0:
+                problems.append(f"legend covers: {tx.get_text()[:22]!r}")
     for i in range(len(boxes)):
         for j in range(i + 1, len(boxes)):
             a, b = boxes[i][1], boxes[j][1]
@@ -201,6 +240,7 @@ def audit(fig):
                     f"overlap: {boxes[i][0].get_text()[:22]!r} / "
                     f"{boxes[j][0].get_text()[:22]!r}")
     problems += floor_problems(fig, [(t, id(t) in title_ids) for t in items])
+    problems += sitefig.grid_problems(fig)
     return problems
 
 
@@ -597,6 +637,7 @@ def main():
     for ax_ in fig.axes:
         ax_.set_facecolor(BG)
 
+    sitefig.centre(fig)      # the grid's margins are a guess; this measures (2026-09-05)
     problems = audit(fig)
     # dpi is raised only to keep the bitmap's pixel count close to what it was
     # at the old, wider figsize - it has no effect on the on-screen CSS size

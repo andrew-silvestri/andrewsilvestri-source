@@ -200,6 +200,12 @@ main > * {
    nothing can paint over anything. The 2026-08-30 audit's finding 4 was
    this collision in canvas form; the clamp that fixed it lived in the script
    3a deleted, so it is now in the grid, where a deleted file cannot take it. */
+/* Since 2026-09-04 (Phase 4, A4) the home page is main.notes too, with
+   nothing in its gutters: a page with empty gutters has no reason to break
+   out of its measure, and the figures and card thumbnails it carries were
+   drawn for this 714px column (sitefig NOTES, THUMB), which is why they were
+   soft when the page spent a day on the two-track grid. One measure, one
+   left edge. */
 main.notes {
   --text: min(68ch, 100%);
   grid-template-columns:
@@ -209,9 +215,18 @@ main.notes {
     minmax(0, var(--gutter)) [gutter-r-end]
     minmax(34px, 1fr) [full-end];
 }
-main > .wide, main > table, main > img.fig, main > video.fig,
-main > .cardgrid, main > .mosaic { grid-column: wide; }
+/* A table is a block of text and starts where the text starts. Until
+   2026-09-04 (Phase 4, A4) tables were promoted to the wide track with the
+   figures, which gave every prose page two left edges; every table on the
+   site fits the measure by wrapping its prose column, measured at 1440. A
+   picture may still break out, centred on the measure; text may not. */
+main > .wide, main > img.fig, main > video.fig,
+main > .mosaic { grid-column: wide; }
 main > .full { grid-column: full; }
+/* A short text block on a gallery page whose cards take the wide track:
+   flush to the wide edge, so the page has one left edge, but held to the
+   measure so its lines stay readable (library.html, 2026-09-04). */
+main > .flush { grid-column: wide; max-width: var(--text); }
 
 h1 {
   font: 600 var(--fs4)/1.12 var(--sans);
@@ -288,7 +303,7 @@ th.n, td.n { text-align: right; font-variant-numeric: tabular-nums; }
 img.fig, video.fig {
   width: 100%;
   max-width: 100%;
-  height: auto;          /* see the note on .cardgrid .card img */
+  height: auto;
   border: 1px solid var(--rule);
   margin: 18px 0 8px;
   background: var(--card);
@@ -356,39 +371,36 @@ img.fig:focus-visible { outline: 2px solid var(--acc); outline-offset: 2px; }
   .lightbox-close { position: fixed; top: 10px; right: 10px; width: 36px; height: 36px; }
 }
 
-/* --------------------------------------------------------------- grid --- */
-/* Cards sit two-up on a wide screen. Each one's prose therefore stays short
-   even though the block is wider than the text column — which is the whole
-   point of widening: more room without longer lines. */
-.cardgrid {
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: 0;
-  margin: 10px 0;
-}
-.cardgrid .card {
-  display: grid;
-  grid-template-columns: minmax(0, 38%) minmax(0, 1fr);
-  /* The image (column 1) spans every row; the text sits in rows 2-4 between
-     two 1fr rows. So whichever column is taller sets the card's height and
-     the other is centred against it: a shorter image floats mid-text, a
-     shorter text stack floats mid-image. Before this (2026-09-04) the rows
-     were all auto and the leftover height was dumped under the image - 20
-     to 76px of dead space at the foot of five of the six home-page cards,
-     which read as a mistake, not as rhythm. */
-  grid-template-rows: 1fr auto auto auto 1fr;
-  gap: 0 28px;
-  align-items: start;
-  border: 0;
-  border-top: 1px solid var(--rule);
-  padding: 22px 0;
-  margin: 0;
-  height: auto;
-}
-.cardgrid .card .tag, .cardgrid .card h3, .cardgrid .card p, .cardgrid .card a.btn { grid-column: 2; }
-.cardgrid .card .tag { grid-row: 2; }
-.cardgrid .card h3 { grid-row: 3; }
-.cardgrid .card p { grid-row: 4; margin: 8px 0 0; }
+/* -------------------------------------------------------------- index --- */
+/* ======================================================================
+   THE INDEX SPEC (index.html, .index .entry). Succeeds THE CARD SPEC on
+   2026-09-05 (PHASE5, Part 2b), which succeeded four passes of card fixes.
+   The home page is an index: it points at five projects, and the layer
+   diagram above makes the site's argument before anyone scrolls.
+
+   1. An entry is a kicker (.tag, mono 12px), a linked title (h3) and one
+      sentence in the small face, muted. No figure. A 271px thumbnail
+      could not hold its own beside a paragraph, and a figure at the
+      measure let the tallest figure set the page's rhythm (the longevity
+      ranking, 810px, beside a break-even that reads at 300) - the card
+      mistake pointing the other way. The figures live on the pages that
+      explain them; the mosaic above still shows six of them as a strip.
+   2. One sentence: a hook, not a summary; the project page carries the
+      explanation. It does not open by repeating the title. There is no
+      copy budget, because one sentence always fits; the layout test counts
+      the sentences and fails an entry with more than one.
+   3. Geometry: a 1px rule above each entry; 16px above, 18px below; the
+      title 4px under the kicker, the sentence 6px under the title. Every
+      entry is the same shape, and its height is the sentence's line count,
+      one or two at the measure.
+   4. Entries sit on the measure like every other block on the page (one
+      left edge, test_layout.js), grouped under the page's h2s.
+   Change this before the code.
+   ====================================================================== */
+.index { margin: 10px 0 0; }
+.index .entry { border-top: 1px solid var(--rule); padding: 16px 0 18px; margin: 0; }   /* spec item 3 */
+.index .entry h3 { margin: 4px 0 6px; }                                                  /* spec item 3 */
+.index .entry p { margin: 0; color: var(--dim); font-size: var(--fs-1); }               /* spec item 1 */
 
 /* -------------------------------------------------------------- cards --- */
 .card {
@@ -407,31 +419,6 @@ img.fig:focus-visible { outline: 2px solid var(--acc); outline-offset: 2px; }
 .card h3 { margin-top: 4px; }
 .card h3 a { border: 0; color: var(--ink); }
 .card h3 a:hover { color: var(--acc); }
-/* A thumbnail for a card that has an obvious hero figure - home page tool
-   cards only, not every card on the site. Sized to the card rather than
-   promoted to the wide track: two-up at 330px+ (.cardgrid above), full width
-   of one column at the 760px breakpoint below. */
-.cardgrid .card img {
-  grid-column: 1;
-  grid-row: 1 / span 5;
-  align-self: center;
-  width: 100%;
-  max-width: 100%;
-  /* No fixed aspect and no object-fit: the thumbnail is the whole figure at
-     its own shape (build_thumbnails.py) and is shown whole at every width.
-     Do not put aspect-ratio + object-fit: cover back. That pair was here on
-     2026-09-04 and looked innocent - a 3:2 box showing a 3:2 image - while
-     the crop it was hiding had moved into the asset: sitefig.thumbnail()
-     was centre-cropping 1.6-2.1:1 figures to 3:2, and every card lost its
-     right edge (the skyline's "played in Bb" and its last tower, the tomato
-     chain's gas figure and half a box). The mosaic below carries the same
-     warning from its first version. A card 40px taller than its neighbour
-     is the cost, and it is the right cost. */
-  height: auto;
-  margin: 4px 0 0;
-  display: block;
-}
-
 /* --------------------------------------------------------------- btns --- */
 .btn {
   display: inline-block;
@@ -647,14 +634,15 @@ aside.marginalia img { width: 18px; height: 18px; vertical-align: -4px; margin-r
 
 /* ------------------------------------------------------------- mobile --- */
 @media (max-width: 760px) {
-  main { grid-template-columns: [full-start wide-start text-start] 1fr
+  /* main.notes as well: its own five-column rule has a class in the
+     selector and outranked this one, so every notes page at 390 kept the
+     34px outer columns inside the 20px padding and drew its text in a 282px
+     column, not the 350 the phone renders are made for (Phase 4, 2026-09-04,
+     found when the hero's 350px render came out 282 wide on the home page). */
+  main, main.notes { grid-template-columns: [full-start wide-start text-start] 1fr
                                 [text-end wide-end full-end];
          padding-left: 20px; padding-right: 20px;
          max-width: 100%; }
-  .cardgrid { grid-template-columns: 1fr; }
-  .cardgrid .card { grid-template-columns: 1fr; grid-template-rows: none; }
-  .cardgrid .card img { grid-column: 1; grid-row: auto; margin: 10px 0 4px; }
-  .cardgrid .card .tag, .cardgrid .card h3, .cardgrid .card p, .cardgrid .card a.btn { grid-column: 1; grid-row: auto; }
   /* Nothing may be wider than the screen. One over-wide child gives the
      whole document a horizontal scroll, and every block then reads as
      though it has been cut off down the right edge. */

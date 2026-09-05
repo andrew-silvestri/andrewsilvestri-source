@@ -21,6 +21,8 @@ import numpy as np
 
 from build_throughlines import (BG, DIM, INK, KCOL, LABEL, RULE, SHORT,
                                 audit, engine, style)
+from build_layer_diagram import rank_from_app
+from matplotlib.patches import Patch
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 DATA = os.path.join(HERE, "site", "assets", "atlas-data.js")
@@ -55,16 +57,52 @@ def main():
     fig = plt.figure(figsize=fig_size(NOTES, 0.95), facecolor=BG)
     # 714 px wide: room on the left for the longest kind label at 12 px,
     # and under the donut for its two-column legend
-    gs = fig.add_gridspec(2, 2, hspace=0.6, wspace=0.62,
-                          left=0.2, right=0.985, top=0.94, bottom=0.08)
+    # The donut's legend hangs below its axes, seven lines of it, and at
+    # hspace=0.6 the last line ("everything else") sat on the lower-right
+    # panel's label. The audit did not see it because it read only the
+    # centre title slot (sitefig.titles() fixed that, 2026-09-04); the
+    # upper row is now taller and the gap wider so the legend clears.
+    # THE GRID. Two columns, each an axes of the same width with a gutter of
+    # the same width on its left for tick labels (both columns carry a row
+    # of long y labels: the kinds at top left, the categories at bottom
+    # right). The donut's legend hangs under the donut, centred on it. Then
+    # sitefig.centre() measures the content and centres the whole sheet;
+    # the margins below are only a starting point. Until 2026-09-05 this was
+    # a GridSpec with left=0.2 and a legend anchored 0.42 axes-widths to the
+    # left of the donut: the content sat 23px right of centre and the donut
+    # 40px right of its key, and no audit measured either - the third fault
+    # on this figure, and the same cause as the first two: assembled by
+    # hand, off the system the other sheets use.
+    # The numbers, in CSS px of a 714 canvas: a label gutter of 95 on the
+    # left of each column (the widest y label is about 90), an axes of 239
+    # in each, a 30 gap: 8 + 95 + 239 + 30 + 95 + 239 = 706. So left =
+    # 103/714, wspace = (30 + 95)/239, right = 706/714; the second column's
+    # gutter lives inside the wspace. The donut legend hangs under the
+    # donut, centred, and its names are cut to fit the column (below).
+    gs = fig.add_gridspec(2, 2, hspace=0.95, wspace=0.52, height_ratios=[1.12, 1],
+                          left=0.144, right=0.989, top=0.94, bottom=0.08)
 
 
     # ---- what the model contains ---------------------------------------
     ax = fig.add_subplot(gs[0, 0])
     ks = [k for k in ORDER if counts[k]]
     vals = [counts[k] for k in ks]
-    ax.barh(range(len(ks)), vals, color=[KCOL[k] for k in ks], height=0.66,
-            alpha=0.92)
+    # Twelve kinds is more than the palette can separate: coloured one hue
+    # per kind, climate at near-black read as a different sort of thing
+    # rather than one more kind. The bars now carry the one distinction the
+    # model itself makes between kinds, the same one the layer diagram
+    # draws: the kinds that push and are never pushed back (the ranked ones
+    # in atlas-app.js) against the kinds that trade back and forth.
+    sources = set(rank_from_app()[0])
+    ax.barh(range(len(ks)), vals,
+            color=[ONE_WAY_COL if k in sources else TWO_WAY_COL for k in ks],
+            height=0.66, alpha=0.92)
+    # under the axes, not inside them: inside, the key's colour patches sat
+    # on the "18" of insolation, which text-against-text audits cannot see
+    ax.legend([Patch(color=ONE_WAY_COL), Patch(color=TWO_WAY_COL)],
+              ["pushes one way", "trades back and forth"], loc="upper center",
+              bbox_to_anchor=(0.5, -0.26), frameon=False, fontsize=FS_2,
+              labelcolor=DIM, handlelength=1.2, ncol=1)   # centred on its panel, like the donut's
     ax.set_yticks(range(len(ks)))
     ax.set_yticklabels([LABEL[k] for k in ks], fontsize=FS_2)
     ax.set_xscale("log")
@@ -80,7 +118,12 @@ def main():
     src = collections.Counter()
     for i in range(D["n"]):
         s = D["srcDict"][D["src"][i]]
-        src[s.split("·")[0].strip().split(",")[0][:26]] += 1
+        # 26 characters cut "WRI Global Power Plant Database" to "...Dat";
+        # under the donut there is room for the whole name
+        # 30 characters: the legend hangs centred under the donut, so its
+        # width is the column's, and the longest name must fit that
+        name = s.split("·")[0].strip().split(",")[0]
+        src[name if len(name) <= 24 else name[:23] + "…"] += 1
     top = src.most_common(6)
     other = sum(src.values()) - sum(v for _, v in top)
     labs = [f"{k} — {v:,}" for k, v in top]
@@ -94,7 +137,7 @@ def main():
                    wedgeprops=dict(width=0.42, edgecolor=BG, linewidth=1.4))
     # under the donut, not beside it: beside it the longest source name ran
     # off the right edge of the sheet
-    ax2.legend(w, labs, loc="upper left", bbox_to_anchor=(-0.42, -0.02),
+    ax2.legend(w, labs, loc="upper center", bbox_to_anchor=(0.5, -0.02),
                frameon=False, fontsize=FS_2, labelcolor=DIM, ncol=1)
     sitefig.panel(ax2, "Where the numbers\ncome from")
 
@@ -159,8 +202,8 @@ def main():
                         fontsize=FS_2)
     ax4.set_xscale("log")
     ax4.set_xlim(0.7, max(max(r[1]) for r in rows) * 4)
-    ax4.set_xlabel("nodes moved by more than 0.02 (log scale)", color=DIM,
-                   fontsize=FS_2)
+    ax4.set_xlabel("nodes moved past 0.02 (log scale)", color=DIM,
+                   fontsize=FS_2)     # fits the 239px column; the long form ran off the canvas
     sitefig.panel(ax4, f"How far the {len(D['scenarios'])} prepared\nchanges travel")
 
     for a in (ax, ax3, ax4):
@@ -172,6 +215,7 @@ def main():
             s.set_color(RULE)
     ax2.set_facecolor(BG)
 
+    sitefig.centre(fig)
     problems = audit(fig)
     # dpi raised to keep the bitmap's pixel count close to what it was at the
     # old, wider figsize - it has no effect on the on-screen CSS size the

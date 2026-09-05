@@ -176,6 +176,7 @@ def explain(rows, summary, path=None):
              fontsize=FS_1, color=COOL, ha="left", va="top", linespacing=1.4, fontfamily=MONO)
 
     out = path or os.path.join(OUT, "fig0_lq_explained.png")
+    sitefig.centre(fig)      # the grid's margins are a guess; this measures (2026-09-05)
     bad = audit(fig)
     sitefig.save(fig, out, close=False)
     plt.close(fig)
@@ -202,7 +203,7 @@ def audit(fig):
         if t.get_text().strip():
             items.append(t)
     for ax in fig.axes:
-        for t in [ax.title, ax.xaxis.label, ax.yaxis.label] + list(ax.texts):
+        for t in sitefig.titles(ax) + [ax.xaxis.label, ax.yaxis.label] + list(ax.texts):
             if t.get_text().strip():
                 items.append(t)
         if ax.axison:
@@ -242,6 +243,7 @@ def audit(fig):
             frac = area / min(a.width * a.height, b.width * b.height)
             if frac > 0.12:
                 out.append(f"overlap {frac:.0%}: {la!r} / {lb!r}")
+    out += sitefig.grid_problems(fig)     # columns shared, content centred (2026-09-05)
     return out
 
 

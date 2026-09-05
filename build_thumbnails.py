@@ -10,7 +10,7 @@ half a box) or 41 % off the top and bottom (the ranking). Nobody could see it
 in the CSS, because the crop was baked into the asset and the card's
 object-fit: cover fitted a 3:2 image to a 3:2 box exactly. The rule is now
 in one place, here and in sitefig.thumbnail(): a thumbnail shows the whole
-figure, and the page (style.css, .cardgrid .card img and .mosaic) lets it
+figure, and the page (style.css, .mosaic; the cards went on 2026-09-05) lets it
 keep its shape.
 
 Sources are the shipped figures in site/assets/, so the thumbnails cannot be
@@ -27,22 +27,17 @@ ASSETS = os.path.join(HERE, "site", "assets")
 
 # shipped figure -> thumbnail, both in site/assets/
 THUMBS = [
-    # the library mosaic on index.html, six tiles
+    # the library mosaic on index.html, six tiles: the whole figure at its
+    # own aspect; the 16:9 tiles letterbox in CSS on the figure's ground.
+    # The five project-card thumbnails went with the cards (2026-09-05,
+    # THE INDEX SPEC in style.css); nothing else is thumbnailed.
     "02_demand_distribution.png",
     "04_inertia_by_type.png",
     "05_link_structure.png",
     "06_scenario_reach.png",
     "07_arrival_order.png",
     "09_size_vs_lowcarbon.png",
-    # the six project cards on index.html
-    "heat_fig1_breakeven_price.png",
-    "storage_fig3_duration_value.png",
-    "climate_chain_tomato.png",
-    "skyline_towers.png",
-    "lq_ranked.png",
-    "bookshelf-demo-shelf.webp",
 ]
-
 
 def thumb_name(src):
     return os.path.splitext(src)[0] + "-thumb.png"

@@ -114,10 +114,10 @@ def trace():
 def audit(fig):
     fig.canvas.draw()
     r = fig.canvas.get_renderer()
-    title_ids = {id(ax.title) for ax in fig.axes}
+    title_ids = {id(t) for ax in fig.axes for t in sitefig.titles(ax)}
     items, problems = [], []
     for ax in fig.axes:
-        for tx in list(ax.texts) + [ax.title]:
+        for tx in list(ax.texts) + sitefig.titles(ax):
             if tx.get_text().strip():
                 items.append(tx)
     for tx in fig.texts:

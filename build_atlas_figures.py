@@ -61,10 +61,11 @@ def audit(fig):
     fig.canvas.draw()
     ren = fig.canvas.get_renderer()
     W, H = fig.canvas.get_width_height()
-    title_ids = {id(ax.title) for ax in fig.axes}
+    title_ids = {id(t) for ax in fig.axes for t in sitefig.titles(ax)}
+    problems_grid = sitefig.grid_problems(fig)
     items = [t for t in fig.texts if t.get_text().strip()]
     for ax in fig.axes:
-        for t in [ax.title, ax.xaxis.label, ax.yaxis.label] + list(ax.texts):
+        for t in sitefig.titles(ax) + [ax.xaxis.label, ax.yaxis.label] + list(ax.texts):
             if t.get_text().strip():
                 items.append(t)
         if ax.axison:
@@ -109,7 +110,7 @@ def audit(fig):
                 if fr > 0.15:
                     bad.append(f"overlap {fr:.0%}: {la!r} / {lb!r}")
     bad += floor_problems(fig, [(t, id(t) in title_ids) for t in items])
-    return bad
+    return bad + problems_grid
 
 
 def emit(fig, name):
@@ -410,8 +411,7 @@ def main():
                 color=ACC, lw=1.6)
         a1.set_ylabel("CO$_2$ (ppm)")
         a1.grid(alpha=0.18)
-        a1.set_title("The two measured series the model treats as its slow "
-                     "variable")
+        sitefig.panel(a1, "The two measured series the model treats as its slow variable")
         if temp:
             a2.plot([p[0] for p in temp], [p[1] for p in temp], color=ROSE,
                     lw=1.6)
@@ -445,7 +445,7 @@ def main():
                 color=DIM, fontsize=FS_2)
         a1.set_xlabel("latitude (degrees)")
         a1.set_ylabel("annual mean insolation (W/m$^2$)")
-        a1.set_title("Sunlight above the atmosphere")
+        sitefig.panel(a1, "Sunlight above the atmosphere")
         a1.grid(alpha=0.18)
         a1.set_xlim(-90, 90)
         a1.set_xticks([-90, -60, -30, 0, 30, 60, 90])
@@ -459,7 +459,7 @@ def main():
         a2.plot(yrs, val, color=ACC, lw=1.7)
         a2.set_xlabel("year")
         a2.set_ylabel("total solar irradiance (W/m$^2$)")
-        a2.set_title("The measured solar constant, with its uncertainty")
+        sitefig.panel(a2, "The measured solar constant, with its uncertainty")
         a2.grid(alpha=0.18)
         fig.tight_layout()
         problems += len(emit(fig, "14_space_layer.png"))
