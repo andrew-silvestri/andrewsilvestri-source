@@ -850,6 +850,22 @@
   if (ro) ro.observe(document.getElementById('stage'));
   window.addEventListener('resize', function () { resize(); touch(); });
 
+  /* The phone sidebar's "more below" cue (template.html, .more): shown while
+     the box has content below its fold, hidden at the end and when nothing
+     scrolls. Defensive, because the harness's DOM has no layout. */
+  (function () {
+    var side = document.getElementById('side');
+    if (!side || typeof side.addEventListener !== 'function') return;
+    function cue() {
+      var atEnd = side.scrollHeight - side.clientHeight - side.scrollTop < 4 ||
+                  side.scrollHeight <= side.clientHeight;
+      if (side.classList && side.classList.toggle) side.classList.toggle('end', atEnd);
+    }
+    side.addEventListener('scroll', cue);
+    window.addEventListener('resize', cue);
+    cue();
+  })();
+
   /* --------------------------------------------------------------- boot -- */
   document.getElementById('city').innerHTML = C.map(function (c, i) {
     return '<option value="' + i + '">' + esc(c.city) + ' &middot; ' +

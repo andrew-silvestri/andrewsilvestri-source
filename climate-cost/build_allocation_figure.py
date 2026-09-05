@@ -44,7 +44,7 @@ import matplotlib.pyplot as plt         # noqa: E402
 
 import sitefig                          # noqa: E402
 from sitefig import (MONO, BG, INK, DIM, RULE, FAINT, ACC, MOSS, COOL, SLATE,  # noqa: E402,F401
-                     FS_2, FS_1, FS0, PROSE, fig_size, save)
+                     FS_2, FS_1, FS0, NOTES, fig_size, save)
 from fig_floor import floor_problems    # noqa: E402
 import lca                              # noqa: E402  the model of record; imported, not edited
 from processes import PRODUCTS          # noqa: E402
@@ -135,11 +135,16 @@ def compute(panel):
 # ------------------------------------------------------------------ draw ----
 def draw(cheese, shoes, out):
     sitefig.style()
-    w, h = fig_size(PROSE, 1.7)
-    fig, axes = plt.subplots(1, 2, figsize=(w, h), sharex=True,
-                             gridspec_kw=dict(width_ratios=[1, 1], wspace=0.55))
+    # Drawn at the width it is shown: the text column of a notes page, 714px
+    # (sitefig NOTES). Until 2026-09-05 this was fig_size(PROSE, 1.7), a
+    # 1140px render squeezed to 714 on climate-cost.html, its 12px labels at
+    # 7.5 on screen - the model chart's fault in reverse (PHASE4 A3). Two
+    # panels side by side do not fit 714 with these labels, so they stack.
+    w, h = fig_size(NOTES, 0.92)
+    fig, axes = plt.subplots(2, 1, figsize=(w, h), sharex=True,
+                             gridspec_kw=dict(hspace=0.62))
     texts = []
-    xmax = 16.0
+    xmax = 19.0     # room for the "15.4 kg" label at 714px
 
     for ax, (panel, (rows, spread)) in zip(axes, ((CHEESE, cheese), (SHOES, shoes))):
         n = len(rows)
@@ -161,6 +166,7 @@ def draw(cheese, shoes, out):
         ax.set_yticklabels([r[0] for r in rows], fontsize=FS_2)
         ax.tick_params(axis="y", length=0, pad=6)
         ax.set_xlim(0, xmax)
+        ax.set_xticks(range(0, int(xmax) + 1, 5))   # matplotlib's extra tick at 20 sat off the canvas
         ax.set_ylim(-0.7, n - 0.3)
         for s in ("top", "right", "left"):
             ax.spines[s].set_visible(False)
@@ -173,7 +179,7 @@ def draw(cheese, shoes, out):
         # A two-panel sheet keeps one short label per panel, set through
         # sitefig.panel() so it is the same furniture as every other sheet.
         sitefig.panel(ax, panel["label"], pad=10)
-        texts.append(ax.title)
+        texts += sitefig.titles(ax)
         texts.append(ax.text(1.0, -0.2, f"spread ×{spread:.2f}",
                              transform=ax.transAxes, ha="right", va="top",
                              fontsize=FS_1, color=INK))
@@ -182,14 +188,16 @@ def draw(cheese, shoes, out):
                              transform=ax.transAxes, ha="left", va="top",
                              fontsize=FS_2, color=DIM))
 
-    foot = ("Spread = highest ÷ lowest total across the published bases shown; the model’s assumed 2.2% is drawn but not counted.\n"
-            "Bars: the shipped default in dark blue, published alternatives in light blue; the shoe’s shipped 2.2% is an assumption and is grey.\n"
-            "Milk–meat factors: Flysjö, Cederberg, Henriksson & Ledgard 2011, Int J LCA 16:420, Table 1; IDF Bulletin 479 (2015) pp. 35–36.\n"
-            "Hide factors: Lunesu et al. 2025, Animals 15:3546.  Every bar is one run of climate-cost/lca.py with that factor on the\n"
-            "contested edge; drawn by climate-cost/build_allocation_figure.py.")
+    foot = ("Spread = highest ÷ lowest total across the published bases shown; the model’s assumed\n"
+            "2.2% is drawn but not counted. Bars: the shipped default in dark blue, published alternatives\n"
+            "in light blue; the shoe’s shipped 2.2% is an assumption and is grey. Milk–meat factors: Flysjö,\n"
+            "Cederberg, Henriksson & Ledgard 2011, Int J LCA 16:420, Table 1; IDF Bulletin 479 (2015)\n"
+            "pp. 35–36. Hide factors: Lunesu et al. 2025, Animals 15:3546. Every bar is one run of\n"
+            "climate-cost/lca.py with that factor on the contested edge; drawn by build_allocation_figure.py.")
     texts.append(fig.text(0.045, 0.012, foot, fontsize=FS_2, color=DIM,
                           va="bottom", ha="left", linespacing=1.45))
-    fig.subplots_adjust(left=0.20, right=0.985, top=0.86, bottom=0.33)
+    fig.subplots_adjust(left=0.30, right=0.975, top=0.94, bottom=0.30)
+    sitefig.centre(fig)      # the margins above are a guess; this measures
     problems = audit(fig, texts)
     size = save(fig, out)
     return size, problems
@@ -210,7 +218,7 @@ def audit(fig, texts):
     for ax in fig.axes:
         items += [(t, False) for t in ax.get_yticklabels() + ax.get_xticklabels()]
         items.append((ax.xaxis.label, False))
-    problems = floor_problems(fig, items)
+    problems = floor_problems(fig, items) + sitefig.grid_problems(fig)
     W, H = fig.get_size_inches() * fig.dpi
     boxes = []
     for t, _ in items:

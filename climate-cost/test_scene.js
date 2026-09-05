@@ -16,14 +16,34 @@
  *      it converges is an empirical question, so it is measured rather than
  *      assumed.
  *
- * Run:  node test_scene.js
+ * Run:  node test_scene.js       (needs jsdom from ../tests/node_modules; fails loudly without it)
  */
 'use strict';
 const fs = require('fs');
 const path = require('path');
 const { execFileSync } = require('child_process');
-const { JSDOM } = require('jsdom');
-const THREE = require('three');
+// jsdom lives with the other test dependency, in tests/node_modules (npm
+// install in tests/). Until 2026-09-05 this line was a bare require that
+// nothing installed, so the suite could not run and looked no different from
+// a suite that passed. A missing dependency is a failure, said out loud.
+let JSDOM;
+try {
+  ({ JSDOM } = require(path.join(__dirname, '..', 'tests', 'node_modules', 'jsdom')));
+} catch (e) {
+  console.error('FAIL test_scene.js cannot run: jsdom is not installed in tests/node_modules.');
+  console.error('     cd tests && npm install   (package.json lists it)');
+  console.error('     ' + String(e.message).split(/\r?\n/)[0]);
+  process.exit(2);
+}
+// three r128, the revision the page loads from its CDN, from the same place
+let THREE;
+try {
+  THREE = require(path.join(__dirname, '..', 'tests', 'node_modules', 'three'));
+} catch (e) {
+  console.error('FAIL test_scene.js cannot run: three is not installed in tests/node_modules.');
+  console.error('     cd tests && npm install   (package.json pins three@0.128.0, the page\'s r128)');
+  process.exit(2);
+}
 
 const HERE = __dirname;
 const PAGE = path.join(HERE, 'climate-cost.html');

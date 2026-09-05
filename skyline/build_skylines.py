@@ -48,6 +48,27 @@ The raw pull this file reads, data/raw/wikidata_buildings.json, was never
 archived, so this script cannot currently be run. The shipped
 data/skylines.json was brought to this shape by prune_payload.py instead.
 
+WHAT A FRESH PULL WOULD TAKE (written 2026-09-05, so nobody has to rediscover
+it): one SPARQL query per city against query.wikidata.org, asking for every
+item within a radius of the city's centroid (wikibase:around, ~25 km) that
+has a height (P2048, read through psv: so the unit comes back and feet can
+be converted) and a coordinate (P625), and whose class (P31, followed up
+P279*) is on this file's list of things that are buildings - the class check
+and the unit check are the two fixes recorded above, and the pull must keep
+them. Twenty-seven cities, so twenty-seven queries, each under the service's
+sixty-second limit if the radius is kept small; the whole pull is minutes.
+Save the raw answers to data/raw/wikidata_buildings.json AND commit it,
+because a raw pull that is not archived is the reason this note exists.
+Then: run this script, run supplement.py's three cities (their published
+lists overrule Wikidata above each list's floor), run test_app.js (43
+checks: no empty bearing, no label collision at eight bearings), and
+regenerate skyline_towers.png. Expect a different dataset: heights get
+corrected on Wikidata, towers finish and get added, and every downstream
+number on skyline.html (the tallest, the twenty named per city, the notes
+line) moves with it. That is a new release of the project, not a rebuild
+of this one; the shipped data/skylines.json stays the dataset of record
+until someone does it.
+
 Run:  python3 build_skylines.py            report only
       python3 build_skylines.py --apply    write data/skylines.json
 """
