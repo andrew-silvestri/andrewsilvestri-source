@@ -251,7 +251,7 @@ family,Strigopidae,1,0,2.2911,60.0,2000.0,2000.0,Kakapo,60.0
 family,Galagidae,18,0,2.2267,16.85,60.0,1300.0,"Brown greater galago, or Greater galago",22.7
 family,Indriidae,1,0,2.1814,31.0,5000.0,5000.0,Verreaux's sifaka,31.0
 family,Chimaeridae,1,0,2.1703,29.4,1375.0,1375.0,Rabbitfish,29.4
-family,Emydidae,43,0,2.1615,41.0,132.1,3748.5,-999,138.0
+family,Emydidae,43,0,2.1615,41.0,132.1,3748.5,Terrapene mexicana,138.0
 family,Calomyscidae,7,0,2.161,9.4,20.4,20.4,Mouse-like hamster,9.4
 family,Harpagiferidae,1,0,2.1412,9.0,10.439,10.439,Antarctic spiny plunderfish,9.0
 family,Prunellidae,1,0,2.1409,20.8,20.2,20.2,Hedge sparrow,20.8
@@ -607,7 +607,7 @@ family,Polioptilidae,2,0,0.7686,6.1,6.0,6.5,California gnatcatcher,8.0
 family,Teiidae,15,0,0.7677,7.8,7.9,4700.0,Argentine Black and White Tegu,16.1
 family,Cinclidae,2,0,0.7664,9.35,50.2,61.7,White-throated dipper,10.6
 family,Arripidae,3,0,0.7645,9.0,440.0,5775.0,Australian salmon,26.0
-family,Lacertidae,48,0,0.7611,4.0,2.1,195.995,-999,20.0
+family,Lacertidae,48,0,0.7611,4.0,2.1,195.995,Gallotia auaritae,20.0
 family,Picidae,36,0,0.7603,10.5,19.8,364.0,Red-bellied woodpecker,20.7
 family,Artamidae,1,0,0.7592,8.2,33.0,33.0,Dusky woodswallow,8.2
 family,Talpidae,20,0,0.759,3.5,18.85,983.805,Desman,10.0
@@ -633,7 +633,7 @@ family,Synodontidae,1,0,0.7055,7.0,375.328,375.328,Snakefish,7.0
 family,Dromaiidae,1,0,0.7002,35.0,40000.0,40000.0,Emu,35.0
 family,Priacanthidae,1,0,0.6943,9.0,1144.0,1144.0,Bulleye,9.0
 family,Dipsadidae,12,0,0.694,11.85,104.0,1587.0,Dusty Hognose Snake,20.0
-family,Sphaerodactylidae,8,0,0.6933,2.2,0.5,16.235,-999,13.0
+family,Sphaerodactylidae,8,0,0.6933,2.2,0.5,16.235,Gonatodes fuscus,13.0
 family,Atrichornithidae,1,0,0.6872,7.8,41.525,41.525,Noisy scrubbird,7.8
 family,Hypsiprymnodontidae,1,0,0.6832,6.0,534.25,534.25,Musky Rat-kangaroo,6.0
 family,Pholidae,1,0,0.6824,5.0,105.982,105.982,Rock gunnel,5.0
@@ -847,7 +847,7 @@ genus,Cebus,8,0,3.7563,46.0,2467.5,2670.07,White-faced capuchin,54.0
 genus,Artibeus,4,0,3.7531,19.217,45.0,46.1,Jamaican fruit bat,20.0
 genus,Astrochelys,1,0,3.7249,100.0,8000.0,8000.0,Madagascan (Plowshare or Ploughshare) Tortoise,100.0
 genus,Pseudopus,1,0,3.694,54.0,450.0,450.0,"European glass lizard, or Armored glass lizard",54.0
-genus,Trachemys,11,0,3.6068,75.0,1500.0,1895.0,-999,75.0
+genus,Trachemys,11,0,3.6068,75.0,1500.0,1895.0,Trachemys callirostris,75.0
 genus,Tachyglossus,1,0,3.5991,50.0,4500.0,4500.0,Short-beaked echidna,50.0
 genus,Helicolenus,1,0,3.5629,42.0,770.0,770.0,Sea perch,42.0
 genus,Brachypelma,1,0,3.5524,30.0,20.0,20.0,Mexican redknee tarantula,30.0
@@ -871,8 +871,8 @@ genus,Lasionycteris,1,0,3.2162,12.0,10.0,10.0,Silver-haired bat,12.0
 genus,Miniopterus,11,0,3.1704,22.0,7.4,13.0,Southeast Asian Long-fingered Bat,22.0
 genus,Hydrobates,1,0,3.1655,33.0,28.0,28.0,European storm petrel,33.0
 genus,Hylobates,7,0,3.1619,45.0,5500.0,6207.5,Borneo gibbon,60.0
-genus,Eublepharis,2,0,3.1284,28.25,35.245,60.0,-999,28.5
-genus,Terrapene,5,0,3.1201,28.4,259.8,855.5,-999,138.0
+genus,Eublepharis,2,0,3.1284,28.25,35.245,60.0,Eublepharis fuscus,28.5
+genus,Terrapene,5,0,3.1201,28.4,259.8,855.5,Terrapene mexicana,138.0
 genus,Fukomys,1,0,3.0867,20.0,130.0,130.0,Damaraland mole-rat,20.0
 genus,Nemadactylus,1,0,3.0863,50.0,2900.0,2900.0,Tarakihi,50.0
 genus,Leontopithecus,3,0,3.0725,31.6,535.0,654.5,Superagui Lion Tamarin,31.6
@@ -894,7 +894,7 @@ genus,Chasmistes,2,0,2.8988,40.5,1496.0,1634.29,Cui-ui,41.0
 genus,Tadarida,5,0,2.8875,13.0,12.0,35.0,Mexican free-tailed bat,18.0
 genus,Pleuronectes,1,0,2.8836,50.0,3850.0,3850.0,Plaice,50.0
 genus,Serranus,1,0,2.8824,60.0,8250.0,8250.0,Painted comber,60.0
-genus,Chelonoidis,10,0,2.8819,177.0,2000.0,250000.0,-999,177.0
+genus,Chelonoidis,10,0,2.8819,177.0,2000.0,250000.0,Chelonoidis abingdonii,177.0
 genus,Heteronotia,1,0,2.8677,13.6,2.18,2.18,Prickly gecko,13.6
 genus,Lesueurigobius,1,0,2.8513,11.0,7.3,7.3,Fries' goby,11.0
 genus,Chlorocebus,6,0,2.8463,46.0,4500.0,5620.0,Malbrouck,46.0
@@ -1051,7 +1051,7 @@ genus,Tarsius,7,0,1.9567,12.0,114.455,173.0,Horsfield's Tarsier,16.3
 genus,Gorilla,2,0,1.9526,57.7,139842.0,160000.0,Western gorilla,60.0
 genus,Clupea,2,0,1.948,20.5,300.0,750.0,Atlantic herring,22.0
 genus,Glis,1,0,1.9455,13.0,150.0,150.0,Edible dormouse,13.0
-genus,Ophisaurus,3,0,1.9441,14.8,15.23,23.825,-999,14.8
+genus,Ophisaurus,3,0,1.9441,14.8,15.23,23.825,Ophisaurus attenuatus,14.8
 genus,Fossa,1,0,1.9402,21.4,1540.0,1540.0,Malagasy civet,21.4
 genus,Onychoprion,3,0,1.9351,25.8,131.7,148.0,Sooty tern,35.8
 genus,Setifer,1,0,1.9338,14.1,225.0,225.0,Greater hedgehog tenrec,14.1
@@ -1077,7 +1077,7 @@ genus,Daubentonia,1,0,1.8788,23.0,2500.0,2500.0,Aye-aye,23.0
 genus,Silurus,1,0,1.8712,60.0,50000.0,50000.0,Wels catfish,60.0
 genus,Micruroides,1,0,1.8697,17.6,56.0,56.0,Western coral snake,17.6
 genus,Psittacula,6,0,1.8633,30.0,66.0,255.0,Echo Parakeet,34.0
-genus,Gonatodes,2,0,1.8594,9.3,1.865,1.865,-999,13.0
+genus,Gonatodes,2,0,1.8594,9.3,1.865,1.865,Gonatodes fuscus,13.0
 genus,Osteolaemus,1,0,1.856,70.0,40000.0,40000.0,West African dwarf crocodile,70.0
 genus,Hemitheconyx,1,0,1.8559,16.2,39.17,39.17,African fat-tailed gecko,16.2
 genus,Hapalemur,4,0,1.8538,23.3,1012.5,1476.2,Bandro,23.3
@@ -1112,7 +1112,7 @@ genus,Lagidium,3,0,1.7951,19.5,1245.0,1540.0,Northern Mountain Viscacha,19.5
 genus,Caiman,3,0,1.7935,60.0,14600.0,40000.0,Spectacled caiman,60.0
 genus,Archilochus,2,0,1.7882,11.6,3.0,3.2,Ruby-throated hummingbird,12.0
 genus,Lumbricus,1,0,1.788,10.0,4.0,4.0,Common earthworm,10.0
-genus,Chelydra,3,0,1.7818,47.0,5170.0,10000.0,-999,47.0
+genus,Chelydra,3,0,1.7818,47.0,5170.0,10000.0,Chelydra acutirostris,47.0
 genus,Callosciurus,8,0,1.7777,14.25,190.0,400.0,Ear-spot Squirrel,21.1
 genus,Spalacopus,1,0,1.7713,10.8,98.0,98.0,Coruro,10.8
 genus,Centrophorus,2,0,1.7703,47.5,7484.3,26189.2,Leafscale gulper shark,70.0
@@ -1178,7 +1178,7 @@ genus,Cynocephalus,1,0,1.6595,17.5,1250.0,1250.0,Philippine Flying Lemur,17.5
 genus,Delichon,1,0,1.6584,15.0,14.5,14.5,Common house-martin and northern house-martin,15.0
 genus,Geospiza,1,0,1.6584,15.0,14.5,14.5,Small ground finch,15.0
 genus,Gymnogyps,1,0,1.6561,60.0,9000.0,9000.0,California condor,60.0
-genus,Chalcides,13,0,1.6545,14.0,18.8,39.1,-999,14.0
+genus,Chalcides,13,0,1.6545,14.0,18.8,39.1,Chalcides bottegi,14.0
 genus,Pachyuromys,1,0,1.6508,8.3,40.0,40.0,Fat-tailed gerbil,8.3
 genus,Rhinopithecus,3,0,1.6468,29.5,14500.0,14750.0,Black Snub-nosed Monkey,29.5
 genus,Alle,1,0,1.6464,25.0,160.0,160.0,Little Auk,25.0
@@ -1360,7 +1360,7 @@ genus,Threskiornis,6,0,1.4149,37.0,1351.5,1806.0,Straw-necked ibis,39.4
 genus,Deirochelys,1,0,1.4147,24.0,910.5,910.5,Chicken turtle,24.0
 genus,Torpedo,1,0,1.4133,20.0,1650.0,1650.0,Marbled electric ray,20.0
 genus,Tremarctos,1,0,1.4132,39.0,109250.0,109250.0,Spectacled bear,39.0
-genus,Lacerta,7,0,1.4126,10.0,9.87,25.95,-999,13.975
+genus,Lacerta,7,0,1.4126,10.0,9.87,25.95,Lacerta media,13.975
 genus,Hesperiphona,1,0,1.4102,17.0,54.9,54.9,Evening grosbeak,17.0
 genus,Oplurus,2,0,1.41,15.25,45.4,117.7,Cuvier's Madagascar swift,21.2
 genus,Spilogale,3,0,1.4086,14.0,600.0,612.0,Southern Spotted Skunk,14.0
@@ -1850,7 +1850,7 @@ genus,Funisciurus,5,0,1.0153,9.5,112.0,271.7,Thomas's rope squirrel,10.0
 genus,Gulo,1,0,1.0149,18.0,14000.0,14000.0,Wolverine,18.0
 genus,Smicrornis,1,0,1.0145,7.4,5.35,5.35,Weebill,7.4
 genus,Brotogeris,5,0,1.0144,11.3,59.0,71.6,Yellow-chevroned parakeet,19.0
-genus,Aspidoscelis,5,0,1.0142,7.8,7.9,17.37,-999,7.8
+genus,Aspidoscelis,5,0,1.0142,7.8,7.9,17.37,Aspidoscelis marmorata,7.8
 genus,Galerida,2,0,1.0135,11.592,42.9,43.15,Crested lark,11.6
 genus,Dendrocincla,3,0,1.0133,11.417,34.4,40.725,Plain-brown Woodcreeper,11.4167
 genus,Pseudochirulus,4,0,1.0131,10.5,153.125,1098.34,Lowland Ringtail,15.0
@@ -1944,7 +1944,7 @@ genus,Iduna,2,0,0.9669,7.9,9.0,9.1,Western Olivaceous Warbler,7.9
 genus,Eucometis,1,0,0.9668,10.0,27.0,27.0,Gray-headed tanager,10.0
 genus,Basiliscus,3,0,0.9664,9.1,60.87,225.0,Green basilisk,13.0
 genus,Orcaella,1,0,0.9651,30.0,190000.0,190000.0,Irrawaddy dolphin,30.0
-genus,Acanthophis,4,0,0.965,15.5,384.0,384.0,-999,15.5
+genus,Acanthophis,4,0,0.965,15.5,384.0,384.0,Acanthophis laevis,15.5
 genus,Phodopus,3,0,0.9649,3.908,12.02,28.745,Desert hamster,4.8
 genus,Clupeonella,1,0,0.9639,5.0,25.1,25.1,Black sea sprat,5.0
 genus,Sitta,8,0,0.9637,9.0,10.7,31.0,Siberian Nuthatch,12.917
@@ -2166,7 +2166,7 @@ genus,Charmosyna,1,0,0.8574,11.3,83.0,83.0,Papuan lorikeet,11.3
 genus,Pelecus,1,0,0.8567,11.0,1100.0,1100.0,Ziege,11.0
 genus,Aphredoderus,1,0,0.8541,4.0,16.3855,16.3855,Pirate perch,4.0
 genus,Pandinus,1,0,0.8539,8.0,30.0,30.0,Emperor scorpion,8.0
-genus,Malaclemys,1,0,0.8535,14.1,803.0,803.0,-999,14.1
+genus,Malaclemys,1,0,0.8535,14.1,803.0,803.0,Malaclemys terrapin,14.1
 genus,Fratercula,3,0,0.8532,20.0,400.0,775.0,Atlantic puffin,41.0
 genus,Bagrus,1,0,0.8532,17.0,6875.0,6875.0,African catfish,17.0
 genus,Rhinobatos,1,0,0.8523,16.0,5362.5,5362.5,Shovelnose guitarfish,16.0
@@ -2201,7 +2201,7 @@ genus,Sturnella,2,0,0.8375,11.3,85.0,94.71,Eastern meadowlark,12.6
 genus,Falco,17,0,0.8369,13.5,120.0,1406.5,Barbary Falcon,25.0
 genus,Octodon,2,0,0.8362,8.287,186.875,235.0,Degu,14.0
 genus,Stenodus,1,0,0.8354,22.0,22000.0,22000.0,Inconnu,22.0
-genus,Gallotia,6,0,0.8342,5.6,16.48,195.995,-999,20.0
+genus,Gallotia,6,0,0.8342,5.6,16.48,195.995,Gallotia auaritae,20.0
 genus,Nemipterus,1,0,0.8329,8.0,327.8,327.8,Japanese threadfin-bream,8.0
 genus,Dorcatragus,1,0,0.8328,14.0,10918.1,10918.1,Beira,14.0
 genus,Tringa,8,0,0.8311,11.6,62.5,270.0,Common redshank,26.9
@@ -2344,7 +2344,7 @@ genus,Morus,3,0,0.7679,33.0,2350.0,3000.0,Northern gannet,37.0
 genus,Artemisiospiza,2,0,0.7671,7.425,17.1,18.1,Sage sparrow,9.1
 genus,Myliobatis,1,0,0.767,24.0,45155.0,45155.0,Bat ray,24.0
 genus,Uromastyx,3,0,0.7665,11.4,111.425,851.73,Egyptian spiny-tailed lizard,15.3
-genus,Corallus,2,0,0.7665,15.2,1906.0,1906.0,-999,15.4
+genus,Corallus,2,0,0.7665,15.2,1906.0,1906.0,Corallus cookii,15.4
 genus,Steatomys,4,0,0.7665,3.742,34.04,37.5,Bocage's African Fat Mouse,3.74167
 genus,Cinclus,2,0,0.7664,9.35,50.2,61.7,White-throated dipper,10.6
 genus,Chordeiles,2,0,0.7662,10.0,79.3,79.3,Antillean Nighthawk,10.0
@@ -2497,7 +2497,7 @@ genus,Phocarctos,1,0,0.6841,23.0,273500.0,273500.0,New Zealand Sealion,23.0
 genus,Hypsiprymnodon,1,0,0.6832,6.0,534.25,534.25,Musky Rat-kangaroo,6.0
 genus,Pholis,1,0,0.6824,5.0,105.982,105.982,Rock gunnel,5.0
 genus,Stellagama,1,0,0.6822,6.0,40.605,40.605,Roughtail Rock Agama,6.0
-genus,Aipysurus,1,0,0.682,15.0,3113.0,3113.0,-999,15.0
+genus,Aipysurus,1,0,0.682,15.0,3113.0,3113.0,Aipysurus laevis,15.0
 genus,Leptonychotes,1,0,0.6812,25.0,410833.0,410833.0,Weddell Seal,25.0
 genus,Mergus,3,0,0.6811,14.8,613.5,1445.0,Red-breasted merganser,21.3
 genus,Chilomeniscus,1,0,0.6811,4.0,6.0,6.0,Banded sand snake,4.0
@@ -2663,7 +2663,7 @@ genus,Lenothrix,1,0,0.5724,3.825,150.0,150.0,Sundaic Lenothrix,3.825
 genus,Pogonomys,1,0,0.5713,3.1,57.0,57.0,"Chestnut pogonomys, or Long-tailed tree mouse",3.1
 genus,Serranochromis,3,0,0.5683,6.0,550.0,1375.0,Thinface cichlid,9.0
 genus,Coracina,2,0,0.5682,7.6,58.5,115.133,Black-faced cuckooshrike,9.0
-genus,Tropiocolotes,2,0,0.5677,1.8,0.3,0.35,-999,1.8
+genus,Tropiocolotes,2,0,0.5677,1.8,0.3,0.35,Tropiocolotes nattereri,1.8
 genus,Hyperoodon,2,0,0.5673,37.0,5440000.0,6500000.0,Northern bottlenose whale,37.0
 genus,Euroscaptor,5,0,0.567,3.0,25.05,60.46,Kloss's Mole,3.0
 genus,Retropinna,1,0,0.5642,2.0,5.12861,5.12861,Australian smelt,2.0
@@ -2730,7 +2730,7 @@ genus,Nocomis,4,0,0.5249,4.5,126.057,409.108,River chub,5.0
 genus,Ochotona,20,0,0.5244,3.575,68.75,336.26,Northern pika,9.4
 genus,Cannomys,1,0,0.524,4.8,650.0,650.0,Lesser bamboo rat,4.8
 genus,Dasyurus,6,0,0.5238,6.05,525.0,5500.0,"Tiger quoll, or Australian tiger cat",6.8
-genus,Darevskia,7,0,0.5229,3.0,2.1,7.93,-999,3.0
+genus,Darevskia,7,0,0.5229,3.0,2.1,7.93,Darevskia armeniaca,3.0
 genus,Oxymycterus,7,0,0.5227,3.075,82.01,83.755,Atlantic Forest Hocicudo,3.075
 genus,Monarcha,1,0,0.5204,5.2,23.0,23.0,Black-faced monarch,5.2
 genus,Pardalotus,3,0,0.5204,4.0,8.875,11.775,Striated pardalote,6.0
@@ -2798,7 +2798,7 @@ genus,Glaucidium,1,0,0.4791,6.0,65.5,65.5,Eurasian pygmy-owl,6.0
 genus,Eurocephalus,1,0,0.4783,5.667,50.65,50.65,Northern White-crowned Shrike,5.66667
 genus,Eulamprus,1,0,0.477,3.0,8.3,8.3,"Alpine Meadow-skink, Alpine Water Skink",3.0
 genus,Chrysospalax,1,0,0.4763,4.0,434.04,434.04,Giant Golden Mole,4.0
-genus,Eretmochelys,1,0,0.4756,20.0,67000.0,67000.0,-999,20.0
+genus,Eretmochelys,1,0,0.4756,20.0,67000.0,67000.0,Eretmochelys imbricata,20.0
 genus,Psammophis,10,0,0.4748,10.3,1687.0,2381.0,Short-snouted Grass Snake,10.3
 genus,Oporornis,1,0,0.4743,4.34,15.3,15.3,Connecticut Warbler,4.34
 genus,Labeo,2,0,0.4741,9.5,1980.0,24750.0,Rohu,10.0
@@ -2859,7 +2859,7 @@ genus,Tetraodon,1,0,0.4296,5.9,1456.0,1456.0,Nile globe-fish,5.9
 genus,Hemicentetes,1,0,0.4269,2.742,124.7,124.7,Highland Streaked Tenrec,2.74167
 genus,Agonus,1,0,0.4267,3.0,89.1687,89.1687,Armed bullhead,3.0
 genus,Hippocamelus,2,0,0.4265,10.667,68599.7,69620.4,Guemal,10.7333
-genus,Lygophis,1,0,0.4261,4.8,131.0,131.0,-999,4.8
+genus,Lygophis,1,0,0.4261,4.8,131.0,131.0,Lygophis anomalus,4.8
 genus,Saccostomus,2,0,0.4248,2.833,47.4,64.91,Pouched mouse,4.5
 genus,Dasyornis,1,0,0.423,4.8,41.5,41.5,Eastern bristlebird,4.8
 genus,Cacomantis,2,0,0.4221,4.9,33.5083,49.85,Fan-tailed cuckoo,6.0
@@ -2877,12 +2877,12 @@ genus,Harengula,1,0,0.4125,3.0,102.766,102.766,Scaled herring,3.0
 genus,Calloselasma,1,0,0.4103,5.8,384.0,384.0,Malayan Pit Viper,5.8
 genus,Tropidolaemus,2,0,0.4103,5.8,384.0,384.0,Broad-banded Temple Pitviper,5.8
 genus,Halcyon,1,0,0.4087,5.5,91.4,91.4,White-throated kingfisher,5.5
-genus,Gerrhonotus,1,0,0.4082,3.5,36.0,36.0,-999,3.5
+genus,Gerrhonotus,1,0,0.4082,3.5,36.0,36.0,Gerrhonotus infernalis,3.5
 genus,Liberiictis,1,0,0.4072,4.658,1825.47,1825.47,Liberian Mongoose,4.65833
 genus,Francolinus,2,0,0.4068,7.5,334.0,453.0,Grey francolin,8.0
 genus,Taterillus,5,0,0.406,1.167,45.45,52.0,Senegal Tateril,8.2
 genus,Trisopterus,2,0,0.4058,4.5,319.778,1058.15,Norway pout,5.0
-genus,Epomops,2,0,0.4057,2.662,118.99,135.67,Franquet's Epauletted Fruit<b> </b>Bat,3.15833
+genus,Epomops,2,0,0.4057,2.662,118.99,135.67,Franquet's Epauletted Fruit Bat,3.15833
 genus,Sciurillus,1,0,0.4046,2.0,36.955,36.955,Neotropical Pygmy Squirrel,2.0
 genus,Colinus,1,0,0.4043,6.4,194.0,194.0,Northern bobwhite,6.4
 genus,Ptychocheilus,1,0,0.4041,12.0,36290.0,36290.0,Colorado pikeminnow,12.0
@@ -2923,7 +2923,7 @@ genus,Thalassoma,1,0,0.3755,3.0,151.977,151.977,Bluehead,3.0
 genus,Apis,2,0,0.3744,2.575,0.09,0.18,Honey bee queen,5.0
 genus,Plectropterus,1,0,0.3742,11.3,3869.0,3869.0,Spur-winged goose,11.3
 genus,Drosophila,1,0,0.3738,0.25,0.001,0.001,Common fruit fly,0.25
-genus,Atheris,2,0,0.3731,4.5,181.0,181.0,-999,4.5
+genus,Atheris,2,0,0.3731,4.5,181.0,181.0,Atheris chlorechis,4.5
 genus,Lalage,2,0,0.3717,3.95,25.5,29.45,Varied triller,4.8
 genus,Mormyrus,1,0,0.3699,6.0,2915.0,2915.0,Mormyrids,6.0
 genus,Sphaerodactylus,4,0,0.3694,1.3,0.5,0.635,"Hispaniolan eyespot sphaero, Difficult Least Geckko",1.3
@@ -3025,7 +3025,7 @@ genus,Abrothrix,2,0,0.2164,1.0,27.0,27.0,Wellington Akodont,1.0
 genus,Electrona,1,0,0.2144,1.0,16.1,16.1,Chubby flashlightfish,1.0
 genus,Plecoglossus,1,0,0.2053,3.0,1887.99,1887.99,Ayu,3.0
 genus,Tropidurus,1,0,0.2022,1.6,24.59,24.59,Peters' Lava Lizard,1.6
-genus,Lycodonomorphus,1,0,0.202,4.3,2666.0,2666.0,-999,4.3
+genus,Lycodonomorphus,1,0,0.202,4.3,2666.0,2666.0,Lycodonomorphus whytii,4.3
 genus,Lates,1,0,0.2014,7.8,110000.0,110000.0,Snook,7.8
 genus,Thallomys,4,0,0.1906,0.833,77.7,124.595,Acacia Thallomys,3.5
 genus,Eligmodontia,2,0,0.1879,0.8,17.5,19.45,Altiplano Laucha,0.8

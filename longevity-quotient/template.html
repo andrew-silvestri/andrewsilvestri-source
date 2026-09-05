@@ -8,11 +8,11 @@
 try{document.documentElement.dataset.motion=matchMedia('(prefers-reduced-motion: reduce)').matches?'off':'on';}catch(e){document.documentElement.dataset.motion='on';}</script>
 <style>
 :root{--ink:#161a26;--dim:#5c6480;--faint:#e0e3ef;--bg:#f4f5fa;--acc:#4c3fb5;--acc-fill:#4c3fb5;--acc-fill-hover:#3d329a;
- --card:#fff;--wild:#2f6f5c;--cap:#4c3fb5;--unk:#6b7186;--avg:#161a26;--rule:#c4cadb;
- --grp:#7a6a92;--line:#8b93b0}
+ --card:#fff;--wild:#2f6f5c;--cap:#4c3fb5;--unk:#6b7186;--avg:#161a26;--rule:#7a8299;
+ --grp:#7a6a92;--line:#7a8299}
 @media (prefers-color-scheme:dark){
  :root{--ink:#e3e6f2;--dim:#8b93b0;--faint:#1a2038;--bg:#070a12;--acc:#8b7ff2;--acc-fill:#5a4fb0;--acc-fill-hover:#4c3fb5;
-  --card:#10152a;--wild:#4f9d84;--cap:#8b7ff2;--unk:#7d849c;--avg:#e3e6f2;--rule:#3a4463;
+  --card:#10152a;--wild:#4f9d84;--cap:#8b7ff2;--unk:#7d849c;--avg:#e3e6f2;--rule:#6a7390;
   --grp:#a992c9;--line:#6a7390}}
 *{box-sizing:border-box}
 body{margin:0;background:var(--bg);color:var(--ink);
@@ -21,6 +21,7 @@ body{margin:0;background:var(--bg);color:var(--ink);
 h1{font-size:27px;font-weight:600;margin:0 0 6px;line-height:1.24}
 h2{font-size:20px;font-weight:600;margin:30px 0 8px}
 p{margin:11px 0}
+sup{font-size:12px;line-height:0}
 .dim{color:var(--dim)}
 .small{font-size:14px;color:var(--dim)}
 a{color:var(--acc)}
@@ -75,7 +76,7 @@ select{max-width:200px}
 .bg1{top:7px;height:9px;background:var(--grp)}
 .avg{position:absolute;top:0;height:22px;width:2px;background:var(--avg);
  opacity:.75;transition:left .58s cubic-bezier(.22,.72,.24,1)}
-.rng{position:absolute;top:10.5px;height:2px;background:var(--grp);opacity:.6;
+.rng{position:absolute;top:10.5px;height:2px;background:var(--grp);opacity:.85;
  transition:left .58s cubic-bezier(.22,.72,.24,1),
  width .58s cubic-bezier(.22,.72,.24,1)}
 .val{position:absolute;top:3px;font:12px system-ui,sans-serif;
@@ -83,10 +84,10 @@ select{max-width:200px}
  transition:left .58s cubic-bezier(.22,.72,.24,1)}
 .gl{position:absolute;top:0;bottom:0;width:1px;background:var(--rule);
  transition:left .5s cubic-bezier(.22,.72,.24,1)}
-.gl span{position:absolute;top:-17px;left:3px;font:12px system-ui,sans-serif;
+.gl span{position:absolute;top:1px;left:4px;font:12px system-ui,sans-serif;
  color:var(--dim);white-space:nowrap}
 .gl.one{background:var(--acc);opacity:.9;width:2px}
-#axis{position:relative;height:18px;margin-left:300px}
+#axis{position:relative;height:24px;margin-left:300px;margin-top:6px}
 #detail{position:fixed;right:16px;bottom:16px;width:340px;
  max-width:calc(100vw - 32px);background:var(--card);
  border:1px solid var(--faint);border-radius:2px;padding:15px 17px;
@@ -133,8 +134,8 @@ table.fits th{font-size:12px;text-transform:uppercase;letter-spacing:.05em;
  input[type=search],select{min-height:44px}
  .row{height:48px;flex-wrap:wrap;align-items:flex-start}
  .nm{width:100%;padding:3px 0 0;line-height:18px}
- .track{flex:none;width:100%;height:22px}
- #axis{margin-left:0}
+ .track{flex:none;width:calc(100% - 58px);height:22px}
+ #axis{margin-left:0;margin-right:58px}
  #detail{left:16px;right:16px;width:auto;max-height:60vh}}
 /* Motion. Nothing here moves under the site's contract or the system
    preference. Both are honoured: the attribute is set before first paint

@@ -42,6 +42,7 @@ import json
 import io
 import math
 import os
+import re
 import sys
 import zipfile
 
@@ -127,7 +128,13 @@ def rec(source, sci, cls="", order="", family="", genus="", common="",
         mass=None, wild=None, captive=None, quality="C", phylum="Chordata",
         kingdom="Animalia", colonial=False, note="", unknown=None):
     sci = " ".join(str(sci).split())
-    return dict(source=source, scientific_name=sci, common_name=common or "",
+    # AnAge marks a missing common name with the literal string -999, and two
+    # of its names carry stray <b> tags; both reached the visualiser's labels
+    # and the download until 2026-09-04. A missing name is an empty string.
+    common = re.sub(r"<[^>]+>", "", str(common or "")).strip()
+    if common in ("-999", "-999.0", "NA", "null"):
+        common = ""
+    return dict(source=source, scientific_name=sci, common_name=common,
                 kingdom=kingdom, phylum=phylum, class_=cls.strip(),
                 order=order.strip(), family=family.strip(),
                 genus=(genus or sci.split(" ")[0]).strip(),
