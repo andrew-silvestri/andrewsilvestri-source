@@ -156,17 +156,22 @@ def save(fig, path, close=True):
     return os.path.getsize(path)
 
 
-def thumbnail(src, dst, width=THUMB, aspect=1.5):
-    """A 3:2 thumbnail from a rendered figure: cover-crop about the centre,
-    resize, quantise. For the mosaic and the home-page cards."""
+def thumbnail(src, dst, width=THUMB):
+    """A thumbnail of a rendered figure: the whole figure, scaled to `width`
+    CSS px at its own aspect, quantised. For the mosaic and the home-page
+    cards (build_thumbnails.py).
+
+    Never a crop. The first version of this cover-cropped to 3:2, and every
+    card on the home page lost its right edge or its top and bottom - axis
+    labels, the last bar, half a box - while the CSS looked innocent, because
+    a 3:2 image in a 3:2 box is not cropped by object-fit: cover. A thumbnail
+    that shows a slice is a different figure from the one the caption
+    describes. If a fixed tile shape is wanted, the page letterboxes
+    (object-fit: contain on the figure's own ground colour); the asset stays
+    whole."""
     from PIL import Image
     im = Image.open(src).convert("RGB")
     w, h = im.size
-    tw, th = width, round(width / aspect)
-    scale = max(tw / w, th / h)
-    im = im.resize((round(w * scale), round(h * scale)), Image.LANCZOS)
-    w, h = im.size
-    left, top = (w - tw) // 2, (h - th) // 2
-    im = im.crop((left, top, left + tw, top + th))
+    im = im.resize((width, round(h * width / w)), Image.LANCZOS)
     im.quantize(colors=256, method=Image.Quantize.MEDIANCUT, dither=Image.Dither.NONE).save(dst, optimize=True)
     return os.path.getsize(dst)

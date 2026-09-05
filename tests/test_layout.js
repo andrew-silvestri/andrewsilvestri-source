@@ -19,7 +19,11 @@ const { chromium } = require('playwright');
 
 const SITE = path.join(__dirname, '..', 'site');
 const PAGES = ['index', 'atlas', 'model', 'library', 'code', 'heat', 'storage', 'climate-cost', 'longevity', 'skyline', 'desktop'];
-const VIEWPORTS = [[1440, 900], [1024, 768], [390, 844]];
+// 1920 is here because "New York" wrapping to a line of its own in a 192px
+// gutter was read as clipping (2026-09-04); the test now also fails on real
+// clipping - any marginalia element wider than its box - so the two cannot
+// be confused again.
+const VIEWPORTS = [[1920, 1080], [1440, 900], [1024, 768], [390, 844]];
 const MIME = { '.html': 'text/html', '.css': 'text/css', '.js': 'text/javascript', '.png': 'image/png', '.webp': 'image/webp', '.svg': 'image/svg+xml', '.woff2': 'font/woff2', '.mp4': 'video/mp4', '.ico': 'image/x-icon' };
 
 function serve() {
@@ -66,6 +70,10 @@ function serve() {
               if (hit(ab, eb)) out.push((a.className) + ' x ' + el.tagName.toLowerCase() + (el.className && typeof el.className === 'string' ? '.' + el.className.split(' ')[0] : '') + ' @' + Math.round(eb.top + scrollY));
             }
             for (const b of asides) if (b !== a && hit(ab, box(b))) out.push(a.className + ' x ' + b.className);
+            // clipping: text wider than the box that holds it is cut off, not wrapped
+            for (const el of [a, ...a.querySelectorAll('*')]) {
+              if (el.scrollWidth > el.clientWidth + 1) out.push(a.className + ' clips ' + el.tagName.toLowerCase() + ' "' + (el.textContent || '').trim().slice(0, 28) + '"');
+            }
           }
           return out;
         });

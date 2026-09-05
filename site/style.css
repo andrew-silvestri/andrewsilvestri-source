@@ -369,6 +369,14 @@ img.fig:focus-visible { outline: 2px solid var(--acc); outline-offset: 2px; }
 .cardgrid .card {
   display: grid;
   grid-template-columns: minmax(0, 38%) minmax(0, 1fr);
+  /* The image (column 1) spans every row; the text sits in rows 2-4 between
+     two 1fr rows. So whichever column is taller sets the card's height and
+     the other is centred against it: a shorter image floats mid-text, a
+     shorter text stack floats mid-image. Before this (2026-09-04) the rows
+     were all auto and the leftover height was dumped under the image - 20
+     to 76px of dead space at the foot of five of the six home-page cards,
+     which read as a mistake, not as rhythm. */
+  grid-template-rows: 1fr auto auto auto 1fr;
   gap: 0 28px;
   align-items: start;
   border: 0;
@@ -378,7 +386,9 @@ img.fig:focus-visible { outline: 2px solid var(--acc); outline-offset: 2px; }
   height: auto;
 }
 .cardgrid .card .tag, .cardgrid .card h3, .cardgrid .card p, .cardgrid .card a.btn { grid-column: 2; }
-.cardgrid .card p { margin: 8px 0 0; }
+.cardgrid .card .tag { grid-row: 2; }
+.cardgrid .card h3 { grid-row: 3; }
+.cardgrid .card p { grid-row: 4; margin: 8px 0 0; }
 
 /* -------------------------------------------------------------- cards --- */
 .card {
@@ -403,12 +413,21 @@ img.fig:focus-visible { outline: 2px solid var(--acc); outline-offset: 2px; }
    of one column at the 760px breakpoint below. */
 .cardgrid .card img {
   grid-column: 1;
-  grid-row: 1 / span 4;
+  grid-row: 1 / span 5;
+  align-self: center;
   width: 100%;
   max-width: 100%;
-  aspect-ratio: 3 / 2;   /* the site's one thumbnail shape; overrides the width/height attributes */
+  /* No fixed aspect and no object-fit: the thumbnail is the whole figure at
+     its own shape (build_thumbnails.py) and is shown whole at every width.
+     Do not put aspect-ratio + object-fit: cover back. That pair was here on
+     2026-09-04 and looked innocent - a 3:2 box showing a 3:2 image - while
+     the crop it was hiding had moved into the asset: sitefig.thumbnail()
+     was centre-cropping 1.6-2.1:1 figures to 3:2, and every card lost its
+     right edge (the skyline's "played in Bb" and its last tower, the tomato
+     chain's gas figure and half a box). The mosaic below carries the same
+     warning from its first version. A card 40px taller than its neighbour
+     is the cost, and it is the right cost. */
   height: auto;
-  object-fit: cover;
   margin: 4px 0 0;
   display: block;
 }
@@ -537,19 +556,27 @@ footer {
   gap: 6px;
   margin: 4px 0 6px;
 }
-/* One aspect for every thumbnail on the site, 3:2. Part 2 renders the
-   mosaic and card thumbnails at exactly this shape, so nothing is boxed or
-   cropped; until then the stale dark figures are cropped to it. */
+/* contain, not cover. The six library figures are drawn WIDE, 1.70-1.83:1,
+   so a 16:9 tile fits each with at most 2% of its height in bands, and the
+   bands are the figure's own ground (--bg), so they do not show. The
+   original of this rule said: "contain, not cover: these figures range from
+   1.15:1 to 1.83:1 against a 4:3 tile, and a centred cover-crop was cutting
+   whole panels and axis labels off rather than showing a recognisable slice
+   of the chart." The dead-space fix (2026-09-04) replaced it with cover and
+   deleted that sentence, and the crop came straight back, this time inside
+   the thumbnails. If the tile shape changes, change it to fit the figures
+   (sitefig.WIDE), never the figures to fit the tile. */
 .mosaic a {
   display: block;
-  aspect-ratio: 3 / 2;
+  aspect-ratio: 16 / 9;
   overflow: hidden;
   border: 1px solid var(--rule);
+  background: var(--bg);
 }
 .mosaic img {
   width: 100%;
   height: 100%;
-  object-fit: cover;
+  object-fit: contain;
   display: block;
   transition: transform .25s ease;
 }
@@ -572,7 +599,13 @@ aside.marginalia.right { grid-column: gutter-r; padding: 0 0 0 22px; }
    follow it on that page, written by the page build; no fixed number here */
 aside.marginalia.long { position: static; }
 aside.marginalia ul { list-style: none; margin: 0; padding: 0; }
-aside.marginalia li { margin: 0 0 10px; padding-left: 10px; border-left: 2px solid var(--faint); }
+aside.marginalia li { margin: 0 0 10px; padding-left: 10px; border-left: 2px solid var(--faint);
+  /* A 192px gutter holds about 26 characters, so "cheese, France to New
+     York" broke as "…to New / York" - a legal wrap that reads as clipping.
+     pretty lets the engine avoid a one-word last line (2026-09-04, checked
+     at 1920: nothing in the gutter overflows its box; test_layout.js now
+     asserts that at every width). */
+  text-wrap: pretty; }
 aside.marginalia b { display: block; color: var(--ink); font-weight: 400; }
 aside.marginalia .v { display: block; }
 aside.marginalia a { border: 0; }
@@ -599,8 +632,12 @@ aside.marginalia img { width: 18px; height: 18px; vertical-align: -4px; margin-r
 
 @media (max-width: 1100px) {
   /* the gutters shrink below what a value needs; the notes go above the prose */
+  /* Two columns only when each can be 170px: at 390 a bare "columns: 2"
+     gave 131px columns and "5.13 dollars/MMBtu" (non-breaking, 130px) was
+     cut off at the right (2026-09-04, caught by test_layout.js's clipping
+     check the day it was added). One column below ~360px of content. */
   aside.marginalia, aside.marginalia.right { position: static; grid-row: auto !important; grid-column: text; padding: 0;
-                                            columns: 2; column-gap: 20px; margin: 6px 0 14px; }
+                                            columns: 2 170px; column-gap: 20px; margin: 6px 0 14px; }
   aside.marginalia li { break-inside: avoid; }
 }
 
@@ -611,9 +648,9 @@ aside.marginalia img { width: 18px; height: 18px; vertical-align: -4px; margin-r
          padding-left: 20px; padding-right: 20px;
          max-width: 100%; }
   .cardgrid { grid-template-columns: 1fr; }
-  .cardgrid .card { grid-template-columns: 1fr; }
+  .cardgrid .card { grid-template-columns: 1fr; grid-template-rows: none; }
   .cardgrid .card img { grid-column: 1; grid-row: auto; margin: 10px 0 4px; }
-  .cardgrid .card .tag, .cardgrid .card h3, .cardgrid .card p, .cardgrid .card a.btn { grid-column: 1; }
+  .cardgrid .card .tag, .cardgrid .card h3, .cardgrid .card p, .cardgrid .card a.btn { grid-column: 1; grid-row: auto; }
   /* Nothing may be wider than the screen. One over-wide child gives the
      whole document a horizontal scroll, and every block then reads as
      though it has been cut off down the right edge. */
