@@ -10,10 +10,10 @@ browser, the shelf is drawn in the browser, and the PNG is written by the
 browser. You can pull the network cable first if you want to check. Nothing
 is stored between visits.
 
-The one exception is *Real covers*. Ticking it sends one request per book
-to Open Library (an Internet Archive project) carrying that book's ISBN from
-your export and nothing else from it - no title, no rating, no cookie, no
-referrer. An ISBN is a book, and several hundred sent together are a list of
+The CSV is parsed in the browser and never leaves it. The optional cover
+mode sends the ISBN of each book that has one to Open Library — nothing else
+from your export — and follows its redirect to Internet Archive. One request
+per book, with no title, no rating, no cookie, no referrer. An ISBN is a book, and several hundred sent together are a list of
 your books, so the box is off until you tick it, switches itself off again
 whenever you load a file, and the panel reports what came back: how many
 covers, how many books had no ISBN to look up, how many Open Library has no
