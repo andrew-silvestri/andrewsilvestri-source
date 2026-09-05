@@ -35,15 +35,17 @@ source material unless told otherwise.
     library.html            figure library
     code.html               downloads index
     heat.html storage.html climate-cost.html    project pages (Energy)
-    longevity.html skyline.html desktop.html    project pages (Others)
+    longevity.html skyline.html                 project pages (Others)
     atlas-app.html longevity-app.html skyline-app.html
-    bookshelf-app.html climate-cost-app.html    full-screen interactive apps,
+    climate-cost-app.html                       full-screen interactive apps,
                                                 opened in a new tab
     style.css               the ONLY stylesheet for all non-app pages
     assets/                 figures (.png/.webp) and their -thumb.png, 4 JS files
                             (atlas-app, atlas-data, lightbox, motion), fonts/
                             (IBM Plex, OFL). No video and no WebGL hero since
-                            2026-09-04: the home-page globe is hero_globe.png.
+                            2026-09-04. The home-page hero is the layer diagram
+                            (atlas_layers-notes.png, -phone.png for a phone);
+                            the globe, hero_globe.png, is on atlas.html.
     downloads/              per-project source .zip archives (gitignored; four
                             of the twelve are rebuilt by rezip_downloads.py)
     CNAME .nojekyll         GitHub Pages config — do not delete either
@@ -51,9 +53,12 @@ source material unless told otherwise.
   climate-cost/             sub-project: LCA engine, data, tests, template
   longevity-quotient/       sub-project: model, data, tests, template
   heat/ storage/            the two calculator models (see the table below)
-  skyline/ bookshelf/       the skyline generator; the bookshelf download's README
+  skyline/ bookshelf/       the skyline generator; the retired bookshelf app's README,
+                            wallpaper setter and demo render (see unpublished/)
   fonts/                    Plex OTFs for the figure builders (sitefig.py)
-  unpublished/              retired pages kept but not linked: dac, holdup, beans,
+  unpublished/              retired pages kept but not linked (RETIRED.md there says
+                            what each was and why): the bookshelf (desktop.html,
+                            bookshelf-app.html, 2026-09-05), dac, holdup, beans,
                             running-shoes and its three.js app (opening state from
                             ?shoe=1&part=2&explode=1&az=&el=), energy-web, hobbies,
                             navigator. Corrected 2026-09-04: this file used to list
@@ -77,8 +82,8 @@ longer in the workspace at all, and three projects now live inside
 | `01 ARCHIVE/10 World Energy Web/`, `11 …`, `13 World Energy Web v4/`, `14 World Energy Web v5/` | World Energy Web v3/v4/v5 — **retired** model generations. Source of some legacy code the atlas still inherits. |
 | `01 ARCHIVE/18 Final Deliverables/` | A snapshot of the **retired 7,192-node model**. Do not copy figures out of here; see the trap in §8. |
 | `00 PUBLISH/skyline/` | The skyline project, unpacked from `skyline-code.zip` on 2026-09-04 (the zip had been the only copy). `build_app.py` builds `skyline/skyline-app.html`; the shipped copy is `site/skyline-app.html` and the two must be identical (`tests/test_generators.py` checks). Austin, Nashville and Fort Worth are carried in `supplement.py` from each city's published tallest-buildings list; above each list's stated floor the list overrules Wikidata. The instrument has one rendering, the musical one; the old realistic mode and its control are gone, so `S.mode` no longer exists. `24 Skyline Sonifier/` is not in the workspace. |
-| `00 PUBLISH/bookshelf/` | The README and the wallpaper setter for the bookshelf download; the app itself is `site/bookshelf-app.html` (fully client-side; demo screenshots in `site/assets/`). `25 Desktop Gallery/`, which also held a config-driven museum-wallpaper generator and its `PUBLISHING-NOTE.md` on image permissions, is not in the workspace; nothing from that generator is on the site. |
-| `dumpNew/PyProjects/` | Personal desktop apps (Philbrook museum wall, Desktop Gazette), not published. Install contract: one folder, optional Startup shortcut, tray-icon quit, nothing in the registry. |
+| `00 PUBLISH/bookshelf/` | The README and the wallpaper setter of the bookshelf download, retired 2026-09-05; the app itself is `unpublished/bookshelf-app.html` (fully client-side; demo screenshots in `site/assets/`). `25 Desktop Gallery/`, which also held a config-driven museum-wallpaper generator and its `PUBLISHING-NOTE.md` on image permissions, is not in the workspace; nothing from that generator is on the site. |
+| `dumpNew/PyProjects/` | Personal desktop apps (Philbrook museum wall, Desktop Gazette), not published. Install contract: one folder, optional Startup shortcut, tray-icon quit, nothing in the registry. **Do not publish the museum wall.** Its `PUBLISHING-NOTE.md`, which held the reason, is gone (noticed 2026-09-05); the reason was image rights: `philbrook_museum/images_full/` is the museum's collection photography, pulled for a private wall and not licensed for a public site. A working generator with no visible reason not to ship it is how that warning would otherwise be lost. |
 | `01 ARCHIVE/16 Presentation Architecture/` | 13 GB. Do not walk it casually. |
 
 ---
@@ -168,12 +173,32 @@ figure builders take theirs from `sitefig.py`, which is the same set by
 name and value; the five apps copy the set into their own `:root` because
 each must work alone from a folder. The one dark scene left is the atlas
 app's globe (and the same globe in the climate-cost app), drawn for the sea
-it sits on; the home page's globe is a figure on paper. Until 2026-09-04
+it sits on; the atlas page's globe is a figure on paper (it was the home
+page's until Phase 4, 2026-09-04, when the layer diagram became the hero:
+a globe is a map, and the first picture should say "this is a model", not
+"this is a map"). Until 2026-09-04
 this paragraph described the previous palette (violet accent, dark ground,
 WebGL hero trails); that stylesheet is in git before that date.
 
+**The index.** The home page's projects are an index, not cards: "THE INDEX
+SPEC" in `style.css` beside `.index .entry`, changed before the code. An entry
+is a kicker, a linked title and one sentence, a hook, not a summary; no
+figure; a rule above, 16px above and 18px below, every entry the same shape.
+There is no copy budget because one sentence always fits, and
+`tests/test_layout.js` counts the sentences, fails an entry with more than
+one or with a figure, and fails a sentence that opens by repeating its title.
+This replaced THE CARD SPEC on 2026-09-05 after four passes of card fixes
+(the crop, the 3:2 aspect, the dead space, the alignment, then a copy
+budget): a 271px thumbnail cannot hold its own beside a paragraph, and a
+full-width figure lets the tallest figure set the page's rhythm. The figures
+live on the pages that explain them; `build_thumbnails.py` now makes only the
+mosaic's six.
+
 **Figures.** Generated by Python, never hand-drawn, always regenerated from the
-live payload. Every figure builder runs an `audit()` that reports overlapping
+live payload. A panel is labelled only through `sitefig.panel()`, and
+`sitefig.save()` refuses a figure with any other axes title. An audit reads
+titles through `sitefig.titles()`, never `ax.title` (see the trap in section 8).
+Every figure builder runs an `audit()` that reports overlapping
 or off-canvas text and must report **0 layout problems**.
 
 ---
@@ -196,7 +221,9 @@ report first.**
 | `build_atlas_figures.py` | Regenerates the 11 library figures. |
 | `build_throughlines.py` | Regenerates the big throughlines sheet. |
 | `build_model_chart.py` | Regenerates the home-page overview chart. |
-| `build_hero_figure.py` | Draws the home-page globe (`hero_globe.png`) from the atlas payload: stations, settlements, coastlines, on paper. Replaced `build_hero.py` and the WebGL hero on 2026-09-04. |
+| `build_layer_diagram.py` | The nine layers as bands with their counts, and every layer-to-layer link as an arc, one-way on the right and two-way on the left, stroke by edge count. Counts, links and the rank rule are read from the payload and `atlas-app.js`; nothing is typed in. Three renders: 1140 (above the atlas table), 714 (the home-page hero) and 350 (a phone). The band order is the one that minimises arc crossings, checked over all 120, and `update_atlas_pages.py` orders the layer table to match. In `tests/test_generators.py`. |
+| `build_hero_figure.py` | Draws the globe (`hero_globe.png`) from the atlas payload: stations, settlements, coastlines, on paper. The home-page hero from 2026-09-04 22:32 until Phase 4 the same night; now under the intro on `atlas.html`. |
+| `unpublished/build_bookshelf_demo.js` | Retired with the bookshelf (2026-09-05): renders the app's demo shelf to `bookshelf/demo-wallpaper.png`. Kept runnable from `unpublished/`. |
 | `build_favicon.py` | The favicon and touch icon from one description, in the palette. |
 | `update_atlas_pages.py` | **Regenerates `atlas.html` wholesale** and replaces stale figures in `model.html`. |
 
@@ -210,8 +237,8 @@ report first.**
 | `sync_assets.py` | Copies figures from project folders into `site/assets/`. |
 | `bust_cache.py` | **Run before every publish.** Stamps `style.css`, the JS and every image with a content hash. Does not stamp what CSS `url()` references (the fonts). |
 | `sync_img_dims.py` | Keeps every `<img width height>` equal to the file's pixels. |
-| `build_thumbnails.py` | The twelve card and mosaic thumbnails from the shipped figures: the whole figure at 542px wide, its own aspect, never a crop (trap 15). Run after re-rendering any of them, then `sync_img_dims.py`. |
-| `rezip_downloads.py` | Rebuilds the heat, storage, bookshelf and skyline `-code.zip` from their source folders. One run at a time (lock file in `site/downloads/`); each archive is written beside itself and moved into place; `--verify` compares a fresh build against what is shipped without writing. Never ships `__pycache__/`, `outputs/`, node state or a built page — storage-code.zip did, on 2026-09-04. |
+| `build_thumbnails.py` | The six mosaic thumbnails on the home page from the library figures, whole at their own aspect (`sitefig.thumbnail()`). The five card thumbnails went with the cards on 2026-09-05. |
+| `rezip_downloads.py` | Rebuilds the atlas, heat, storage and skyline `-code.zip` (the bookshelf's last build is in `unpublished/downloads/`; `atlas-code.zip` is a named-files archive, `ATLAS_FILES`, carrying the builders, the app, the fonts and the tests, with `atlas-code-README.md` as its README, since 2026-09-05) from their source folders. One run at a time (lock file in `site/downloads/`); each archive is written beside itself and moved into place; `--verify` compares a fresh build against what is shipped without writing. Never ships `__pycache__/`, `outputs/`, node state or a built page — storage-code.zip did, on 2026-09-04. |
 | `tests/test_generators.py` | Runs every text generator into a copy of the tree and diffs the result against `site/`. **Run it before trusting any generator**, and run a generator for real only after the check says it agrees. |
 | `build_site.py` | **Retired. Never run it.** The original generator, last valid 2026-08-01: it writes pages that are no longer on the site (dac, holdup, energy-web), a nav from before the regrouping, and its own icons. `tests/test_generators.py --retired` shows what it would do to the tree. |
 | `publish.sh` | Mirrors `site/` into the Pages repo and commits. `--dry-run` first. |
@@ -288,8 +315,32 @@ Four properties that took a long time to get right — **do not undo them**:
    however many members it has.
 4. **Row normalisation** by the node's total in-weight, which makes the
    spectral radius exactly 1 and the iteration a contraction.
+5. **A response is not promoted, and neither is the coupling it answers.**
+   Added 2026-09-05, because property 2 had a casualty: making every
+   same-rank edge two-way gave the district→consumer demand edge (+0.50) a
+   back-channel, consumer→district, which property 3 filed in the same
+   fan-in bucket as the consumer's −0.01 response edge, and the bucket
+   summed to +0.49. Demand response was in the payload and never in a run:
+   pushing a consumer moved its district up. The rule states the reason
+   rather than the instance: a negative edge within a rank is a response
+   (the site's definition of a negative link, relief rather than stress),
+   the reverse edge is the coupling it answers, and the response is that
+   coupling's back-channel, so the engine does not invent another. Any
+   future response edge inherits this. Not a kind-pair rule and not a
+   payload flag: the payload already says which edges are responses, by
+   sign. Today it selects exactly the 1,142 consumer↔district pairs;
+   `tests/test_demand_response.py` pushes consumers and asserts their
+   districts fall. Rejected on the way: a per-edge type flag (a payload
+   change, so a rebuild or a second hand-patch), and "an explicit reverse
+   edge overrides the implied back-channel" (principled, but it also sweeps
+   in the 571 filler-district↔grid pairs and moves 41 of the 60 scenario
+   reaches, for pairs whose intent nobody can verify).
 
-If you change any of this, change it in **both** engines and re-verify parity.
+If you change any of this, change it in **both** engines and re-run
+`python tests/test_parity.py`, which runs all sixty prepared changes through
+both and holds every node's settled effect to 1e-12 (measured 1.1e-15 on
+2026-09-05, step counts equal). Until that day no such test existed and the
+claim below it was unverified.
 
 ### Scenario magnitudes
 
@@ -309,14 +360,19 @@ python3 tests/test_markup.py           # markdown that never became HTML
 python3 tests/test_units.py            # every climate-cost input against its declared unit
 python3 tests/test_generators.py       # every text generator run into a copy and diffed against site/
 node tests/test_atlas_interaction.js   # boots the real app against a three.js stub
+python3 tests/test_parity.py           # the browser engine against the figures' engine, all 60 scenarios, to 1e-12
+python3 tests/test_payload.py          # the payload's SHA-1 against atlas_payload.json (trap 14)
+python3 tests/test_demand_response.py  # push consumer groups, districts must fall (engine property 5)
+node climate-cost/test_scene.js        # the climate-cost visualiser: JS engine against lca.py, layout, overlap; jsdom and three r128 from tests/node_modules
 node tests/test_layout.js              # Playwright: marginalia, measure, hierarchy at 1440/1024/390
 node tests/probe_scene.js              # prints what is actually in the scene graph
 python3 build_atlas_figures.py         # must say "0 layout problem(s)"
 ```
 
-The first five are the suites; all of them must pass before a commit. The
-generator check needs nothing installed; the two node suites use the
-Playwright in `tests/package.json`.
+All of them must pass before a publish; section 11 says what each one
+catches. The Python checks need numpy, scipy, matplotlib and Pillow; the
+node suites use the playwright, jsdom and three in `tests/package.json`
+(`npm install` in `tests/`).
 
 `tests/three-stub.js` is a hand-written partial three.js so the app can be
 booted headlessly. `window.__atlasUI` and `window.__atlasScene` are test hooks
@@ -462,6 +518,37 @@ Read this section. Every item is a real bug that shipped.
     delete a file, its warnings go into the thing that took over its job
     (the grid comment in `style.css` is the margin-scene clamp's).
 
+12. **`ax.title` is only the centre title.** `sitefig.panel()` sets a
+    left-aligned title, which matplotlib keeps in `ax._left_title`, so every
+    audit that read `ax.title` saw no panel label at all and passed a sheet
+    whose label sat on a legend (`energy_model_chart.png`, Phase 4,
+    2026-09-04). Read `sitefig.titles(ax)`. A legend is also a box, not just
+    its words: `build_throughlines.audit()` checks the legend's whole extent
+    against every other text.
+
+13. **A figure is drawn at the width it is shown, and the page decides the
+    width.** `index.html` spent one day as `main.prose` (two tracks) and every
+    714px figure and 271px thumbnail on it was scaled up 1.6x and went soft.
+    It is `main.notes` again, one 714px measure, no marginalia; the CSS beside
+    `main.notes` says why. `tests/test_layout.js` fails a page whose text
+    blocks have more than one left edge, and a picture that breaks out
+    off-centre.
+
+14. **The payload carries two hand-patched strings, and its builder now
+    produces the corrected versions.** On 2026-09-05 (PHASE5 Part 3) the
+    tab subtitles "2,896 ports and benchmarks" and "34,065 settlements" in
+    `site/assets/atlas-data.js` were replaced in place with "ports, price
+    benchmarks and fuel supplies" and "settlements and consumer groups", and
+    `build_atlas_global.py` was changed to write those. The payload was not
+    rebuilt: the pipeline needs the raw data under `19 Atlas v6/raw` and a
+    day. So builder and payload agree on the words and disagree on how they
+    got there, and the next full rebuild resolves it. The payload is
+    gitignored and too large for the generator check, so
+    `tests/test_payload.py` holds its SHA-1 against `atlas_payload.json`
+    (this state, recorded 2026-09-05) and fails on any change until someone
+    re-records it with a note. Anyone who diffs a fresh build against the
+    shipped file and finds exactly those two strings has found this note.
+
 ---
 
 ## 9. Adding a new project
@@ -504,22 +591,118 @@ one that gets tested on this machine.
 
 ---
 
-## 11. Current state, August 2026
+## 11. Current state, 5 September 2026
 
-- Payload: **86,622 nodes, 197,068 weighted links**, 0.10% isolated, 12 node
-  kinds, 9 tabs.
-- **60 prepared scenarios** in 9 categories, each with a stated basis.
-- Engine parity between the browser and the figure builder: agreement to ~1e-9.
-- All figure builders report 0 layout problems; all interaction tests pass.
-- No broken links; 12 download archives intact.
+Live: the mirror's `b768538` (2026-09-05, the last of six publishes that
+day: Phase 4 Part A `a934a13`; Phase 5 Parts 1, 2b, 3, 4+5, and the grid).
+The write-ups are `PHASE4_2026-09-04.md` and `PHASE5_2026-09-04.md`; every
+earlier one is listed in section 2. This section is the state, not the
+history, so that nobody has to read eleven write-ups to know it.
 
-Known gaps, deliberately left:
+### The model
 
-- The NAO reaches only Great Britain and Ireland, because those are the only
-  countries with a published, quantified NAO-to-demand relationship.
-- No district-level political or values weighting. WVS/EVS is national-level
-  for ~120 countries and does not exist at the resolution that would require.
-  Building it would mean presenting interpolation as measurement.
-- 571 of 3,332 districts are synthetic fillers with no population and no
-  behaviour link, because the source data could not resolve real divisions for
-  those countries.
+- Payload `site/assets/atlas-data.js`: **86,622 nodes, 197,068 weighted
+  links**, 12 kinds, 9 tabs, 60 prepared scenarios in 9 categories. Its
+  SHA-1 is recorded in `atlas_payload.json` and `tests/test_payload.py`
+  holds it there; the record's note says what state the file is in (last
+  full build 2026-09-04, two hand-patched tab subtitles, scenario reach
+  fields rewritten under property 5). See section 8, trap 14.
+- The propagation engine exists **twice** and nowhere else: `atlas-app.js`
+  (the model of record) and `build_throughlines.engine()` (every figure,
+  the scenario builder, the page generator). A third copy lived in
+  `build_scenarios.py` until 2026-09-05; it imports the second now.
+- **Five properties**, all in section 6 with their reasons: (1) a node takes
+  the weighted mean of its drivers, not the sum; (2) layers carry an
+  exogeneity rank and an edge is two-way only within a rank; (3) fan-in
+  normalisation, a layer speaks once however many members it has; (4) row
+  normalisation by total in-weight, spectral radius 1; (5) a negative
+  same-rank edge is a response, and neither it nor the coupling it answers
+  is promoted to two-way. Change any of them in both engines and run the
+  parity test.
+- What the engine measures, as of this payload: the sixty prepared changes
+  settle in 5 to 43 rounds (never the ceiling of sixty), reach 2 to 77,684
+  nodes, and pushing the most connected power plant moves nothing but
+  itself. These are computed by `update_atlas_pages.py` and written into
+  the pages; do not type them.
+
+### The tests, and what each one catches
+
+All of these must pass before a publish; `./publish.sh --dry-run` after.
+
+| Test | Catches |
+|---|---|
+| `tests/test_generators.py` | Any of the 11 text generators drifting from what is shipped: nav, atlas and model pages, longevity page and app, climate-cost app, skyline app, the five generated download archives, thumbnails, the layer diagram, image dimensions, cache stamps. Run before trusting any generator. |
+| `tests/test_parity.py` | The two engines disagreeing: all 60 scenarios, every node, to 1e-12 (measured 2.2e-15), and the round counts. |
+| `tests/test_demand_response.py` | Property 5 regressing: push a consumer group, its district must fall. 40 sampled, `--all` for 1,142. |
+| `tests/test_payload.py` | The payload changing without anyone re-recording it. |
+| `tests/test_atlas_interaction.js` | The app failing to boot or a node kind that cannot be clicked, against a three.js stub. 19 checks. |
+| `tests/test_layout.js` | Marginalia painting over content; a page with more than one left edge for its text blocks, or a breakout picture off the measure; the home page's index entries off spec (one sentence, no figure, same shape). 40 page-viewport combinations at 1920, 1440, 1024, 390. |
+| `tests/test_markup.py` | Markdown that never became HTML. |
+| `tests/test_units.py` | A climate-cost input against its declared unit (211). |
+| `climate-cost/test_lca.py` | The life-cycle model against its published ranges. |
+| `climate-cost/test_scene.js` | The page's JavaScript engine drifting from `lca.py`; a branch placed off-frustum; balls overlapping; idle cost. 25 checks; needs jsdom and three r128 from `tests/node_modules`, and fails loudly without them. First ran 2026-09-05. |
+| `skyline/test_app.js` | An empty bearing; tower names colliding with each other or the compass; bars reaching into the foot. 43 checks. |
+| `longevity-quotient/test_perf.js`, `test_fit_strategy.py`, `test_merge.py` | The app's render cost; the fit strategy; the merge of the three lifespan sources. 12, ok, 22. |
+| Every figure builder's `audit()` | Text overlapping text, text off the canvas, anything under the 12px floor, text spilling its box, a legend's box over text, a panel label not set through `sitefig.panel()` (`save()` refuses), and on a multi-panel sheet: stacked panels not sharing a column, content off-centre, a legend under a panel off its centre (`sitefig.grid_problems()`). Every builder must print 0 problems. |
+| `_deslop/measure.js` then `analyse.js` | The page rig: every page and app at 1440 and 390, console errors, failed requests, text under 12px, every contrast pair against AA, weight. Serve `site/` on 8765 first. |
+
+### Generated against typed
+
+Generated, and regenerated by `python update_atlas_pages.py --apply` from
+the payload and a run: all of `atlas.html` (the layer table in the
+diagram's order, the assumed-node counts, the settle range, the reach span,
+the plant push, the category table); on `model.html` the §2 node table,
+the §4.4 settle range, the §5.1 weight and §5.2 inertia tables' numbers,
+the §6 behaviour table, and every bare count. `rebuild_nav.py` writes the
+nav on every page; `bust_cache.py` the stamps; `sync_img_dims.py` the
+image sizes; `build_thumbnails.py` the mosaic's six; `build_layer_diagram.py`
+the hero and the atlas figure; `rezip_downloads.py` five archives;
+`longevity-quotient/update_page.py` the longevity page's numbers.
+
+Typed, and therefore able to go stale: the prose on every page; the
+"reason" columns of the §5 tables (each checked against
+`build_atlas_global.py` on 2026-09-05, but typed); `model.html` §7;
+`code.html`'s rows, including each archive's file count and size; the five
+sentences on the home page; the specs in `style.css`; and the two tab
+subtitles inside the payload (trap 14). If a number on a page is not in the
+generated list above, it was typed.
+
+### Open, by name
+
+- **Payload rebuild.** The pipeline (`build_atlas_global.py` onward) has not
+  been run since 2026-09-04; the shipped payload carries two hand-patched
+  subtitles the builder now writes itself, and the scenario reach fields
+  from `build_scenarios.py --apply` under property 5. Needs the raw data in
+  `19 Atlas v6/raw` and a day; re-record `atlas_payload.json` after.
+- **Skyline's Wikidata pull.** `build_skylines.py` cannot run because the
+  raw pull was never archived; its docstring says what a fresh pull takes
+  and that it is a new dataset. `rprof` (60 KB) is derivable and still
+  shipped; the hijaz/insen compromise is stated, not solved.
+- **Longevity's remaining leftovers** (`FIX_LONGEVITY_2026-09-04.md` §9):
+  `taken_from` not shipped; six derivable payload columns (~265 KB) still
+  shipped; ten long names truncate on a phone; `load_anage.py`,
+  `README.md` and `DATA_SOURCES.md` describe the older pipeline;
+  `lq_explained.png` uses the all-animal fit. The eight high-side
+  demotions stay grade C by decision (PHASE5 Part 5).
+- **The heat and storage builders** live in their download zips with their
+  own `figstyle.py`, off `sitefig.py`; their audits read `ax.title` and
+  have no panel labels or grids to miss. Bringing them onto sitefig is a
+  rezip.
+- **`code.html`'s archive rows** are typed (file counts, sizes) and drift
+  whenever an archive is rebuilt; a generator would read the zips.
+- **`.notes`** is the home page's class and the page has no notes; the CSS
+  comment beside the rule says why. A rename touches eight pages.
+- **`library.html`'s four text blocks** are `.flush`: one left edge with the
+  cards, held to the measure, two widths on one page.
+- **The mosaic** shows 271px renders at 232px; fine, but the only figures
+  on the site not shown at their render width.
+- **The museum generator** under `dumpNew/PyProjects/` must not be
+  published (image rights; section 2). The warning is the only thing
+  keeping it that way.
+
+Known gaps in the model, deliberately left and unchanged since August: the
+NAO reaches only Great Britain and Ireland (the only quantified NAO-to-demand
+relationship published); no district-level political or values weighting
+(WVS/EVS is national and interpolating it would be presented as
+measurement); 571 of 3,332 districts are synthetic fillers with no
+population and no behaviour link.
