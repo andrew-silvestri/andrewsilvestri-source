@@ -251,6 +251,66 @@ function soundingSet() {
      `loudest bearing is ${swing.toFixed(1)}x the quietest`);
 }
 
+console.log('\n  The voicing');
+{
+  /* Each mode voiced on its own terms, and the minor-third safety net never
+     fires. Before 2026-09-04 eight modes collapsed to five sounds and Dubai
+     in D hijaz was Vienna in D major, note for note. */
+  const shapes = new Map();   // mode -> pitch classes sounding
+  const byKey = new Map();    // root + classes -> label
+  let bad = '';
+  for (let i = 0; i < K.cities.length; i++) {
+    K.S.i = i; K.setKey();
+    const p = K.pitches();
+    const pcs = [...new Set(p.map(f => Math.round(12 * Math.log2(f / p[0])) % 12))]
+      .sort((a, b) => a - b).join(',');
+    const c = K.cities[i];
+    if (shapes.has(c.key.mode) && shapes.get(c.key.mode) !== pcs) bad = c.city;
+    shapes.set(c.key.mode, pcs);
+    const kk = c.key.root + '|' + pcs;
+    if (byKey.has(kk) && byKey.get(kk) !== c.key.label) bad = c.city + ' = ' + byKey.get(kk);
+    byKey.set(kk, c.key.label);
+    const vo = K.voicing[c.key.mode];
+    if (!vo || !vo.ground.concat(vo.upper).every(d => c.key.steps.includes(d)))
+      bad = c.city + ': voiced note not in the mode';
+  }
+  ok(K.clashes() === 0, 'the minor-third net never removes a voiced note',
+     `${K.clashes()} removed`);
+  ok(new Set(shapes.values()).size === shapes.size,
+     'every mode sounds different from every other',
+     `${new Set(shapes.values()).size} shapes for ${shapes.size} modes`);
+  ok(!bad, 'no two keys with different names sound alike, and every voiced note is in its mode', bad);
+}
+
+console.log('\n  Reduced motion');
+{
+  doc.documentElement.dataset.motion = 'off';
+  doc.dispatchEvent(new win.Event('motionchange'));
+  ok(K.motionOff() === true, 'the app reads data-motion=off');
+  ok(doc.getElementById('spin').hidden === true, 'and hides Spin');
+  K.S.i = 0; K.setKey(); K.S.az = 90; K.step(0.016);
+  const lv = K.levels(), b = K.bars();
+  let snapped = true;
+  for (let k = 0; k < K.BARS; k++) if (Math.abs(lv[k] - b[k]) > 1e-6) snapped = false;
+  ok(snapped, 'the meter snaps instead of easing');
+  doc.documentElement.dataset.motion = 'on';
+  doc.dispatchEvent(new win.Event('motionchange'));
+  ok(doc.getElementById('spin').hidden === false, 'and Spin comes back when motion does');
+}
+
+console.log('\n  The sidebar says where the numbers come from');
+{
+  const fw = K.cities.findIndex(c => c.city === 'Fort Worth');
+  K.S.i = fw; K.setKey(); K.panel();
+  const stats = doc.getElementById('stats').textContent;
+  ok(/at or above 55 m/.test(stats), 'the ring floor is on screen');
+  ok(/published tallest-buildings list/.test(stats) && /above 61 m/.test(stats),
+     'a supplemented city names its source and the override floor');
+  ok(/Voiced as/.test(doc.getElementById('voice').textContent), 'the voicing is stated');
+  K.S.i = 0; K.setKey(); K.panel();
+  ok(/Wikidata/.test(doc.getElementById('stats').textContent), 'a Wikidata city says so');
+}
+
 console.log('\n  The sound stops when the page does');
 {
   const play = doc.getElementById('play');

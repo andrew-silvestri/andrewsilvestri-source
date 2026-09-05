@@ -41,7 +41,7 @@ label.f{display:block;font:var(--fs-2) var(--sans);text-transform:uppercase;
   letter-spacing:.11em;color:var(--dim);margin:0 0 3px}
 select,input[type=range]{width:100%}
 select{padding:7px 9px;background:var(--card);color:var(--ink);
-  border:1px solid var(--rule);border-radius:7px;font:var(--fs-1) var(--sans);
+  border:1px solid var(--dim);border-radius:7px;font:var(--fs-1) var(--sans);
   appearance:none;-webkit-appearance:none;cursor:pointer;
   background-image:linear-gradient(45deg,transparent 50%,var(--dim) 50%),
     linear-gradient(135deg,var(--dim) 50%,transparent 50%);
@@ -55,9 +55,11 @@ input[type=range]{accent-color:var(--acc);margin:6px 0 0}
    bare accent was 2.91 in the dark scheme - the failure the 2026-09-04
    palette pass fixed everywhere but here). Outlines are on --acc, 5.78 dark
    and 6.71 light, because --rule against the panel is 1.34 and a control
-   boundary needs 3. */
+   boundary needs 3; the filled button carries the same outline because its
+   fill against the panel is 2.86 in the dark scheme. The select's border is
+   --dim (5.9 dark, 4.7 light) for the same reason. */
 .btns button{flex:1;padding:11px 0;border-radius:9px;
-  background:var(--acc-fill);color:var(--acc-ink);border:1px solid var(--acc-fill);
+  background:var(--acc-fill);color:var(--acc-ink);border:1px solid var(--acc);
   font:600 var(--fs-1) var(--sans);cursor:pointer}
 .btns button:hover{background:var(--acc-fill-hover);border-color:var(--acc-fill-hover)}
 .btns button.on{background:transparent;color:var(--ink);
@@ -110,11 +112,12 @@ canvas{position:absolute;inset:0;width:100%;height:100%;display:block;
   min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 #az{font:var(--fs-2) var(--mono);color:var(--dim);flex:none;white-space:nowrap;
   margin-left:auto}
-/* Below the point where the panel stacks, the hint goes: it talks about
-   dragging, arrow keys and the space bar, two of which a phone does not
-   have, and it was the thing running into the bearing readout. The bearing
-   stays, because it is the one reading that changes as you turn. */
-@media (max-width:760px){ #hint{display:none} }
+/* Below the point where the panel stacks the long hint goes - it talks
+   about arrow keys and the space bar, which a phone does not have - and a
+   four-word one takes its place, because a reader who is never told to drag
+   the wheel does not drag the wheel. */
+#hint .phone{display:none}
+@media (max-width:760px){ #hint .desk{display:none} #hint .phone{display:inline} }
 #tip{position:absolute;pointer-events:none;display:none;padding:6px 10px;
   background:var(--card);border:1px solid var(--rule);border-radius:8px;
   font-size:var(--fs-1);box-shadow:0 12px 30px rgba(2,4,12,.5)}
@@ -180,9 +183,10 @@ canvas{position:absolute;inset:0;width:100%;height:100%;display:block;
   <div id="foot">
     <div id="left">
       <div id="notes"></div>
-      <div id="hint">drag to turn &middot; arrow keys nudge &middot; space to
-        spin &middot; the top panel is the city, the bottom is the same ring
-        as a meter</div>
+      <div id="hint"><span class="desk">drag to turn &middot; arrow keys
+        nudge &middot; space to spin &middot; the top panel is the city, the
+        bottom is the same ring as a meter</span><span class="phone">drag the
+        wheel to turn</span></div>
     </div>
     <div id="az"></div>
   </div>

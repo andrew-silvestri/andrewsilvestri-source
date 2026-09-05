@@ -308,7 +308,10 @@
                     'Bb', 'B'];
   function noteName(f) {
     var midi = Math.round(69 + 12 * Math.log(f / 440) / Math.LN2);
-    var names = /b/.test(C[S.i].key.root) ? NOTES_FLAT : NOTES_SHARP;
+    var key = C[S.i].key;
+    var flats = /b/.test(key.root) || (!/#/.test(key.root) &&
+      /^(minor|hijaz|insen|pent_minor|blues)$/.test(key.mode));
+    var names = flats ? NOTES_FLAT : NOTES_SHARP;
     return names[((midi % 12) + 12) % 12] + (Math.floor(midi / 12) - 1);
   }
   var notesEl = document.getElementById('notes');
@@ -321,10 +324,9 @@
     var snd = sounding();
     var on = [];
     for (var j = 0; j < pitch.length; j++) if (snd.keep[j]) on.push(j);
-    var txt = on.length
-      ? 'sounding ' + on.map(function (j) { return noteName(pitch[j]); })
-                        .join(' ')
-      : 'sounding nothing';
+    var names = on.map(function (j) { return noteName(pitch[j]); }).join(' ');
+    var txt = !on.length ? (S.playing ? 'sounding nothing' : 'stopped')
+      : (S.playing ? 'sounding ' : 'stopped \u00b7 would sound ') + names;
     if (txt !== notesLast) { notesLast = txt; notesEl.textContent = txt; }
   }
 
@@ -759,6 +761,7 @@
   function silence() {
     S.playing = false;
     noaudio('');
+    notesLine();
     playBtn.textContent = 'Play';
     playBtn.classList.remove('on');
     if (master) {
@@ -779,6 +782,7 @@
       playBtn.textContent = 'Stop';
       playBtn.classList.add('on');
       pushAudio();
+      notesLine();
       /* A context that will not run - a phone on mute, a machine with no
          output - used to leave the button saying Stop over a dancing meter
          and nothing else. The API cannot see a mute switch, so this only
