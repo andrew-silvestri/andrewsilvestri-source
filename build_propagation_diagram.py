@@ -1,201 +1,195 @@
-"""
-One clean diagram of the propagation step described in model.html sec4.4 -
-zoomed in on a single node, rather than a network. The throughlines figure
-already shows the step-by-step route through the whole system; this shows
-what happens at one node on one step, so the equation in the prose has a
-picture to point at.
+"""One node, one step: the propagation arithmetic of model.html section 4.4,
+drawn as a worked example at a single node.
 
-Symbolic, not data-driven: the drivers, weights and node are generic (A, B,
-C; w1, w2, w3), because this illustrates the shape of the calculation, not a
-measured instance of it. No number here is asserted as real; the real
-numbers for link weights and inertia are the tables already on model.html.
+The throughlines sheet shows a change travelling through the whole system;
+this shows what happens at one node on one step, so the list in the prose
+has a picture to point at. It is worked with made-up numbers rather than
+symbols alone, because a reader can check a number and cannot check a
+letter: three drivers with effects and weights, the node's inertia, no
+applied change, and the value at each stage. Nothing here is asserted as
+real - the footnote says so - and the real weights and inertias are the
+tables in section 5.
 
-Layout is checked rather than eyeballed: audit() (same routine as
-build_throughlines.py) walks every Text on the canvas and reports anything
-that overlaps or falls outside the figure.
+What is drawn is what atlas-app.js does (the engine of record):
+
+    inflow = sum(w * s) / sum(|w|)                 the weighted mean
+    target = tanh(change + (1 - 0.6 * inertia) * inflow)
+    s_new  = s + LAM * (target - s)                most of the way there
+
+Note the 0.6: the prose says "(1 - inertia)"; the code damps by
+(1 - 0.6 * inertia). The figure follows the code (ATLAS_CLAIMS_TODO item 3
+has the prose).
+
+Layout is checked rather than eyeballed: audit() walks every Text on the
+canvas and reports anything that overlaps or falls outside the figure.
 
 Run:  python3 build_propagation_diagram.py
 """
-
+import math
 import os
+import re
+import sys
+
+if hasattr(sys.stdout, "reconfigure"):
+    sys.stdout.reconfigure(encoding="utf-8", errors="replace")
 
 import matplotlib
-from sitefig import BG, INK, DIM, RULE, FAINT, ACC, COOL, MOSS, ROSE, SLATE, DISTRICT, SUPPLY, PSYCH, SUN, INSOL, GOLD, GREY, VIOLET, BLUE, GREEN, WARM, ARROW, ONE_WAY_COL, TWO_WAY_COL, NODE_COL, WARM2, KCOL, CYCLE, FS_2, FS_1, FS0, FS1, FS2, FONT, MONO, NOTES, PROSE, CARD, THUMB, fig_size, save, WIDE, PLOT, SQUARE, TALL, row_aspect, panel  # noqa: E402,F401
-import sitefig  # noqa: E402
-
 matplotlib.use("Agg")
-import matplotlib.pyplot as plt
-from matplotlib.patches import Circle, FancyArrowPatch, FancyBboxPatch
+import matplotlib.pyplot as plt                              # noqa: E402
+from matplotlib.patches import Circle, FancyArrowPatch, Rectangle  # noqa: E402
 
-from fig_floor import floor_problems
+import sitefig                                               # noqa: E402
+from sitefig import ACC, COOL, MOSS, INK, DIM, RULE, FAINT, BG, CARD_FILL, FS_2, FS_1, FS0, MONO, PROSE, fig_size  # noqa: E402
+from fig_floor import floor_problems                         # noqa: E402
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 OUT = os.path.join(HERE, "site", "assets", "model_propagation_step.png")
+APP = os.path.join(HERE, "site", "assets", "atlas-app.js")
 
-DRIVER_COL = [ACC, COOL, MOSS]
+# ---- the example ----------------------------------------------------------
+DRIVERS = [("A", 0.60, 0.5, ACC), ("B", -0.20, 0.3, COOL), ("C", 0.40, 0.2, MOSS)]
+INERTIA = 0.40
+CHANGE = 0.0
+S_OLD = 0.0
+
+
+def lam_from_app():
+    """The step fraction the engine actually uses, read from the source so
+    the figure cannot drift from it."""
+    s = open(APP, encoding="utf-8").read()
+    m = re.search(r"\blam\s*=\s*([0-9.]+)", s)
+    if not m:
+        raise SystemExit("atlas-app.js: could not find the step fraction (lam = ...)")
+    return float(m.group(1))
+
+
 def audit(fig):
-    """Same routine as build_throughlines.py: walk every Text actually drawn
-    and report overlaps or anything off the canvas."""
     fig.canvas.draw()
     r = fig.canvas.get_renderer()
-    title_ids = {id(ax.title) for ax in fig.axes}
-    items, problems = [], []
-    for ax in fig.axes:
-        for tx in ax.texts:
-            if tx.get_text().strip():
-                items.append(tx)
-        if ax.title.get_text().strip():
-            items.append(ax.title)
-    for tx in fig.texts:
-        if tx.get_text().strip():
-            items.append(tx)
-    boxes = []
+    items = [t for ax in fig.axes for t in ax.texts if t.get_text().strip()]
+    items += [t for t in fig.texts if t.get_text().strip()]
     W, H = fig.canvas.get_width_height()
-    for tx in items:
-        bb = tx.get_window_extent(renderer=r)
-        boxes.append((tx, bb))
+    boxes, problems = [], []
+    for t in items:
+        bb = t.get_window_extent(renderer=r)
+        boxes.append((t, bb))
         if bb.x0 < -2 or bb.y0 < -2 or bb.x1 > W + 2 or bb.y1 > H + 2:
-            problems.append(f"off canvas: {tx.get_text()[:36]!r}")
+            problems.append(f"off canvas: {t.get_text()[:36]!r}")
     for i in range(len(boxes)):
         for j in range(i + 1, len(boxes)):
             a, b = boxes[i][1], boxes[j][1]
             if a.x1 > b.x0 and b.x1 > a.x0 and a.y1 > b.y0 and b.y1 > a.y0:
-                problems.append(
-                    f"overlap: {boxes[i][0].get_text()[:22]!r} / "
-                    f"{boxes[j][0].get_text()[:22]!r}")
-    problems += floor_problems(fig, [(t, id(t) in title_ids) for t in items])
+                problems.append(f"overlap: {boxes[i][0].get_text()[:22]!r} / {boxes[j][0].get_text()[:22]!r}")
+    problems += floor_problems(fig, [(t, False) for t in items])
+    for t, (x0, y0, x1, y1) in BOXED:
+        bb = t.get_window_extent(renderer=r).transformed(fig.axes[0].transData.inverted())
+        if bb.x0 < x0 + 0.06 or bb.x1 > x1 - 0.06 or bb.y0 < y0 + 0.04 or bb.y1 > y1 - 0.04:
+            problems.append(f"spills its box: {t.get_text()[:30]!r}")
     return problems
 
 
-def arrow(ax, p0, p1, color=RULE, lw=1.3, style="-|>", shrink=0):
-    ax.add_patch(FancyArrowPatch(p0, p1, arrowstyle=style, color=color,
-                                  linewidth=lw, mutation_scale=11,
-                                  shrinkA=shrink, shrinkB=shrink, zorder=2))
+def arrow(ax, p0, p1, color=RULE, lw=1.2, dashed=False):
+    ax.add_patch(FancyArrowPatch(p0, p1, arrowstyle="-|>", color=color, linewidth=lw,
+                                 mutation_scale=11, shrinkA=0, shrinkB=0, zorder=2,
+                                 linestyle=(0, (3, 3)) if dashed else "solid"))
 
 
-def box(ax, cx, cy, w, h, label, sub, fill=BG, edge=RULE):
-    ax.add_patch(FancyBboxPatch((cx - w / 2, cy - h / 2), w, h,
-                                 boxstyle="round,pad=0.02,rounding_size=0.06",
-                                 linewidth=1.1, edgecolor=edge,
-                                 facecolor=fill, zorder=3))
-    ax.text(cx, cy + 0.10, label, color=INK, fontsize=FS_1, ha="center",
-            va="center", zorder=4)
-    if sub:
-        ax.text(cx, cy - 0.20, sub, color=DIM, fontsize=FS_2, ha="center",
-                va="center", zorder=4)
+def stage(ax, cx, cy, w, h, n, title, formula, value):
+    """A stage box: number above, the operation in the site face, the
+    arithmetic in mono, the running value in mono under it."""
+    ax.add_patch(Rectangle((cx - w / 2, cy - h / 2), w, h, linewidth=1.0,
+                           edgecolor=RULE, facecolor=CARD_FILL, zorder=3))
+    ax.text(cx - w / 2, cy + h / 2 + 0.12, f"{n}", color=DIM, fontsize=FS_2,
+            fontfamily=MONO, ha="left", va="bottom", zorder=4)
+    inside = [
+        ax.text(cx, cy + 0.40, title, color=INK, fontsize=FS_1, ha="center", va="center",
+                linespacing=1.25, zorder=4),
+        ax.text(cx, cy - 0.16, formula, color=DIM, fontsize=FS_2, fontfamily=MONO,
+                ha="center", va="center", zorder=4),
+        ax.text(cx, cy - 0.48, value, color=ACC, fontsize=FS_2, fontfamily=MONO,
+                ha="center", va="center", zorder=4)]
+    # what a box holds must fit in it: the audit checks text against text,
+    # and the first render of this sheet had three titles running through
+    # their boxes' edges and into each other without a single overlap of
+    # text on text (2026-09-04)
+    for t in inside:
+        BOXED.append((t, (cx - w / 2, cy - h / 2, cx + w / 2, cy + h / 2)))
 
 
-def step_tag(ax, cx, y, n, text):
-    ax.text(cx, y, f"{n}", color=DIM, fontsize=FS_2, ha="center", va="top",
-            fontweight="bold", zorder=4)
-    ax.text(cx, y - 0.30, text, color=DIM, fontsize=FS_2, ha="center",
-            va="top", zorder=4)
+BOXED = []
 
 
 def main():
-    fig = plt.figure(figsize=fig_size(PROSE, 2.4348), facecolor=BG)
-    ax = fig.add_axes([0, 0, 1, 1])
-    ax.set_xlim(0, 11.2)
-    ax.set_ylim(0, 4.6)
-    ax.axis("off")
-    ax.set_facecolor(BG)
+    sitefig.style()
+    lam = lam_from_app()
+    # the arithmetic, once, so every number on the sheet comes from one place
+    inflow = sum(w * s for _, s, w, _ in DRIVERS) / sum(abs(w) for _, _, w, _ in DRIVERS)
+    damped = (1 - 0.6 * INERTIA) * inflow
+    target = math.tanh(CHANGE + damped)
+    s_new = S_OLD + lam * (target - S_OLD)
 
-    # cy used to be 2.15, a hair below the true vertical centre (2.30) of
-    # this 4.6in-tall canvas, for no reason tied to anything else on the
-    # sheet. Centring the box row exactly means the leftover space above
-    # (title/annotation) and below (captions) can be balanced on purpose
-    # instead of accumulating wherever the row happened to sit.
-    cy = 2.30
-    # The three driver circles used to sit +-1.15 from cy - a taller span
-    # (2.98in edge-to-edge) than the 0.95in-tall box row they feed, which
-    # read as an unbalanced composition. +-0.95 trims that to 2.58in.
-    # DRIVER_LABEL_DY (the label's own drop below its circle's centre) has
-    # to shrink to match: at the old 0.58in offset and the old 1.15in
-    # spacing, a label sat 1.15-0.58=0.57in past its own circle - clear of
-    # the 0.34in-radius circle below it. Shrinking the spacing without
-    # shrinking the label offset put the label only 1.15-0.58=... (0.80 at
-    # the first attempt) past its own circle, which is *inside* the next
-    # circle's 0.34in radius - "driver A" rendered on top of driver B's
-    # circle. 0.46in keeps the label clear of its own circle (0.46-0.34 =
-    # 0.12in) and 0.95-0.46 = 0.49in clear of the one below (0.49-0.34 =
-    # 0.15in to spare).
-    DRIVER_LABEL_DY = 0.46
-    drivers = [(0.95, cy + 0.95), (0.95, cy), (0.95, cy - 0.95)]
-    labels = ["driver A", "driver B", "driver C"]
-    for (dx, dy), col, lab, w in zip(drivers, DRIVER_COL, labels,
-                                      ["w₁", "w₂", "w₃"]):
-        ax.add_patch(Circle((dx, dy), 0.34, facecolor=col, edgecolor="none",
-                             zorder=3))
-        ax.text(dx, dy - DRIVER_LABEL_DY, lab, color=DIM, fontsize=FS_2,
-                ha="center", va="center", zorder=4)
-        mx, my = 2.55, cy
-        arrow(ax, (dx + 0.32, dy), (mx - 0.62, my + (dy - cy) * 0.28),
-              color=RULE, shrink=1)
-        ax.text((dx + mx) / 2 - 0.25, (dy + cy) / 2 + 0.18 * (1 if dy > cy
-                else (-1 if dy < cy else 0)) + 0.05, w, color=DIM,
-                fontsize=FS_2, ha="center", va="center", zorder=4)
+    fig = plt.figure(figsize=fig_size(PROSE, 2.7))
+    W, H = fig.get_size_inches()
+    ax = fig.add_axes([0, 0, 1, 1]); ax.set_xlim(0, W); ax.set_ylim(0, H); ax.axis("off")
+    cy = H * 0.56
 
-    # Captions 1 and 2 used to sit at the midpoint of the arrow *after* the
-    # box they describe (4.08 and 6.90 - the same trick used correctly
-    # below for the dashed-arrow annotation), which put "take the weighted
-    # mean" under the gap leading to the inertia box and "damp by the
-    # node's inertia" under the gap leading to tanh. Captions 3 and 4
-    # already used their own element's centre (7.90, 9.95); 1 and 2 now
-    # match that so every caption sits under what it names, and the wide,
-    # uneven box-centre spacing (2.70/2.35/2.05in) gives 2 and 3 - which
-    # used to be only 1.0in apart - clear separation for free.
-    # CAPTION_Y also moves up from 0.85: the box row's bottom edge sits at
-    # cy-0.475 = 1.825, and 0.85 left a ~0.83in dead band above the numbers
-    # that had no visual role. 1.45 leaves a clear ~0.38in gap above the
-    # captions and a comfortable ~0.55in margin below them to the canvas
-    # edge, instead of the old 0.83in-gap/0.28in-margin split.
-    CAPTION_Y = 1.45
+    # ---- drivers: three circles, each with its effect and its weight -------
+    dx = 1.45
+    ys = [cy + 1.25, cy, cy - 1.25]
+    bx1, bw, bh = 4.75, 2.2, 1.55
+    for (name, s, w, col), y in zip(DRIVERS, ys):
+        ax.add_patch(Circle((dx, y), 0.30, facecolor=col, edgecolor="none", zorder=3))
+        ax.text(dx, y, name, color=BG, fontsize=FS_1, ha="center", va="center", fontweight="bold", zorder=4)
+        ax.text(dx - 0.42, y, f"s = {s:+.2f}", color=DIM, fontsize=FS_2, fontfamily=MONO,
+                ha="right", va="center", zorder=4)
+        arrow(ax, (dx + 0.34, y), (bx1 - bw / 2 - 0.05, cy + (y - cy) * 0.30))
+        ax.text((dx + 0.34 + bx1 - bw / 2) / 2 - 0.1, (y + cy + (y - cy) * 0.30) / 2 + (0.16 if y != cy else 0.14),
+                f"w = {w:.1f}", color=DIM, fontsize=FS_2, fontfamily=MONO, ha="center", va="bottom", zorder=4)
+    ax.text(dx, cy - 1.25 - 0.55, "the node's drivers", color=DIM, fontsize=FS_2,
+            ha="center", va="top", zorder=4)
 
-    box(ax, 2.85, cy, 1.55, 0.95, "weighted\nmean", None)
-    arrow(ax, (3.62, cy), (4.55, cy), shrink=2)
-    step_tag(ax, 2.85, CAPTION_Y, 1, "take the weighted\nmean of drivers")
+    # ---- the four stages ------------------------------------------------------
+    gap = 0.50
+    xs = [bx1 + i * (bw + gap) for i in range(4)]
+    stage(ax, xs[0], cy, bw, bh, 1, "weighted mean\nof the drivers", "sum(w·s) ÷ sum|w|", f"= {inflow:+.3f}")
+    stage(ax, xs[1], cy, bw, bh, 2, "damped by the\nnode's inertia", "× (1 − 0.6·inertia)", f"= {damped:+.3f}")
+    stage(ax, xs[2], cy, bw, bh, 3, "the change added,\nsquashed by tanh", "tanh(change + ·)", f"= {target:+.3f}")
+    stage(ax, xs[3], cy, bw, bh, 4, "most of the\nway there", f"s + {lam:.2f}(target − s)", f"= {s_new:+.3f}")
+    for a, b in zip(xs, xs[1:]):
+        arrow(ax, (a + bw / 2, cy), (b - bw / 2 - 0.05, cy))
+    # inertia and the previous effect, as small facts under their stages
+    ax.text(xs[1], cy - bh / 2 - 0.14, f"inertia {INERTIA:.2f}", color=DIM, fontsize=FS_2,
+            fontfamily=MONO, ha="center", va="top", zorder=4)
+    ax.text(xs[3], cy - bh / 2 - 0.14, f"previous effect s = {S_OLD:+.2f}", color=DIM, fontsize=FS_2,
+            fontfamily=MONO, ha="center", va="top", zorder=4)
+    # the applied change, from above stage 3
+    arrow(ax, (xs[2], cy + bh / 2 + 1.05), (xs[2], cy + bh / 2 + 0.05), color=DIM, dashed=True)
+    ax.text(xs[2], cy + bh / 2 + 1.15, f"applied change, if any (here {CHANGE:.0f})", color=DIM,
+            fontsize=FS_2, ha="center", va="bottom", zorder=4)
 
-    box(ax, 5.55, cy, 1.85, 0.95, "× (1 − inertia)", None)
-    arrow(ax, (6.47, cy), (7.35, cy), shrink=2)
-    step_tag(ax, 5.55, CAPTION_Y, 2, "damp by the\nnode's inertia")
+    # ---- the node, after the step ---------------------------------------------
+    nx = xs[3] + bw / 2 + 1.0
+    arrow(ax, (xs[3] + bw / 2, cy), (nx - 0.50, cy))
+    ax.add_patch(Circle((nx, cy), 0.46, facecolor=ACC, edgecolor="none", zorder=3))
+    ax.text(nx, cy, f"{s_new:+.2f}", color=BG, fontsize=FS_1, ha="center", va="center",
+            fontweight="bold", fontfamily=MONO, zorder=4)
+    ax.text(nx, cy - 0.62, "the node's\nnew effect", color=DIM, fontsize=FS_2,
+            ha="center", va="top", zorder=4)
 
-    ax.add_patch(FancyArrowPatch((7.90, 3.85), (7.90, cy + 0.55),
-                                  arrowstyle="-|>", color=DIM, linewidth=1.1,
-                                  linestyle=(0, (2, 2)), mutation_scale=10,
-                                  zorder=2))
-    ax.text(7.90, 4.05, "applied change, if any", color=DIM, fontsize=FS_2,
-            ha="center", va="bottom", zorder=4)
-    box(ax, 7.90, cy, 1.35, 0.95, "tanh", None)
-    step_tag(ax, 7.90, CAPTION_Y, 3, "apply the change,\nsquash with tanh")
-
-    arrow(ax, (8.58, cy), (9.45, cy), shrink=2)
-    ax.add_patch(Circle((9.95, cy), 0.46, facecolor=NODE_COL,
-                         edgecolor="none", zorder=3))
-    ax.text(9.95, cy, "new\neffect", color=BG, fontsize=FS_2,
-            ha="center", va="center", fontweight="bold", zorder=4)
-    step_tag(ax, 9.95, CAPTION_Y, 4, "move the node most\nof the way there")
-
-    # x=0.0/11.2 put ha="left"/"right" text flush against the canvas edge -
-    # fine for the bounding box the audit measures, but a rounded glyph's
-    # ink (the "O" in "One", the "4" in "§4.4") overshoots its box slightly
-    # and was being cut by the canvas itself. 0.10in of margin on each side
-    # (this axes' data units are exactly inches, since it spans [0,0,1,1]
-    # over an 11.2x4.6in figure) clears that with room to spare.
-    ax.text(0.10, 4.45, "One node, one step", color=INK, fontsize=FS_1,
-            ha="left", va="top", fontweight="bold", zorder=4)
-    ax.text(11.10, 4.45, "model.html §4.4", color=DIM, fontsize=FS_2,
-            ha="right", va="top", zorder=4)
+    # ---- footnote ---------------------------------------------------------------
+    ax.text(0.18, 0.22,
+            "A worked example with made-up numbers: three drivers, weights 0.5, 0.3 and 0.2, inertia 0.40, no applied change. "
+            "The arithmetic is atlas-app.js's;\nthe real weights and inertias are the tables in section 5. "
+            "The step repeats until no node moves more than 0.00001, and gives up at sixty.",
+            color=DIM, fontsize=FS_2, fontfamily=MONO, ha="left", va="bottom", linespacing=1.4, zorder=4)
 
     problems = audit(fig)
     sitefig.save(fig, OUT, close=False)
     plt.close(fig)
-    print(f"  wrote {os.path.basename(OUT)}")
-    if problems:
-        print(f"  {len(problems)} layout problem(s):")
-        for p in problems[:12]:
-            print("     " + p)
-    else:
-        print("  0 layout problems")
+    print(f"  wrote {os.path.basename(OUT)}   lam={lam}  inflow={inflow:+.3f} damped={damped:+.3f} target={target:+.3f} new={s_new:+.3f}")
+    print(f"  {len(problems)} layout problem(s)" + ("" if not problems else ":"))
+    for p in problems[:12]:
+        print("     " + p)
     return len(problems)
 
 

@@ -29,6 +29,7 @@ FONT_DIR = os.path.join(HERE, "fonts")
 
 # ---- palette: Yacht club, 2026-09-04 (PALETTE_TRIAL_2026-09-04.md) -------
 BG = "#F2F0EF"          # the page's ground
+CARD_FILL = "#FAF9F8"   # --card: a step up from the ground, for a box on a diagram
 INK = "#241E1A"         # text; imported near-black from the brown
 DIM = "#625C57"         # ticks, muted labels
 RULE = "#BBBDBC"        # axes, grid
