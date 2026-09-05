@@ -31,8 +31,19 @@ function stub() {
     lineTo() {}, stroke() {},
     createLinearGradient: () => ({ addColorStop() {} }),
     fillRect(x, y, w, h) { rects.push({ x, y, w, h }); },
-    fillText() {}, measureText: () => ({ width: 40 }) };
+    /* Text is recorded as a box, the way the app sizes it: measureText
+       returns a width from the string, not a constant, so the app's own
+       collision test runs on the same numbers this file checks. 6.6px per
+       character at 12px is a sans average; the check below is about
+       overlap between labels, which a constant width could never fail. */
+    fillText(t, x, y) {
+      const w = String(t).length * 6.6 * (this._dpr || 1);
+      const centred = this.textAlign === 'center';
+      texts.push({ t: String(t), x: centred ? x - w / 2 : x, w, y });
+    },
+    measureText: t => ({ width: String(t).length * 6.6 }) };
 }
+let texts = [];
 
 /* A Web Audio stub, only as much of it as the app touches. It exists for one
    check: that the sound actually stops when the tab is hidden. Without a
@@ -353,6 +364,40 @@ console.log('\n  The sound stops when the page does');
   ok(K.S.playing === true && K.audio().state === 'running' &&
      K.audio().gain > 0, 'a closed context is rebuilt, not trusted',
      `state ${K.audio().state}, gain ${K.audio().gain.toFixed(2)}`);
+}
+
+console.log('\n  Labels do not collide');
+/* The same idea as tests/test_layout.js for the marginalia: every piece of
+   text the canvas draws is a box, and no two boxes may overlap - tower
+   names against compass points included, which is the pair that shipped
+   overlapping ("One World Trade Center" through "NW", 2026-09-04). Every
+   city, at eight bearings, so a name that only clashes when the wheel is
+   turned is caught too. The canvas's own bottom rows are checked against
+   the DOM foot as well: the meter must end above the notes line. */
+{
+  let clashes = 0, first = '';
+  const lineH = 12;
+  for (let i = 0; i < K.cities.length; i++) {
+    K.S.i = i; K.setKey();
+    for (let az = 0; az < 360; az += 45) {
+      K.S.az = az;
+      for (let s = 0; s < 4; s++) K.step(0.016);
+      texts = []; rects = []; K.draw();
+      for (let a = 0; a < texts.length; a++) for (let b = a + 1; b < texts.length; b++) {
+        const p = texts[a], q = texts[b];
+        if (Math.abs(p.y - q.y) < lineH && p.x < q.x + q.w && q.x < p.x + p.w) {
+          clashes++;
+          if (!first) first = `${K.cities[i].city} @${az}: "${p.t}" x "${q.t}"`;
+        }
+      }
+    }
+  }
+  ok(clashes === 0, 'no two labels overlap, any city, any bearing',
+     clashes ? `${clashes} clashes, first: ${first}` : `${K.cities.length} cities x 8 bearings`);
+  // the meter's lowest bar must clear the foot: 66px of canvas at the bottom
+  const H = doc.getElementById('c').height;
+  const low = rects.filter(r => r.y + r.h > H - 60).length;
+  ok(low === 0, 'the meter ends above the notes line', low ? `${low} bars reach into the foot` : '');
 }
 
 console.log(`\n  ${checks - fails}/${checks} checks passed` +
