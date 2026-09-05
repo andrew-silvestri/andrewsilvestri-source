@@ -594,8 +594,9 @@ one that gets tested on this machine.
 
 ## 11. Current state, 5 September 2026
 
-Live: the mirror's `b768538` (2026-09-05, the last of six publishes that
-day: Phase 4 Part A `a934a13`; Phase 5 Parts 1, 2b, 3, 4+5, and the grid).
+Live: the mirror's `6d0316e` (2026-09-05, the seventh publish that day, the
+food project; before it Phase 4 Part A `a934a13`, then Phase 5 Parts 1, 2b,
+3, 4+5, and the grid at `b768538`).
 The write-ups are `PHASE4_2026-09-04.md` and `PHASE5_2026-09-04.md`; every
 earlier one is listed in section 2. This section is the state, not the
 history, so that nobody has to read eleven write-ups to know it.
