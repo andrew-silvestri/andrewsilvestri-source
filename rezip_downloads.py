@@ -1,6 +1,6 @@
 """
 Rebuild the download archives that have a source folder in this repo -
-heat, storage, bookshelf, skyline and longevity - and check all twelve
+atlas, heat, storage, skyline and longevity - and check all eleven
 archives in site/downloads/ for things that must never ship.
 
 figstyle.py and both projects' model.py used to exist only inside
@@ -67,22 +67,71 @@ SKIP_SUFFIXES = (".pyc", ".pyo")
 
 
 def target(folder, name, extras=None, keep=(), skip=()):
-    """folder: source folder under the repo; name: the zip in site/downloads;
-    extras: archive name -> path outside the folder (a download whose main
-    file is the shipped file itself); keep: SKIP_DIRS this archive may ship;
-    skip: extra path globs, relative to the folder, this archive must not."""
+    """folder: source folder under the repo, or None for an archive assembled
+    from named files alone; name: the zip in site/downloads; extras: archive
+    name -> path outside the folder (a download whose main file is the
+    shipped file itself, or every entry when folder is None); keep: SKIP_DIRS
+    this archive may ship; skip: extra path globs, relative to the folder,
+    this archive must not."""
     return dict(folder=folder, zip=os.path.join(DOWNLOADS, name),
                 extras=extras or {}, keep=frozenset(keep), skip=tuple(skip))
 
 
+def files_target(name, entries):
+    """An archive of named files from around the repo: archive name -> path
+    relative to the repo root. For atlas-code.zip, whose sources are the root
+    build scripts, the tests and the shipped app, and which had no generator
+    until 2026-09-05 - it was cut by hand on 2026-08-29 and still carried
+    build_hero.py after that file was deleted."""
+    return target(None, name, extras={k: os.path.join(HERE, v) for k, v in entries.items()})
+
+
+ATLAS_FILES = {
+    # the pipeline, in order (HANDOFF section 5)
+    "build_atlas_global.py": "build_atlas_global.py",
+    "build_atlas.py": "build_atlas.py",
+    "build_atlas_space.py": "build_atlas_space.py",
+    "build_atlas_brain.py": "build_atlas_brain.py",
+    "prune_atlas_edges.py": "prune_atlas_edges.py",
+    "build_scenarios.py": "build_scenarios.py",
+    "data_climate_indices.py": "data_climate_indices.py",
+    # the engine the figures use, and the figures
+    "build_throughlines.py": "build_throughlines.py",
+    "build_atlas_figures.py": "build_atlas_figures.py",
+    "build_model_chart.py": "build_model_chart.py",
+    "build_layer_diagram.py": "build_layer_diagram.py",
+    "build_hero_figure.py": "build_hero_figure.py",
+    "build_propagation_diagram.py": "build_propagation_diagram.py",
+    "sitefig.py": "sitefig.py",
+    "fig_floor.py": "fig_floor.py",
+    "fonts/IBMPlexSans-Regular.otf": "fonts/IBMPlexSans-Regular.otf",
+    "fonts/IBMPlexSans-SemiBold.otf": "fonts/IBMPlexSans-SemiBold.otf",
+    "fonts/IBMPlexSans-Italic.otf": "fonts/IBMPlexSans-Italic.otf",
+    "fonts/IBMPlexMono-Regular.otf": "fonts/IBMPlexMono-Regular.otf",
+    "fonts/LICENSE-IBMPlex.txt": "fonts/LICENSE-IBMPlex.txt",
+    # the pages' generator and the stamps
+    "update_atlas_pages.py": "update_atlas_pages.py",
+    "bust_cache.py": "bust_cache.py",
+    # the app, as shipped
+    "site/atlas-app.html": "site/atlas-app.html",
+    "site/assets/atlas-app.js": "site/assets/atlas-app.js",
+    # the tests, including the one model.html names
+    "tests/test_parity.py": "tests/test_parity.py",
+    "tests/parity_engine.js": "tests/parity_engine.js",
+    "tests/test_atlas_interaction.js": "tests/test_atlas_interaction.js",
+    "tests/probe_scene.js": "tests/probe_scene.js",
+    "tests/three-stub.js": "tests/three-stub.js",
+    "README.md": "atlas-code-README.md",
+}
+
+
 TARGETS = [
+    files_target("atlas-code.zip", ATLAS_FILES),
     target("heat", "heat-code.zip"),
     target("storage", "storage-code.zip"),
-    # bookshelf/ holds the README and the wallpaper setter; the application
-    # itself is the shipped file, pulled in by name so the download can never
-    # drift from what the site runs (2026-09-04: it had, by one line).
-    target("bookshelf", "bookshelf-code.zip",
-           extras={"bookshelf-app.html": os.path.join(HERE, "site", "bookshelf-app.html")}),
+    # bookshelf-code.zip retired with its app on 2026-09-05 (PHASE5): the last
+    # build is unpublished/downloads/bookshelf-code.zip, its sources bookshelf/
+    # and unpublished/bookshelf-app.html.
     # skyline/ was unpacked from its own zip on 2026-09-04 (FIX_SKYLINE): the
     # zip had been the only copy of the generator, and its template had
     # drifted three lines behind site/skyline-app.html.
@@ -139,7 +188,7 @@ def _order(t, src_dir, quiet=False):
     dropped with a warning, since silently losing a file out of a shipped
     download is exactly the kind of drift this script exists to prevent -
     unless they are pollution, which is dropped without regret."""
-    dirs, files = _all_paths(src_dir, t["keep"], t["skip"])
+    dirs, files = _all_paths(src_dir, t["keep"], t["skip"]) if src_dir else ([], [])
     all_names = set(dirs) | set(files) | set(t["extras"])
     order = []
     if os.path.exists(t["zip"]):
@@ -149,7 +198,7 @@ def _order(t, src_dir, quiet=False):
                     order.append(name)
                 elif not quiet:
                     why = "never shipped" if polluted([name], t["keep"], t["skip"]) else \
-                        f"no longer in {os.path.basename(src_dir)}/"
+                        (f"no longer in {os.path.basename(src_dir)}/" if src_dir else "no longer listed")
                     print(f"  ! dropping {name!r} from {os.path.basename(t['zip'])} - {why}")
     seen = set(order)
     return order + sorted(n for n in all_names if n not in seen)
@@ -161,7 +210,7 @@ def _write(order, src_dir, extras, out_path):
             if name.endswith("/"):
                 z.writestr(zipfile.ZipInfo(name), "")
             else:
-                z.write(extras.get(name, os.path.join(src_dir, name)), name)
+                z.write(extras[name] if name in extras else os.path.join(src_dir, name), name)
 
 
 def rezip(t, src_dir):
@@ -293,7 +342,7 @@ def main():
     ok = True
     with Lock():
         for t in TARGETS:
-            src = os.path.join(HERE, t["folder"])
+            src = os.path.join(HERE, t["folder"]) if t["folder"] else None
             if args.verify:
                 ok = verify(t, src) and ok
             else:

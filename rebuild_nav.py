@@ -40,7 +40,8 @@ NAV = [
     ("Others", [
         ("Longevity quotient", "longevity.html"),
         ("Skylines, played", "skyline.html"),
-        ("The bookshelf", "desktop.html"),
+        # "The bookshelf" (desktop.html) retired to unpublished/ on 2026-09-05
+        # (PHASE5); the pages were regenerated from this list the same day.
     ]),
     ("Code", "code.html"),
 ]
