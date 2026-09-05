@@ -4,27 +4,36 @@
 <title>Skylines, played</title>
 <link rel="icon" href="favicon.svg" type="image/svg+xml">
 <link rel="alternate icon" href="favicon.png">
-<meta name="theme-color" content="#070a12">
+<meta name="theme-color" content="#F2F0EF">
 <script>/* the motion contract - set before first paint, from the system preference alone. Mirrors assets/motion.js, which the apps do not load; the app reads data-motion and listens for "motionchange". */
 (function(){var r=document.documentElement,m=window.matchMedia?matchMedia('(prefers-reduced-motion: reduce)'):null;function a(){var s=m&&m.matches?'off':'on';if(r.dataset.motion===s)return;r.dataset.motion=s;document.dispatchEvent(new CustomEvent('motionchange',{detail:s}));}try{a();if(m){if(m.addEventListener)m.addEventListener('change',a);else if(m.addListener)m.addListener(a);}}catch(e){r.dataset.motion='on';}})();</script>
 <style>
+/* The site's tokens (site/style.css :root, "Yacht club", 2026-09-04), copied
+   by name and value because this file must also work alone from a folder
+   (the download). The panel is --bg-lift; fields and floating notes are
+   --card. The fix brief for this app said "the tokens in style.css" and
+   style.css then held the violet set; that is why this block was violet for
+   a day. Nothing chromatic is set anywhere else in this file. */
 :root{
-  --bg:#070a12; --panel:#0c1020; --card:#10152a; --ink:#e3e6f2;
-  --dim:#8b93b0; --faint:#1a2038; --rule:#232a45; --acc:#8b7ff2;--acc-fill:#5a4fb0;--acc-fill-hover:#4c3fb5;
-  --acc-dim:#5a4fb0; --acc-ink:#f2f0ff; --cool:#5aa8d8; --moss:#4f9d84;
-  --rose:#d86a86;
-  --sans:ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif;
-  --mono:ui-monospace,"SF Mono","Cascadia Mono",Consolas,monospace;
-  --serif:"Iowan Old Style","Palatino Linotype",Palatino,Georgia,serif;
-  /* the site's type scale (style.css), the three steps this chrome uses;
-     12 px is the floor and nothing here goes under it */
-  --fs-2:12px; --fs-1:14.5px; --fs1:21px;
+  --bg:#F2F0EF; --bg-lift:#E9E6E4; --card:#FAF9F8; --ink:#241E1A; --dim:#625C57;
+  --faint:#D9D8D6; --rule:#BBBDBC; --acc:#245F73; --acc-dim:#4A8AA0;
+  --acc-ink:#FFFFFF; --acc-fill:#245F73; --acc-fill-hover:#1B4A5B;
+  --moss:#733E24; --rose:#A9724F; --slate:#7F8A8F;
+  --overlay:rgba(36,30,26,.82); --shadow:0 14px 34px rgba(36,30,26,.12);
+  --panel:var(--bg-lift);
+  --sans:"IBM Plex Sans",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --mono:"IBM Plex Mono",ui-monospace,"Cascadia Mono",Consolas,monospace;
+  --serif:var(--sans);
+  /* the type scale (style.css); 12 px is the floor and nothing here goes under it */
+  --fs-2:12px; --fs-1:14.5px; --fs0:17.5px; --fs1:21px; --fs2:25px; --fs3:30px;
+  /* the canvas (app.js) reads --acc for the near towers and --cool for the
+     far ones; style.css has --cool equal to --acc, which would erase that
+     depth, so here --cool is the palette's blue tint (--acc-dim). */
+  --cool:#4A8AA0;
 }
-@media (prefers-color-scheme: light){
-  :root{--bg:#f4f5fa;--panel:#ecedf6;--card:#fff;--ink:#161a26;--dim:#5c6480;
-        --faint:#e0e3ef;--rule:#d2d7e6;--acc:#4c3fb5;--acc-fill:#4c3fb5;--acc-fill-hover:#3d329a;--acc-dim:#7a6fd8;
-        --acc-ink:#fff;--cool:#2a6a96;--moss:#2f6f5c;--rose:#a83a58;}
-}
+@font-face{font-family:"IBM Plex Sans";src:url("assets/fonts/IBMPlexSans-Regular.woff2") format("woff2");font-weight:400;font-style:normal;font-display:swap}
+@font-face{font-family:"IBM Plex Sans";src:url("assets/fonts/IBMPlexSans-SemiBold.woff2") format("woff2");font-weight:600;font-style:normal;font-display:swap}
+@font-face{font-family:"IBM Plex Mono";src:url("assets/fonts/IBMPlexMono-Regular.woff2") format("woff2");font-weight:400;font-style:normal;font-display:swap}
 *{box-sizing:border-box}
 html,body{height:100%}
 body{margin:0;background:var(--bg);color:var(--ink);
@@ -34,14 +43,14 @@ body{margin:0;background:var(--bg);color:var(--ink);
 
 #side{overflow:auto;background:var(--panel);
   border-right:1px solid var(--rule);padding:16px 18px 40px}
-h1{font:500 var(--fs1)/1.25 var(--serif);margin:0 0 2px}
+h1{font:600 var(--fs1)/1.25 var(--sans);margin:0 0 2px}
 .sub{color:var(--dim);font-size:var(--fs-1);margin:0 0 14px}
 
 label.f{display:block;font:var(--fs-2) var(--sans);text-transform:uppercase;
   letter-spacing:.11em;color:var(--dim);margin:0 0 3px}
 select,input[type=range]{width:100%}
 select{padding:7px 9px;background:var(--card);color:var(--ink);
-  border:1px solid var(--dim);border-radius:7px;font:var(--fs-1) var(--sans);
+  border:1px solid var(--dim);border-radius:2px;font:var(--fs-1) var(--sans);
   appearance:none;-webkit-appearance:none;cursor:pointer;
   background-image:linear-gradient(45deg,transparent 50%,var(--dim) 50%),
     linear-gradient(135deg,var(--dim) 50%,transparent 50%);
@@ -51,14 +60,12 @@ select:focus{outline:none;border-color:var(--acc-dim)}
 input[type=range]{accent-color:var(--acc);margin:6px 0 0}
 
 .btns{display:flex;gap:8px;margin:14px 0 0}
-/* Play is the filled button, on --acc-fill: 5.88:1 dark, 7.82:1 light (the
-   bare accent was 2.91 in the dark scheme - the failure the 2026-09-04
-   palette pass fixed everywhere but here). Outlines are on --acc, 5.78 dark
-   and 6.71 light, because --rule against the panel is 1.34 and a control
-   boundary needs 3; the filled button carries the same outline because its
-   fill against the panel is 2.86 in the dark scheme. The select's border is
-   --dim (5.9 dark, 4.7 light) for the same reason. */
-.btns button{flex:1;padding:11px 0;border-radius:9px;
+/* Play is the filled button, --acc-fill under --acc-ink (7.10:1 in
+   style.css). Outlines are on --acc, not --rule, because a control boundary
+   needs 3:1 against the panel and --rule is a hairline; the select's border
+   is --dim for the same reason. Measured on the paper set by
+   _deslop/verify3c.js (2026-09-04). */
+.btns button{flex:1;padding:11px 0;border-radius:2px;
   background:var(--acc-fill);color:var(--acc-ink);border:1px solid var(--acc);
   font:600 var(--fs-1) var(--sans);cursor:pointer}
 .btns button:hover{background:var(--acc-fill-hover);border-color:var(--acc-fill-hover)}
@@ -89,20 +96,15 @@ ol.tow a{color:inherit;text-decoration:none;border-bottom:1px solid var(--faint)
 ol.tow a:hover{color:var(--acc);border-bottom-color:var(--acc)}
 ol.tow span{display:block;font-size:var(--fs-2)}
 
-#stage{position:relative;overflow:hidden;
-  background:linear-gradient(180deg,#070a12 0%,#0b1024 62%,#111838 100%)}
-@media (prefers-color-scheme: light){
-  #stage{background:linear-gradient(180deg,#eef0fa 0%,#e2e6f6 62%,#d6dcf0 100%)}
-}
+/* The sky is the paper, flat. The towers are drawn in --acc and --cool on
+   it, as skyline_towers.png draws them on the page; the night-sky gradient
+   went with the site's other gradients (2026-09-04). */
+#stage{position:relative;overflow:hidden;background:var(--bg)}
 canvas{position:absolute;inset:0;width:100%;height:100%;display:block;
   cursor:ew-resize;touch-action:none}
 #foot{position:absolute;left:0;right:0;bottom:0;display:flex;
   align-items:flex-end;justify-content:space-between;gap:14px;
-  padding:10px 16px 12px;pointer-events:none;
-  background:linear-gradient(180deg,transparent,rgba(7,10,18,.55))}
-@media (prefers-color-scheme: light){
-  #foot{background:linear-gradient(180deg,transparent,rgba(238,240,250,.65))}
-}
+  padding:10px 16px 12px;pointer-events:none}
 #left{min-width:0;display:flex;flex-direction:column;gap:3px}
 /* the notes sounding now: the meter as names, for anyone who cannot hear it
    (or has it muted). --ink, not --dim, because it is a reading, not a hint */
@@ -119,8 +121,8 @@ canvas{position:absolute;inset:0;width:100%;height:100%;display:block;
 #hint .phone{display:none}
 @media (max-width:760px){ #hint .desk{display:none} #hint .phone{display:inline} }
 #tip{position:absolute;pointer-events:none;display:none;padding:6px 10px;
-  background:var(--card);border:1px solid var(--rule);border-radius:8px;
-  font-size:var(--fs-1);box-shadow:0 12px 30px rgba(2,4,12,.5)}
+  background:var(--card);border:1px solid var(--rule);border-radius:2px;
+  font-size:var(--fs-1);box-shadow:var(--shadow)}
 #noaudio{position:absolute;left:50%;top:14px;transform:translateX(-50%);
   max-width:calc(100% - 32px);text-align:center;
   font-size:var(--fs-2);color:var(--ink);background:var(--card);

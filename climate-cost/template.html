@@ -4,7 +4,7 @@
 <title>The true climate cost of a thing</title>
 <link rel="icon" href="favicon.svg" type="image/svg+xml">
 <link rel="alternate icon" href="favicon.png">
-<meta name="theme-color" content="#070a12">
+<meta name="theme-color" content="#F2F0EF">
 <style>
 /* Two columns: a fixed reading panel and a stage that takes everything else.
    Every panel is a flow child of its own cell, so nothing is positioned on top
@@ -12,27 +12,49 @@
    clamped inside the viewport. The labels layer sits over the canvas but is
    pointer-transparent and self-thinning: a label that would collide with one
    already placed is dropped rather than drawn across it. */
+/* The site's tokens (site/style.css :root, "Yacht club", 2026-09-04), copied
+   by name and value because this file must also work alone from a folder
+   (the download). The panel is --bg-lift; fields and floating notes are
+   --card. The fix brief for this app said "the tokens in style.css" and
+   style.css then held the violet set; that is why this block was violet for
+   a day. Nothing chromatic is set anywhere else in this file. */
 :root{
-  --bg:#070a12; --panel:#0c1020; --card:#10152a; --ink:#e3e6f2;
-  --dim:#8b93b0; --faint:#1a2038; --rule:#232a45; --acc:#8b7ff2;--acc-fill:#5a4fb0;--acc-fill-hover:#4c3fb5;
-  --acc-dim:#5a4fb0; --acc-ink:#f2f0ff; --cool:#5aa8d8; --moss:#4f9d84;
-  --rose:#d86a86; --slate:#6f7fd8;
-  --sans:ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif;
-  --mono:ui-monospace,"SF Mono","Cascadia Mono",Consolas,monospace;
-  --serif:"Iowan Old Style","Palatino Linotype",Palatino,Georgia,serif;
+  --bg:#F2F0EF; --bg-lift:#E9E6E4; --card:#FAF9F8; --ink:#241E1A; --dim:#625C57;
+  --faint:#D9D8D6; --rule:#BBBDBC; --acc:#245F73; --acc-dim:#4A8AA0;
+  --acc-ink:#FFFFFF; --acc-fill:#245F73; --acc-fill-hover:#1B4A5B;
+  --moss:#733E24; --rose:#A9724F; --slate:#7F8A8F;
+  --overlay:rgba(36,30,26,.82); --shadow:0 14px 34px rgba(36,30,26,.12);
+  --panel:var(--bg-lift);
+  --sans:"IBM Plex Sans",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --mono:"IBM Plex Mono",ui-monospace,"Cascadia Mono",Consolas,monospace;
+  --serif:var(--sans);
+  /* the type scale (style.css); 12 px is the floor and nothing here goes under it */
+  --fs-2:12px; --fs-1:14.5px; --fs0:17.5px; --fs1:21px; --fs2:25px; --fs3:30px;
+  --cool:#4A8AA0;
+  /* The stage is the same dark globe the atlas and the home page draw
+     (scene.js), so it keeps that scene's ground, and the labels that float
+     on it take paper-coloured ink: --sea-ink is the palette's --bg and
+     --sea-dim its --rule, both read on the dark sea (17:1 and 9:1);
+     --sea-acc is the blue tint, the one blue that reads on it. */
+  --sea:#070c18; --sea-ink:#F2F0EF; --sea-dim:#BBBDBC; --sea-acc:#4A8AA0;
+  /* The five node colours the scene draws (scene.js reads these) and the
+     legend shows. They are the palette's tints, the ones that read on the
+     dark sea: blue tint for a life-cycle stage, tan for freight, light grey
+     for electricity, brown tint for combustion, grey for the rest. The
+     page's own --acc/--moss/--rose stay for the panel's pills and text. */
+  --scene-acc:#4A8AA0; --scene-moss:#B08A63; --scene-cool:#A3A5A4;
+  --scene-rose:#A9724F; --scene-slate:#7F8A8F;
 }
-@media (prefers-color-scheme: light){
-  :root{
-    --bg:#f4f5fa; --panel:#ecedf6; --card:#ffffff; --ink:#161a26;
-    --dim:#5c6480; --faint:#e0e3ef; --rule:#d2d7e6; --acc:#4c3fb5;--acc-fill:#4c3fb5;--acc-fill-hover:#3d329a;
-    --acc-dim:#7a6fd8; --acc-ink:#ffffff; --cool:#2a6a96; --moss:#2f6f5c;
-    --rose:#a83a58; --slate:#4a56a8;
-  }
-}
+@font-face{font-family:"IBM Plex Sans";src:url("assets/fonts/IBMPlexSans-Regular.woff2") format("woff2");font-weight:400;font-style:normal;font-display:swap}
+@font-face{font-family:"IBM Plex Sans";src:url("assets/fonts/IBMPlexSans-SemiBold.woff2") format("woff2");font-weight:600;font-style:normal;font-display:swap}
+@font-face{font-family:"IBM Plex Mono";src:url("assets/fonts/IBMPlexMono-Regular.woff2") format("woff2");font-weight:400;font-style:normal;font-display:swap}
 *{box-sizing:border-box}
 html,body{height:100%}
 body{margin:0;background:var(--bg);color:var(--ink);
-  font:15px/1.6 var(--sans);-webkit-font-smoothing:antialiased}
+  font:var(--fs-1)/1.6 var(--sans);-webkit-font-smoothing:antialiased}
+/* the browser's sub/sup is "smaller", which took CO2's 2 to 10px inside a
+   12px label; the floor is 12 */
+sub,sup{font-size:var(--fs-2);line-height:0}
 
 #app{position:fixed;inset:0;display:grid;
   grid-template-columns:352px 1fr;grid-template-rows:100%}
@@ -40,27 +62,27 @@ body{margin:0;background:var(--bg);color:var(--ink);
 /* ------------------------------------------------------------- panel --- */
 #side{overflow:auto;background:var(--panel);
   border-right:1px solid var(--rule);padding:16px 18px 44px}
-#side h1{font:500 20px/1.25 var(--serif);margin:0 0 2px;letter-spacing:-.01em}
-#side .sub{color:var(--dim);font-size:12.5px;margin:0 0 14px}
-.back{color:var(--dim);font-size:12.5px;text-decoration:none;
+#side h1{font:600 var(--fs1)/1.25 var(--sans);margin:0 0 2px}
+#side .sub{color:var(--dim);font-size:var(--fs-1);margin:0 0 14px}
+.back{color:var(--dim);font-size:var(--fs-2);text-decoration:none;
   border-bottom:1px solid var(--faint);float:right;margin-left:12px}
 .back:hover{color:var(--acc);border-bottom-color:var(--acc)}
 
 .f{margin:0 0 9px}
-.f label{display:block;font:11px var(--sans);text-transform:uppercase;
+.f label{display:block;font:var(--fs-2) var(--mono);text-transform:uppercase;
   letter-spacing:.11em;color:var(--dim);margin-bottom:3px}
 /* The lifetime slider. It only appears for the products that amortise a
    vehicle, because for a kilogram of beef there is nothing to amortise. */
 #life{width:100%;accent-color:var(--acc);margin:2px 0 0}
-.lifeval{display:block;font:12px var(--mono);color:var(--acc);margin-top:2px;
+.lifeval{display:block;font:var(--fs-2) var(--mono);color:var(--acc);margin-top:2px;
   font-variant-numeric:tabular-nums}
 select{width:100%;padding:7px 9px;background:var(--card);color:var(--ink);
-  border:1px solid var(--rule);border-radius:7px;font:13.5px var(--sans);
+  border:1px solid var(--dim);border-radius:2px;font:var(--fs-1) var(--sans);
   appearance:none;-webkit-appearance:none;cursor:pointer;
   /* The caret is drawn here rather than left to the platform. A native select
      arrow is the one control a page cannot recolour, and it arrives in
      whatever accent the operating system happens to use - which is how a
-     stray yellow gets onto an otherwise violet page. */
+     stray yellow gets onto the page. */
   background-image:linear-gradient(45deg,transparent 50%,var(--dim) 50%),
     linear-gradient(135deg,var(--dim) 50%,transparent 50%);
   background-position:calc(100% - 15px) 52%,calc(100% - 10px) 52%;
@@ -69,104 +91,104 @@ select:focus{outline:none;border-color:var(--acc-dim)}
 option{background:var(--card);color:var(--ink)}
 
 .tot{margin:14px 0 0;padding:12px 13px;border:1px solid var(--rule);
-  border-radius:9px;background:var(--card)}
-.tot .big{font:600 27px/1 var(--sans);font-variant-numeric:tabular-nums;
+  border-radius:2px;background:var(--card)}
+.tot .big{font:600 var(--fs2)/1 var(--sans);font-variant-numeric:tabular-nums;
   color:var(--acc)}
-.tot .u{color:var(--dim);font-size:12px}
-.tot .route{display:block;color:var(--dim);font-size:12px;margin-top:6px}
+.tot .u{color:var(--dim);font-size:var(--fs-2)}
+.tot .route{display:block;color:var(--dim);font-size:var(--fs-2);margin-top:6px}
 .bar{height:5px;border-radius:3px;background:var(--faint);margin-top:9px;
   overflow:hidden}
 .bar i{display:block;height:100%;background:var(--acc)}
-.note{color:var(--dim);font-size:12.5px;margin:9px 0 0}
+.note{color:var(--dim);font-size:var(--fs-1);margin:9px 0 0}
 
-h2{font:600 10.5px var(--sans);text-transform:uppercase;letter-spacing:.14em;
+h2{font:600 var(--fs-2) var(--mono);text-transform:uppercase;letter-spacing:.06em;
   color:var(--dim);margin:22px 0 8px;padding-bottom:6px;
   border-bottom:1px solid var(--rule)}
 
-#sel{font-size:13px}
-#sel .nm{font:500 15px var(--serif);color:var(--ink)}
+#sel{font-size:var(--fs-1)}
+#sel .nm{font:600 var(--fs0) var(--sans);color:var(--ink)}
 #sel dl{display:grid;grid-template-columns:auto 1fr;gap:3px 10px;margin:8px 0}
-#sel dt{color:var(--dim);font-size:11.5px;text-transform:uppercase;
+#sel dt{color:var(--dim);font-size:var(--fs-2);text-transform:uppercase;
   letter-spacing:.08em}
 #sel dd{margin:0;font-variant-numeric:tabular-nums}
-#sel .why{color:var(--dim);font-size:12.5px;margin-top:8px}
-#sel .path{font:11.5px/1.5 var(--mono);color:var(--dim);margin-top:8px;
+#sel .why{color:var(--dim);font-size:var(--fs-1);margin-top:8px}
+#sel .path{font:var(--fs-2)/1.5 var(--mono);color:var(--dim);margin-top:8px;
   word-break:break-word}
-.pill{display:inline-block;padding:1px 7px;border-radius:20px;font-size:11px;
+.pill{display:inline-block;padding:1px 7px;border-radius:20px;font-size:var(--fs-2);
   border:1px solid var(--rule);color:var(--dim);margin:0 5px 4px 0}
 .pill.a{border-color:var(--moss);color:var(--moss)}
 .pill.c{border-color:var(--rose);color:var(--rose)}
 
-.key{display:flex;flex-wrap:wrap;gap:5px 14px;font-size:12px;color:var(--dim)}
+.key{display:flex;flex-wrap:wrap;gap:5px 14px;font-size:var(--fs-2);color:var(--dim)}
 .key span{display:flex;align-items:center;gap:6px}
-.key i{width:9px;height:9px;border-radius:50%;display:inline-block}
+.key i{width:9px;height:9px;border-radius:50%;display:inline-block;
+  border:1px solid var(--dim)}   /* the scene tints are pale on the panel; the edge keeps the dot a dot */
 
 .tabs{display:flex;gap:6px;margin:14px 0 0}
 .tabs button{flex:1;padding:6px 0;background:var(--card);color:var(--dim);
-  border:1px solid var(--rule);border-radius:7px;font:12.5px var(--sans);
+  border:1px solid var(--rule);border-radius:2px;font:var(--fs-1) var(--sans);
   cursor:pointer}
 .tabs button.on{color:var(--acc-ink);background:var(--acc-fill);
   border-color:var(--acc-fill)}
 
 /* -------------------------------------------------------------- stage --- */
-#stage{position:relative;overflow:hidden;background:
-  radial-gradient(circle at 42% 44%,#0a1024 0%,#05070f 74%)}
-@media (prefers-color-scheme: light){
-  #stage{background:radial-gradient(circle at 42% 44%,#ffffff 0%,#e7e9f4 78%)}
-}
+/* The stage is the scene's ground, flat: the radial atmosphere went with the
+   site's other gradients (2026-09-04). See --sea in :root. */
+#stage{position:relative;overflow:hidden;background:var(--sea)}
 #gl{position:absolute;inset:0;width:100%;height:100%;display:block;
   cursor:grab;touch-action:none}
 #gl.drag{cursor:grabbing}
 #labels{position:absolute;inset:0;pointer-events:none;overflow:hidden}
-.lab{position:absolute;font:11.5px/1.25 var(--sans);color:var(--dim);
+/* Labels float on the dark scene, so they take the scene inks (--sea-*),
+   not the page's; the shadow is the sea itself. */
+.lab{position:absolute;font:var(--fs-2)/1.25 var(--sans);color:var(--sea-dim);
   white-space:nowrap;transform:translate(-50%,-50%);
-  text-shadow:0 1px 4px rgba(3,5,14,.92),0 0 2px rgba(3,5,14,.92)}
-.lab.spine{color:var(--ink);font-size:12.5px;font-weight:500}
-.lab.sel{color:var(--acc)}
-.lab.geo{color:var(--cool);letter-spacing:.06em;font-size:11px;
+  text-shadow:0 1px 4px var(--sea),0 0 2px var(--sea)}
+.lab.spine{color:var(--sea-ink);font-size:var(--fs-1);font-weight:600}
+.lab.sel{color:var(--sea-acc)}
+.lab.geo{color:var(--sea-acc);letter-spacing:.06em;font-size:var(--fs-2);
   text-transform:uppercase}
-.lab b{font-weight:500;font-variant-numeric:tabular-nums;color:var(--ink)}
-@media (prefers-color-scheme: light){
-  .lab{text-shadow:0 1px 4px rgba(255,255,255,.95),0 0 2px rgba(255,255,255,.95)}
-}
+.lab b{font-weight:600;font-variant-numeric:tabular-nums;color:var(--sea-ink)}
 
 #hover{position:absolute;pointer-events:none;display:none;max-width:280px;
   padding:8px 11px;background:var(--card);border:1px solid var(--rule);
-  border-radius:8px;font-size:12.5px;box-shadow:0 14px 34px rgba(2,4,12,.55);
+  border-radius:2px;font-size:var(--fs-1);box-shadow:var(--shadow);
   z-index:5}
-#hover .h{font:500 13px var(--serif);color:var(--ink)}
+#hover .h{font:600 var(--fs-1) var(--sans);color:var(--ink)}
 #hover .v{color:var(--acc);font-variant-numeric:tabular-nums}
-#hover .n{color:var(--dim);font-size:11.5px;margin-top:3px}
+#hover .n{color:var(--dim);font-size:var(--fs-2);margin-top:3px}
 
-#hint{position:absolute;left:14px;bottom:12px;font-size:11.5px;color:var(--dim);
+/* the hint sits on the dark stage: a paper card, like the atlas's legend */
+#hint{position:absolute;left:14px;bottom:12px;font:var(--fs-2) var(--mono);color:var(--dim);
+  background:var(--card);border:1px solid var(--rule);border-radius:2px;padding:5px 9px;
   pointer-events:none;letter-spacing:.03em}
-#reset{position:absolute;right:14px;bottom:12px;font-size:11.5px;
+#reset{position:absolute;right:14px;bottom:12px;font:var(--fs-2) var(--mono);
   color:var(--dim);background:var(--card);border:1px solid var(--rule);
-  border-radius:7px;padding:5px 11px;cursor:pointer}
+  border-radius:2px;padding:5px 11px;cursor:pointer}
 #reset:hover{color:var(--ink);border-color:var(--dim)}
 
 /* ------------------------------------------------ the list, and no-GL --- */
 #list{position:absolute;inset:0;overflow:auto;padding:22px 26px 60px;
   background:var(--bg);display:none}
 #list.on{display:block}
-#list h3{font:500 17px var(--serif);margin:24px 0 4px}
+#list h3{font:600 var(--fs0) var(--sans);margin:24px 0 4px}
 #list .stagehead{display:flex;align-items:baseline;gap:10px}
 #list .stagehead .val{color:var(--acc)}
 ul.tree{list-style:none;margin:0;padding:0 0 0 15px;
   border-left:1px solid var(--faint)}
 ul.tree ul.tree{margin-left:2px}
 li.n{margin:5px 0;padding-left:4px}
-.row{display:flex;align-items:baseline;gap:9px;font-size:13px}
+.row{display:flex;align-items:baseline;gap:9px;font-size:var(--fs-1)}
 .lbl{flex:1;min-width:0}
 .dot{width:8px;height:8px;border-radius:50%;display:inline-block;
   margin-right:6px}
-.amt{color:var(--dim);font-size:11.5px;margin-left:6px}
-.alloc{color:var(--cool);font-size:11.5px;margin-left:5px;
+.amt{color:var(--dim);font-size:var(--fs-2);margin-left:6px}
+.alloc{color:var(--acc);font-size:var(--fs-2);margin-left:5px;
   font-variant-numeric:tabular-nums}
-.q{color:var(--dim);font-size:10px;border:1px solid var(--rule);
+.q{color:var(--dim);font-size:var(--fs-2);border:1px solid var(--rule);   /* was 10px, under the site's floor */
   border-radius:3px;padding:0 4px;margin-left:5px}
-.val{font-variant-numeric:tabular-nums;color:var(--ink);font-size:12.5px}
-.leafnote{color:var(--dim);font-size:12px;margin:2px 0 4px 14px;max-width:74ch}
+.val{font-variant-numeric:tabular-nums;color:var(--ink);font-size:var(--fs-1)}
+.leafnote{color:var(--dim);font-size:var(--fs-2);margin:2px 0 4px 14px;max-width:72ch}
 #nogl{position:absolute;inset:0;display:none;align-items:center;
   justify-content:center;padding:40px;color:var(--dim);text-align:center}
 
@@ -219,10 +241,10 @@ canvas, #gl, #view, #stage { touch-action: none; }
 
   <h2>Reading the scene</h2>
   <div class="key">
-    <span><i style="background:var(--acc)"></i>life-cycle stage</span>
-    <span><i style="background:var(--moss)"></i>freight</span>
-    <span><i style="background:var(--cool)"></i>electricity</span>
-    <span><i style="background:var(--rose)"></i>combustion, soil, decay</span>
+    <span><i style="background:var(--scene-acc)"></i>life-cycle stage</span>
+    <span><i style="background:var(--scene-moss)"></i>freight</span>
+    <span><i style="background:var(--scene-cool)"></i>electricity</span>
+    <span><i style="background:var(--scene-rose)"></i>combustion, soil, decay</span>
     <span><i style="background:var(--slate)"></i>materials and inputs</span>
   </div>
   <p class="note">Ball size is emissions, on a cube-root scale so that small

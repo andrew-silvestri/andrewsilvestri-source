@@ -65,9 +65,14 @@
     return 'slate';
   }
   var PAL = {};
+  /* The scene's five node colours come from the --scene-* tokens, not the
+     page's --acc/--moss/...: the nodes sit on the dark sea, and the page's
+     colours are chosen for paper (the brown --moss is 1.6:1 on the sea).
+     The legend in the panel uses the same --scene-* names, so what the
+     key shows is what the globe draws. (2026-09-04) */
   function palette() {
-    PAL = { acc: css('--acc'), moss: css('--moss'), cool: css('--cool'),
-            rose: css('--rose'), slate: css('--slate'), dim: css('--dim'),
+    PAL = { acc: css('--scene-acc'), moss: css('--scene-moss'), cool: css('--scene-cool'),
+            rose: css('--scene-rose'), slate: css('--scene-slate'), dim: css('--dim'),
             ink: css('--ink'), rule: css('--rule') };
   }
   palette();
