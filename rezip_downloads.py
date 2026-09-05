@@ -1,7 +1,7 @@
 """
-Rebuild heat-code.zip, storage-code.zip, bookshelf-code.zip and
-skyline-code.zip from the tracked heat/, storage/, bookshelf/ and skyline/
-folders.
+Rebuild the download archives that have a source folder in this repo -
+heat, storage, bookshelf, skyline and longevity - and check all twelve
+archives in site/downloads/ for things that must never ship.
 
 figstyle.py and both projects' model.py used to exist only inside
 site/downloads/heat-code.zip and storage-code.zip - the sibling source
@@ -18,13 +18,14 @@ new files at the end, dropping ones that no longer exist in the source
 folder - specifically so that re-running this against an unmodified source
 folder reproduces the original zip's namelist() exactly.
 
-What is never shipped: bytecode caches, node_modules, a folder's outputs/
-(the figures and CSVs a model writes when it runs - they are the site's
-assets, not its source), package-manager files, and a built page. On
+What is never shipped: bytecode caches, node_modules, package-manager files,
+a built page, and a folder's outputs/ - unless a target says otherwise: the
+longevity download keeps its outputs/ data files (the model of record and
+its provenance) but not the figures, which are the site's assets. On
 2026-09-04 storage-code.zip shipped __pycache__/ and outputs/ (ten files,
 443 KB) because a builder had just been run in storage/ and this script
-walked the folder as it stood. The skip list below is now checked against
-every archive on every run, and an archive that fails it is not written.
+walked the folder as it stood. The rules are now checked against every
+archive on every run, and an archive that fails them is not written.
 
 Two sessions running this at once corrupted an archive the same day. A lock
 file in site/downloads/ now makes the second run wait its turn or give up,
@@ -32,15 +33,17 @@ and each archive is written beside itself and moved into place, so a run
 that dies half-way leaves the shipped zip as it was.
 
 Run:
-    python3 rezip_downloads.py            # rebuild every archive
-    python3 rezip_downloads.py --verify   # rebuild into a temp file and diff
-                                          # names and content against what is
-                                          # shipped; the shipped zip is not
-                                          # touched. Exit 1 on any difference
-                                          # or any polluted entry.
+    python3 rezip_downloads.py            # rebuild every generated archive
+    python3 rezip_downloads.py --verify   # rebuild each into a temp file and
+                                          # diff names and content against
+                                          # what is shipped, then scan all
+                                          # twelve archives for forbidden
+                                          # entries. Writes nothing. Exit 1
+                                          # on any difference or any hit.
 """
 
 import argparse
+import fnmatch
 import os
 import sys
 import tempfile
@@ -53,76 +56,101 @@ LOCK = os.path.join(DOWNLOADS, ".rezip.lock")
 LOCK_WAIT_S = 60          # how long a second run waits for the first
 LOCK_STALE_S = 15 * 60    # a lock older than this belongs to a dead run
 
-TARGETS = [
-    ("heat", os.path.join(DOWNLOADS, "heat-code.zip")),
-    ("storage", os.path.join(DOWNLOADS, "storage-code.zip")),
-    # bookshelf/ holds the README and the wallpaper setter; the application
-    # itself is the shipped file, pulled in by name so the download can never
-    # drift from what the site runs (2026-09-04: it had, by one line).
-    ("bookshelf", os.path.join(DOWNLOADS, "bookshelf-code.zip"),
-     {"bookshelf-app.html": os.path.join(HERE, "site", "bookshelf-app.html")}),
-    # skyline/ was unpacked from its own zip on 2026-09-04 (FIX_SKYLINE): the
-    # zip had been the only copy of the generator, and its template had
-    # drifted three lines behind site/skyline-app.html.
-    ("skyline", os.path.join(DOWNLOADS, "skyline-code.zip")),
-]
-
 # Never shipped in a download: package-manager state, bytecode caches, a
 # model's own outputs/, and a built page (skyline-app.html is built by
-# skyline/build_app.py next to it; the shipped copy is site/skyline-app.html).
+# skyline/build_app.py next to it, longevity.html by build_lq.py; the shipped
+# copies are site/skyline-app.html and site/longevity-app.html).
 SKIP_DIRS = {"node_modules", "__pycache__", "outputs", ".ipynb_checkpoints"}
 SKIP_FILES = {"package.json", "package-lock.json", "skyline-app.html",
-              ".DS_Store", "Thumbs.db"}
+              "longevity.html", ".DS_Store", "Thumbs.db"}
 SKIP_SUFFIXES = (".pyc", ".pyo")
 
 
-def polluted(names):
-    """The entries in names that the skip rules say must never ship."""
+def target(folder, name, extras=None, keep=(), skip=()):
+    """folder: source folder under the repo; name: the zip in site/downloads;
+    extras: archive name -> path outside the folder (a download whose main
+    file is the shipped file itself); keep: SKIP_DIRS this archive may ship;
+    skip: extra path globs, relative to the folder, this archive must not."""
+    return dict(folder=folder, zip=os.path.join(DOWNLOADS, name),
+                extras=extras or {}, keep=frozenset(keep), skip=tuple(skip))
+
+
+TARGETS = [
+    target("heat", "heat-code.zip"),
+    target("storage", "storage-code.zip"),
+    # bookshelf/ holds the README and the wallpaper setter; the application
+    # itself is the shipped file, pulled in by name so the download can never
+    # drift from what the site runs (2026-09-04: it had, by one line).
+    target("bookshelf", "bookshelf-code.zip",
+           extras={"bookshelf-app.html": os.path.join(HERE, "site", "bookshelf-app.html")}),
+    # skyline/ was unpacked from its own zip on 2026-09-04 (FIX_SKYLINE): the
+    # zip had been the only copy of the generator, and its template had
+    # drifted three lines behind site/skyline-app.html.
+    target("skyline", "skyline-code.zip"),
+    # The longevity download had no generator until 2026-09-04. It ships the
+    # model, the data pipeline, the merged table and the outputs/ data files
+    # a reader would want to reproduce (lq_table, provenance, summaries) -
+    # but not the raw source dumps (39 MB, rebuilt by data/ingest.py from the
+    # sources in DATA_SOURCES.md), not the figures (the site's assets), not
+    # the built app, not the node state.
+    target("longevity-quotient", "longevity-code.zip",
+           keep={"outputs"},
+           skip=("data/raw", "data/raw/*", "outputs/*.png")),
+]
+
+
+def polluted(names, keep=(), skip=()):
+    """The entries in names that the rules say must never ship."""
     bad = []
     for n in names:
-        parts = n.rstrip("/").split("/")
-        if any(p in SKIP_DIRS for p in parts) or parts[-1] in SKIP_FILES \
-                or parts[-1].endswith(SKIP_SUFFIXES):
+        rel = n.rstrip("/")
+        parts = rel.split("/")
+        if any(p in SKIP_DIRS and p not in keep for p in parts) \
+                or parts[-1] in SKIP_FILES \
+                or parts[-1].endswith(SKIP_SUFFIXES) \
+                or any(fnmatch.fnmatch(rel, g) for g in skip):
             bad.append(n)
     return bad
 
 
-def _all_paths(src_dir):
+def _all_paths(src_dir, keep=(), skip=()):
     """Every path under src_dir, files and directories, as archive-style
     forward-slash relative names - directories carrying the trailing slash
-    a zip uses to mark a directory entry."""
+    a zip uses to mark a directory entry - minus what the rules skip."""
     dirs, files = [], []
     for root, ds, fs in os.walk(src_dir):
-        ds[:] = sorted(d for d in ds if d not in SKIP_DIRS)
-        fs = [f for f in fs if f not in SKIP_FILES and not f.endswith(SKIP_SUFFIXES)]
-        rel_root = os.path.relpath(root, src_dir)
-        if rel_root != ".":
-            dirs.append(rel_root.replace(os.sep, "/") + "/")
+        rel_root = os.path.relpath(root, src_dir).replace(os.sep, "/")
+        rel_root = "" if rel_root == "." else rel_root
+        ds[:] = sorted(d for d in ds
+                       if not polluted([(rel_root + "/" if rel_root else "") + d + "/"], keep, skip))
+        if rel_root:
+            dirs.append(rel_root + "/")
         for f in sorted(fs):
-            rel = os.path.join(rel_root, f) if rel_root != "." else f
-            files.append(rel.replace(os.sep, "/"))
+            rel = (rel_root + "/" if rel_root else "") + f
+            if not polluted([rel], keep, skip):
+                files.append(rel)
     return dirs, files
 
 
-def _order(src_dir, zip_path, extras, quiet=False):
+def _order(t, src_dir, quiet=False):
     """The entry order for a rebuilt archive: the existing zip's order for
     every name still present, then anything new (directories first, then
     files, each sorted). Names the zip had that the source no longer has are
     dropped with a warning, since silently losing a file out of a shipped
     download is exactly the kind of drift this script exists to prevent -
     unless they are pollution, which is dropped without regret."""
-    dirs, files = _all_paths(src_dir)
-    all_names = set(dirs) | set(files) | set(extras)
+    dirs, files = _all_paths(src_dir, t["keep"], t["skip"])
+    all_names = set(dirs) | set(files) | set(t["extras"])
     order = []
-    if os.path.exists(zip_path):
-        with zipfile.ZipFile(zip_path) as old:
+    if os.path.exists(t["zip"]):
+        with zipfile.ZipFile(t["zip"]) as old:
             for name in old.namelist():
                 if name in all_names:
                     order.append(name)
                 elif not quiet:
-                    why = "never shipped" if polluted([name]) else \
+                    why = "never shipped" if polluted([name], t["keep"], t["skip"]) else \
                         f"no longer in {os.path.basename(src_dir)}/"
-                    print(f"  ! dropping {name!r} from {os.path.basename(zip_path)} - {why}")
+                    print(f"  ! dropping {name!r} from {os.path.basename(t['zip'])} - {why}")
     seen = set(order)
     return order + sorted(n for n in all_names if n not in seen)
 
@@ -136,21 +164,18 @@ def _write(order, src_dir, extras, out_path):
                 z.write(extras.get(name, os.path.join(src_dir, name)), name)
 
 
-def rezip(src_dir, zip_path, extras=None):
-    """Rebuild zip_path from src_dir (plus extras, mapping an archive name to
-    a path outside src_dir - for a download whose main file is the shipped
-    file itself). Written beside the target and moved into place, so a
-    failure leaves the shipped archive untouched."""
-    extras = extras or {}
-    order = _order(src_dir, zip_path, extras)
-    bad = polluted(order)
+def rezip(t, src_dir):
+    """Rebuild t['zip'] from src_dir. Written beside the target and moved
+    into place, so a failure leaves the shipped archive untouched."""
+    order = _order(t, src_dir)
+    bad = polluted(order, t["keep"], t["skip"])
     if bad:
-        raise SystemExit(f"refusing to write {os.path.basename(zip_path)}: "
-                         f"{len(bad)} entries the skip rules forbid: {bad[:4]}")
-    tmp = zip_path + ".tmp"
+        raise SystemExit(f"refusing to write {os.path.basename(t['zip'])}: "
+                         f"{len(bad)} entries the rules forbid: {bad[:4]}")
+    tmp = t["zip"] + ".tmp"
     try:
-        _write(order, src_dir, extras, tmp)
-        os.replace(tmp, zip_path)
+        _write(order, src_dir, t["extras"], tmp)
+        os.replace(tmp, t["zip"])
     finally:
         if os.path.exists(tmp):
             os.remove(tmp)
@@ -162,22 +187,21 @@ def _members(zip_path):
         return [(i.filename, i.CRC) for i in z.infolist()]
 
 
-def verify(src_dir, zip_path, extras=None):
+def verify(t, src_dir):
     """Build what rezip() would write into a temporary file and compare its
     entry names and content (CRCs) against the shipped archive. The shipped
     archive is read and never written. Returns True when they agree and the
-    shipped archive carries nothing the skip rules forbid."""
-    extras = extras or {}
-    name = os.path.basename(zip_path)
-    if not os.path.exists(zip_path):
+    shipped archive carries nothing the rules forbid."""
+    name = os.path.basename(t["zip"])
+    if not os.path.exists(t["zip"]):
         print(f"  {name}: MISSING (nothing shipped to verify)")
         return False
-    shipped = _members(zip_path)
-    bad = polluted([n for n, _ in shipped])
-    order = _order(src_dir, zip_path, extras, quiet=True)
+    shipped = _members(t["zip"])
+    bad = polluted([n for n, _ in shipped], t["keep"], t["skip"])
+    order = _order(t, src_dir, quiet=True)
     with tempfile.TemporaryDirectory() as tmp:
         fresh = os.path.join(tmp, name)
-        _write(order, src_dir, extras, fresh)
+        _write(order, src_dir, t["extras"], fresh)
         built = _members(fresh)
     ok = shipped == built and not bad
     print(f"  {name}: {'agrees with source' if ok else 'DIFFERS'} "
@@ -195,6 +219,29 @@ def verify(src_dir, zip_path, extras=None):
                 print(f"    ~ {n}  (content differs)")
         if [n for n, _ in shipped] != [n for n, _ in built] and set(s) == set(b):
             print("    (same names, different order)")
+    return ok
+
+
+def scan_all():
+    """Every archive in site/downloads/, generated or not, against the rules
+    (a generated one against its own target's allowances). Returns True when
+    none carries a forbidden entry."""
+    by_zip = {t["zip"]: t for t in TARGETS}
+    ok = True
+    names = sorted(f for f in os.listdir(DOWNLOADS) if f.endswith(".zip"))
+    for f in names:
+        p = os.path.join(DOWNLOADS, f)
+        t = by_zip.get(p)
+        with zipfile.ZipFile(p) as z:
+            entries = z.namelist()
+        bad = polluted(entries, t["keep"] if t else (), t["skip"] if t else ())
+        tag = "generated" if t else "no generator"
+        if bad:
+            ok = False
+            print(f"  {f}: {len(bad)} forbidden of {len(entries)} ({tag}): {bad[:5]}")
+        else:
+            print(f"  {f}: clean, {len(entries)} entries ({tag})")
+    print(f"  {len(names)} archives scanned")
     return ok
 
 
@@ -240,21 +287,21 @@ def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--verify", action="store_true",
                     help="compare a fresh build against the shipped archives "
-                         "without writing them")
+                         "and scan all twelve, without writing anything")
     args = ap.parse_args()
 
     ok = True
     with Lock():
-        for target in TARGETS:
-            folder, zip_path = target[0], target[1]
-            extras = target[2] if len(target) > 2 else None
-            src = os.path.join(HERE, folder)
+        for t in TARGETS:
+            src = os.path.join(HERE, t["folder"])
             if args.verify:
-                ok = verify(src, zip_path, extras) and ok
+                ok = verify(t, src) and ok
             else:
-                names = rezip(src, zip_path, extras)
-                print(f"  wrote {os.path.relpath(zip_path, HERE)}  "
+                names = rezip(t, src)
+                print(f"  wrote {os.path.relpath(t['zip'], HERE)}  "
                       f"({len(names)} entries)")
+        print()
+        ok = scan_all() and ok
     return 0 if ok else 1
 
 

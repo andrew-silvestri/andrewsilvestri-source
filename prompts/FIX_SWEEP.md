@@ -59,6 +59,34 @@ Three lessons from today, written for a maintainer who was not here:
 Also correct §2's archive table, which still points at workspace-root folders
 that moved into `01 ARCHIVE/` or are gone.
 
+## 3b. Damage from the parallel runs — verified, fix these
+
+Running four instances at once produced real artifacts, not just a noisy
+`git status`. Each of these is confirmed, not reported:
+
+1. **`site/downloads/storage-code.zip` is polluted.** It contains
+   `__pycache__/` (two `.pyc` files) and `outputs/` (eight files, ~443 KB of
+   generated figures and CSVs), timestamped 2026-09-04 16:31–16:37 — during the
+   parallel runs. The skyline session hit the same `rezip_downloads.py`
+   collision and restored `heat-code.zip`; storage was left. Rebuild it and
+   **check all twelve archives**, not just this one. A download that ships
+   compiled bytecode and stale generated outputs is a defect a reader meets
+   before any of your prose.
+
+2. **Commit `c2d02aa` swept up work from three different tasks** under a message
+   about climate-cost, including the built `skyline/skyline-app.html` and
+   `package*.json`. Those are now tracked and should not be:
+   `git rm --cached` them; `.gitignore` was already updated. A second commit
+   carries the bookshelf privacy fix under a message about figures.
+
+   Do not rewrite history to fix this. Record it: the repository now has commits
+   whose messages describe changes they do not contain, which is the same defect
+   class as a stale generator, in git. One honest note commit is enough.
+
+3. **`rezip_downloads.py` has no locking and a `--verify` run rewrites the
+   archive it is verifying.** That is why the pollution happened. A verify that
+   mutates is not a verify — fix it, or the next parallel session repeats this.
+
 ## 4. Close out
 
 - `python bust_cache.py` — the only run in this whole sequence.

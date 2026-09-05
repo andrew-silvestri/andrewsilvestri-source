@@ -296,23 +296,10 @@ LAYER_FIG = (
     '<p class="small">Every count is read live from the published model. A single arrowhead\n'
     'pushes one way; a double head trades an influence back and forth.</p>')
 
-# Written for the page but never shipped: no committed atlas.html has carried
-# it (git log -S "Kirchhoff" is empty). Found 2026-09-04 when the generator
-# was first diffed against the tree. Kept here, out of BODY, until someone
-# decides to ship it; the tree is the fact and this is a draft.
-LIMITS_UNSHIPPED = """<h2>Limits</h2>
-
-<p>Coverage follows the source databases rather than reality. Wikidata and the
-World Resources Institute are better on countries that publish in English, so
-a thin layer over a region is a statement about record-keeping and not about
-the region.</p>
-
-<p>The propagation is a relaxation on a weighted graph, not a power flow. It
-answers what is connected to what and how strongly, and it does not solve
-Kirchhoff's laws, clear a market or respect a transmission constraint. The
-link weights are calibrated against replayed historical events to within about
-a factor of two, and that band is quoted rather than hidden.</p>
-"""
+# BODY once ended with a "Limits" section (coverage follows the source
+# databases; the propagation is a relaxation, not a power flow) that no
+# committed atlas.html ever carried. Removed 2026-09-04 rather than kept as
+# dead prose in a generator; the text is quoted in FIX_SWEEP_2026-09-04.md.
 
 
 def main(apply=False):

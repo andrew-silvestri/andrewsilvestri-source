@@ -203,6 +203,7 @@ report first.**
 | `sync_assets.py` | Copies figures from project folders into `site/assets/`. |
 | `bust_cache.py` | **Run before every publish.** Stamps `style.css`, the JS and every image with a content hash. Does not stamp what CSS `url()` references (the fonts). |
 | `sync_img_dims.py` | Keeps every `<img width height>` equal to the file's pixels. |
+| `build_thumbnails.py` | The twelve card and mosaic thumbnails from the shipped figures: the whole figure at 542px wide, its own aspect, never a crop (trap 15). Run after re-rendering any of them, then `sync_img_dims.py`. |
 | `rezip_downloads.py` | Rebuilds the heat, storage, bookshelf and skyline `-code.zip` from their source folders. One run at a time (lock file in `site/downloads/`); each archive is written beside itself and moved into place; `--verify` compares a fresh build against what is shipped without writing. Never ships `__pycache__/`, `outputs/`, node state or a built page — storage-code.zip did, on 2026-09-04. |
 | `tests/test_generators.py` | Runs every text generator into a copy of the tree and diffs the result against `site/`. **Run it before trusting any generator**, and run a generator for real only after the check says it agrees. |
 | `build_site.py` | **Retired. Never run it.** The original generator, last valid 2026-08-01: it writes pages that are no longer on the site (dac, holdup, energy-web), a nav from before the regrouping, and its own icons. `tests/test_generators.py --retired` shows what it would do to the tree. |
@@ -438,6 +439,21 @@ Read this section. Every item is a real bug that shipped.
     listing, `git show --stat`, a grep. Check the premise before acting on
     it, and when it is wrong, say so and quote it rather than quietly
     building on the corrected version.
+15. **A fix that deletes the comment explaining an earlier fix will be
+    undone by the next person, including when the next person is you.**
+    Three times on 2026-09-04: the margin-scene clamp that kept marginalia
+    off the figures lived in a script the deslop pass deleted, and the
+    collision came back; `rebuild_nav.py`'s NAV list was corrected without a
+    note and would have been trusted again; and the mosaic's `object-fit:
+    contain` carried a comment saying exactly why not `cover` ("a centred
+    cover-crop was cutting whole panels and axis labels off"), the dead-space
+    fix replaced it with `cover` and deleted the comment, and the crop came
+    back - this time baked into the thumbnails themselves by
+    `sitefig.thumbnail()`, where no CSS could show it. The rule: a rule that
+    exists because of a bug carries the bug in a comment beside it; when you
+    replace the rule, the comment moves to whatever replaces it; when you
+    delete a file, its warnings go into the thing that took over its job
+    (the grid comment in `style.css` is the margin-scene clamp's).
 
 ---
 

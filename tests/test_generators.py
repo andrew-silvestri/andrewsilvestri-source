@@ -82,6 +82,7 @@ GENERATORS = [
      ["build_app.py"], "skyline",
      [("skyline/skyline-app.html", "site/skyline-app.html")]),
     ("downloads: rezip_downloads.py", ["rezip_downloads.py"], ".", "zips"),
+    ("thumbnails: build_thumbnails.py", ["build_thumbnails.py"], ".", "site"),
     ("image dims: sync_img_dims.py", ["sync_img_dims.py"], ".", "site"),
     ("cache stamps: bust_cache.py", ["bust_cache.py"], ".", "site"),
 ]
