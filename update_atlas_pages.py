@@ -36,6 +36,9 @@ def stats():
             if "·" in s:
                 countries.add(s.split("·")[1].strip())
     return {
+        "bykind": dict(c),
+        "ports": sum(1 for i, k in enumerate(kind) if k == "market"
+                     and "Port Index" in D["srcDict"][D["src"][i]]),
         "n": D["n"], "edges": len(D["es"]),
         "isolated": sum(1 for i in range(D["n"]) if deg[i] == 0),
         "anatomy": len(D["anatomy"]), "countries": len(countries),
@@ -83,6 +86,42 @@ def atlas_page(s):
     for a, b, cdesc in rows:
         tbl.append(f'<tr><td>{a}</td><td class="n">{f(b)}</td>'
                    f'<td>{cdesc}</td></tr>')
+    tbl.append('</table>')
+    return "\n".join(tbl)
+
+
+def model_table(s):
+    """model.html section 2, one row per node kind in the payload, in the
+    order the layers stack. Until 2026-09-04 this table was the July Julia
+    build's README table (7,192 nodes: districts 571, price benchmarks 6,
+    behaviour channels 6) with four numbers regex-patched by the rules in
+    main() - and one of those rules keyed "National grid" to s["grid"],
+    which is grids plus districts (the Grids tab), so the row said 3,546
+    for 214. The rows summed to 84,258 under a stated 86,622. Now every row
+    is counted from the payload and the total is asserted."""
+    k = s["bykind"]
+    ports = s["ports"]
+    rows = [
+        ("Sun", "sun", "The measured solar constant"),
+        ("Insolation band", "insolation", "Annual mean insolation above the atmosphere at one band of latitude, computed from orbital geometry"),
+        ("Weather mode", "weather", "El Ni&ntilde;o / La Ni&ntilde;a, or the North Atlantic Oscillation, from its measured index series"),
+        ("Climate system", "climate", "Carbon dioxide level, or the global temperature anomaly"),
+        ("Recorded event", "event", "One earthquake of magnitude 5.5 or more since 1960 that reaches infrastructure, or one earlier recorded disaster"),
+        ("Market", "market", f"One traded price benchmark ({f(k['market'] - ports)}), or one port in the World Port Index ({f(ports)})"),
+        ("Fuel supply", "supply", "One fuel in one country, with its share of that country's electricity"),
+        ("National grid", "grid", "The power system of one country"),
+        ("District", "district", "One first-level administrative division, at its settlement centroid"),
+        ("Power station", "station", f"One generating unit from the world database, at its recorded coordinate; {s['countries']} countries"),
+        ("Consumer group", "consumer", "The demand of one settlement above fifteen thousand people"),
+        ("Behaviour channel", "psych", "One behavioural channel, placed in a drawn brain structure and wired into demand"),
+    ]
+    total = sum(k[kind] for _, kind, _ in rows)
+    assert total == s["n"], (total, s["n"], sorted(k))
+    assert set(kind for _, kind, _ in rows) == set(k), sorted(k)
+    tbl = ['<table>', '<tr><th>Node type</th><th class="n">Count</th><th>What one node is</th></tr>']
+    for label, kind, desc in rows:
+        tbl.append(f'<tr><td>{label}</td><td class="n">{f(k[kind])}</td><td>{desc}</td></tr>')
+    tbl.append(f'<tr><td><b>Total</b></td><td class="n"><b>{f(total)}</b></td><td></td></tr>')
     tbl.append('</table>')
     return "\n".join(tbl)
 
@@ -336,7 +375,9 @@ def main(apply=False):
     p2 = os.path.join(SITE, "model.html")
     t2 = open(p2, encoding="utf-8").read()
     subs = [
-        (r"\b7,192\b", f(s["n"])),
+        # no rule for 7,192: that is the July build's own count, and section 7
+        # names it as such. A rule here rewrote that sentence to the current
+        # count the first time it existed (2026-09-04) - trap 8 again.
         (r"\b13,826\b", f(s["edges"])),
         (r"\b130,772\b", f(s["edges"])),
         (r"\b130,804\b", f(s["edges"])),
@@ -355,6 +396,16 @@ def main(apply=False):
     for pat, rep in subs:
         t2, k = re.subn(pat, rep, t2)
         hits += k
+    # Section 2's table is generated whole, every row from the payload, so no
+    # number in it can be left behind or mis-keyed by the rules above.
+    t2, k = re.subn(r"(<h2>2\. What the model contains</h2>\s*\n\s*\n)<table>.*?</table>",
+                    lambda m: m.group(1) + model_table(s), t2, count=1, flags=re.S)
+    if k != 1:
+        raise SystemExit("model.html: section 2 table not found")
+    hits += k
+    # the sources table's brain row counts the channels
+    t2, k = re.subn(r"\b\d+ channels matched\b", f"{f(s['psych'])} channels matched", t2)
+    hits += k
     # Generated last, and deliberately so. The substitution loop above
     # rewrites bare numbers wherever they appear, and the count of negative
     # links happens to equal an older value of the consumer-group count. Run
