@@ -13,49 +13,23 @@ material: the numbered folders 01–21 are the archive and are unchanged.
 | `site/assets/` | Figures and images used by the pages. |
 | `longevity-quotient/` | The longevity quotient project — model, data, tests, and the visualiser template it generates. |
 | `build_site.py` | The generator that produced the first version of the site pages. |
-| `build_hero.py` | Builds the front-page hero data by sampling the live payload: coastlines and 3,996 of the model's nodes at their real coordinates. |
+| `build_hero_figure.py` | Draws the front-page globe from the atlas payload (see below). |
 | `HANDOFF.md` | **Read this first.** Orientation for anyone, human or AI, picking the project up cold. |
 | `backups/` | Dated byte-identical copies of `site/` taken before a deploy. |
 | `tests/` | Node harnesses that boot the atlas headlessly and check it. |
 
-## The front-page hero, and the graphics decision
+## The front-page globe
 
-The hero is the model on a rotating globe. Nothing on it is decorative:
-coastline rings from the country polygon set, and 3,996 of the 86,622 nodes
-at their recorded coordinates, coloured by kind. Each layer has a quota, because
-a uniform sample of this payload would be four parts power station and nothing
-else. It reads the same file the atlas runs on, so the front page cannot drift
-away from the model. The only invention is the flow field, which is a smooth
-analytic function rather than wind data, and the code says so where it is
-defined.
-
-It renders twice, deliberately.
-
-`assets/hero.js` is a 2D canvas version with no dependencies. It starts
-immediately, works in every browser, and is what the page ships with.
-
-`assets/hero-gl.js` then tries to upgrade it. If the browser reports WebGL, it
-fetches three.js from a CDN, builds the same scene in 3D, and once it has a
-frame on screen fades out the 2D layers and stops their loop. If any link in
-that chain fails — no WebGL, blocked CDN, slow network, thrown error — nothing
-happens and the 2D hero keeps running. The page never waits on it.
-
-What 3D actually buys: real depth, so geometry behind the globe is occluded by
-the depth buffer rather than by a hand-written facing test; additive blending,
-so overlapping light accumulates the way light does, which is where the glow
-comes from; and trails as real geometry, each particle carrying a nine-point
-history, so a streamline has a gradient along its length instead of being a
-smear left in a fading framebuffer. About 23,000 line segments and 1,900
-sprites, roughly ten times what the 2D path can carry.
-
-**WebGPU is deliberately not used.** Its support still trails WebGL by a wide
-margin, and this is a front page rather than a demo — a blank hero for a share
-of visitors is not worth the marginal gain. The structure would take a WebGPU
-renderer later without changes to anything above it.
-
-Tested in three states: no WebGL (falls back cleanly, 2D keeps drawing), WebGL
-present (three.js requested, 2D still drawing until the handover), and
-reduced-motion (one static frame, no CDN request, no animation loop).
+The home page's globe is a figure, `assets/hero_globe.png`, drawn by
+`build_hero_figure.py` from the atlas payload: the model's 34,936 power
+stations and 35,207 settlements at their recorded coordinates, the
+coastlines, an orthographic view centred on the Atlantic, in the site's
+palette on paper. It replaced a WebGL globe (`hero.js`, `hero-gl.js`,
+three.js and a 109 KB payload built by `build_hero.py`) on 2026-09-04: that
+object was drawn for a dark ground and, once the site went to paper, read as
+a dark sphere with a halo floating in white. The moving globe lives in the
+atlas app, where it has its ground. Re-run the builder after the payload
+changes; `tests/test_generators.py` does not cover figures.
 
 ## Publishing
 

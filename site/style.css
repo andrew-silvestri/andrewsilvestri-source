@@ -209,7 +209,7 @@ main.notes {
     minmax(0, var(--gutter)) [gutter-r-end]
     minmax(34px, 1fr) [full-end];
 }
-main > .wide, main > table, main > img.fig, main > video.fig, main > #hero,
+main > .wide, main > table, main > img.fig, main > video.fig,
 main > .cardgrid, main > .mosaic { grid-column: wide; }
 main > .full { grid-column: full; }
 
@@ -453,22 +453,21 @@ img.fig:focus-visible { outline: 2px solid var(--acc); outline-offset: 2px; }
 .btn.ghost:hover { color: var(--ink); border-color: var(--dim); }
 
 /* --------------------------------------------------------------- hero --- */
-#hero {
-  position: relative;
-  width: 100%;
-  height: clamp(300px, 46vh, 560px);
-  margin: 14px 0 22px;
-  overflow: hidden;
-  /* The globe canvases draw a dark sphere with its own limb and rim; on this
-     ground it is an object on the page, so there is no box and no frame. */
-}
-.hero-layer { position: absolute; inset: 0; display: block; }
-/* the WebGL canvas fades in over the 2D pair, then they are stopped */
-.hero-gl { z-index: 2; }
-.hero-cap {
-  font: var(--fs-2) var(--mono);
-  color: var(--dim);
-  margin: 10px 0 0;
+/* The home page's globe is a figure drawn on paper (build_hero_figure.py,
+   hero_globe.png): the model's stations and settlements at their recorded
+   coordinates on an orthographic globe, in the palette. Until 2026-09-04
+   it was a WebGL sphere (hero.js, hero-gl.js, three.js, a 109 KB payload)
+   drawn for a dark ground; once Part 1 took the dark frame away it read as
+   a dark blob with a halo on white. A dark object needs a dark ground, and
+   the atlas app is where this one has it. .plain: no frame and no card
+   ground, because a globe is an object on the page, not a picture in a
+   box; capped at 720px so the sphere is a masthead, not a poster. */
+img.fig.plain {
+  border: 0;
+  background: transparent;
+  max-width: min(100%, 720px);
+  margin: 6px auto 18px;
+  display: block;
 }
 
 /* ------------------------------------------------------------- footer --- */
@@ -660,7 +659,6 @@ aside.marginalia img { width: 18px; height: 18px; vertical-align: -4px; margin-r
      whole document a horizontal scroll, and every block then reads as
      though it has been cut off down the right edge. */
   main > * { max-width: 100%; min-width: 0; }
-  #hero { max-width: 100%; }
   /* A table of numbers cannot be made narrow without lying about it, so it
      scrolls inside its own box rather than stretching the page. */
   table { display: block; width: 100%; overflow-x: auto; }

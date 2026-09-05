@@ -26,6 +26,7 @@ HERE = os.path.dirname(os.path.abspath(__file__))
 DATA = os.path.join(HERE, "site", "assets", "atlas-data.js")
 OUT = os.path.join(HERE, "site", "assets", "hero_globe.png")
 LON0, LAT0 = -20.0, 22.0      # the Atlantic view: Europe, Africa, the Americas
+HERO_PX = 720                 # the CSS width the figure is displayed at
 
 
 def load():
@@ -49,7 +50,11 @@ def main():
     D = load()
     kind = [D["kinds"][k] for k in D["kind"]]
     lon, lat = np.array(D["lon"], float), np.array(D["lat"], float)
-    fig, ax = plt.subplots(figsize=fig_size(PROSE, SQUARE * 1.15))
+    # Drawn at the width it is shown at, 720 CSS px (style.css caps
+    # img.fig.plain there), not the wide track: at PROSE the file was 338 KB
+    # and the home page 751 KB; at 720 it is a third of that and the page
+    # is under the 600 KB line. sitefig saves at two pixels per CSS pixel.
+    fig, ax = plt.subplots(figsize=fig_size(HERO_PX, SQUARE * 1.15))
     ax.set_aspect("equal"); ax.axis("off")
     # the caption sits under the limb, so the frame is a little taller than
     # the sphere and the extra is at the bottom
@@ -82,6 +87,15 @@ def main():
             fontsize=sitefig.FS_2, color=DIM, fontfamily=sitefig.MONO, ha="left", va="top")
     fig.subplots_adjust(0, 0, 1, 1)
     size = sitefig.save(fig, OUT)
+    # Seventy thousand translucent dots blend into thousands of near-
+    # identical colours, and at 256 the palette is most of the file. Sixty-
+    # four is indistinguishable on this figure (a scan by eye at 2x) and
+    # keeps the home page under the 600 KB line; the general save() stays
+    # at 256 because a chart's legend colours must not merge.
+    from PIL import Image
+    im = Image.open(OUT).convert("RGB")
+    im.quantize(colors=64, method=Image.Quantize.MEDIANCUT, dither=Image.Dither.NONE).save(OUT, optimize=True)
+    size = os.path.getsize(OUT)
     print(f"  wrote {os.path.basename(OUT)}  {size // 1024} KB")
 
 
