@@ -25,7 +25,7 @@ about what is actually on the page.
 WIDE_TRACK_PX = 1140
 MIN_PX = 12.0        # --fs-2, the smallest step of the site scale (2026-09-04)
 MIN_TITLE_PX = 14.5  # --fs-1
-KNOWN_DISPLAY = (714, 1082, 1140, 542)   # sitefig display widths, one point per pixel
+KNOWN_DISPLAY = (714, 1082, 1140, 542, 350)   # sitefig display widths, one point per pixel (350: the phone variant)
 
 
 def on_screen_px(pt, figsize_w_in):

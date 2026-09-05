@@ -13,23 +13,25 @@ material: the numbered folders 01–21 are the archive and are unchanged.
 | `site/assets/` | Figures and images used by the pages. |
 | `longevity-quotient/` | The longevity quotient project — model, data, tests, and the visualiser template it generates. |
 | `build_site.py` | The generator that produced the first version of the site pages. |
-| `build_hero_figure.py` | Draws the front-page globe from the atlas payload (see below). |
+| `build_layer_diagram.py` | Draws the front-page hero, the nine-layer diagram, from the atlas payload (see below). |
+| `build_hero_figure.py` | Draws the globe on the atlas page from the atlas payload. |
 | `HANDOFF.md` | **Read this first.** Orientation for anyone, human or AI, picking the project up cold. |
 | `backups/` | Dated byte-identical copies of `site/` taken before a deploy. |
 | `tests/` | Node harnesses that boot the atlas headlessly and check it. |
 
-## The front-page globe
+## The front-page hero
 
-The home page's globe is a figure, `assets/hero_globe.png`, drawn by
-`build_hero_figure.py` from the atlas payload: the model's 34,936 power
-stations and 35,207 settlements at their recorded coordinates, the
-coastlines, an orthographic view centred on the Atlantic, in the site's
-palette on paper. It replaced a WebGL globe (`hero.js`, `hero-gl.js`,
-three.js and a 109 KB payload built by `build_hero.py`) on 2026-09-04: that
-object was drawn for a dark ground and, once the site went to paper, read as
-a dark sphere with a halo floating in white. The moving globe lives in the
-atlas app, where it has its ground. Re-run the builder after the payload
-changes; `tests/test_generators.py` does not cover figures.
+The home page opens on the model's nine layers, `assets/atlas_layers-notes.png`
+(a 350px render for phones beside it), drawn by `build_layer_diagram.py`: the
+layers as bands with their node counts, every link between layers as an arc,
+one-way links on the right with one head and two-way links on the left with
+two, the stroke as the number of links. Every number and every link is read
+from the payload, and the rank rule that decides direction from `atlas-app.js`.
+It replaced the globe on 2026-09-04 because a globe of dots is a map of where
+things are, and the first picture should say what the model *is*. The globe,
+`assets/hero_globe.png` by `build_hero_figure.py`, now sits on the atlas page,
+where a map is the right object. Re-run both builders after the payload
+changes; `tests/test_generators.py` covers the layer diagram.
 
 ## Publishing
 

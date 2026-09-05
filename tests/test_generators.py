@@ -9,9 +9,11 @@ shipped a template three palette lines behind site/. Each of those was a
 script that would have reverted a deliberate change the next time someone
 trusted it. The check is cheap: run it, diff it, every time.
 
-Scope: the text generators (pages, apps, nav, stamps, image dims) and the
-download archives. Figure builders are out of scope here - each carries its
-own layout audit(), and PNG bytes depend on the matplotlib build.
+Scope: the text generators (pages, apps, nav, stamps, image dims), the
+download archives, and one figure builder, the layer diagram (the home page's
+hero, read from the payload). The other figure builders are out of scope -
+each carries its own layout audit(), and PNG bytes depend on the matplotlib
+build.
 build_site.py is retired (HANDOFF: never run it; last valid 2026-08-01) and
 runs only with --retired, so the report can say what it would do.
 
@@ -83,6 +85,13 @@ GENERATORS = [
      [("skyline/skyline-app.html", "site/skyline-app.html")]),
     ("downloads: rezip_downloads.py", ["rezip_downloads.py"], ".", "zips"),
     ("thumbnails: build_thumbnails.py", ["build_thumbnails.py"], ".", "site"),
+    # One figure builder is in scope: the layer diagram is the home page's
+    # first screen and the picture above the atlas table, and it is drawn
+    # from the payload, the engine source and the table's own grouping. If
+    # any of those move, the shipped PNGs must move with them. Agg is
+    # deterministic on one machine and one matplotlib, which is what this
+    # check runs on.
+    ("layer diagram: build_layer_diagram.py", ["build_layer_diagram.py"], ".", "site"),
     ("image dims: sync_img_dims.py", ["sync_img_dims.py"], ".", "site"),
     ("cache stamps: bust_cache.py", ["bust_cache.py"], ".", "site"),
 ]

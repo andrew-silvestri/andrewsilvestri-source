@@ -36,6 +36,7 @@ def stats():
             if "·" in s:
                 countries.add(s.split("·")[1].strip())
     return {
+        "_kind": kind, "_D": D,
         "bykind": dict(c),
         "ports": sum(1 for i, k in enumerate(kind) if k == "market"
                      and "Port Index" in D["srcDict"][D["src"][i]]),
@@ -50,7 +51,54 @@ def stats():
         "space": c["sun"] + c["insolation"], "weather": c["weather"],
         "neg": sum(1 for x in D["ew"] if x < 0),
         "wmin": min(D["ew"]), "wmax": max(D["ew"]),
+        **run_stats(D, kind, deg),
+        **provenance_stats(D, kind),
     }
+
+
+def run_stats(D, kind, deg):
+    """What the engine actually does, measured, for the sentences that used
+    to guess it: how many rounds the sixty scenarios take to settle, how far
+    they reach, and what pushing the most connected power plant moves.
+    The engine is build_throughlines.engine(), the figures' copy, which
+    tests/test_parity.py holds equal to the browser's."""
+    import numpy as np
+    from build_throughlines import engine
+    run, _ = engine(D)
+    ids = {k: int(v) for k, v in D["idMap"].items()}
+    steps, reach = [], []
+    for sc in D["scenarios"].values():
+        sh = {ids[i]: a for i, a in sc["shocks"].items() if i in ids}
+        if not sh:
+            continue
+        st, hist = run(sh)
+        steps.append(len(hist) - 1)
+        reach.append(int((np.abs(st) >= 0.02).sum()))
+    plant = max((i for i, k in enumerate(kind) if k == "station"), key=lambda i: deg[i])
+    st, hist = run({plant: 1.0})
+    moved = int((np.abs(st) >= 0.02).sum()) - 1     # besides itself
+    return {
+        "steps_min": min(steps), "steps_max": max(steps),
+        "steps_median": int(np.median(steps)), "steps_under20": sum(1 for x in steps if x < 20),
+        "reach_min": min(reach), "reach_max": max(reach),
+        "reach_orders": np.log10(max(reach) / min(reach)),
+        "plant_name": D["name"][plant], "plant_deg": deg[plant], "plant_moved": moved,
+        "plant_steps": len(hist) - 1,
+    }
+
+
+def provenance_stats(D, kind):
+    """Which nodes carry a measured quantity and which carry an assumption,
+    read from each node's own source string."""
+    src = [D["srcDict"][i] for i in D["src"]]
+    assumed_consumer = sum(1 for s_, k in zip(src, kind) if k == "consumer" and "literature" in s_)
+    modelled_psych = sum(1 for s_, k in zip(src, kind) if k == "psych" and "model of" in s_)
+    ports = sum(1 for s_, k in zip(src, kind) if k == "market" and "Port Index" in s_)
+    at_origin = sum(1 for i in range(D["n"]) if D["lat"][i] == 0 and D["lon"][i] == 0)
+    at_origin_kinds = sorted({kind[i] for i in range(D["n"]) if D["lat"][i] == 0 and D["lon"][i] == 0})
+    return {"assumed_consumer": assumed_consumer, "modelled_psych": modelled_psych,
+            "ports": ports, "at_origin": at_origin, "at_origin_kinds": at_origin_kinds,
+            "assumed_total": assumed_consumer + modelled_psych + ports}
 
 
 def f(n):
@@ -58,6 +106,13 @@ def f(n):
 
 
 def atlas_page(s):
+    # Row order is the layer diagram's (build_layer_diagram.LAYERS): the
+    # figure's band order is derived - it is the one order of the nine that
+    # minimises arc crossings, checked over every order by its audit - and
+    # the table's used to be arbitrary. Two orders for the same nine layers
+    # on one page read as one of them being wrong, so the one with a reason
+    # wins and the other follows it. The caption under the figure says so.
+    from build_layer_diagram import LAYERS
     rows = [
         ("Space", s["space"], "The measured solar constant, and the annual "
          "mean insolation above the atmosphere at each band of latitude, "
@@ -81,6 +136,10 @@ def atlas_page(s):
          f"{f(s['anatomy'])} drawn brain structures, fed by every district "
          f"with a measured population"),
     ]
+    by_label = {r[0]: r for r in rows}
+    if set(by_label) != {g for g, _ in LAYERS}:
+        raise SystemExit("the table's layers and the diagram's do not match")
+    rows = [by_label[g] for g, _ in LAYERS]
     tbl = ['<table><tr><th>Layer</th><th class="n">Nodes</th>'
            '<th>Contents</th></tr>']
     for a, b, cdesc in rows:
@@ -88,6 +147,80 @@ def atlas_page(s):
                    f'<td>{cdesc}</td></tr>')
     tbl.append('</table>')
     return "\n".join(tbl)
+
+
+# Section 5's two tables, generated from the payload the way section 2's is.
+# Until 2026-09-05 they were typed: single inertia values where the payload
+# holds ranges, a "grid -> district 0.60 fixed" that is 0.42-0.60, and
+# "event -> grid: log10 of the real damage cost" for a layer where 8,733 of
+# 9,259 events are USGS earthquakes with no cost at all. The reasons are
+# still typed (a payload cannot say why); the numbers are read.
+LINK_ROWS = [
+    # (source kind, target kind, label, where the weight comes from)
+    ("climate", "climate", "Climate system → temperature", "Fixed. The temperature follows the forcing closely."),
+    ("market", "market", "Price benchmark → related benchmark", "Observed price correlation."),
+    ("supply", "grid", "Fuel supply → national grid", "0.55 × <b>the real share of that fuel in that country's power</b>."),
+    ("market", "supply", "Price benchmark → fuel supply", "0.35 + 0.40 × share: higher where the country depends more on that fuel."),
+    ("grid", "district", "National grid → district", "0.60 for a district with a measured population, 0.42 for a synthetic filler (build_atlas_global.py)."),
+    ("district", "consumer", "District → consumer group", "Fixed."),
+    ("event", "grid", "Recorded event → grid", "<b>log10 of the recorded damage cost</b> for the {emdat} EM-DAT events that have one; for the {usgs} USGS earthquakes, which carry no cost, from magnitude and distance (build_atlas_global.py)."),
+    ("event", "station", "Recorded event → power plant", "From magnitude and distance; a quake reaches at most twelve nodes inside its felt radius."),
+    ("climate", "grid", "Temperature → national grid", "Heating and cooling demand."),
+    ("climate", "market", "Temperature → gas and power price", "Heating and cooling demand."),
+    ("consumer", "district", "Consumer group → district", "Negative: demand response. Consumers use less when costs rise."),
+    ("station", "grid", "Power station → grid", "0.20 + 0.55 × √(capacity ÷ the largest plant); the division by plant count is the engine's fan-in, section 5.3."),
+    ("district", "psych", "District → behaviour channel", "Varies by district; set in the brain build."),
+    ("psych", "consumer", "Behaviour channel → consumer group", "Fixed."),
+]
+INERTIA_ROWS = [
+    # (kinds, label, reason)
+    (("event",), "Recorded event", "0.10 + 0.10 per unit of magnitude above 5: an event happens at once, a great earthquake holds longer."),
+    (("market",), "Price benchmark, port", "Benchmarks: <b>set by the real volatility of that price series</b>, a more volatile price reacting faster. Ports: by harbour size class."),
+    (("grid",), "National grid", "A grid must balance in seconds."),
+    (("supply", "district"), "Fuel supply, district", "Supply chains take weeks."),
+    (("consumer",), "Settlement, consumer group", "Settlements: 0.18 + 0.55 × ∛(population ÷ the largest); a city changes more slowly than a town."),
+    (("station",), "Power station", "From capacity: a larger plant changes more slowly."),
+    (("climate",), "Climate system", "The climate is a slow variable."),
+    (("weather",), "Weather mode", "Set per index (build_atlas_global.py)."),
+    (("psych",), "Behaviour channel", "0.30 rising by 0.02 per channel: a modelling choice, not a measurement."),
+    (("sun", "insolation"), "Sun, insolation", "The sun is held; insolation follows it at once."),
+]
+
+
+def weight_table(D, kind):
+    import collections
+    rng = collections.defaultdict(list)
+    for a, b, w in zip(D["es"], D["et"], D["ew"]):
+        rng[(kind[a], kind[b])].append(w)
+    src = [D["srcDict"][i] for i in D["src"]]
+    emdat = sum(1 for s_, k in zip(src, kind) if k == "event" and "USGS" not in s_)
+    usgs = sum(1 for s_, k in zip(src, kind) if k == "event" and "USGS" in s_)
+    rows = ['<table><tr><th>Link</th><th class="n">Links</th><th>Weight</th>'
+            '<th>Where the weight comes from</th></tr>']
+    for a, b, label, why in LINK_ROWS:
+        ws = rng.get((a, b))
+        if not ws:
+            continue
+        lo, hi = min(ws), max(ws)
+        val = f"{lo:+.2f}" if abs(hi - lo) < 0.005 else f"{lo:+.2f} to {hi:+.2f}"
+        rows.append(f'<tr><td>{label}</td><td class="n">{f(len(ws))}</td><td>{val}</td>'
+                    f'<td>{why.format(emdat=f(emdat), usgs=f(usgs))}</td></tr>')
+    rows.append("</table>")
+    return "\n".join(rows)
+
+
+def inertia_table(D, kind):
+    res = D["res"]
+    rows = ['<table><tr><th>Node type</th><th>Inertia</th><th>Reason</th></tr>']
+    for kinds, label, why in INERTIA_ROWS:
+        vals = [r for r, k in zip(res, kind) if k in kinds]
+        if not vals:
+            continue
+        lo, hi = min(vals), max(vals)
+        val = f"{lo:.2f}" if abs(hi - lo) < 0.005 else f"{lo:.2f} to {hi:.2f}"
+        rows.append(f"<tr><td>{label}</td><td>{val}</td><td>{why}</td></tr>")
+    rows.append("</table>")
+    return "\n".join(rows)
 
 
 def model_table(s):
@@ -126,27 +259,59 @@ def model_table(s):
     return "\n".join(tbl)
 
 
-SCEN_TABLE = """<table>
-<tr><th>Category</th><th class="n">Changes</th><th class="n">Widest reach</th><th>Widest</th></tr>
-<tr><td>People & cognition</td><td class="n">6</td><td class="n">3,004</td><td>Fear becomes salient</td></tr>
-<tr><td>Universe & Earth, exogenous</td><td class="n">10</td><td class="n">77,669</td><td>A step in climate forcing</td></tr>
-<tr><td>Country policy changes</td><td class="n">8</td><td class="n">13,969</td><td>The United States retires coal</td></tr>
-<tr><td>Climate goal meetings</td><td class="n">8</td><td class="n">76,165</td><td>Paris, fully met</td></tr>
-<tr><td>Natural disasters</td><td class="n">6</td><td class="n">13,969</td><td>A major California earthquake</td></tr>
-<tr><td>Global pandemics</td><td class="n">6</td><td class="n">2,744</td><td>The Black Death, at today's scale</td></tr>
-<tr><td>Wars</td><td class="n">5</td><td class="n">5,478</td><td>A war of 1939-45 scale</td></tr>
-<tr><td>Technology improvement & buildout</td><td class="n">5</td><td class="n">6,983</td><td>Fusion arrives at scale</td></tr>
-<tr><td>Energy makeup evolution</td><td class="n">6</td><td class="n">5,121</td><td>Renewables pass half of world power</td></tr>
-</table>"""
+def scen_rows(D):
+    """Per category: how many prepared changes, the widest reach among them
+    and which change it was, from the payload's scenario `reach` fields
+    (written by build_scenarios.py from a run of the engine). Until
+    2026-09-05 both tables that show this were typed, and the numbers went
+    stale the day the engine changed."""
+    rows = []
+    for c in D["scenarioCats"]:
+        sc = [v for v in D["scenarios"].values() if v.get("cat") == c["id"]]
+        if not sc:
+            continue
+        top = max(sc, key=lambda v: v.get("reach", 0))
+        rows.append((c["label"], len(sc), top.get("reach", 0), top["label"]))
+    return rows
+
+
+def scen_table(D):
+    """atlas.html's table, in the catalogue's own category order."""
+    tbl = ['<table>', '<tr><th>Category</th><th class="n">Changes</th>'
+           '<th class="n">Widest reach</th><th>Widest</th></tr>']
+    for label, n, reach, top in scen_rows(D):
+        tbl.append(f'<tr><td>{label}</td><td class="n">{n}</td>'
+                   f'<td class="n">{f(reach)}</td><td>{top}</td></tr>')
+    tbl.append('</table>')
+    return "\n".join(tbl)
+
+
+def behaviour_table(D):
+    """model.html section 6's table, widest first."""
+    tbl = ['<table>', '<tr><th>Kind of change</th><th>Widest in that kind</th>'
+           '<th class="n">Nodes that changed</th></tr>']
+    for label, n, reach, top in sorted(scen_rows(D), key=lambda r: -r[2]):
+        tbl.append(f'<tr><td>{label}</td><td>{top}</td><td class="n">{f(reach)}</td></tr>')
+    tbl.append('</table>')
+    return "\n".join(tbl)
+
 
 BODY = """<h1>The atlas</h1>
 <p class="dim">{n} nodes and {edges} weighted links, each carrying a
 parameter from a public data set.</p>
 
 <p>The atlas is the world energy system drawn as a graph and made to move.
-Every node holds one measured quantity and names where it came from. Apply a
-change anywhere and the effect propagates along the links until it settles,
-which takes between twenty and fifty steps.</p>
+Most nodes hold a measured quantity, and every node names where it came
+from; the {assumed_total} that hold an assumption say so in their source line:
+{assumed_consumer} consumer groups carry an elasticity from the literature,
+the {psych} behaviour channels are a model of where demand is decided, and
+{ports} ports carry a name and a harbour size class and no number. Apply a
+change anywhere
+and the effect propagates along the links until it settles, which the sixty
+prepared changes do in {steps_min} to {steps_max} rounds, {steps_median} in the
+middle; a single node pushed on its own settles in about {plant_steps}.</p>
+
+{globe}
 
 {card}
 
@@ -178,7 +343,8 @@ the model. The channels carry weight and wire into demand.</p>
 mean of what its neighbours are carrying, damped by its own resilience, bounded
 by a hyperbolic tangent so that nothing runs away, and the source is held at
 the value it was pushed to. The run repeats until the largest remaining
-movement falls below a threshold, which takes between twenty and fifty steps.
+movement falls below a threshold, which takes {steps_min} to {steps_max} rounds
+across the prepared changes and never reaches the ceiling of sixty.
 Nodes the run moved pulse, with the depth of the pulse scaling with the size of
 the effect. Clicking a node draws its web of influence three hops deep.</p>
 
@@ -213,9 +379,11 @@ be found, the scenario says so and calls itself an assumption.</p>
 strongly, so a prepared change is a way of asking that question from a
 particular starting point.</p>
 
-<p>Reach spans five orders of magnitude, and starting at the most connected
-power plant in the world moves one other node. That spread is the point. A
-model that answers the same number to every question is not answering.</p>
+<p>Reach spans {reach_orders} orders of magnitude, from {reach_min} nodes to
+{reach_max}, and starting at the most connected power plant in the world
+({plant_name}, {plant_deg} links) moves {plant_moved_text}. That spread is the
+point. A model that answers the same number to every question is not
+answering.</p>
 
 <h2>What is above the climate</h2>
 
@@ -322,18 +490,41 @@ quantity the propagation already uses. Hidden nodes still take part in a run.
 The threshold changes the view, not the answer.</p>
 """
 
-# The layer diagram and its caption, as shipped since a402b9f (2026-09-04).
-# The generator takes the stamped tag from the page it is rewriting when one
-# is there, so bust_cache.py's stamp survives a regeneration; this is the
-# fallback for a page that has lost it.
+# The layer diagram and its caption. The generator takes the stamped block
+# from the page it is rewriting when one is there, so bust_cache.py's stamps
+# survive a regeneration; this is the fallback for a page that has lost it,
+# and the source of the markup when it changes (2026-09-04: a <picture> with
+# the phone render, the generator named, the band order explained).
 LAYER_FIG = (
-    '<img src="assets/atlas_layers.png" class="fig wide" loading="lazy" '
-    'width="2280" height="1379" alt="The nine layers of the atlas drawn as '
-    'boxes with their live node counts. Sun, insolation, weather, climate and '
-    'recorded events push forward only; markets, grids, plants, districts, '
-    'consumers and behaviour trade back and forth.">\n'
-    '<p class="small">Every count is read live from the published model. A single arrowhead\n'
-    'pushes one way; a double head trades an influence back and forth.</p>')
+    '<picture class="wide">\n'
+    '<source media="(max-width: 760px)" srcset="assets/atlas_layers-phone.png">\n'
+    '<img src="assets/atlas_layers.png" class="fig" loading="lazy" '
+    'width="2280" height="1400" alt="The nine layers of the atlas as bands '
+    'with their live node counts. Space, weather, climate and recorded events '
+    'push one way, downward; demand, power plants, markets and fuel, grids and '
+    'behaviour trade back and forth.">\n'
+    '</picture>\n'
+    '<p class="small">Drawn by <code>build_layer_diagram.py</code> from the '
+    'published payload: every count and every link is read from it, and the '
+    'rank rule from the engine. A single arrowhead pushes one way; a double '
+    'head trades back and forth; an arc\'s width is the number of links it '
+    'stands for. The bands are in the one order that minimises arc crossings, '
+    'and the table below follows the figure.</p>')
+
+
+# The globe, moved here from the home page on 2026-09-04: a map belongs on
+# the page about the thing it maps. Same stamp-preserving rule as the layer
+# diagram; the fallback is written from the payload's own counts.
+def globe_fig(s):
+    return (
+        '<img class="fig wide plain" src="assets/hero_globe.png" '
+        'width="1440" height="1252" alt="The model\'s '
+        f'{f(s["station"])} power stations and {f(s["consumer"])} settlements '
+        'at their recorded coordinates, on an orthographic globe centred on '
+        'the Atlantic">\n'
+        '<p class="small">Every power station and every settlement in the '
+        'model at its recorded coordinates, drawn on paper by '
+        '<code>build_hero_figure.py</code> from the payload.</p>')
 
 # BODY once ended with a "Limits" section (coverage follows the source
 # databases; the propagation is a relaxation, not a power flow) that no
@@ -356,13 +547,25 @@ def main(apply=False):
     tail = t[t.index("<footer"):]
     card = re.search(r'<div class="card">.*?</div>\s*\n', t, re.S)
     card = card.group(0) if card else ""
-    fig = re.search(r'<img src="assets/atlas_layers\.png[^>]*>\n<p class="small">.*?</p>', t, re.S)
+    fig = re.search(r'<picture class="wide">\n<source[^>]*atlas_layers-phone[^>]*>\n'
+                    r'<img src="assets/atlas_layers\.png[^>]*>\n</picture>\n<p class="small">.*?</p>', t, re.S)
     layerfig = fig.group(0) if fig else LAYER_FIG
+    gl = re.search(r'<img class="fig wide plain" src="assets/hero_globe\.png[^>]*>\n<p class="small">.*?</p>', t, re.S)
+    globe = gl.group(0) if gl else globe_fig(s)
 
     body = BODY.format(
-        nscen=f(s["nscen"]), scentable=SCEN_TABLE,
+        nscen=f(s["nscen"]), scentable=scen_table(s["_D"]),
         n=f(s["n"]), edges=f(s["edges"]), card=card, table=atlas_page(s),
-        layerfig=layerfig,
+        layerfig=layerfig, globe=globe,
+        assumed_total=f(s["assumed_total"]), assumed_consumer=f(s["assumed_consumer"]),
+        ports=f(s["ports"]),
+        steps_min=s["steps_min"], steps_max=s["steps_max"], steps_median=s["steps_median"],
+        plant_steps=s["plant_steps"],
+        reach_orders=f"{s['reach_orders']:.1f}".replace(".0", ""),
+        reach_min=f(s["reach_min"]), reach_max=f(s["reach_max"]),
+        plant_name=s["plant_name"], plant_deg=f(s["plant_deg"]),
+        plant_moved_text=("nothing but itself" if s["plant_moved"] == 0 else
+                          f"{f(s['plant_moved'])} other node" + ("" if s["plant_moved"] == 1 else "s")),
         psych=f(s["psych"]), anatomy=f(s["anatomy"]),
         isolated=f(s["isolated"]),
         isopct=f"{100 * s['isolated'] / s['n']:.2f}")
@@ -402,6 +605,29 @@ def main(apply=False):
                     lambda m: m.group(1) + model_table(s), t2, count=1, flags=re.S)
     if k != 1:
         raise SystemExit("model.html: section 2 table not found")
+    hits += k
+    # Sections 5.1 and 5.2: the weight and inertia tables, from the payload
+    # (claim 3 of ATLAS_CLAIMS_TODO_2026-09-04.md)
+    t2, k = re.subn(r"(<h3>5\.1 Link weights</h3>.*?</p>\s*\n\s*\n)<table>.*?</table>",
+                    lambda m: m.group(1) + weight_table(s["_D"], s["_kind"]), t2, count=1, flags=re.S)
+    if k != 1:
+        raise SystemExit("model.html: section 5.1 table not found")
+    hits += k
+    t2, k = re.subn(r"(<h3>5\.2 Node inertia</h3>.*?</p>\s*\n\s*\n)<table>.*?</table>",
+                    lambda m: m.group(1) + inertia_table(s["_D"], s["_kind"]), t2, count=1, flags=re.S)
+    if k != 1:
+        raise SystemExit("model.html: section 5.2 table not found")
+    hits += k
+    # Section 4.4: the measured settle range (typed once, 2026-09-05, and
+    # stale by one the same day when property 5 changed the runs)
+    t2, k = re.subn(r"the prepared\s+changes settle in \d+ to \d+\.",
+                    f"the prepared changes settle in {s['steps_min']} to {s['steps_max']}.", t2)
+    hits += k
+    # Section 6: the behaviour table, from the scenarios' measured reach
+    t2, k = re.subn(r"(<h2>6\. How the model behaves</h2>\s*\n\s*\n)<table>.*?</table>",
+                    lambda m: m.group(1) + behaviour_table(s["_D"]), t2, count=1, flags=re.S)
+    if k != 1:
+        raise SystemExit("model.html: section 6 table not found")
     hits += k
     # the sources table's brain row counts the channels
     t2, k = re.subn(r"\b\d+ channels matched\b", f"{f(s['psych'])} channels matched", t2)

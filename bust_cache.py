@@ -52,8 +52,9 @@ def main():
         t = re.sub(r'href="style\.css(\?v=[0-9a-f]+)?"',
                    f'href="style.css?v={css}"', t)
         for a, v in vers.items():
-            # src / data-src (the motion-gated <video> pattern) / poster
-            t = re.sub(r'(src|data-src|poster)="' + re.escape(a)
+            # src / data-src (the motion-gated <video> pattern) / poster /
+            # srcset (a <picture>'s narrow variant, one file per source)
+            t = re.sub(r'(src|data-src|poster|srcset)="' + re.escape(a)
                        + r'(\?v=[0-9a-f]+)?"',
                        rf'\1="{a}?v={v}"', t)
         if t != o:

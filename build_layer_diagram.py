@@ -1,124 +1,128 @@
+"""The atlas's nine layers, drawn as bands: the home-page hero, and the
+picture above atlas.html's layer table.
+
+What it shows. Nine horizontal bands, one per layer of the published model,
+in the order of the table on atlas.html, each with its node count. On the
+right, every link that runs one way: a single-headed arc from the layer that
+pushes to the layer that is pushed. On the left, every link that runs both
+ways: a double-headed arc. A dashed rule sits between Events and Markets,
+and every arc that crosses it is single-headed and points down, because that
+is the model's one structural rule: sun 0, insolation 1, weather 2, climate
+3, event 4, everything else 5, and an edge is two-way only within a rank
+(HANDOFF.md section 6). An arc's stroke is the number of links it stands for,
+on a log scale, so a two-edge link between climate and the markets is a
+hairline and the 66,000 district-to-behaviour links are the heaviest stroke.
+The one forced crossing is stated in the foot, so a reader who notices it
+finds it was noticed first.
+
+What is read, and from where. Nothing on the sheet is typed in:
+
+- Node counts per layer are sums over the payload's kinds
+  (site/assets/atlas-data.js), and are checked against the numbers
+  update_atlas_pages.py writes into the table, so the figure and the table
+  cannot disagree.
+- Which links exist, and how many edges each stands for, are counted from
+  the payload's edge list, kind by kind, and folded to layers. The first
+  version of this file hand-typed thirteen kind-level links and missed eight
+  that the payload carries (event-to-station, 23,320 edges; event-to-consumer,
+  22,025; grid-to-consumer, 34,006; market-to-grid, 2,855; and four small
+  ones). A hand-typed link list is a claim the payload can falsify.
+- The rank table is parsed out of site/assets/atlas-app.js, the engine of
+  record, the way build_propagation_diagram.py parses the step fraction.
+  The sheet fails loudly if any cross-rank edge in the payload runs from a
+  higher rank to a lower one, or if two kind-level edges between the same two
+  layers disagree about direction, because either is a modelling change a
+  figure must not paper over.
+
+Three renders. The band layout is one-dimensional, so it survives a narrow
+column by being drawn again at that column's width rather than scaled: 1140
+CSS px for the wide track on atlas.html, 714 for the text track on the home
+page (the hero sits on the measure, so the page keeps one left edge), and 350
+for a phone (390 minus main's padding). All at one point per pixel and two
+bitmap pixels per point (sitefig); every label clears the 12 px floor in each.
+The node counts are labels only: the home page's model chart already draws
+them as bars on a log scale one scroll below, and this figure's job is
+direction and rank.
+
+Layout is checked, not eyeballed: audit() walks every Text for overlap,
+off-canvas and the type floor, checks that what a band holds fits inside it,
+that no arc reaches outside its column, and that the band order is the one
+with the fewest arc crossings of any (one, forced by the payload).
+
+Run:  python build_layer_diagram.py            # writes into site/assets/
+      python build_layer_diagram.py --out DIR  # a review render elsewhere
 """
-The atlas layer diagram: what the nine-layer model looks like, at last.
-
-atlas.html spends a table and four paragraphs describing nine layers, their
-node counts, and which links between them run one way versus both ways - and
-never shows a picture of it. This is that picture, sized for the site's own
-1140px `wide` track rather than folded into a corner of a poster, and it goes
-directly above that same table (h2 "The nine layers"), so it has to count out
-to nine boxes or it will visibly disagree with the thing it sits next to.
-
-It is not drawn from scratch. Panel A of build_throughlines.py already lays
-out a version of this diagram - but at the model's twelve internal *kinds*,
-not the page's nine displayed *layers*. The table folds three kind pairs
-together: Space is sun plus insolation (1 + 18 = 19, the table's own number),
-Markets and fuel is market plus supply (2,902 + 725 = 3,627), and Grids is
-grid plus district (214 + 3,332 = 3,546). The other six kinds map to a layer
-one-for-one. A first version of this file reproduced panel A's twelve boxes
-verbatim and stuck a "nine layers" title on top of them - which is exactly
-the silent disagreement this file exists to avoid. This version groups the
-same way the table does, and proves the grouping by computing every group's
-count as a live sum over its constituent kinds rather than asserting it.
-
-Two things this adds that a plain box-and-arrow copy of panel A would not:
-
-1. **One-way vs. two-way, drawn rather than only argued.** The page's prose
-   says a recorded earthquake can move a grid but no grid ever causes an
-   earthquake - climate and events only push forward. That claim is a
-   structural fact of the published propagation (build_throughlines.py's
-   `engine()`, and atlas-app.js's own run loop): every kind is given a rank,
-   sun < insolation < weather < climate < event < everything else, and the
-   model only ever lets a lower rank push a higher one, never the reverse.
-   Everything left at the default rank (markets, grids, plants, districts,
-   consumers, behaviour) trades an influence back and forth. That rank table
-   is reproduced here directly from the engine, and a link between two
-   *groups* is only ever called one-way if every kind-level link it stands in
-   for agrees - checked in code (see `group_links()`), not assumed. One-way
-   links get a single arrowhead in one colour; two-way links get a filled
-   head on both ends in a second, brighter colour, so the distinction survives
-   being scaled down to the page's 1140px display width and does not depend
-   on a reader noticing arrowhead count alone.
-2. **Nothing here is typed in.** Every count on every box is read live out of
-   site/assets/atlas-data.js - the same payload every other generator on this
-   site loads - so a box's number, or the table's, cannot drift from the
-   published model without this figure changing too.
-
-Run:  python3 build_layer_diagram.py
-"""
-
 import collections
+import itertools
 import json
+import math
 import os
+import re
+import sys
+import textwrap
+
+if hasattr(sys.stdout, "reconfigure"):
+    sys.stdout.reconfigure(encoding="utf-8", errors="replace")
 
 import matplotlib
-from sitefig import BG, INK, DIM, RULE, FAINT, ACC, COOL, MOSS, ROSE, SLATE, DISTRICT, SUPPLY, PSYCH, SUN, INSOL, GOLD, GREY, VIOLET, BLUE, GREEN, WARM, ARROW, ONE_WAY_COL, TWO_WAY_COL, NODE_COL, WARM2, KCOL, CYCLE, FS_2, FS_1, FS0, FS1, FS2, FONT, MONO, NOTES, PROSE, CARD, THUMB, fig_size, save, WIDE, PLOT, SQUARE, TALL, row_aspect, panel  # noqa: E402,F401
-import sitefig  # noqa: E402
-
 matplotlib.use("Agg")
-import matplotlib.pyplot as plt
-from matplotlib.patches import FancyArrowPatch, FancyBboxPatch
+import matplotlib.pyplot as plt                                    # noqa: E402
+from matplotlib.patches import FancyArrowPatch, Rectangle          # noqa: E402
+from matplotlib.path import Path                                   # noqa: E402
 
-from fig_floor import floor_problems
+import sitefig                                                     # noqa: E402
+from sitefig import (BG, CARD_FILL, INK, DIM, RULE, FAINT, ONE_WAY_COL,   # noqa: E402
+                     TWO_WAY_COL, FS_2, FS_1, MONO, PROSE, NOTES, PHONE, fig_size)
+from fig_floor import floor_problems                               # noqa: E402
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 DATA = os.path.join(HERE, "site", "assets", "atlas-data.js")
-OUT = os.path.join(HERE, "site", "assets", "atlas_layers.png")
+APP = os.path.join(HERE, "site", "assets", "atlas-app.js")
+OUT = {"wide": os.path.join(HERE, "site", "assets", "atlas_layers.png"),
+       "notes": os.path.join(HERE, "site", "assets", "atlas_layers-notes.png"),
+       "phone": os.path.join(HERE, "site", "assets", "atlas_layers-phone.png")}
 
+# The table's grouping (update_atlas_pages.py, atlas_page()): nine displayed
+# layers over the model's twelve kinds. The counts are never taken from here;
+# they are summed from the payload and then checked against the table
+# generator's own stats().
+#
+# The order is the table's for the four sources, whose order is their rank.
+# Below the rule the table's order (markets, grids, plants, demand,
+# behaviour) carries no meaning, and drawn that way the arcs cross nine
+# times: events fan out to four layers, and every arc from above into grids
+# has to cut through that fan unless grids sits beyond it. No order is
+# clean: climate pushes both grids and the markets, events pushes both, and
+# space pushes only grids, so one crossing is forced whichever comes first.
+# audit() tries every order of the block and requires this one to reach the
+# minimum, which is one crossing, between the two-edge climate-to-markets
+# hairline and events-to-grids. A payload that makes a better order
+# possible, or that makes the minimum worse than one, fails the build so a
+# human reorders rather than shipping a tangle.
+LAYERS = [("Space", ["sun", "insolation"]),
+          ("Weather", ["weather"]),
+          ("Climate", ["climate"]),
+          ("Events", ["event"]),
+          ("Demand", ["consumer"]),
+          ("Power plants", ["station"]),
+          ("Markets and fuel", ["market", "supply"]),
+          ("Grids", ["grid", "district"]),
+          ("Behaviour", ["psych"])]
+GROUP_OF = {k: g for g, ks in LAYERS for k in ks}
+TABLE_KEY = {"Space": "space", "Weather": "weather", "Climate": "climate",
+             "Events": "event", "Markets and fuel": "market", "Grids": "grid",
+             "Power plants": "station", "Demand": "consumer",
+             "Behaviour": "psych"}
 
-# The propagation's own rank table (build_throughlines.py's engine(), which
-# mirrors atlas-app.js's run loop): a lower rank can push a higher one, never
-# the other way, and everything left at the default rank trades back and
-# forth with everything else at that same rank.
-RANK = {"sun": 0, "insolation": 1, "weather": 2, "climate": 3, "event": 4}
-
-# The published propagation's links, at kind level - the same thirteen edges
-# panel A of build_throughlines.py draws.
-KIND_LINKS = [("sun", "insolation"), ("insolation", "grid"),
-              ("weather", "climate"), ("climate", "event"),
-              ("climate", "grid"), ("event", "grid"),
-              ("market", "supply"), ("supply", "grid"),
-              ("station", "grid"), ("grid", "district"),
-              ("district", "consumer"), ("district", "psych"),
-              ("psych", "consumer")]
-
-# The table's own grouping (site/atlas.html, "The nine layers"): which kinds
-# roll up into which displayed layer.
-GROUP_OF = {"sun": "space", "insolation": "space",
-            "weather": "weather", "climate": "climate", "event": "events",
-            "market": "markets", "supply": "markets",
-            "grid": "grids", "district": "grids",
-            "station": "plants", "consumer": "demand", "psych": "behaviour"}
-
-GLABEL = {"space": "Space", "weather": "Weather", "climate": "Climate",
-          "events": "Events", "markets": "Markets and fuel",
-          "grids": "Grids", "plants": "Power plants", "demand": "Demand",
-          "behaviour": "Behaviour"}
-
-GCOL = {"space": SUN, "weather": MOSS, "climate": PSYCH,
-        "events": ROSE, "markets": SLATE, "grids": COOL,
-        "plants": ACC, "demand": DIM, "behaviour": SUPPLY}
-
-# Position for each of the nine group boxes, x in [0,100], y in [0,36]. The
-# four exogenous layers (space, weather, climate, events) sit apart from the
-# five that trade back and forth, so the one-way/two-way split reads visually
-# as two neighbourhoods before a reader even looks at an arrowhead.
-# Space's only link is insolation into the grid, which is the longest edge on
-# the sheet. Ordering the top row markets-space-plants keeps that edge clear
-# of every other box: laid out left to right as space-markets-plants it ran
-# underneath the markets box, which hid it completely and left the space layer
-# looking connected to nothing.
-YMAX = 38.5
-
-POS = {"markets": (8, 27), "space": (28, 33), "plants": (48, 33),
-       "weather": (24, 6), "climate": (42, 6), "events": (60, 6),
-       "grids": (60, 19), "demand": (82, 19), "behaviour": (82, 5)}
-
-
-def style():
-    sitefig.style(); plt.rcParams.update({
-        "font.size": FS_1,
-        "font.family": FONT,
-    })
+# Geometry per render, in CSS px (the axes are in px, one point per px).
+GEOM = {
+    "wide": dict(W=PROSE, top=14, pitch=58, band=44, rank_gap=34,
+                 left=200, col=580, sub=True, legend_h=110),
+    "notes": dict(W=NOTES, top=12, pitch=52, band=42, rank_gap=30,
+                  left=120, col=400, sub=False, legend_h=112),
+    "phone": dict(W=PHONE, top=10, pitch=46, band=38, rank_gap=26,
+                  left=66, col=210, sub=False, legend_h=148),
+}
 
 
 def load():
@@ -126,189 +130,321 @@ def load():
     return json.loads(raw[raw.index("=") + 1:raw.rindex(";")])
 
 
-def group_links():
-    """Fold the thirteen kind-level links down to the nine group boxes.
+def rank_from_app():
+    """The exogeneity rank table, parsed from the engine of record."""
+    s = open(APP, encoding="utf-8").read()
+    m = re.search(r"var RANK\s*=\s*\{([^}]*)\}", s)
+    if not m:
+        raise SystemExit("atlas-app.js: could not find var RANK = {...}")
+    rank = {k.strip(): int(v) for k, v in re.findall(r"(\w+)\s*:\s*(\d+)", m.group(1))}
+    default = re.search(r"return r === undefined \? (\d+) : r", s)
+    if not default:
+        raise SystemExit("atlas-app.js: could not find the default rank")
+    return rank, int(default.group(1))
 
-    A link internal to one group (sun->insolation, market->supply,
-    grid->district) disappears - it is now inside a single box. Every
-    surviving link is checked, not assumed: if the kind-level links that map
-    onto the same group pair ever disagreed about one-way vs. two-way, that
-    is a modelling change this figure needs to know about, so it fails loudly
-    instead of silently picking one.
-    """
-    verdict = {}
-    for a, b in KIND_LINKS:
+
+def fmt(n):
+    return f"{n:,}"
+
+
+def structure(D):
+    """Counts per layer, and the layer-level links with the edges each
+    stands for, from the payload alone."""
+    rank_tbl, default = rank_from_app()
+    rank = lambda k: rank_tbl.get(k, default)  # noqa: E731
+    kinds = D["kinds"]
+    kind = [kinds[k] for k in D["kind"]]
+    kc = collections.Counter(kind)
+    unknown = set(kc) - set(GROUP_OF)
+    if unknown:
+        raise SystemExit(f"payload has kinds the table does not group: {sorted(unknown)}")
+    counts = {g: sum(kc[k] for k in ks) for g, ks in LAYERS}
+    kind_counts = {g: [(k, kc[k]) for k in ks] for g, ks in LAYERS}
+
+    pair = collections.Counter()
+    for s, t in zip(D["es"], D["et"]):
+        pair[(kind[s], kind[t])] += 1
+
+    one_way, two_way = collections.Counter(), collections.Counter()
+    for (a, b), n in pair.items():
         ga, gb = GROUP_OF[a], GROUP_OF[b]
         if ga == gb:
             continue
-        one_way = RANK.get(a, 5) != RANK.get(b, 5)
-        key = (ga, gb)
-        if key in verdict and verdict[key] != one_way:
-            raise SystemExit(
-                f"group link {ga}->{gb} is one-way on one kind-level edge "
-                f"and two-way on another - the grouping in GROUP_OF no "
-                f"longer matches a single propagation direction and needs "
-                f"a human to look at it, not a figure that guesses.")
-        verdict[key] = one_way
-    return list(verdict.items())
+        if rank(a) == rank(b):
+            two_way[frozenset((ga, gb))] += n
+        else:
+            if rank(a) > rank(b):
+                raise SystemExit(f"payload edge {a}->{b} runs from rank {rank(a)} "
+                                 f"to rank {rank(b)}: a higher rank pushing a lower one "
+                                 f"is not the model this figure draws")
+            one_way[(ga, gb)] += n
+    for key in two_way:
+        a, b = tuple(key)
+        if (a, b) in one_way or (b, a) in one_way:
+            raise SystemExit(f"layers {a} / {b} are joined by both a one-way and a "
+                             f"two-way kind-level edge: the grouping needs a human")
+    order = [g for g, _ in LAYERS]
+    idx = {g: i for i, g in enumerate(order)}
+    links = [dict(a=a, b=b, n=n, one=True) for (a, b), n in one_way.items()]
+    links += [dict(a=min(k, key=idx.get), b=max(k, key=idx.get), n=n, one=False)
+              for k, n in two_way.items()]
+    rank_of_layer = {g: {rank(k) for k in ks} for g, ks in LAYERS}
+    return dict(counts=counts, kind_counts=kind_counts, links=links, order=order,
+                n=D["n"], edges=len(D["es"]), ranks=rank_of_layer, default=default)
 
 
-def edge_points(a_pos, b_pos):
-    """Where a straight-ish connector should touch each box's edge, picking
-    the horizontal or vertical pair of edges depending on which way the two
-    centres are mostly offset. Handles either box being left/right/above/
-    below the other, unlike a formula that only works for one layout."""
-    xa, ya, wa, ha = a_pos
-    xb, yb, wb, hb = b_pos
-    dx, dy = xb - xa, yb - ya
-    if abs(dx) >= abs(dy):
-        if dx >= 0:
-            return (xa + wa / 2, ya), (xb - wb / 2, yb)
-        return (xa - wa / 2, ya), (xb + wb / 2, yb)
-    if dy >= 0:
-        return (xa, ya + ha / 2), (xb, yb - hb / 2)
-    return (xa, ya - ha / 2), (xb, yb + hb / 2)
+def check_against_table(counts):
+    """The table on atlas.html is written by update_atlas_pages.py from the
+    same payload; the two must agree to the node."""
+    sys.path.insert(0, HERE)
+    import update_atlas_pages
+    s = update_atlas_pages.stats()
+    bad = [(g, counts[g], s[TABLE_KEY[g]]) for g in counts if counts[g] != s[TABLE_KEY[g]]]
+    if bad:
+        raise SystemExit(f"figure and table disagree: {bad}")
 
 
-def audit(fig):
-    """Same walk build_throughlines.py's audit() does: every Text object on
-    the canvas, checked for running off the canvas, overlapping another one,
-    or falling under the site's on-screen type floor."""
+def stroke(n):
+    """Line width for a link standing for n edges: log scale, 2 -> 0.7 px,
+    66,000 -> 3.4 px."""
+    return 0.5 + 0.6 * math.log10(max(n, 1))
+
+
+# ---------------------------------------------------------------- drawing --
+BOXED, ARCS = [], []
+
+
+def arc(ax, x0, ya, yb, side, bulge, lw, col, two):
+    """A D-shaped arc from (x0, ya) to (x0, yb) on `side` (+1 right, -1
+    left), reaching side * 0.75 * bulge from x0. Heads point into the bands."""
+    cx = x0 + side * bulge
+    path = Path([(x0, ya), (cx, ya), (cx, yb), (x0, yb)],
+                [Path.MOVETO, Path.CURVE4, Path.CURVE4, Path.CURVE4])
+    ax.add_patch(FancyArrowPatch(path=path, arrowstyle="<|-|>" if two else "-|>",
+                                 mutation_scale=8 + 1.6 * lw, linewidth=lw,
+                                 color=col, zorder=2, shrinkA=0, shrinkB=0,
+                                 capstyle="round"))
+    ARCS.append((x0 + side * 0.75 * bulge, side))
+
+
+def draw(S, which):
+    g = GEOM[which]
+    W, top, pitch, band = g["W"], g["top"], g["pitch"], g["band"]
+    order, counts, links = S["order"], S["counts"], S["links"]
+    x_col0 = g["left"]
+    x_col1 = g["left"] + g["col"]
+    right = W - x_col1
+
+    # band centres, with the rank gap after the last one-way source
+    src_ranks = S["default"]
+    y, ys = top + band / 2, {}
+    for i, name in enumerate(order):
+        ys[name] = y
+        y += pitch
+        if i + 1 < len(order) and S["ranks"][order[i + 1]] == {src_ranks} \
+                and S["ranks"][name] != {src_ranks}:
+            y_rule = y - (pitch - band) / 2 + g["rank_gap"] / 2
+            y += g["rank_gap"]
+    y_bands_end = y - (pitch - band)
+    H = y_bands_end + 12 + g["legend_h"]
+
+    fig = plt.figure(figsize=(W / 72.0, H / 72.0))
+    ax = fig.add_axes([0, 0, 1, 1])
+    ax.set_xlim(0, W); ax.set_ylim(H, 0); ax.axis("off")
+
+    # ---- bands ------------------------------------------------------------
+    for name in order:
+        yc = ys[name]
+        ax.add_patch(Rectangle((x_col0, yc - band / 2), g["col"], band, linewidth=1.0,
+                               edgecolor=RULE, facecolor=CARD_FILL, zorder=1))
+        pad = 10
+        if g["sub"]:
+            t1 = ax.text(x_col0 + pad, yc - 6, name, color=INK, fontsize=FS_1,
+                         fontweight="bold", ha="left", va="center", zorder=3)
+            t2 = ax.text(x_col1 - pad, yc - 6, f"{fmt(counts[name])} nodes",
+                         color=DIM, fontsize=FS_1, fontfamily=MONO, ha="right", va="center", zorder=3)
+        else:
+            t1 = ax.text(x_col0 + pad, yc - 8, name, color=INK, fontsize=FS_1,
+                         fontweight="bold", ha="left", va="center", zorder=3)
+            t2 = ax.text(x_col0 + pad, yc + 9, f"{fmt(counts[name])} nodes",
+                         color=DIM, fontsize=FS_2, fontfamily=MONO, ha="left", va="center", zorder=3)
+        inside = [t1, t2]
+        if g["sub"]:
+            sub = " · ".join(f"{k} {fmt(n)}" for k, n in S["kind_counts"][name])
+            inside.append(ax.text(x_col0 + pad, yc + 10, sub, color=DIM, fontsize=FS_2,
+                                  fontfamily=MONO, ha="left", va="center", zorder=3))
+        for t in inside:
+            BOXED.append((t, (x_col0, yc - band / 2, x_col1, yc + band / 2)))
+
+    # ---- the rank rule ----------------------------------------------------
+    ax.plot([0, W], [y_rule, y_rule], color=DIM, linewidth=0.8, linestyle=(0, (4, 4)), zorder=0)
+    ax.text(x_col1 - 10, y_rule - 3,
+            "everything above this line pushes and is never pushed back" if which == "wide"
+            else "above: pushes, never pushed back",
+            color=DIM, fontsize=FS_2, fontfamily=MONO, ha="right", va="bottom", zorder=3,
+            bbox=dict(facecolor=BG, edgecolor="none", pad=1.5))
+
+    # ---- arcs --------------------------------------------------------------
+    # attachment points per band and side, ordered so nested arcs never
+    # cross at the band edge: upward arcs above downward ones, nearer
+    # target first on the way up, farther first on the way down
+    ends = collections.defaultdict(list)
+    for L in links:
+        side = 1 if L["one"] else -1
+        for me, other in ((L["a"], L["b"]), (L["b"], L["a"])):
+            ends[(me, side)].append((ys[other] > ys[me], -ys[other], id(L), other))
+    attach = {}
+    for (me, side), lst in ends.items():
+        lst.sort()
+        n = len(lst)
+        for i, (_, _, lid, other) in enumerate(lst):
+            off = 0 if n == 1 else (i - (n - 1) / 2) * min(9, (band - 12) / (n - 1))
+            attach[(lid, me)] = ys[me] + off
+    span_max = max(abs(ys[L["a"]] - ys[L["b"]]) for L in links)
+    for L in sorted(links, key=lambda L: abs(ys[L["a"]] - ys[L["b"]])):
+        side = 1 if L["one"] else -1
+        room = (right if side > 0 else x_col0) - 10
+        span = abs(ys[L["a"]] - ys[L["b"]])
+        bulge = (room / 0.75) * (0.18 + 0.82 * span / span_max)
+        x0 = x_col1 + 2 if side > 0 else x_col0 - 2
+        arc(ax, x0, attach[(id(L), L["a"])], attach[(id(L), L["b"])], side, bulge,
+            stroke(L["n"]), ONE_WAY_COL if L["one"] else TWO_WAY_COL, not L["one"])
+
+    # ---- legend and foot ------------------------------------------------
+    ly = y_bands_end + 12 + 14
+    nmin_l = min(L["n"] for L in links); nmax_l = max(L["n"] for L in links)
+    x = x_col0
+    cross = crossings(S, order)
+    if which == "wide":
+        ax.add_patch(FancyArrowPatch((x, ly), (x + 44, ly), arrowstyle="-|>", mutation_scale=12,
+                                     linewidth=1.6, color=ONE_WAY_COL, shrinkA=0, shrinkB=0))
+        ax.text(x + 54, ly, "pushes one way", color=DIM, fontsize=FS_2, va="center", ha="left")
+        x = x_col0 + 190
+        ax.add_patch(FancyArrowPatch((x, ly), (x + 44, ly), arrowstyle="<|-|>", mutation_scale=12,
+                                     linewidth=1.6, color=TWO_WAY_COL, shrinkA=0, shrinkB=0))
+        ax.text(x + 54, ly, "trades back and forth", color=DIM, fontsize=FS_2, va="center", ha="left")
+        x = x_col0 + 420
+        for i, n in enumerate((nmin_l, 1000, nmax_l)):
+            ax.plot([x + i * 34, x + i * 34 + 24], [ly, ly], color=DIM, linewidth=stroke(n),
+                    solid_capstyle="round")
+        ax.text(x + 110, ly, f"width: the links an arc stands for, {fmt(nmin_l)} to {fmt(nmax_l)}, log scale",
+                color=DIM, fontsize=FS_2, va="center", ha="left")
+        ly2 = ly + 24
+        foot = [f"{fmt(S['n'])} nodes in nine layers, {fmt(S['edges'])} links, read from the published model."]
+        if cross:
+            a, b, c, d = cross[0]
+            foot.append(f"Bands are ordered to minimise crossings; one is unavoidable, "
+                        f"because {a} and {c} each drive both {b} and {d}.")
+        for line in foot:
+            ax.text(x_col0, ly2, line, color=DIM, fontsize=FS_2, fontfamily=MONO, va="center", ha="left")
+            ly2 += 20
+    else:
+        ax.add_patch(FancyArrowPatch((x, ly), (x + 34, ly), arrowstyle="-|>", mutation_scale=11,
+                                     linewidth=1.6, color=ONE_WAY_COL, shrinkA=0, shrinkB=0))
+        ax.text(x + 42, ly, "pushes one way", color=DIM, fontsize=FS_2, va="center", ha="left")
+        ly += 20
+        ax.add_patch(FancyArrowPatch((x, ly), (x + 34, ly), arrowstyle="<|-|>", mutation_scale=11,
+                                     linewidth=1.6, color=TWO_WAY_COL, shrinkA=0, shrinkB=0))
+        ax.text(x + 42, ly, "trades back and forth", color=DIM, fontsize=FS_2, va="center", ha="left")
+        ly2 = ly + 20
+        text = [f"arc width: the links it stands for, log scale. "
+                f"{fmt(S['n'])} nodes, {fmt(S['edges'])} links."]
+        if cross:
+            a, b, c, d = cross[0]
+            text.append(f"One crossing is unavoidable: {a} and {c} each drive both {b} and {d}.")
+        # mono at FS_2 is 0.6 em per character; wrap to the width there is
+        fx = 10 if which == "phone" else x_col0
+        width_chars = int((W - fx - 10) / (0.6 * FS_2))
+        for para in text:
+            for line in textwrap.wrap(para, width_chars):
+                ax.text(fx, ly2, line, color=DIM, fontsize=FS_2, fontfamily=MONO, va="center", ha="left")
+                ly2 += 18
+    return fig, ax, dict(W=W, H=H, x_col0=x_col0, x_col1=x_col1, ys=ys)
+
+
+# ------------------------------------------------------------------ audit --
+def audit(fig, ax, geo, S):
     fig.canvas.draw()
     r = fig.canvas.get_renderer()
-    title_ids = {id(ax.title) for ax in fig.axes}
-    items, problems = [], []
-    for ax in fig.axes:
-        for tx in list(ax.texts) + [ax.title]:
-            if tx.get_text().strip():
-                items.append(tx)
-        lg = ax.get_legend()
-        if lg is not None:
-            for lab in lg.get_texts():
-                if lab.get_text().strip():
-                    items.append(lab)
-    for tx in fig.texts:
-        if tx.get_text().strip():
-            items.append(tx)
-    boxes = []
-    W, H = fig.canvas.get_width_height()
-    for tx in items:
-        bb = tx.get_window_extent(renderer=r)
-        boxes.append((tx, bb))
-        if bb.x0 < -2 or bb.y0 < -2 or bb.x1 > W + 2 or bb.y1 > H + 2:
-            problems.append(f"off canvas: {tx.get_text()[:36]!r}")
+    items = [t for t in ax.texts if t.get_text().strip()]
+    Wc, Hc = fig.canvas.get_width_height()
+    boxes, problems = [], []
+    for t in items:
+        bb = t.get_window_extent(renderer=r)
+        boxes.append((t, bb))
+        if bb.x0 < -2 or bb.y0 < -2 or bb.x1 > Wc + 2 or bb.y1 > Hc + 2:
+            problems.append(f"off canvas: {t.get_text()[:36]!r}")
     for i in range(len(boxes)):
         for j in range(i + 1, len(boxes)):
             a, b = boxes[i][1], boxes[j][1]
             if a.x1 > b.x0 and b.x1 > a.x0 and a.y1 > b.y0 and b.y1 > a.y0:
-                problems.append(
-                    f"overlap: {boxes[i][0].get_text()[:22]!r} / "
-                    f"{boxes[j][0].get_text()[:22]!r}")
-    problems += floor_problems(fig, [(t, id(t) in title_ids) for t in items])
-    problems += box_problems()
+                problems.append(f"overlap: {boxes[i][0].get_text()[:22]!r} / {boxes[j][0].get_text()[:22]!r}")
+    problems += floor_problems(fig, [(t, False) for t in items])
+    inv = ax.transData.inverted()
+    for t, (x0, y0, x1, y1) in BOXED:
+        bb = t.get_window_extent(renderer=r).transformed(inv)
+        # y is inverted on this axis: bb.y0 is the lower screen edge (larger value)
+        lo, hi = min(bb.y0, bb.y1), max(bb.y0, bb.y1)
+        if bb.x0 < x0 + 2 or bb.x1 > x1 - 2 or lo < y0 + 1 or hi > y1 - 1:
+            problems.append(f"spills its band: {t.get_text()[:30]!r}")
+    for reach, side in ARCS:
+        if (side > 0 and reach > geo["W"] - 2) or (side < 0 and reach < 2):
+            problems.append(f"arc reaches off canvas ({reach:.0f}px)")
+    # two arcs on one side cross when their spans interleave; the block
+    # below the rule must be in the best order there is, and that order must
+    # be nearly clean
+    order = S["order"]
+    n_src = sum(1 for g in order if S["ranks"][g] != {S["default"]})
+    best = min(crossings(S, order[:n_src] + list(p)) for p in itertools.permutations(order[n_src:]))
+    mine = crossings(S, order)
+    if len(mine) > len(best) or len(mine) > 1:
+        problems.append(f"{len(mine)} arc crossing(s), best order has {len(best)}: "
+                        + "; ".join(f"{a}-{b} / {c}-{d}" for a, b, c, d in mine))
     return problems
 
 
-def box_problems(gutter=2.0):
-    """The text audit above cannot see this figure's real furniture. Its nodes
-    are patches, not Text, so two boxes drawn on top of each other pass every
-    check while reading as one merged box - which is exactly what happened
-    when space and markets were placed sixteen units apart and each was
-    fifteen and a half wide. Checked in data units, against POS, so it holds
-    however the figure is later resized."""
-    w, h, out = 15.5, 7.2, []
-    names = list(POS)
-    for i in range(len(names)):
-        for j in range(i + 1, len(names)):
-            (ax_, ay), (bx, by) = POS[names[i]], POS[names[j]]
-            dx, dy = abs(ax_ - bx) - w, abs(ay - by) - h
-            if dx < gutter and dy < gutter:
-                out.append(f"boxes too close: {names[i]} / {names[j]} "
-                           f"(gap {max(dx, dy):.1f} < {gutter})")
-    # Spacing is only half the question: a box can be clear of every other box
-    # and still be cut off by the canvas edge, which is how the top row lost
-    # its border the first time this layout moved.
-    for n, (x, y) in POS.items():
-        if y + h / 2 > YMAX - 0.4 or y - h / 2 < 0.4:
-            out.append(f"box off canvas: {n} (y {y}, ylim {YMAX})")
+def crossings(S, order):
+    idx = {g: i for i, g in enumerate(order)}
+    out = []
+    for side in (True, False):
+        spans = sorted((min(idx[L["a"]], idx[L["b"]]), max(idx[L["a"]], idx[L["b"]]))
+                       for L in S["links"] if L["one"] == side)
+        for i in range(len(spans)):
+            for j in range(i + 1, len(spans)):
+                (a, b), (c, d) = spans[i], spans[j]
+                if a < c < b < d:
+                    out.append((order[a], order[b], order[c], order[d]))
     return out
+
+    return problems
 
 
 def main():
-    style()
+    # --out DIR renders into another folder for review, leaving site/ alone
+    if "--out" in sys.argv:
+        d = sys.argv[sys.argv.index("--out") + 1]
+        for k in OUT:
+            OUT[k] = os.path.join(d, os.path.basename(OUT[k]))
+    sitefig.style()
     D = load()
-    kind = [D["kinds"][k] for k in D["kind"]]
-    kind_counts = collections.Counter(kind)
-    # Every group's count is a live sum over its constituent kinds - never a
-    # number copied from the table, so it cannot silently drift from it.
-    counts = {g: sum(kind_counts[k] for k, gg in GROUP_OF.items() if gg == g)
-              for g in GLABEL}
-
-    # 11.4in wide puts the on-screen factor (pt * 1140 / (72 * width)) at
-    # ~1.39, comfortably above the 1.02 that made panel A's box labels read
-    # small as a sub-panel of a poster.
-    fig = plt.figure(figsize=fig_size(PROSE, 1.6522), facecolor=BG)
-    ax = fig.add_axes([0.035, 0.065, 0.93, 0.70])
-    ax.set_facecolor(BG)
-    ax.set_xlim(0, 100)
-    ax.set_ylim(0, YMAX)
-    ax.axis("off")
-
-
-    at = {}
-    for g, (x, y) in POS.items():
-        w, h = 15.5, 7.2
-        ax.add_patch(FancyBboxPatch(
-            (x - w / 2, y - h / 2), w, h,
-            boxstyle="round,pad=0.25,rounding_size=0.5",
-            linewidth=1.6, edgecolor=GCOL[g], facecolor=FAINT, zorder=2))
-        ax.text(x, y + 1.6, GLABEL[g], ha="center", va="center", color=INK,
-                fontsize=FS_1, fontweight="bold", zorder=3)
-        n = counts[g]
-        ax.text(x, y - 1.8, f"{n:,} node" + ("" if n == 1 else "s"),
-                ha="center", va="center", color=DIM, fontsize=FS_1, zorder=3)
-        at[g] = (x, y, w, h)
-
-    for (ga, gb), one_way in group_links():
-        pa, pb = edge_points(at[ga], at[gb])
-        col = ONE_WAY_COL if one_way else TWO_WAY_COL
-        style_ = "-|>" if one_way else "<|-|>"
-        ax.add_patch(FancyArrowPatch(
-            pa, pb, arrowstyle=style_,
-            mutation_scale=16 if one_way else 20,
-            linewidth=1.7 if one_way else 2.1,
-            color=col, alpha=0.95, zorder=1,
-            connectionstyle="arc3,rad=0.12"))
-
-    # ---- legend: two example arrows, drawn the same way the real ones are,
-    # rather than a synthetic marker matplotlib's own legend() would draw --
-    lx0, ly = 4, -3.8
-    ax.add_patch(FancyArrowPatch((lx0, ly), (lx0 + 10, ly), arrowstyle="-|>",
-                                  mutation_scale=16, linewidth=1.7,
-                                  color=ONE_WAY_COL))
-    ax.text(lx0 + 12.5, ly, "one-way  —  space, weather, climate and "
-            "events only push forward", color=DIM,
-            fontsize=FS_1, va="center", ha="left")
-    ly2 = -8.0
-    ax.add_patch(FancyArrowPatch((lx0, ly2), (lx0 + 10, ly2),
-                                  arrowstyle="<|-|>", mutation_scale=20,
-                                  linewidth=2.1, color=TWO_WAY_COL))
-    ax.text(lx0 + 12.5, ly2, "two-way  —  markets and fuel, grids, power "
-            "plants, demand and behaviour trade back and forth",
-            color=DIM, fontsize=FS_1, va="center", ha="left")
-    ax.set_ylim(-11.0, YMAX)
-
-    problems = audit(fig)
-    sitefig.save(fig, OUT, close=False)
-    plt.close(fig)
-    print(f"  wrote {os.path.basename(OUT)}")
-    if problems:
-        print(f"  {len(problems)} layout problem(s):")
+    S = structure(D)
+    check_against_table(S["counts"])
+    total = 0
+    for which in ("wide", "notes", "phone"):
+        BOXED.clear(); ARCS.clear()
+        fig, ax, geo = draw(S, which)
+        problems = audit(fig, ax, geo, S)
+        size = sitefig.save(fig, OUT[which])
+        print(f"  wrote {os.path.basename(OUT[which])}  {geo['W']}x{geo['H']:.0f} css px, {size // 1024} KB, "
+              f"{len(problems)} layout problem(s)" + (":" if problems else ""))
         for p in problems[:20]:
             print("     " + p)
-    else:
-        print("  0 layout problems")
-    return len(problems)
+        total += len(problems)
+    one = sorted((L for L in S["links"] if L["one"]), key=lambda L: -L["n"])
+    two = sorted((L for L in S["links"] if not L["one"]), key=lambda L: -L["n"])
+    print("  one-way: " + ", ".join(f"{L['a']}->{L['b']} {fmt(L['n'])}" for L in one))
+    print("  two-way: " + ", ".join(f"{L['a']}<->{L['b']} {fmt(L['n'])}" for L in two))
+    return total
 
 
 if __name__ == "__main__":
