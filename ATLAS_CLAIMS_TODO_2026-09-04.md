@@ -1,5 +1,8 @@
 # Atlas claims still to correct (2026-09-04)
 
+**Resolved 2026-09-05, PHASE5 Part 3.** Kept as the record of what was
+found; what was done with each is in `PHASE5_2026-09-04.md`.
+
 Found by the read-only claims pass in `DESLOP_3C_2026-09-04.md` §3 and left
 for a pass of their own. Each is a sentence on a page or in the app that
 the code, the payload, or a run does not bear out. Evidence is where the

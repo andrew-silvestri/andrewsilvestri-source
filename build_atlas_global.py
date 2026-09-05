@@ -578,11 +578,14 @@ def main():
     tabs = json.loads(json.dumps(d["tabs"]))
     for t in tabs:
         if t["id"] == "markets":
-            t["sub"] = f"{len(ports):,} ports and benchmarks"
+            # the legend beside this already counts the layer's nodes; a
+            # number here that counted only the ports (2,896 beside 3,627)
+            # read as a disagreement (2026-09-05)
+            t["sub"] = "ports, price benchmarks and fuel supplies"
         if t["id"] == "events":
             t["sub"] = f"{cnt_event:,} recorded events"
         if t["id"] == "demand":
-            t["sub"] = f"{len(cities):,} settlements"
+            t["sub"] = "settlements and consumer groups"   # same reason as markets
         if t["id"] == "grids":
             t["sub"] = f"{cnt_grid:,} systems and districts"
         if t["id"] == "plants":

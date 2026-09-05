@@ -1,0 +1,6 @@
+{
+ "sha1": "d4358eaf6577cb9c797ca75196a60d5f84100ace",
+ "bytes": 10072409,
+ "recorded": "2026-09-05",
+ "note": "The shipped payload as of PHASE5 Part 4: the last full build (2026-09-04), two hand-patched tab subtitles (markets, demand) that build_atlas_global.py now produces itself, and the scenario reach fields rewritten by build_scenarios.py --apply under engine property 5 (the response rule). The next full rebuild resolves the subtitle difference; re-record here after it."
+}
