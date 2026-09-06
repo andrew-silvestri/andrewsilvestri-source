@@ -1,0 +1,73 @@
+{
+ "retrieved": "2026-09-05",
+ "sources": {
+  "neuromorpho": {
+   "api": "https://neuromorpho.org/api",
+   "licence": "CC BY 4.0",
+   "cite": "Ascoli, Donohue & Halavi, J Neurosci 27(35):9247-9251, 2007, doi:10.1523/JNEUROSCI.2055-07.2007; Tecuatl, Ljungquist & Ascoli, FASEB BioAdvances 6(7):207-221, 2024, doi:10.1096/fba.2024-00048",
+   "reconstructions": 298339
+  },
+  "allen": {
+   "api": "http://api.brain-map.org/api/v2/data/query.json",
+   "licence": "free, non-commercial, journalistic carve-out",
+   "cite": "Allen Cell Types Database (RRID:SCR_014806); Gouwens et al., Nat Neurosci 22(7):1182-1195, 2019, doi:10.1038/s41593-019-0417-0"
+  }
+ },
+ "seed": 1,
+ "archives_sampled": [
+  "MouseLight",
+  "Peng",
+  "Sjostrom",
+  "Tolias",
+  "Markram",
+  "Chiang",
+  "Helmstaedter",
+  "Siegert",
+  "Jacobs",
+  "Yang_XW",
+  "Roysam",
+  "Diniz",
+  "Baier",
+  "Franca",
+  "Cox",
+  "FlyEM",
+  "Althammer",
+  "Harder",
+  "Narkilahti",
+  "Kuddannaya",
+  "Chklovskii",
+  "Nordman"
+ ],
+ "per_archive": 60,
+ "n_sampled": 1501,
+ "exemplars": {
+  "allen": {
+   "file": "data/swc/allen/471800189.swc",
+   "neuron": "471800189",
+   "archive": "Allen Cell Types",
+   "reach_um": 465.2618,
+   "axon_um": 58.1953,
+   "dend_um": 2751.6092,
+   "diam_measured": true,
+   "n_distinct_diam": 1084.0,
+   "frac_len_modal_diam": 0.078682
+  },
+  "mouselight": {
+   "file": "data/swc/mouselight/AA0490.swc",
+   "neuron": "AA0490",
+   "archive": "MouseLight",
+   "reach_um": 4671.4586,
+   "axon_um": 59804.7767,
+   "dend_um": 8487.2674,
+   "diam_measured": false,
+   "n_distinct_diam": 1.0,
+   "frac_len_modal_diam": 1.0
+  }
+ },
+ "sha256": {
+  "data/neurons.csv.gz": "97ffaa19e93cf728e9ea036c4beb891380b2b238d26e93c5acd8a58a5173a7e5",
+  "data/swc_metrics.csv": "9fce741c425562ef244a3917ad3cef96c1d5ff8a7330391a0f448eb790e50a41",
+  "data/swc/allen/471800189.swc": "823758f75b4d697583a0dc1e76693118c2deeee43055d2c08bd0330e45c0fed0",
+  "data/swc/mouselight/AA0490.swc": "1fb55d7cd6375d5d3c93153f1d464e85b4bab6286928316b07375f332548a537"
+ }
+}
