@@ -20,9 +20,16 @@ untested) mirrors `site/` into `~/andrew-silvestri.github.io` and pushes to
 GitHub Pages. Live at `andrewsilvestri.com`.
 
 `HANDOFF.md` in that folder is the system's own map: §4 the house style, §6 the
-engine and its five properties, §8 nineteen traps, §11 the current state. It was
-rewritten on 5 September and is current. Read it before advising on anything
-structural.
+engine and its five properties, §8 **twenty-three** traps, §11 the current
+state. It was rewritten on 5 September, corrected on 6 September, and is
+current. Read it before advising on anything structural.
+
+Two numbering faults in it were fixed on 6 September and old pointers will
+still be wrong: §6's heading said "four properties" over a list of five, and
+§8 numbered its traps 1–20 and then restarted at 12, 13, 14. The tail is now
+21, 22, 23, so **"trap 14" now means only the briefs-are-leads trap** and the
+payload hand-patch is **trap 23**. Anything written before 6 September that
+says "trap 14" about the payload means 23.
 
 `prompts/` holds every brief written for the terminals. `NEW_PROJECTS.md` is the
 three-stage method the six new projects run on.
@@ -73,17 +80,26 @@ they are remembered.
 
 ### Published
 
-The site was published several times on 4–5 September. The redesign is live:
-Yacht club palette, IBM Plex, one left edge, a layer diagram as the home hero,
-five projects as an index with one sentence each. `shoes.html` published at
-commit `791dfe3`; rollback hash before it is `6d0316e`.
+The site was published nine times on 5 September (twelve times over 4–5
+September). The redesign is live: Yacht club palette, IBM Plex, one left edge,
+a layer diagram as the home hero, projects as an index with one sentence each.
 
-### In the tree, not published
+**Live is the mirror's `72d928e`** — "Continents move in the reconstruction
+viewer", 2026-09-05 16:52. **Rollback is `a55c566`**, 15:34 the same day, the
+neuron-and-continents publish. `shoes.html` went out earlier, at `791dfe3`
+(13:51), whose rollback was `6d0316e`; that pair is history now, not the
+current one.
 
-- `site/neuron.html` and `neuron-app.html`
-- `site/continents.html` and `continents-app.html`
+`site/` in `00 PUBLISH` is identical to the mirror's head, checked file by
+file on 6 September. **Nothing is built-but-unpublished.**
 
-Both complete and passing. Andrew wanted **one publish, not three**.
+### Previously listed as unpublished — they are live
+
+`site/neuron.html`, `neuron-app.html`, `continents.html` and
+`continents-app.html` were still in the tree when this file was written, and
+were published four minutes after they were written on 5 September. All four
+answer 200 on `andrewsilvestri.com`. Andrew got the one publish he asked for;
+the note that they were waiting is what was behind, not the work.
 
 ### Blocked
 
@@ -97,21 +113,52 @@ placeholders. Blocked on two credentials only Andrew can obtain:
 The per-species OpenAlex fetch then takes about two days on the free tier.
 **Check whether these have been done; if not, that is the first thing to raise.**
 
-### In flight when this was written
+### The nav retaxonomy — landed, and not in the shape planned
 
-The nav retaxonomy: Energy / Mind / Running / Misc, replacing Home / The atlas /
-Energy / Others / Code. Sent to the economy terminal. Two decisions were made
-that Andrew may reverse: the atlas folds into Energy rather than keeping its own
-group, and Mind holds one page until beauty lands.
+It is live, and the shipped taxonomy is **Home / Energy / Running / Misc /
+Code**, replacing Home / The atlas / Energy / Others / Code.
+
+There is **no Mind group**. The plan above described Energy / Mind / Running /
+Misc; what shipped folded the atlas into Energy (that decision held) and put
+`neuron` under Misc instead of standing Mind up for one page. Misc now carries
+six items — climate-cost, food, continents, longevity, skyline, neuron —
+against Energy's six and Running's two, and **Misc is the group that will need
+splitting when beauty lands**. That is still Andrew's decision; shipping this
+did not make it. Verified against the live `index.html`, not against a
+generator: `rebuild_nav.py` writes the nav on every page, and HANDOFF §8 trap
+11 is about exactly this kind of claim.
 
 ### Open, by name
 
-- `add_citations.py` is **disarmed behind a guard** and drifts on `heat.html`,
-  `longevity.html` and `storage.html`. Four defects diagnosed in its banner.
-  Assigned to the neuron terminal. `tests/test_generators.py` is correctly red
-  on it — do not let anyone make it green by disabling the check.
+- ~~`add_citations.py` is disarmed behind a guard and drifts on three pages.~~
+  **Closed 6 September — it is armed and it does not drift.** The guard and the
+  flag that bypassed it are both gone from `tests/test_generators.py`, and the
+  script's banner marks all four defects resolved. Reproduced independently:
+  `site/` copied to a scratch directory, `python add_citations.py --apply` run
+  against the copy, byte-identical output on all seven pages it owns — heat 4
+  markers, economy 10, neuron 17, continents 13, food 10, storage 5,
+  climate-cost 8 — its only report `beauty.html does not exist`, exit 0. The
+  `longevity.html` reference list is a separate open item and stays open: that
+  page left `PAGES` because its own generator owns it, and its nine unmarked
+  references are recorded in HANDOFF §11.
 - The continents archive is 1.85 MB, 3.5× the previous largest. Kept
   deliberately so the build reproduces without re-fetching.
+- `beauty/data/iucn_table1a.csv` is **kept deliberately**, on
+  `beauty/DATA_SOURCES.md`'s authority: it is a cited aggregate summary table,
+  not the per-species Red List categories the Red List terms forbid
+  redistributing. Those are gitignored (`iucn_aves.csv`, `birds_joined.csv`,
+  `data/raw/`). Checked on 6 September, not overlooked — do not raise it again
+  as a licence problem without reading that file.
+- `neuron/neuron-app.html` and `neuron/data/_work/` were gitignored on
+  6 September. The second is empty in a clean tree and fills with ~1,500
+  sampled SWC files when the fetch runs, which is one `git add -A` from
+  HANDOFF §8 trap 18.
+- **`site/downloads/` is gitignored in full**, so no source archive is in the
+  repository. `code.html` links sixteen; `rezip_downloads.py` rebuilds ten of
+  them (it also builds `beauty-code.zip`, not yet linked); and six —
+  `climate-cost`, `deliverables`, `model`, `web-v3`, `web-v4`, `web-v5` — have
+  **no generator anywhere in the tree** and survive only in the working copy
+  and the published mirror. See HANDOFF §10.
 - Eight high-side longevity demotions held at grade C, with reasons recorded.
 
 ---
@@ -191,11 +238,23 @@ git tag "<stage>-2026-09-06"
 git bundle create "$HOME\Desktop\00-PUBLISH-2026-09-06.bundle" --all
 ```
 
-`00 PUBLISH` has **no git remote**. The bundle is the only off-machine copy, and
-it currently sits on the same disk as the repository. Pushing this to a private
-GitHub repo is a standing recommendation Andrew has not yet acted on — his two
-existing repos are `andrew-silvestri.github.io` (the generated mirror) and
-`energy-web` (a different project). Neither is the source.
+~~`00 PUBLISH` has no git remote.~~ **It does, as of 6 September:** `origin` is
+`https://github.com/andrew-silvestri/andrewsilvestri-source.git`, branch
+`master` is pushed, and `git ls-remote --heads origin` answers with the local
+head. The standing recommendation was acted on. Note that this claim lived
+**here**, in this file, and never in `HANDOFF.md` — an earlier brief
+attributed it to `HANDOFF.md` and cost a terminal a grep to disprove.
+
+`HANDOFF.md` §10 said nothing about this repository's own remote or backup at
+all; that gap is now filled there too.
+
+The bundle habit is still worth keeping before anything destructive, but a
+bundle on `~/Desktop` is on the same disk as the repository and is not a
+backup. The bundles on disk are dated 4 and 5 September; the remote is newer
+than all of them. Andrew's other repositories are
+`andrew-silvestri.github.io` (the generated mirror, `site/` only) and
+`energy-web` (a different project); neither is the source, which is why the
+third one exists.
 
 ---
 

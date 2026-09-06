@@ -12,7 +12,7 @@ changed payload is a change someone has to re-record on purpose:
     python tests/test_payload.py            # check
     python tests/test_payload.py --record   # after a deliberate change, with a note
 
-HANDOFF section 8, trap 14, is the reason.
+HANDOFF section 8, trap 23, is the reason.
 """
 import datetime
 import hashlib

@@ -322,7 +322,7 @@ The iteration is
 `s ← (1−λ)·s + λ·tanh(b + damp·(A·s))`, λ = 0.95, damp = 1 − 0.6·res, stopping
 when the largest move is under 1e-5 or at 60 rounds.
 
-Four properties that took a long time to get right — **do not undo them**:
+Five properties that took a long time to get right — **do not undo them**:
 
 1. **A node takes the weighted mean of its drivers, not their sum.** Summing
    gave the operator a spectral radius of 26; it could not converge and every
@@ -382,7 +382,7 @@ python3 tests/test_units.py            # every climate-cost input against its de
 python3 tests/test_generators.py       # every text generator run into a copy and diffed against site/
 node tests/test_atlas_interaction.js   # boots the real app against a three.js stub
 python3 tests/test_parity.py           # the browser engine against the figures' engine, all 60 scenarios, to 1e-12
-python3 tests/test_payload.py          # the payload's SHA-1 against atlas_payload.json (trap 14)
+python3 tests/test_payload.py          # the payload's SHA-1 against atlas_payload.json (trap 23)
 python3 tests/test_demand_response.py  # push consumer groups, districts must fall (engine property 5)
 node climate-cost/test_scene.js        # the climate-cost visualiser: JS engine against lca.py, layout, overlap; jsdom and three r128 from tests/node_modules
 node tests/test_layout.js              # Playwright: marginalia, measure, hierarchy at 1440/1024/390
@@ -705,7 +705,7 @@ Read this section. Every item is a real bug that shipped.
     where a plausible one would not.
 
 
-12. **`ax.title` is only the centre title.** `sitefig.panel()` sets a
+21. **`ax.title` is only the centre title.** `sitefig.panel()` sets a
     left-aligned title, which matplotlib keeps in `ax._left_title`, so every
     audit that read `ax.title` saw no panel label at all and passed a sheet
     whose label sat on a legend (`energy_model_chart.png`, Phase 4,
@@ -713,7 +713,7 @@ Read this section. Every item is a real bug that shipped.
     its words: `build_throughlines.audit()` checks the legend's whole extent
     against every other text.
 
-13. **A figure is drawn at the width it is shown, and the page decides the
+22. **A figure is drawn at the width it is shown, and the page decides the
     width.** `index.html` spent one day as `main.prose` (two tracks) and every
     714px figure and 271px thumbnail on it was scaled up 1.6x and went soft.
     It is `main.notes` again, one 714px measure, no marginalia; the CSS beside
@@ -721,7 +721,7 @@ Read this section. Every item is a real bug that shipped.
     blocks have more than one left edge, and a picture that breaks out
     off-centre.
 
-14. **The payload carries two hand-patched strings, and its builder now
+23. **The payload carries two hand-patched strings, and its builder now
     produces the corrected versions.** On 2026-09-05 (PHASE5 Part 3) the
     tab subtitles "2,896 ports and benchmarks" and "34,065 settlements" in
     `site/assets/atlas-data.js` were replaced in place with "ports, price
@@ -763,6 +763,8 @@ The pattern every existing project follows:
 
 ## 10. Publishing
 
+### The mirror
+
 `site/` is mirrored into `~/andrew-silvestri.github.io` and committed.
 `index.html` must be at the repo root and `CNAME` must say
 `andrewsilvestri.com` — Pages fails silently without either.
@@ -776,16 +778,88 @@ python3 bust_cache.py
 Use `publish.sh` (Git Bash) rather than `publish.ps1`; the bash version is the
 one that gets tested on this machine.
 
+The mirror's remote is `andrew-silvestri/andrew-silvestri.github.io`, branch
+`main`. `publish.sh` clones it if it is missing and hard-resets it to
+`origin/<branch>` before copying, so the mirror is disposable: it holds no
+state that is not either in `site/` or in its own history. Its history is the
+rollback: the commit before the current head is the version to reset to.
+
+### This repository, and where the only copy is
+
+`00 PUBLISH` **does** have a remote, added 2026-09-06:
+`andrew-silvestri/andrewsilvestri-source.git`, branch `master`, and
+`git ls-remote --heads origin` should answer with the local head. Earlier
+briefs said it had none; that was true when they were written and is not now.
+Push after any session that changes the tree — the remote is the off-machine
+copy of the source, which the mirror is not, because the mirror holds only
+`site/`.
+
+The `git bundle` habit predates the remote and is still worth keeping before
+anything destructive, but a bundle on `~/Desktop` is on the same disk as the
+repository and is not a backup:
+
+```bash
+git bundle create ~/Desktop/00-PUBLISH-$(date +%F).bundle --all
+```
+
+The bundles on disk are dated 2026-09-04 and 2026-09-05. The remote is newer
+than all of them.
+
+### What a fresh clone cannot serve
+
+`site/downloads/` is gitignored in full, so **none** of the source archives are
+in this repository. `site/code.html` links sixteen of them:
+
+- Ten are rebuilt by `python3 rezip_downloads.py` — atlas, continents, economy,
+  food, heat, longevity, neuron, shoes, skyline, storage. (It builds an
+  eleventh, `beauty-code.zip`, which `code.html` does not link yet.)
+- **Six have no generator at all**: `climate-cost-code.zip`,
+  `deliverables-code.zip`, `model-code.zip`, `web-v3-code.zip`,
+  `web-v4-code.zip` and `web-v5-code.zip`. They exist only in the working
+  copy's `site/downloads/` and in the published mirror. Nothing in the tree can
+  reproduce them. If they are lost, they come back from
+  `~/andrew-silvestri.github.io` or from the live site, and from nowhere else.
+
+So a clone of this repository serves `code.html` with sixteen dead links until
+`rezip_downloads.py` runs, and with six dead links for good afterwards.
+
 ---
 
-## 11. Current state, 5 September 2026
+## 11. Current state, 6 September 2026
 
-Live: the mirror's `6d0316e` (2026-09-05, the seventh publish that day, the
-food project; before it Phase 4 Part A `a934a13`, then Phase 5 Parts 1, 2b,
-3, 4+5, and the grid at `b768538`).
+**Live: the mirror's `72d928e`**, "Continents move in the reconstruction
+viewer", 2026-09-05 16:52 — the last of nine mirror commits dated 5 September.
+**Rollback is `a55c566`**, 15:34 the same day, "Publish: where the ground goes,
+and the measured neuron". Before those: `791dfe3` (13:51, shoes), `6d0316e`
+(03:01), the grid at `b768538`, Phase 5 Parts 1/2b/3/4+5, and Phase 4 Part A
+`a934a13` on 4 September. There is no mirror commit dated 6 September; the
+`publish-2026-09-06` tag is on this repository's `772633d`, not on a publish.
+
+`site/` here is identical to the mirror's head — checked file by file on
+2026-09-06, the only differences being the mirror's `LICENSE` and the
+gitignored `site/_preview/`. **Nothing in the tree is waiting to be
+published.** Two earlier notes said otherwise and were behind the pages they
+described: `site/neuron.html`, `neuron-app.html`, `continents.html` and
+`continents-app.html` were written at 16:48 on 5 September, twenty-seven
+minutes after the previous version of this section, and published four minutes
+later. All four answer 200 on `andrewsilvestri.com`.
+
 The write-ups are `PHASE4_2026-09-04.md` and `PHASE5_2026-09-04.md`; every
 earlier one is listed in section 2. This section is the state, not the
 history, so that nobody has to read eleven write-ups to know it.
+
+### The nav, as shipped
+
+Five top-level items: **Home / Energy / Running / Misc / Code.** The
+retaxonomy landed and is live; the atlas did fold into Energy rather than keep
+a group of its own. There is **no Mind group** — a brief that describes one
+(Energy / Mind / Running / Misc) is describing a plan, not the site. `neuron`
+sits under Misc, which now carries six items (climate-cost, food, continents,
+longevity, skyline, neuron) against Energy's six and Running's two. Misc is
+the group that will need splitting when beauty lands; that is the decision
+someone will have to make, and it was not made by shipping this.
+`rebuild_nav.py` writes the nav on every page — see section 8, trap 11 before
+hand-editing it.
 
 ### The model
 
@@ -794,7 +868,7 @@ history, so that nobody has to read eleven write-ups to know it.
   SHA-1 is recorded in `atlas_payload.json` and `tests/test_payload.py`
   holds it there; the record's note says what state the file is in (last
   full build 2026-09-04, two hand-patched tab subtitles, scenario reach
-  fields rewritten under property 5). See section 8, trap 14.
+  fields rewritten under property 5). See section 8, trap 23.
 - The propagation engine exists **twice** and nowhere else: `atlas-app.js`
   (the model of record) and `build_throughlines.engine()` (every figure,
   the scenario builder, the page generator). A third copy lived in
@@ -819,7 +893,7 @@ All of these must pass before a publish; `./publish.sh --dry-run` after.
 
 | Test | Catches |
 |---|---|
-| `tests/test_generators.py` | Any of the 12 text generators drifting from what is shipped: nav, atlas and model pages, longevity page and app, food page, climate-cost app, skyline app, the six generated download archives, thumbnails, the layer diagram, image dimensions, cache stamps. Run before trusting any generator. |
+| `tests/test_generators.py` | Any of the text generators drifting from what is shipped: nav, atlas and model pages, longevity page and app, food page, neuron page and app, shoes page, economy page, citations, climate-cost app, skyline app, the download archives, thumbnails, the layer diagram, image dimensions, cache stamps. Run before trusting any generator. The `add_citations.py` entry is **armed**: the guard and the flag that bypassed it are both gone, and the comment above the entry says why. |
 | `tests/test_parity.py` | The two engines disagreeing: all 60 scenarios, every node, to 1e-12 (measured 2.2e-15), and the round counts. |
 | `tests/test_demand_response.py` | Property 5 regressing: push a consumer group, its district must fall. 40 sampled, `--all` for 1,142. |
 | `tests/test_payload.py` | The payload changing without anyone re-recording it. |
@@ -845,7 +919,7 @@ the §4.4 settle range, the §5.1 weight and §5.2 inertia tables' numbers,
 the §6 behaviour table, and every bare count. `rebuild_nav.py` writes the
 nav on every page; `bust_cache.py` the stamps; `sync_img_dims.py` the
 image sizes; `build_thumbnails.py` the mosaic's six; `build_layer_diagram.py`
-the hero and the atlas figure; `rezip_downloads.py` five archives;
+the hero and the atlas figure; `rezip_downloads.py` eleven archives (§10);
 `longevity-quotient/update_page.py` the longevity page's numbers.
 
 Typed, and therefore able to go stale: the prose on every page; the
@@ -853,8 +927,40 @@ Typed, and therefore able to go stale: the prose on every page; the
 `build_atlas_global.py` on 2026-09-05, but typed); `model.html` §7;
 `code.html`'s rows, including each archive's file count and size; the five
 sentences on the home page; the specs in `style.css`; and the two tab
-subtitles inside the payload (trap 14). If a number on a page is not in the
+subtitles inside the payload (trap 23). If a number on a page is not in the
 generated list above, it was typed.
+
+### Settled on 6 September, so that nobody re-litigates it
+
+- **`add_citations.py` is armed, not disarmed.** The guard is gone from
+  `tests/test_generators.py` and the script's own banner marks all four
+  defects resolved. Verified on 2026-09-06 by copying `site/` to a scratch
+  directory and running `python add_citations.py --apply` against the copy: a
+  no-op on all seven pages it owns — heat (4 markers), economy (10), neuron
+  (17), continents (13), food (10), storage (5), climate-cost (8) — byte-identical
+  output, its only report `beauty.html does not exist`, exit 0. Any brief
+  saying it drifts on `heat.html`, `longevity.html` and `storage.html`, or that
+  the test is "correctly red" on it, is describing 5 September.
+  `longevity.html` is a separate matter and is below.
+
+- **`beauty/data/iucn_table1a.csv` is kept deliberately.** It is a cited
+  aggregate, published as a summary table, and `beauty/DATA_SOURCES.md` is its
+  authority. That is distinct from the per-species Red List categories, which
+  the Red List terms do not permit redistributing and which are gitignored
+  (`beauty/data/iucn_aves.csv`, `beauty/data/birds_joined.csv`,
+  `beauty/data/raw/`). Checked and kept, not overlooked — do not remove it as
+  a licence problem without reading that file first.
+
+- **Two neuron paths were gitignored** on 6 September:
+  `neuron/neuron-app.html`, which is generated into `site/`, and
+  `neuron/data/_work/`, which is empty in a clean tree and fills with about
+  1,500 sampled SWC files the moment the fetch runs. The second is one
+  `git add -A` away from trap 18 and that is the whole reason it is listed.
+
+- **`.claude/settings.local.json`** is ignored, and now ignored *by this
+  repository* rather than only by the machine's global git ignore, so a clone
+  on another machine behaves the same way. It is local tool configuration and
+  is not part of the site.
 
 ### Open, by name
 
