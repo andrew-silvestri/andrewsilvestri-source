@@ -11,6 +11,7 @@ The navigation lives in one place here rather than in seventeen files, so
 adding a page is one line and cannot drift between pages.
 """
 
+import argparse
 import glob
 import os
 import re
@@ -19,28 +20,48 @@ HERE = os.path.dirname(os.path.abspath(__file__))
 SITE = os.path.join(HERE, "site")
 
 # (label, href) - a group is (label, [(label, href), ...])
+# Regrouped 2026-09-05 from four groups (The atlas / Energy / Others) into
+# three. "Others" had grown to seven pages of unrelated work and said nothing
+# about any of them.
+#
+# The atlas lost its own top-level group and folds in here as the first four
+# entries. It is still the main project and does not need the nav to say so:
+# index.html opens with its hero, tagged "Main project", above every section.
+#
+# Every label here is the page's own title. A nav that renames a page gives
+# the site two names for one thing, and index.html's headings are this same
+# taxonomy in a second place - if the two disagree the site has two
+# structures. Changing a label means changing the page.
 NAV = [
     ("Home", "index.html"),
-    ("The atlas", [
+    ("Energy", [
         ("Open the atlas", "atlas-app.html"),
         ("About the atlas", "atlas.html"),
         ("How the model works", "model.html"),
         ("Figures", "library.html"),
-    ]),
-    ("Energy", [
         ("Industrial heat break-even", "heat.html"),
         ("Battery revenue simulator", "storage.html"),
-        # Folded in here from its own one-item "Climate research" group in
-        # the 2026-08-30 revamp (SITE_REVAMP_2026-08-30.md, "Navigation
-        # grouping"): nothing distinguished it from the two tools it sat
-        # beside. The pages were edited by hand then; this list caught up
-        # on 2026-09-04 so the generator matches what shipped.
-        ("Climate cost calculator", "climate-cost.html"),
     ]),
-    ("Others", [
+    ("Running", [
+        ("What a fast shoe is worth", "shoes.html"),
+        ("Economy is not time", "economy.html"),
+    ]),
+    ("Misc", [
+        # Was its own one-item "Climate research" group until the 2026-08-30
+        # revamp (SITE_REVAMP_2026-08-30.md, "Navigation grouping"); the label
+        # here was "Climate cost calculator" until 2026-09-05, which matched
+        # neither the page nor its index entry.
+        ("The true climate cost", "climate-cost.html"),
+        ("Fat, sugar, salt", "food.html"),
+        ("Where the ground goes", "continents.html"),
         ("Longevity quotient", "longevity.html"),
         ("Skylines, played", "skyline.html"),
-        ("Fat, sugar, salt", "food.html"),
+        # Parked here rather than in a "Mind" group of its own. A group holding
+        # one page is rendered by nav_for() as a bare link to that page, with
+        # the category name dropped entirely, so a one-item Mind would have put
+        # "Mind" on index.html and nothing of the kind in the nav. When the
+        # beauty project lands, the two of them make Mind and this line moves.
+        ("The measured neuron", "neuron.html"),
         # "The bookshelf" (desktop.html) retired to unpublished/ on 2026-09-05
         # (PHASE5); the pages were regenerated from this list the same day.
     ]),
@@ -89,7 +110,14 @@ def nav_for(page):
     return '<nav class="top">' + "".join(out) + "</nav>"
 
 
-def main():
+def main(dry_run=False):
+    """--dry-run reports what would change and writes nothing.
+
+    Added 2026-09-05, when NAV was regrouped into four categories. Section 8
+    item 11 of HANDOFF: this list and the shipped nav disagreed for five weeks
+    once, so running the generator would have silently reverted a deliberate
+    change. The defence is to read the diff before the write, and that needs a
+    mode that does not write."""
     n = 0
     for path in sorted(glob.glob(os.path.join(SITE, "*.html"))):
         page = os.path.basename(path)
@@ -98,12 +126,19 @@ def main():
             continue
         new = re.sub(r'<nav class="top">.*?</nav>', lambda m: nav_for(page),
                      t, count=1, flags=re.S)
-        if new != t:
+        changed = new != t
+        if changed and not dry_run:
             open(path, "w", encoding="utf-8").write(new)
-            n += 1
-        print(f"  {page:24s} {'updated' if new != t else 'unchanged'}")
-    print(f"\n  {n} page(s) rewritten")
+        n += changed
+        state = ("would change" if dry_run else "updated") if changed else "unchanged"
+        print(f"  {page:24s} {state}")
+    verb = "would be rewritten" if dry_run else "rewritten"
+    print(f"\n  {n} page(s) {verb}")
+    return n
 
 
 if __name__ == "__main__":
-    main()
+    ap = argparse.ArgumentParser()
+    ap.add_argument("--dry-run", action="store_true",
+                    help="report what would change; write nothing")
+    main(ap.parse_args().dry_run)
