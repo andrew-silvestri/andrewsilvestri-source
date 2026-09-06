@@ -201,7 +201,7 @@ def cite(text):
     if not refs:
         return text, ["food.html has no entry in add_citations.PAGES"]
     tmp = PAGE + ".render.tmp"
-    open(tmp, "w", encoding="utf-8").write(text)
+    open(tmp, "w", encoding="utf-8", newline="\n").write(text)
     try:
         out, probs = add_citations.build(os.path.basename(tmp), refs)
     finally:
@@ -221,7 +221,7 @@ def main(apply=False):
     else:
         print("  food.html: new page" + ("" if apply else " (not written)"))
     if apply:
-        open(PAGE, "w", encoding="utf-8").write(t)
+        open(PAGE, "w", encoding="utf-8", newline="\n").write(t)
 
 
 if __name__ == "__main__":

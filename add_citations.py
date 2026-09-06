@@ -712,7 +712,7 @@ def main():
         placed = out.count('class="cite"')
         print(f"  {page:22s} {placed} of {len(refs)-1} markers placed")
         if a.apply:
-            open(os.path.join(SITE, page), "w", encoding="utf-8").write(out)
+            open(os.path.join(SITE, page), "w", encoding="utf-8", newline="\n").write(out)
             done += 1
 
     if allprob:

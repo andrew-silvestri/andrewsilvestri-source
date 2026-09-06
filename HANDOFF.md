@@ -429,6 +429,26 @@ catches. The Python checks need numpy, scipy, matplotlib and Pillow; the
 node suites use the playwright, jsdom and three in `tests/package.json`
 (`npm install` in `tests/`).
 
+**`_deslop/` is gitignored, so one edit the rig needs cannot be committed.**
+`_deslop/measure.js` opens every page with no query string. The home page
+picks one of three systems at random per load (`site/assets/hero.js`), so an
+unpinned run measures a different system each time and its CPU and weight
+columns are not comparable between passes - and nothing says so in the
+output. The edit is two lines, near the top and at the `page.goto`:
+
+```js
+const HERO = process.env.HERO ? '?hero=' + process.env.HERO : '';
+...
+await page.goto(BASE+p+'.html'+((p==='index'&&!app)?HERO:''), {...});
+```
+
+then `HERO=pendulum node measure.js index`, and again for `lorenz` and
+`threebody`. **Anyone measuring `index.html` must re-apply this first, or they
+are measuring a random system without knowing it.** It cannot live in the repo
+because `.gitignore` line 6 excludes the whole directory; that exclusion is
+deliberate (the rig carries hundreds of megabytes of screenshots and results)
+and is not worth changing for two lines, so the two lines live here instead.
+
 `tests/three-stub.js` is a hand-written partial three.js so the app can be
 booted headlessly. `window.__atlasUI` and `window.__atlasScene` are test hooks
 deliberately exposed by `atlas-app.js`.
