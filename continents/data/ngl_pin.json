@@ -1,0 +1,14 @@
+{
+ "midasfile": {
+  "bytes": 5455590,
+  "pinned_on": "2026-09-05",
+  "sha256": "522cc1c5f50ee749c101c99f54d51f25b71697250bb1a859c762572f16559d67",
+  "url": "https://geodesy.unr.edu/gps_timeseries/IGS20/midas/midasfile"
+ },
+ "platevel.all": {
+  "bytes": 1638430,
+  "pinned_on": "2026-09-05",
+  "sha256": "d8f69418c524e892febfe01c67b3c4369bd77fdfa92348c2f69c7a52a4d8a467",
+  "url": "https://geodesy.unr.edu/gps_timeseries/IGS20/midas/platevel.all"
+ }
+}

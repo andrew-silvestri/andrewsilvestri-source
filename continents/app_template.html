@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Reconstruction viewer — Where the ground goes</title>
+<meta name="description" content="Pick a place, drag back through 500 million years, and watch eight published plate models disagree about where the ground under it was.">
+<meta name="theme-color" content="#F2F0EF">
+<script>try{document.documentElement.dataset.motion=matchMedia('(prefers-reduced-motion: reduce)').matches?'off':'on';}catch(e){document.documentElement.dataset.motion='on';}</script>
+<style>
+/* The site's tokens (site/style.css :root, "Yacht club"), copied by name and
+   value so this file reads the same as the page it belongs to. This app must
+   work alone from a folder, so nothing is imported. */
+:root{
+  --bg:#F2F0EF; --card:#FAF9F8; --ink:#241E1A; --dim:#625C57;
+  --faint:#D9D8D6; --rule:#BBBDBC; --acc:#245F73; --cool:#4A8AA0;
+  --moss:#733E24; --rose:#A9724F; --slate:#7F8A8F;
+  --sans:"IBM Plex Sans",system-ui,-apple-system,Segoe UI,Roboto,sans-serif;
+  --mono:"IBM Plex Mono",ui-monospace,SFMono-Regular,Menlo,monospace;
+  --fs-2:12px; --fs-1:14.5px; --fs0:17.5px; --fs1:21px;
+  /* 12 px is the floor and nothing here goes under it */
+}
+*{box-sizing:border-box}
+html,body{margin:0;height:100%}
+body{background:var(--bg);color:var(--ink);font:var(--fs-1)/1.5 var(--sans);
+  display:grid;grid-template-columns:352px 1fr;grid-template-areas:"panel stage";
+  overflow:hidden}
+@media (max-width:900px){
+  body{grid-template-columns:1fr;grid-template-rows:auto 1fr;
+       grid-template-areas:"panel" "stage";overflow:auto}
+}
+#panel{grid-area:panel;padding:18px 20px;overflow-y:auto;
+  border-right:1px solid var(--rule)}
+#stage{grid-area:stage;position:relative;display:flex;flex-direction:column}
+h1{font-size:var(--fs0);margin:0 0 2px;font-weight:600}
+.sub{color:var(--dim);font-size:var(--fs-2);margin:0 0 16px}
+.lab{font-family:var(--mono);font-size:var(--fs-2);color:var(--dim);
+  text-transform:uppercase;letter-spacing:.06em;margin:18px 0 6px}
+#places,#landpick{display:flex;flex-wrap:wrap;gap:5px}
+#places button,#landpick button{font:var(--fs-2) var(--mono);padding:4px 8px;cursor:pointer;
+  background:var(--card);color:var(--ink);border:1px solid var(--rule)}
+#places button[aria-pressed="true"],#landpick button[aria-pressed="true"]{background:var(--acc);color:var(--bg);
+  border-color:var(--acc)}
+#readout{font-family:var(--mono);font-size:var(--fs-2);color:var(--ink);
+  background:var(--card);border:1px solid var(--faint);padding:9px 10px}
+#legend{list-style:none;margin:0;padding:0;font-family:var(--mono);
+  font-size:var(--fs-2)}
+#legend li{display:flex;align-items:center;gap:7px;padding:2px 0;
+  color:var(--ink);cursor:default}
+#legend li.out{color:var(--dim)}
+#legend li.nocrust{color:var(--moss)}
+#legend .sw{width:10px;height:10px;flex:0 0 10px;border-radius:50%}
+#legend .val{margin-left:auto;color:var(--dim)}
+.note{font-size:var(--fs-2);color:var(--dim);margin-top:16px;
+  border-top:1px solid var(--faint);padding-top:10px}
+#timebar{padding:10px 20px 6px;border-top:1px solid var(--rule);
+  display:flex;align-items:center;gap:14px}
+#age{font-family:var(--mono);font-size:var(--fs0);min-width:104px}
+#slider{flex:1;accent-color:var(--acc)}
+canvas{display:block;width:100%}
+#globewrap{flex:1;min-height:0;position:relative}
+#strip{height:150px;border-top:1px solid var(--faint)}
+#empty{position:absolute;inset:0;display:none;align-items:center;
+  justify-content:center;text-align:center;font-family:var(--mono);
+  font-size:var(--fs-1);color:var(--moss);padding:0 40px}
+</style>
+</head><body>
+<div id="panel">
+  <h1>Where was the ground?</h1>
+  <p class="sub">Eight published plate models, asked the same question.</p>
+
+  <p class="lab">Place</p>
+  <div id="places"></div>
+
+  <p class="lab">Land drawn by</p>
+  <div id="landpick"></div>
+
+  <p class="lab">At this age</p>
+  <div id="readout"></div>
+
+  <p class="lab">The models</p>
+  <ul id="legend"></ul>
+
+  <p class="note">The coastlines are reconstructed by the model named above,
+  not modern outlines moved around: nothing on this map is today's world at
+  any age but zero. Switch the model and the continents move, which is the
+  same disagreement the dots show, drawn as land.</p>
+  <p class="note">Palaeomagnetism determines how far from the equator a rock
+  formed. It cannot determine its longitude at all. Most of the east-west
+  spread you are looking at is each model's own assumption, not a measurement.</p>
+  <p class="note">Equal Earth is equal-area, so a polar continent is squeezed
+  into a thin band along the pole line. Antarctica today is 2.7 per cent of
+  the Earth's surface and takes 2.7 per cent of this map.</p>
+  <p class="note">Reconstructions fetched {{fetched}}. Every model is named
+  explicitly; none of this is the service's default, which is documented as
+  liable to change.</p>
+</div>
+
+<div id="stage">
+  <div id="globewrap">
+    <canvas id="globe"></canvas>
+    <div id="empty"></div>
+  </div>
+  <canvas id="strip"></canvas>
+  <div id="timebar">
+    <span id="age"></span>
+    <input id="slider" type="range" min="0" max="1" step="1" value="0"
+           aria-label="millions of years ago">
+  </div>
+</div>
+
+<script src="assets/continents-land.js"></script>
+<script>
+const DATA = {{payload}};
+
+/* Equal Earth (Savric, Patterson and Jenny 2019). The same maths as geo.py,
+   because the app and the figures must draw the same world. */
+const A1=1.340264,A2=-0.081106,A3=0.000893,A4=0.003796,S3=Math.sqrt(3);
+function eeFwd(lon,lat){
+  const th=Math.asin(S3/2*Math.sin(lat*Math.PI/180));
+  const d=3*(9*A4*th**8+7*A3*th**6+3*A2*th**2+A1);
+  return [2*S3*(lon*Math.PI/180)*Math.cos(th)/d,
+          A1*th+A2*th**3+A3*th**9+A4*th**11];
+}
+const XMAX=eeFwd(180,0)[0], YMAX=eeFwd(0,90)[1];
+const R_KM=6371.0088;
+function gc(a,b){
+  const r=Math.PI/180, la1=a[1]*r, lo1=a[0]*r, la2=b[1]*r, lo2=b[0]*r;
+  const h=Math.sin((la2-la1)/2)**2+Math.cos(la1)*Math.cos(la2)*Math.sin((lo2-lo1)/2)**2;
+  return 2*R_KM*Math.asin(Math.min(1,Math.sqrt(h)));
+}
+const css=n=>getComputedStyle(document.documentElement).getPropertyValue(n).trim();
+
+let placeIdx=0, ageIdx=0, hi=null;
+let landModel=(typeof LAND!=="undefined" && LAND.models) ? LAND.models[0] : null;
+const AGES=DATA.ages, MODELS=DATA.models;
+
+/* Rings arrive delta-encoded on a quarter-degree grid: the first pair is
+   absolute and every pair after it is a step. Decoding is cheap but there is
+   no reason to redo it on every frame of a drag. */
+const _ringCache=new Map();
+function landRings(model, age){
+  if(typeof LAND==="undefined") return null;
+  const k=model+"@"+age;
+  if(_ringCache.has(k)) return _ringCache.get(k);
+  const raw=LAND.frames[k];
+  if(!raw){ _ringCache.set(k,null); return null; }
+  const q=LAND.quantisation;
+  const out=raw.map(r=>{ const pts=[]; let x=0,y=0;
+    for(let i=0;i<r.length;i+=2){ x+=r[i]; y+=r[i+1]; pts.push([x/q,y/q]); }
+    return pts; });
+  _ringCache.set(k,out); return out;
+}
+
+function state(m,i){                       /* the three states, exhaustively */
+  if(AGES[ageIdx]>m.oldest_ma) return "out";
+  const t=DATA.tracks[placeIdx].models[m.name];
+  return (t.lat[ageIdx]===null)?"nocrust":"here";
+}
+function pos(m){
+  const t=DATA.tracks[placeIdx].models[m.name];
+  return [t.lon[ageIdx],t.lat[ageIdx]];
+}
+
+function fit(cv){
+  const r=cv.getBoundingClientRect(), d=window.devicePixelRatio||1;
+  cv.width=Math.max(1,Math.round(r.width*d));
+  cv.height=Math.max(1,Math.round(r.height*d));
+  const g=cv.getContext("2d"); g.setTransform(d,0,0,d,0,0);
+  return [g,r.width,r.height];
+}
+
+function drawGlobe(){
+  const cv=document.getElementById("globe");
+  const [g,W,H]=fit(cv);
+  g.clearRect(0,0,W,H);
+  const pad=18, s=Math.min((W-2*pad)/(2*XMAX),(H-2*pad)/(2*YMAX));
+  const px=(lon,lat)=>{const p=eeFwd(lon,lat);
+    return [W/2+p[0]*s, H/2-p[1]*s];};
+
+  g.lineWidth=1; g.strokeStyle=css("--faint");
+  for(let lat=-60;lat<=60;lat+=30){ g.beginPath();
+    for(let lon=-180;lon<=180;lon+=3){const q=px(lon,lat);
+      lon===-180?g.moveTo(...q):g.lineTo(...q);} g.stroke(); }
+  for(let lon=-180;lon<=180;lon+=30){ g.beginPath();
+    for(let lat=-90;lat<=90;lat+=3){const q=px(lon,lat);
+      lat===-90?g.moveTo(...q):g.lineTo(...q);} g.stroke(); }
+  g.strokeStyle=css("--rule"); g.lineWidth=1.2;
+  for(const lat of [0]){ g.beginPath();
+    for(let lon=-180;lon<=180;lon+=3){const q=px(lon,lat);
+      lon===-180?g.moveTo(...q):g.lineTo(...q);} g.stroke(); }
+  g.beginPath();
+  for(let lat=-90;lat<=90;lat+=2){const q=px(180,lat); lat===-90?g.moveTo(...q):g.lineTo(...q);}
+  for(let lat=90;lat>=-90;lat-=2){const q=px(-180,lat); g.lineTo(...q);}
+  g.closePath(); g.stroke();
+
+  const rings=landRings(landModel, AGES[ageIdx]);
+  if(rings){
+    g.fillStyle=css("--faint"); g.strokeStyle=css("--rule"); g.lineWidth=0.7;
+    for(const pts of rings){
+      g.beginPath();
+      for(let i=0;i<pts.length;i++){ const q=px(pts[i][0],pts[i][1]);
+        i?g.lineTo(q[0],q[1]):g.moveTo(q[0],q[1]); }
+      g.closePath(); g.fill(); g.stroke();
+    }
+  }
+
+  const shown=MODELS.filter(m=>state(m)==="here");
+  let far=null,best=-1;
+  for(let i=0;i<shown.length;i++)for(let j=i+1;j<shown.length;j++){
+    const d=gc(pos(shown[i]),pos(shown[j]));
+    if(d>best){best=d;far=[pos(shown[i]),pos(shown[j])];}
+  }
+  if(far){                                    /* the widest pair, as an arc */
+    g.strokeStyle=css("--moss"); g.lineWidth=1.2;
+    g.beginPath();
+    for(let k=0;k<=48;k++){
+      const t=k/48;
+      const a=far[0], b=far[1];
+      let dlon=b[0]-a[0]; if(dlon>180)dlon-=360; if(dlon<-180)dlon+=360;
+      const lon=a[0]+dlon*t, lat=a[1]+(b[1]-a[1])*t;
+      const q=px(((lon+180)%360+360)%360-180,lat);
+      k===0?g.moveTo(...q):g.lineTo(...q);
+    }
+    g.stroke();
+  }
+  for(const m of MODELS){
+    if(state(m)!=="here") continue;
+    const p=pos(m), q=px(p[0],p[1]);
+    g.beginPath(); g.arc(q[0],q[1],hi===m.name?6:4.2,0,7);
+    g.fillStyle=hi===m.name?css("--moss"):css("--acc"); g.fill();
+  }
+  const emp=document.getElementById("empty");
+  const inRange=MODELS.filter(m=>state(m)!=="out").length;
+  if(shown.length===0 && inRange>0){
+    emp.style.display="flex";
+    emp.textContent="No model places any crust here at "+AGES[ageIdx]+
+      " Ma. The ground you picked did not exist yet.";
+  } else if(inRange===0){
+    emp.style.display="flex";
+    emp.textContent="No model reaches "+AGES[ageIdx]+" Ma.";
+  } else emp.style.display="none";
+  return {shown:shown.length,widest:best>0?best:null};
+}
+
+function drawStrip(){
+  const cv=document.getElementById("strip");
+  const [g,W,H]=fit(cv);
+  g.clearRect(0,0,W,H);
+  const L=44,Rp=12,T=10,B=22;
+  const x=a=>L+(a/AGES[AGES.length-1])*(W-L-Rp);
+  const y=v=>T+((90-v)/180)*(H-T-B);
+  g.strokeStyle=css("--faint"); g.lineWidth=1;
+  for(const v of [-60,-30,30,60]){g.beginPath();g.moveTo(L,y(v));g.lineTo(W-Rp,y(v));g.stroke();}
+  g.strokeStyle=css("--rule");g.beginPath();g.moveTo(L,y(0));g.lineTo(W-Rp,y(0));g.stroke();
+  g.font="12px "+css("--mono"); g.fillStyle=css("--dim");
+  g.fillText("+90",4,y(90)+10); g.fillText("0",4,y(0)+4); g.fillText("-90",4,y(-90));
+  g.fillText("0 Ma",L,H-6); g.fillText(AGES[AGES.length-1]+" Ma",W-Rp-46,H-6);
+  for(const m of MODELS){
+    const t=DATA.tracks[placeIdx].models[m.name];
+    g.strokeStyle=hi===m.name?css("--moss"):css("--acc");
+    g.globalAlpha=hi===m.name?1:.5; g.lineWidth=hi===m.name?1.8:1;
+    let pen=false; g.beginPath();
+    for(let i=0;i<AGES.length;i++){
+      if(AGES[i]>m.oldest_ma||t.lat[i]===null){pen=false;continue;}
+      const q=[x(AGES[i]),y(t.lat[i])];
+      pen?g.lineTo(...q):g.moveTo(...q); pen=true;
+    }
+    g.stroke();
+  }
+  g.globalAlpha=1;
+  g.strokeStyle=css("--ink"); g.lineWidth=1.2;
+  g.beginPath(); g.moveTo(x(AGES[ageIdx]),T); g.lineTo(x(AGES[ageIdx]),H-B); g.stroke();
+}
+
+function drawLegend(info){
+  const ul=document.getElementById("legend"); ul.innerHTML="";
+  for(const m of MODELS){
+    const st=state(m), li=document.createElement("li");
+    li.className=st==="here"?"":st;
+    const sw=document.createElement("span"); sw.className="sw";
+    sw.style.background=st==="here"?css("--acc"):"transparent";
+    sw.style.border=st==="here"?"none":
+      (st==="nocrust"?"1.5px solid "+css("--moss"):"1.5px solid "+css("--slate"));
+    if(st==="nocrust") sw.style.borderRadius="2px";
+    const nm=document.createElement("span"); nm.textContent=m.name;
+    const v=document.createElement("span"); v.className="val";
+    v.textContent = st==="here"
+      ? pos(m)[1].toFixed(1)+"°, "+pos(m)[0].toFixed(1)+"°"
+      : (st==="nocrust" ? "no crust in this model"
+                        : "does not reach "+AGES[ageIdx]+" Ma");
+    li.append(sw,nm,v);
+    li.onmouseenter=()=>{hi=m.name;render();};
+    li.onmouseleave=()=>{hi=null;render();};
+    ul.append(li);
+  }
+  const inRange=MODELS.filter(m=>state(m)!=="out").length;
+  const nc=MODELS.filter(m=>state(m)==="nocrust").length;
+  const r=document.getElementById("readout");
+  let s="At "+AGES[ageIdx]+" Ma, "+inRange+" of the "+MODELS.length+
+        " models reach this age.";
+  if(nc) s+=" "+nc+" of them place no crust at "+DATA.tracks[placeIdx].place+".";
+  if(info.widest) s+=" The two furthest apart are "+
+        Math.round(info.widest).toLocaleString()+" km apart.";
+  r.textContent=s;
+}
+
+function render(){ const info=drawGlobe(); drawStrip(); drawLegend(info);
+  document.getElementById("age").textContent=AGES[ageIdx]+" Ma"; }
+
+function build(){
+  const pc=document.getElementById("places");
+  DATA.tracks.forEach((t,i)=>{
+    const b=document.createElement("button");
+    b.textContent=t.place; b.setAttribute("aria-pressed",i===0?"true":"false");
+    b.onclick=()=>{placeIdx=i;
+      [...pc.children].forEach((c,j)=>c.setAttribute("aria-pressed",j===i?"true":"false"));
+      render();};
+    pc.append(b);
+  });
+  const lp=document.getElementById("landpick");
+  if(typeof LAND!=="undefined" && LAND.models){
+    LAND.models.forEach((m,i)=>{
+      const b=document.createElement("button");
+      b.textContent=m; b.setAttribute("aria-pressed",i===0?"true":"false");
+      b.onclick=()=>{ landModel=m;
+        [...lp.children].forEach(c=>c.setAttribute("aria-pressed",
+          c.textContent===m?"true":"false"));
+        render(); };
+      lp.append(b);
+    });
+  } else {
+    lp.textContent="land data not loaded";
+  }
+  const sl=document.getElementById("slider");
+  sl.max=AGES.length-1;
+  sl.oninput=()=>{ageIdx=+sl.value;render();};
+  addEventListener("resize",render);
+  render();
+}
+build();
+window.__app={DATA,state,pos,render,gc,eeFwd,landRings,
+  land:()=>landModel, setLand:(m)=>{landModel=m;render();},
+  set:(p,a)=>{placeIdx=p;ageIdx=a;render();},
+  counts:()=>{const c={here:0,nocrust:0,out:0};
+    for(const m of MODELS)c[state(m)]++;return c;}};
+</script>
+</body></html>

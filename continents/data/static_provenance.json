@@ -1,0 +1,29 @@
+{
+ "fetched": "2026-09-05",
+ "itrf": {
+  "citation": "Altamimi, Z., Metivier, L., Rebischung, P., Collilieux, X., Chanard, K. and Barneoud, J. (2023). ITRF2020 Plate Motion Model. Geophysical Research Letters 50(24), e2023GL106373, doi:10.1029/2023GL106373.",
+  "licence": "none stated"
+ },
+ "morvel": {
+  "citation": "Argus, D.F., Gordon, R.G. and DeMets, C. (2011). Geologically current motion of 56 plates relative to the no-net-rotation reference frame. Geochemistry, Geophysics, Geosystems 12(11), Q11001, doi:10.1029/2011GC003751.",
+  "cross_checked_against": "https://raw.githubusercontent.com/insarlab/MintPy/main/src/mintpy/objects/euler_pole.py",
+  "cross_checked_rows": 25,
+  "extracted_rows": 25,
+  "host_note": "the authors' site is unreachable and its own copy of this table is a JPEG, which is why the paper is the source here",
+  "licence": "not an open licence. The MORVEL site's own citation page: 'No restrictions are placed on non-commercial uses of graphics or results from this web site. The authors retain all commercial rights.'",
+  "pole_tol_deg": 0.01,
+  "rate_tol_deg_myr": 0.001,
+  "table": "Table 1, page 5 of the PDF"
+ },
+ "pb2002": {
+  "citation": "Bird, P. (2003). An updated digital model of plate boundaries. Geochemistry, Geophysics, Geosystems 4(3), 1027, doi:10.1029/2001GC000252.",
+  "licence": "none stated; cite the paper"
+ },
+ "sha256": {
+  "Argus_2011_G3.pdf": "31c8e91562d3db0a6393dad3fbc81ed97f9fe1353e28dd42141716cb963564d3",
+  "ITRF2020-PMM-residuals.dat": "9b366bc0fb18919923266e693b9481ccc083556985c7717d1e17e7598958d276",
+  "ITRF2020-PMM.dat": "9862e83f3596f2886ab5dbe8bea4a66a8e9b3518c8f0124815986fcc37ea1b5f",
+  "PB2002_boundaries.json": "42b3e0876a7e40f133e958ba7ab85f8851b5c693a046fbc3b138e7751863d92a",
+  "mintpy_euler_pole.py": "765a9a2af64ae1446a1875dc99257bd6272b5c246eb92f3e3764da1624e6c521"
+ }
+}

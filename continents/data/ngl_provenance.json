@@ -1,0 +1,14 @@
+{
+ "citation": "Blewitt, G., Kreemer, C., Hammond, W.C. and Gazeaux, J. (2016). MIDAS robust trend estimator for accurate GPS station velocities without step detection. Journal of Geophysical Research: Solid Earth 121(3), 2054-2068, doi:10.1002/2015JB012552.",
+ "fetched": "2026-09-05",
+ "frame": "IGS20",
+ "frame_note": "IGS20 is the IGS realisation of ITRF2020, which is what makes the comparison with ITRF2020-PMM a comparison of models rather than of reference frames.",
+ "licence": "none stated; NGL asks for the citation above",
+ "sha256": {
+  "midasfile": "522cc1c5f50ee749c101c99f54d51f25b71697250bb1a859c762572f16559d67",
+  "platevel.all": "d8f69418c524e892febfe01c67b3c4369bd77fdfa92348c2f69c7a52a4d8a467"
+ },
+ "source": "https://geodesy.unr.edu/gps_timeseries/IGS20/midas/",
+ "stations": 21910,
+ "stations_with_plate": 21872
+}
