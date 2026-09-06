@@ -525,7 +525,7 @@ def main(apply=False):
     if not apply:
         print("\n  report only. Re-run with --apply.")
         return 1 if any(c.startswith("MISSED") for c in changes) else 0
-    open(PAGE, "w", encoding="utf-8").write(t)
+    open(PAGE, "w", encoding="utf-8", newline="\n").write(t)
     print(f"\n  wrote {PAGE}")
     return 1 if any(c.startswith("MISSED") for c in changes) else 0
 

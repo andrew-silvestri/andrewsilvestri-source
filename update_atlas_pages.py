@@ -653,8 +653,22 @@ def main(apply=False):
     if not apply:
         print("\n  report only. Re-run with --apply.")
         return
-    open(p, "w", encoding="utf-8").write(new)
-    open(p2, "w", encoding="utf-8").write(t2)
+    # newline="\n", not the default and not newline="". site/.gitattributes
+    # declares "* text=auto eol=lf", so the served tree is LF; Python text mode
+    # on Windows turns \n into \r\n on write, and every page generator here
+    # was doing that silently. Nothing failed while the checked-out tree had
+    # drifted to CRLF and matched that output by accident. The moment the tree
+    # was restored to its declared format, seven generators went into drift at
+    # once: the bug had been masked for exactly as long as the drift lasted.
+    #
+    # newline="" would also clear today drift and is the wrong fix, because it
+    # preserves whatever the tree happens to hold - so a future CRLF drift would
+    # make the generators follow it and the check would pass on an inconsistent
+    # repo, which is the masking that hid this in the first place. newline="\n"
+    # writes the declared format unconditionally, so the check fails when the
+    # tree is wrong instead of agreeing with it.
+    open(p, "w", encoding="utf-8", newline="\n").write(new)
+    open(p2, "w", encoding="utf-8", newline="\n").write(t2)
     print("\n  written")
 
 

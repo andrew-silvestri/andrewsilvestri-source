@@ -72,14 +72,26 @@ from matplotlib.path import Path                                   # noqa: E402
 
 import sitefig                                                     # noqa: E402
 from sitefig import (BG, CARD_FILL, INK, DIM, RULE, FAINT, ONE_WAY_COL,   # noqa: E402
-                     TWO_WAY_COL, FS_2, FS_1, MONO, PROSE, NOTES, PHONE, fig_size)
+                     TWO_WAY_COL, FS_2, FS_1, MONO, PROSE, PHONE, fig_size)
 from fig_floor import floor_problems                               # noqa: E402
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 DATA = os.path.join(HERE, "site", "assets", "atlas-data.js")
 APP = os.path.join(HERE, "site", "assets", "atlas-app.js")
+# Two renders, not three. The 714 "notes" render existed for the home page,
+# which was this figure's only consumer at that width; since 2026-09-06 the home
+# page's first screen is a live canvas (site/assets/hero.js) and nothing asks
+# for 714 any more. Retired here rather than left building an unreferenced file:
+# a generator that writes something nothing reads is how one goes stale, and
+# deleting the PNG while OUT still named it would turn tests/test_generators.py
+# red instead.
+#
+# THE 350 "phone" RENDER STAYS AND IS NOT ORPHANED. atlas.html carries
+#   <source media="(max-width: 760px)" srcset="assets/atlas_layers-phone.png">
+# so after the home page stopped using it, that page is its only consumer - and
+# a phone render on a page whose other render is 1140 wide looks like a leftover
+# unless someone says otherwise. This is someone saying otherwise.
 OUT = {"wide": os.path.join(HERE, "site", "assets", "atlas_layers.png"),
-       "notes": os.path.join(HERE, "site", "assets", "atlas_layers-notes.png"),
        "phone": os.path.join(HERE, "site", "assets", "atlas_layers-phone.png")}
 
 # The table's grouping (update_atlas_pages.py, atlas_page()): nine displayed
@@ -118,8 +130,6 @@ TABLE_KEY = {"Space": "space", "Weather": "weather", "Climate": "climate",
 GEOM = {
     "wide": dict(W=PROSE, top=14, pitch=58, band=44, rank_gap=34,
                  left=200, col=580, sub=True, legend_h=110),
-    "notes": dict(W=NOTES, top=12, pitch=52, band=42, rank_gap=30,
-                  left=120, col=400, sub=False, legend_h=112),
     "phone": dict(W=PHONE, top=10, pitch=46, band=38, rank_gap=26,
                   left=66, col=210, sub=False, legend_h=148),
 }
@@ -430,7 +440,7 @@ def main():
     S = structure(D)
     check_against_table(S["counts"])
     total = 0
-    for which in ("wide", "notes", "phone"):
+    for which in ("wide", "phone"):
         BOXED.clear(); ARCS.clear()
         fig, ax, geo = draw(S, which)
         problems = audit(fig, ax, geo, S)

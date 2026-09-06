@@ -222,7 +222,7 @@ def cite(text, P):
     re-run reproduces the shipped page exactly."""
     import add_citations
     tmp = PAGE + ".render.tmp"
-    open(tmp, "w", encoding="utf-8").write(text)
+    open(tmp, "w", encoding="utf-8", newline="\n").write(text)
     try:
         out, probs = add_citations.build(os.path.basename(tmp), refs_from(P))
     finally:
@@ -244,7 +244,7 @@ def main(apply=False):
     else:
         print("  shoes.html: new page" + ("" if apply else " (not written)"))
     if apply:
-        open(PAGE, "w", encoding="utf-8").write(t)
+        open(PAGE, "w", encoding="utf-8", newline="\n").write(t)
 
 
 if __name__ == "__main__":
