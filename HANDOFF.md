@@ -34,10 +34,13 @@ source material unless told otherwise.
     model.html              how the model works (the long method page)
     library.html            figure library
     code.html               downloads index
-    heat.html storage.html climate-cost.html    project pages (Energy)
-    longevity.html skyline.html                 project pages (Others)
+    heat.html storage.html                      project pages (Energy)
+    shoes.html economy.html                     project pages (Running)
+    climate-cost.html food.html continents.html
+    longevity.html skyline.html neuron.html     project pages (Misc)
     atlas-app.html longevity-app.html skyline-app.html
-    climate-cost-app.html                       full-screen interactive apps,
+    climate-cost-app.html continents-app.html
+    neuron-app.html                             full-screen interactive apps,
                                                 opened in a new tab
     style.css               the ONLY stylesheet for all non-app pages
     assets/                 figures (.png/.webp) and their -thumb.png, 4 JS files
@@ -139,10 +142,26 @@ re-run). Before you trust it: run it, and if it reports anything but
 
 ```python
 NAV = [("Home", "index.html"),
-       ("The atlas", [("Open the atlas", "atlas-app.html"), …]),
-       ("Energy", […]), ("Others", […]),
+       ("Energy", [("Open the atlas", "atlas-app.html"), …]),
+       ("Running", […]), ("Misc", […]),
        ("Code", "code.html")]
 ```
+
+Regrouped on 2026-09-05: "The atlas" lost its own group and folds into Energy
+as its first four entries, "Others" became "Misc", and Running was split out.
+Two rules came out of that pass and both are in `rebuild_nav.py`'s comments.
+**Every label in `NAV` is the page's own title** - a nav that renames a page
+gives the site two names for one thing. And **`index.html`'s section headings
+are this same taxonomy in a second place**, so they must match `NAV` exactly or
+the site describes itself two ways; they had already drifted, index still
+carrying a "Climate research" heading that `NAV` dropped five weeks earlier.
+Note that `nav_for()` renders a group holding one page as a bare link to that
+page and drops the category name, so a one-page group cannot appear in the bar
+at all - which is why the neuron page sits in Misc rather than in a "Mind"
+group of its own until the beauty project joins it.
+
+`python3 rebuild_nav.py --dry-run` reports what would change and writes
+nothing. Use it before the real run.
 
 ---
 
@@ -234,7 +253,8 @@ report first.**
 |---|---|
 | `rebuild_nav.py` | Rewrites the nav on every page from the `NAV` list. |
 | `build_climate_figures.py` | The two climate-research diagrams (`nitrogen_fixation.png`, `running_shoe.png`). Boxes are drawn as text bboxes and arrows run underneath them, deliberately: a box sized by a guessed line height is a bug the layout audit cannot see. The shoe outline functions here are duplicated in `site/running-shoes-app.html`; if one changes, change both, because the flat figure and the 3D model are meant to be the same shoe. |
-| `add_citations.py` | Attaches superscript citations anchored to phrases, not positions. |
+| `add_citations.py` | Attaches superscript citations anchored to phrases, not positions. Armed and round-tripping all seven pages it owns since 2026-09-05; it was disarmed for a day while three defects it could not reproduce were fixed, and its docstring records them. |
+| `build_sitemap.py` | Writes `site/sitemap.xml` from the pages that exist, apps excluded. `--apply` to write; without it, reports and lists the urls that would be added or dropped. Carries each page's existing `lastmod` over so a run does not churn every date, which is also what makes it idempotent enough for the drift check. It was a hand-kept list and was four pages behind on 2026-09-05. |
 | `sync_assets.py` | Copies figures from project folders into `site/assets/`. |
 | `bust_cache.py` | **Run before every publish.** Stamps `style.css`, the JS and every image with a content hash. Does not stamp what CSS `url()` references (the fonts). |
 | `sync_img_dims.py` | Keeps every `<img width height>` equal to the file's pixels. |
@@ -368,7 +388,14 @@ node climate-cost/test_scene.js        # the climate-cost visualiser: JS engine 
 node tests/test_layout.js              # Playwright: marginalia, measure, hierarchy at 1440/1024/390
 node tests/probe_scene.js              # prints what is actually in the scene graph
 python3 build_atlas_figures.py         # must say "0 layout problem(s)"
+python3 neuron/test_neuron.py          # the measured neuron: z provenance, placeholder widths, the cascade, the parser
+python3 neuron/fig_neuron.py           # must say "0 layout problem(s) in total"
 ```
+
+Project suites this block has not always listed, and which the tree has:
+`food/test_food.py`, `beauty/test_beauty.py`, `economy/test_economy.py`,
+`shoes/test_shoes.py`, `neuron/test_neuron.py`. Section 11 is the current
+inventory; this block is a claim about it (trap 11).
 
 All of them must pass before a publish; section 11 says what each one
 catches. The Python checks need numpy, scipy, matplotlib and Pillow; the
@@ -518,6 +545,165 @@ Read this section. Every item is a real bug that shipped.
     replace the rule, the comment moves to whatever replaces it; when you
     delete a file, its warnings go into the thing that took over its job
     (the grid comment in `style.css` is the margin-scene clamp's).
+16. **A test that reproduces published summary statistics does not pin the
+    parameters behind them.** `economy/` computes everything it says from five
+    transcribed cost-of-running polynomials, and the obvious guard is that the
+    source paper states three results of its own: a 1% metabolic saving is
+    worth 1.17% of speed at 2.60 m/s and 0.65% at 5.72 m/s, and a 4% saving is
+    worth 2.64% at 5.72. Reproducing all three to 0.008 of a percentage point
+    looked like proof the transcription was right. It is not. Perturbing any
+    single coefficient by 1% still passes, and a 5% error in the linear term
+    *lowers* the residual below what the correct coefficients give. Four
+    parameters, three published numbers, and all three are ratios evaluated at
+    two speeds, so errors in different terms cancel inside them. The check
+    constrains the shape of the curve and says almost nothing about the
+    coefficients.
+    The fix is to check the parameters as parameters: `economy/test_economy.py`
+    holds the coefficients a second time, apart from `model.py`, and compares
+    them digit for digit, so an edit fails whether or not it moves a published
+    number and a curve refitted to other data cannot be substituted quietly.
+    The published-results check is kept, because it does catch gross errors -
+    a sign flip on the linear term lands 0.25 pp out.
+    **The general form: reproducing a source's summary statistics is evidence
+    about behaviour, not about parameters. The test is only as strong as the
+    number of independent published quantities it checks against, and it is
+    worthless where those quantities are degenerate combinations of the
+    parameters** - three ratios at two speeds cannot separate four
+    coefficients however precisely they are reproduced.
+    Two sibling projects were checked against this on the night it was found,
+    and both are in better shape, which is what the rule looks like when it is
+    satisfied. `beauty/` reached the sharper version independently the same
+    night and is the pattern to copy: `model_maths()` in
+    `beauty/test_beauty.py` fits synthetic data built from known coefficients
+    and asserts the estimator recovers them, which is a direct test of the
+    parameters rather than of an aggregate, and it adds two invariants that
+    hold whatever the numbers are - that a category-only model's g-computed
+    means equal the raw group means, and that no dropped term can raise
+    R-squared. Its docstring also records what it does *not* reach: the
+    synthetic frame arrives already transformed, so nothing `join()` does to
+    build one is covered.
+    **That test was written after this trap, not before it, and the sentence
+    above was wrong when it was first written.** `beauty/` had only the drift
+    check then - it recomputed the coefficients through the same `fit_all()`
+    that produced them and compared - which is the weak shape this trap is
+    about. Its approved plan says so in as many words and says nothing about
+    synthetic recovery. The session that wrote this trap set out to verify
+    that claim and reported the opposite; the operator's original suspicion,
+    that `beauty/` was of the weak shape, was correct and was talked out of.
+    A verification that returns a confident answer without pinning the thing
+    it claims to have checked is this trap happening to the trap. Two lessons
+    stand: check the file, not the plan; and a sibling project's clean bill of
+    health is a claim like any other. The continents work
+    (`03 RESEARCH/continents/`) fits three Euler-pole parameters per plate and
+    `crosscheck.py` compares them against NGL's published model station by
+    station, in mm/yr - hundreds of independent comparisons over a velocity
+    field that varies across them, not a handful of summary figures. The count
+    is what saves it.
+17. **Break every new test before trusting it.** A test nobody has seen fail
+    is a claim, not a check. Three defects in the `economy/` build on
+    2026-09-05, and each was found by a different active method, none by
+    reading:
+    - trap 16 above, by deliberately corrupting a coefficient and watching the
+      test pass;
+    - a margin note reading "2:56 pace" beside prose that generated 2:55, by
+      opening the rendered page and comparing it against itself. The drift
+      check could not have caught it: it compares the page to what the
+      template renders, and the wrong number was in the template;
+    - a stated 2.9% that the model contradicts with 3.3%, by building the
+      thing. It came from applying a transfer coefficient of 0.70 at a pace
+      where the elasticity is 0.81, it was written into the approved design,
+      and it survived the plan being read by two people.
+    So: after writing a test, introduce the defect it exists to catch and
+    confirm it fails; then fix the defect and confirm it passes. Both
+    directions, every time. `economy/test_economy.py`'s docstring records what
+    each of its checks was proven to catch and, for the weak one, what it was
+    proven not to.
+    `beauty/break_model.py` is the mechanised form: it mutates
+    `build_beauty.py` in memory, one realistic fault at a time - a misaligned
+    design matrix, a dropped reference category, an adjusted mean that forgets
+    to clear a species' own category, a drop-one R-squared reported with its
+    sign flipped - and reports whether the test noticed each. All four are
+    caught, one of them by raising. The first attempt at it is worth knowing
+    about: the intended "swapped columns" mutation swapped the lookup that
+    `design()` reads *both* a column and its name from, so it swapped them
+    together and changed nothing. A mutation that does not mutate reads
+    exactly like a test that works. Check that the clean run and the mutated
+    run actually differ.
+18. **Placeholder data left in a project folder is one `rezip` away from being
+    published.** On 2026-09-05 `beauty/` held `data/openalex_counts.csv` whose
+    rows had been generated to exercise the build while the real fetch waited
+    on an API key. Another session ran `rezip_downloads.py` across every
+    target that evening and walked `beauty/` as it stood. The archive it wrote
+    does not contain that file, and the only reason is timing: the placeholder
+    was written after that run and deleted before the next. Nothing in the
+    repository would have stopped it. A fabricated table inside the download
+    archive of the page about research that does not trace to its sources is
+    the version of this failure that would have been hardest to live down.
+    The fix is a stamp. Every `beauty/fetch_*.py` writes the date it ran into
+    each row it appends, and `check_settled()` in `build_beauty.py` refuses to
+    build when any value in that column is not a date, naming the file and the
+    script that should have produced it. Placeholder data can no longer reach
+    a payload, so it cannot reach a figure, a page or an archive.
+    **The general form: a project folder is shared surface, and tooling you do
+    not control runs across it on a schedule you do not set. Make the
+    difference between real and provisional data machine-readable rather than
+    something you intend to remember.**
+19. **A rule about what must not ship belongs with the code that ships, not
+    with the project it constrains.** `beauty/` may not redistribute IUCN Red
+    List categories; the Red List's terms forbid it. That rule lives as a
+    `skip=` tuple on the project's target in `rezip_downloads.py`, with its
+    reason in the comment beside it, and *not* inside `beauty/`. The placement
+    was tested by accident on 2026-09-05, in the best way available: another
+    session, which knew nothing about the Red List or the carve-out, rebuilt
+    every archive, and the one it produced for `beauty/` contained no category
+    column, no `data/raw/` and no joined species table. The rule held because
+    it sat in the path the archive is actually built by.
+    Had it lived in `beauty/` instead - a check in `test_beauty.py`, an ignore
+    file, a line in its README - it would have held only for someone who ran
+    that project's own tooling first, which is exactly what the session that
+    rebuilt the archives did not do.
+    **The general form: put a constraint on the last piece of code that can
+    violate it.** Someone will want to move this next to the project it
+    describes, where it reads better. It reads better there and protects less.
+
+20. **A gate that reads a recorded result rather than recomputing it is not
+    a gate.** Trap 16 says a test reproducing a published summary statistic
+    does not pin the parameters behind it. Trap 17 says break every new test
+    before trusting it. Apply 17 to the gates themselves and 16 turns up one
+    level higher, where it is harder to see.
+
+    `continents/` gates its reconstruction data on an identity: at age 0 every
+    plate model must hand back the point it was given. That is the only known
+    answer that regime has and the whole defence against the service swapping
+    its coordinate order, which would leave every distance plausible and every
+    position wrong. The gate passed. `break_gates.py` then swapped lon and lat
+    throughout the cached responses on purpose, and **the gate still passed**:
+    it was reading `identity_worst_km` as computed and recorded by the fetcher
+    at download time, not recomputing it from the cache the build actually
+    reads. Damaging the data left the recorded number innocent. Five other
+    gates in the same project refused the same class of damage; this one did
+    not, and nothing but deliberately breaking it would have shown that.
+
+    `neuron/` hit the same shape independently within the hour. Two projects
+    finding it separately in one evening is why it is here rather than in a
+    project README.
+
+    **The rule: a gate must be computed from the artefact it is guarding, in
+    the process that consumes that artefact.** A value another script wrote
+    earlier is provenance, not verification - it describes the data as it was
+    at some past moment, and the whole point of a gate is to catch the case
+    where that is no longer true. Recording the number as well is fine and
+    useful; reading it instead of recomputing is the bug.
+
+    Two smaller instances of the same family, both from the same build:
+    a probe test that passed trivially because the sampling helper read each
+    file's declared header, so the control could never present the wrong
+    convention it was meant to catch - the control has to force the mistake,
+    not ask the code to make it; and a weighting bug that reported land as
+    41,882 per cent of the Earth's surface on the gate's first run, which is
+    the useful kind of wrong, because a number that far out announces itself
+    where a plausible one would not.
+
 
 12. **`ax.title` is only the centre title.** `sitefig.panel()` sets a
     left-aligned title, which matplotlib keeps in `ax._left_title`, so every
@@ -645,6 +831,7 @@ All of these must pass before a publish; `./publish.sh --dry-run` after.
 | `climate-cost/test_scene.js` | The page's JavaScript engine drifting from `lca.py`; a branch placed off-frustum; balls overlapping; idle cost. 25 checks; needs jsdom and three r128 from `tests/node_modules`, and fails loudly without them. First ran 2026-09-05. |
 | `skyline/test_app.js` | An empty bearing; tower names colliding with each other or the compass; bars reaching into the foot. 43 checks. |
 | `longevity-quotient/test_perf.js`, `test_fit_strategy.py`, `test_merge.py` | The app's render cost; the fit strategy; the merge of the three lifespan sources. 12, ok, 22. |
+| `neuron/test_neuron.py` | The measured neuron, seven modes: a slice reconstruction's z reaching a figure (the characteristic failure here - Allen files ship uncorrected, so a 3D drawing from them is wrong by about 2x in one axis and looks entirely plausible); a placeholder width drawn as if it varied; the cascade and the app's 32 subset counts; what the fully-qualified set is; the gradient verdict against a rule fixed before the answer was known; page against payload; and the SWC parser against a hand-computed fixture and, with `--network`, against L-Measure's independent computation. The parser check exists because reproducing a published summary statistic does not pin a parser. |
 | Every figure builder's `audit()` | Text overlapping text, text off the canvas, anything under the 12px floor, text spilling its box, a legend's box over text, a panel label not set through `sitefig.panel()` (`save()` refuses), and on a multi-panel sheet: stacked panels not sharing a column, content off-centre, a legend under a panel off its centre (`sitefig.grid_problems()`). Every builder must print 0 problems. |
 | `_deslop/measure.js` then `analyse.js` | The page rig: every page and app at 1440 and 390, console errors, failed requests, text under 12px, every contrast pair against AA, weight. Serve `site/` on 8765 first. |
 
@@ -670,6 +857,17 @@ subtitles inside the payload (trap 14). If a number on a page is not in the
 generated list above, it was typed.
 
 ### Open, by name
+
+- **longevity.html lists ten references and carries one marker.** The other
+  nine point at nothing. The page is written in place by
+  `longevity-quotient/update_page.py`, which keeps whatever Sources block it
+  finds, so the list is maintained by hand and the markers were never placed.
+  It was removed from `add_citations.PAGES` on 2026-09-05 because a second
+  owner made the citation sweep un-runnable site-wide; the entry there was
+  also stale, two of its anchors having left the prose. Either the page's own
+  generator should build the list from its data, as `shoes/update_page.py`
+  does, or it should return to `PAGES` with anchors that match the prose.
+  Whichever, it is the longevity project's call.
 
 - **Payload rebuild.** The pipeline (`build_atlas_global.py` onward) has not
   been run since 2026-09-04; the shipped payload carries two hand-patched
@@ -701,6 +899,53 @@ generated list above, it was typed.
 - **The museum generator** under `dumpNew/PyProjects/` must not be
   published (image rights; section 2). The warning is the only thing
   keeping it that way.
+
+### The measured neuron (2026-09-05)
+
+`neuron/`, `site/neuron.html` and `site/neuron-app.html`, section 2 of
+`prompts/NEW_PROJECTS.md`; the research memo is `neuron/RESEARCH.md`, moved in
+from `03 RESEARCH/neuron/`, which keeps the Stage 1 scratch scripts. The brief
+asked for "a neuron, visualised", which is a subject and not a question; the
+question the data answers is how much of the picture was measured. Two public
+APIs, no key: a complete census of all 298,339 NeuroMorpho.Org reconstructions
+and 1,501 files sampled across 22 archives. Of the census, 104 carry all five
+things a drawing at true proportions needs, and 48 of those 104 carry one DOI,
+the paper stating the shrinkage correction they were corrected with.
+
+**Depth is the failure mode, and it is closed structurally.** Slice
+reconstructions are distributed with an uncorrected z axis, compressed by
+roughly a factor of two; the Allen white paper documents no correction, and
+Gouwens et al. 2019 excluded z-derived features rather than fixing
+coordinates. A 3D drawing from those files would be wrong in one axis and look
+entirely plausible. So `swclib.load_xy()` returns two columns and is what the
+figures use, `load_xyz()` takes its provenance from the file's directory
+rather than from an argument, and `test_neuron.py` asserts that
+`fig_neuron.py` contains no call to it by any route.
+
+**The gradient was tested and not found.** Stage 1 measured a rank correlation
+of 0.88 between how far an arbor reaches and how coarse its recorded thickness
+is - across two datasets whose reach ranges barely overlap, so the correlation
+was the boundary between two methods. Across 22 archives the median
+within-archive correlation is -0.0026 and the pooled figure falls to 0.28. The
+verdict rule was fixed before the answer was known and the page states the
+negative result; `test_neuron.py` check 5 fails if the page's sentence stops
+following from the rule.
+
+**Two things worth stealing.** The parser is pinned to `tests/fixture.swc`,
+whose every quantity was worked out by hand, and cross-checked against
+L-Measure on the same bytes - because reproducing a published summary
+statistic does not pin a parser, and the earlier "it matches Winnubst's
+85 metres" check was exactly that mistake. And the sample contains archives
+whose files are not in micrometres: SWC has seven columns and none is a unit,
+so an archive is trusted only if the median soma of its measured-diameter
+cells is a plausible soma, or, where its radii are placeholders, if no arbor
+reaches further than a brain. Two of 22 archives fail, and the page says which
+and why.
+
+The interactive is the cascade made reorderable: five toggles, 32 precomputed
+subset counts, ~1.1 KB of data and no filtering logic of its own. It earns its
+place on order-dependence - a shrinkage correction costs 94% of what is left
+when applied last and almost nothing when applied first.
 
 ### Fat, sugar, salt (2026-09-05)
 
