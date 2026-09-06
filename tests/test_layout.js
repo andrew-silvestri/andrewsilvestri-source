@@ -37,7 +37,14 @@ const PAGES = ['index', 'atlas', 'model', 'library', 'code', 'heat', 'storage', 
 // gutter was read as clipping (2026-09-04); the test now also fails on real
 // clipping - any marginalia element wider than its box - so the two cannot
 // be confused again.
-const VIEWPORTS = [[1920, 1080], [1440, 900], [1024, 768], [390, 844]];
+// 960 is the home page's paper-column breakpoint (style.css, body.home .paper):
+// above it the hero canvas shows in the margins either side of the column,
+// below it the column is full-bleed. The list used to step 1024 -> 390, so the
+// width where that rule changes - and the band of useless 9-121px margins just
+// under it - was never measured. Added 2026-09-06, and run green on the tree
+// before the hero landed, so a failure here is this test's news and not the
+// hero's.
+const VIEWPORTS = [[1920, 1080], [1440, 900], [1024, 768], [960, 720], [390, 844]];
 const MIME = { '.html': 'text/html', '.css': 'text/css', '.js': 'text/javascript', '.png': 'image/png', '.webp': 'image/webp', '.svg': 'image/svg+xml', '.woff2': 'font/woff2', '.mp4': 'video/mp4', '.ico': 'image/x-icon' };
 
 function serve() {
