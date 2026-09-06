@@ -47,6 +47,16 @@ The failure modes this project is exposed to.
    windows and the "under one pixel" shares must fall out of the file again,
    and the opened-set summary the page quotes must fall out of the CSV.
 
+9. An alt attribute makes a claim the prose no longer makes. Alt text is a
+   claim the page makes - a screen reader gets nothing else - and on
+   2026-09-06 figure 5's caption was corrected ("the thinnest calibre in
+   the literature" became the electron-microscopy figure reference 2
+   supplies) while its alt text kept the old wording and shipped. So: every
+   figure has an alt; no alt carries a digit, because a number in alt text
+   is typed rather than generated and will drift from the caption under it;
+   and neither the page nor the app carries a phrase the page has retired,
+   listed in RETIRED below with the date it went.
+
 Run:  python3 test_neuron.py [--network]
 """
 import argparse
@@ -67,6 +77,18 @@ PAYLOAD = os.path.join(HERE, "outputs", "neuron_payload.json")
 PAGE = os.path.join(HERE, "..", "site", "neuron.html")
 
 fails = []
+
+# Phrases the page once made and has withdrawn, with when. A retired claim
+# that comes back - in prose, in alt text, in the app's note - fails here.
+RETIRED = [
+    ("thinnest calibre in the literature", "2026-09-06: nobody measured a literature-wide "
+                                            "minimum; the 0.17 um is one electron-microscopy figure"),
+    ("almost all cells whose axon never leaves the neighbourhood",
+     "2026-09-06: fifteen of the 104 are projection cells reaching 2-6 mm"),
+    ("each at its own scale", "2026-09-06: figure 2 draws both cells at one scale"),
+    ("every width in the file is under a pixel",
+     "2026-09-06: the soma and the widest dendrite exceed a pixel in panel A"),
+]
 
 
 def check(label, ok, detail=""):
@@ -285,6 +307,25 @@ def main():
         rendered, _ = update_page.cite(update_page.render(P))
         shipped = open(PAGE, encoding="utf-8").read()
         check("site/neuron.html matches", rendered == shipped)
+
+        # -- 9. alt text ----------------------------------------------------
+        print("9. alt text claims only what the page claims")
+        imgs = re.findall(r"<img\b[^>]*>", shipped)
+        figs = [m for m in imgs if 'class="fig' in m]
+        alts = [re.search(r'alt="([^"]*)"', m) for m in figs]
+        n_png = len([f for f in os.listdir(os.path.join(HERE, "..", "site", "assets"))
+                     if re.match(r"neuron_fig\d+_.*\.png$", f)])
+        check("every figure is on the page with an alt",
+              len(figs) == n_png and all(a and a.group(1).strip() for a in alts),
+              "%d figures, %d built" % (len(figs), n_png))
+        digits = [a.group(1)[:50] for a in alts if a and re.search(r"\d", a.group(1))]
+        check("no alt text carries a digit", not digits,
+              "; ".join(digits) if digits else "numbers live in the generated captions")
+        app = open(os.path.join(HERE, "neuron-app.html"), encoding="utf-8").read()
+        low = (shipped + app).lower()
+        back = [f"{ph!r} ({why})" for ph, why in RETIRED if ph.lower() in low]
+        check("no retired claim is back, in prose, alt text or the app", not back,
+              "; ".join(back) if back else "%d retired phrases checked" % len(RETIRED))
 
     print()
     if fails:
