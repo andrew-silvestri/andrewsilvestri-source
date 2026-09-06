@@ -110,7 +110,228 @@
    "1234": 121,
    "01234": 104
   },
-  "n_complete": 104
+  "n_complete": 104,
+  "order_costs": {
+   "n_orders": 120,
+   "constraints": [
+    {
+     "key": "parts",
+     "label": "a soma, a dendrite and an axon",
+     "first": 0.924613,
+     "last": 0.140496,
+     "min": 0.072034,
+     "max": 0.924613,
+     "by_position": [
+      {
+       "mean": 0.924613,
+       "min": 0.924613,
+       "max": 0.924613
+      },
+      {
+       "mean": 0.836418,
+       "min": 0.730289,
+       "max": 0.90814
+      },
+      {
+       "mean": 0.663762,
+       "min": 0.098765,
+       "max": 0.851883
+      },
+      {
+       "mean": 0.421847,
+       "min": 0.072034,
+       "max": 0.759648
+      },
+      {
+       "mean": 0.140496,
+       "min": 0.140496,
+       "max": 0.140496
+      }
+     ],
+     "cheapest_after": [
+      "three_d",
+      "axon_complete",
+      "shrinkage"
+     ],
+     "dearest_after": [],
+     "swing": 0.852579
+    },
+    {
+     "key": "diameter",
+     "label": "a measured diameter",
+     "first": 0.701239,
+     "last": 0.525114,
+     "min": 0.439202,
+     "max": 0.853853,
+     "by_position": [
+      {
+       "mean": 0.701239,
+       "min": 0.701239,
+       "max": 0.701239
+      },
+      {
+       "mean": 0.634312,
+       "min": 0.460984,
+       "max": 0.85184
+      },
+      {
+       "mean": 0.613151,
+       "min": 0.439202,
+       "max": 0.853853
+      },
+      {
+       "mean": 0.580228,
+       "min": 0.487288,
+       "max": 0.678481
+      },
+      {
+       "mean": 0.525114,
+       "min": 0.525114,
+       "max": 0.525114
+      }
+     ],
+     "cheapest_after": [
+      "parts",
+      "three_d"
+     ],
+     "dearest_after": [
+      "three_d",
+      "axon_complete"
+     ],
+     "swing": 0.414652
+    },
+    {
+     "key": "three_d",
+     "label": "three dimensions",
+     "first": 0.221282,
+     "last": 0.0,
+     "min": 0.0,
+     "max": 0.221282,
+     "by_position": [
+      {
+       "mean": 0.221282,
+       "min": 0.221282,
+       "max": 0.221282
+      },
+      {
+       "mean": 0.06132,
+       "min": 0.031412,
+       "max": 0.093468
+      },
+      {
+       "mean": 0.042911,
+       "min": 0.0,
+       "max": 0.104465
+      },
+      {
+       "mean": 0.014427,
+       "min": 0.0,
+       "max": 0.054688
+      },
+      {
+       "mean": 0.0,
+       "min": 0.0,
+       "max": 0.0
+      }
+     ],
+     "cheapest_after": [
+      "parts",
+      "diameter",
+      "axon_complete",
+      "shrinkage"
+     ],
+     "dearest_after": [],
+     "swing": 0.221282
+    },
+    {
+     "key": "axon_complete",
+     "label": "an axon its depositor marked complete",
+     "first": 0.877381,
+     "last": 0.868521,
+     "min": 0.745054,
+     "max": 0.969345,
+     "by_position": [
+      {
+       "mean": 0.877381,
+       "min": 0.877381,
+       "max": 0.877381
+      },
+      {
+       "mean": 0.876759,
+       "min": 0.745054,
+       "max": 0.969345
+      },
+      {
+       "mean": 0.898381,
+       "min": 0.759383,
+       "max": 0.969263
+      },
+      {
+       "mean": 0.897843,
+       "min": 0.862049,
+       "max": 0.963233
+      },
+      {
+       "mean": 0.868521,
+       "min": 0.868521,
+       "max": 0.868521
+      }
+     ],
+     "cheapest_after": [
+      "parts"
+     ],
+     "dearest_after": [
+      "shrinkage"
+     ],
+     "swing": 0.224292
+    },
+    {
+     "key": "shrinkage",
+     "label": "a correction for tissue shrinkage",
+     "first": 0.97343,
+     "last": 0.937008,
+     "min": 0.899817,
+     "max": 0.993357,
+     "by_position": [
+      {
+       "mean": 0.97343,
+       "min": 0.97343,
+       "max": 0.97343
+      },
+      {
+       "mean": 0.956801,
+       "min": 0.90494,
+       "max": 0.993357
+      },
+      {
+       "mean": 0.954183,
+       "min": 0.899817,
+       "max": 0.993069
+      },
+      {
+       "mean": 0.951035,
+       "min": 0.933907,
+       "max": 0.975683
+      },
+      {
+       "mean": 0.937008,
+       "min": 0.937008,
+       "max": 0.937008
+      }
+     ],
+     "cheapest_after": [
+      "parts",
+      "three_d"
+     ],
+     "dearest_after": [
+      "axon_complete"
+     ],
+     "swing": 0.09354
+    }
+   ],
+   "most_order_dependent": "parts",
+   "least_order_dependent": "shrinkage"
+  }
  },
  "the_complete": {
   "n": 104,

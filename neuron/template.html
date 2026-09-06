@@ -43,12 +43,6 @@ a measured width, {{opened_single}} hold a single width for the entire arbor
 despite the flag that says otherwise, and one of them is drawn below at three
 scales.</p>
 
-<div class="card"><div class="tag">Interactive</div><h3 style="margin-top:4px">What a drawing at true proportions needs</h3><p>The five requirements, and what each one costs. Tick them in any order: the
-order changes the answer, because a reconstruction that has been corrected for
-shrinkage is usually one that was careful about everything else.</p>
-<a class="btn" href="neuron-app.html" target="_blank" rel="noopener">Open it</a>
-<a class="btn ghost" href="downloads/neuron-code.zip">Download code and data · {{zipsize}}</a></div>
-
 <h2>Why the diagram is schematic</h2>
 
 <p>Start with the reason the textbook picture exists, which is not laziness. A
@@ -97,8 +91,9 @@ in different ways.</p>
 <h2>What the archive contains</h2>
 
 <img class="fig wide" src="assets/neuron_fig4_cascade.png" loading="lazy" width="0" height="0" alt="A descending bar chart on a logarithmic axis. Every reconstruction, then the count remaining after each of five requirements is added: all three parts, a measured diameter, three dimensions, a complete axon, and a shrinkage correction.">
-<p class="small">Each line adds one requirement to the line above it. The
-order matters, and the interactive lets you change it.</p>
+<p class="small">Each line adds one requirement to the line above it, in the
+order the text states them. The order matters, and the next figure shows by
+how much.</p>
 
 <p>{{n_parts}} reconstructions contain a soma, a dendrite and an axon
 together, which is {{pc_parts}}% of the archive. {{pc_nodiam}}% record no
@@ -114,6 +109,23 @@ than on the archive's own labels, the same split appears. The
 {{wb_reach}} from the soma and hold a median of {{wb_distinct}} distinct
 widths across the entire arbor. The {{sl_n}} slice and culture reconstructions
 reach {{sl_reach}} and hold {{sl_distinct}}.</p>
+
+<img class="fig wide" src="assets/neuron_fig6_orders.png" loading="lazy" width="0" height="0" alt="Five rows, one per requirement, on a horizontal axis from zero to one hundred per cent. Each row has a pale band from the smallest to the largest share the requirement removes across every order of application, small ticks at the mean for each position, a filled dot where it is applied first and a hollow dot where it is applied last. The band for the three-parts requirement spans most of the axis; the band for the shrinkage correction is short and sits near the right edge.">
+<p class="small">What each requirement removes, as a share of what was left,
+in every one of the {{oc_n_orders}} orders the five can be applied in. A
+requirement's cost is not a property of the requirement; it is a property of
+what came before it.</p>
+
+<p>The five are not independent, and the figure is the whole of that
+finding. Asking for a soma, a dendrite and an axon removes
+{{oc_parts_first}}% of the archive when it is asked first and
+{{oc_parts_last}}% when it is asked last, because almost everything that
+passed the other four had all three parts already. Three dimensions costs
+{{oc_3d_first}}% first and {{oc_3d_last}}% last. The shrinkage correction is
+the least order-dependent of the five: it removes between {{oc_shrink_min}}%
+and {{oc_shrink_max}}% wherever it sits, which is another way of saying that
+correcting for shrinkage is rare in every corner of the archive, not only in
+the careful one.</p>
 
 <h2>Is it a gradient?</h2>
 
@@ -301,8 +313,8 @@ file is not distributed for that archive.</p>
 <p>Two public sources, no key: the NeuroMorpho.Org API and the Allen Institute
 API. <code>fetch_data.py</code> takes the census and the sample and records a
 hash of each; <code>swclib.py</code> parses the reconstructions and holds the
-rule about depth; <code>build_neuron.py</code> computes the payload and builds
-the interactive; <code>fig_neuron.py</code> draws the five figures;
+rule about depth; <code>build_neuron.py</code> computes the payload;
+<code>fig_neuron.py</code> draws the six figures;
 <code>update_page.py</code> writes this page from the payload;
 <code>test_neuron.py</code> checks the failure modes, including the parser
 against a fixture whose every quantity was worked out by hand. The archive

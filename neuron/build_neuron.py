@@ -7,13 +7,11 @@ Reads  data/neurons.csv.gz    the census of NeuroMorpho.Org (fetch_data.py)
        data/swc/<source>/     the three reconstructions the figures draw
        data/manifest.json     what was fetched, when, and its hashes
 Writes outputs/neuron_payload.json
-       neuron-app.html        with --build
 
 Everything the page states is computed here.  Nothing is typed into the
 template except prose; every number arrives through a placeholder.
 
 Run:  python3 build_neuron.py
-      python3 build_neuron.py --build
 """
 import argparse
 import csv
@@ -214,7 +212,56 @@ def cascade(rows):
     full = subsets["01234"]
     keep = [r for r, fl in zip(rows, flags) if all(fl)]
     return {"n_total": n, "alone": alone, "steps": steps, "subsets": subsets,
-            "n_complete": full}, keep
+            "n_complete": full, "order_costs": order_costs(subsets)}, keep
+
+
+def order_costs(subsets):
+    """What each constraint costs at each position, over all 120 orders.
+
+    The five constraints are not independent, so what one removes depends
+    on what has already been removed.  A cost is 1 - (count after) /
+    (count before), and every count is one of the 32 subsets, so nothing
+    here is estimated: each cell of the five-by-five table is the exact
+    cost over the 24 orders that put that constraint at that position.
+    This is the whole of the order-dependence finding, in one table; the
+    figure draws it, and it replaced the reorderable cascade app on
+    2026-09-06 because a still figure holds all 120 orders at once and the
+    app held one.
+    """
+    k = len(CONSTRAINTS)
+
+    def key(done):
+        return "".join(str(i) for i in sorted(done)) or "-"
+    cost = [[[] for _ in range(k)] for _ in range(k)]
+    cheapest, dearest = [None] * k, [None] * k
+    for perm in itertools.permutations(range(k)):
+        done = []
+        for pos, i in enumerate(perm):
+            before = subsets[key(done)]
+            done.append(i)
+            after = subsets[key(done)]
+            c = 1.0 - after / before if before else 0.0
+            cost[i][pos].append(c)
+            if cheapest[i] is None or c < cheapest[i][0]:
+                cheapest[i] = (c, list(perm[:pos]))
+            if dearest[i] is None or c > dearest[i][0]:
+                dearest[i] = (c, list(perm[:pos]))
+    out = []
+    for i, (ck, label, _) in enumerate(CONSTRAINTS):
+        allv = [v for pos in range(k) for v in cost[i][pos]]
+        out.append({
+            "key": ck, "label": label,
+            "first": round(cost[i][0][0], 6), "last": round(cost[i][k - 1][0], 6),
+            "min": round(min(allv), 6), "max": round(max(allv), 6),
+            "by_position": [{"mean": round(sum(v) / len(v), 6), "min": round(min(v), 6),
+                             "max": round(max(v), 6)} for v in cost[i]],
+            "cheapest_after": [CONSTRAINTS[j][0] for j in cheapest[i][1]],
+            "dearest_after": [CONSTRAINTS[j][0] for j in dearest[i][1]],
+            "swing": round(max(allv) - min(allv), 6),
+        })
+    return {"n_orders": len(list(itertools.permutations(range(k)))), "constraints": out,
+            "most_order_dependent": max(out, key=lambda o: o["swing"])["key"],
+            "least_order_dependent": min(out, key=lambda o: o["swing"])["key"]}
 
 
 def describe_104(keep):
@@ -843,6 +890,12 @@ def report(p):
     if g2:
         print("  pair at one scale          %.1fx in extent; the slice cell is %.0f px wide, soma %.1f px"
               % (g2["extent_ratio"], g2["allen_px_in_shared"], g2["allen_soma_px_in_shared"]))
+    oc = c["order_costs"]
+    print("  order dependence           over %d orders: most %s, least %s"
+          % (oc["n_orders"], oc["most_order_dependent"], oc["least_order_dependent"]))
+    for o in oc["constraints"]:
+        print("    %-38s first %5.1f%%  last %5.1f%%  min %5.1f%%  max %5.1f%%"
+              % (o["label"], 100 * o["first"], 100 * o["last"], 100 * o["min"], 100 * o["max"]))
     u = p["units"]
     print("  units                      %d of %d archives confirmed micrometres; %d rejected%s"
           % (u["n_micrometres"], u["n_archives"], u["n_rejected"],
@@ -867,14 +920,9 @@ def report(p):
 
 
 def main():
-    ap = argparse.ArgumentParser()
-    ap.add_argument("--build", action="store_true", help="also write neuron-app.html")
-    a = ap.parse_args()
+    argparse.ArgumentParser().parse_args()
     p = build()
     report(p)
-    if a.build:
-        import build_app
-        build_app.write(p, HERE)
     return 0
 
 

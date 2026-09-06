@@ -1,5 +1,5 @@
 """
-The five figures for site/neuron.html, drawn from outputs/neuron_payload.json.
+The six figures for site/neuron.html, drawn from outputs/neuron_payload.json.
 
   neuron_fig1_span.png      every scale a drawing at true proportions must
                             hold at once, against what a figure can render
@@ -13,6 +13,10 @@ The five figures for site/neuron.html, drawn from outputs/neuron_payload.json.
   neuron_fig5_ladder.png    one cell from the complete set at three scales,
                             each window boxed in the one before, at the
                             file's own widths throughout
+  neuron_fig6_orders.png    what each constraint removes at each position,
+                            over all 120 orders: the order-dependence that
+                            the reorderable app used to show one order at
+                            a time
 
 Every colour, size and face comes from sitefig.py.  The panel boxes of
 figures 2 and 5, and what a pixel means in them, come from build_neuron.py,
@@ -535,10 +539,61 @@ def fig_cascade(P):
     return emit(fig, "neuron_fig4_cascade.png")
 
 
+# ------------------------------------------------------------------ fig 6 ---
+
+def fig_orders(P):
+    """What each constraint removes, at every position, over all 120 orders."""
+    oc = P["cascade"]["order_costs"]
+    rows = oc["constraints"]
+    n = len(rows)
+    fig, ax = plt.subplots(figsize=fig_size(NOTES, row_aspect(n, row_px=44, header_px=118)))
+    ys = np.arange(n)[::-1]
+    # INK and SLATE, not ACC and MOSS: on this page those two are dendrite
+    # and axon (figures 2 and 5), and figure 3 already gave up the pair for
+    # the same reason. Nothing here is anatomy.
+    for y, o in zip(ys, rows):
+        ax.plot([100 * o["min"], 100 * o["max"]], [y, y], color=FAINT, lw=9,
+                solid_capstyle="butt", zorder=1)
+        ax.plot([100 * p["mean"] for p in o["by_position"]], [y] * n, "|", ms=9,
+                color=SLATE, mew=1.2, zorder=2)
+        ax.plot([100 * o["first"]], [y], "o", ms=7, color=INK, zorder=3)
+        ax.plot([100 * o["last"]], [y], "o", ms=7, mfc=BG, mec=INK, mew=1.4, zorder=3)
+    # a legend built by hand, so the band and the ticks appear in it too
+    from matplotlib.lines import Line2D
+    handles = [
+        Line2D([], [], color=FAINT, lw=9, solid_capstyle="butt",
+               label="every one of %d orders" % oc["n_orders"]),
+        Line2D([], [], color=SLATE, marker="|", ms=9, mew=1.2, lw=0,
+               label="mean at each position, first to fifth"),
+        Line2D([], [], color=INK, marker="o", ms=7, lw=0, label="applied first"),
+        Line2D([], [], mfc=BG, mec=INK, marker="o", ms=7, mew=1.4, lw=0, label="applied last"),
+    ]
+    ax.legend(handles=handles, fontsize=FS_2, frameon=False, loc="lower left")
+    ax.set_yticks(ys)
+    ax.set_yticklabels([o["label"] for o in rows], fontsize=FS_2)
+    ax.set_xlim(-2, 102)
+    ax.set_ylim(-0.7, n - 0.3)
+    ax.set_xticks([0, 25, 50, 75, 100])
+    ax.set_xticklabels(["0", "25", "50", "75", "100%"])
+    ax.set_xlabel("share of what was left that the requirement removes")
+    ax.grid(axis="x", alpha=.18, which="major")
+    ax.set_axisbelow(True)
+    for s in ("top", "right", "left"):
+        ax.spines[s].set_visible(False)
+    sitefig.panel(ax, "cost by position, all %d orders" % oc["n_orders"])
+    # tight_layout leaves the long tick labels to the left of the axes and
+    # then centre() moves the grid by the labels' width, which pushes them
+    # off the left edge; the margins are set instead.
+    fig.subplots_adjust(left=.40, right=.97, top=.86, bottom=.17)
+    sitefig.centre(fig)
+    return emit(fig, "neuron_fig6_orders.png")
+
+
 def main():
     P = json.load(open(PAYLOAD, encoding="utf-8"))
     sitefig.style()
-    bad = fig_span(P) + fig_pair(P) + fig_tradeoff(P) + fig_cascade(P) + fig_ladder(P)
+    bad = (fig_span(P) + fig_pair(P) + fig_tradeoff(P) + fig_cascade(P) + fig_ladder(P)
+           + fig_orders(P))
     print(f"  {bad} layout problem(s) in total")
     return bad
 

@@ -188,11 +188,11 @@ TARGETS = [
     target("beauty", "beauty-code.zip", keep={"outputs"},
            skip=("data/raw", "data/raw/*", "data/iucn_aves.csv",
                  "data/birds_joined.csv", "outputs/*.png")),
-    # The measured neuron: the scripts, the frozen census and the two
-    # reconstructions figure 2 draws; not the 1,500 sampled files, which
-    # fetch_data.py pulls again.
+    # The measured neuron: the scripts, the frozen census, the opened complete
+    # set and the three reconstructions the figures draw; not the 1,500 sampled
+    # files, which fetch_data.py pulls again.
     target("neuron", "neuron-code.zip", keep={"outputs"},
-           skip=("data/_work", "data/_work/*", "neuron-app.html")),
+           skip=("data/_work", "data/_work/*")),
 ]
 
 

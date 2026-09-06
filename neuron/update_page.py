@@ -99,7 +99,21 @@ def values(P):
     W = d["windows"]
     G = P["pair_geometry"]
 
+    oc = c["order_costs"]
+    byk = {o["key"]: o for o in oc["constraints"]}
+
     v = {
+        # order dependence, over every order of the five
+        "oc_n_orders": fmt(oc["n_orders"]),
+        "oc_parts_first": pct(byk["parts"]["first"], 1),
+        "oc_parts_last": pct(byk["parts"]["last"], 1),
+        "oc_parts_min": pct(byk["parts"]["min"], 1),
+        "oc_3d_first": pct(byk["three_d"]["first"], 1),
+        "oc_3d_last": pct(byk["three_d"]["last"], 1),
+        "oc_shrink_min": pct(byk["shrinkage"]["min"], 0),
+        "oc_shrink_max": pct(byk["shrinkage"]["max"], 0),
+        "oc_most": byk[oc["most_order_dependent"]]["label"],
+        "oc_least": byk[oc["least_order_dependent"]]["label"],
         # the complete set, opened
         "opened_pass": fmt(o["n_pass_width"]),
         "opened_fail": fmt(o["n_fail_width"]),

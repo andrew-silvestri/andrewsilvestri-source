@@ -81,9 +81,6 @@ GENERATORS = [
      ["update_page.py", "--apply"], "food", "site"),
     ("neuron page: neuron/update_page.py --apply",
      ["update_page.py", "--apply"], "neuron", "site"),
-    ("neuron app: neuron/build_neuron.py --build",
-     ["build_neuron.py", "--build"], "neuron",
-     [("neuron/neuron-app.html", "site/neuron-app.html")]),
     ("shoes page: shoes/update_page.py --apply",
      ["update_page.py", "--apply"], "shoes", "site"),
     # add_citations.py owns the markers and the Sources list on every page that

@@ -15,8 +15,9 @@ The failure modes this project is exposed to.
    carry a single radius for the entire arbor. Any figure that varies their
    line width is drawing a number nobody measured.
 
-3. The cascade does not reproduce. Every count on the page and all 32 subset
-   counts in the app must fall out of the frozen census again.
+3. The cascade does not reproduce. Every count on the page, all 32 subset
+   counts and the order-cost table figure 6 draws must fall out of the
+   frozen census again.
 
 4. The complete set stops being what the page says it is. The page makes a
    specific claim about the 104: how many laboratories, whether any human
@@ -88,6 +89,12 @@ RETIRED = [
     ("each at its own scale", "2026-09-06: figure 2 draws both cells at one scale"),
     ("every width in the file is under a pixel",
      "2026-09-06: the soma and the widest dendrite exceed a pixel in panel A"),
+    ("almost nothing when applied first",
+     "2026-09-06: shrinkage removes 90-99% at every position; it is the least "
+     "order-dependent constraint, and the three-parts requirement is the most"),
+    ("the interactive lets you change it",
+     "2026-09-06: the reorderable app was retired; figure 6 holds all 120 orders"),
+    ("neuron-app.html", "2026-09-06: retired to unpublished/"),
 ]
 
 
@@ -191,7 +198,7 @@ def main():
               "%d distinct value(s) in the file" % ml["n_distinct_diam"])
 
     # -- 3. the cascade -----------------------------------------------------
-    print("3. the cascade and the app's 32 subsets reproduce")
+    print("3. the cascade, its 32 subsets and the order costs reproduce")
     with gzip.open(os.path.join(DATA, "neurons.csv.gz"), "rt", encoding="utf-8") as fh:
         rows = list(csv.DictReader(fh))
     casc, keep = B.cascade(rows)
@@ -201,11 +208,14 @@ def main():
           " -> ".join(f'{s["n"]:,}' for s in casc["steps"]))
     check("all 32 subsets", casc["subsets"] == P["cascade"]["subsets"],
           "%d combinations" % len(casc["subsets"]))
-    app = json.loads(re.search(r'<script id="data" type="application/json">(.*?)</script>',
-                               open(os.path.join(HERE, "neuron-app.html"),
-                                    encoding="utf-8").read(), re.S).group(1))
-    check("the app ships the same subsets", app["subsets"] == casc["subsets"])
-    check("the app ships the same total", app["total"] == casc["n_total"])
+    oc = casc["order_costs"]
+    check("the order costs reproduce over every order", oc == P["cascade"]["order_costs"],
+          "%d orders" % oc["n_orders"])
+    parts = [o for o in oc["constraints"] if o["key"] == "parts"][0]
+    check("a cost is what the subsets say it is",
+          abs(parts["first"] - (1 - casc["subsets"]["0"] / casc["n_total"])) < 1e-6
+          and abs(parts["last"] - (1 - casc["subsets"]["01234"] / casc["subsets"]["1234"])) < 1e-6,
+          "parts first %.1f%%, last %.1f%%" % (100 * parts["first"], 100 * parts["last"]))
 
     # -- 4. the complete set ------------------------------------------------
     print("4. the complete set is still what the page says")
@@ -321,10 +331,9 @@ def main():
         digits = [a.group(1)[:50] for a in alts if a and re.search(r"\d", a.group(1))]
         check("no alt text carries a digit", not digits,
               "; ".join(digits) if digits else "numbers live in the generated captions")
-        app = open(os.path.join(HERE, "neuron-app.html"), encoding="utf-8").read()
-        low = (shipped + app).lower()
+        low = shipped.lower()
         back = [f"{ph!r} ({why})" for ph, why in RETIRED if ph.lower() in low]
-        check("no retired claim is back, in prose, alt text or the app", not back,
+        check("no retired claim is back, in prose or alt text", not back,
               "; ".join(back) if back else "%d retired phrases checked" % len(RETIRED))
 
     print()

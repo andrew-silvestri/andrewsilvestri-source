@@ -39,8 +39,7 @@ source material unless told otherwise.
     climate-cost.html food.html continents.html
     longevity.html skyline.html neuron.html     project pages (Misc)
     atlas-app.html longevity-app.html skyline-app.html
-    climate-cost-app.html continents-app.html
-    neuron-app.html                             full-screen interactive apps,
+    climate-cost-app.html continents-app.html   full-screen interactive apps,
                                                 opened in a new tab
     style.css               the ONLY stylesheet for all non-app pages
     assets/                 figures (.png/.webp) and their -thumb.png, 4 JS files
@@ -951,11 +950,11 @@ generated list above, it was typed.
   `beauty/data/raw/`). Checked and kept, not overlooked — do not remove it as
   a licence problem without reading that file first.
 
-- **Two neuron paths were gitignored** on 6 September:
-  `neuron/neuron-app.html`, which is generated into `site/`, and
-  `neuron/data/_work/`, which is empty in a clean tree and fills with about
-  1,500 sampled SWC files the moment the fetch runs. The second is one
-  `git add -A` away from trap 18 and that is the whole reason it is listed.
+- **`neuron/data/_work/` is gitignored** (6 September): empty in a clean
+  tree, it fills with about 1,500 sampled SWC files the moment the fetch runs,
+  one `git add -A` away from trap 18, which is the whole reason it is listed.
+  (`neuron/neuron-app.html` was the other ignored path until the app was
+  retired the same day.)
 
 - **`.claude/settings.local.json`** is ignored, and now ignored *by this
   repository* rather than only by the machine's global git ignore, so a clone
@@ -1048,12 +1047,22 @@ cells is a plausible soma, or, where its radii are placeholders, if no arbor
 reaches further than a brain. Two of 22 archives fail, and the page says which
 and why.
 
-The interactive is the cascade made reorderable: five toggles, 32 precomputed
-subset counts, ~1.2 KB of data and no filtering logic of its own. It earns its
-place on order-dependence - a shrinkage correction costs 94% of what is left
-when applied last and almost nothing when applied first. It draws nothing,
-deliberately: the subset a set of ticks selects is the same in every order,
-so a drawing would not move with the one thing the toggles teach.
+**The interactive was retired on 2026-09-06** (`unpublished/neuron-app.html`,
+sources in `unpublished/neuron/`, entry in `unpublished/RETIRED.md`). It was
+the cascade made reorderable, five toggles over the 32 subset counts, and it
+showed one of the 120 orders at a time. `build_neuron.order_costs()` now
+computes every constraint's cost at every position over all 120 orders from
+the same subsets, and figure 6 draws the table: a range per constraint with
+its first-position and last-position costs marked. That is the case
+`NEW_PROJECTS` §2 names for building the still figure. Computing it also
+corrected the sentence this paragraph used to carry: the shrinkage correction
+does not cost "almost nothing when applied first"; it removes 90-99% wherever
+it sits and is the *least* order-dependent constraint. The order-dependence
+is in the three-parts requirement (92.5% first, 14% last) and in three
+dimensions (22% first, 0% last). `test_neuron.RETIRED` carries the old
+sentence so it cannot come back. `neuron/` had a `--build` flag and a
+`build_app.py`; both are gone, and `tests/test_generators.py` no longer
+lists a neuron app.
 
 **The 104, opened (2026-09-06).** As first shipped the page never opened one
 of the 104: none of their six archives was in `fetch_data.py`'s sample, so

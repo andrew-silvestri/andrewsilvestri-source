@@ -17,7 +17,6 @@ food/data/raw/
 beauty/data/raw/
 beauty/data/birds_joined.csv
 beauty/data/iucn_aves.csv
-neuron/neuron-app.html
 neuron/data/_work/
 
 # Local Claude Code tool configuration, not part of the site. It was only ever

@@ -435,6 +435,16 @@ axon's width is a floor and the dendrite's is a measurement. The CNG file is
 PCA-rotated (trap 5) and no Source-Version exists for the archive, so the
 drawing is in the archive's orientation and says so.
 
+**Order-dependence, computed in full (6 September, later the same day).** The
+reorderable app showed one of the 120 orders at a time and is retired; the
+payload's `cascade.order_costs` holds every constraint's cost at every
+position over all 120 orders, and figure 6 draws it. [computed] The claim the
+app's card made, that shrinkage "costs almost nothing when applied first", is
+false: shrinkage removes 90.0–99.3% wherever it sits and is the least
+order-dependent of the five. The three-parts requirement swings from 92.5%
+first to 14.0% last (7.2% at its cheapest), and three dimensions from 22.1%
+to 0.0%.
+
 **Why the Conte cells are not cited on the page.** Twenty of the 22 files that
 fail the width rule are the Conte archive's *Xenopus* tadpole spinal neurons
 (Conte, Borisyuk, Hull & Roberts, *J Neurosci Methods* 351:109062, 2021,
