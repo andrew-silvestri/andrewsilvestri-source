@@ -199,6 +199,33 @@ a globe is a map, and the first picture should say "this is a model", not
 this paragraph described the previous palette (violet accent, dark ground,
 WebGL hero trails); that stylesheet is in git before that date.
 
+**The home page's hero is a live canvas, and that trade was made
+deliberately on 2026-09-06.** `site/assets/hero.js` draws one of three named
+nonlinear systems - double pendulum, Lorenz attractor, Burrau's three-body
+problem - integrated in the browser from published equations. Phase 4's
+argument above, that the first picture should say *this is a model*, was
+traded for *this is a nonlinear system*. **That is a weaker claim and it is
+written down here so the next audit finds an argument rather than
+re-deriving it.**
+
+`DESLOP_AUDIT_2026-09-04.md` F6 cut `force-bg.js` - a real, physically
+simulated subgraph of the published atlas behind the prose - for being
+"decoration that restates the page at illegible size", on the grounds that
+"a reader cannot read them, so they are texture, and texture made from data
+is still texture". A fixed full-viewport canvas behind the prose is
+structurally the same thing returning. What differs: the hero does not
+restate the page and does not claim to be the energy model; it is drawn at
+full size, where a trajectory that never repeats is the whole of what it
+has to say, which is the exact legibility test F6 applied; and every
+caption names the system, its parameters and its integrator and says in as
+many words that it is not the energy model.
+
+What still lands is T15, decoration that is not the content: this is a
+picture of a nonlinear system on a page about energy modelling, and its
+defence is metaphorical. That was the trade Andrew asked for, and the
+captions are what keep it honest. The design and every measurement behind
+it are in `03 RESEARCH/rename-hero/STAGE2_PLAN.md`.
+
 **The index.** The home page's projects are an index, not cards: "THE INDEX
 SPEC" in `style.css` beside `.index .entry`, changed before the code. An entry
 is a kicker, a linked title and one sentence, a hook, not a summary; no
@@ -382,6 +409,7 @@ python3 tests/test_generators.py       # every text generator run into a copy an
 node tests/test_atlas_interaction.js   # boots the real app against a three.js stub
 python3 tests/test_parity.py           # the browser engine against the figures' engine, all 60 scenarios, to 1e-12
 python3 tests/test_payload.py          # the payload's SHA-1 against atlas_payload.json (trap 23)
+node tests/verify_hero_systems.js      # what the home page hero's captions claim, recomputed; --break for the mutations
 python3 tests/test_demand_response.py  # push consumer groups, districts must fall (engine property 5)
 node climate-cost/test_scene.js        # the climate-cost visualiser: JS engine against lca.py, layout, overlap; jsdom and three r128 from tests/node_modules
 node tests/test_layout.js              # Playwright: marginalia, measure, hierarchy at 1440/1024/390
@@ -896,6 +924,7 @@ All of these must pass before a publish; `./publish.sh --dry-run` after.
 | `tests/test_parity.py` | The two engines disagreeing: all 60 scenarios, every node, to 1e-12 (measured 2.2e-15), and the round counts. |
 | `tests/test_demand_response.py` | Property 5 regressing: push a consumer group, its district must fall. 40 sampled, `--all` for 1,142. |
 | `tests/test_payload.py` | The payload changing without anyone re-recording it. |
+| `tests/verify_hero_systems.js` | The hero's captions claiming something its integrator does not do. The three-body caption names an outcome and the pendulum asserts an energy bound; neither is true by construction. It found that a fixed step cannot do Burrau (energy drift 1.8e+1, encounters unresolved) and that RK4's secular drift would have breached a guessed 1e-4 bound at six hours. `--break` carries three mutations, all caught. |
 | `tests/test_atlas_interaction.js` | The app failing to boot or a node kind that cannot be clicked, against a three.js stub. 19 checks. |
 | `tests/test_layout.js` | Marginalia painting over content; a page with more than one left edge for its text blocks, or a breakout picture off the measure; the home page's index entries off spec (one sentence, no figure, same shape). 40 page-viewport combinations at 1920, 1440, 1024, 390. |
 | `tests/test_markup.py` | Markdown that never became HTML. |
@@ -995,8 +1024,14 @@ generated list above, it was typed.
   rezip.
 - **`code.html`'s archive rows** are typed (file counts, sizes) and drift
   whenever an archive is rebuilt; a generator would read the zips.
-- **`.notes`** is the home page's class and the page has no notes; the CSS
-  comment beside the rule says why. A rename touches eight pages.
+- **`.notes`** is on **eleven** pages - climate-cost, continents, economy,
+  food, heat, index, longevity, neuron, shoes, skyline, storage - and
+  `main.prose` on four (atlas, code, library, model). It is not the home
+  page's class and never was a home-only hook; the home page's own hook is
+  `body.home`, added 2026-09-06 because `.notes` could not gate anything.
+  The CSS comment beside the rule says why the class exists. A rename
+  touches eleven pages, not eight: this entry said eight until 2026-09-06,
+  written before the food, economy and shoes projects landed.
 - **`library.html`'s four text blocks** are `.flush`: one left edge with the
   cards, held to the measure, two widths on one page.
 - **The mosaic** shows 271px renders at 232px; fine, but the only figures
