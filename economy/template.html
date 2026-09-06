@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Economy is not time — Andrew Silvestri</title>
+<meta name="description" content="A {{headline_pct}} per cent gain in running economy is not {{headline_pct}} per cent off a marathon. It is {{gain_400_pct}} per cent of speed at {{pace_400_hm}} pace and {{gain_572_pct}} at {{pace_572_hm}}, and {{gain_260_pct}} for a runner finishing in {{pace_260_hm}}. Computed from published cost-of-running curves.">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="alternate icon" href="favicon.png">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<meta name="theme-color" content="#F2F0EF">
+<link rel="canonical" href="https://andrewsilvestri.com/economy.html">
+<script>/* the motion contract — set before first paint, from the system preference alone */
+try{document.documentElement.dataset.motion=matchMedia('(prefers-reduced-motion: reduce)').matches?'off':'on';}catch(e){document.documentElement.dataset.motion='on';}</script>
+<link rel="stylesheet" href="style.css">
+</head><body>
+{{nav}}
+<main class="notes">
+
+<h1>Economy is not time</h1>
+<p class="dim">A shoe that makes you four per cent more efficient does not make
+you four per cent faster. How much faster it makes you depends on how fast you
+already are, and for the fastest runners it is under two thirds.</p>
+<aside class="marginalia" style="grid-row: span {{span}}" aria-label="On this page"><ul><li><b>a {{headline_pct}}% saving, at {{pace_400_hm}} pace</b><span class="v">{{gain_400_pct}}% of speed</span></li><li><b>the same, at {{pace_572_hm}} pace</b><span class="v">{{gain_572_pct}}%</span></li><li><b>the same, at {{pace_260_hm}} pace</b><span class="v">{{gain_260_pct}}%</span></li><li><b>worth exactly itself at</b><span class="v">a {{crossing_hm}} marathon</span></li><li><b>measured transfer</b><span class="v">{{transfer_measured}}</span></li><li><b>modelled transfer</b><span class="v">{{transfer_modelled}}</span></li></ul></aside>
+
+<p>Everyone who runs has heard the number four per cent. It came from a
+laboratory measurement of oxygen uptake, and it is a real measurement. What it
+is not is a promise about the clock. Oxygen cost and race time are different
+quantities, and the exchange rate between them is neither one-to-one nor
+constant: it depends on how fast the runner is going, and it gets worse the
+faster they go.</p>
+
+<p>At the pace of a {{pace_400_hm}} marathon, a saving of {{headline_pct}} per
+cent in the oxygen cost of running buys {{gain_400_pct}} per cent of speed,
+which is {{saved_400}} off the finish. At the pace that was the world record
+when this arithmetic was published, {{pace_572_hm}}, the same saving buys
+{{gain_572_pct}} per cent and {{saved_572}}. And for a runner finishing in
+{{pace_260_hm}} it buys {{gain_260_pct}} per cent, which is more than the
+saving itself. The discount is a fast runner's problem. Below a
+{{crossing_hm}} marathon there is no discount at all.</p>
+
+<img class="fig wide" src="assets/economy_fig1_elasticity.png" loading="lazy" width="" height="" alt="Two panels. The left shows how much speed one per cent of economy buys, falling from about 1.4 at slow paces to about 0.6 at world-record pace, crossing one at a 3:51 marathon, with five published curves shown as a band. The right shows the same four per cent saving as minutes off a marathon, falling from over twelve minutes for a slow runner to about three for the fastest.">
+<p class="small">How much speed one per cent of metabolic saving buys, against
+pace. The heavy line is the curve this page computes with; the band is the
+range across {{n_curves}} published cost-of-running curves, all of them fitted
+to treadmill data and corrected for air resistance. Above the dashed line a
+saving is worth more than itself, below it less. The crossing is at
+{{crossing_ms}} metres per second, a {{crossing_hm}} marathon. Right: the same
+{{headline_pct}} per cent saving expressed as minutes off a finish time, which
+is the form a runner can use. Both axes carry a second scale in marathon
+finishes, because nobody knows their pace in metres per second.</p>
+
+<h2>Why the exchange rate is not one</h2>
+
+<p>Two things make it so, and both are physics rather than physiology. The
+oxygen cost of running does not rise in proportion to speed; it rises faster,
+so buying more speed costs progressively more than the last increment did. And
+a runner has to push air out of the way, which costs energy in proportion to
+the cube of speed. At {{pace_400_hm}} pace the air term is
+{{drag_400_pct}} per cent of the whole; at {{pace_572_hm}} pace it is
+{{drag_572_pct}} per cent. Both effects work the same way: they make a
+metabolic saving buy less speed the faster you are already going.</p>
+
+<div class="card"><div class="tag">Code and data</div><h3 style="margin-top:4px">Every number on this page is generated</h3><p>Two supplementary tables from open-access papers, both CC BY, and four scripts: the fetch with its hash check, the model, the figures and the page. The archive holds all of it, including both tables, so the page can be rebuilt from what is inside it.</p><a class="btn ghost" href="downloads/economy-code.zip">Download code and data</a></div>
+
+<h2>The same number, from two directions</h2>
+
+<p>The exchange rate has been measured, once, cleanly. Adding
+{{hoogkamer_mass}} grams to each shoe of {{hoogkamer_n}} trained men raised the
+metabolic cost of running by {{hoogkamer_metabolic}} per cent and their
+3000 metre race times by {{hoogkamer_time}} per cent. Dividing one by the other
+gives {{transfer_measured}}: about seven tenths of a metabolic change reaches
+the clock. Computing the same quantity from the cost-of-running curve, at the
+speed that race was run, gives {{transfer_modelled}}. The two differ by
+{{transfer_gap}}.</p>
+
+<p>That agreement is not this page's claim. The paper that published the curve
+says so itself, and reproduces the race result from its own equation. Two
+independent routes to one number, one measured on runners and one derived from
+a curve, is the strongest evidential position anything on this site rests
+on.</p>
+
+<img class="fig wide" src="assets/economy_fig2_transfer.png" loading="lazy" width="" height="" alt="A single axis showing the measured transfer coefficient at 0.70 with a wide published interval, and the modelled value at 0.71 directly beneath it, both far from the value of 1.0 that a reader assumes.">
+<p class="small">The measured exchange rate and the modelled one, on the same
+axis. The interval is the widest the two published confidence intervals allow:
+the effects were measured on the same runners and their covariance is not
+reported, so a narrower interval could not be justified. The dashed line at one
+is what a reader assumes when they hear that a shoe is four per cent better.</p>
+
+<h2>The three terms, and what the product is worth</h2>
+
+<p>Marathon speed decomposes into three measured quantities: the ceiling on
+oxygen uptake, the fraction of that ceiling a runner can hold for the distance,
+and the oxygen cost of covering a kilometre. Speed is the first times the
+second divided by the third. That decomposition is published and it is not
+controversial.</p>
+
+<p>What is worth seeing is how much better the product is than any term inside
+it. In the one open dataset carrying all three terms and a race result for the
+same {{lan_n}} people, the ceiling alone correlates {{r_ceiling}} with 3000
+metre speed, the sustainable fraction {{r_fraction}}, and the oxygen cost
+{{r_economy}}. Put the ceiling over the cost and the correlation is
+{{r_product}}. None of the terms is the model. The product is.</p>
+
+<img class="fig wide" src="assets/economy_fig3_product.png" loading="lazy" width="" height="" alt="Four scatter panels of the same twenty runners, plotting 3000 metre speed against the oxygen ceiling, the fraction held, the oxygen cost, and finally the ceiling divided by the cost. The correlations are plus 0.65, plus 0.10, minus 0.16 and plus 0.87.">
+<p class="small">{{lan_n}} recreational men, each panel the same runners against
+the same outcome. Oxygen cost correlates negatively because a lower cost is a
+better runner, which is the expected direction; on its own it explains almost
+nothing here. The fraction held explains nothing at all over 3000 metres, which
+is what a race of about ten minutes should look like. Only the product
+predicts.</p>
+
+<h2>Compounding is a rounding error</h2>
+
+<p>Because the three terms multiply, improving all of them should compound: the
+total ought to exceed the sum of the parts. It does, and the excess is too
+small to care about. Three separate improvements of three per cent give
+{{comp_3_product}} per cent rather than {{comp_3_sum}} per cent, and on a
+three-hour marathon the difference between compounding and simply adding is
+{{comp_3_gap_s}} seconds.</p>
+
+<table>
+<tr><th>Each term improved by</th><th class="n">Product</th><th class="n">Sum</th><th class="n">Difference, on a 3:00 marathon</th></tr>
+{{compounding_rows}}
+</table>
+
+<p class="small">A null. The compounding is real arithmetic and it is not worth
+a figure. It is reported here because it is a popular idea, and because the
+honest size of it is a fact a reader is unlikely to have been told.</p>
+
+<h2>Nothing holds still</h2>
+
+<p>The decomposition treats its three terms as constants, and over a marathon
+none of them is. In {{zanini_n}} trained runners, two hours of running raised
+the oxygen cost of a kilometre by {{zanini_econ_120}} per cent, lowered peak
+oxygen uptake by {{zanini_peak_120}} per cent and dropped threshold speed from
+{{zanini_thr_0}} to {{zanini_thr_120}} kilometres per hour. The fraction of
+critical speed a runner holds falls with how long they are out there: about
+{{smyth_150}} per cent for a two-and-a-half-hour finisher and
+{{smyth_360}} per cent for a six-hour one.</p>
+
+<p>The same pattern shows up in race results alone. Among the
+{{vic_n_all}} recreational runners in an open survey, the
+{{vic_n}} who reported both a 5 km and a marathon held a median of
+{{vic_ratio}} per cent of their 5 km speed over the longer race, and the
+faster third held more of it than the slower third,
+{{vic_fast}} against {{vic_slow}} per cent. Being able to hold a larger share
+of what you have is itself part of being good at the distance.</p>
+
+<img class="fig wide" src="assets/economy_fig4_drift.png" loading="lazy" width="" height="" alt="Left, three lines showing that over two hours of running the cost of a kilometre rises about six per cent while peak oxygen uptake and threshold speed both fall about seven per cent. Right, the share of critical speed held falls from 93 per cent for a two-and-a-half-hour finisher to 79 per cent for a six-hour one.">
+<p class="small">Left: {{zanini_n}} trained runners before, during and after two
+hours of running. Peak uptake and threshold speed fall by very nearly the same
+amount, which is why the two lines sit on top of each other. Right: over
+25,000 marathons, from training data held under a research licence, so these
+are the published values rather than a recomputation. A separate literature
+argues that how well a runner resists this decay is a fourth determinant the
+three-term model leaves out, with individual differences running from almost
+nothing to a third.</p>
+
+<h2>What this page does not say</h2>
+
+<p>It does not say what a shoe will do for you. The published measurements of
+advanced footwear disagree with each other by a factor of nearly four, from
+{{shoe_min}} to {{shoe_max}} per cent across twelve laboratory comparisons, and
+where studies report individual results the range runs from
+{{shoe_ind_min}} per cent to {{shoe_ind_max}} per cent within a single group of
+runners. The size and the spread of that measurement is a separate subject and
+this page does not re-analyse it. What is on this page is the exchange rate you
+should apply to whatever number turns out to be true for you.</p>
+
+<h2>Method</h2>
+
+<p><b>Computed.</b> The exchange rate at every pace, the time a saving buys,
+both routes to the transfer coefficient, the compounding table, and the two
+cohort checks. All of it is arithmetic over published coefficients or over the
+two open tables in the archive. Nothing is fitted, smoothed or tuned: a
+refitted curve is exactly how a page like this acquires a number that appears
+in no paper, so the build refuses to run unless the transcribed coefficients
+reproduce the three results the source paper states, to within
+{{paper_tol}} of a percentage point. They currently reproduce to
+{{paper_worst}}.</p>
+
+<p><b>Looked up.</b> The form of the decomposition; the norms for economy and
+its measurement error; the within-race decay; the share of critical speed by
+finish time; the footwear effect sizes. Each is named in Sources with its
+identifier.</p>
+
+<p><b>Assumed.</b> Three things, and the page depends on all of them. The cost
+curve is fitted to a runner of {{ref_mass}} kilograms and
+{{ref_height}} metres with a {{ref_area}} square metre frontal area, and a
+reader of another size has another curve. The measured exchange rate was
+obtained by adding mass over 3000 metres in trained men, so applying it to a
+different intervention over a different distance extends it past what was
+measured. And the arithmetic moves one term while holding the others still,
+which in a real runner does not happen: the ceiling accounts for between
+{{coyle_lo}} and {{coyle_hi}} per cent of the variance in the threshold, so the
+three are correlated and the independent case is a counterfactual rather than a
+prediction about a person.</p>
+
+<h2>Limits</h2>
+
+<p>The product check rests on {{lan_n}} recreational men over 3000 metres,
+which is the only open dataset carrying all three terms with a race result. No
+equivalent exists at marathon distance, and no per-athlete table for elite
+runners is public at all: the best-known cohort publishes its individuals only
+as points in a figure. The cost curves are treadmill measurements. Every
+figure on this page is about averages, and the decay literature shows
+individual differences several times larger than the average effect.</p>
+
+<h2>Why there is no calculator here</h2>
+
+<p>This page is four figures and no interactive, which was a decision rather
+than an omission. The exchange rate is a function of one variable, so a curve
+shows every reader their own answer at a glance and a slider would show one
+point of it at a time. More importantly, a calculator would have to accept
+three inputs and move them independently, and independence is the one thing the
+literature says is not true of them. A page that refuses to compute a number
+for you is being accurate about what is known.</p>
+
+<footer>Andrew Silvestri · energy systems modelling · <a href="mailto:dasilvestri12@gmail.com">dasilvestri12@gmail.com</a></footer>
+</main>
+</body></html>
