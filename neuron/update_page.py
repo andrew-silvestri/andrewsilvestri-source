@@ -46,6 +46,44 @@ def um(v):
     return f"{v:.2f} &micro;m"
 
 
+def um2(v):
+    """A length to two significant figures: micrometres per pixel."""
+    s = f"{v:.2g}"
+    if "e" in s:
+        s = f"{v:.2f}"
+    return f"{s} &micro;m"
+
+
+def um_w(v):
+    """A recorded width, to two decimals, so that 3.15 um (a width) and
+    3.1 um (a panel's scale) can never print as the same number."""
+    return f"{v:.2f} &micro;m"
+
+
+def um_bar(v):
+    """A scale the way the figure's own furniture writes it (fig_neuron.si):
+    one decimal past a micrometre, so caption and panel label agree."""
+    if v >= 1000:
+        return f"{round(v / 1000.0, 1):g} mm"
+    return f"{round(v, 1):g} &micro;m"
+
+
+def panel_a_sentence(W, d):
+    """What is and is not under a pixel in panel A, from the shares rather
+    than from a claim: the simple sentence only when the numbers allow it."""
+    a = W["A"]
+    soma = f'{a["soma_px"]:.1f}'
+    if a["axon_under_one_px"] >= 1.0 and a["dendrite_under_one_px"] >= 1.0:
+        return ("where every neurite width in the file is under a pixel and only the soma, "
+                f"{soma} pixels across, is not")
+    dend_over = 100 * (1 - a["dendrite_under_one_px"])
+    wmax_px = d["dendrite"]["diam_max_um"] / a["um_per_px"]
+    return ("where the axon is entirely under a pixel and all but "
+            f"{dend_over:.1f}% of the dendrite's length is; the exceptions are the soma, "
+            f"{soma} pixels across, and the widest dendrite, {um_w(d['dendrite']['diam_max_um'])} "
+            f"at {wmax_px:.3f} pixels")
+
+
 def values(P):
     c, k, g, l = P["cascade"], P["the_complete"], P["gradient"], P["ladder"]
     tm, tf = P["tradeoff_metadata"], P["tradeoff_files"]
@@ -55,8 +93,70 @@ def values(P):
     pair = P["pair"]
     al, ml = pair.get("allen", {}), pair.get("mouselight", {})
     lu = P["looked_up"]
+    o = k["opened"]
+    pj = o["projection"]
+    d = P["drawn"]
+    W = d["windows"]
+    G = P["pair_geometry"]
 
     v = {
+        # the complete set, opened
+        "opened_pass": fmt(o["n_pass_width"]),
+        "opened_fail": fmt(o["n_fail_width"]),
+        "opened_fails_by": ", ".join("%s %d" % (f["archive"], f["n"]) for f in o["fails_by_archive"]),
+        "opened_single": fmt(o["n_single_width"]),
+        "proj_n": fmt(pj["n"]),
+        "proj_species": ", ".join(pj["species"]),
+        "proj_region": "; ".join(r.replace("|", ", ") for r in pj["regions"]),
+        "proj_protocol": ", ".join(pj["protocols"]),
+        "proj_axon_min": um(pj["axon_min_um"]),
+        "proj_axon_max": um(pj["axon_max_um"]),
+        "proj_reach_min": um(pj["reach_min_um"]),
+        "proj_reach_max": um(pj["reach_max_um"]),
+        "proj_distinct_min": fmt(pj["distinct_min"]),
+        "proj_distinct_max": fmt(pj["distinct_max"]),
+        "proj_doi": pj["doi"],
+        # the drawn cell
+        "drawn_name": d["neuron"],
+        "drawn_archive": d["archive"],
+        "drawn_species": d["species"],
+        "drawn_type": ", ".join(d["cell_type"]).replace("Non-fast", "non-fast"),
+        "drawn_region": ", ".join(d["brain_region"]),
+        "drawn_axon": um(d["axon_um"]),
+        "drawn_dend": um(d["dend_um"]),
+        "drawn_reach": um(d["reach_um"]),
+        "drawn_soma": um(d["soma_diam_um"]),
+        "drawn_extent": um(d["extent_xy_um"]),
+        "drawn_distinct": fmt(d["n_distinct_diam"]),
+        "drawn_widths_file": fmt(d["widths"]["file"]),
+        "drawn_widths_shared": fmt(d["widths"]["shared"]),
+        "drawn_widths_union": fmt(d["widths"]["neurite_union"]),
+        "drawn_soma_width": um_w(d["soma_diam_um"]),
+        "drawn_axon_distinct": fmt(d["widths"]["axon"]),
+        "drawn_axon_modal_pc": pct(d["axon"]["frac_len_modal"], 0),
+        "drawn_axon_modal": um_w(d["axon"]["modal_diam_um"]),
+        "drawn_dend_distinct": fmt(d["widths"]["dendrite"]),
+        "drawn_dend_wmin": um_w(d["dendrite"]["diam_min_um"]),
+        "drawn_dend_wmax": um_w(d["dendrite"]["diam_max_um"]),
+        "ladder_a_sentence": panel_a_sentence(W, d),
+        "ladder_b_axon_ink": pct(1 - W["B"]["axon_under_one_px"], 0),
+        "drawn_orders": f'{d["orders_to_em"]:.1f}',
+        "drawn_rule_fail": fmt(d["rule"]["n_with_doi"] - d["rule"]["n_pass_width"]),
+        "ml_x_drawn": f'{max(G["mouselight_span_um"]) / d["extent_xy_um"]:.1f}',
+        "ladder_a_upp": um2(W["A"]["um_per_px"]),
+        "ladder_b_upp": um2(W["B"]["um_per_px"]),
+        "ladder_c_upp": um2(W["C"]["um_per_px"]),
+        "ladder_a_under": pct(W["A"]["share_under_one_px"], 0),
+        "ladder_b_dend_ink": pct(1 - W["B"]["dendrite_under_one_px"], 0),
+        "ladder_b_axon_under": pct(W["B"]["axon_under_one_px"], 0),
+        "ladder_c_under": pct(W["C"]["share_under_one_px"], 0),
+        "ladder_c_em_px": f'{W["C"]["thinnest_em_px"]:.1f}',
+        # the pair at one scale
+        "pair_upp": um_bar(G["shared_um_per_px"]),
+        "pair_own_upp": um_bar(G["own_um_per_px"]),
+        "pair_ratio": f'{G["extent_ratio"]:.1f}',
+        "pair_allen_px": f'{G["allen_px_in_shared"]:.0f}',
+        "pair_allen_soma_px": f'{G["allen_soma_px_in_shared"]:.1f}',
         "retrieved": P["retrieved"],
         "n_total": fmt(c["n_total"]),
         # the cascade

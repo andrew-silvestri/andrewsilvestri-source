@@ -2,6 +2,9 @@
 
 Reads  data/neurons.csv.gz    the census of NeuroMorpho.Org (fetch_data.py)
        data/swc_metrics.csv   morphometrics from files, computed by swclib
+       data/complete_metrics.csv
+                              the complete set, opened and measured
+       data/swc/<source>/     the three reconstructions the figures draw
        data/manifest.json     what was fetched, when, and its hashes
 Writes outputs/neuron_payload.json
        neuron-app.html        with --build
@@ -79,27 +82,65 @@ THINNEST = {
 }
 
 
+# --- what the two drawing figures are laid out on, in CSS pixels ------------
+# The figures are displayed DISPLAY_PX wide (sitefig.NOTES), one point per
+# pixel, and every "under one pixel" statement on the page is made at that
+# size.  Both figure builders place their axes from these boxes, and the
+# shares below are computed from the same boxes, so the number in the caption
+# and the drawing above it cannot disagree about what a pixel is.
+DISPLAY_PX = 714
+STRIP_PX = 28            # a strip inside each panel, below the drawing, for the scale bar
+HAIRLINE_PT = 0.5        # the shape's hairline, drawn under the true widths
+WINDOW_PAD = 0.05        # panel A: the cell's bounding box, padded this much per side
+WINDOW_B = 0.10          # panel B: this fraction of panel A's window, centred on the soma
+WINDOW_C_SOMA = 1.5      # panel C: this many soma diameters, centred on the soma
+LADDER_CSS = {           # (x, y, w, h) from the top-left, in CSS px
+    "fig": (714, 560),
+    "A": (8, 30, 316, 522),
+    "B": (354, 30, 352, 250),
+    "C": (354, 310, 352, 250),
+}
+PAIR_CSS = {
+    "fig": (714, 458),
+    "shared": (8, 30, 470, 420),     # both cells at one scale
+    "own": (508, 30, 198, 226),      # the slice cell at its own scale
+    "gap_um_frac": 0.06,             # the gap between the two cells, as a share of the wide one
+}
+
+
 def read_census():
     with gzip.open(os.path.join(DATA, "neurons.csv.gz"), "rt", encoding="utf-8") as fh:
         return list(csv.DictReader(fh))
 
 
-def read_metrics():
-    with open(os.path.join(DATA, "swc_metrics.csv"), encoding="utf-8") as fh:
-        rows = list(csv.DictReader(fh))
+_TEXT_COLS = ("archive", "neuron_name", "species", "source", "file", "nmo_attributes",
+              "nmo_domain", "dendrite_type", "structure", "cell_type", "brain_region",
+              "doi", "protocol")
+
+
+def _typed(rows):
     for r in rows:
         for k, v in list(r.items()):
             if v in ("", "None"):
                 r[k] = None
             elif k in ("whole_brain", "diam_measured"):
                 r[k] = v in ("True", "true", "1")
-            elif k not in ("archive", "neuron_name", "species", "source", "file",
-                           "nmo_attributes", "nmo_domain", "dendrite_type", "structure"):
+            elif k not in _TEXT_COLS:
                 try:
                     r[k] = float(v)
                 except (TypeError, ValueError):
                     pass
     return rows
+
+
+def read_metrics():
+    with open(os.path.join(DATA, "swc_metrics.csv"), encoding="utf-8") as fh:
+        return _typed(list(csv.DictReader(fh)))
+
+
+def read_complete():
+    with open(os.path.join(DATA, "complete_metrics.csv"), encoding="utf-8") as fh:
+        return _typed(list(csv.DictReader(fh)))
 
 
 def unit_check(mets):
@@ -193,6 +234,225 @@ def describe_104(keep):
         "has_human": any((s or "").lower() == "human" for s in sp),
         "top_doi": top_doi, "top_doi_n": top_n,
         "top_doi_share": round(top_n / len(keep), 4) if keep else 0,
+    }
+
+
+def opened(comp):
+    """The complete set, measured from its files rather than counted from
+    its flags.  Every file in data/complete_metrics.csv passed all five
+    constraints in the archive's metadata; this is what they hold."""
+    from collections import Counter
+    n = len(comp)
+    fail = [m for m in comp if not m["diam_measured"]]
+    single = [m for m in comp if (m.get("n_distinct_diam") or 0) == 1]
+    fails_by = Counter(m["archive"] for m in fail)
+    # the projection cells: the part of the set that looks like the thing the
+    # page says no file contains, so the page has to say what they are
+    proj_all = [m for m in comp if "projection" in (m["cell_type"] or "").lower()
+                and "principal" in (m["cell_type"] or "").lower()]
+    pdoi = Counter(m["doi"] for m in proj_all if m["doi"])
+    top = pdoi.most_common(1)[0][0] if pdoi else None
+    # the largest single-paper group among them is what the page describes,
+    # because what has to be said about them is said by their paper
+    proj = [m for m in proj_all if m["doi"] == top]
+    return {
+        "n": n,
+        "n_pass_width": n - len(fail),
+        "n_fail_width": len(fail),
+        "fails_by_archive": [{"archive": a, "n": c} for a, c in fails_by.most_common()],
+        "n_single_width": len(single),
+        "single_width_archives": sorted({m["archive"] for m in single}),
+        "projection": {
+            "n_all": len(proj_all),
+            "n": len(proj),
+            "archives": sorted({m["archive"] for m in proj}),
+            "species": sorted({m["species"] for m in proj}),
+            "regions": sorted({m["brain_region"] for m in proj}),
+            "protocols": sorted({m["protocol"] for m in proj}),
+            "doi": top,
+            "reach_min_um": round(min(m["max_radial_um"] for m in proj), 1) if proj else None,
+            "reach_max_um": round(max(m["max_radial_um"] for m in proj), 1) if proj else None,
+            "axon_min_um": round(min(m["len_axon_um"] for m in proj), 1) if proj else None,
+            "axon_max_um": round(max(m["len_axon_um"] for m in proj), 1) if proj else None,
+            "distinct_min": int(min(m["n_distinct_diam"] for m in proj)) if proj else None,
+            "distinct_max": int(max(m["n_distinct_diam"] for m in proj)) if proj else None,
+            "n_pass_width": sum(1 for m in proj if m["diam_measured"]),
+        },
+    }
+
+
+# ------------------------------------------------------------ the drawing ---
+
+def _cell_xy(path):
+    """Points, segments and widths of one file, in the two drawable columns.
+
+    Lengths come from swclib.segments (3D, the depositor's own path length);
+    positions and windows come from load_xy, which has no z.  Nothing here
+    is a figure, but the windows it computes are the figures' windows, so
+    it draws from the same two columns they do.
+    """
+    idx, typ, xyz, rad, par = swclib.read_swc(path)
+    xy = swclib.load_xy(path)
+    seg_len, seg_typ, seg_diam, _ = swclib.segments(idx, typ, xyz, rad, par)
+    neurite = typ != swclib.SOMA
+    som = xy[typ == swclib.SOMA]
+    soma_c = som.mean(axis=0) if len(som) else xy[0]
+    soma_d = 2.0 * float(rad[typ == swclib.SOMA].mean()) if len(som) else 0.0
+    return {"xy": xy, "neurite": neurite, "soma_c": soma_c, "soma_d": soma_d,
+            "seg_len": seg_len[seg_typ != swclib.SOMA], "seg_typ": seg_typ[seg_typ != swclib.SOMA],
+            "seg_diam": seg_diam[seg_typ != swclib.SOMA]}
+
+
+def ladder_windows(path):
+    """The three windows figure 5 draws, from the file and LADDER_CSS.
+
+    A: the whole cell, its bounding box padded WINDOW_PAD per side.
+    B: WINDOW_B of A's longer side, square, centred on the soma.
+    C: WINDOW_C_SOMA soma diameters, square, centred on the soma.
+    Each panel's micrometres per CSS pixel follow from its window and its
+    box, with STRIP_PX of the box kept under the drawing for the scale bar.
+    """
+    c = _cell_xy(path)
+    pts = c["xy"][c["neurite"]]
+    lo, hi = pts.min(axis=0), pts.max(axis=0)
+    span = hi - lo
+    a_win = span * (1 + 2 * WINDOW_PAD)
+    a_centre = (lo + hi) / 2
+    b_win = float(a_win.max() * WINDOW_B)
+    c_win = float(c["soma_d"] * WINDOW_C_SOMA)
+    out = {}
+    for key, win, centre in (("A", a_win, a_centre),
+                             ("B", np.array([b_win, b_win]), c["soma_c"]),
+                             ("C", np.array([c_win, c_win]), c["soma_c"])):
+        x, y, w, h = LADDER_CSS[key]
+        draw_h = h - STRIP_PX
+        upp = float(max(win[0] / w, win[1] / draw_h))
+        ax_sel = c["seg_typ"] == swclib.AXON
+
+        def under(sel):
+            ll = c["seg_len"][sel]
+            return round(float(ll[c["seg_diam"][sel] < upp].sum() / ll.sum()), 4) if ll.sum() else None
+        out[key] = {
+            "box_css": [x, y, w, h],
+            "window_um": [round(float(win[0]), 2), round(float(win[1]), 2)],
+            "centre_um": [round(float(centre[0]), 3), round(float(centre[1]), 3)],
+            "um_per_px": round(upp, 5),
+            "share_under_one_px": under(np.ones(len(ax_sel), dtype=bool)),
+            "axon_under_one_px": under(ax_sel),
+            "dendrite_under_one_px": under(~ax_sel),
+            "soma_px": round(c["soma_d"] / upp, 2),
+            "thinnest_em_px": round(THINNEST["value_um"] / upp, 3),
+        }
+    return out
+
+
+def drawn_block(man):
+    """The cell from the complete set that figure 5 draws, measured from its
+    file, with the windows it is drawn in."""
+    d = man.get("drawn")
+    if not d:
+        return None
+    path = os.path.join(HERE, d["file"])
+    m = swclib.metrics(path, source=swclib.source_of(path))
+    c = _cell_xy(path)
+    by_part = {}
+    for t, name in swclib.TYPE_NAME.items():
+        sel = c["seg_typ"] == t
+        if not sel.any():
+            continue
+        dd, ll = c["seg_diam"][sel], c["seg_len"][sel]
+        vals, inv = np.unique(np.round(dd, 6), return_inverse=True)
+        wl = np.bincount(inv, weights=ll)
+        by_part[name] = {
+            "len_um": round(float(ll.sum()), 1),
+            "n_distinct_diam": int(len(vals)),
+            "diam_min_um": round(float(dd.min()), 3),
+            "diam_max_um": round(float(dd.max()), 3),
+            "modal_diam_um": round(float(vals[int(wl.argmax())]), 3),
+            "frac_len_modal": round(float(wl.max() / ll.sum()), 4),
+        }
+    dend = {"len_um": round(by_part.get("basal", {}).get("len_um", 0)
+                             + by_part.get("apical", {}).get("len_um", 0), 1)}
+    dsel = c["seg_typ"] != swclib.AXON
+    if dsel.any():
+        dd, ll = c["seg_diam"][dsel], c["seg_len"][dsel]
+        vals, inv = np.unique(np.round(dd, 6), return_inverse=True)
+        wl = np.bincount(inv, weights=ll)
+        dend.update({"n_distinct_diam": int(len(vals)),
+                     "diam_min_um": round(float(dd.min()), 3),
+                     "diam_max_um": round(float(dd.max()), 3),
+                     "modal_diam_um": round(float(vals[int(wl.argmax())]), 3),
+                     "frac_len_modal": round(float(wl.max() / ll.sum()), 4)})
+    pts = c["xy"][c["neurite"]]
+    extent = float((pts.max(axis=0) - pts.min(axis=0)).max())
+    # The width count, stated four ways so the page cannot contradict itself:
+    # the axon's values, the dendrites' values, the values both share, and
+    # their union - which is what n_distinct_diam and the width rule count,
+    # because swclib.metrics() measures neurites only.  The soma is a
+    # decision: it is drawn (the disc in every panel, at its radius) and it
+    # is counted in n_distinct_file, but it belongs to neither compartment
+    # and is not part of the width rule, which asks whether the *neurite*
+    # radii vary.
+    ax_vals = set(np.round(c["seg_diam"][c["seg_typ"] == swclib.AXON], 6).tolist())
+    dn_vals = set(np.round(c["seg_diam"][c["seg_typ"] != swclib.AXON], 6).tolist())
+    soma_vals = {round(c["soma_d"], 6)} if c["soma_d"] else set()
+    widths = {
+        "axon": len(ax_vals), "dendrite": len(dn_vals),
+        "shared": len(ax_vals & dn_vals), "neurite_union": len(ax_vals | dn_vals),
+        "soma": len(soma_vals - ax_vals - dn_vals),
+        "file": len(ax_vals | dn_vals | soma_vals),
+        "soma_drawn": True, "soma_in_width_rule": False,
+    }
+    return {
+        "widths": widths,
+        "file": d["file"], "neuron": d["neuron"], "neuron_id": d["neuron_id"],
+        "archive": d["archive"], "species": d["species"],
+        "cell_type": [s for s in (d["cell_type"] or "").split("|") if s],
+        "brain_region": [s for s in (d["brain_region"] or "").split("|") if s],
+        "doi": d["doi"], "protocol": d["protocol"],
+        "rule": d["rule"],
+        "source": swclib.source_of(path),
+        "z_drawable": swclib.source_of(path) in swclib.Z_TRUSTWORTHY,
+        "reach_um": m["max_radial_um"], "axon_um": m["len_axon_um"],
+        "dend_um": m["len_dend_um"], "soma_diam_um": m["soma_diam_um"],
+        "extent_xy_um": round(extent, 1),
+        "n_distinct_diam": m["n_distinct_diam"],
+        "frac_len_modal_diam": m["frac_len_modal_diam"],
+        "diam_measured": m["diam_measured"],
+        "axon": by_part.get("axon"), "dendrite": dend,
+        "orders_to_em": round(float(np.log10(extent / THINNEST["value_um"])), 2),
+        "windows": ladder_windows(path),
+    }
+
+
+def pair_geometry(pair):
+    """Figure 2's shared frame: both cells at one scale, and what the slice
+    cell measures in it."""
+    al, ml = pair.get("allen"), pair.get("mouselight")
+    if not (al and ml):
+        return None
+    spans = {}
+    for src, d in (("allen", al), ("mouselight", ml)):
+        c = _cell_xy(os.path.join(HERE, d["file"]))
+        pts = c["xy"][c["neurite"]]
+        spans[src] = pts.max(axis=0) - pts.min(axis=0)
+    wide, small = spans["mouselight"], spans["allen"]
+    gap = float(wide.max() * PAIR_CSS["gap_um_frac"])
+    win_x = float(wide[0] + gap + small[0])
+    win_y = float(max(wide[1], small[1]))
+    x, y, w, h = PAIR_CSS["shared"]
+    upp = max(win_x * (1 + 2 * WINDOW_PAD) / w, win_y * (1 + 2 * WINDOW_PAD) / (h - STRIP_PX))
+    ox, oy, ow, oh = PAIR_CSS["own"]
+    upp_own = max(small[0] * (1 + 2 * WINDOW_PAD) / ow, small[1] * (1 + 2 * WINDOW_PAD) / (oh - STRIP_PX))
+    return {
+        "extent_ratio": round(float(wide.max() / small.max()), 2),
+        "shared_um_per_px": round(float(upp), 4),
+        "own_um_per_px": round(float(upp_own), 4),
+        "allen_px_in_shared": round(float(small.max() / upp), 1),
+        "allen_soma_px_in_shared": round(float((al.get("soma_diam_um") or 0) / upp), 2),
+        "gap_um": round(gap, 1),
+        "allen_span_um": [round(float(v), 1) for v in small],
+        "mouselight_span_um": [round(float(v), 1) for v in wide],
     }
 
 
@@ -413,6 +673,26 @@ def looked_up():
             "value": "seven columns; type 1 soma, 2 axon, 3 basal dendrite, 4 apical dendrite",
             "source": "Cannon, Turner, Pyapali & Wheal, J Neurosci Methods 84(1-2):49-54, 1998, "
                       "doi:10.1016/S0165-0270(98)00091-0"},
+        "projection_cells_paper": {
+            "value": "the paper behind the projection cells in the complete set contains no "
+                     "occurrence of 'shrink', 'shrinkage', 'correction' or 'corrected'; it "
+                     "states 'we cannot exclude that some axons might have been incompletely "
+                     "traced, and it is likely that some axons were incompletely labeled' and "
+                     "'in most cases we lost the axon within the callosal fiber tract'",
+            "source": "Yamashita et al., Front Neuroanat 12:33, 2018, "
+                      "doi:10.3389/fnana.2018.00033 (full text searched 2026-09-06)"},
+        "drawn_cell_paper": {
+            "value": "x1.1 in x-y, x2.1 in z, stated in the paper the drawn cell was "
+                     "published with",
+            "source": "Emmenegger, Qi, Wang & Feldmeyer, Cereb Cortex 28(4):1439-1457, 2018, "
+                      "doi:10.1093/cercor/bhx352"},
+        "cng_standardisation": {
+            "value": "the CNG version of a file has its soma moved to the origin and its axes "
+                     "rotated onto the principal components of the coordinates, so its "
+                     "orientation is the archive's, not the tissue's",
+            "source": "NeuroMorpho.Org, 'CNG version' file documentation; checked on the "
+                      "Ascoli archive, whose depositor's file and CNG file agree on every "
+                      "metric swclib computes"},
     }
 
 
@@ -451,6 +731,21 @@ def assumed():
         {"key": "sample",
          "text": "the cross-archive sample is drawn from the first page of each archive's "
                  "records with a fixed seed, not uniformly at random across the whole archive"},
+        {"key": "drawn_cell",
+         "text": "the cell drawn from the complete set is chosen by rule: the largest "
+                 "single-paper group in the set, less any file failing the width rule when "
+                 "opened, and then the cell closest to that group's median reach and axon "
+                 "length"},
+        {"key": "windows",
+         "text": "the three windows it is drawn in are the whole cell padded %d%% per side, "
+                 "%d%% of that window centred on the soma, and %.1f soma diameters centred on "
+                 "the soma; 'under one pixel' means at the %d CSS pixels the page displays "
+                 "the figure at" % (int(100 * WINDOW_PAD), int(100 * WINDOW_B),
+                                    WINDOW_C_SOMA, DISPLAY_PX)},
+        {"key": "hairline",
+         "text": "where a recorded width is thinner than a pixel the shape is carried by a "
+                 "%.1f-point hairline in a fainter tint; the width itself is still drawn at "
+                 "its true size on top, and vanishes" % HAIRLINE_PT},
     ]
 
 
@@ -465,18 +760,29 @@ def build():
     # Everything measured from files is measured on the archives whose units
     # can be confirmed. The rest are counted and named, not silently dropped.
     um = [m for m in mets if m["archive"] in trusted]
+    comp = read_complete()
+    if len(comp) != casc["n_complete"]:
+        raise SystemExit("complete_metrics.csv holds %d files but the cascade leaves %d; "
+                         "run fetch_data.py --complete-only" % (len(comp), casc["n_complete"]))
+    the_complete = describe_104(keep)
+    the_complete["opened"] = opened(comp)
+    pair = pair_block(man, mets)
     payload = {
         "generated_from": "NeuroMorpho.Org v8.x (CC BY 4.0) and the Allen Cell Types Database",
         "retrieved": man["retrieved"],
         "manifest_sha256": man["sha256"],
         "seed": man["seed"],
         "cascade": casc,
-        "the_complete": describe_104(keep),
+        "the_complete": the_complete,
         "tradeoff_metadata": tradeoff(rows),
         "tradeoff_files": method_split(um),
         "gradient": gradient_test(um),
         "scatter": scatter(um),
-        "pair": pair_block(man, mets),
+        "pair": pair,
+        "pair_geometry": pair_geometry(pair),
+        "drawn": drawn_block(man),
+        "layout": {"display_px": DISPLAY_PX, "strip_px": STRIP_PX, "hairline_pt": HAIRLINE_PT,
+                   "ladder_css": LADDER_CSS, "pair_css": PAIR_CSS},
         "ladder": None,
         "units": {"per_archive": units,
                   "n_archives": len(units),
@@ -510,6 +816,33 @@ def report(p):
     print("  the complete set           %d cells, %d labs, human present: %s"
           % (k["n"], k["n_labs"], k["has_human"]))
     print("                             %d of them carry %s" % (k["top_doi_n"], k["top_doi"]))
+    o = k["opened"]
+    print("  ... opened                 %d pass the width rule, %d fail (%s); %d hold one width"
+          % (o["n_pass_width"], o["n_fail_width"],
+             ", ".join("%s %d" % (f["archive"], f["n"]) for f in o["fails_by_archive"]),
+             o["n_single_width"]))
+    pj = o["projection"]
+    print("                             %d projection cells (%s), reach %s-%s um, axon %s-%s um, %s-%s widths"
+          % (pj["n"], ", ".join(pj["archives"]), f'{pj["reach_min_um"]:,.0f}',
+             f'{pj["reach_max_um"]:,.0f}', f'{pj["axon_min_um"]:,.0f}', f'{pj["axon_max_um"]:,.0f}',
+             pj["distinct_min"], pj["distinct_max"]))
+    d = p["drawn"]
+    if d:
+        print("  drawn                      %s (%s), reach %s um, axon %s um, %d widths; "
+              "axon %d widths at %.0f%% one value"
+              % (d["neuron"], d["archive"], f'{d["reach_um"]:,.0f}', f'{d["axon_um"]:,.0f}',
+                 d["n_distinct_diam"], d["axon"]["n_distinct_diam"], 100 * d["axon"]["frac_len_modal"]))
+        for key in ("A", "B", "C"):
+            w = d["windows"][key]
+            print("    %s  window %8.1f um  %.3f um/px  under a pixel: %3.0f%% of length, axon %3.0f%%, "
+                  "dendrite %3.0f%%  soma %6.1f px  EM %.2f px"
+                  % (key, w["window_um"][0], w["um_per_px"], 100 * w["share_under_one_px"],
+                     100 * w["axon_under_one_px"], 100 * w["dendrite_under_one_px"],
+                     w["soma_px"], w["thinnest_em_px"]))
+    g2 = p["pair_geometry"]
+    if g2:
+        print("  pair at one scale          %.1fx in extent; the slice cell is %.0f px wide, soma %.1f px"
+              % (g2["extent_ratio"], g2["allen_px_in_shared"], g2["allen_soma_px_in_shared"]))
     u = p["units"]
     print("  units                      %d of %d archives confirmed micrometres; %d rejected%s"
           % (u["n_micrometres"], u["n_archives"], u["n_rejected"],

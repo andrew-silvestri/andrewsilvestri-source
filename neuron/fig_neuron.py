@@ -1,29 +1,36 @@
 """
-The four figures for site/neuron.html, drawn from outputs/neuron_payload.json.
+The five figures for site/neuron.html, drawn from outputs/neuron_payload.json.
 
   neuron_fig1_span.png      every scale a drawing at true proportions must
                             hold at once, against what a figure can render
-  neuron_fig2_pair.png      two real reconstructions: one with measured
-                            thickness and almost no axon, one with a complete
-                            axon and a single invented thickness
+  neuron_fig2_pair.png      two real reconstructions at one scale - one with
+                            measured thickness and almost no axon, one with a
+                            complete axon and a single invented thickness -
+                            and the small one's box opened at its own scale
   neuron_fig3_tradeoff.png  reach against how coarse the recorded thickness
                             is, one point per sampled cell, coloured by method
   neuron_fig4_cascade.png   the five constraints, and what each one costs
+  neuron_fig5_ladder.png    one cell from the complete set at three scales,
+                            each window boxed in the one before, at the
+                            file's own widths throughout
 
-Every colour, size and face comes from sitefig.py.
+Every colour, size and face comes from sitefig.py.  The panel boxes of
+figures 2 and 5, and what a pixel means in them, come from build_neuron.py,
+which computes the captions' "under one pixel" shares from the same boxes.
 
-No figure here uses a z coordinate.  Figure 2 draws two projections through
-swclib.load_xy(), which returns two columns, because the Allen file's z axis
-is uncorrected slice geometry compressed by roughly a factor of two and the
-archive ships no per-cell correction (see swclib and check 1 in
-test_neuron.py).  Figure 2 also varies its line width only for the cell whose
-radius column is a measurement; the other is drawn at one width because it
-holds one value.
+No figure here uses a z coordinate.  Figures 2 and 5 draw projections
+through swclib.load_xy(), which returns two columns, because a slice file's
+z axis is uncorrected slice geometry compressed by roughly a factor of two
+and the archive ships no per-cell correction (see swclib and check 1 in
+test_neuron.py).  Both draw a width only for a cell whose radius column is
+a measurement, and then in data units, so it is the file's number at the
+panel's scale; a cell holding one value is drawn as a hairline because
+varying it would draw a number nobody measured.
 
 Each figure is audited for text that overlaps, runs off the canvas or falls
-under the site's size floor, and for grid faults; figures 1 and 2 carry a
-scale bar, which the shared audit cannot see, so they check their own.  The
-build prints the count and it must be 0.
+under the site's size floor, and for grid faults; figures 1, 2 and 5 carry
+a scale bar, which the shared audit cannot see, so they check their own.
+The build prints the count and it must be 0.
 
 Run:  python3 fig_neuron.py
 """
@@ -36,7 +43,9 @@ import matplotlib
 matplotlib.use("Agg")
 import matplotlib.pyplot as plt          # noqa: E402
 import numpy as np                       # noqa: E402
-from matplotlib.collections import LineCollection   # noqa: E402
+from matplotlib.collections import (LineCollection, PolyCollection,    # noqa: E402
+                                    EllipseCollection)
+from matplotlib.patches import Rectangle                    # noqa: E402
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 ROOT = os.path.abspath(os.path.join(HERE, ".."))
@@ -47,6 +56,7 @@ from sitefig import (ACC, BG, DIM, FAINT, FS_2, INK, MOSS, NOTES, PLOT,  # noqa:
                      SLATE, fig_size, row_aspect)
 from fig_floor import floor_problems                        # noqa: E402
 import swclib                                               # noqa: E402
+from build_neuron import STRIP_PX, HAIRLINE_PT, WINDOW_PAD  # noqa: E402
 
 PAYLOAD = os.path.join(HERE, "outputs", "neuron_payload.json")
 OUT = os.path.join(ROOT, "site", "assets")
@@ -103,16 +113,25 @@ def audit(fig):
 
 
 # The shared audit compares text against text and against the canvas. It does
-# not see one drawn thing covering another (HANDOFF s8, trap 4), and figures 1
-# and 2 both carry a scale bar, which is drawn rather than written. Rather
+# not see one drawn thing covering another (HANDOFF s8, trap 4), and figures
+# 1, 2 and 5 carry a scale bar, which is drawn rather than written. Rather
 # than test for a collision after the fact, each panel reserves a strip that
-# nothing else may enter, and this asserts the strip really is empty.
+# nothing else may enter, and this asserts the strip really is empty: either
+# no drawn point lies in it, or, where a panel clips its drawing to a window,
+# the window ends at or above it.
 _STRIPS = []
+_CLIPS = []
 
 
 def reserve_strip(ax, y_top, points, label):
     """Record that everything below y_top in `ax` belongs to the scale bar."""
     _STRIPS.append((ax, y_top, np.asarray(points, dtype=float), label))
+
+
+def reserve_clip(ax, clip_bottom, y_top, label):
+    """Record that the drawing is clipped at clip_bottom, which must not be
+    below the strip's top."""
+    _CLIPS.append((ax, float(clip_bottom), float(y_top), label))
 
 
 def strip_problems():
@@ -122,12 +141,16 @@ def strip_problems():
             n = int((pts[:, 1] < y_top).sum())
             bad.append("scale bar: %d drawn point(s) inside the reserved strip in %s"
                        % (n, label))
+    for ax, clip_bottom, y_top, label in _CLIPS:
+        if clip_bottom < y_top - 1e-9:
+            bad.append("scale bar: the clip window enters the reserved strip in %s" % label)
     return bad
 
 
 def emit(fig, name):
     bad = audit(fig) + strip_problems()
     _STRIPS.clear()
+    _CLIPS.clear()
     sitefig.save(fig, os.path.join(OUT, name), close=False)
     plt.close(fig)
     flag = "  LAYOUT: " + "; ".join(bad[:3]) if bad else ""
@@ -205,86 +228,235 @@ def fig_span(P):
     return emit(fig, "neuron_fig1_span.png")
 
 
-# ------------------------------------------------------------------ fig 2 ---
+# ------------------------------------------------------------ the renderer ---
+# Figures 2 and 5 draw reconstructions, and they share one renderer so that a
+# width means the same thing in both: the file's number, in data units, at
+# whatever scale the panel happens to be.  The panel boxes come from
+# build_neuron.py, where the "under one pixel" shares in the captions are
+# computed from the same boxes.
 
-def draw_cell(ax, path, vary_width, colour, base_lw=0.45):
-    """One reconstruction, projected. Two columns in, never three."""
-    xy = swclib.load_xy(path)                    # (N, 2): there is no z here
-    idx, typ, xyz, rad, par = swclib.read_swc(path)
+HAIR_ALPHA = 0.55
+
+
+def panel_axes(fig, box_css, fig_css):
+    """An axes placed from a CSS-pixel box measured from the top-left."""
+    x, y, w, h = box_css
+    W, H = fig_css
+    return fig.add_axes([x / W, 1 - (y + h) / H, w / W, h / H])
+
+
+def frame(ax, centre, upp, box_css):
+    """Data limits such that one CSS pixel is `upp` micrometres, the drawing
+    centred on `centre` in the top of the box and STRIP_PX kept below it for
+    the scale bar.  Returns the strip's top edge in data units."""
+    _, _, w, h = box_css
+    draw_h = h - STRIP_PX
+    cx, cy = float(centre[0]), float(centre[1])
+    ax.set_xlim(cx - w * upp / 2, cx + w * upp / 2)
+    ax.set_ylim(cy - draw_h * upp / 2 - STRIP_PX * upp, cy + draw_h * upp / 2)
+    ax.set_aspect("equal", adjustable="box")
+    ax.axis("off")
+    return cy - draw_h * upp / 2
+
+
+def _quads(p, c, d):
+    """One rectangle per segment, in data units, the segment's own diameter."""
+    v = c - p
+    n = np.linalg.norm(v, axis=1)
+    n[n == 0] = 1.0
+    perp = np.stack([-v[:, 1], v[:, 0]], axis=1) / n[:, None] * (d / 2.0)[:, None]
+    return np.stack([p + perp, c + perp, c - perp, p - perp], axis=1)
+
+
+def draw_true(ax, path, widths_measured, offset=(0.0, 0.0), clip=None):
+    """One reconstruction, projected, at the file's own widths.
+
+    Two columns in, never three.  Every segment is a hairline - the shape,
+    HAIRLINE_PT wide, in a fainter tint - with, on top of it and only where
+    the file's radius column is a measurement, a polygon in data units as
+    wide as the segment's recorded diameter.  So a width is the file's
+    number at whatever scale the panel is drawn at, and disappears under
+    the hairline when it is thinner than a pixel.  A file holding one width
+    gets the hairline alone: varying it would draw a number nobody
+    measured.  Dendrite in ACC, axon in MOSS, the soma a disc of its radius.
+    Returns the drawn neurite points, for the scale-bar audit.
+    """
+    xy = swclib.load_xy(path) + np.asarray(offset, dtype=float)   # (N, 2): there is no z here
+    idx, typ, _, rad, par = swclib.read_swc(path)
     pos = {int(i): k for k, i in enumerate(idx)}
-    segs, widths = [], []
+    P, C, D, T = [], [], [], []
     for k in range(len(idx)):
         p = int(par[k])
         if p == -1 or p not in pos or int(typ[k]) == swclib.SOMA:
             continue
         j = pos[p]
-        segs.append([xy[j], xy[k]])
-        widths.append(2.0 * float(rad[k]))
-    segs = np.asarray(segs, dtype=float)
-    widths = np.asarray(widths, dtype=float)
-    if vary_width:
-        w = widths / max(np.median(widths), 1e-9)
-        lw = np.clip(base_lw * w, 0.16, 2.4)
-    else:
-        # one value in the file, so one width on the page: varying it would
-        # be drawing a number nobody measured
-        lw = np.full(len(segs), base_lw)
-    ax.add_collection(LineCollection(segs, linewidths=lw, colors=colour,
-                                     capstyle="round", zorder=2))
-    som = xyz[typ == swclib.SOMA][:, :2]
+        P.append(xy[j]); C.append(xy[k]); D.append(2.0 * float(rad[k])); T.append(int(typ[k]))
+    P, C = np.asarray(P, dtype=float), np.asarray(C, dtype=float)
+    D, T = np.asarray(D, dtype=float), np.asarray(T)
+    arts = []
+    for is_axon, col in ((False, ACC), (True, MOSS)):
+        sel = (T == swclib.AXON) == is_axon
+        if not sel.any():
+            continue
+        hair = LineCollection(np.stack([P[sel], C[sel]], axis=1), linewidths=HAIRLINE_PT,
+                              colors=col, alpha=HAIR_ALPHA, capstyle="round", zorder=2)
+        ax.add_collection(hair)
+        arts.append(hair)
+        if widths_measured:
+            poly = PolyCollection(_quads(P[sel], C[sel], D[sel]), facecolors=col,
+                                  edgecolors="none", zorder=3)
+            ax.add_collection(poly)
+            arts.append(poly)
+            # a disc at every joint, so a bend in a thick branch has no notch
+            dots = EllipseCollection(D[sel], D[sel], np.zeros(int(sel.sum())), units="xy",
+                                     offsets=C[sel], offset_transform=ax.transData,
+                                     facecolors=col, edgecolors="none", zorder=3)
+            ax.add_collection(dots)
+            arts.append(dots)
+    som = xy[typ == swclib.SOMA]
     if len(som):
-        r = float(rad[typ == swclib.SOMA].mean())
-        ax.add_patch(plt.Circle(som.mean(axis=0), r, color=colour, zorder=3, lw=0))
-    return segs.reshape(-1, 2)
+        circ = plt.Circle(som.mean(axis=0), float(rad[typ == swclib.SOMA].mean()),
+                          color=ACC, zorder=4, lw=0)
+        ax.add_patch(circ)
+        arts.append(circ)
+    if clip is not None:
+        for a in arts:
+            a.set_clip_path(clip)
+    return np.vstack([P, C]) if len(P) else xy
 
+
+def nice(v):
+    """The largest of 1, 2, 5 x 10^n not above v."""
+    step = 10.0 ** np.floor(np.log10(v))
+    for m in (5, 2, 1):
+        if m * step <= v:
+            return m * step
+    return step
+
+
+def scale_bar(ax, strip_top, upp, box_css, x_frac=0.02):
+    """A bar in the reserved strip, its length the largest round number
+    under 35% of the panel's width, labelled above it."""
+    _, _, w, _ = box_css
+    x0 = ax.get_xlim()[0] + w * upp * x_frac
+    bar = nice(0.35 * w * upp)
+    by = strip_top - STRIP_PX * upp * 0.72
+    ax.plot([x0, x0 + bar], [by, by], color=INK, lw=1.4, solid_capstyle="butt",
+            zorder=5, clip_on=False)
+    ax.annotate(si(bar), (x0 + bar / 2, by), xytext=(0, 4), textcoords="offset points",
+                ha="center", va="bottom", fontsize=FS_2, color=INK,
+                fontfamily="IBM Plex Mono", zorder=5)
+    return bar
+
+
+def window_box(ax, centre, win, label):
+    """The child panel's window, drawn as a box in its parent, with its letter."""
+    cx, cy = float(centre[0]), float(centre[1])
+    r = Rectangle((cx - win / 2, cy - win / 2), win, win, fill=False, ec=INK, lw=0.8, zorder=6)
+    ax.add_patch(r)
+    ax.annotate(label, (cx + win / 2, cy + win / 2), xytext=(3, 1), textcoords="offset points",
+                ha="left", va="bottom", fontsize=FS_2, color=INK, fontfamily="IBM Plex Mono",
+                zorder=6)
+    return r
+
+
+# ------------------------------------------------------------------ fig 2 ---
 
 def fig_pair(P):
-    """The two files, each at its own scale, each saying what it lacks."""
-    pair = P["pair"]
-    order = [("allen", ACC), ("mouselight", MOSS)]
-    fig, axes = plt.subplots(1, 2, figsize=fig_size(NOTES, 1.28))
-    for ax, (src, col) in zip(axes, order):
-        d = pair.get(src)
-        if not d:
-            continue
-        pts = draw_cell(ax, os.path.join(HERE, d["file"]), d["diam_measured"], col)
-        ax.set_aspect("equal")
-        # Equal aspect shrinks each box to fit its own data, so two panels of
-        # different proportions end up different heights and their labels sit
-        # at different heights with them. Anchor both boxes to the top of the
-        # space they were given and the labels line up.
-        ax.set_anchor("N")
-        ax.axis("off")
-        x0, x1 = pts[:, 0].min(), pts[:, 0].max()
-        y0, y1 = pts[:, 1].min(), pts[:, 1].max()
-        padx, pady = (x1 - x0) * .10 + 1, (y1 - y0) * .10 + 1
-        # a strip below the drawing that belongs to the scale bar alone
-        strip = (y1 - y0) * .17 + 1
-        ax.set_xlim(x0 - padx, x1 + padx)
-        ax.set_ylim(y0 - pady - strip, y1 + pady)
-        reserve_strip(ax, y0 - pady, pts, src)
+    """The two files at one scale, and the slice cell's box opened."""
+    pair, G, L = P["pair"], P["pair_geometry"], P["layout"]
+    css = L["pair_css"]
+    al, ml = pair["allen"], pair["mouselight"]
+    fig = plt.figure(figsize=fig_size(NOTES, css["fig"][0] / css["fig"][1]))
 
-        span = x1 - x0
-        step = 10.0 ** np.floor(np.log10(span * .45))
-        bar = step if span * .45 / step < 2.2 else step * 2
-        bx = x0 - padx * .1
-        by = y0 - pady - strip * .55
-        ax.plot([bx, bx + bar], [by, by], color=INK, lw=1.4, solid_capstyle="butt", zorder=5)
-        ax.annotate(si(bar), ((bx + bx + bar) / 2, by), xytext=(0, 5),
-                    textcoords="offset points", ha="center", va="bottom",
-                    fontsize=FS_2, color=INK, fontfamily="IBM Plex Mono", zorder=5)
-        if d["diam_measured"]:
-            note = "%s widths" % f'{d["n_distinct_diam"]:,}'
-        else:
-            note = "one width"
-        sitefig.panel(ax, "axon %s, %s" % (si(d["axon_um"]), note))
-    # An equal-aspect drawing takes all the height it is given, and the panel
-    # label sits above the axes, so these margins are set rather than fitted:
-    # tight_layout let the taller cell fill the canvas and pushed its own label
-    # off the top edge.
-    fig.subplots_adjust(left=.015, right=.985, top=.88, bottom=.02, wspace=.06)
+    # the shared frame: the whole-brain cell where the file puts it, the
+    # slice cell translated to sit beside it, vertically centred on it
+    ax = panel_axes(fig, css["shared"], css["fig"])
+    ml_xy = swclib.load_xy(os.path.join(HERE, ml["file"]))
+    al_xy = swclib.load_xy(os.path.join(HERE, al["file"]))
+    ml_lo, ml_hi = ml_xy.min(axis=0), ml_xy.max(axis=0)
+    al_lo, al_hi = al_xy.min(axis=0), al_xy.max(axis=0)
+    shift = np.array([ml_hi[0] + G["gap_um"] - al_lo[0],
+                      (ml_lo[1] + ml_hi[1]) / 2 - (al_lo[1] + al_hi[1]) / 2])
+    lo = np.minimum(ml_lo, al_lo + shift)
+    hi = np.maximum(ml_hi, al_hi + shift)
+    upp = G["shared_um_per_px"]
+    strip_top = frame(ax, (lo + hi) / 2, upp, css["shared"])
+    pts = draw_true(ax, os.path.join(HERE, ml["file"]), ml["diam_measured"])
+    pts2 = draw_true(ax, os.path.join(HERE, al["file"]), al["diam_measured"], offset=shift)
+    pts = np.vstack([pts, pts2])
+    reserve_strip(ax, strip_top, pts, "shared")
+    scale_bar(ax, strip_top, upp, css["shared"])
+    # the slice cell's window, as a box
+    span = al_hi - al_lo
+    win = float(span.max() * (1 + 2 * WINDOW_PAD))
+    centre = (al_lo + al_hi) / 2 + shift
+    window_box(ax, centre, win, "the box")
+    sitefig.panel(ax, "both cells at one scale, %s per pixel" % si(upp))
+
+    # the box, opened: the slice cell at its own scale, at its recorded widths
+    ax2 = panel_axes(fig, css["own"], css["fig"])
+    upp2 = G["own_um_per_px"]
+    strip2 = frame(ax2, (al_lo + al_hi) / 2, upp2, css["own"])
+    pts3 = draw_true(ax2, os.path.join(HERE, al["file"]), al["diam_measured"])
+    reserve_strip(ax2, strip2, pts3, "own")
+    scale_bar(ax2, strip2, upp2, css["own"])
+    x0, x1 = ax2.get_xlim()
+    ax2.add_patch(Rectangle((x0, strip2), x1 - x0, ax2.get_ylim()[1] - strip2, fill=False,
+                            ec=INK, lw=0.8, zorder=6, clip_on=False))
+    sitefig.panel(ax2, "the box, opened")
     sitefig.centre(fig)
     return emit(fig, "neuron_fig2_pair.png")
+
+
+# ------------------------------------------------------------------ fig 5 ---
+
+def fig_ladder(P):
+    """One of the complete set at three scales, each window boxed in the
+    one before, at the file's own widths throughout."""
+    d, L = P["drawn"], P["layout"]
+    css = L["ladder_css"]
+    path = os.path.join(HERE, d["file"])
+    W = d["windows"]
+    fig = plt.figure(figsize=fig_size(NOTES, css["fig"][0] / css["fig"][1]))
+    axes = {}
+    for key in ("A", "B", "C"):
+        w = W[key]
+        ax = panel_axes(fig, css[key], css["fig"])
+        strip_top = frame(ax, w["centre_um"], w["um_per_px"], css[key])
+        # everything outside the window is clipped, so nothing can reach the
+        # strip; the audit checks the window really ends above it
+        x0, x1 = ax.get_xlim()
+        y1 = ax.get_ylim()[1]
+        clip = Rectangle((x0, strip_top), x1 - x0, y1 - strip_top, transform=ax.transData)
+        pts = draw_true(ax, path, d["diam_measured"], clip=clip)
+        if key == "A":
+            reserve_strip(ax, strip_top, pts, "ladder A")
+        else:
+            reserve_clip(ax, strip_top, strip_top, "ladder " + key)
+        scale_bar(ax, strip_top, w["um_per_px"], css[key])
+        axes[key] = (ax, strip_top)
+    # the boxes: B's window in A, C's in B
+    for parent, child in (("A", "B"), ("B", "C")):
+        window_box(axes[parent][0], W[child]["centre_um"], W[child]["window_um"][0], child)
+    # the fourth order: an axon of the thinnest calibre in the literature,
+    # drawn at its true width in C's strip beside the scale bar
+    axC, stripC = axes["C"]
+    upp = W["C"]["um_per_px"]
+    _, _, wpx, _ = css["C"]
+    em = P["ladder"]["thinnest_um"]
+    x0 = axC.get_xlim()[0] + wpx * upp * 0.50
+    ln = nice(0.30 * wpx * upp)
+    by = stripC - STRIP_PX * upp * 0.72
+    axC.add_patch(Rectangle((x0, by - em / 2), ln, em, color=DIM, lw=0, zorder=5, clip_on=False))
+    axC.annotate("an axon %s wide, by electron microscopy" % si(em), (x0 + ln / 2, by),
+                 xytext=(0, 4), textcoords="offset points", ha="center", va="bottom",
+                 fontsize=FS_2, color=DIM, zorder=5)
+    sitefig.panel(axes["A"][0], "A  the whole cell, %s end to end" % si(d["extent_xy_um"]))
+    sitefig.panel(axes["B"][0], "B  the box in A, %s across" % si(W["B"]["window_um"][0]))
+    sitefig.panel(axes["C"][0], "C  the box in B, %s across" % si(W["C"]["window_um"][0]))
+    sitefig.centre(fig)
+    return emit(fig, "neuron_fig5_ladder.png")
 
 
 # ------------------------------------------------------------------ fig 3 ---
@@ -294,13 +466,25 @@ def fig_tradeoff(P):
     S = P["scatter"]
     G = P["gradient"]
     fig, ax = plt.subplots(figsize=fig_size(NOTES, PLOT))
-    for wb, col, lab in ((False, ACC, "slice and culture"),
-                         (True, MOSS, "whole brain, in vivo")):
+    # Not ACC and MOSS here, deliberately. Figures 2 and 5 draw anatomy and
+    # give ACC to dendrite and MOSS to axon; this figure sits between them
+    # and colours *method*. On 2026-09-06 it used the same pair, which agreed
+    # by accident in figure 2 (the slice cell is nearly all dendrite, the
+    # whole-brain cell nearly all axon) and contradicted figure 5, where one
+    # cell is both. So method gets a pair with no hue in it: INK for whole
+    # brain and SLATE for slice and culture. Both clear the deslop palette
+    # floor for a graphic on the figure ground (3.0:1 - INK 14.5, SLATE 3.1)
+    # and against each other (4.65, which no two of the site's dark hues
+    # manage), and lightness survives a colour-blind reader. SLATE is drawn
+    # opaque because alpha would take it under the floor; INK goes on top.
+    # Do not "restore" ACC/MOSS here (HANDOFF s8, trap 15).
+    for wb, col, alpha, lab in ((False, SLATE, 1.0, "slice and culture"),
+                                (True, INK, .8, "whole brain, in vivo")):
         g = [s for s in S if s["whole_brain"] == wb]
         if not g:
             continue
         ax.scatter([s["reach_um"] for s in g], [s["modal_share"] for s in g],
-                   s=13, alpha=.55, c=col, linewidths=0,
+                   s=13, alpha=alpha, c=col, linewidths=0,
                    label="%s, n = %d" % (lab, len(g)))
     ax.set_xscale("log")
     xs = [s["reach_um"] for s in S]
@@ -354,7 +538,7 @@ def fig_cascade(P):
 def main():
     P = json.load(open(PAYLOAD, encoding="utf-8"))
     sitefig.style()
-    bad = fig_span(P) + fig_pair(P) + fig_tradeoff(P) + fig_cascade(P)
+    bad = fig_span(P) + fig_pair(P) + fig_tradeoff(P) + fig_cascade(P) + fig_ladder(P)
     print(f"  {bad} layout problem(s) in total")
     return bad
 

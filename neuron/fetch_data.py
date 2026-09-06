@@ -14,10 +14,17 @@ Three products, in the order they are built:
                         which dataset a cell came from, and the whole question
                         of whether a gradient exists needs more than two.
 
-  data/swc/<source>/    the two reconstructions figure 2 draws, and only
-                        those.  Everything else is discarded after its
-                        metrics are taken, because a figure needs two files
-                        and the repository does not need fifteen hundred.
+  data/complete_metrics.csv
+                        the reconstructions that pass all five constraints,
+                        opened and measured.  The cascade counts them from
+                        the archive's flags; this is what the files hold.
+
+  data/swc/<source>/    the three reconstructions the figures draw, and only
+                        those: the two in figure 2, and the one from the
+                        complete set that figure 5 draws at three scales.
+                        Everything else is discarded after its metrics are
+                        taken, because a figure needs a few files and the
+                        repository does not need fifteen hundred.
 
 Sources.  NeuroMorpho.Org v8.x, CC BY 4.0, no key: the REST API and the
 documented static paths under /dableFiles/.  Its HTML pages must not be
@@ -32,6 +39,8 @@ Run:  python3 fetch_data.py                   # everything, ~1 hour
       python3 fetch_data.py --sample 20       # a smaller SWC sample
       python3 fetch_data.py --exemplars-only  # re-choose the two cells figure 2
                                               # draws, from the saved metrics
+      python3 fetch_data.py --complete-only   # open the complete set again and
+                                              # re-choose the cell figure 5 draws
 """
 import argparse
 import csv
@@ -40,6 +49,7 @@ import hashlib
 import json
 import os
 import random
+import shutil
 import ssl
 import sys
 import time
@@ -353,6 +363,138 @@ def pick_exemplars(metrics, workdir=None):
     return kept
 
 
+# ----------------------------------------------------------- complete set ---
+
+def complete_set(workdir):
+    """Open every reconstruction that passes all five constraints.
+
+    The cascade counts the complete set from the archive's flags, and a flag
+    is the depositor's claim about a file, not a measurement of it.  This
+    downloads each of them, measures it with swclib, and keeps the metrics
+    in data/complete_metrics.csv beside the census fields that describe it.
+    The census carries no neuron_name - it was trimmed to the columns the
+    cascade reads - so the name is looked up by id, one API call per cell.
+
+    Returns the metric rows; nothing is kept in data/swc/ here.
+    """
+    import build_neuron
+    rows = build_neuron.read_census()
+    _, keep = build_neuron.cascade(rows)
+    print("  complete set: %d reconstructions pass all five flags" % len(keep))
+    out, missing = [], 0
+    for r in keep:
+        rec = fetch("%s/neuron/id/%s" % (NMO, r["neuron_id"]))
+        if not rec or not rec.get("neuron_name"):
+            missing += 1
+            continue
+        name, arch = rec["neuron_name"], rec["archive"]
+        body = fetch(swc_url(arch, name), raw=True)
+        if not body or len(body) < 200:
+            missing += 1
+            continue
+        p = os.path.join(workdir, "complete__%s__%s.swc" % (nmo_slug(arch), name.replace("/", "_")))
+        with open(p, "wb") as fh:
+            fh.write(body)
+        try:
+            m = swclib.metrics(p, source=nmo_slug(arch))
+        except Exception:                                         # noqa: BLE001
+            os.remove(p)
+            missing += 1
+            continue
+        m["archive"] = arch
+        m["neuron_name"] = name
+        m["neuron_id"] = r["neuron_id"]
+        m["species"] = r["species"]
+        m["cell_type"] = r["cell_type"]
+        m["brain_region"] = r["brain_region"]
+        m["doi"] = r["doi"]
+        m["protocol"] = r["protocol"]
+        m["whole_brain"] = nmo_slug(arch) in swclib.Z_TRUSTWORTHY
+        m["_path"] = p
+        out.append(m)
+    if missing:
+        # a partial set would let the page state a count that no longer
+        # matches the files it was measured on
+        raise SystemExit("complete set: %d of %d could not be opened; refusing to "
+                         "write a partial file" % (missing, len(keep)))
+    print("  complete set: %d files opened, %d pass the width rule"
+          % (len(out), sum(1 for m in out if m["diam_measured"])))
+    return out
+
+
+def write_complete(mets):
+    cols = ["archive", "neuron_name", "neuron_id", "species", "cell_type", "brain_region",
+            "doi", "protocol", "source", "whole_brain"]
+    cols += sorted(k for k in {k for m in mets for k in m} if k not in cols and k != "_path")
+    mpath = os.path.join(DATA, "complete_metrics.csv")
+    with open(mpath, "w", newline="", encoding="utf-8") as fh:
+        w = csv.DictWriter(fh, fieldnames=cols, extrasaction="ignore")
+        w.writeheader()
+        w.writerows(sorted(mets, key=lambda m: (m["archive"], m["neuron_name"])))
+    print("  complete metrics -> %s" % os.path.basename(mpath))
+    return mpath
+
+
+def pick_drawn(mets):
+    """The one reconstruction from the complete set that figure 5 draws.
+
+    By rule, not by eye, and every step of the rule is computed from the set
+    itself: take the largest single-paper group among the complete set - the
+    DOI the page already cites as the one that states its shrinkage
+    correction - drop any file that fails the width rule when opened, and
+    take the cell closest to that group's median reach and axon length, the
+    same distance pick_exemplars() uses.  So the drawn cell is the ordinary
+    member of the group the page's correction claim rests on, not the most
+    photogenic file in the archive.
+    """
+    import statistics as st
+    doi = Counter(m["doi"] for m in mets if m["doi"])
+    top_doi, top_n = doi.most_common(1)[0]
+    g = [m for m in mets if m["doi"] == top_doi and m["diam_measured"]
+         and m.get("max_radial_um") and m.get("len_axon_um")]
+    mr = st.median([m["max_radial_um"] for m in g])
+    ma = st.median([m["len_axon_um"] for m in g])
+    best = min(g, key=lambda m: (abs(m["max_radial_um"] - mr) / mr) ** 2
+               + (abs(m["len_axon_um"] - ma) / ma) ** 2)
+    return best, {"doi": top_doi, "n_with_doi": top_n, "n_pass_width": len(g),
+                  "median_reach_um": mr, "median_axon_um": ma}
+
+
+def keep_drawn(mets):
+    """Copy the drawn cell's file into data/swc/<archive>/ and describe it."""
+    best, rule = pick_drawn(mets)
+    src = nmo_slug(best["archive"])
+    d = os.path.join(SWC, src)
+    os.makedirs(d, exist_ok=True)
+    dst = os.path.join(d, "%s.swc" % best["neuron_name"].replace("/", "_"))
+    shutil.copyfile(best["_path"], dst)
+    print("    drawn  %-22s %-10s reach %6.0f um  axon %8.0f um  %d widths"
+          % (best["neuron_name"], best["archive"], best["max_radial_um"],
+             best["len_axon_um"], best["n_distinct_diam"]))
+    return {"file": os.path.relpath(dst, HERE).replace("\\", "/"),
+            "neuron": best["neuron_name"], "neuron_id": best["neuron_id"],
+            "archive": best["archive"], "species": best["species"],
+            "cell_type": best["cell_type"], "brain_region": best["brain_region"],
+            "doi": best["doi"], "protocol": best["protocol"], "rule": rule}
+
+
+def clear_kept(src):
+    d = os.path.join(SWC, src)
+    if os.path.isdir(d):
+        for f in os.listdir(d):
+            os.remove(os.path.join(d, f))
+
+
+def manifest_hashes(man):
+    files = [os.path.join(DATA, "neurons.csv.gz"), os.path.join(DATA, "swc_metrics.csv"),
+             os.path.join(DATA, "complete_metrics.csv")]
+    files += [os.path.join(HERE, v["file"]) for v in man.get("exemplars", {}).values()]
+    if man.get("drawn"):
+        files.append(os.path.join(HERE, man["drawn"]["file"]))
+    return {os.path.relpath(p, HERE).replace("\\", "/"): sha256(p)
+            for p in files if os.path.exists(p)}
+
+
 # ---------------------------------------------------------------- manifest ---
 
 def sha256(path):
@@ -371,6 +513,9 @@ def main():
     ap.add_argument("--exemplars-only", action="store_true",
                     help="re-choose and re-download the two cells figure 2 draws, "
                          "from the metrics already in data/")
+    ap.add_argument("--complete-only", action="store_true",
+                    help="open the complete set again, rewrite data/complete_metrics.csv "
+                         "and re-choose the cell figure 5 draws")
     a = ap.parse_args()
 
     os.makedirs(DATA, exist_ok=True)
@@ -378,23 +523,33 @@ def main():
     workdir = os.path.join(DATA, "_work")
     os.makedirs(workdir, exist_ok=True)
     cpath = os.path.join(DATA, "neurons.csv.gz")
+    mpath_man = os.path.join(DATA, "manifest.json")
 
     if a.exemplars_only:
         import build_neuron
         mets = build_neuron.read_metrics()
-        for src in os.listdir(SWC):
-            d = os.path.join(SWC, src)
-            for f in os.listdir(d):
-                os.remove(os.path.join(d, f))
+        man = json.load(open(mpath_man, encoding="utf-8"))
+        for src in man.get("exemplars", {}):
+            clear_kept(src)
         kept = pick_exemplars(mets)
-        mpath = os.path.join(DATA, "swc_metrics.csv")
-        man = json.load(open(os.path.join(DATA, "manifest.json"), encoding="utf-8"))
         man["exemplars"] = kept
-        man["sha256"] = {os.path.relpath(p, HERE).replace("\\", "/"): sha256(p)
-                         for p in [cpath, mpath]
-                         + [os.path.join(HERE, v["file"]) for v in kept.values()]}
-        json.dump(man, open(os.path.join(DATA, "manifest.json"), "w", encoding="utf-8"),
-                  indent=1)
+        man["sha256"] = manifest_hashes(man)
+        json.dump(man, open(mpath_man, "w", encoding="utf-8"), indent=1)
+        print("  manifest updated")
+        return 0
+
+    if a.complete_only:
+        man = json.load(open(mpath_man, encoding="utf-8"))
+        comp = complete_set(workdir)
+        write_complete(comp)
+        if man.get("drawn"):
+            clear_kept(nmo_slug(man["drawn"]["archive"]))
+        man["drawn"] = keep_drawn(comp)
+        man["sha256"] = manifest_hashes(man)
+        json.dump(man, open(mpath_man, "w", encoding="utf-8"), indent=1)
+        for f in os.listdir(workdir):
+            os.remove(os.path.join(workdir, f))
+        os.rmdir(workdir)
         print("  manifest updated")
         return 0
 
@@ -422,6 +577,9 @@ def main():
     print("  metrics -> %s" % os.path.basename(mpath))
 
     kept = pick_exemplars(mets)
+    comp = complete_set(workdir)
+    write_complete(comp)
+    drawn = keep_drawn(comp)
 
     man = {
         "retrieved": time.strftime("%Y-%m-%d", time.gmtime()),
@@ -440,17 +598,17 @@ def main():
         "seed": SEED, "archives_sampled": ARCHIVES, "per_archive": a.sample,
         "n_sampled": len(mets),
         "exemplars": kept,
-        "sha256": {os.path.relpath(p, HERE).replace("\\", "/"): sha256(p)
-                   for p in [cpath, mpath] + [os.path.join(HERE, v["file"]) for v in kept.values()]},
+        "drawn": drawn,
     }
-    with open(os.path.join(DATA, "manifest.json"), "w", encoding="utf-8") as fh:
+    man["sha256"] = manifest_hashes(man)
+    with open(mpath_man, "w", encoding="utf-8") as fh:
         json.dump(man, fh, indent=1)
     print("  manifest -> data/manifest.json")
 
     for f in os.listdir(workdir):
         os.remove(os.path.join(workdir, f))
     os.rmdir(workdir)
-    print("  working files discarded; %d SWC kept" % len(kept))
+    print("  working files discarded; %d SWC kept" % (len(kept) + 1))
     return 0
 
 

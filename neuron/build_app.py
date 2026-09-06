@@ -15,14 +15,21 @@ import os
 def payload_for_app(p):
     c = p["cascade"]
     k = p["the_complete"]
+    o = k["opened"]
+    d = p.get("drawn") or {}
     return {
         "total": c["n_total"],
         "constraints": [{"key": a["key"], "label": a["label"], "n": a["n"]}
                         for a in c["alone"]],
         "subsets": c["subsets"],
-        "all_note": ("These %d come from %d laboratories, contain no human cell, and are "
-                     "almost all cells whose axon never leaves the neighbourhood."
-                     % (k["n"], k["n_labs"])),
+        # the flags say 104; the files say less, and the page draws one
+        "all_note": ("These %d come from %d laboratories and contain no human cell. Opened, "
+                     "%d of them pass the page's width rule and %d hold a single width "
+                     "despite the flag. One of the %d is drawn at three scales on "
+                     "<a href=\"neuron.html\">the page</a>%s."
+                     % (k["n"], k["n_labs"], o["n_pass_width"], o["n_single_width"],
+                        o["n_pass_width"],
+                        (": %s, from the %s archive" % (d["neuron"], d["archive"])) if d else "")),
         "foot": ("Every reconstruction in NeuroMorpho.Org v8.x, retrieved %s, counted from the "
                  "archive's own metadata. The counts are the archive's claims about its files, "
                  "not measurements of them. "

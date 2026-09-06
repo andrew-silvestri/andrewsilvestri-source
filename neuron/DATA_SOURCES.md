@@ -25,7 +25,26 @@ on every point, and the standardised copy carries one value for neurites and
 another for the soma. Both versions are downloadable, at
 `/dableFiles/<archive>/CNG version/<name>.CNG.swc` and
 `/dableFiles/<archive>/Source-Version/<name>.swc`, with that capitalisation
-exactly.
+exactly. Not every archive has a Source-Version: Feldmeyer and Petersen
+return 404 for it, so the cell figure 5 draws (Feldmeyer, `BC150319A_28`) is
+the CNG copy in the archive's orientation, and the page says so. Where both
+exist (Ascoli) they agree on every metric `swclib` computes.
+
+**The complete set, opened.** The 104 reconstructions that pass all five
+constraints are counted from the archive's flags and then every one of them
+is downloaded and measured (`fetch_data.py --complete-only`,
+`data/complete_metrics.csv`). The census carries no `neuron_name`, so each is
+resolved through `/api/neuron/id/<neuron_id>` first. Fifteen of the 104 are
+the Petersen archive's in vivo L2 projection cells, published under
+
+> Yamashita, Vavladeli, Pala, Galan, Crochet, Petersen & Petersen,
+> *Frontiers in Neuroanatomy* 12:33, 2018, doi:10.3389/fnana.2018.00033
+> (CC BY 4.0)
+
+whose full text contains no statement about shrinkage or a correction and
+describes its axon tracing as possibly incomplete; the archive's *Corrected*
+and *Axon Complete* fields on those files are curation values, and the page
+treats them as such.
 
 **Allen Cell Types Database**, through the Allen Institute API
 (`http://api.brain-map.org/api/v2/data/query.json`, no key). Fetched

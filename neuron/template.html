@@ -20,7 +20,7 @@ try{document.documentElement.dataset.motion=matchMedia('(prefers-reduced-motion:
 different place, is every reconstruction in the public archive. Computed for
 all {{n_total}} of them.</p>
 
-<aside class="marginalia" style="grid-row: span {{span}}" aria-label="On this page"><p class="lab">On this page</p><ul><li><b>reconstructions</b><span class="v">{{n_total}}</span></li><li><b>with soma, dendrite and axon</b><span class="v">{{n_parts}}</span></li><li><b>with no measured width</b><span class="v">{{pc_nodiam}}%</span></li><li><b>corrected for shrinkage</b><span class="v">{{pc_shrink}}%</span></li><li><b>with all five</b><span class="v">{{n_complete}}</span></li></ul></aside>
+<aside class="marginalia" style="grid-row: span {{span}}" aria-label="On this page"><p class="lab">On this page</p><ul><li><b>reconstructions</b><span class="v">{{n_total}}</span></li><li><b>with soma, dendrite and axon</b><span class="v">{{n_parts}}</span></li><li><b>with no measured width</b><span class="v">{{pc_nodiam}}%</span></li><li><b>corrected for shrinkage</b><span class="v">{{pc_shrink}}%</span></li><li><b>with all five</b><span class="v">{{n_complete}}</span></li><li><b>of those, opened, with a measured width</b><span class="v">{{opened_pass}}</span></li></ul></aside>
 <aside class="marginalia right" style="grid-row: span {{span}}"><ul><li><b>one cell spans</b><span class="v">{{span_orders}} orders</span></li><li><b>a figure holds</b><span class="v">about 3</span></li><li><b>thinnest axon</b><span class="v">{{span_thinnest}}</span></li><li><b>at 1000 px it is</b><span class="v">{{span_px}} px</span></li></ul></aside>
 
 <p>A neuron in a textbook has a round body, a few branches at the top and a
@@ -37,7 +37,11 @@ records, for each reconstruction, which parts of the cell it contains, whether
 its widths were measured, whether it is three-dimensional, whether its axon
 was followed to the end, and whether anyone corrected for the tissue shrinking
 under the microscope. Requiring all five leaves {{n_complete}} files out of
-{{n_total}}, which is {{pc_complete}}% of them.</p>
+{{n_total}}, which is {{pc_complete}}% of them. That is the archive's count.
+Opened, {{opened_pass}} of the {{n_complete}} pass this page's own test for
+a measured width, {{opened_single}} hold a single width for the entire arbor
+despite the flag that says otherwise, and one of them is drawn below at three
+scales.</p>
 
 <div class="card"><div class="tag">Interactive</div><h3 style="margin-top:4px">What a drawing at true proportions needs</h3><p>The five requirements, and what each one costs. Tick them in any order: the
 order changes the answer, because a reconstruction that has been corrected for
@@ -73,18 +77,22 @@ was prepared rather than by anyone's preference. A cell recorded in a slice
 sits in a piece of brain a third of a millimetre thick; its widths can be
 measured, and its axon is cut off by the blade. A cell traced through a whole brain keeps its axon, and nobody measured its widths.</p>
 
-<img class="fig wide" src="assets/neuron_fig2_pair.png" loading="lazy" width="0" height="0" alt="Two reconstructions side by side, each at its own scale with a scale bar. The left is a slice reconstruction with varying line widths and almost no axon. The right is a whole-brain reconstruction with a long branching axon drawn at a single uniform width.">
-<p class="small">Two real files. Left: {{allen_archive}}, {{allen_dend}} of
-dendrite and {{allen_axon}} of axon, drawn at {{allen_distinct}} distinct
-widths because that is how many the file records. Right: {{ml_archive}},
-{{ml_axon}} of axon reaching {{ml_reach}} from the soma, drawn at one width
-because the file contains one.</p>
+<img class="fig wide" src="assets/neuron_fig2_pair.png" loading="lazy" width="0" height="0" alt="Left: two reconstructions in one frame at one scale, a whole-brain cell with a long looping axon drawn as a hairline, and beside it, inside a small box, a slice cell a fraction of its size. Right: the box opened, the slice cell at its own scale with its recorded widths drawn, dendrite in blue and axon in brown, with a scale bar.">
+<p class="small">Two real files at one scale, {{pair_upp}} per pixel. The
+large cell is {{ml_archive}}: {{ml_axon}} of axon reaching {{ml_reach}} from
+the soma, a hairline because the file holds one width. In the box beside it
+is {{allen_archive}}: {{allen_dend}} of dendrite and {{allen_axon}} of axon,
+{{pair_ratio}} times smaller end to end and {{pair_allen_px}} pixels wide at
+this size, its soma {{pair_allen_soma_px}} of a pixel. Right: the box opened,
+at {{pair_own_upp}} per pixel, with the {{allen_distinct}} recorded widths
+drawn at their true size, dendrite in blue and axon in brown; where a width
+is thinner than a pixel, a fainter hairline carries the shape.</p>
 
-<p>The cell on the right carries {{ml_axon}} of axon. The cell on the left
-carries {{allen_axon}}, and it is the kind of picture that a search for a
-cortical neuron returns. Neither is wrong. Each is missing the half the other
-has, and the halves cannot be added, because they come from different animals
-prepared in different ways.</p>
+<p>The large cell carries {{ml_axon}} of axon. The cell in the box carries
+{{allen_axon}}, and it is the kind of picture that a search for a cortical
+neuron returns. Neither is wrong. Each is missing the half the other has, and
+the halves cannot be added, because they come from different animals prepared
+in different ways.</p>
 
 <h2>What the archive contains</h2>
 
@@ -144,6 +152,52 @@ corrected corner of the archive is not a slow accumulation of good practice
 across the field. It is a few groups that correct as a matter of protocol, and
 their cells.</p>
 
+<img class="fig wide" src="assets/neuron_fig5_ladder.png" loading="lazy" width="0" height="0" alt="One reconstruction at three scales. Panel A, the whole cell as a hairline drawing with a small box near its centre. Panel B, the contents of that box ten times larger: dendrites in blue now drawn with visible thickness, axon in brown still a hairline, and a smaller box around the soma. Panel C, that box opened: the soma as a large disc with dendrites and axon leaving it at their recorded widths, a scale bar, and beside the bar a thin line showing an axon of the thinnest calibre in the literature at the same scale.">
+<p class="small">One of the {{n_complete}}, at the widths its file records.
+{{drawn_name}} from the {{drawn_archive}} archive: a {{drawn_species}}
+{{drawn_type}} in {{drawn_region}}, with {{drawn_axon}} of axon and
+{{drawn_dend}} of dendrite, corrected for shrinkage by the factors its paper
+states. Dendrite in blue, axon in brown, each width drawn at its recorded
+size; where a width is thinner than a pixel a fainter hairline carries the
+shape. A: the whole cell at {{ladder_a_upp}} per pixel,
+{{ladder_a_sentence}}. B: the box in A at {{ladder_b_upp}} per pixel, where
+{{ladder_b_dend_ink}}% of the dendrite's length is wider than a pixel and
+{{ladder_b_axon_ink}}% of the axon's is. C: the box in B at {{ladder_c_upp}}
+per pixel, where every width shows; beside the scale bar is an axon
+{{span_thinnest}} wide, the electron-microscopy figure the page's span is
+computed from, at the same scale. The orientation is the archive's
+standardised one, not the tissue's.</p>
+
+<p>The file holds {{drawn_widths_file}} distinct widths: {{drawn_axon_distinct}}
+on the axon, {{drawn_dend_distinct}} on the dendrites, of which
+{{drawn_widths_shared}} appear on both, so the neurites between them hold
+{{drawn_widths_union}}; the last is the soma's own, {{drawn_soma_width}},
+which is drawn as the disc in every panel but belongs to neither compartment
+and is not part of the width test. Of the axon's {{drawn_axon}},
+{{drawn_axon_modal_pc}}% run at one value, {{drawn_axon_modal}}, which is
+about what visible light can resolve; the dendrites' widths run from
+{{drawn_dend_wmin}} to {{drawn_dend_wmax}}. So even in the corrected corner of the archive the
+axon's width is a floor and the dendrite's is a measurement, which is why
+panel B shows dendrite in ink and axon as a hairline. The cell was chosen by
+rule rather than by eye: the largest single-paper group among the
+{{n_complete}}, less the {{drawn_rule_fail}} file in it that fails the width
+test when opened, and then the cell nearest that group's median reach and
+axon length. End to end it spans {{drawn_extent}}; the whole-brain cell in
+the second figure spans {{ml_x_drawn}} times that.</p>
+
+<p>The {{n_complete}} also contain {{proj_n}} cells that look like the thing
+this page says no file holds: {{proj_species}} pyramidal cells from
+{{proj_region}}, filled {{proj_protocol}}, with {{proj_axon_min}} to
+{{proj_axon_max}} of axon reaching {{proj_reach_min}} to {{proj_reach_max}}
+from the soma and {{proj_distinct_min}} to {{proj_distinct_max}} recorded
+widths, flagged in the archive as corrected for shrinkage and as having a
+complete axon. All {{proj_n}} come from one paper, and that paper contains no
+statement about shrinkage or a correction; on completeness it says that some
+axons might have been incompletely traced, and that in most cases the
+callosal axon was lost inside the fibre tract. The flags are the archive's
+curation fields, not the authors' claims, and they are the reason every count
+on this page is read from the files as well as from the metadata.</p>
+
 <p>That is what the question on this page looks like when it is made
 concrete. Not whether a picture is accurate, but how far you have to go before
 the number under it was measured by someone, on purpose, and written down.</p>
@@ -179,7 +233,10 @@ measurements of them. That distinction is not decorative: a reconstruction is
 flagged as having a measured width if its widths are not all identical, and
 that test passes a file holding three values. Every width statement on this
 page is therefore computed from the files, using a stricter rule that is
-stated in the code and labelled <em>assumed</em> in the payload.</p>
+stated in the code and labelled <em>assumed</em> in the payload. Applied to
+the {{n_complete}} themselves, that rule fails {{opened_fail}} of them
+({{opened_fails_by}}), and {{opened_single}} of those hold one width for the
+whole arbor and carry the flag anyway.</p>
 
 <p>Nor can you always tell what a file's numbers mean. An SWC file has seven
 columns and none of them is a unit: the convention is micrometres, and there
@@ -230,8 +287,12 @@ covers local axon only; a long-range projection is lost entirely.</p>
 
 <p>Depth is the one thing no figure here uses. Reconstructions made in slices
 are distributed without a shrinkage correction, and tissue prepared this way
-loses roughly half its thickness &mdash; {{zshrink}} in the preparation these files come from. The archive that supplies the widths handled this by leaving depth-derived measurements out of its own analysis rather than by correcting the coordinates. So both drawings on this page are flat projections, and the
-code that reads them returns two columns rather than three.</p>
+loses roughly half its thickness &mdash; {{zshrink}} in the preparation these files come from. The archive that supplies the widths handled this by leaving depth-derived measurements out of its own analysis rather than by correcting the coordinates. So every drawing on this page is a flat projection, and the
+code that reads them returns two columns rather than three. The cell drawn
+from the complete set is also shown as the archive standardises it, with the
+soma at the origin and the axes rotated onto the principal components of the
+coordinates, which is not the orientation of the tissue; the depositor's own
+file is not distributed for that archive.</p>
 
 <hr>
 
@@ -241,13 +302,14 @@ code that reads them returns two columns rather than three.</p>
 API. <code>fetch_data.py</code> takes the census and the sample and records a
 hash of each; <code>swclib.py</code> parses the reconstructions and holds the
 rule about depth; <code>build_neuron.py</code> computes the payload and builds
-the interactive; <code>fig_neuron.py</code> draws the four figures;
+the interactive; <code>fig_neuron.py</code> draws the five figures;
 <code>update_page.py</code> writes this page from the payload;
 <code>test_neuron.py</code> checks the failure modes, including the parser
 against a fixture whose every quantity was worked out by hand. The archive
-holds the scripts, the frozen census and the two reconstructions the second
-figure draws; it does not hold the fifteen hundred files the sample was
-computed from, which the fetch script will pull again.</p>
+holds the scripts, the frozen census, the measurements of the {{n_complete}}
+files that were opened, and the three reconstructions the figures draw; it
+does not hold the fifteen hundred files the sample was computed from, which
+the fetch script will pull again.</p>
 
 <p><a class="btn" href="downloads/neuron-code.zip">Download source · {{zipsize}}</a>
 <a class="btn ghost" href="code.html">All code</a></p>

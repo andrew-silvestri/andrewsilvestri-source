@@ -158,6 +158,12 @@ PAGES = {
          'doi:10.1016/j.cell.2019.07.042.',
          "Whole-brain single-neuron reconstruction; more than 85 m of axon across "
          "more than 1,000 projection neurons."),
+        ("come from one paper",
+         'Yamashita, Vavladeli, Pala, Galan, Crochet, Petersen &amp; Petersen, '
+         '<i>Frontiers in Neuroanatomy</i> 12:33, 2018, doi:10.3389/fnana.2018.00033.',
+         "The projection cells in the complete set; its full text contains no "
+         "statement about shrinkage or a correction, and describes its axon tracing "
+         "as possibly incomplete. CC BY 4.0."),
         ("The published figure for that is",
          'van Pelt, van Ooyen &amp; Uylings, <i>Frontiers in Neuroanatomy</i> '
          '8:54, 2014, doi:10.3389/fnana.2014.00054.',

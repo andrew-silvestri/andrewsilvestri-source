@@ -40,6 +40,13 @@ The failure modes this project is exposed to.
    by hand, and - with --network - against L-Measure's independent
    computation of the same quantities on the same bytes.
 
+8. The drawn cell drifts from its file, or the complete set from its
+   measurements. The page draws one of the complete set at three scales and
+   states what each window holds; the file is hashed in the manifest, the
+   selection rule must re-pick it from data/complete_metrics.csv, the
+   windows and the "under one pixel" shares must fall out of the file again,
+   and the opened-set summary the page quotes must fall out of the CSV.
+
 Run:  python3 test_neuron.py [--network]
 """
 import argparse
@@ -120,22 +127,25 @@ def main():
 
     # -- 1. z provenance ----------------------------------------------------
     print("1. no slice-derived z reaches a figure")
-    slice_file = None
-    for src, d in P["pair"].items():
+    drawn_files = dict(P["pair"])
+    if P.get("drawn"):
+        drawn_files["drawn"] = P["drawn"]
+    slice_files = []
+    for src, d in drawn_files.items():
         p = os.path.join(HERE, d["file"])
         drawable = swclib.source_of(p) in swclib.Z_TRUSTWORTHY
         check("payload's z_drawable for %s matches its directory" % src,
               d["z_drawable"] == drawable, "declared %s, path says %s"
               % (d["z_drawable"], drawable))
         if not drawable:
-            slice_file = p
-    if slice_file:
+            slice_files.append((src, p))
+    for src, p in slice_files:
         try:
-            swclib.load_xyz(slice_file)
-            check("load_xyz refuses a slice reconstruction", False, "it returned data")
+            swclib.load_xyz(p)
+            check("load_xyz refuses the %s slice reconstruction" % src, False, "it returned data")
         except swclib.ZProvenanceError:
-            check("load_xyz refuses a slice reconstruction", True)
-    else:
+            check("load_xyz refuses the %s slice reconstruction" % src, True)
+    if not slice_files:
         check("a slice reconstruction is present to test the guard with", False)
 
     check("load_xy returns two columns", swclib.load_xy(swclib.FIXTURE).shape[1] == 2)
@@ -146,7 +156,7 @@ def main():
 
     # -- 2. diameter provenance --------------------------------------------
     print("2. no fabricated thickness is drawn as if it varied")
-    for src, d in P["pair"].items():
+    for src, d in drawn_files.items():
         mm = swclib.metrics(os.path.join(HERE, d["file"]))
         want = swclib.measured_diameter(mm["n_distinct_diam"], mm["frac_len_modal_diam"])
         check("%s: diam_measured matches the file" % src, d["diam_measured"] == want,
@@ -185,6 +195,52 @@ def main():
     check("the commonest DOI and its share", got["top_doi"] == want["top_doi"]
           and got["top_doi_n"] == want["top_doi_n"],
           "%d of %d carry %s" % (got["top_doi_n"], got["n"], got["top_doi"]))
+
+    # -- 8. the complete set, opened, and the drawn cell --------------------
+    print("8. the opened set and the drawn cell reproduce from their files")
+    import hashlib
+    import fetch_data
+    comp = B.read_complete()
+    check("one measured row per file the cascade leaves", len(comp) == casc["n_complete"],
+          "%d rows for %d" % (len(comp), casc["n_complete"]))
+    check("the opened-set summary reproduces", B.opened(comp) == want["opened"],
+          "%d pass the width rule, %d hold one width"
+          % (want["opened"]["n_pass_width"], want["opened"]["n_single_width"]))
+
+    def sha(p):
+        return hashlib.sha256(open(p, "rb").read()).hexdigest()
+    for rel in ("data/complete_metrics.csv",) + tuple(d["file"] for d in drawn_files.values()):
+        check("%s matches its hash in the manifest" % rel,
+              sha(os.path.join(HERE, rel)) == P["manifest_sha256"].get(rel))
+    d = P.get("drawn")
+    if not d:
+        check("a drawn cell is in the payload", False)
+    else:
+        best, rule = fetch_data.pick_drawn(comp)
+        check("the selection rule re-picks the drawn cell",
+              best["neuron_name"] == d["neuron"] and best["archive"] == d["archive"],
+              "%s from %s; %d of %d with the DOI pass the width rule"
+              % (best["neuron_name"], best["archive"], rule["n_pass_width"], rule["n_with_doi"]))
+        p = os.path.join(HERE, d["file"])
+        mm = swclib.metrics(p)
+        check("the drawn cell's metrics reproduce from its file",
+              all(abs(mm[a] - d[b]) < 1e-6 for a, b in
+                  (("max_radial_um", "reach_um"), ("len_axon_um", "axon_um"),
+                   ("len_dend_um", "dend_um"), ("soma_diam_um", "soma_diam_um")))
+              and mm["n_distinct_diam"] == d["n_distinct_diam"])
+        check("the drawn cell passes the width rule", d["diam_measured"] is True
+              and swclib.measured_diameter(mm["n_distinct_diam"], mm["frac_len_modal_diam"]))
+        check("the three windows and their under-a-pixel shares reproduce",
+              B.ladder_windows(p) == d["windows"],
+              "; ".join("%s %.0f%%" % (k, 100 * w["share_under_one_px"])
+                        for k, w in d["windows"].items()))
+        boxes = [tuple(w["box_css"]) for w in d["windows"].values()]
+        check("the windows are drawn from the boxes the shares were computed at",
+              boxes == [tuple(B.LADDER_CSS[k]) for k in ("A", "B", "C")])
+        check("the pair's shared frame reproduces",
+              B.pair_geometry(P["pair"]) == P["pair_geometry"],
+              "%.1fx; the slice cell is %.0f px wide"
+              % (P["pair_geometry"]["extent_ratio"], P["pair_geometry"]["allen_px_in_shared"]))
 
     # -- 5. the gradient verdict -------------------------------------------
     print("5. the page's gradient sentence follows from the rule")

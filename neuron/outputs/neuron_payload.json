@@ -4,8 +4,10 @@
  "manifest_sha256": {
   "data/neurons.csv.gz": "97ffaa19e93cf728e9ea036c4beb891380b2b238d26e93c5acd8a58a5173a7e5",
   "data/swc_metrics.csv": "9fce741c425562ef244a3917ad3cef96c1d5ff8a7330391a0f448eb790e50a41",
+  "data/complete_metrics.csv": "fd5b358cb70006ab1a68bdcf0722a2e31e5cfe2f37987a4bd72423f04c7ac536",
   "data/swc/allen/471800189.swc": "823758f75b4d697583a0dc1e76693118c2deeee43055d2c08bd0330e45c0fed0",
-  "data/swc/mouselight/AA0490.swc": "1fb55d7cd6375d5d3c93153f1d464e85b4bab6286928316b07375f332548a537"
+  "data/swc/mouselight/AA0490.swc": "1fb55d7cd6375d5d3c93153f1d464e85b4bab6286928316b07375f332548a537",
+  "data/swc/feldmeyer/BC150319A_28.swc": "c7d973c995a460eb1190e7daaaa1fe590de7b113596f092bd5844e96a495f8f2"
  },
  "seed": 1,
  "cascade": {
@@ -174,7 +176,54 @@
   "has_human": false,
   "top_doi": "10.1093/cercor/bhx352",
   "top_doi_n": 48,
-  "top_doi_share": 0.4615
+  "top_doi_share": 0.4615,
+  "opened": {
+   "n": 104,
+   "n_pass_width": 82,
+   "n_fail_width": 22,
+   "fails_by_archive": [
+    {
+     "archive": "Conte",
+     "n": 20
+    },
+    {
+     "archive": "Feldmeyer",
+     "n": 1
+    },
+    {
+     "archive": "Turner",
+     "n": 1
+    }
+   ],
+   "n_single_width": 2,
+   "single_width_archives": [
+    "Conte"
+   ],
+   "projection": {
+    "n_all": 16,
+    "n": 15,
+    "archives": [
+     "Petersen"
+    ],
+    "species": [
+     "mouse"
+    ],
+    "regions": [
+     "neocortex|somatosensory|barrel|C2|layer 2|primary somatosensory"
+    ],
+    "protocols": [
+     "in vivo"
+    ],
+    "doi": "10.3389/fnana.2018.00033",
+    "reach_min_um": 2102.8,
+    "reach_max_um": 6457.4,
+    "axon_min_um": 45496.7,
+    "axon_max_um": 74166.4,
+    "distinct_min": 20,
+    "distinct_max": 71,
+    "n_pass_width": 15
+   }
+  }
  },
  "tradeoff_metadata": {
   "axon_complete": 36582,
@@ -12860,6 +12909,203 @@
    "z_drawable": true
   }
  },
+ "pair_geometry": {
+  "extent_ratio": 13.63,
+  "shared_um_per_px": 14.7476,
+  "own_um_per_px": 2.2715,
+  "allen_px_in_shared": 27.7,
+  "allen_soma_px_in_shared": 0.9,
+  "gap_um": 334.3,
+  "allen_span_um": [
+   394.4,
+   408.9
+  ],
+  "mouselight_span_um": [
+   5572.4,
+   5132.7
+  ]
+ },
+ "drawn": {
+  "widths": {
+   "axon": 10,
+   "dendrite": 18,
+   "shared": 7,
+   "neurite_union": 21,
+   "soma": 1,
+   "file": 22,
+   "soma_drawn": true,
+   "soma_in_width_rule": false
+  },
+  "file": "data/swc/feldmeyer/BC150319A_28.swc",
+  "neuron": "BC150319A_28",
+  "neuron_id": "109107",
+  "archive": "Feldmeyer",
+  "species": "rat",
+  "cell_type": [
+   "interneuron",
+   "Non-fast spiking",
+   "Martinotti-like",
+   "supragranular projecting"
+  ],
+  "brain_region": [
+   "neocortex",
+   "somatosensory",
+   "barrel",
+   "layer 4"
+  ],
+  "doi": "10.1093/cercor/bhx352",
+  "protocol": "in vitro",
+  "rule": {
+   "doi": "10.1093/cercor/bhx352",
+   "n_with_doi": 48,
+   "n_pass_width": 47,
+   "median_reach_um": 724.6116,
+   "median_axon_um": 37147.462
+  },
+  "source": "feldmeyer",
+  "z_drawable": false,
+  "reach_um": 724.6116,
+  "axon_um": 37147.462,
+  "dend_um": 3565.3213,
+  "soma_diam_um": 20.3342,
+  "extent_xy_um": 1274.8,
+  "n_distinct_diam": 21,
+  "frac_len_modal_diam": 0.580329,
+  "diam_measured": true,
+  "axon": {
+   "len_um": 37147.5,
+   "n_distinct_diam": 10,
+   "diam_min_um": 0.24,
+   "diam_max_um": 2.1,
+   "modal_diam_um": 0.24,
+   "frac_len_modal": 0.636
+  },
+  "dendrite": {
+   "len_um": 3565.3,
+   "n_distinct_diam": 18,
+   "diam_min_um": 0.41,
+   "diam_max_um": 3.15,
+   "modal_diam_um": 0.65,
+   "frac_len_modal": 0.2754
+  },
+  "orders_to_em": 3.88,
+  "windows": {
+   "A": {
+    "box_css": [
+     8,
+     30,
+     316,
+     522
+    ],
+    "window_um": [
+     994.75,
+     1402.34
+    ],
+    "centre_um": [
+     -167.71,
+     -26.465
+    ],
+    "um_per_px": 3.14795,
+    "share_under_one_px": 0.9994,
+    "axon_under_one_px": 1.0,
+    "dendrite_under_one_px": 0.9932,
+    "soma_px": 6.46,
+    "thinnest_em_px": 0.054
+   },
+   "B": {
+    "box_css": [
+     354,
+     30,
+     352,
+     250
+    ],
+    "window_um": [
+     140.23,
+     140.23
+    ],
+    "centre_um": [
+     0.0,
+     -0.003
+    ],
+    "um_per_px": 0.63168,
+    "share_under_one_px": 0.9472,
+    "axon_under_one_px": 0.9982,
+    "dendrite_under_one_px": 0.416,
+    "soma_px": 32.19,
+    "thinnest_em_px": 0.269
+   },
+   "C": {
+    "box_css": [
+     354,
+     310,
+     352,
+     250
+    ],
+    "window_um": [
+     30.5,
+     30.5
+    ],
+    "centre_um": [
+     0.0,
+     -0.003
+    ],
+    "um_per_px": 0.13739,
+    "share_under_one_px": 0.0,
+    "axon_under_one_px": 0.0,
+    "dendrite_under_one_px": 0.0,
+    "soma_px": 148.0,
+    "thinnest_em_px": 1.237
+   }
+  }
+ },
+ "layout": {
+  "display_px": 714,
+  "strip_px": 28,
+  "hairline_pt": 0.5,
+  "ladder_css": {
+   "fig": [
+    714,
+    560
+   ],
+   "A": [
+    8,
+    30,
+    316,
+    522
+   ],
+   "B": [
+    354,
+    30,
+    352,
+    250
+   ],
+   "C": [
+    354,
+    310,
+    352,
+    250
+   ]
+  },
+  "pair_css": {
+   "fig": [
+    714,
+    458
+   ],
+   "shared": [
+    8,
+    30,
+    470,
+    420
+   ],
+   "own": [
+    508,
+    30,
+    198,
+    226
+   ],
+   "gap_um_frac": 0.06
+  }
+ },
  "ladder": {
   "extent_um": 4353.2,
   "thinnest_um": 0.17,
@@ -13180,6 +13426,18 @@
   "swc_format": {
    "value": "seven columns; type 1 soma, 2 axon, 3 basal dendrite, 4 apical dendrite",
    "source": "Cannon, Turner, Pyapali & Wheal, J Neurosci Methods 84(1-2):49-54, 1998, doi:10.1016/S0165-0270(98)00091-0"
+  },
+  "projection_cells_paper": {
+   "value": "the paper behind the projection cells in the complete set contains no occurrence of 'shrink', 'shrinkage', 'correction' or 'corrected'; it states 'we cannot exclude that some axons might have been incompletely traced, and it is likely that some axons were incompletely labeled' and 'in most cases we lost the axon within the callosal fiber tract'",
+   "source": "Yamashita et al., Front Neuroanat 12:33, 2018, doi:10.3389/fnana.2018.00033 (full text searched 2026-09-06)"
+  },
+  "drawn_cell_paper": {
+   "value": "x1.1 in x-y, x2.1 in z, stated in the paper the drawn cell was published with",
+   "source": "Emmenegger, Qi, Wang & Feldmeyer, Cereb Cortex 28(4):1439-1457, 2018, doi:10.1093/cercor/bhx352"
+  },
+  "cng_standardisation": {
+   "value": "the CNG version of a file has its soma moved to the origin and its axes rotated onto the principal components of the coordinates, so its orientation is the archive's, not the tissue's",
+   "source": "NeuroMorpho.Org, 'CNG version' file documentation; checked on the Ascoli archive, whose depositor's file and CNG file agree on every metric swclib computes"
   }
  },
  "assumed": [
@@ -13214,6 +13472,18 @@
   {
    "key": "sample",
    "text": "the cross-archive sample is drawn from the first page of each archive's records with a fixed seed, not uniformly at random across the whole archive"
+  },
+  {
+   "key": "drawn_cell",
+   "text": "the cell drawn from the complete set is chosen by rule: the largest single-paper group in the set, less any file failing the width rule when opened, and then the cell closest to that group's median reach and axon length"
+  },
+  {
+   "key": "windows",
+   "text": "the three windows it is drawn in are the whole cell padded 5% per side, 10% of that window centred on the soma, and 1.5 soma diameters centred on the soma; 'under one pixel' means at the 714 CSS pixels the page displays the figure at"
+  },
+  {
+   "key": "hairline",
+   "text": "where a recorded width is thinner than a pixel the shape is carried by a 0.5-point hairline in a fainter tint; the width itself is still drawn at its true size on top, and vanishes"
   }
  ]
 }

@@ -67,7 +67,27 @@
  "sha256": {
   "data/neurons.csv.gz": "97ffaa19e93cf728e9ea036c4beb891380b2b238d26e93c5acd8a58a5173a7e5",
   "data/swc_metrics.csv": "9fce741c425562ef244a3917ad3cef96c1d5ff8a7330391a0f448eb790e50a41",
+  "data/complete_metrics.csv": "fd5b358cb70006ab1a68bdcf0722a2e31e5cfe2f37987a4bd72423f04c7ac536",
   "data/swc/allen/471800189.swc": "823758f75b4d697583a0dc1e76693118c2deeee43055d2c08bd0330e45c0fed0",
-  "data/swc/mouselight/AA0490.swc": "1fb55d7cd6375d5d3c93153f1d464e85b4bab6286928316b07375f332548a537"
+  "data/swc/mouselight/AA0490.swc": "1fb55d7cd6375d5d3c93153f1d464e85b4bab6286928316b07375f332548a537",
+  "data/swc/feldmeyer/BC150319A_28.swc": "c7d973c995a460eb1190e7daaaa1fe590de7b113596f092bd5844e96a495f8f2"
+ },
+ "drawn": {
+  "file": "data/swc/feldmeyer/BC150319A_28.swc",
+  "neuron": "BC150319A_28",
+  "neuron_id": "109107",
+  "archive": "Feldmeyer",
+  "species": "rat",
+  "cell_type": "interneuron|Non-fast spiking|Martinotti-like|supragranular projecting",
+  "brain_region": "neocortex|somatosensory|barrel|layer 4",
+  "doi": "10.1093/cercor/bhx352",
+  "protocol": "in vitro",
+  "rule": {
+   "doi": "10.1093/cercor/bhx352",
+   "n_with_doi": 48,
+   "n_pass_width": 47,
+   "median_reach_um": 724.6116,
+   "median_axon_um": 37147.462
+  }
  }
 }

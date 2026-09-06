@@ -1049,9 +1049,35 @@ reaches further than a brain. Two of 22 archives fail, and the page says which
 and why.
 
 The interactive is the cascade made reorderable: five toggles, 32 precomputed
-subset counts, ~1.1 KB of data and no filtering logic of its own. It earns its
+subset counts, ~1.2 KB of data and no filtering logic of its own. It earns its
 place on order-dependence - a shrinkage correction costs 94% of what is left
-when applied last and almost nothing when applied first.
+when applied last and almost nothing when applied first. It draws nothing,
+deliberately: the subset a set of ticks selects is the same in every order,
+so a drawing would not move with the one thing the toggles teach.
+
+**The 104, opened (2026-09-06).** As first shipped the page never opened one
+of the 104: none of their six archives was in `fetch_data.py`'s sample, so
+the punchline rested on the archive's flags, which is what the page's own
+Limits section warns against. `fetch_data.py --complete-only` now opens all
+of them into `data/complete_metrics.csv`: 82 pass the page's width rule, 22
+fail (Conte 20, Feldmeyer 1, Turner 1), 2 hold a single width and carry the
+"Diameter" flag anyway. Fifteen are in vivo mouse L2 barrel-cortex projection
+cells (Petersen archive, Yamashita et al. 2018) with 2-6 mm reach and 20-71
+widths, flagged *Corrected* and *Axon Complete*; their paper contains no
+statement about shrinkage and calls its tracing possibly incomplete. The page
+says so, and cites it. Figure 5 draws one of the 104 at three nested scales,
+at the file's own widths as polygons in data units over a hairline: cell
+BC150319A_28 (Feldmeyer), chosen by rule in `fetch_data.pick_drawn()` - the
+largest single-paper group, less the one file failing the width rule, then
+the cell nearest the group's median reach and axon. Figure 2 now puts its
+two cells in one frame at one scale, the slice cell 28 px wide in a box that
+the right-hand panel opens. The panel boxes and "under one pixel" shares
+live in `build_neuron.py` (`LADDER_CSS`, `PAIR_CSS`, `ladder_windows()`) and
+`fig_neuron.py` places its axes from the same boxes; check 8 in
+`test_neuron.py` asserts the file's hash, the re-pick, the windows and the
+shares. The Feldmeyer CNG file is 3.7 MB (90,781 points); the depositor's
+Source-Version is not distributed for that archive, so the drawing is in the
+archive's PCA orientation and the caption says so.
 
 ### Fat, sugar, salt (2026-09-05)
 

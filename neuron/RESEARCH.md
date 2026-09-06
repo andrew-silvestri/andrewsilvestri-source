@@ -394,6 +394,57 @@ exception. That is a stronger claim than the one I started with because it is
 measured on the files rather than counted from flags, and it is the reason
 §4c's audit mattered — a flag is not a measurement.
 
+### 4e. The 104, opened (added at Stage 3, 6 September 2026)
+
+Everything above about the 104 was read from flags. None of their six
+archives was in the Stage 1 or Stage 3 sample, so until today no file from the
+complete set had been opened, which is the mistake trap 11 describes,
+committed on the page's own punchline. `fetch_data.py --complete-only` now
+opens all of them and `data/complete_metrics.csv` holds the result.
+[computed]:
+
+| Opened | n |
+|---|---|
+| pass the width rule (≥4 distinct values, ≤90% of length at one) | 82 of 104 |
+| fail it | 22: Conte 20, Feldmeyer 1, Turner 1 |
+| hold **one** width and carry the "Diameter" flag | 2 (Conte) |
+| projection cells, 2.1–6.5 mm reach, 45–74 mm axon, 20–71 widths | 15 (Petersen; mouse L2 barrel cortex, in vivo) |
+| Turner CA3 cells spliced from two cells ("Dendrite-…-Axon" in the name) | 3 |
+| depositor's Source-Version available on NeuroMorpho | Ascoli only; Feldmeyer and Petersen return 404 |
+
+**§1's "almost all cells whose axon never leaves the neighbourhood" is wrong
+for fifteen of them.** The Petersen cells look like the thing §1 says no file
+contains. Their paper — Yamashita et al., *Front Neuroanat* 12:33, 2018,
+doi:10.3389/fnana.2018.00033 — was searched in full text: no occurrence of
+"shrink", "shrinkage", "correction" or "corrected"; on completeness, "we
+cannot exclude that some axons might have been incompletely traced, and it is
+likely that some axons were incompletely labeled" and "in most cases we lost
+the axon within the callosal fiber tract". So the archive's *Corrected* and
+*Axon Complete* fields on those 15 are curation values the source does not
+support. That is trap 11 again, and the page now states it with the citation.
+
+**The cell the page draws** is chosen by rule (`fetch_data.pick_drawn()`):
+the largest single-paper group among the 104 (the 48 Feldmeyer cells whose
+correction §10 verified), less the one that fails the width rule, then the
+cell nearest the group's median reach and axon length: BC150319A_28, a rat
+L4 barrel-cortex Martinotti-like interneuron, reach 725 µm, 37.1 mm of axon,
+3.6 mm of dendrite, 21 distinct widths. Its axon holds 10 widths with 64% of
+its length at 0.24 µm — the diffraction floor again — and its dendrites 18
+widths from 0.41 to 3.15 µm. [computed] Even in the corrected corner the
+axon's width is a floor and the dendrite's is a measurement. The CNG file is
+PCA-rotated (trap 5) and no Source-Version exists for the archive, so the
+drawing is in the archive's orientation and says so.
+
+**Why the Conte cells are not cited on the page.** Twenty of the 22 files that
+fail the width rule are the Conte archive's *Xenopus* tadpole spinal neurons
+(Conte, Borisyuk, Hull & Roberts, *J Neurosci Methods* 351:109062, 2021,
+doi:10.1016/j.jneumeth.2020.109062). The page names them only inside a
+generated list ("Conte 20, Feldmeyer 1, Turner 1"), and `add_citations.py`
+attaches a marker to a fixed phrase in the prose; there is no sentence about
+them to anchor one to, and an anchor inside a generated list would break the
+next time the counts moved. The citation is recorded here instead. If the
+page ever gains a sentence about them, that is where the marker goes.
+
 ## 5. What the literature says about why
 
 The archive's shortcomings are documented, in pieces, by the people who built
