@@ -12,4 +12,10 @@ _audit-bookshelf/
 skyline/skyline-app.html
 skyline/package.json
 skyline/package-lock.json
+continents/data/raw/
 food/data/raw/
+beauty/data/raw/
+beauty/data/birds_joined.csv
+beauty/data/iucn_aves.csv
+neuron/neuron-app.html
+neuron/data/_work/

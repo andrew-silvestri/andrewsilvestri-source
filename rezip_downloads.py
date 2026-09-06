@@ -148,8 +148,51 @@ TARGETS = [
     # Fat, sugar, salt: the three scripts, the slimmed USDA table and the
     # payload the page is written from; not the 6 MB USDA zip (fetch_data.py
     # re-downloads and hash-checks it), not the figures (the site's assets).
+    # Where the ground goes: the readers, the gates, the model, the figures,
+    # the committed derived data (the 0.7 MB packed scenario masks and the
+    # slim station table) and the payload - everything needed to reproduce
+    # every number without re-fetching. Not data/raw: the four fetchers
+    # re-download and hash-check it, and the scenario archive alone unpacks
+    # to about 400 MB.
+    target("continents", "continents-code.zip", keep={"outputs"},
+           skip=("data/raw", "data/raw/*", "outputs/*.png")),
     target("food", "food-code.zip", keep={"outputs"},
            skip=("data/raw", "data/raw/*", "outputs/*.png")),
+    # Economy is not time: the model, both open cohort tables (CC BY, so they
+    # ship and the page can be rebuilt from the archive alone), the payload and
+    # the tests. Not the figures, which are the site's assets.
+    target("economy", "economy-code.zip", keep={"outputs"},
+           skip=("data/raw", "data/raw/*", "outputs/*.png")),
+    # What a fast shoe is worth: the declared table of published effect sizes,
+    # the build, the figures and the tests. There is no data/ download to
+    # exclude - no public dataset carries these numbers, so data/studies.py is
+    # itself the data and ships. Not the figures, which are the site's assets.
+    target("shoes", "shoes-code.zip", keep={"outputs"},
+           skip=("outputs/*.png",)),
+    # Studied, not endangered: the scripts, the open inputs and the payload.
+    # Not data/raw/ (re-downloaded and hash-checked by the fetch scripts),
+    # not the figures, and NOT any file with a Red List category beside a
+    # species name - data/iucn_aves.csv and data/birds_joined.csv - because
+    # the IUCN Red List terms of use (v3.1, 2024, section 4) prohibit
+    # redistributing Red List data in any form; the reader fetches that
+    # column with their own token. beauty/test_beauty.py opens the built zip
+    # and fails if a category column has crept in.
+    #
+    # This rule stays HERE rather than inside beauty/, and the difference is
+    # not cosmetic. On 2026-09-05 a session that knew nothing about the Red
+    # List rebuilt every archive; this target's skip list held anyway,
+    # because it sits in the path the archive is built by. In beauty/ it
+    # would have protected only a run that went through beauty/'s own
+    # tooling. Moving it next to the project it describes reads better and
+    # protects less. HANDOFF.md section 8, trap 19.
+    target("beauty", "beauty-code.zip", keep={"outputs"},
+           skip=("data/raw", "data/raw/*", "data/iucn_aves.csv",
+                 "data/birds_joined.csv", "outputs/*.png")),
+    # The measured neuron: the scripts, the frozen census and the two
+    # reconstructions figure 2 draws; not the 1,500 sampled files, which
+    # fetch_data.py pulls again.
+    target("neuron", "neuron-code.zip", keep={"outputs"},
+           skip=("data/_work", "data/_work/*", "neuron-app.html")),
 ]
 
 
