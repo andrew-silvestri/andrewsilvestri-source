@@ -1079,7 +1079,7 @@ shares. The Feldmeyer CNG file is 3.7 MB (90,781 points); the depositor's
 Source-Version is not distributed for that archive, so the drawing is in the
 archive's PCA orientation and the caption says so.
 
-Published 2026-09-06: source commit `6bff69b` on `master`, mirror head `fee3e64` on `main` (the commit before it, `72d928e`, is the rollback).
+Published 2026-09-06: source commit `6bff69b` on `master`, mirror head `fee3e64` on `main`; the alt-text correction `0445bcc` followed as mirror `b5b38af` (the commit before it is the rollback).
 
 ### Fat, sugar, salt (2026-09-05)
 
