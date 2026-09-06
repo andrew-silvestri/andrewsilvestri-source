@@ -47,7 +47,8 @@ if hasattr(sys.stdout, "reconfigure"):
 # the raw longevity data (39 MB; build_lq.py reads the merged CSV beside it).
 SKIP_DIRS = {".git", "backups", "_deslop", "node_modules", "__pycache__",
              "unpublished", os.path.join("site", "_preview"),
-             os.path.join("longevity-quotient", "data", "raw")}
+             os.path.join("longevity-quotient", "data", "raw"),
+             os.path.join("continents", "data", "raw")}
 SKIP_PREFIXES = ("_audit-",)
 
 
@@ -74,8 +75,30 @@ GENERATORS = [
      ["update_atlas_pages.py", "--apply"], ".", "site"),
     ("longevity page: longevity-quotient/update_page.py --apply",
      ["update_page.py", "--apply"], "longevity-quotient", "site"),
+    ("continents page: continents/update_page.py --apply",
+     ["update_page.py", "--apply"], "continents", "site"),
     ("food page: food/update_page.py --apply",
      ["update_page.py", "--apply"], "food", "site"),
+    ("neuron page: neuron/update_page.py --apply",
+     ["update_page.py", "--apply"], "neuron", "site"),
+    ("neuron app: neuron/build_neuron.py --build",
+     ["build_neuron.py", "--build"], "neuron",
+     [("neuron/neuron-app.html", "site/neuron-app.html")]),
+    ("shoes page: shoes/update_page.py --apply",
+     ["update_page.py", "--apply"], "shoes", "site"),
+    # add_citations.py owns the markers and the Sources list on every page that
+    # has an entry in its PAGES table, and nobody had ever run it into a copy
+    # and diffed it. Added 2026-09-05 with the shoes project, which found the
+    # drift: PAGES["heat.html"] still cited eGRID 2022 where the shipped page
+    # had been hand-corrected to eGRID2023. A generator that would revert a
+    # deliberate fix is exactly what this file exists to catch.
+    # It was disarmed from 2026-09-05 until the three defects it could not
+    # round-trip were fixed that evening; the flag that ran it anyway is gone
+    # with the guard.
+    ("citations: add_citations.py --apply",
+     ["add_citations.py", "--apply"], ".", "site"),
+    ("economy page: economy/update_page.py --apply",
+     ["update_page.py", "--apply"], "economy", "site"),
     ("longevity app: longevity-quotient/build_lq.py",
      ["build_lq.py"], "longevity-quotient",
      [("longevity-quotient/longevity.html", "site/longevity-app.html")]),
@@ -86,6 +109,8 @@ GENERATORS = [
      ["build_app.py"], "skyline",
      [("skyline/skyline-app.html", "site/skyline-app.html")]),
     ("downloads: rezip_downloads.py", ["rezip_downloads.py"], ".", "zips"),
+    ("sitemap: build_sitemap.py --apply",
+     ["build_sitemap.py", "--apply"], ".", "site"),
     ("thumbnails: build_thumbnails.py", ["build_thumbnails.py"], ".", "site"),
     # One figure builder is in scope: the layer diagram is the home page's
     # first screen and the picture above the atlas table, and it is drawn
