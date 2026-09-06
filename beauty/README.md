@@ -57,11 +57,15 @@ that stops existing a second later. A run that is interrupted leaves a
 heartbeat file under `data/raw/.locks/`; the build treats one that has not
 beaten for two minutes as a dead fetch and says which script to re-run.
 
-Every fetch script stamps each row it writes with the date it ran, and the
-build refuses any input whose stamp is not a date. That is what keeps a
-table generated to exercise the code from reaching a payload, a figure or
+Every per-species fetch script stamps each row it writes with the date it
+ran, in a `fetched` column, and the build refuses a per-species table that
+has no such column as well as one whose values are not dates. The column
+is required rather than looked for, so a table written by anything other
+than its fetch script is refused before a value is read. That is what keeps
+a table generated to exercise the code from reaching a payload, a figure or
 this archive; it is a cheap guard against the one mistake this project
-could not survive making.
+could not survive making, and `test_beauty.py` proves both refusals and the
+pass on every table.
 
 Every fetch script is resumable: re-run it and it continues from the
 species it has. `data/openalex_counts.csv`, `data/wikipedia_views.csv`,

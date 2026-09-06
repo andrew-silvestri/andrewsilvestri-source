@@ -61,9 +61,16 @@ SHIPPED_INPUTS = ["avonet_slim.csv", "attractiveness_slim.csv", "description_yea
 RESUMABLE = {"description_years.csv": "fetch_years.py",
              "wikipedia_views.csv": "fetch_wikipedia.py",
              "openalex_counts.csv": "fetch_openalex.py"}
+# Every resumable table carries this column, the ISO date the fetch that
+# wrote the row ran. The build refuses a table without it, and one with
+# any other kind of value in it. description_years.csv and
+# wikipedia_views.csv were fetched on 2026-09-05 without the column and
+# stamped with that date, from the files' modification times, when it was
+# added on 2026-09-06.
+STAMP = "fetched"
 FETCH_STAMP = re.compile(r"^\d{4}-\d{2}-\d{2}$")
-# description_years.csv stamps which register answered, not a date.
-ALLOWED_STAMPS = {"gbif", "col", "none"}
+# description_years.csv also records which register answered.
+REGISTERS = {"gbif", "col", "none"}
 SANT_ZIP = os.path.join(DATA, "raw", "santangeli_2023.zip")
 SANT_CSV = "Santangeli_et_al_data_and_scripts/monsterALL2_2_2023.csv"
 
@@ -114,26 +121,40 @@ def check_settled():
         if not os.path.exists(p):
             problems.append(f"data/{name} is missing; run {script}")
             continue
-        rows = list(csv.DictReader(open(p, encoding="utf-8")))
+        reader = csv.DictReader(open(p, encoding="utf-8"))
+        rows = list(reader)
         have = {r["species"] for r in rows}
         short = want - have
         if short:
             problems.append(f"data/{name} covers {len(have):,} of {len(want):,} species, "
                             f"{len(short):,} short; {script} has not finished")
-        # Every fetch stamps the date it ran. A value that is not a date is a
-        # table somebody generated to exercise the code, and it must not reach
-        # a payload, a figure or an archive. On 5 September 2026 a placeholder
-        # openalex_counts.csv sat in this folder while another session's
-        # rezip_downloads.py walked it; the archive missed it by timing alone.
-        for field in ("fetched", "source"):
-            if rows and field in rows[0]:
-                bad = sorted({r[field] for r in rows
-                              if r[field] and not FETCH_STAMP.match(r[field])} - ALLOWED_STAMPS)
-                if bad:
-                    problems.append(f"data/{name} has {field} value(s) that are not dates: "
-                                    f"{', '.join(bad[:3])}. That is placeholder data; delete it "
-                                    f"and run {script}.")
-                break
+        # Every fetch stamps each row with the date it ran. A table without
+        # the column was written by something other than its fetch script,
+        # and a value that is not a date is a table somebody generated to
+        # exercise the code; neither may reach a payload, a figure or an
+        # archive. On 5 September 2026 a placeholder openalex_counts.csv sat
+        # in this folder while another session's rezip_downloads.py walked
+        # it; the archive missed it by timing alone. The column is required,
+        # not looked for: until 6 September the check only ran when it found
+        # one, so a table with none passed in silence (test_beauty.py's
+        # settled_guard() is the proof).
+        if STAMP not in (reader.fieldnames or []):
+            problems.append(f"data/{name} has no '{STAMP}' column, so nothing says when its "
+                            f"rows were fetched, or whether they were. {script} writes one; "
+                            f"delete this table and run {script}.")
+        else:
+            bad = sorted({r[STAMP] or "(blank)" for r in rows
+                          if not FETCH_STAMP.match(r[STAMP] or "")})
+            if bad:
+                problems.append(f"data/{name} has '{STAMP}' value(s) that are not dates: "
+                                f"{', '.join(bad[:3])}. That is placeholder data; delete it "
+                                f"and run {script}.")
+        if "source" in (reader.fieldnames or []):
+            odd = sorted({r["source"] for r in rows} - REGISTERS)
+            if odd:
+                problems.append(f"data/{name} has 'source' value(s) outside "
+                                f"{sorted(REGISTERS)}: {', '.join(odd[:3])}; {script} does not "
+                                f"write those.")
     if problems:
         sys.exit("  the inputs are not settled, so nothing was built:\n" +
                  "".join(f"    - {p}\n" for p in problems) +

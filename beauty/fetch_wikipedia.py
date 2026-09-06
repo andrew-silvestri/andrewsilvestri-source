@@ -13,13 +13,15 @@ policy):
      for that article, January 2016 to December 2025.
 
 Writes data/wikipedia_views.csv: species, article, months, views_total,
-views_mean_monthly. Resumable: species already in the file are skipped.
-Requests are sequential, as the policy asks.
+views_mean_monthly, fetched (the date this script wrote the row; the
+build refuses a table without it). Resumable: species already in the file
+are skipped. Requests are sequential, as the policy asks.
 
 Run:  python3 fetch_wikipedia.py
 """
 
 import csv
+import datetime as dt
 import os
 import sys
 import time
@@ -27,7 +29,7 @@ import urllib.parse
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, HERE)
-from netutil import get_json, Budget, Lock  # noqa: E402
+from netutil import get_json, check_header, Budget, Lock  # noqa: E402
 
 SPECIES = os.path.join(HERE, "data", "avonet_slim.csv")
 OUT = os.path.join(HERE, "data", "wikipedia_views.csv")
@@ -35,7 +37,7 @@ START, END = "20160101", "20251231"
 QUERY = "https://en.wikipedia.org/w/api.php?action=query&format=json&redirects=1&titles="
 VIEWS = ("https://wikimedia.org/api/rest_v1/metrics/pageviews/per-article/"
          "en.wikipedia/all-access/user/{title}/monthly/" + START + "/" + END)
-COLS = ["species", "article", "months", "views_total", "views_mean_monthly"]
+COLS = ["species", "article", "months", "views_total", "views_mean_monthly", "fetched"]
 
 
 def resolve(names):
@@ -68,9 +70,11 @@ def main():
     print(f"  {len(species):,} species, {len(done):,} done, {len(todo):,} to fetch")
     if not todo:
         return
+    check_header(OUT, COLS)
     titles = resolve(todo)
     new = not os.path.exists(OUT)
     n = 0
+    today = dt.date.today().isoformat()
     with Lock("wikipedia", HERE) as lk, open(OUT, "a", encoding="utf-8", newline="") as fh:
         w = csv.writer(fh)
         if new:
@@ -79,7 +83,7 @@ def main():
             for s in todo:
                 art = titles.get(s, "")
                 if not art:
-                    w.writerow([s, "", 0, "", ""])
+                    w.writerow([s, "", 0, "", "", today])
                     continue
                 j = get_json(VIEWS.format(title=urllib.parse.quote(art.replace(" ", "_"), safe="")),
                              retries=6, wait_429=30)
@@ -87,7 +91,7 @@ def main():
                 time.sleep(0.25)
                 tot = sum(it["views"] for it in items)
                 w.writerow([s, art, len(items), tot,
-                            f"{tot / len(items):.2f}" if items else ""])
+                            f"{tot / len(items):.2f}" if items else "", today])
                 n += 1
                 lk.beat()
                 if n % 500 == 0:

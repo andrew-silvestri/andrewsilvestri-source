@@ -110,6 +110,21 @@ def get_json(url, headers=None, retries=4, timeout=60, wait_429=0):
     return None
 
 
+def check_header(path, cols):
+    """Refuse to append to a table whose header is not the one this script
+    writes. A resumed fetch that added a column would otherwise write rows
+    one field wider than the header, and the build's stamp check would see
+    no stamp column and refuse the whole table for a reason that names the
+    wrong culprit."""
+    if not os.path.exists(path):
+        return
+    with open(path, encoding="utf-8", newline="") as fh:
+        have = fh.readline().rstrip("\r\n").split(",")
+    if have != list(cols):
+        sys.exit(f"  {os.path.basename(path)} has columns {have}, this script writes {list(cols)}.\n"
+                 f"  Nothing was appended. Move the file aside and re-run, or add the column.")
+
+
 def need_key(name, where, turnaround):
     """Exit without writing when a required key is not in the environment."""
     sys.exit(f"  {name} is not set.\n  Request one at {where}\n  ({turnaround}), then run:\n"

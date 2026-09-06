@@ -10,12 +10,15 @@ CC BY) is tried. A species neither resolves is recorded with no year and
 left out of the model.
 
 Writes data/description_years.csv: species, matched_name, authorship,
-year, source. Resumable.
+year, source (which register answered: gbif, col or none), fetched (the
+date this script wrote the row; the build refuses a table without it).
+Resumable.
 
 Run:  python3 fetch_years.py
 """
 
 import csv
+import datetime as dt
 import os
 import re
 import sys
@@ -23,10 +26,11 @@ import urllib.parse
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, HERE)
-from netutil import get_json, Budget, Lock  # noqa: E402
+from netutil import get_json, check_header, Budget, Lock  # noqa: E402
 
 SPECIES = os.path.join(HERE, "data", "avonet_slim.csv")
 OUT = os.path.join(HERE, "data", "description_years.csv")
+COLS = ["species", "matched_name", "authorship", "year", "source", "fetched"]
 GBIF = "https://api.gbif.org/v1/species/match?kingdom=Animalia&class=Aves&rank=SPECIES&name="
 COL = "https://api.checklistbank.org/dataset/3LR/nameusage/search?content=SCIENTIFIC_NAME&limit=3&q="
 YEAR = re.compile(r"\b(1[6-9]\d\d|20[0-2]\d)\b")
@@ -61,19 +65,21 @@ def main():
         done = {r["species"] for r in csv.DictReader(open(OUT, encoding="utf-8"))}
     todo = [s for s in species if s not in done]
     print(f"  {len(species):,} species, {len(done):,} done, {len(todo):,} to fetch")
+    check_header(OUT, COLS)
     new = not os.path.exists(OUT)
     n, missing = 0, 0
+    today = dt.date.today().isoformat()
     with Lock("years", HERE) as lk, open(OUT, "a", encoding="utf-8", newline="") as fh:
         w = csv.writer(fh)
         if new:
-            w.writerow(["species", "matched_name", "authorship", "year", "source"])
+            w.writerow(COLS)
         try:
             for s in todo:
                 hit = gbif_lookup(s) or col_lookup(s)
                 if hit and hit[2]:
-                    w.writerow([s, *hit])
+                    w.writerow([s, *hit, today])
                 else:
-                    w.writerow([s, hit[0] if hit else "", hit[1] if hit else "", "", "none"])
+                    w.writerow([s, hit[0] if hit else "", hit[1] if hit else "", "", "none", today])
                     missing += 1
                 n += 1
                 lk.beat()

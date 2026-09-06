@@ -26,11 +26,12 @@ import urllib.parse
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, HERE)
-from netutil import get_json, Budget, Lock  # noqa: E402
+from netutil import get_json, check_header, Budget, Lock  # noqa: E402
 
 SPECIES = os.path.join(HERE, "data", "avonet_slim.csv")
 OUT = os.path.join(HERE, "data", "openalex_counts.csv")
 LOG = os.path.join(HERE, "data", "openalex_run_log.txt")
+COLS = ["species", "works_2015_2024", "cost_usd", "fetched"]
 YEARS = "2015-2024"
 MAILTO = "dasilvestri@utexas.edu"
 
@@ -52,18 +53,25 @@ def main():
     todo = [s for s in species if s not in done]
     print(f"  {len(species):,} species, {len(done):,} done, {len(todo):,} to fetch, "
           f"{'keyed' if key else 'keyless ($0.10/day)'}")
+    check_header(OUT, COLS)
     new = not os.path.exists(OUT)
-    n, cost = 0, 0.0
+    n, cost, unanswered = 0, 0.0, 0
     today = dt.date.today().isoformat()
     stopped = ""
     with Lock("openalex", HERE) as lk, open(OUT, "a", encoding="utf-8", newline="") as fh:
         w = csv.writer(fh)
         if new:
-            w.writerow(["species", "works_2015_2024", "cost_usd", "fetched"])
+            w.writerow(COLS)
         try:
             for s in todo:
                 j = get_json(url_for(s, key))
-                meta = (j or {}).get("meta", {})
+                if j is None or "meta" not in j:
+                    # No row: a species whose call failed is still to do, so
+                    # the next run retries it instead of carrying a blank
+                    # count as if it were an answer.
+                    unanswered += 1
+                    continue
+                meta = j["meta"]
                 c = float(meta.get("cost_usd", 0) or 0)
                 w.writerow([s, meta.get("count", ""), f"{c:.4f}", today])
                 n += 1
@@ -79,7 +87,8 @@ def main():
     with open(LOG, "a", encoding="utf-8") as lg:
         lg.write(f"{today}\t{'keyed' if key else 'keyless'}\tspecies={n}\tcost_usd={cost:.4f}"
                  f"\t{stopped}\n")
-    print(f"  {n:,} species fetched, ${cost:.4f} -> {os.path.relpath(OUT, HERE)}")
+    print(f"  {n:,} species fetched, ${cost:.4f} -> {os.path.relpath(OUT, HERE)}"
+          + (f"; {unanswered} unanswered, left for the next run" if unanswered else ""))
 
 
 if __name__ == "__main__":

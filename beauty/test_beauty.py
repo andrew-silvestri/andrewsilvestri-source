@@ -197,6 +197,100 @@ def openalex_query():
     return fails
 
 
+def settled_guard():
+    """check_settled() must refuse a resumable table that does not say when
+    its rows were fetched, and one that says something other than a date.
+
+    The guard exists because a placeholder table sat in this folder on
+    5 September 2026 while the archive was being rebuilt (HANDOFF trap 18).
+    Its first version looked for a stamp column and checked the values it
+    found, which meant a table with no stamp column passed in silence: on
+    6 September wikipedia_views.csv had no such column and the guard had
+    nothing to say about it. A guard that needs a column to exist before it
+    can complain is trap 20 in a different coat.
+
+    Three cases, each run against a private data directory holding two
+    species and all three resumable tables, so no fetch running in the real
+    one can touch the result:
+      - a table with no `fetched` column, once per resumable table;
+      - a table whose `fetched` values include a non-date, once per table;
+      - all three stamped with a date, which must build.
+
+    Proven against the guard as it stood on 6 September 2026 (trap 17):
+    the three no-column cases all passed that guard, and this check
+    reported all three; the three non-date cases were already refused; the
+    clean case passed. After the guard was made total all seven agreed.
+    """
+    import contextlib
+    import shutil
+    import tempfile
+    import build_beauty as B
+    fails = []
+    species = ["Passer domesticus", "Zosterops lateralis"]
+    good = "2026-09-05"
+    columns = {"description_years.csv": ["species", "matched_name", "authorship", "year", "source"],
+               "wikipedia_views.csv": ["species", "article", "months", "views_total",
+                                       "views_mean_monthly"],
+               "openalex_counts.csv": ["species", "works_2015_2024", "cost_usd"]}
+    filler = {"source": "gbif", "year": "1758", "months": "120", "views_total": "10",
+              "views_mean_monthly": "0.08", "works_2015_2024": "3", "cost_usd": "0.0001"}
+
+    def run(stamps):
+        """stamps: table -> list of `fetched` values per species, or None for
+        no column. Returns the refusal text, or '' when the guard passed."""
+        tmp = tempfile.mkdtemp(prefix="beauty-guard-")
+        data = os.path.join(tmp, "data")
+        os.makedirs(data)
+        with open(os.path.join(data, "avonet_slim.csv"), "w", encoding="utf-8", newline="") as fh:
+            w = csv.writer(fh)
+            w.writerow(["species", "family", "mass", "range"])
+            for s in species:
+                w.writerow([s, "F", "10", "100"])
+        for name, cols in columns.items():
+            st = stamps[name]
+            hdr = cols + (["fetched"] if st is not None else [])
+            with open(os.path.join(data, name), "w", encoding="utf-8", newline="") as fh:
+                w = csv.writer(fh)
+                w.writerow(hdr)
+                for i, s in enumerate(species):
+                    row = [s] + [filler.get(c, "") for c in cols[1:]]
+                    w.writerow(row + ([st[i]] if st is not None else []))
+        keep = B.HERE, B.DATA
+        B.HERE, B.DATA = tmp, data
+        try:
+            with contextlib.redirect_stdout(io.StringIO()):
+                B.check_settled()
+            return ""
+        except SystemExit as e:
+            return str(e)
+        finally:
+            B.HERE, B.DATA = keep
+            shutil.rmtree(tmp, ignore_errors=True)
+
+    clean = {n: [good, good] for n in columns}
+    msg = run(clean)
+    if msg:
+        fails.append(f"guard: three correctly stamped tables were refused: {msg.strip()}")
+    for name in columns:
+        script = B.RESUMABLE[name]
+        s = dict(clean)
+        s[name] = None
+        msg = run(s)
+        if not msg:
+            fails.append(f"guard: {name} with no fetched column was not refused")
+        elif name not in msg or script not in msg or "fetched" not in msg:
+            fails.append(f"guard: {name} with no fetched column was refused, but without "
+                         f"naming the table, the column and {script}: {msg.strip()}")
+        s[name] = [good, "placeholder"]
+        msg = run(s)
+        if not msg:
+            fails.append(f"guard: {name} with a non-date fetched value was not refused")
+        elif "placeholder" not in msg or script not in msg:
+            fails.append(f"guard: {name} with a non-date fetched value was refused, but "
+                         f"without naming the value and {script}: {msg.strip()}")
+    return fails
+
+
 def main():
     fails, skips = [], []
     if not os.path.exists(PAYLOAD) or not os.path.exists(OPEN):
@@ -204,7 +298,7 @@ def main():
         # before the first one: it is how the query guard was exercised
         # while the fetches were still going.
         print("  no build yet (outputs/beauty_payload.json); running what does not need one")
-        fails = model_maths() + openalex_query()
+        fails = model_maths() + openalex_query() + settled_guard()
         for f in fails:
             print("  FAIL: " + f)
         print(f"  {len(fails)} failure(s), the rest skipped until build_beauty.py has run")
@@ -317,6 +411,7 @@ def main():
     #    still means what the page says it means
     fails += model_maths()
     fails += openalex_query()
+    fails += settled_guard()
 
     # 8. the build refuses to run on inputs that are still being written
     import build_beauty as B
