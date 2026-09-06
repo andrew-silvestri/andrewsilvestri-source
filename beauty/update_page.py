@@ -29,7 +29,10 @@ TEMPLATE = os.path.join(HERE, "template.html")
 PAYLOAD = os.path.join(HERE, "outputs", "beauty_payload.json")
 MODELS = os.path.join(HERE, "models.json")
 MANIFEST = os.path.join(HERE, "manifest.json")
-RUNLOG = os.path.join(HERE, "data", "openalex_run_log.txt")
+COUNTS = os.path.join(HERE, "data", "openalex_counts.csv")
+# A free OpenAlex key's daily allowance in dollars, measured from the
+# X-RateLimit-Limit-USD header on 6 September 2026.
+OPENALEX_DAILY_USD = 1.00
 ZIP = os.path.join(SITE, "downloads", "beauty-code.zip")
 sys.path.insert(0, ROOT)
 
@@ -47,16 +50,17 @@ def pct(x, d=0):
 
 
 def openalex_cost():
-    """What the per-species fetch actually cost, summed from the run log."""
-    if not os.path.exists(RUNLOG):
+    """What the per-species fetch actually cost: the cost_usd column of
+    the table that ships, summed, and the rows it has. The run log is
+    provenance for the same figure, but it is written when a run ends, so
+    a run that was killed leaves rows in the table and no line in the log;
+    the table is the artefact the page describes, so the table is what is
+    summed (HANDOFF trap 20)."""
+    import csv
+    if not os.path.exists(COUNTS):
         return 0.0, 0
-    tot, n = 0.0, 0
-    for line in open(RUNLOG, encoding="utf-8"):
-        m = re.search(r"species=(\d+)\tcost_usd=([\d.]+)", line)
-        if m:
-            n += int(m.group(1))
-            tot += float(m.group(2))
-    return tot, n
+    rows = list(csv.DictReader(open(COUNTS, encoding="utf-8")))
+    return sum(float(r["cost_usd"] or 0) for r in rows), len(rows)
 
 
 def values(P):
@@ -160,7 +164,8 @@ def values(P):
         "dd_amph": lu["dd_amphibians_predicted_threatened"]["value"],
         "extinct_est": lu["extinct_since_1500_estimate"]["value"], "extinct_rl": lu["extinct_since_1500_red_list"]["value"],
         # the code
-        "openalex_cost": f"{cost:.2f}", "openalex_cost_n": fmt(cost_n), "zip_kb": fmt(zip_kb),
+        "openalex_cost": f"{cost:.2f}", "openalex_cost_n": fmt(cost_n),
+        "openalex_days": fmt(max(1, int(-(-cost // OPENALEX_DAILY_USD)))), "zip_kb": fmt(zip_kb),
         "cat_sha_short": P["categories_sha256"][:16], "cat_rows": fmt(MAN["withheld"]["rows"]),
         "drift_date": (lambda d: f"{d.day} {d:%B %Y}")(dt.date.fromisoformat(dr["observed"])),
         "drift_common": dr["common"], "drift_fulltext": fmt(dr["fulltext"]),

@@ -29,7 +29,7 @@ import urllib.parse
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, HERE)
-from netutil import get_json, check_header, Budget, Lock  # noqa: E402
+from netutil import get_json, check_header, trim_partial_row, Budget, Lock  # noqa: E402
 
 SPECIES = os.path.join(HERE, "data", "avonet_slim.csv")
 OUT = os.path.join(HERE, "data", "wikipedia_views.csv")
@@ -63,6 +63,8 @@ def resolve(names):
 
 def main():
     species = [r["species"] for r in csv.DictReader(open(SPECIES, encoding="utf-8"))]
+    trim_partial_row(OUT)
+    check_header(OUT, COLS)
     done = set()
     if os.path.exists(OUT):
         done = {r["species"] for r in csv.DictReader(open(OUT, encoding="utf-8"))}
@@ -70,7 +72,6 @@ def main():
     print(f"  {len(species):,} species, {len(done):,} done, {len(todo):,} to fetch")
     if not todo:
         return
-    check_header(OUT, COLS)
     titles = resolve(todo)
     new = not os.path.exists(OUT)
     n = 0

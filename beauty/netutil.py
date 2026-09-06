@@ -125,6 +125,30 @@ def check_header(path, cols):
                  f"  Nothing was appended. Move the file aside and re-run, or add the column.")
 
 
+def trim_partial_row(path):
+    """Drop a trailing row that has no newline, and return it.
+
+    A fetch killed mid-write leaves one, and the next run's DictReader
+    would read it as a species that is done with whatever fields survived,
+    so that species would carry a blank or truncated value for good and
+    the stamp guard, seeing a date on every other row, would not notice.
+    A file that is only a partial header is removed, so the next run
+    starts it again rather than appending rows under no header."""
+    if not os.path.exists(path):
+        return ""
+    with open(path, "rb") as fh:
+        b = fh.read()
+    if not b or b.endswith(b"\n"):
+        return ""
+    cut = b.rfind(b"\n") + 1
+    if cut == 0:
+        os.remove(path)
+    else:
+        with open(path, "wb") as fh:
+            fh.write(b[:cut])
+    return b[cut:].decode("utf-8", "replace")
+
+
 def need_key(name, where, turnaround):
     """Exit without writing when a required key is not in the environment."""
     sys.exit(f"  {name} is not set.\n  Request one at {where}\n  ({turnaround}), then run:\n"

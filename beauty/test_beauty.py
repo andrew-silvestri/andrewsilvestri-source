@@ -291,6 +291,43 @@ def settled_guard():
     return fails
 
 
+def resume_repair():
+    """netutil.trim_partial_row() must drop a trailing row cut short by a
+    kill, keep every whole row, leave a clean file alone, and remove a
+    file that is nothing but a partial header.
+
+    The fetches are appends, and the OpenAlex one runs for days on a
+    machine that reboots. A row cut mid-write would be read on the next
+    start as a finished species with a truncated count, and the stamp
+    guard would pass it if the cut fell after the date. Proven 6 September
+    2026 two ways: against a trim that trims nothing, the cut-row and
+    partial-header cases both reported and the clean case passed, as it
+    should; against a netutil without the function, one report."""
+    import tempfile
+    import netutil
+    fails = []
+    fn = getattr(netutil, "trim_partial_row", None)
+    if fn is None:
+        return ["resume: netutil has no trim_partial_row()"]
+    whole = "species,works_2015_2024,cost_usd,fetched\nAa bb,3,0.0010,2026-09-06\n"
+    cases = [("cut row", whole + "Cc dd,12,0.00", whole, "Cc dd,12,0.00"),
+             ("clean file", whole, whole, ""),
+             ("partial header", "species,works_20", None, "species,works_20")]
+    for label, before, after, dropped in cases:
+        fd, p = tempfile.mkstemp(suffix=".csv")
+        os.close(fd)
+        with open(p, "wb") as fh:
+            fh.write(before.encode("utf-8"))
+        got = fn(p)
+        now = open(p, "rb").read().decode("utf-8") if os.path.exists(p) else None
+        os.path.exists(p) and os.remove(p)
+        if got != dropped:
+            fails.append(f"resume: {label}: returned {got!r}, expected {dropped!r}")
+        if now != after:
+            fails.append(f"resume: {label}: file is {now!r} afterwards, expected {after!r}")
+    return fails
+
+
 def main():
     fails, skips = [], []
     if not os.path.exists(PAYLOAD) or not os.path.exists(OPEN):
@@ -298,7 +335,7 @@ def main():
         # before the first one: it is how the query guard was exercised
         # while the fetches were still going.
         print("  no build yet (outputs/beauty_payload.json); running what does not need one")
-        fails = model_maths() + openalex_query() + settled_guard()
+        fails = model_maths() + openalex_query() + settled_guard() + resume_repair()
         for f in fails:
             print("  FAIL: " + f)
         print(f"  {len(fails)} failure(s), the rest skipped until build_beauty.py has run")
@@ -412,6 +449,7 @@ def main():
     fails += model_maths()
     fails += openalex_query()
     fails += settled_guard()
+    fails += resume_repair()
 
     # 8. the build refuses to run on inputs that are still being written
     import build_beauty as B

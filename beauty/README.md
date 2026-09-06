@@ -89,11 +89,14 @@ Two environment variables, read at run time and never from disk:
 
 ## Cost of reproducing
 
-OpenAlex meters list-and-filter calls at $0.0001 each. The per-species
-fetch is one call per species, so the full run for 11,009 birds is about
-$1.10: two days on a free key, eleven days without one. The class-level
-fetch is ten calls. `data/openalex_run_log.txt` records what each run
-actually cost, and the page quotes that log. Everything else is free.
+OpenAlex meters list-and-filter calls at 10 credits, $0.001, each, whatever
+the page size (measured from the response headers on 6 September 2026; the
+figure of $0.0001 that circulated before then was wrong by ten). The
+per-species fetch is one call per species, so the full run for 11,009
+birds is about $11: eleven days on a free key's $1.00 a day, or a hundred
+and ten without one. The class-level fetch is ten calls.
+`data/openalex_run_log.txt` records what each run actually cost, and the
+page quotes that log. Everything else is free.
 
 Without `IUCN_TOKEN` the build still runs: it takes the Red List category
 from the Santangeli et al. 2023 deposit, which carries the categories as

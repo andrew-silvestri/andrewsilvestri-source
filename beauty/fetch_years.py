@@ -26,7 +26,7 @@ import urllib.parse
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, HERE)
-from netutil import get_json, check_header, Budget, Lock  # noqa: E402
+from netutil import get_json, check_header, trim_partial_row, Budget, Lock  # noqa: E402
 
 SPECIES = os.path.join(HERE, "data", "avonet_slim.csv")
 OUT = os.path.join(HERE, "data", "description_years.csv")
@@ -60,12 +60,13 @@ def col_lookup(name):
 
 def main():
     species = [r["species"] for r in csv.DictReader(open(SPECIES, encoding="utf-8"))]
+    trim_partial_row(OUT)
+    check_header(OUT, COLS)
     done = set()
     if os.path.exists(OUT):
         done = {r["species"] for r in csv.DictReader(open(OUT, encoding="utf-8"))}
     todo = [s for s in species if s not in done]
     print(f"  {len(species):,} species, {len(done):,} done, {len(todo):,} to fetch")
-    check_header(OUT, COLS)
     new = not os.path.exists(OUT)
     n, missing = 0, 0
     today = dt.date.today().isoformat()
