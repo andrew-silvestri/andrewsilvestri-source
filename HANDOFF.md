@@ -1083,7 +1083,20 @@ reaches further than a brain. Two of 22 archives fail, and the page says which
 and why.
 
 **The interactive was retired on 2026-09-06** (`unpublished/neuron-app.html`,
-sources in `unpublished/neuron/`, entry in `unpublished/RETIRED.md`). It was
+sources in `unpublished/neuron/`, entry in `unpublished/RETIRED.md`).
+
+**Where that retirement was actually completed, because the obvious commit is
+not it.** `bd9b117` on master, "neuron: retire the constraint app; figure 6
+holds every order at once", writes the figure and the prose but **never moves
+the files**: on master `site/neuron-app.html` still exists and
+`unpublished/neuron-app.html` does not. The three renames that finish the job -
+`site/neuron-app.html`, `neuron/build_app.py` and `neuron/template-app.html`
+into `unpublished/` - are in `6b29932` on the `hero-nonlinear-system` branch,
+under the message "Tests: recompute what the hero's captions will claim". They
+landed there because a session stashed one branch's work to publish another's
+and the two got bundled on the way back; the content is right and complete, the
+message describes only half of it. `git log --follow -- unpublished/neuron-app.html`
+finds it. This note exists so nobody has to know to run that. It was
 the cascade made reorderable, five toggles over the 32 subset counts, and it
 showed one of the 120 orders at a time. `build_neuron.order_costs()` now
 computes every constraint's cost at every position over all 120 orders from
