@@ -402,7 +402,14 @@ def fig_shoe():
          "in manufacturing, not materials.",
          WARN),
         ("Why separation fails",
-         "65 discrete parts and 360-odd\nprocessing steps per pair. Foam is\n"
+         # Per SHOE, not per pair. Cheah et al. 2013 (J Clean Prod 44:18-29):
+         # "a single shoe can contain 65 discrete parts that require 360
+         # processing steps for assembly". This figure and running-shoes.html
+         # both said "per pair" until 2026-09-05, from citing the MIT press
+         # release rather than the paper. Neither ships any more; corrected
+         # anyway, because a wrong number in a retired file is a wrong number
+         # someone later trusts.
+         "65 discrete parts and 360-odd\nprocessing steps per shoe. Foam is\n"
          "glued to rubber, mesh is welded to\nTPU. No economical process\n"
          "separates them at scale.",
          WARN),
