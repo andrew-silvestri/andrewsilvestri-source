@@ -1,0 +1,913 @@
+{
+ "aft": [
+  {
+   "ci_pct": null,
+   "colour": "acc",
+   "comparison": "Nike Vaporfly vs Adidas Adizero Adios 3",
+   "dispersion": "sd",
+   "effect_pct": 4.2,
+   "key": "barnes2019_vaporfly_vs_adios",
+   "label": "Barnes & Kilding 2019",
+   "n": 24,
+   "outdoor": false,
+   "sd_pct": 1.2,
+   "setting": "treadmill, 14-18 km/h",
+   "short": "retail vs flat",
+   "speed_kmh": 16.0,
+   "study": "barnes2019"
+  },
+  {
+   "ci_pct": null,
+   "colour": "slate",
+   "comparison": "prototype vs Nike Zoom Streak 6, mass matched",
+   "dispersion": "none",
+   "effect_pct": 4.16,
+   "key": "hoogkamer2018_proto_vs_streak",
+   "label": "Hoogkamer et al. 2018",
+   "n": 18,
+   "outdoor": false,
+   "sd_pct": null,
+   "setting": "treadmill, 14/16/18 km/h",
+   "short": "prototype vs flat",
+   "speed_kmh": 16.0,
+   "study": "hoogkamer2018"
+  },
+  {
+   "ci_pct": null,
+   "colour": "slate",
+   "comparison": "prototype vs Adidas Adizero Adios Boost, mass matched",
+   "dispersion": "none",
+   "effect_pct": 4.01,
+   "key": "hoogkamer2018_proto_vs_adios",
+   "label": "Hoogkamer et al. 2018",
+   "n": 18,
+   "outdoor": false,
+   "sd_pct": null,
+   "setting": "treadmill, 14/16/18 km/h",
+   "short": "prototype vs flat",
+   "speed_kmh": 16.0,
+   "study": "hoogkamer2018"
+  },
+  {
+   "ci_pct": null,
+   "colour": "slate",
+   "comparison": "Nike Vaporfly 4% vs Nike Zoom Streak 6, level",
+   "dispersion": "none",
+   "effect_pct": 3.83,
+   "key": "whiting2021_level",
+   "label": "Whiting et al. 2021",
+   "n": 16,
+   "outdoor": false,
+   "sd_pct": null,
+   "setting": "treadmill, level",
+   "short": "retail, level",
+   "speed_kmh": 13.0,
+   "study": "whiting2021"
+  },
+  {
+   "ci_pct": null,
+   "colour": "acc",
+   "comparison": "Nike Vaporfly matched to Adios mass vs Adidas Adizero Adios 3",
+   "dispersion": "sd",
+   "effect_pct": 2.9,
+   "key": "barnes2019_vaporfly_massmatched",
+   "label": "Barnes & Kilding 2019",
+   "n": 24,
+   "outdoor": false,
+   "sd_pct": 1.3,
+   "setting": "treadmill",
+   "short": "retail, mass matched",
+   "speed_kmh": 16.0,
+   "study": "barnes2019"
+  },
+  {
+   "ci_pct": null,
+   "colour": "slate",
+   "comparison": "Nike Vaporfly 4% vs Nike Zoom Streak 6, +3 degrees",
+   "dispersion": "none",
+   "effect_pct": 2.82,
+   "key": "whiting2021_uphill",
+   "label": "Whiting et al. 2021",
+   "n": 16,
+   "outdoor": false,
+   "sd_pct": null,
+   "setting": "treadmill, +3 degrees",
+   "short": "retail, uphill",
+   "speed_kmh": 13.0,
+   "study": "whiting2021"
+  },
+  {
+   "ci_pct": null,
+   "colour": "slate",
+   "comparison": "retail Nike Vaporfly 4% vs Adidas Adizero Adios Boost",
+   "dispersion": "none",
+   "effect_pct": 2.8,
+   "key": "hunter2019_vaporfly_vs_adios",
+   "label": "Hunter et al. 2019",
+   "n": 19,
+   "outdoor": false,
+   "sd_pct": null,
+   "setting": "treadmill, 4.44 m/s",
+   "short": "retail vs flat",
+   "speed_kmh": 16.0,
+   "study": "hunter2019"
+  },
+  {
+   "ci_pct": null,
+   "colour": "slate",
+   "comparison": "Nike Vaporfly 4% vs Nike Zoom Streak 6, -3 degrees",
+   "dispersion": "none",
+   "effect_pct": 2.7,
+   "key": "whiting2021_downhill",
+   "label": "Whiting et al. 2021",
+   "n": 16,
+   "outdoor": false,
+   "sd_pct": null,
+   "setting": "treadmill, -3 degrees",
+   "short": "retail, downhill",
+   "speed_kmh": 13.0,
+   "study": "whiting2021"
+  },
+  {
+   "ci_pct": null,
+   "colour": "acc",
+   "comparison": "Nike Vaporfly vs Nike Zoom Matumbo 3 track spike",
+   "dispersion": "sd",
+   "effect_pct": 2.6,
+   "key": "barnes2019_vaporfly_vs_spike",
+   "label": "Barnes & Kilding 2019",
+   "n": 24,
+   "outdoor": false,
+   "sd_pct": 1.3,
+   "setting": "treadmill",
+   "short": "retail vs spike",
+   "speed_kmh": 16.0,
+   "study": "barnes2019"
+  },
+  {
+   "ci_pct": null,
+   "colour": "slate",
+   "comparison": "AFT track spike vs traditional track spike",
+   "dispersion": "sd",
+   "effect_pct": 2.1,
+   "key": "joubert2024_spike_a",
+   "label": "Joubert et al. 2024",
+   "n": 9,
+   "outdoor": false,
+   "sd_pct": 1.0,
+   "setting": "treadmill",
+   "short": "AFT spike vs spike",
+   "speed_kmh": 16.0,
+   "study": "joubert2024"
+  },
+  {
+   "ci_pct": null,
+   "colour": "slate",
+   "comparison": "retail Nike Vaporfly 4% vs Nike Zoom Streak",
+   "dispersion": "none",
+   "effect_pct": 1.9,
+   "key": "hunter2019_vaporfly_vs_streak",
+   "label": "Hunter et al. 2019",
+   "n": 19,
+   "outdoor": false,
+   "sd_pct": null,
+   "setting": "treadmill, 4.44 m/s",
+   "short": "retail vs flat",
+   "speed_kmh": 16.0,
+   "study": "hunter2019"
+  },
+  {
+   "ci_pct": null,
+   "colour": "slate",
+   "comparison": "second AFT track spike vs traditional track spike",
+   "dispersion": "sd",
+   "effect_pct": 1.8,
+   "key": "joubert2024_spike_b",
+   "label": "Joubert et al. 2024",
+   "n": 9,
+   "outdoor": false,
+   "sd_pct": 1.0,
+   "setting": "treadmill",
+   "short": "AFT spike vs spike",
+   "speed_kmh": 16.0,
+   "study": "joubert2024"
+  },
+  {
+   "ci_pct": null,
+   "colour": "slate",
+   "comparison": "AFT trail shoe vs control trail shoe, outdoors",
+   "dispersion": "sd",
+   "effect_pct": 1.1,
+   "key": "joubert2026_trail",
+   "label": "Joubert & Sanders 2026",
+   "n": 8,
+   "outdoor": true,
+   "sd_pct": 1.1,
+   "setting": "outdoor trail, portable analyser",
+   "short": "AFT trail, outdoors",
+   "speed_kmh": 11.5,
+   "study": "joubert2026"
+  }
+ ],
+ "contradiction": [
+  {
+   "ci_pct": null,
+   "comparison": "+100 g per shoe, energy cost at 85% of VT2",
+   "dispersion": "none",
+   "effect_pct": -7.4,
+   "key": "rodrigocarranza2020_mass_85vt2",
+   "label": "Rodrigo-Carranza et al. 2020",
+   "measures": "economy",
+   "n": 11,
+   "ratio_to_rule": 6.7,
+   "short": "energy cost at 85% VT2",
+   "study": "rodrigocarranza2020"
+  },
+  {
+   "ci_pct": null,
+   "comparison": "+100 g per shoe, energy cost at 95% of VT2",
+   "dispersion": "none",
+   "effect_pct": -10.21,
+   "key": "rodrigocarranza2020_mass_95vt2",
+   "label": "Rodrigo-Carranza et al. 2020",
+   "measures": "economy",
+   "n": 11,
+   "ratio_to_rule": 9.2,
+   "short": "energy cost at 95% VT2",
+   "study": "rodrigocarranza2020"
+  }
+ ],
+ "individual": {
+  "n": 4,
+  "n_spanning_zero": 3,
+  "rows": [
+   {
+    "colour": "moss",
+    "group": "world-class Kenyan runners",
+    "hi": 11.4,
+    "key": "knopp2023_kenyan",
+    "label": "Knopp et al. 2023",
+    "lo": -11.3,
+    "n": 7,
+    "spans_zero": true,
+    "study": "knopp2023",
+    "width": 22.7
+   },
+   {
+    "colour": "moss",
+    "group": "European amateur runners",
+    "hi": 9.7,
+    "key": "knopp2023_amateur",
+    "label": "Knopp et al. 2023",
+    "lo": -1.1,
+    "n": 7,
+    "spans_zero": true,
+    "study": "knopp2023",
+    "width": 10.8
+   },
+   {
+    "colour": "acc",
+    "group": "highly trained, vs track spike",
+    "hi": 5.34,
+    "key": "barnes2019_vaporfly_vs_spike",
+    "label": "Barnes & Kilding 2019",
+    "lo": -0.5,
+    "n": 24,
+    "spans_zero": true,
+    "study": "barnes2019",
+    "width": 5.84
+   },
+   {
+    "colour": "acc",
+    "group": "highly trained, vs racing flat",
+    "hi": 7.15,
+    "key": "barnes2019_vaporfly_vs_adios",
+    "label": "Barnes & Kilding 2019",
+    "lo": 1.72,
+    "n": 24,
+    "spans_zero": false,
+    "study": "barnes2019",
+    "width": 5.43
+   }
+  ],
+  "studies": [
+   "Barnes & Kilding 2019",
+   "Knopp et al. 2023"
+  ],
+  "widest": 22.7
+ },
+ "limits": {
+  "n_female": 6,
+  "n_outdoor": 1,
+  "n_rows": 21,
+  "n_time": 3
+ },
+ "mass": [
+  {
+   "ci_pct": [
+    -1.35,
+    -0.88
+   ],
+   "comparison": "+100 g per shoe, metabolic rate",
+   "dispersion": "ci",
+   "effect_pct": -1.11,
+   "key": "hoogkamer2016_mass_metabolic",
+   "label": "Hoogkamer et al. 2016",
+   "measures": "economy",
+   "n": 18,
+   "ratio_to_rule": 1.0,
+   "short": "metabolic cost",
+   "study": "hoogkamer2016"
+  },
+  {
+   "ci_pct": [
+    -1.04,
+    -0.52
+   ],
+   "comparison": "+100 g per shoe, 3000 m time-trial time",
+   "dispersion": "ci",
+   "effect_pct": -0.78,
+   "key": "hoogkamer2016_mass_time",
+   "label": "Hoogkamer et al. 2016",
+   "measures": "time",
+   "n": 18,
+   "ratio_to_rule": 0.7,
+   "short": "race time",
+   "study": "hoogkamer2016"
+  },
+  {
+   "ci_pct": null,
+   "comparison": "+100 g per shoe, energy cost at 85% of VT2",
+   "dispersion": "none",
+   "effect_pct": -7.4,
+   "key": "rodrigocarranza2020_mass_85vt2",
+   "label": "Rodrigo-Carranza et al. 2020",
+   "measures": "economy",
+   "n": 11,
+   "ratio_to_rule": 6.7,
+   "short": "energy cost at 85% VT2",
+   "study": "rodrigocarranza2020"
+  },
+  {
+   "ci_pct": null,
+   "comparison": "+100 g per shoe, energy cost at 95% of VT2",
+   "dispersion": "none",
+   "effect_pct": -10.21,
+   "key": "rodrigocarranza2020_mass_95vt2",
+   "label": "Rodrigo-Carranza et al. 2020",
+   "measures": "economy",
+   "n": 11,
+   "ratio_to_rule": 9.2,
+   "short": "energy cost at 95% VT2",
+   "study": "rodrigocarranza2020"
+  }
+ ],
+ "meta": {
+  "fuller2015": {
+   "ci": null,
+   "doi": "10.1007/s40279-014-0283-6",
+   "label": "Fuller et al. 2015",
+   "n": null,
+   "note": "Found a significant positive association between shoe mass and metabolic cost, and no studies at all reporting effects on running performance as opposed to economy, as of April 2014.",
+   "smd": null,
+   "source": "Fuller JT, Bellenger CR, Thewlis D, Tsiros MD, Buckley JD (2015). The effect of footwear on running performance and running economy in distance runners. <i>Sports Med</i> 45(3):411-422.",
+   "studies": 19
+  },
+  "ortega2021": {
+   "ci": null,
+   "doi": "10.1007/s40279-020-01406-5",
+   "label": "Ortega et al. 2021",
+   "n": null,
+   "note": "Puts the bending-stiffness literature at about 3% deterioration to about 3% improvement. The sign of the effect is not settled.",
+   "smd": null,
+   "source": "Ortega JA, Healey LA, Swinnen W, Hoogkamer W (2021). Energetics and Biomechanics of Running Footwear with Increased Longitudinal Bending Stiffness: A Narrative Review. <i>Sports Med</i> 51(5):873-894.",
+   "studies": null
+  },
+  "rodrigocarranza2022": {
+   "ci": [
+    -0.58,
+    -0.28
+   ],
+   "doi": "10.1080/17461391.2021.1955014",
+   "label": "Rodrigo-Carranza et al. 2022",
+   "n": null,
+   "note": "A curved plate improved economy 3.45% against no plate; a flat plate showed no improvement.",
+   "smd": -0.43,
+   "source": "Rodrigo-Carranza V, Gonz&aacute;lez-Moh&iacute;no F, Santos-Concejero J, Gonz&aacute;lez-Rav&eacute; JM (2022). The effects of footwear midsole longitudinal bending stiffness on running economy and ground contact biomechanics. <i>Eur J Sport Sci</i> 22(10):1508-1521.",
+   "studies": 12
+  },
+  "stephen2025": {
+   "ci": [
+    -0.6,
+    -0.28
+   ],
+   "doi": "10.1016/j.jshs.2025.101069",
+   "label": "Stephen et al. 2025",
+   "n": 878,
+   "note": "Neither longitudinal bending stiffness alone nor midsole energy return alone significantly affected oxygen consumption; only their interaction did. Quality of evidence graded low or very low for almost every outcome.",
+   "smd": -0.44,
+   "source": "Stephen CHN, Kelly LA, Schuster RW, Diamond LE (2025). The effects of running shoe longitudinal bending stiffness and midsole energy return on oxygen consumption and ankle mechanics and energetics. <i>J Sport Health Sci</i> 14:101069.",
+   "studies": 48
+  },
+  "xiao2025": {
+   "ci": [
+    -0.59,
+    -0.3
+   ],
+   "doi": "10.1055/a-2637-7283",
+   "label": "Xiao et al. 2025",
+   "n": 281,
+   "note": "Also reports time-trial performance at g=-0.23, about half the size of the oxygen effect.",
+   "smd": -0.44,
+   "source": "Xiao Y, Hu X, Tian D, Qiu A (2025). Effects of Advanced Footwear Technology on Running Economy and Endurance Performance: A Meta-Analysis. <i>Int J Sports Med</i> 47(2):81-94.",
+   "studies": 17
+  }
+ },
+ "predicted": {
+  "assumed": true,
+  "hi": 2.951351351351351,
+  "lo": 0.772972972972973,
+  "note": "The laboratory range pushed through the transfer coefficient. Assumed: the coefficient was measured for added mass over 3000 m in trained men, not for advanced footwear over a marathon."
+ },
+ "race": [
+  {
+   "assumed": false,
+   "hi": 2.2,
+   "key": "guinness2020_women",
+   "lo": 0.6,
+   "sex": "female",
+   "short": "observed in races, women",
+   "study": "guinness2020"
+  },
+  {
+   "assumed": false,
+   "hi": 2.8,
+   "key": "guinness2020_men",
+   "lo": 1.4,
+   "sex": "male",
+   "short": "observed in races, men",
+   "study": "guinness2020"
+  }
+ ],
+ "rows": {
+  "barnes2019_vaporfly_massmatched": {
+   "ci_pct": null,
+   "comparison": "Nike Vaporfly matched to Adios mass vs Adidas Adizero Adios 3",
+   "effect_pct": 2.9,
+   "family": "aft",
+   "level": "highly trained",
+   "n": 24,
+   "note": "The same pair of shoes as the 4.2% row with the mass difference removed. The gap between the two rows is what mass was worth.",
+   "quality": "A",
+   "sd_pct": 1.3,
+   "setting": "treadmill",
+   "sex": "12 male, 12 female",
+   "short": "retail, mass matched",
+   "speed_kmh": 16.0,
+   "study": "barnes2019"
+  },
+  "barnes2019_vaporfly_vs_adios": {
+   "ci_pct": null,
+   "comparison": "Nike Vaporfly vs Adidas Adizero Adios 3",
+   "effect_pct": 4.2,
+   "family": "aft",
+   "individual_group": "highly trained, vs racing flat",
+   "individual_range_pct": [
+    1.72,
+    7.15
+   ],
+   "level": "highly trained",
+   "n": 24,
+   "note": "One of only two studies here with women in the sample. Against the same shoe mass-matched the figure is 2.9%, so about a third of this comparison is the Vaporfly being lighter rather than anything about its foam or plate.",
+   "quality": "A",
+   "sd_pct": 1.2,
+   "setting": "treadmill, 14-18 km/h",
+   "sex": "12 male, 12 female",
+   "short": "retail vs flat",
+   "speed_kmh": 16.0,
+   "study": "barnes2019"
+  },
+  "barnes2019_vaporfly_vs_spike": {
+   "ci_pct": null,
+   "comparison": "Nike Vaporfly vs Nike Zoom Matumbo 3 track spike",
+   "effect_pct": 2.6,
+   "family": "aft",
+   "individual_group": "highly trained, vs track spike",
+   "individual_range_pct": [
+    -0.5,
+    5.34
+   ],
+   "level": "highly trained",
+   "n": 24,
+   "note": "The lower end of the individual range is negative: at least one runner was less economical in the shoe than in the control. The population mean and the individual outcome are different quantities and this row carries both.",
+   "quality": "A",
+   "sd_pct": 1.3,
+   "setting": "treadmill",
+   "sex": "12 male, 12 female",
+   "short": "retail vs spike",
+   "speed_kmh": 16.0,
+   "study": "barnes2019"
+  },
+  "guinness2020_men": {
+   "ci_pct": [
+    1.4,
+    2.8
+   ],
+   "comparison": "Vaporfly vs not, marathon finishing time, men",
+   "effect_pct": null,
+   "family": "race",
+   "level": "elite and sub-elite",
+   "measures": "time",
+   "n": null,
+   "note": "Observational, not randomised: runners chose their own shoes and the fastest adopted them first. The interval is the result; there is no point estimate to draw.",
+   "quality": "B",
+   "sd_pct": null,
+   "setting": "22 marathons 2015-2019, shoes read from public race photographs",
+   "sex": "male",
+   "short": "observed in races, men",
+   "speed_kmh": null,
+   "study": "guinness2020"
+  },
+  "guinness2020_women": {
+   "ci_pct": [
+    0.6,
+    2.2
+   ],
+   "comparison": "Vaporfly vs not, marathon finishing time, women",
+   "effect_pct": null,
+   "family": "race",
+   "level": "elite and sub-elite",
+   "measures": "time",
+   "n": null,
+   "note": "The women's interval from the same model.",
+   "quality": "B",
+   "sd_pct": null,
+   "setting": "22 marathons 2015-2019, shoes read from public race photographs",
+   "sex": "female",
+   "short": "observed in races, women",
+   "speed_kmh": null,
+   "study": "guinness2020"
+  },
+  "hoogkamer2016_mass_metabolic": {
+   "ci_pct": [
+    -1.35,
+    -0.88
+   ],
+   "comparison": "+100 g per shoe, metabolic rate",
+   "effect_pct": -1.11,
+   "family": "mass",
+   "level": "sub-20-min 5 km",
+   "n": 18,
+   "note": "The founding constant of the field, restated from Frederick, Daniels and Hayes 1984 and measured directly here. The one genuine confidence interval in this table.",
+   "quality": "A",
+   "sd_pct": null,
+   "setting": "treadmill, 3.5 m/s",
+   "sex": "male",
+   "short": "metabolic cost",
+   "speed_kmh": 12.6,
+   "study": "hoogkamer2016"
+  },
+  "hoogkamer2016_mass_time": {
+   "ci_pct": [
+    -1.04,
+    -0.52
+   ],
+   "comparison": "+100 g per shoe, 3000 m time-trial time",
+   "effect_pct": -0.78,
+   "family": "mass",
+   "level": "sub-20-min 5 km",
+   "measures": "time",
+   "n": 18,
+   "note": "The only row in the table measured as race time rather than as oxygen or energy cost. Its ratio to the metabolic row is the transfer coefficient the page uses, and labels assumed wherever it is applied to anything but added mass.",
+   "quality": "A",
+   "sd_pct": null,
+   "setting": "3000 m time trial",
+   "sex": "male",
+   "short": "race time",
+   "speed_kmh": null,
+   "study": "hoogkamer2016"
+  },
+  "hoogkamer2018_proto_vs_adios": {
+   "ci_pct": null,
+   "comparison": "prototype vs Adidas Adizero Adios Boost, mass matched",
+   "effect_pct": 4.01,
+   "family": "aft",
+   "level": "high-caliber",
+   "n": 18,
+   "note": "The same prototype against the other established racing shoe.",
+   "quality": "A",
+   "sd_pct": null,
+   "setting": "treadmill, 14/16/18 km/h",
+   "sex": "male",
+   "short": "prototype vs flat",
+   "speed_kmh": 16.0,
+   "study": "hoogkamer2018"
+  },
+  "hoogkamer2018_proto_vs_streak": {
+   "ci_pct": null,
+   "comparison": "prototype vs Nike Zoom Streak 6, mass matched",
+   "effect_pct": 4.16,
+   "family": "aft",
+   "level": "high-caliber",
+   "n": 18,
+   "note": "The origin of the 4% figure. A prototype rather than a retail shoe, mass-matched with lead, at three elite marathon paces. Reported as a mean with no dispersion.",
+   "quality": "A",
+   "sd_pct": null,
+   "setting": "treadmill, 14/16/18 km/h",
+   "sex": "male",
+   "short": "prototype vs flat",
+   "speed_kmh": 16.0,
+   "study": "hoogkamer2018"
+  },
+  "hunter2019_vaporfly_vs_adios": {
+   "ci_pct": null,
+   "comparison": "retail Nike Vaporfly 4% vs Adidas Adizero Adios Boost",
+   "effect_pct": 2.8,
+   "family": "aft",
+   "level": "trained",
+   "n": 19,
+   "note": "The consumer version of the shoe, measured by an independent group against the same control brand as the prototype study, at about two thirds of the prototype's benefit.",
+   "quality": "A",
+   "sd_pct": null,
+   "setting": "treadmill, 4.44 m/s",
+   "sex": "male",
+   "short": "retail vs flat",
+   "speed_kmh": 16.0,
+   "study": "hunter2019"
+  },
+  "hunter2019_vaporfly_vs_streak": {
+   "ci_pct": null,
+   "comparison": "retail Nike Vaporfly 4% vs Nike Zoom Streak",
+   "effect_pct": 1.9,
+   "family": "aft",
+   "level": "trained",
+   "n": 19,
+   "note": "The same retail shoe as the 2.8% row, against the other control.",
+   "quality": "A",
+   "sd_pct": null,
+   "setting": "treadmill, 4.44 m/s",
+   "sex": "male",
+   "short": "retail vs flat",
+   "speed_kmh": 16.0,
+   "study": "hunter2019"
+  },
+  "joubert2024_spike_a": {
+   "ci_pct": null,
+   "comparison": "AFT track spike vs traditional track spike",
+   "effect_pct": 2.1,
+   "family": "aft",
+   "level": "distance runners",
+   "n": 9,
+   "note": "The first of two AFT spikes the study tested.",
+   "quality": "A",
+   "sd_pct": 1.0,
+   "setting": "treadmill",
+   "sex": "male",
+   "short": "AFT spike vs spike",
+   "speed_kmh": 16.0,
+   "study": "joubert2024"
+  },
+  "joubert2024_spike_b": {
+   "ci_pct": null,
+   "comparison": "second AFT track spike vs traditional track spike",
+   "effect_pct": 1.8,
+   "family": "aft",
+   "level": "distance runners",
+   "n": 9,
+   "note": "The second AFT spike in the same study. Included because the table's rule is every controlled comparison, and dropping the smaller of a study's two arms is how a collected table starts flattering itself.",
+   "quality": "A",
+   "sd_pct": 1.0,
+   "setting": "treadmill",
+   "sex": "male",
+   "short": "AFT spike vs spike",
+   "speed_kmh": 16.0,
+   "study": "joubert2024"
+  },
+  "joubert2026_trail": {
+   "ci_pct": null,
+   "comparison": "AFT trail shoe vs control trail shoe, outdoors",
+   "effect_pct": 1.1,
+   "family": "aft",
+   "level": "trail runners",
+   "n": 8,
+   "note": "The only row measured outside a laboratory, and the slowest. Its standard deviation equals its mean.",
+   "quality": "B",
+   "sd_pct": 1.1,
+   "setting": "outdoor trail, portable analyser",
+   "sex": "not stated in the abstract",
+   "short": "AFT trail, outdoors",
+   "speed_kmh": 11.5,
+   "study": "joubert2026"
+  },
+  "knopp2023_amateur": {
+   "ci_pct": null,
+   "comparison": "three AFT models vs a racing flat, per-athlete range",
+   "effect_pct": null,
+   "family": "individual",
+   "individual_group": "European amateur runners",
+   "individual_range_pct": [
+    -1.1,
+    9.7
+   ],
+   "level": "amateur",
+   "n": 7,
+   "note": "The comparison group in the same study.",
+   "quality": "A",
+   "sd_pct": null,
+   "setting": "treadmill",
+   "sex": "male",
+   "short": "European amateur runners",
+   "speed_kmh": null,
+   "study": "knopp2023"
+  },
+  "knopp2023_kenyan": {
+   "ci_pct": null,
+   "comparison": "three AFT models vs a racing flat, per-athlete range",
+   "effect_pct": null,
+   "family": "individual",
+   "individual_group": "world-class Kenyan runners",
+   "individual_range_pct": [
+    -11.3,
+    11.4
+   ],
+   "level": "world-class, mean half-marathon 59:30",
+   "n": 7,
+   "note": "The group the shoes were designed for, and the widest range anyone has published. Recorded as the paper states it: an 11.3% drawback to an 11.4% benefit.",
+   "quality": "A",
+   "sd_pct": null,
+   "setting": "treadmill",
+   "sex": "male",
+   "short": "world-class Kenyan runners",
+   "speed_kmh": null,
+   "study": "knopp2023"
+  },
+  "rodrigocarranza2020_mass_85vt2": {
+   "ci_pct": null,
+   "comparison": "+100 g per shoe, energy cost at 85% of VT2",
+   "effect_pct": -7.4,
+   "family": "mass",
+   "level": "trained",
+   "n": 11,
+   "note": "Several times the accepted per-100 g figure, for the same manipulation. Peer-reviewed, not retracted, and rarely cited against the number it contradicts.",
+   "quality": "B",
+   "sd_pct": null,
+   "setting": "treadmill, 85% of second ventilatory threshold",
+   "sex": "6 male, 5 female",
+   "short": "energy cost at 85% VT2",
+   "speed_kmh": null,
+   "study": "rodrigocarranza2020"
+  },
+  "rodrigocarranza2020_mass_95vt2": {
+   "ci_pct": null,
+   "comparison": "+100 g per shoe, energy cost at 95% of VT2",
+   "effect_pct": -10.21,
+   "family": "mass",
+   "level": "trained",
+   "n": 11,
+   "note": "The same study's harder condition, further still from the accepted figure.",
+   "quality": "B",
+   "sd_pct": null,
+   "setting": "treadmill, 95% of second ventilatory threshold",
+   "sex": "6 male, 5 female",
+   "short": "energy cost at 95% VT2",
+   "speed_kmh": null,
+   "study": "rodrigocarranza2020"
+  },
+  "whiting2021_downhill": {
+   "ci_pct": null,
+   "comparison": "Nike Vaporfly 4% vs Nike Zoom Streak 6, -3 degrees",
+   "effect_pct": 2.7,
+   "family": "aft",
+   "level": "competitive",
+   "n": 16,
+   "note": "Not statistically distinguishable from the level condition in the paper, unlike the uphill one.",
+   "quality": "A",
+   "sd_pct": null,
+   "setting": "treadmill, -3 degrees",
+   "sex": "male",
+   "short": "retail, downhill",
+   "speed_kmh": 13.0,
+   "study": "whiting2021"
+  },
+  "whiting2021_level": {
+   "ci_pct": null,
+   "comparison": "Nike Vaporfly 4% vs Nike Zoom Streak 6, level",
+   "effect_pct": 3.83,
+   "family": "aft",
+   "level": "competitive",
+   "n": 16,
+   "note": "Metabolic power rather than oxygen uptake. The level condition of the study that also ran it uphill and downhill.",
+   "quality": "A",
+   "sd_pct": null,
+   "setting": "treadmill, level",
+   "sex": "male",
+   "short": "retail, level",
+   "speed_kmh": 13.0,
+   "study": "whiting2021"
+  },
+  "whiting2021_uphill": {
+   "ci_pct": null,
+   "comparison": "Nike Vaporfly 4% vs Nike Zoom Streak 6, +3 degrees",
+   "effect_pct": 2.82,
+   "family": "aft",
+   "level": "competitive",
+   "n": 16,
+   "note": "Significantly smaller than the same study's level condition.",
+   "quality": "A",
+   "sd_pct": null,
+   "setting": "treadmill, +3 degrees",
+   "sex": "male",
+   "short": "retail, uphill",
+   "speed_kmh": 13.0,
+   "study": "whiting2021"
+  }
+ },
+ "spread": {
+  "hi": 4.2,
+  "lo": 1.1,
+  "median": 2.8,
+  "n": 13,
+  "n_with_sd": 6,
+  "n_without": 7,
+  "ratio": 3.8,
+  "without_fraction": "7 of 13"
+ },
+ "studies": {
+  "barnes2019": {
+   "colour": "acc",
+   "doi": "10.1007/s40279-018-1012-3",
+   "label": "Barnes & Kilding 2019",
+   "source": "Barnes KR, Kilding AE (2019). A Randomized Crossover Study Investigating the Running Economy of Highly-Trained Male and Female Distance Runners in Marathon Racing Shoes versus Track Spikes. <i>Sports Med</i> 49(2):331-342."
+  },
+  "guinness2020": {
+   "colour": "slate",
+   "doi": "10.48550/arXiv.2002.06105",
+   "label": "Guinness et al. 2020",
+   "source": "Guinness J, Bhattacharya D, Chen J, Chen M, Loh A (2020). An Observational Study of the Effect of Nike Vaporfly Shoes on Marathon Performance. <i>arXiv</i>:2002.06105."
+  },
+  "hoogkamer2016": {
+   "colour": "slate",
+   "doi": "10.1249/MSS.0000000000001012",
+   "label": "Hoogkamer et al. 2016",
+   "source": "Hoogkamer W, Kipp S, Spiering BA, Kram R (2016). Altered Running Economy Directly Translates to Altered Distance-Running Performance. <i>Med Sci Sports Exerc</i> 48(11):2175-2180."
+  },
+  "hoogkamer2018": {
+   "colour": "slate",
+   "doi": "10.1007/s40279-017-0811-2",
+   "label": "Hoogkamer et al. 2018",
+   "source": "Hoogkamer W, Kipp S, Frank JH, Farina EM, Luo G, Kram R (2018). A Comparison of the Energetic Cost of Running in Marathon Racing Shoes. <i>Sports Med</i> 48(4):1009-1019 (correction, 48(6):1521-1522)."
+  },
+  "hunter2019": {
+   "colour": "slate",
+   "doi": "10.1080/02640414.2019.1633837",
+   "label": "Hunter et al. 2019",
+   "source": "Hunter I, McLeod A, Valentine D, Low T, Ward J, Hager R (2019). Running economy, mechanics, and marathon racing shoes. <i>J Sports Sci</i> 37(20):2367-2373."
+  },
+  "joubert2024": {
+   "colour": "slate",
+   "doi": "10.1123/ijspp.2023-0372",
+   "label": "Joubert et al. 2024",
+   "source": "Joubert DP, Oehlert GM, Jones EJ, Burns GT (2024). Comparative Effects of Advanced Footwear Technology in Track Spikes and Road-Racing Shoes on Running Economy. <i>Int J Sports Physiol Perform</i> 19(7):705-711."
+  },
+  "joubert2026": {
+   "colour": "slate",
+   "doi": "10.1519/JSC.0000000000005553",
+   "label": "Joubert & Sanders 2026",
+   "source": "Joubert DP, Sanders J (2026). Effects of Advanced Footwear Technology in Trail Running Shoes on Running Economy. <i>J Strength Cond Res</i>, ahead of print."
+  },
+  "knopp2023": {
+   "colour": "moss",
+   "doi": "10.1007/s40279-023-01816-1",
+   "label": "Knopp et al. 2023",
+   "source": "Knopp M, Mu&ntilde;iz-Pardos B, Wackerhage H, Sch&ouml;nfelder M, Guppy F, Pitsiladis Y, Ruiz D (2023). Variability in Running Economy of Kenyan World-Class and European Amateur Male Runners with Advanced Footwear Running Technology. <i>Sports Med</i> 53(6):1255-1271."
+  },
+  "rodrigocarranza2020": {
+   "colour": "slate",
+   "doi": "10.3389/fphys.2020.573660",
+   "label": "Rodrigo-Carranza et al. 2020",
+   "source": "Rodrigo-Carranza V, Gonz&aacute;lez-Moh&iacute;no F, Santos-Concejero J, Gonz&aacute;lez-Rav&eacute; JM (2020). Influence of Shoe Mass on Performance and Running Economy in Trained Runners. <i>Front Physiol</i> 11:573660."
+  },
+  "whiting2021": {
+   "colour": "slate",
+   "doi": "10.1016/j.jshs.2021.10.004",
+   "label": "Whiting et al. 2021",
+   "source": "Whiting CS, Hoogkamer W, Kram R (2021). Metabolic cost of level, uphill, and downhill running in highly cushioned shoes with carbon-fiber plates. <i>J Sport Health Sci</i> 11(3):303-308."
+  }
+ },
+ "transfer": {
+  "hi": 1.1818181818181819,
+  "lo": 0.3851851851851852,
+  "metabolic": -1.11,
+  "metabolic_ci": [
+   -1.35,
+   -0.88
+  ],
+  "note": "The ratio of the two Hoogkamer 2016 rows: a 1% change in the metabolic cost of running bought this fraction of a percent in 3000 m time, for added shoe mass, in trained men. It has never been measured for advanced footwear.",
+  "time": -0.78,
+  "time_ci": [
+   -1.04,
+   -0.52
+  ],
+  "value": 0.7027027027027026
+ }
+}
