@@ -977,7 +977,14 @@ So a clone of this repository serves `code.html` with sixteen dead links until
 
 ## 11. Current state, 6 September 2026
 
-**Live: the mirror's `26af501`**, 2026-09-07 — the hero designed for software
+**Live: the mirror's `b278146`**, 2026-09-07 15:51 — the bottom-left
+caption/footer block made to fit its own margin: the identity stacked without
+separators, the block's breakpoint raised from 960 to 1340 (derived from the
+191px its longest line renders at), and `tests/test_layout.js` asserting that a
+`position: fixed` block's text fits inside it. It had been fixed in a margin
+narrower than its own content from 961px up to ~1336px — 53px of usable width
+at 1024 — and no check looked. Merged here as `4dd3d70`.
+**Rollback is `26af501`**, 15:09 — the hero designed for software
 raster. `MAX_BACKING_W` caps the canvas backing store at an absolute width in
 device pixels rather than by device ratio, which with `TRAIL_DPR` at 1 cuts
 raster work 4.7x, from 14.9 megapixels a frame to 3.2; the canvas fades out and
