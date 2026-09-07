@@ -843,6 +843,49 @@ Read this section. Every item is a real bug that shipped.
     Chromium composites in software and a fixed canvas under a scrolling layer
     is a compositing question.
 
+25. **Accelerated Canvas2D fails under GPU-process contention, so a canvas page
+    has to be designed for the software fallback as the normal case.** Firefox
+    records canvas commands in the content process and replays them in the GPU
+    process. On 2026-09-07 the home page was reported unusable, and
+    `about:support` showed accelerated Canvas2D **available and failing at
+    runtime** - `Failed to play canvas event type: 67` - with the GPU process
+    reporting *"Video swapchain present is slow"* and *"RemoteTexture ready
+    timeout"* four times over. Firefox had fallen back to Skia software raster,
+    which is the `ml3::lowp` cost that showed up in the profile.
+
+    **The cause was contention, not configuration.** Fifteen content processes
+    were live - four YouTube, four Sam's Club, two FT - with video decoding
+    active and DevTools open. A clean session on the same machine scrolls
+    smoothly and logs nothing. The extension first suspected was never enabled.
+
+    That machine is a Ryzen 7 PRO 7840U with 64 GB and a Radeon 780M. **If
+    acceleration collapses there under ordinary multitasking, it collapses
+    sooner and at lighter load on a corporate laptop with 8 GB**, and the
+    reader will never know why the page is slow. So the fallback is the case to
+    design for, not the exception to tolerate.
+
+    What that means concretely, in `site/assets/hero.js`:
+    - **`MAX_BACKING_W`** caps the canvas backing store at an absolute width in
+      device pixels rather than by device ratio. A ratio is a multiplier on a
+      viewport nobody controls; a width is a ceiling on work. On the reporting
+      machine - 3840x2400 at 225% scaling, so `devicePixelRatio` 2.2222 and a
+      1728x1080 CSS viewport - the old cap of 2 gave 7.5 megapixels per canvas,
+      twice, every frame. About 900 MP/s on one core.
+    - **`TRAIL_DPR`** halves the trail canvas again.
+    - Together they cut raster work **4.7x**, from 14.9 megapixels a frame to
+      3.2.
+
+    **`MAX_BACKING_W` is the next lever if a loaded machine still struggles**,
+    not confining the canvas or removing the margin animation - that was
+    measured and is worth about 7% (the note beside `fadeBack` in `hero.js`).
+
+    The general form: **a feature that is fine when the browser's fast path
+    works, and unusable when it does not, is a feature that fails for reasons
+    its author cannot see and its reader cannot report.** Measure it with the
+    fast path off. `tests/test_scroll_jank.js --software` does exactly that,
+    with `gfx.canvas.accelerated=false`, because real contention is not
+    reproducible and a forced fallback is.
+
 ---
 
 ## 9. Adding a new project

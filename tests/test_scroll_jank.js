@@ -47,7 +47,7 @@
 const path = require('path');
 const fs = require('fs');
 const http = require('http');
-const { chromium } = require('playwright');
+const { chromium, firefox } = require('playwright');
 
 const SITE = path.join(__dirname, '..', 'site');
 const PINS = ['pendulum', 'lorenz', 'threebody'];
@@ -63,6 +63,23 @@ const BREAK = has('--break');
 const ONLY_VP = arg('--vp', null);
 const ONLY_PIN = arg('--pin', null);
 const ONLY_B = arg('--buckets', null);
+/* ARRIVAL and SCROLLED are different questions and this file used to average
+   them. Arrival is the first screen with the hero band on it and nothing
+   moving but the animation - it is what a reader meets, and what the lever-4
+   decision rule is about. Scrolled is the rest of the page, past the band,
+   which is what lever 4 exists to improve. A measurement that scrolls from the
+   top through both reports neither. */
+const PHASE = arg('--phase', 'both');
+/* --firefox drives Playwright's Firefox instead of Chromium; --software forces
+   canvas raster onto the CPU with gfx.canvas.accelerated=false. Together they
+   reproduce the configuration the hero was reported broken on: accelerated
+   Canvas2D AVAILABLE but failing at runtime inside the GPU process ("Failed to
+   play canvas event type: 67"), leaving Firefox on Skia software raster. A
+   fresh Playwright profile will not fail that way by itself, so the pref is how
+   the failure gets reproduced deliberately rather than hoped for. Chromium
+   numbers are not evidence for that bug. */
+const FIREFOX = has('--firefox');
+const SOFTWARE = has('--software');
 
 /* Seconds of elapsed animation. 0 is the superimposed pendulums and the easy
    opening three-body geometry; 30 is well past the divergence; 60 is steady. */
@@ -74,7 +91,10 @@ const LONG_BUCKETS = [150, 195, 206];
 /* 1920x1200 is this machine maximised: a 3840x2400 panel at 200% scaling.
    1440x900 was the only desktop size measured before 2026-09-07 and it
    understates the canvas by 78% - 5.18 megapixels against 9.22. */
-let VIEWPORTS = [[1920, 1200], [390, 844]];
+/* 1728x1080 is a 3840x2400 panel at 225% Windows scaling, which is the
+   configuration the software-raster bug was reported on - devicePixelRatio
+   2.2222, not the 2 this file assumed. 1920x1200 is the same panel at 200%. */
+let VIEWPORTS = [[1728, 1080], [1920, 1200], [390, 844]];
 if (ONLY_VP) VIEWPORTS = VIEWPORTS.filter(v => String(v[0]) === ONLY_VP);
 
 function serve() {
@@ -118,6 +138,48 @@ const STOP = () => {
     longtask: Math.round(window.__j.tasks.reduce((a, b) => a + b, 0))
   };
 };
+
+/* ARRIVAL: sit at the top with the band on screen and record, without
+   scrolling. Nothing moves but the animation, which is the point. */
+async function arrivalMeasure(page) {
+  await page.bringToFront();
+  await page.evaluate(() => scrollTo(0, 0));
+  await page.waitForTimeout(500);
+  await page.evaluate(START);
+  await page.waitForTimeout(1100);          /* ~66 frames at 60Hz */
+  const r = await page.evaluate(STOP);
+  r.throttled = r.median > 100;
+  return r;
+}
+
+/* SCROLLED: get past the band first, THEN record while scrolling inside the
+   index. Starting the recording at scroll 0 would fold the arrival into it. */
+async function scrolledMeasure(page) {
+  await page.bringToFront();
+  const vh = page.viewportSize().height;
+  await page.evaluate(v => scrollTo(0, v), Math.round(vh * 1.4));
+  await page.waitForTimeout(900);           /* let any fade settle */
+  await page.evaluate(START);
+  await page.mouse.move(page.viewportSize().width / 2, vh / 2);
+  /* Scroll for a fixed DURATION, reversing at the ends, rather than for a
+     fixed distance: the index is not tall enough to give a usable sample in
+     one pass and the first attempt captured 8 frames. Same wall time as the
+     arrival phase, so the two are comparable. */
+  const t0 = Date.now();
+  let dir = 1;
+  while (Date.now() - t0 < 1100) {
+    await page.mouse.wheel(0, 120 * dir);
+    await page.waitForTimeout(20);
+    const y = await page.evaluate(() => scrollY);
+    const max = await page.evaluate(() => document.documentElement.scrollHeight - innerHeight);
+    if (y >= max - 130 || y <= vh * 1.3) dir = -dir;
+  }
+  const r = await page.evaluate(STOP);
+  r.throttled = r.median > 100;
+  await page.evaluate(() => scrollTo(0, 0));
+  await page.waitForTimeout(400);
+  return r;
+}
 
 async function scrollMeasure(page, heavy) {
   /* Chrome throttles requestAnimationFrame to 1Hz in a window that is not
@@ -165,15 +227,22 @@ async function scrollMeasure(page, heavy) {
 (async () => {
   const srv = await serve();
   const base = `http://127.0.0.1:${srv.address().port}/`;
-  const browser = REAL
-    ? await chromium.launch({ channel: 'chrome', headless: false,
-        args: ['--force-device-scale-factor=' + DSF] })
-    : await chromium.launch();
+  const browser = FIREFOX
+    ? await firefox.launch({ headless: !REAL,
+        firefoxUserPrefs: SOFTWARE ? { 'gfx.canvas.accelerated': false } : {} })
+    : REAL
+      ? await chromium.launch({ channel: 'chrome', headless: false,
+          args: ['--force-device-scale-factor=' + DSF] })
+      : await chromium.launch();
   let failures = 0;
 
-  console.log(`\nScroll jank across elapsed time - ${REAL ? 'INSTALLED Chrome, GPU' : 'headless Chromium, software'}, `
+  const engine = FIREFOX
+    ? 'Playwright Firefox' + (SOFTWARE ? ', canvas raster FORCED TO SOFTWARE' : ', canvas accelerated')
+    : REAL ? 'INSTALLED Chrome, GPU' : 'headless Chromium, software';
+  console.log(`\nScroll jank across elapsed time - ${engine}, `
             + `deviceScaleFactor ${DSF}, ${FRAME_MS.toFixed(1)}ms budget`);
-  console.log('  pin        viewport      t=s  frames  median    p95   worst  >25ms  canvasMP\n');
+  console.log(`  phase: ${PHASE}`);
+  console.log('  pin        viewport      t=s  frames  median    p95   worst  >25ms  rasterMP\n');
 
   const jobs = [];
   for (const [w, h] of VIEWPORTS)
@@ -188,13 +257,15 @@ async function scrollMeasure(page, heavy) {
     await page.goto(base + 'index.html?hero=' + job.pin, { waitUntil: 'load' });
     await page.waitForFunction(() => document.body.classList.contains('hero-live'));
     const t0 = Date.now();
-    const mp = await page.evaluate(() => { const c = document.querySelector('#hero canvas'); return c ? c.width * c.height / 1e6 : 0; });
+    const mp = await page.evaluate(() => { return [...document.querySelectorAll('#hero canvas')].reduce((t, c) => t + c.width * c.height, 0) / 1e6; });
 
     for (const b of job.buckets) {
       const wait = t0 + b * 1000 - Date.now();
       if (wait > 0) await page.waitForTimeout(wait);
       const elapsed = Math.round((Date.now() - t0) / 1000);
-      const r = await scrollMeasure(page, false);
+      const r = PHASE === 'arrival' ? await arrivalMeasure(page)
+              : PHASE === 'scrolled' ? await scrolledMeasure(page)
+              : await scrollMeasure(page, false);
       rows.push({ pin: job.pin, w: job.w, b, r });
       console.log(`  ${job.pin.padEnd(10)} ${(job.w + 'x' + job.h).padEnd(11)} ${String(elapsed).padStart(4)} ${String(r.n).padStart(7)} ${r.median.toFixed(1).padStart(7)} ${r.p95.toFixed(1).padStart(6)} ${r.worst.toFixed(1).padStart(7)} ${String(r.dropped).padStart(6)} ${mp.toFixed(2).padStart(9)}`);
       if (r.throttled) { failures++; console.log('  FAIL  that row is a throttled window, not a measurement - rerun'); }
