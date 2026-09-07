@@ -983,7 +983,7 @@ separators, the block's breakpoint raised from 960 to 1340 (derived from the
 191px its longest line renders at), and `tests/test_layout.js` asserting that a
 `position: fixed` block's text fits inside it. It had been fixed in a margin
 narrower than its own content from 961px up to ~1336px — 53px of usable width
-at 1024 — and no check looked. Merged here as `4dd3d70`.
+at 1024 — and no check looked. Merged here as `39eb515`.
 **Rollback is `26af501`**, 15:09 — the hero designed for software
 raster. `MAX_BACKING_W` caps the canvas backing store at an absolute width in
 device pixels rather than by device ratio, which with `TRAIL_DPR` at 1 cuts
