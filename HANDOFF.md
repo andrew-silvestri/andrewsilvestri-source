@@ -977,15 +977,22 @@ So a clone of this repository serves `code.html` with sixteen dead links until
 
 ## 11. Current state, 6 September 2026
 
-**Live: the mirror's `5f91a1b`**, 2026-09-07 — the caption and footer as one
+**Live: the mirror's `26af501`**, 2026-09-07 — the hero designed for software
+raster. `MAX_BACKING_W` caps the canvas backing store at an absolute width in
+device pixels rather than by device ratio, which with `TRAIL_DPR` at 1 cuts
+raster work 4.7x, from 14.9 megapixels a frame to 3.2; the canvas fades out and
+the loop stops when the hero band leaves the viewport; and the three-body's
+trails fade properly now that the erosion clears its 8-bit floor (section 8,
+trap 25). Merged to master here as `9a294d9`.
+**Rollback is `5f91a1b`** — the caption and footer as one
 viewport-fixed block at the bottom left, and an `<h1>Projects</h1>` on a page
 that had carried no top-level heading since the masthead was deleted. Merged to
 master here as `ad11c75`, which also brought in the root `.gitattributes` and
 two new checks: `tests/test_scroll_jank.js` (scroll cadence across elapsed time,
 which no gate measured) and `tests/test_exclusion.js` (rendered pixels, which
 `_deslop/measure.js` cannot see).
-**Rollback is `66ca9eb`**, 2026-09-07 01:51 — three pendulums and an
-emptier home page. The hero draws three double pendulums released 0.001 rad
+Before that, `66ca9eb` (2026-09-07 01:51, three pendulums and an emptier home
+page). The hero draws three double pendulums released 0.001 rad
 apart; the band is the whole viewport less the nav; and the atlas card, the
 figure mosaic and the model chart are gone, so the home page is the hero and
 the index and the Energy nav group is the only route to atlas-app, atlas,
