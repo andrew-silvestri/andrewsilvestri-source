@@ -776,10 +776,12 @@ body.home .herofoot footer {
 }
 /* The identity is stacked, not run together with middots. In a block this
    narrow the separators orphan - a dangling "·" at the end of a wrapped line -
-   and no width fixes that, because the line is 68 characters and needs ~590px
-   of 14.5px mono while the block has 405px at 1728 and 261px at 1440. Stacked,
-   the longest item is "energy systems modelling" at 24 characters, ~209px, and
-   nothing can orphan at any width the block is used at.
+   and no width fixes that, because the run-together line is 68 characters and
+   needs roughly 590px while the block has 405px at 1728 and 261px at 1440.
+   Stacked, the longest item is "energy systems modelling", which RENDERS at
+   191px - measured, not counted; the character-count estimate for it was 209
+   and 9% high, and the breakpoint below is derived from the 191. Nothing can
+   orphan at any width this block stays fixed at.
    Two <p> rather than <br><br>, so the gap between the identity and the
    built-with line comes from margins and can be changed in one place. */
 body.home .herofoot footer p { margin: 0; }
