@@ -18,6 +18,16 @@
  * three left edges (masthead 342, hero 360, cards 150 at 1440) and nobody
  * measured it.
  *
+ * Since 2026-09-07 it also checks that a position:fixed block is wide enough
+ * for its own text. The home page's caption/footer block sits in the margin
+ * beside .paper, and that margin is (viewport - 782) / 2 - so it narrows as the
+ * window does while the text inside it does not. It shipped staying fixed down
+ * to 961px, where the usable width is about two characters; at 1280, a common
+ * laptop width, it is 181px against the 209px its longest line needs. This
+ * test ran at 1024 and saw none of it, because nothing asserted that the text
+ * fit. Overflow is measured as scrollWidth > clientWidth, the same way the
+ * marginalia clipping check does it.
+ *
  * And the index spec (style.css, "THE INDEX SPEC", 2026-09-05): on any page
  * with an .index, every .entry is a kicker, a linked title and exactly one
  * sentence, carries no figure, does not open by repeating its title, and
@@ -44,7 +54,15 @@ const PAGES = ['index', 'atlas', 'model', 'library', 'code', 'heat', 'storage', 
 // under it - was never measured. Added 2026-09-06, and run green on the tree
 // before the hero landed, so a failure here is this test's news and not the
 // hero's.
-const VIEWPORTS = [[1920, 1080], [1440, 900], [1024, 768], [960, 720], [390, 844]];
+/* 1366 and 1280 straddle the caption/footer block's 1340 breakpoint, and 1280
+   is the one that discriminates. At 1366 the block is fixed with 224px of
+   usable text against the 209px its longest line needs - it fits, so it would
+   pass even against a wrong breakpoint. At 1280 the margin is 181px and the
+   text does NOT fit, so that width fails the moment the breakpoint is set too
+   low. Both are common laptop widths, and without them nothing between 1024
+   and 1440 was ever measured - which is how the block shipped staying fixed
+   down to 961px. */
+const VIEWPORTS = [[1920, 1080], [1440, 900], [1366, 768], [1280, 800], [1024, 768], [960, 720], [390, 844]];
 const MIME = { '.html': 'text/html', '.css': 'text/css', '.js': 'text/javascript', '.png': 'image/png', '.webp': 'image/webp', '.svg': 'image/svg+xml', '.woff2': 'font/woff2', '.mp4': 'video/mp4', '.ico': 'image/x-icon' };
 
 function serve() {
@@ -126,6 +144,26 @@ function serve() {
         return out;
       });
       for (const f of edges) if (!hits.includes(f)) hits.push(f);
+      // a fixed block's text must fit inside it
+      const fits = await page.evaluate(() => {
+        const out = [];
+        for (const el of document.querySelectorAll('body *')) {
+          if (getComputedStyle(el).position !== 'fixed') continue;
+          const r = el.getBoundingClientRect();
+          if (!r.width || !r.height) continue;
+          const name = el.tagName.toLowerCase() + (typeof el.className === 'string' && el.className ? '.' + el.className.trim().split(/\s+/)[0] : '');
+          for (const n of [el, ...el.querySelectorAll('*')]) {
+            if (n.scrollWidth > n.clientWidth + 1 && n.clientWidth > 0) {
+              out.push(`fixed block ${name} is too narrow for its text: `
+                + `${n.tagName.toLowerCase()} needs ${n.scrollWidth}px in ${n.clientWidth}px `
+                + `"${(n.textContent || '').trim().slice(0, 30)}"`);
+              break;
+            }
+          }
+        }
+        return out;
+      });
+      for (const f of fits) if (!hits.includes(f)) hits.push(f);
       // the index spec
       const entries = await page.evaluate(() => {
         const es = [...document.querySelectorAll('.index .entry')];
