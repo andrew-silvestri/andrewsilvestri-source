@@ -934,7 +934,14 @@ So a clone of this repository serves `code.html` with sixteen dead links until
 
 ## 11. Current state, 6 September 2026
 
-**Live: the mirror's `66ca9eb`**, 2026-09-07 01:51 — three pendulums and an
+**Live: the mirror's `5f91a1b`**, 2026-09-07 — the caption and footer as one
+viewport-fixed block at the bottom left, and an `<h1>Projects</h1>` on a page
+that had carried no top-level heading since the masthead was deleted. Merged to
+master here as `ad11c75`, which also brought in the root `.gitattributes` and
+two new checks: `tests/test_scroll_jank.js` (scroll cadence across elapsed time,
+which no gate measured) and `tests/test_exclusion.js` (rendered pixels, which
+`_deslop/measure.js` cannot see).
+**Rollback is `66ca9eb`**, 2026-09-07 01:51 — three pendulums and an
 emptier home page. The hero draws three double pendulums released 0.001 rad
 apart; the band is the whole viewport less the nav; and the atlas card, the
 figure mosaic and the model chart are gone, so the home page is the hero and
@@ -942,8 +949,8 @@ the index and the Energy nav group is the only route to atlas-app, atlas,
 model and library. Seven PNGs were deleted with them (six `*-thumb.png` and
 `energy_model_chart.png`) and their builders retired to `unpublished/`. Merged
 to master here as `93bd8dc`.
-**Rollback is `7ff2323`**, 2026-09-06 18:43 — the hero as first published,
-with the atlas blocks still on the page. Before that `b5b38af`, 15:42. Before those: `fee3e64` (15:22),
+Before those, `7ff2323` (2026-09-06 18:43, the hero as first published, with
+the atlas blocks still on the page) and `b5b38af` (15:42). Before those: `fee3e64` (15:22),
 then `72d928e` (09-05 16:52, "Continents move in the reconstruction viewer"),
 `a55c566` (15:34, "Publish: where the ground goes, and the measured neuron"),
 `791dfe3` (13:51, shoes), `6d0316e` (03:01), the grid at `b768538`, Phase 5
