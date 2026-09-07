@@ -104,7 +104,25 @@
      is dominated by stroke COUNT, not by fill area - which is also why
      splitting trail() from bodies() below was worth far more than this. So
      dpr 2, because it is visibly better and costs nothing detectable. */
-  var TRAIL_DPR = 2;
+  var TRAIL_DPR = 1;
+
+  /* AN ABSOLUTE CEILING ON THE BACKING STORE, in device pixels - not a device
+     ratio, because a ratio is a multiplier on a viewport nobody controls.
+     This page was reported unusable on a 3840x2400 panel at 225% Windows
+     scaling: devicePixelRatio 2.2222, CSS viewport 1728x1080, and with the old
+     cap of 2 that is 3456x2160 = 7.5 megapixels PER CANVAS, twice, every
+     frame. About 900 megapixels a second. On that machine Firefox's
+     accelerated Canvas2D was AVAILABLE and failing at runtime inside the GPU
+     process, so all of it was running on one CPU core through Skia's software
+     raster pipeline.
+     Capping the width instead puts the ceiling on WORK rather than on a ratio,
+     so it holds whatever display arrives. Which limit binds depends on the
+     window: at 1728 CSS px this one does (1600/1728 = 0.926), on a 1200-wide
+     window TRAIL_DPR does.
+     DESIGN FOR SOFTWARE RASTER. Acceleration was available on that machine and
+     failed anyway, so a page that only works when canvas acceleration works is
+     a page that breaks silently for everyone whose acceleration does not. */
+  var MAX_BACKING_W = 1600;
   var CLAMP_MS = 50;                    /* hero.js 2a99923 used this; keep it */
   var NOMINAL_MS = 16;                  /* one 60Hz frame, for the first frame */
 
@@ -473,6 +491,8 @@
   var names = ['pendulum', 'lorenz', 'threebody'];
   var sys = new KINDS[KINDS[want] ? want : names[Math.floor(Math.random() * 3)]]();
 
+  setErosion(sys.FADE);
+
   var cap = document.querySelector('.herocap');
   if (cap) cap.textContent = sys.caption;
 
@@ -496,14 +516,20 @@
     var w = window.innerWidth, h = window.innerHeight;
     if (w === W && h === H) return;
     W = w; H = h;
-    fdpr = Math.min(window.devicePixelRatio || 1, 2);
     /* Both canvases now take the device ratio, capped: TRAIL_DPR above records
        why the back one stopped being pinned to 1. */
-    var bdpr = Math.min(window.devicePixelRatio || 1, TRAIL_DPR);
+    var lid = MAX_BACKING_W / W;
+    fdpr = Math.min(window.devicePixelRatio || 1, 2, lid);
+    var bdpr = Math.min(window.devicePixelRatio || 1, TRAIL_DPR, lid);
     back.width = Math.round(W * bdpr); back.height = Math.round(H * bdpr);
+    front.width = Math.round(W * fdpr); front.height = Math.round(H * fdpr);
+    /* The CSS size stays the full viewport either way: the browser scales the
+       smaller backing store up, which is one composited blit rather than
+       millions of extra rasterised pixels. */
     back.style.width = front.style.width = W + 'px';
     back.style.height = front.style.height = H + 'px';
-    front.width = Math.round(W * fdpr); front.height = Math.round(H * fdpr);
+    /* Both contexts still draw in CSS pixels - every routine in this file
+       assumes that, and none of them change. */
     fc.setTransform(fdpr, 0, 0, fdpr, 0, 0);
     bc.setTransform(bdpr, 0, 0, bdpr, 0, 0);
     bc.clearRect(0, 0, W, H);              /* a stretched trail is a smear */
@@ -558,7 +584,17 @@
      Rounding there is strictly downward, so it converges cleanly to fully
      transparent and the page's own --bg shows through exactly. The trail is
      laid down at alpha 1, so its colour is never re-quantised on the way out.
-     This is an eraser, not additive blending; nothing here sums. */
+     This is an eraser, not additive blending; nothing here sums.
+
+     AND alpha:false DOES NOT RESCUE THE OTHER APPROACH. getContext('2d',
+     {alpha:false}) would remove the per-pixel alpha-blend stages that show up
+     in a software-raster profile, but destination-out needs an alpha channel
+     to act on, so an opaque canvas would have to go back to painting --bg -
+     the thing that does not converge. Measured 2026-09-07 in both Firefox and
+     Chromium, 400 frames at f=0.03: the opaque canvas settles at (242,240,224)
+     exactly as the transparent one does, because the quantisation is in the
+     low-alpha SOURCE colour and not in the destination. Same failure, same
+     yellow cast. So the back canvas keeps its alpha channel. */
   /* DO NOT CLIP THIS TO THE VISIBLE MARGINS. It is the obvious optimisation -
      the paper column hides 782 of 1440 pixels, 54% of every frame drawn,
      blended and uploaded to be covered by an opaque element - and it was tried
@@ -584,6 +620,36 @@
     bc.globalCompositeOperation = 'source-over';
   }
 
+  /* THE EROSION HAS AN 8-BIT FLOOR, AND BELOW ~0.02 IT STOPS ERODING.
+     destination-out multiplies the stored alpha, and that alpha is an 8-bit
+     integer: once round(a * (1 - f)) === a the pixel stops changing and the
+     trail is there for good. The threshold is a < 0.5/f, so a small f freezes
+     early.
+     Measured 2026-09-07, 3000 frames, one pixel of trail:
+       f = 0.03  (pendulum)   settles at alpha  15/255 - invisible, delta 1
+       f = 0.02  (lorenz)     settles at alpha  25/255 - invisible, delta 1
+       f = 0.005 (threebody)  settles at alpha 127/255 - HALF OPACITY, delta 85
+     So the three-body's trails were never fading. Its FADE of 0.005 was chosen
+     for "about twenty seconds of memory" and delivered unlimited memory at
+     half opacity, cleared only by the reseed wipe every ~205s. It looked like
+     long trails, which is what it was supposed to look like, which is why it
+     survived being screenshotted repeatedly.
+     The fix keeps the decay rate and takes it above the floor: erode every Nth
+     frame with the alpha that compounds to the same rate. Same time constant,
+     no floor. f = 0.005 becomes 0.0199 every 4th frame - measured effective
+     rate 0.00501 against 0.00500, and the residue drops to alpha 25. */
+  var EROSION_MIN = 0.02;
+  var erodeN = 1, erodeF = 0, erodeTick = 0;
+  function setErosion(f) {
+    if (f >= EROSION_MIN) { erodeN = 1; erodeF = f; return; }
+    erodeN = Math.ceil(EROSION_MIN / f);
+    erodeF = 1 - Math.pow(1 - f, erodeN);
+  }
+  function erode() {
+    if (erodeTick++ % erodeN) return;
+    fadeBack(erodeF);
+  }
+
   /* The three-body resolves into a binary and an escaper and has to start
      again. A hard cut - trails gone, bodies suddenly elsewhere - is the one
      moment this reads as a page that crashed and reloaded, so the trails are
@@ -605,6 +671,8 @@
 
     if (wipe > 0) {
       wipe += dt * 0.001;
+      /* The reseed ramp goes to 0.25, far above the floor, so it drives
+         fadeBack directly rather than through the frame-skipping path. */
       fadeBack(wipe < WIPE_OUT ? sys.FADE + (0.25 - sys.FADE) * (wipe / WIPE_OUT) : 0.25);
       if (wipe >= WIPE_HOLD && sys.done) sys.reset();
       if (wipe >= WIPE_END) wipe = 0;
@@ -620,7 +688,7 @@
     if (n === sys.CAP) acc = 0;      /* debt dropped, never banked: catching up
                                         after a hitch is more visible than the
                                         missing time, and compounds under load */
-    fadeBack(sys.FADE);
+    erode();
     fc.clearRect(0, 0, W, H);
     for (var i = 0; i < n; i++) { sys.step(sys.H); sys.trail(1); }
     sys.bodies(1);          /* once a frame: the front canvas was cleared once */

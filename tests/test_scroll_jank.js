@@ -47,7 +47,7 @@
 const path = require('path');
 const fs = require('fs');
 const http = require('http');
-const { chromium } = require('playwright');
+const { chromium, firefox } = require('playwright');
 
 const SITE = path.join(__dirname, '..', 'site');
 const PINS = ['pendulum', 'lorenz', 'threebody'];
@@ -63,6 +63,16 @@ const BREAK = has('--break');
 const ONLY_VP = arg('--vp', null);
 const ONLY_PIN = arg('--pin', null);
 const ONLY_B = arg('--buckets', null);
+/* --firefox drives Playwright's Firefox instead of Chromium; --software forces
+   canvas raster onto the CPU with gfx.canvas.accelerated=false. Together they
+   reproduce the configuration the hero was reported broken on: accelerated
+   Canvas2D AVAILABLE but failing at runtime inside the GPU process ("Failed to
+   play canvas event type: 67"), leaving Firefox on Skia software raster. A
+   fresh Playwright profile will not fail that way by itself, so the pref is how
+   the failure gets reproduced deliberately rather than hoped for. Chromium
+   numbers are not evidence for that bug. */
+const FIREFOX = has('--firefox');
+const SOFTWARE = has('--software');
 
 /* Seconds of elapsed animation. 0 is the superimposed pendulums and the easy
    opening three-body geometry; 30 is well past the divergence; 60 is steady. */
@@ -74,7 +84,10 @@ const LONG_BUCKETS = [150, 195, 206];
 /* 1920x1200 is this machine maximised: a 3840x2400 panel at 200% scaling.
    1440x900 was the only desktop size measured before 2026-09-07 and it
    understates the canvas by 78% - 5.18 megapixels against 9.22. */
-let VIEWPORTS = [[1920, 1200], [390, 844]];
+/* 1728x1080 is a 3840x2400 panel at 225% Windows scaling, which is the
+   configuration the software-raster bug was reported on - devicePixelRatio
+   2.2222, not the 2 this file assumed. 1920x1200 is the same panel at 200%. */
+let VIEWPORTS = [[1728, 1080], [1920, 1200], [390, 844]];
 if (ONLY_VP) VIEWPORTS = VIEWPORTS.filter(v => String(v[0]) === ONLY_VP);
 
 function serve() {
@@ -165,15 +178,21 @@ async function scrollMeasure(page, heavy) {
 (async () => {
   const srv = await serve();
   const base = `http://127.0.0.1:${srv.address().port}/`;
-  const browser = REAL
-    ? await chromium.launch({ channel: 'chrome', headless: false,
-        args: ['--force-device-scale-factor=' + DSF] })
-    : await chromium.launch();
+  const browser = FIREFOX
+    ? await firefox.launch({ headless: !REAL,
+        firefoxUserPrefs: SOFTWARE ? { 'gfx.canvas.accelerated': false } : {} })
+    : REAL
+      ? await chromium.launch({ channel: 'chrome', headless: false,
+          args: ['--force-device-scale-factor=' + DSF] })
+      : await chromium.launch();
   let failures = 0;
 
-  console.log(`\nScroll jank across elapsed time - ${REAL ? 'INSTALLED Chrome, GPU' : 'headless Chromium, software'}, `
+  const engine = FIREFOX
+    ? 'Playwright Firefox' + (SOFTWARE ? ', canvas raster FORCED TO SOFTWARE' : ', canvas accelerated')
+    : REAL ? 'INSTALLED Chrome, GPU' : 'headless Chromium, software';
+  console.log(`\nScroll jank across elapsed time - ${engine}, `
             + `deviceScaleFactor ${DSF}, ${FRAME_MS.toFixed(1)}ms budget`);
-  console.log('  pin        viewport      t=s  frames  median    p95   worst  >25ms  canvasMP\n');
+  console.log('  pin        viewport      t=s  frames  median    p95   worst  >25ms  rasterMP\n');
 
   const jobs = [];
   for (const [w, h] of VIEWPORTS)
@@ -188,7 +207,7 @@ async function scrollMeasure(page, heavy) {
     await page.goto(base + 'index.html?hero=' + job.pin, { waitUntil: 'load' });
     await page.waitForFunction(() => document.body.classList.contains('hero-live'));
     const t0 = Date.now();
-    const mp = await page.evaluate(() => { const c = document.querySelector('#hero canvas'); return c ? c.width * c.height / 1e6 : 0; });
+    const mp = await page.evaluate(() => { return [...document.querySelectorAll('#hero canvas')].reduce((t, c) => t + c.width * c.height, 0) / 1e6; });
 
     for (const b of job.buckets) {
       const wait = t0 + b * 1000 - Date.now();
