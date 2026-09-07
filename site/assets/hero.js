@@ -7,16 +7,30 @@
  * watch. That is the whole argument for it being here - a figure a reader can
  * see being computed, rather than a picture of one.
  *
- * IT IS NOT THE ENERGY MODEL. The captions said so in as many words until
- * 2026-09-06, when they were cut to about a dozen words each and the clause
- * went with the length. So the argument now lives here and in HANDOFF section
- * 4 rather than on the page: a picture of a nonlinear system on a page about
- * energy modelling is a metaphor, and DESLOP_AUDIT F6 deleted force-bg.js -
- * a real, physically simulated subgraph of the published atlas - for being
- * "decoration that restates the page at illegible size". What still separates
- * this from that is that each caption names a system and its published
- * parameters, and nothing here claims to draw the model. Do not let a later
- * edit quietly make it claim otherwise.
+ * IT IS NOT THE ENERGY MODEL, AND THE CAPTIONS STOPPED SAYING SO ON
+ * 2026-09-06. READ THIS BEFORE PUTTING ANYTHING ATLAS-SHAPED BACK ON THE HOME
+ * PAGE.
+ *
+ * DESLOP_AUDIT F6 deleted force-bg.js - a real, physically simulated subgraph
+ * of the published atlas - for being "decoration that restates the page at
+ * illegible size". The answer to that, recorded in HANDOFF section 4, was that
+ * these captions name a published system and deny being the model outright.
+ * The denial has gone: the captions were cut to about a dozen words and the
+ * clause went with the length.
+ *
+ * THAT IS ONLY SAFE BECAUSE THE SAME COMMIT EMPTIED THE PAGE AROUND IT. The
+ * atlas card, the figure mosaic and the model chart went at the same time, so
+ * the home page is this canvas and the index and nothing else. There is
+ * nothing left for a reader to mistake the animation FOR. A pendulum beside a
+ * card headed "A model of the world energy system" invites exactly the
+ * reading F6 punished; a pendulum on an otherwise empty page does not.
+ *
+ * SO THE RULE CARRIES ITS CIRCUMSTANCE: if anything atlas-shaped returns to
+ * the home page - a card, a figure of the model, a node-link anything, and the
+ * pending rename may well put one there - THE DISCLAIMER COMES BACK INTO THE
+ * CAPTIONS AT THE SAME TIME. It is not a stylistic preference that was
+ * outgrown; it was load-bearing until the thing it was bearing against was
+ * removed.
  *
  * ---- the four things that will bite whoever edits this ------------------
  *
@@ -112,6 +126,15 @@
    * H (step), RATE (system time per wall second), CAP (steps a frame may take),
    * FADE (the trail's erosion per frame), settle (units to run undrawn), and a
    * caption.
+   *
+   * THE CAPTIONS ARE ONE REGISTER: the system's name, then the parameters that
+   * make this instance this instance - the release offset, the three Lorenz
+   * constants, the three masses. Nothing else. The dates that used to follow
+   * the Lorenz and Burrau names were dropped on 2026-09-07 because the double
+   * pendulum has no single publication to date and inventing symmetry is worse
+   * than losing two numbers a reader was not using; the citations are in the
+   * per-system comments below, where provenance belongs. Keep new captions to
+   * that shape and to about a dozen words.
    *
    * FADE IS PER SYSTEM. The erosion is per frame but the drawing rate is per
    * unit of system time, so one constant gives the fast system a long arc and
@@ -287,7 +310,7 @@
       fc.fillStyle = INK; dot(fc, ox + s[0] * sx, oy - s[2] * sy, 3.5);
       fc.globalAlpha = 1;
     };
-    this.caption = 'Lorenz attractor, 1963. σ = 10, ρ = 28, β = 8/3.';
+    this.caption = 'Lorenz attractor. σ = 10, ρ = 28, β = 8/3.';
   }
 
   /* ---- 3. Burrau's three-body problem ---------------------------------- */
@@ -439,7 +462,7 @@
       for (i = 0; i < 3; i++) { fc.fillStyle = COL3[i]; dot(fc, pt[i][0], pt[i][1], RAD[i]); }
       fc.globalAlpha = 1;
     };
-    this.caption = 'Burrau’s three-body problem, 1913. Masses 3, 4 and 5.';
+    this.caption = 'Burrau’s three-body problem. Masses 3, 4 and 5.';
   }
 
   /* ==== choose ========================================================= */
