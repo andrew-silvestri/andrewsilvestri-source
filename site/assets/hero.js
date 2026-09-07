@@ -731,6 +731,21 @@
     raf = requestAnimationFrame(frame);
   }
 
+  /* transitionend is not guaranteed - an interrupted transition never fires
+     it - so the stop is also armed on a timer, and whichever arrives first
+     wins. Stopping late costs a few frames; not stopping at all is the bug. */
+  var fadeT = 0;
+  function hide() {
+    document.body.classList.add('hero-idle');
+    clearTimeout(fadeT);
+    fadeT = setTimeout(stop, 380);
+  }
+  function show() {
+    clearTimeout(fadeT);
+    document.body.classList.remove('hero-idle');
+    start();
+  }
+
   function start() {
     if (running || still) return;
     running = true;
@@ -766,19 +781,24 @@
      duplicated constant that goes stale (trap 15). */
   var io = null;
   function observe() {
-    var covered = paper && paper.getBoundingClientRect().width >= window.innerWidth - 1;
+    /* 4b: no `covered` guard, and no hard stop. When the band leaves, the
+       canvas FADES to nothing over 300ms and the loop stops when it gets
+       there; scrolling back up restarts it and fades it in. The full-viewport
+       canvas and the arrival are untouched, so the margins still animate
+       beside the top of the column - the cost only appears once the reader has
+       left the hero behind. */
     if (io) { io.disconnect(); io = null; }
-    if (covered && 'IntersectionObserver' in window) {
+    if ('IntersectionObserver' in window) {
       var band = document.querySelector('.heroband');
       if (band) {
         io = new IntersectionObserver(function (e) {
-          if (e[0].isIntersecting) start(); else stop();
+          if (e[0].isIntersecting) show(); else hide();
         }, { threshold: 0 });
         io.observe(band);
         return;
       }
     }
-    start();
+    show();
   }
 
   /* ==== wiring ========================================================= */
