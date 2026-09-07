@@ -510,7 +510,21 @@
     /* The band is the whole first screen less the nav. Measured rather than
        computed from a constant, because the navband's height changes when the
        nav wraps - which it does at 390. The stylesheet keeps height:0 as the
-       no-JS default; the band only exists when this file runs anyway. */
+       no-JS default; the band only exists when this file runs anyway.
+
+       SETTING THIS IN THE HEAD SCRIPT INSTEAD DOES NOT HELP, and the reasoning
+       that says it should is wrong about this page. The argument: hero-live is
+       added here, after load, so the page paints with a zero-height band and
+       then reflows the whole document when an ~823px block appears above it -
+       a layout thrash on every load, and a good candidate for the 80-113ms
+       single frames seen at t=0.
+       Measured on 2026-09-07 and it does not happen. Cumulative layout shift
+       is 0 before and 0 after moving the height into the blocking head script:
+       0 shifts on two pins, one shift of 0.0002 on the third, either way. The
+       reason is at the bottom of index.html - hero.js is a plain <script src>
+       with no defer and no async, so it is parser-blocking and runs BEFORE the
+       first paint. The band already has its height when the page first paints.
+       There is no reflow to remove. The t=0 spikes are something else. */
     var nb = document.querySelector('.navband');
     var band = document.querySelector('.heroband');
     if (nb && band) band.style.height = Math.max(0, H - nb.getBoundingClientRect().height) + 'px';
