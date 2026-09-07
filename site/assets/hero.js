@@ -595,6 +595,24 @@
      exactly as the transparent one does, because the quantisation is in the
      low-alpha SOURCE colour and not in the destination. Same failure, same
      yellow cast. So the back canvas keeps its alpha channel. */
+  /* AND DO NOT CONFINE THE CANVAS TO THE HERO BAND EITHER, at least not for
+     the reason it keeps getting proposed for. The argument is that a
+     full-viewport fixed canvas rasterises far more than a band-sized one, so
+     shrinking it to the band would cut the work sharply. That WAS true when
+     the band was min(58vh, 460px) - about 43% of a 1080-tall screen. The
+     2026-09-06 revision made the band the full viewport less the nav, and the
+     premise was never rechecked against it.
+     Once the band IS the viewport minus the nav, there is almost nothing to
+     win. Built and measured on 2026-09-07 as variant 4a: 2.97 megapixels a
+     frame against 3.20, about 7%, in exchange for losing the margin animation
+     for the whole page - including on the arrival screen, where the two are
+     visually near-identical because the band is 1003px of a 1080px viewport.
+     Both variants pause after the band leaves and both pauses were proven by
+     removing the observer and watching the drawing resume, so past that point
+     they are the same page. 7% is not worth the design.
+     If a loaded machine still struggles, MAX_BACKING_W is the lever, not the
+     margins. */
+
   /* DO NOT CLIP THIS TO THE VISIBLE MARGINS. It is the obvious optimisation -
      the paper column hides 782 of 1440 pixels, 54% of every frame drawn,
      blended and uploaded to be covered by an opaque element - and it was tried
