@@ -36,3 +36,23 @@ which still carries the one-line version.
   **navigator.html**, **navigator5.html**, **zoom_explorer.html** - earlier
   generations of the atlas and of the site (August 2026). Kept for their
   code.
+
+## 2026-09-06, with the nonlinear hero
+
+- **build_thumbnails.py** - the six mosaic tiles on the home page. The mosaic
+  went when the home page became the hero canvas plus the index; `index.html`
+  was the only page that ever referenced a `*-thumb.png`, and `library.html`
+  shows those same six figures at full size, so nothing a reader could see was
+  lost. The six PNGs are deleted. `sitefig.thumbnail()` stays, uncalled, for
+  the crop lesson in its docstring.
+- **build_model_chart.py** - `energy_model_chart.png`, the four-panel "model at
+  a glance" figure. Also home-page-only, and also cut with the atlas blocks.
+  Removed from `rezip_downloads.py`'s atlas-code.zip file list at the same
+  time, so the archive does not ship a builder for a figure the site no longer
+  has.
+
+Both were retired rather than left building unshipped, for the reason the 714
+layer render was: a generator that writes a file nothing reads goes stale
+silently, and deleting the file while the generator still names it turns
+`tests/test_generators.py` red instead.
+

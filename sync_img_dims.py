@@ -82,7 +82,11 @@ def main():
 
         if apply and out:
             out.append(text[last:])
-            open(page, "w", encoding="utf-8", newline="").write("".join(out))
+            # newline="\n", not "". Both leave today's bytes alone, but ""
+            # preserves whatever the tree happens to hold - so when bust_cache.py
+            # flipped the pages to CRLF, this followed it and agreed, which is the
+            # masking that hides the bug rather than the bug itself.
+            open(page, "w", encoding="utf-8", newline="\n").write("".join(out))
 
     print(f"{checked} sized <img> checked, {wrong} disagreed with the file"
           + (f", {fixed} rewritten" if apply else ""))

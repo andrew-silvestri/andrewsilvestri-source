@@ -226,6 +226,30 @@ defence is metaphorical. That was the trade Andrew asked for, and the
 captions are what keep it honest. The design and every measurement behind
 it are in `03 RESEARCH/rename-hero/STAGE2_PLAN.md`.
 
+**The captions no longer say "not the energy model", and that was deliberate
+on 2026-09-06.** They were cut to about a dozen words each - the long versions
+were the longest text on the first screen and read as an apology - and the
+explicit denial went with the length. What the three still carry is the name of
+the system, its date and its published parameters:
+
+> Three double pendulums, released 0.001 rad apart.
+> Lorenz attractor, 1963. σ = 10, ρ = 28, β = 8/3.
+> Burrau's three-body problem, 1913. Masses 3, 4 and 5.
+
+So the F6 answer above now rests on the weaker of its two legs. The strong one
+is unchanged: each caption names a published system, so the figure cannot be
+mistaken for a drawing of the atlas the way an unlabelled 200-node subgraph
+could. The one that went is the sentence that said so outright. **If a future
+audit reaches for F6 again, this paragraph and `hero.js`'s header are where the
+argument lives - it is no longer on the page**, and anyone restoring it should
+know it was removed on purpose rather than lost.
+
+The home page also stopped carrying the atlas card, the figure mosaic and the
+model chart the same day: it is the hero and the index now, and the Energy nav
+group is the only route to atlas-app, atlas, model and library. That orphaned
+seven generated PNGs, and both builders were retired rather than left writing
+files nothing reads (`unpublished/RETIRED.md`).
+
 **The index.** The home page's projects are an index, not cards: "THE INDEX
 SPEC" in `style.css` beside `.index .entry`, changed before the code. An entry
 is a kicker, a linked title and one sentence, a hook, not a summary; no

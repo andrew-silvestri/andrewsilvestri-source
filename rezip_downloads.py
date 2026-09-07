@@ -98,7 +98,6 @@ ATLAS_FILES = {
     # the engine the figures use, and the figures
     "build_throughlines.py": "build_throughlines.py",
     "build_atlas_figures.py": "build_atlas_figures.py",
-    "build_model_chart.py": "build_model_chart.py",
     "build_layer_diagram.py": "build_layer_diagram.py",
     "build_hero_figure.py": "build_hero_figure.py",
     "build_propagation_diagram.py": "build_propagation_diagram.py",

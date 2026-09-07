@@ -316,7 +316,8 @@ def build_site(path=None):
     html = tpl.replace("/*DATA*/", json.dumps(data, ensure_ascii=False,
                                               separators=(",", ":")))
     out = path or os.path.join(HERE, "climate-cost.html")
-    with open(out, "w", encoding="utf-8") as fh:
+    # newline="\n": site/.gitattributes declares eol=lf and Python text mode on Windows writes CRLF.
+    with open(out, "w", encoding="utf-8", newline="\n") as fh:
         fh.write(html)
     print(f"visualiser written: {out} "
           f"({os.path.getsize(out)/1024:.0f} kB, self-contained)")
