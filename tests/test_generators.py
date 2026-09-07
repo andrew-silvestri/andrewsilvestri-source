@@ -17,6 +17,18 @@ build.
 build_site.py is retired (HANDOFF: never run it; last valid 2026-08-01) and
 runs only with --retired, so the report can say what it would do.
 
+WHICH INTERPRETER. Run this with `python`, not `python3`. On this machine
+they are different installs: `python` is Programs\Python\Python312 and has
+numpy and matplotlib; `python3` on Git Bash's PATH is the WindowsApps shim to
+pythoncore-3.14, which has neither. Under python3 this suite reports FAILED
+for update_atlas_pages.py, build_lq.py and build_layer_diagram.py - three
+ModuleNotFoundErrors dressed as three stale generators. Seen 2026-09-07: 4
+failures under python3, 1 under python, same tree, same second.
+That is HANDOFF section 8, trap 24 - a harness measures the machine you
+configured - in the smallest possible form. Read the traceback before
+believing a FAILED here; a generator that cannot import is not a generator
+that drifted.
+
 Run:
     python tests/test_generators.py             # all live generators
     python tests/test_generators.py --only nav  # one, by label substring

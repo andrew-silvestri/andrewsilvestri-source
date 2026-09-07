@@ -8,11 +8,17 @@ Both were typed, and both drift the moment an archive is rebuilt - which
 happens whenever any project's sources change, by a person who is thinking
 about that project and not about this table. HANDOFF section 11 has listed
 these rows under "typed, and therefore able to go stale" since it was written,
-and on 2026-09-07 nine of sixteen rows disagreed with the zips on disk:
+and on 2026-09-07 TEN of sixteen rows disagreed with the zips on disk:
 
     longevity-code.zip   said 11 files,  96 KB   actually 21 files, 811 KB
     neuron-code.zip      said 19 files            actually 26 files
     heat, storage, skyline, continents, food, economy, atlas   all short
+    climate-cost-code.zip   57 KB -> 58 KB
+
+(This docstring said "nine" and listed nine until the number was recounted
+against the run's own output. The tenth was climate-cost, a 1 KB size
+correction - the smallest one, and therefore the one dropped from a list
+written by hand. A file arguing that typed numbers drift is not exempt.)
 
 The longevity row was out by 8.5x on a number a reader uses to decide whether
 to download. That is a section 4 problem - every number on the site traces to
@@ -58,6 +64,7 @@ def main(apply=False):
     text = open(PAGE, encoding="utf-8").read()
     out, changed, missing = [], [], []
     pos = 0
+    seen = 0
 
     for m in ROW.finditer(text):
         row = m.group(0)
@@ -69,6 +76,7 @@ def main(apply=False):
             missing.append(z.group(1))
             continue
 
+        seen += 1
         with zipfile.ZipFile(path) as zf:
             n = len(zf.namelist())
         size = human(os.path.getsize(path))
@@ -100,7 +108,11 @@ def main(apply=False):
         return 1
 
     if not changed:
-        print("  code.html: %d archive rows, all agree with the zips" % len(ROW.findall(text)))
+        # `seen`, not len(ROW.findall(text)): that counts every <tr>, and the
+        # table has a <th> header row, so the all-agree line said 17 archives
+        # when there are 16. It is the message nobody reads closely, which is
+        # exactly where a wrong count survives.
+        print("  code.html: %d archive rows, all agree with the zips" % seen)
         return 0
 
     if apply:
