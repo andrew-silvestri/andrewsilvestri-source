@@ -898,18 +898,22 @@ So a clone of this repository serves `code.html` with sixteen dead links until
 
 ## 11. Current state, 6 September 2026
 
-**Live: the mirror's `7ff2323`**, 2026-09-06 18:43 — the home page as a
-nonlinear system. It carries the live hero canvas (`assets/hero.js`), the
-retired 714 layer render, `neuron-app.html` removed from the published set,
-`neuron_fig6_orders.png` and the seven rebuilt download archives. Merged to
-master here as `a90dd0a`, "Merge: the home page becomes a nonlinear system".
-**Rollback is `b5b38af`**, 15:42 the same day. Before those: `fee3e64` (15:22),
+**Live: the mirror's `66ca9eb`**, 2026-09-07 01:51 — three pendulums and an
+emptier home page. The hero draws three double pendulums released 0.001 rad
+apart; the band is the whole viewport less the nav; and the atlas card, the
+figure mosaic and the model chart are gone, so the home page is the hero and
+the index and the Energy nav group is the only route to atlas-app, atlas,
+model and library. Seven PNGs were deleted with them (six `*-thumb.png` and
+`energy_model_chart.png`) and their builders retired to `unpublished/`. Merged
+to master here as `93bd8dc`.
+**Rollback is `7ff2323`**, 2026-09-06 18:43 — the hero as first published,
+with the atlas blocks still on the page. Before that `b5b38af`, 15:42. Before those: `fee3e64` (15:22),
 then `72d928e` (09-05 16:52, "Continents move in the reconstruction viewer"),
 `a55c566` (15:34, "Publish: where the ground goes, and the measured neuron"),
 `791dfe3` (13:51, shoes), `6d0316e` (03:01), the grid at `b768538`, Phase 5
 Parts 1/2b/3/4+5, and Phase 4 Part A `a934a13` on 4 September.
 
-Three mirror commits are dated 6 September and all three carry publish.sh's
+Four mirror commits are dated 6–7 September and all four carry publish.sh's
 canned subject line, "Rebuild site: globe atlas, 3D brain, wider layout,
 corrected models" — a message that has described no publish accurately for
 some time. It is the script's constant, not a claim about what changed; read
