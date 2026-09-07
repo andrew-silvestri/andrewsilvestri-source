@@ -22,6 +22,15 @@
  *      burst measures nothing. The bound in hero.js comes from the 8-hour run
  *      here, not from a guess.
  *
+ *   C. The pendulum caption says "released 0.001 rad apart", and the whole
+ *      reason there are three of them is that they diverge. That is a claim
+ *      about behaviour, so it is checked rather than assumed: they must start
+ *      together, still be together after a few seconds, and be visibly apart
+ *      by half a minute. Without this the hero could ship three pendulums
+ *      that stayed in lockstep - because someone seeded them identically, or
+ *      stepped one state vector three times - and the page would quietly say
+ *      something false while looking fine.
+ *
  * The integrators are deliberately a second implementation of the ones in
  * assets/hero.js rather than an import: a check that runs the same code that
  * produced the answer is provenance, not verification (trap 20). The constants
@@ -34,6 +43,7 @@
 /* ---- the constants hero.js must agree with --------------------------- */
 const CONSTANTS = {
   pendulum: { m1: 1, m2: 1, l1: 1, l2: 1, g: 9.81, th1: 2.0, th2: 2.0, h: 0.001 },
+  pendulumTrio: [2.000, 2.001, 2.002],   // hero.js Pendulum(): TH
   threebody: {
     m: [3, 4, 5],
     r: [[1, 3], [-2, -1], [1, -1]],
@@ -282,6 +292,43 @@ function runPendulum(opts) {
   return { E0, marks, worst: marks[marks.length - 1].d };
 }
 
+/* Three pendulums from the trio's initial angles, reporting the maximum
+   pairwise |theta1| separation at a few marks. Deliberately a second
+   implementation of the same step as runPendulum above, for the reason in the
+   header: a check that runs the same code that produced the answer is
+   provenance, not verification. */
+function runTrio(opts) {
+  const P = Object.assign({}, CONSTANTS.pendulum, opts || {});
+  const angles = (opts && opts.angles) || CONSTANTS.pendulumTrio;
+  const h = P.h, secs = (opts && opts.secs) || 30;
+  const st = angles.map(a => [a, a, 0, 0]);
+  const k1 = [0,0,0,0], k2 = [0,0,0,0], k3 = [0,0,0,0], k4 = [0,0,0,0], tmp = [0,0,0,0];
+  const spread = () => {
+    let m = 0;
+    for (let i = 0; i < 3; i++) for (let j = i + 1; j < 3; j++)
+      m = Math.max(m, Math.abs(st[i][0] - st[j][0]));
+    return m;
+  };
+  const steps = Math.round(secs / h), marks = [];
+  const at = new Set([0, 1, 2, 5, 10, 20, 30].map(t => Math.round(t / h)));
+  if (at.has(0)) marks.push({ t: 0, d: spread() });
+  for (let n = 1; n <= steps; n++) {
+    for (const y of st) {
+      let i;
+      pendDeriv(y, P, k1);
+      for (i = 0; i < 4; i++) tmp[i] = y[i] + 0.5 * h * k1[i];
+      pendDeriv(tmp, P, k2);
+      for (i = 0; i < 4; i++) tmp[i] = y[i] + 0.5 * h * k2[i];
+      pendDeriv(tmp, P, k3);
+      for (i = 0; i < 4; i++) tmp[i] = y[i] + h * k3[i];
+      pendDeriv(tmp, P, k4);
+      for (i = 0; i < 4; i++) y[i] += h / 6 * (k1[i] + 2 * k2[i] + 2 * k3[i] + k4[i]);
+    }
+    if (at.has(n)) marks.push({ t: n * h, d: spread() });
+  }
+  return { marks, start: marks[0].d, end: marks[marks.length - 1].d };
+}
+
 /* ==== reporting ======================================================== */
 
 const NAME = ['b1 (mass 3)', 'b2 (mass 4)', 'b3 (mass 5)'];
@@ -319,6 +366,18 @@ function runB() {
   return R;
 }
 
+function runC() {
+  console.log('\nC. Three pendulums 0.001 rad apart - do they actually diverge?');
+  const R = runTrio({});
+  for (const m of R.marks)
+    console.log(`       t = ${String(m.t.toFixed(0)).padStart(2)}s   max pairwise |dtheta1| ${m.d.toExponential(2)}`);
+  say(R.start <= 0.0021, `they start together: ${R.start.toExponential(2)} rad apart`);
+  const early = R.marks.find(m => m.t === 2);
+  say(early && early.d < 0.05, `still together at 2s: ${early ? early.d.toExponential(2) : 'n/a'} rad`);
+  say(R.end > 1.0, `visibly apart by 30s: ${R.end.toFixed(2)} rad`);
+  return R;
+}
+
 /* trap 17: a check nobody has seen fail is a claim, not a check. */
 function runBreak() {
   console.log('\nBREAK (trap 17) - each mutation must be noticed\n');
@@ -335,7 +394,13 @@ function runBreak() {
   console.log('       (reported, not asserted - this is the value the first draft of');
   console.log('        the plan proposed, and the point is to see what it does)');
 
-  console.log('\n  3. pendulum step inflated 100x (h 2ms -> 200ms)');
+  console.log('\n  3. the three pendulums seeded identically (all 2.000 rad)');
+  const same = runTrio({ angles: [2.0, 2.0, 2.0] });
+  say(same.end < 1e-12,
+      `lockstep run ends ${same.end.toExponential(2)} rad apart, so the 1.0 rad ` +
+      `assertion in C would fail - the check is not passing on the maths alone`);
+
+  console.log('\n  4. pendulum step inflated 100x (h 2ms -> 200ms)');
   const coarse = runPendulum({ h: 0.2, hours: 8 });
   const fine = runPendulum({ hours: 8 });
   /* A blown-up integrator gives NaN, not a large number, and `NaN > x` is
@@ -348,6 +413,6 @@ function runBreak() {
 const args = process.argv.slice(2);
 console.log('Recomputing what the hero captions claim.');
 if (args.includes('--break')) { runBreak(); }
-else { runA(); runB(); }
+else { runA(); runB(); runC(); }
 console.log(`\n  ${failures ? failures + ' FAILED' : 'all checks passed'}\n`);
 process.exit(failures ? 1 : 0);

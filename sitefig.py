@@ -299,9 +299,12 @@ def save(fig, path, close=True):
 
 def thumbnail(src, dst, width=THUMB):
     """A thumbnail of a rendered figure: the whole figure, scaled to `width`
-    CSS px at its own aspect, quantised. For the home-page mosaic
-    (build_thumbnails.py), whose 16:9 tiles letterbox in CSS on the figure's
-    own ground.
+    CSS px at its own aspect, quantised. It was written for the home-page
+    mosaic, whose 16:9 tiles letterboxed in CSS on the figure's own ground;
+    that mosaic and its builder were retired on 2026-09-06 when the home page
+    became the hero canvas plus the index, so nothing calls this today
+    (unpublished/build_thumbnails.py). Kept because it is a library function
+    and the crop lesson below is the reason it exists at all.
 
     Never a crop. The first version of this cover-cropped to 3:2, and every
     card on the home page lost its right edge or its top and bottom - axis

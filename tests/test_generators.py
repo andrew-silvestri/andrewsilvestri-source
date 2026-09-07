@@ -108,7 +108,6 @@ GENERATORS = [
     ("downloads: rezip_downloads.py", ["rezip_downloads.py"], ".", "zips"),
     ("sitemap: build_sitemap.py --apply",
      ["build_sitemap.py", "--apply"], ".", "site"),
-    ("thumbnails: build_thumbnails.py", ["build_thumbnails.py"], ".", "site"),
     # One figure builder is in scope: the layer diagram is the home page's
     # first screen and the picture above the atlas table, and it is drawn
     # from the payload, the engine source and the table's own grouping. If

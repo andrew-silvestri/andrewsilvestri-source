@@ -9,6 +9,7 @@ blob = json.dumps(data, separators=(",", ":"), ensure_ascii=False)
 html = tpl.replace("/*APP*/", app).replace(
     "/*DATA*/", json.dumps(blob, ensure_ascii=False))
 out = os.path.join(HERE, "skyline-app.html")
-open(out, "w", encoding="utf-8").write(html)
+# newline="\n": site/.gitattributes declares eol=lf and Python text mode on Windows writes CRLF.
+open(out, "w", encoding="utf-8", newline="\n").write(html)
 print(f"  {out}  ({os.path.getsize(out)/1024:.0f} kB, "
       f"{len(data['cities'])} cities)")

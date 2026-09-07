@@ -58,7 +58,13 @@ def main():
                        + r'(\?v=[0-9a-f]+)?"',
                        rf'\1="{a}?v={v}"', t)
         if t != o:
-            open(p, "w", encoding="utf-8").write(t)
+            # newline="\n" for the reason in update_atlas_pages.py: site/.gitattributes
+            # declares eol=lf and Python text mode on Windows writes CRLF. This one
+            # is the worst place to get it wrong, because it rewrites EVERY page on
+            # every publish - so when it was missed in the 2026-09-06 sweep it sat
+            # harmless only for as long as it happened to stamp nothing, and flipped
+            # the whole site to CRLF the next time style.css changed.
+            open(p, "w", encoding="utf-8", newline="\n").write(t)
             changed += 1
     print(f"  stamped {changed} pages (style.css v={css})")
 

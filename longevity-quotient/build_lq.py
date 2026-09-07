@@ -817,7 +817,8 @@ def write_html(rows, summary):
     html = html.replace("/*FITS*/", json.dumps(summary, ensure_ascii=False,
                                                separators=(",", ":")))
     path = os.path.join(HERE, "longevity.html")
-    with open(path, "w", encoding="utf-8") as fh:
+    # newline="\n": site/.gitattributes declares eol=lf and Python text mode on Windows writes CRLF.
+    with open(path, "w", encoding="utf-8", newline="\n") as fh:
         fh.write(html)
     print(f"\nvisualiser written: {path} "
           f"({os.path.getsize(path)/1024:.0f} kB, self-contained)")
