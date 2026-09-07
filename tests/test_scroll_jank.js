@@ -120,6 +120,15 @@ const STOP = () => {
 };
 
 async function scrollMeasure(page, heavy) {
+  /* Chrome throttles requestAnimationFrame to 1Hz in a window that is not
+     frontmost, and --real opens a headed window per context, so whichever one
+     is behind reports a ~1000ms median and 40-odd "dropped" frames that have
+     nothing to do with the page. It is intermittent, which is worse than
+     consistent - it contaminated a run on 2026-09-07 and would have been read
+     as a catastrophic regression. Raise the window, then assert the cadence is
+     sane before believing anything the run says. */
+  await page.bringToFront();
+  await page.waitForTimeout(150);
   await page.evaluate(START);
   if (heavy) {
     /* trap 17: a deliberately janky page, to prove the check can see jank. A
@@ -141,6 +150,9 @@ async function scrollMeasure(page, heavy) {
   }
   const r = await page.evaluate(STOP);
   if (heavy) await page.evaluate(() => clearInterval(window.__heavy));
+  /* A median anywhere near 1000ms is the throttle above, not the page. Fail
+     loudly rather than reporting it as a measurement. */
+  r.throttled = !heavy && r.median > 100;
   /* Back to the top between buckets, and not only for a consistent start:
      below the 960 breakpoint hero.js pauses the loop once the band is off
      screen, so a page left scrolled down is a page whose animation clock has
@@ -185,6 +197,7 @@ async function scrollMeasure(page, heavy) {
       const r = await scrollMeasure(page, false);
       rows.push({ pin: job.pin, w: job.w, b, r });
       console.log(`  ${job.pin.padEnd(10)} ${(job.w + 'x' + job.h).padEnd(11)} ${String(elapsed).padStart(4)} ${String(r.n).padStart(7)} ${r.median.toFixed(1).padStart(7)} ${r.p95.toFixed(1).padStart(6)} ${r.worst.toFixed(1).padStart(7)} ${String(r.dropped).padStart(6)} ${mp.toFixed(2).padStart(9)}`);
+      if (r.throttled) { failures++; console.log('  FAIL  that row is a throttled window, not a measurement - rerun'); }
 
       if (BREAK) {
         const bad = await scrollMeasure(page, true);
