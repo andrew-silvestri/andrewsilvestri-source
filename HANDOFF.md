@@ -975,9 +975,18 @@ So a clone of this repository serves `code.html` with sixteen dead links until
 
 ---
 
-## 11. Current state, 6 September 2026
+## 11. Current state, 7 September 2026
 
-**Live: the mirror's `b278146`**, 2026-09-07 15:51 — the bottom-left
+**Live: the mirror's `1473eac`**, 2026-09-07 — `code.html`'s sixteen archive
+rows regenerated from the zips on disk. Ten disagreed; longevity said 11 files
+and 96 KB against an actual 21 files and 811 KB, an 8.5x error on the number a
+reader uses to decide whether to download. `sync_code_rows.py` now writes both
+cells and `tests/test_generators.py` checks them, so section 4's rule holds here
+too. NOTE THE DEPENDENCY, because it is unlike the other generators: the
+archives are gitignored build output while `code.html` is tracked, so this
+check is only meaningful on a tree whose zips are current, and on one without
+them it reports missing and writes nothing. Merged to master here as `64fb923`.
+**Rollback is `b278146`**, 15:51 — the bottom-left
 caption/footer block made to fit its own margin: the identity stacked without
 separators, the block's breakpoint raised from 960 to 1340 (derived from the
 191px its longest line renders at), and `tests/test_layout.js` asserting that a
@@ -1106,12 +1115,14 @@ the §6 behaviour table, and every bare count. `rebuild_nav.py` writes the
 nav on every page; `bust_cache.py` the stamps; `sync_img_dims.py` the
 image sizes; `build_thumbnails.py` the mosaic's six; `build_layer_diagram.py`
 the hero and the atlas figure; `rezip_downloads.py` eleven archives (§10);
-`longevity-quotient/update_page.py` the longevity page's numbers.
+`longevity-quotient/update_page.py` the longevity page's numbers;
+`sync_code_rows.py` `code.html`'s file counts and archive sizes.
 
 Typed, and therefore able to go stale: the prose on every page; the
 "reason" columns of the §5 tables (each checked against
 `build_atlas_global.py` on 2026-09-05, but typed); `model.html` §7;
-`code.html`'s rows, including each archive's file count and size; the five
+`code.html`'s row PROSE, though no longer its file counts or sizes - those
+moved to `sync_code_rows.py` on 2026-09-07; the five
 sentences on the home page; the specs in `style.css`; and the two tab
 subtitles inside the payload (trap 23). If a number on a page is not in the
 generated list above, it was typed.
@@ -1180,8 +1191,12 @@ generated list above, it was typed.
   own `figstyle.py`, off `sitefig.py`; their audits read `ax.title` and
   have no panel labels or grids to miss. Bringing them onto sitefig is a
   rezip.
-- **`code.html`'s archive rows** are typed (file counts, sizes) and drift
-  whenever an archive is rebuilt; a generator would read the zips.
+- **`code.html`'s archive rows** WERE typed (file counts, sizes) and drifted
+  whenever an archive was rebuilt. `sync_code_rows.py` reads the zips as of
+  2026-09-07, and it found ten of sixteen rows wrong - longevity by 8.5x, and
+  the atlas row wrong because I had removed a file from that archive the day
+  before without touching the table. Unlike the other generators its input is
+  gitignored, so the check only means something where the zips are current.
 - **`.notes`** is on **eleven** pages - climate-cost, continents, economy,
   food, heat, index, longevity, neuron, shoes, skyline, storage - and
   `main.prose` on four (atlas, code, library, model). It is not the home
