@@ -705,6 +705,11 @@ aside.marginalia img { width: 18px; height: 18px; vertical-align: -4px; margin-r
   inset: 0;
   z-index: 0;
   pointer-events: none;
+  /* This canvas is fixed and repaints every frame while the page scrolls over
+     it, which is the textbook case for giving it a compositor layer of its own
+     so scrolling does not drag it through paint. There were no compositing
+     hints anywhere in this stylesheet before 2026-09-07. */
+  will-change: transform;
 }
 #hero .hero-layer { position: absolute; inset: 0; }
 
