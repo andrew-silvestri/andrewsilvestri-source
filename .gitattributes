@@ -1,0 +1,55 @@
+# Store and check out text as LF, everywhere in this repository.
+#
+# site/.gitattributes has said this for the site since it was written, and the
+# reason there was that git on Windows otherwise rewrites the working copy to
+# CRLF, which is harmless for the served files but makes every one of them look
+# modified on the next publish and buries real changes in noise.
+#
+# The rule needed to cover the whole repository, not just site/, and the two
+# days it did not cost two debugging sessions:
+#
+#   2026-09-06  Restoring site/ to its declared format put seven page
+#               generators into drift at once. They had all been writing CRLF
+#               through Python's text mode on Windows and had only ever passed
+#               because the checked-out tree had drifted to CRLF too and agreed
+#               with them by accident. The bug was as old as the masking.
+#
+#   2026-09-07  bust_cache.py was still writing CRLF - it had been missed in
+#               that sweep - and nothing caught it, because it happened to
+#               stamp nothing for the rest of that session. The moment
+#               style.css changed it rewrote every page in the site and flipped
+#               the whole tree back. sync_img_dims.py, which used newline="",
+#               then faithfully preserved the damage.
+#
+# The generators now all pass newline="\n" explicitly, which is the real fix;
+# this file is the other half, so that a checkout cannot put the tree into a
+# state where writing the declared format looks like drift.
+#
+# Never use newline="" in a generator that writes into the tree. It preserves
+# whatever it finds, so it agrees with a drifted tree and hides exactly this.
+# The exception is csv.writer, which requires newline="" and handles its own
+# line terminator.
+
+* text=auto eol=lf
+
+# Binaries must never be touched. The heuristic behind text=auto is good but
+# it is a heuristic, and these are the types actually tracked here.
+*.png   binary
+*.jpg   binary
+*.jpeg  binary
+*.gif   binary
+*.webp  binary
+*.ico   binary
+*.pdf   binary
+*.mp4   binary
+*.webm  binary
+*.zip   binary
+*.gz    binary
+*.npz   binary
+*.npy   binary
+*.parquet binary
+*.xlsx  binary
+*.otf   binary
+*.ttf   binary
+*.woff  binary
+*.woff2 binary
