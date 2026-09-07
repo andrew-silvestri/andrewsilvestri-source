@@ -115,6 +115,13 @@ GENERATORS = [
     # deterministic on one machine and one matplotlib, which is what this
     # check runs on.
     ("layer diagram: build_layer_diagram.py", ["build_layer_diagram.py"], ".", "site"),
+    # code.html's archive rows stated file counts and sizes that were typed and
+    # drifted every time an archive was rebuilt - nine of sixteen disagreed on
+    # 2026-09-07, longevity worst at 11 files/96KB against 21 files/811KB. The
+    # generator reads site/downloads/*.zip, which are gitignored build output,
+    # so this entry is only meaningful on a tree whose archives are current;
+    # sync_code_rows.py errors rather than rewriting if any are absent.
+    ("code rows: sync_code_rows.py", ["sync_code_rows.py", "--apply"], ".", "site"),
     ("image dims: sync_img_dims.py", ["sync_img_dims.py"], ".", "site"),
     ("cache stamps: bust_cache.py", ["bust_cache.py"], ".", "site"),
 ]
