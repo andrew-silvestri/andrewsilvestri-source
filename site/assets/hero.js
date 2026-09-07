@@ -523,6 +523,24 @@
      transparent and the page's own --bg shows through exactly. The trail is
      laid down at alpha 1, so its colour is never re-quantised on the way out.
      This is an eraser, not additive blending; nothing here sums. */
+  /* DO NOT CLIP THIS TO THE VISIBLE MARGINS. It is the obvious optimisation -
+     the paper column hides 782 of 1440 pixels, 54% of every frame drawn,
+     blended and uploaded to be covered by an opaque element - and it was tried
+     on 2026-09-07 and measured WORSE: p95 19.0 -> 24.3ms and dropped frames
+     1 -> 7 during a scroll, restored on revert.
+     Two reasons, and the second is the one that matters.
+     Cost: two getBoundingClientRect reads, two path builds and two
+     non-rectangular clips per frame cost more than the fill they save, and a
+     non-rectangular clip takes canvas off its fast path.
+     AND THE OCCLUSION IS NOT PERMANENT, WHICH IS WHAT MAKES THE CHEAP VERSION
+     IMPOSSIBLE. It looks static - a fixed column down the middle of a fixed
+     canvas - but at the top of the page the hero band sits ABOVE .paper and
+     the full width is visible; the column only closes over the middle once the
+     reader has scrolled past the band. So the clip cannot be a constant. It
+     has to read the rect every frame, which is where the cost came from.
+     Anyone re-proposing this on the fill-savings argument alone has not
+     checked the scroll-zero case. Measure with tests/test_scroll_jank.js
+     --real before believing any of it. */
   function fadeBack(f) {
     bc.globalCompositeOperation = 'destination-out';
     bc.fillStyle = 'rgba(0,0,0,' + f + ')';

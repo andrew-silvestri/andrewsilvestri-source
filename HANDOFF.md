@@ -807,6 +807,42 @@ Read this section. Every item is a real bug that shipped.
     re-records it with a note. Anyone who diffs a fresh build against the
     shipped file and finds exactly those two strings has found this note.
 
+24. **A harness measures the machine you configured, not the machine a reader
+    has, and its defaults are a configuration you did not make.** Every canvas
+    measurement in this project - the 2,273 ms/3s baseline, every idle-CPU
+    figure in the deslop rig, the whole `TRAIL_DPR` sweep - was taken at
+    **deviceScaleFactor 1**, because that is Playwright's default and nobody
+    passed anything else. The panel these were run against is 3840x2400. So
+    the back canvas measured **1.3 megapixels** in the harness and is **9.22**
+    on the machine, and `hero.js`'s `TRAIL_DPR = Math.min(devicePixelRatio, 2)`
+    was clamped to 1 in every run that was supposed to be testing it.
+
+    **What survives and what does not.** The comparisons hold: the 2,273
+    baseline and everything measured since came off the same rig at the same
+    ratio, so "this is cheaper than that" is still true. The absolute numbers
+    do not - they understate the real canvas cost by up to 4x. And one
+    conclusion is simply wrong: "raising the trail resolution costs nothing
+    measurable", recorded on 2026-09-06 and used to ship `TRAIL_DPR = 2`, was
+    drawn from a harness in which dpr 2 could not take effect. It may still be
+    the right setting; it was not measured.
+
+    The same run added `1920x1200` to the scroll harness for the same reason.
+    `1440x900` was the only desktop size ever used, and it understates this
+    display maximised by 78%.
+
+    **This is trap 20 for the third time** - a gate reading something other
+    than the artefact it guards. Trap 20 was about reading a recorded value
+    instead of recomputing it; this is about recomputing it faithfully in a
+    world you configured wrong. The general form is wider than either: **a
+    measurement inherits every default you did not set, and a default is a
+    decision somebody else made about a machine that is not yours.** Before
+    trusting a performance number, print the configuration it was taken under -
+    device ratio, viewport, renderer, whether the GPU is in play - beside the
+    number. `tests/test_scroll_jank.js` prints its ratio and renderer in its
+    header line for exactly this reason, and takes `--real` because headless
+    Chromium composites in software and a fixed canvas under a scrolling layer
+    is a compositing question.
+
 ---
 
 ## 9. Adding a new project
