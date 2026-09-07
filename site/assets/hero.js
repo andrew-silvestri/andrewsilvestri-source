@@ -620,24 +620,46 @@
     bc.globalCompositeOperation = 'source-over';
   }
 
-  /* THE EROSION HAS AN 8-BIT FLOOR, AND BELOW ~0.02 IT STOPS ERODING.
-     destination-out multiplies the stored alpha, and that alpha is an 8-bit
-     integer: once round(a * (1 - f)) === a the pixel stops changing and the
-     trail is there for good. The threshold is a < 0.5/f, so a small f freezes
-     early.
-     Measured 2026-09-07, 3000 frames, one pixel of trail:
-       f = 0.03  (pendulum)   settles at alpha  15/255 - invisible, delta 1
-       f = 0.02  (lorenz)     settles at alpha  25/255 - invisible, delta 1
-       f = 0.005 (threebody)  settles at alpha 127/255 - HALF OPACITY, delta 85
-     So the three-body's trails were never fading. Its FADE of 0.005 was chosen
-     for "about twenty seconds of memory" and delivered unlimited memory at
-     half opacity, cleared only by the reseed wipe every ~205s. It looked like
-     long trails, which is what it was supposed to look like, which is why it
-     survived being screenshotted repeatedly.
-     The fix keeps the decay rate and takes it above the floor: erode every Nth
-     frame with the alpha that compounds to the same rate. Same time constant,
-     no floor. f = 0.005 becomes 0.0199 every 4th frame - measured effective
-     rate 0.00501 against 0.00500, and the residue drops to alpha 25. */
+  /* THE EROSION HAS AN 8-BIT FLOOR, AND BELOW ~0.02 IT STOPS ERODING WELL
+     SHORT OF ZERO.
+
+     destination-out multiplies the stored alpha, and BOTH alphas are 8-bit
+     integers. The erasing alpha is quantised FIRST - f becomes
+     round(f * 255) / 255 - and a pixel then stops changing once
+     a * round(255f) / 255 rounds to nothing:
+
+         floor = 255 / (2 * round(f * 255))
+
+     Measured over 3000 frames on a solid patch with NO redrawing, identical
+     in Firefox and Chromium:
+
+         f        round(255f)   predicted   measured
+         0.005        1           127.5       127
+         0.0199       5            25.5        25
+         0.02         5            25.5        25
+         0.03         8            15.9        15
+
+     IT IS NOT 0.5/f, which is what this comment claimed until the numbers
+     were checked against it. That form ignores the quantisation of f and
+     predicts 100 at f = 0.005 against the 127 measured; it only looks right
+     when round(255f) is large, which is why it fitted 0.02 and 0.03 and
+     missed 0.005 by 27%. A mechanism that cannot reproduce its own
+     measurement is not pinned. This one reproduces all four.
+     (Nor is the settling point explained by ink being re-laid over the same
+     path: the probe fills once and never draws again.)
+
+     WHAT IT COST: the three-body's FADE of 0.005 was chosen for "about twenty
+     seconds of memory" and delivered unlimited memory at alpha 127 of 255,
+     cleared only by the reseed wipe every ~205s. Its trails were never
+     fading. That looked like long trails, which is what they were supposed to
+     look like, which is why it survived four rounds of screenshots.
+
+     THE FIX keeps the decay rate and lifts the per-application alpha over the
+     floor: erode every Nth frame with the alpha that compounds to the same
+     rate. 0.005 becomes 0.0199 every 4th frame - measured effective rate
+     0.00501 against 0.00500, residue alpha 25 instead of 127. Visually, at
+     t=60 on the three-body: identical geometry and coverage (4.3% of the
+     canvas either way), mean ink darkness 67 -> 111 against paper. */
   var EROSION_MIN = 0.02;
   var erodeN = 1, erodeF = 0, erodeTick = 0;
   function setErosion(f) {
