@@ -1205,7 +1205,7 @@ stays "the atlas"; the eighteen Tier A strings in
 `03 RESEARCH/rename-hero/STAGE1_RENAME_2026-09-07.md` do not change, and that
 file is a record now, not a plan. Andrew's reasoning: the name was never the
 problem, the PLACEMENT was.
-Merged as `1a544d3`.
+Merged as `4e7f616`.
 Rollback is the mirror's `9011f06`, 2026-09-08 — the nav dropdowns. Two defects,
 and the second was not the reported one. `.ddmenu` had `padding: 9px 0` while
 its links are `display:block` with no margin, so the rendered spacing was 9px
