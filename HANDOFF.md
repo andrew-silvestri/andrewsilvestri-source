@@ -1036,7 +1036,22 @@ So a clone of this repository serves `code.html` with sixteen dead links until
 
 ## 11. Current state, 7 September 2026
 
-**Live: the mirror's `1473eac`**, 2026-09-07 — `code.html`'s sixteen archive
+**Live: the mirror's `65dca2e`**, 2026-09-07 — the home page's caption/footer
+block is an opaque panel and the canvas exclusion is gone. `body.home .herofoot`
+carries `background: var(--bg)` and a `--rule` hairline on its top and right
+edges; `hero.js` lost the per-frame `clearRect` pair, the cached `footRect` and
+the `document.fonts.ready` re-measure that existed only because the caption
+rewrapped under the arriving webfont and the bottom-anchored block grew past a
+stale rect. `.herocap`'s `max-width: 34ch` went too, and that — not caption
+length — was what wrapped two of the three captions and left a 109.2px band of
+empty ground beside them. One rhythm, `--rhythm: 22px`. The width takes `+1px`
+so its border-right lands in the same pixel column as `.paper`'s border-left
+instead of beside it as a doubled rule. `tests/test_exclusion.js` was replaced
+by `tests/test_panel.js`, which asks the same question of the new mechanism from
+rendered pixels and fixes trap 26 in what it replaced. Merged to master as
+`bdea17f`. 17 files: `style.css`, `assets/hero.js`, and fifteen pages carrying
+nothing but `bust_cache.py`'s new stamps.
+Rollback is the mirror's `1473eac`, 2026-09-07 — `code.html`'s sixteen archive
 rows regenerated from the zips on disk. Ten disagreed; longevity said 11 files
 and 96 KB against an actual 21 files and 811 KB, an 8.5x error on the number a
 reader uses to decide whether to download. `sync_code_rows.py` now writes both
