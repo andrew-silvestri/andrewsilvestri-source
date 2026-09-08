@@ -1268,7 +1268,7 @@ spec's own account of what a reader meets before the entries was wrong.
 **Trap 28 came out of this** — see section 8 — along with a section 5 note that
 `bust_cache.py` must run after the generators or `test_generators.py` reports
 stale stamps as nine drifts that do not exist.
-Merged as (this commit).
+Merged as `578c3d5`.
 Rollback is the mirror's `c5584ea`, 2026-09-08 — five meta descriptions, and the
 first thing on this site that says what the atlas is FOR. No description
 anywhere mentioned it; `atlas.html`, `atlas-app.html`, `library.html` and
