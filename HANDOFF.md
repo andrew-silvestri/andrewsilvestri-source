@@ -387,6 +387,28 @@ generators, `bust_cache.py`, THEN `test_generators.py`, then `--dry-run`. A
 check run in the wrong order does not fail - it reports nine problems that do
 not exist, which is worse, because somebody will go looking for them.
 
+### A replacement that keeps its own search text cannot be checked by counting
+
+Every in-place patch script in this project counts its matches and fails on a
+miss, which is the right shape and is what trap 27 asks for. It does not cover
+the case where the REPLACEMENT CONTAINS THE SEARCH TEXT — an append rather than
+a swap, which is what a correction appended under the claim it corrects always
+is. After a successful run the anchor still matches, so a second run applies it
+again, exits 0, and silently duplicates the block while the "matched exactly
+once" guard reports success. It doubled `HANDOFF.md` twice on 2026-09-08, 200
+lines at a time; both times the file was uncommitted and `git checkout --` was
+the whole repair.
+
+**The guard has to ask "has this already been applied", not "does the anchor
+exist".** In practice: give each replacement a sentinel string unique to the new
+text, refuse the run if the sentinel is already present, and fail if it is
+absent after the replace. Both directions, and nothing is written unless every
+pair passes.
+
+Worth saying plainly: this was found by running the script twice, and **nothing
+about a single run distinguishes the safe case from the unsafe one**. Run any
+new in-place patcher twice before trusting it.
+
 ### Finding which file owns a string on a page
 
 Three wrong answers were derived in one session (2026-09-07) before the right
@@ -1143,6 +1165,63 @@ Read this section. Every item is a real bug that shipped.
     24 is the special case where the constant is a harness default; this is the
     general one.
 
+29. **A fix can be inert, and nothing here could tell.** `hero.js`'s erosion
+    fix was written, reviewed, published, described in a commit message, and
+    approved by the operator on the strength of a tonal change it produced - and
+    it never executed. One line was 165 lines above the two `var` initialisers it
+    depended on. The function declaration hoisted so the call succeeded; the
+    initialisers ran afterwards and set `erodeF` back to 0. Every frame from
+    2026-09-07 to 2026-09-08 called `fadeBack(0)`, a fill at alpha zero.
+
+    **Why five separate checks all passed.** This is the part worth keeping,
+    because each one is reasonable on its own:
+
+    - `verify_hero_systems.js` recomputes what the CAPTIONS claim - the
+      integrator, the energy bound, Szebehely & Peters' resolution time. It
+      never reads a pixel. Correct, and orthogonal.
+    - `test_panel.js` screenshotted the panel's rect and asked whether the
+      canvas showed through it. A different question, and it retired with the
+      panel.
+    - `_deslop/measure.js` resolves backgrounds through CSS, so text over a
+      canvas reports 0 AA failures whether it is readable or not - already
+      recorded, already known.
+    - `test_scroll_jank.js` measures frame timing across ten runs. **A canvas
+      that never erodes costs the SAME per frame as one that does** - it is one
+      `fillRect` either way, and the alpha argument does not change the raster
+      work. A timing gate cannot see this defect by construction, not by
+      oversight.
+    - The erosion probe measured the MECHANISM, in isolation, and reproduced its
+      table to the integer. That result was then written into the comment as a
+      property of the page.
+
+    **Not one of them asserted that the drawing was bounded.** That is the
+    whole gap: every gate measured a probe or a frame time, and the property
+    that broke - ink laid down must be taken away again - was never written down
+    as a thing to check.
+
+    **This is trap 27's shape one level up.** There, a substitution that matched
+    nothing produced exactly the shipped file, so agreement was what a no-op
+    looked like. Here, code that ran but did nothing produced exactly the
+    performance profile of code that worked, so a green gate was what a no-op
+    looked like. In both, the check reads the right artefact and the artefact is
+    genuinely unremarkable; what is missing is any assertion about the property
+    the change was FOR.
+
+    **The check that would have caught it, and now exists as a method:** follow
+    the same pixels. Grab the trail canvas twice a few seconds apart, take the
+    pixels that were bright in the first grab, and look at them in the second. A
+    decaying trail must show them lower. Before the fix, 8,754 pixels at alpha
+    >= 224 at t=40s were at mean **246.2** five seconds and 298 `erode()` calls
+    later, against **57.3** predicted, none reaching zero. After it, coverage
+    above alpha 96 goes 0.100% at t=30s to 0.068% at t=60s instead of 0.875% to
+    1.866%. Deliberately re-zeroing `erodeF` reproduces the broken numbers
+    exactly, so the measurement can see the defect return.
+
+    **A histogram is not this check and looked like it.** The alpha histogram of
+    a growing curve keeps its shape whether every pixel in it decays or none of
+    them do - both give buckets that scale with path length. It took following
+    identified pixels to separate the two.
+
 ---
 
 ## 9. Adding a new project
@@ -1234,7 +1313,34 @@ So a clone of this repository serves `code.html` with sixteen dead links until
 
 ## 11. Current state, 8 September 2026
 
-**Live: the mirror's `a6959fc`**, 2026-09-08 — the atlas has its own top-level
+**Live: the mirror's `f254215`**, 2026-09-08 — the hero's trails erode, for the
+first time since the erosion was written. `setErosion(sys.FADE)` sat 165 lines
+above the `var EROSION_MIN` / `var erodeN = 1, erodeF = 0` initialisers it reads.
+The function declaration hoisted so the call ran; the var initialisers did not,
+so it read `undefined`, computed `NaN`, and was then overwritten by those same
+initialisers. **`erodeF` was 0 from 2026-09-07 until now**, and every frame
+called `fadeBack(0)` — a fill at alpha zero.
+Measured in the page on all three pins before the fix: `erodeN` 1, `erodeF` 0,
+`fadeBack` at ~60 calls a second with `f = 0`. After: pendulum 0.03, Lorenz
+0.02, three-body `erodeN` 4 at 0.01985 and 63 calls in 4s rather than 251.
+**The check that found it, and the one that could not.** Following identified
+pixels across time: 8,754 at alpha ≥ 224 at t=40s were at mean **246.2** five
+seconds and 298 `erode()` calls later, against **57.3** predicted, none reaching
+zero. An alpha histogram is NOT this check and resembles it — a growing curve's
+histogram keeps its shape whether every pixel decays or none do.
+Three-body after the fix: coverage above alpha 96 goes 0.100% at t=30s to
+0.068% at t=60s, where it went 0.875% → 1.866% before. Broken deliberately by
+re-zeroing `erodeF`, which reproduces the old numbers exactly.
+**Trap 29 came out of this** — five checks passed over it, and the reason each
+one did is worth more than the bug. **THE COMMENT AT `hero.js:618` IS ALSO
+CORRECTED**: its table was measured in a standalone probe and had been written
+as though it described the page.
+**THIS CHANGES HOW THE HERO LOOKS**, and the tonal change Andrew approved on
+2026-09-07 without a screenshot review happens now rather than then.
+**One thing it does NOT fix**, logged under "Open, by name": the floor residue
+is still unbounded on the pendulum and the Lorenz, which never reseed.
+Merged as (this commit).
+Rollback is the mirror's `a6959fc`, 2026-09-08 — the atlas has its own top-level
 nav group. Andrew's reason, kept verbatim above `NAV` in `rebuild_nav.py`
 because it is the part that gets tidied away: carved out EVEN THOUGH it is about
 energy — that is the point. It is not a peer of heat and storage, it is the main
@@ -1446,6 +1552,23 @@ raster work 4.7x, from 14.9 megapixels a frame to 3.2; the canvas fades out and
 the loop stops when the hero band leaves the viewport; and the three-body's
 trails fade properly now that the erosion clears its 8-bit floor (section 8,
 trap 25). Merged to master here as `9a294d9`.
+**THAT LAST CLAUSE WAS FALSE FOR EVERY DAY IT STOOD, AND IT IS LEFT ABOVE
+RATHER THAN EDITED SO THE CORRECTION HAS SOMETHING TO POINT AT.** The erosion
+fix shipped in `9a294d9` and **never ran**: `setErosion(sys.FADE)` sat above the
+`var EROSION_MIN` / `var erodeN = 1, erodeF = 0` initialisers, the function
+declaration hoisted while the vars did not, and those initialisers then
+overwrote what it computed. `erodeF` was **0** from that commit until
+2026-09-08, so every frame called `fadeBack(0)`. Measured in the page on all
+three pins before the fix: `erodeN` 1, `erodeF` 0, `fadeBack` called ~60 times a
+second with `f = 0`. The trails behaved exactly as the commit described the OLD
+state - accumulating until the reseed wipe, and on the pendulum and Lorenz not
+even that, since neither ever reseeds.
+`9a294d9`'s own message goes further and says *"AND THE THREE-BODY'S TRAILS
+CHANGE, which Andrew has approved without a screenshot review, so it is written
+down here."* **He approved a tonal change that did not happen.** The message
+cannot be rewritten - it is pushed - so the correction lives here, and anyone
+reading that commit should read this paragraph with it. Trap 29 is the general
+form.
 **Rollback is `5f91a1b`** — the caption and footer as one
 viewport-fixed block at the bottom left, and an `<h1>Projects</h1>` on a page
 that had carried no top-level heading since the masthead was deleted. Merged to
@@ -1678,6 +1801,32 @@ generated list above, it was typed.
   **zero** rather than at "one known drift we ignore". A standing red line
   teaches the next reader to skim past the output, and the next real drift
   arrives in the same column.
+
+- **The erosion floor's residue is unbounded on the pendulum and the Lorenz,
+  and it is a SECOND defect, not the one fixed on 2026-09-08.** With erosion
+  working, the bright trail is bounded on all three systems - measured, coverage
+  above alpha 96 falls or holds between t=60s and t=300s. What is not bounded is
+  the residue the 8-bit floor leaves behind: a pixel stops changing once
+  `a * round(255f) / 255` rounds to nothing, so ink settles at alpha 15 for the
+  pendulum's `FADE` of 0.03 and 25 for the Lorenz's 0.02 and stays there.
+  Nothing clears it, because **`sys.done` is set only by `ThreeBody`** - the
+  other two never reseed, so their canvases have no wipe at all. Measured at
+  1728x1080, Firefox software raster, after the fix:
+
+  | pin | cover > alpha 0, t=60s | t=300s | cover > alpha 96, t=60s | t=300s |
+  |---|---|---|---|---|
+  | pendulum | 24.2% | **49.8%** | 0.204% | 0.138% |
+  | lorenz | 14.5% | **30.4%** | 0.100% | 0.042% |
+
+  So the drawn line is bounded and the wash under it is not: at five minutes
+  half the pendulum's canvas carries ink at about 6% opacity, and it is still
+  climbing roughly linearly. Whether that reads as a defect or as paper texture
+  is a judgement nobody has made yet with a screenshot in front of them - the
+  numbers say it will reach the whole swept region on a long visit. **Fixing it
+  is a separate change** (a floor-clearing pass, a periodic wipe for the two
+  systems that lack one, or an `EROSION_MIN` chosen so the floor is below the
+  visible threshold) and it needs its own measurement and its own commit. Noted
+  2026-09-08, the day the erosion started running at all.
 
 - **index.html's atlas sentence carries a generated number by hand.** The home
   page's entry for the atlas says a change "reaches two nodes or seventy-seven
