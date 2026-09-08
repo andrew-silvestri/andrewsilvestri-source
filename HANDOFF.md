@@ -1113,7 +1113,24 @@ So a clone of this repository serves `code.html` with sixteen dead links until
 
 ## 11. Current state, 7 September 2026
 
-**Live: the mirror's `85a4c82`**, 2026-09-07 — the site is in American English.
+**Live: the mirror's `0c77c6a`**, 2026-09-07 — every footer is two centered
+lines. Fifteen of them, fourteen pages plus `about.html`:
+`Andrew Silvestri` linking to `about.html`, and the built-with sentence linking
+to `code.html`. The role and the address left all of them —
+**`dasilvestri@utexas.edu` now appears exactly once on the site**, in
+`about.html`'s body, and `economy`'s odd `dasilvestri12@gmail.com` disappeared
+with the line it lived on rather than being reconciled.
+`main footer { text-align: center }` scopes it for free: every page's footer is
+inside `<main>` and the home page's is not, so the rule cannot touch the corner
+panel. `--rhythm` moved to `:root` so the panel and the pages share one number.
+**The catch worth keeping** is in the CSS comment: `font:` is a shorthand that
+resets `line-height`, so one `--rhythm: 22px` rendered 21px on the pages and
+23.7px in the panel until the line-heights were matched — a token failing in
+exactly the way tokens exist to prevent, and it would have shipped as "close
+enough" without measuring the rendered gap. Section 5 also gains **how to find
+which file owns a string**, after three wrong derivations in one session.
+Merged as `9c19d21` and `2efb965`.
+Rollback is the mirror's `85a4c82`, 2026-09-07 — the site is in American English.
 91 occurrences of 19 British spellings in `site/*.html` prose, swept to 0. The
 diff is **88 insertions and 88 deletions across 19 files** — perfectly balanced,
 which is the correct signature for a pure sweep: anything added or removed would
