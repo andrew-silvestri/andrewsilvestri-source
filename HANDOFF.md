@@ -369,6 +369,24 @@ working directory. If two changes really do overlap, commit one and stash it —
 the rule against parallel branches (section 8, trap 2's neighbour) is this same
 rule one level up.
 
+### bust_cache.py runs AFTER the generators, and the check is noisy otherwise
+
+`tests/test_generators.py` runs each generator into a copy of the tree and diffs
+the result against `site/`. Every generator that writes a whole page also writes
+that page's `?v=` stamp. So **if `style.css` or any stamped asset has changed and
+`bust_cache.py` has not been run yet, every page generator drifts at once** - on
+the stamp, not on anything it produced.
+
+Measured 2026-09-08, during the nav carve-out: the check reported **10 drifts**.
+Nine were stale stamps. `python bust_cache.py` stamped 16 pages
+(`style.css 987dc9e9 -> d9341556`) and the same check reported **1**, the known
+archive drift. Nothing had been wrong with any of the nine generators.
+
+The order in the loop below is therefore not cosmetic: change files, run the
+generators, `bust_cache.py`, THEN `test_generators.py`, then `--dry-run`. A
+check run in the wrong order does not fail - it reports nine problems that do
+not exist, which is worse, because somebody will go looking for them.
+
 ### Finding which file owns a string on a page
 
 Three wrong answers were derived in one session (2026-09-07) before the right
@@ -1086,6 +1104,45 @@ Read this section. Every item is a real bug that shipped.
     check that reads it. Treat any "matched text drives a build artefact"
     relationship as needing its own count.
 
+28. **Before reading a number, check that the instrument CAN produce a
+    different one.** This is the fourth time in one week that a measurement was
+    taken with something clamped, and the shape is now clear enough to name.
+
+    - **`deviceScaleFactor 1`** (trap 24). Playwright's default, against a
+      3840x2400 panel. `TRAIL_DPR = Math.min(devicePixelRatio, 2)` was clamped
+      to 1 in every run that existed to test it, so "raising the trail
+      resolution costs nothing measurable" was drawn from a harness in which
+      the thing being tested could not take effect.
+    - **The background throttle.** Same family; the detail is not in this file.
+    - **A `--break` mode that exits 0 either way** (trap 26).
+      `tests/test_exclusion.js` computed its total and dropped it on the floor,
+      so the run said nothing whether three pins caught the mutation or none
+      did.
+    - **`margin-left: auto`, resolved** (2026-09-08). A scratch rig measured the
+      nav bar's spare width by summing each flex child's width and margins and
+      subtracting from the content box. It reported **0 slack at all seven
+      viewports**, which reads as a bar filled exactly to its edge at every
+      width - and was nearly published as the answer to "does a seventh item
+      fit". `getComputedStyle` returns the RESOLVED used value for
+      `margin-left`, so About's `auto` came back as a pixel number, and adding
+      it made the sum equal the content box **by construction**. The auto margin
+      IS the free space. Reported on its own it gives 853 / 853 / 779 / 693 /
+      437 / 373 px down to 960.
+
+    **The tell is free and it is the same every time: a result that does not
+    move when the input moves.** 0 at every viewport, one identical figure
+    across two arms, exit 0 on both the clean and the mutated run. Vary the
+    input on purpose - a width, a ratio, a deliberate defect - and confirm the
+    instrument's output changes before you read anything into its value.
+
+    This is not trap 17 and not trap 20. Trap 17 says break the test; trap 20
+    says a gate must recompute from the artefact it guards. Both assume the
+    instrument responds to its input at all. **Here the instrument is sound, is
+    reading the right artefact, and is pinned to a constant by something nobody
+    chose** - a library default, a resolved CSS value, a dropped variable. Trap
+    24 is the special case where the constant is a harness default; this is the
+    general one.
+
 ---
 
 ## 9. Adding a new project
@@ -1177,7 +1234,42 @@ So a clone of this repository serves `code.html` with sixteen dead links until
 
 ## 11. Current state, 8 September 2026
 
-**Live: the mirror's `c5584ea`**, 2026-09-08 — five meta descriptions, and the
+**Live: the mirror's `a6959fc`**, 2026-09-08 — the atlas has its own top-level
+nav group. Andrew's reason, kept verbatim above `NAV` in `rebuild_nav.py`
+because it is the part that gets tidied away: carved out EVEN THOUGH it is about
+energy — that is the point. It is not a peer of heat and storage, it is the main
+project, and grouping it with them made it look like one of several.
+All four atlas entries move; Energy keeps heat and storage and stays a dropdown.
+The bar is **seven flex children** — Home / Atlas / Energy / Running / Misc /
+Code plus a right-pinned About. A note prepared for this job said "seven items
+plus a right-pinned About"; it was one high.
+`index.html` mentioned the atlas zero times outside the nav and now carries an
+`<h2>Atlas</h2>` section, first, with one entry to THE INDEX SPEC — kicker,
+`The atlas` linked to `atlas.html`, one sentence. **That sentence is the only
+text on the home page describing the main project**, because since the panel
+retired there is no text over the drawing at all.
+THE JUSTIFICATION THIS REPLACES HAD BEEN FALSE FOR TWO PUBLISHES. `NAV`'s
+comment defended folding the atlas into Energy with *"index.html opens with its
+hero, tagged 'Main project', above every section"* — that card was deleted on
+2026-09-06. It is quoted and dated in the file rather than swapped out (trap 15),
+because the same comment is where trap 11 was first found.
+**The nav's single-row assertion was measured, not assumed.** Seven real labels
+use **527px**; slack is 853/853/779/693/**437**/**373** px at
+1920/1440/1366/1280/**1024**/**960**, one row at all six. At 390 `nav.top` is
+`flex-direction: column` and the assertion returns `[]` — inert by design, not a
+pass. Broken first: an 82-character Atlas label (+466px) made `test_layout.js`
+exit 1 on all 16 pages at 1024 and 960 while 1280 and up stayed at one row, so
+the check discriminates by width. A plan estimate of ~615px from character
+widths was 17% high and is superseded by the measurement.
+`style.css`'s THE INDEX SPEC lost three false claims in the same commit: it
+pointed at "five projects" (ten, now eleven), and named a layer diagram and a
+mosaic above the entries that both left the home page on 2026-09-06 — so the
+spec's own account of what a reader meets before the entries was wrong.
+**Trap 28 came out of this** — see section 8 — along with a section 5 note that
+`bust_cache.py` must run after the generators or `test_generators.py` reports
+stale stamps as nine drifts that do not exist.
+Merged as (this commit).
+Rollback is the mirror's `c5584ea`, 2026-09-08 — five meta descriptions, and the
 first thing on this site that says what the atlas is FOR. No description
 anywhere mentioned it; `atlas.html`, `atlas-app.html`, `library.html` and
 `model.html` had none at all, and `index.html`'s named the field and not the
@@ -1398,14 +1490,16 @@ history, so that nobody has to read eleven write-ups to know it.
 
 ### The nav, as shipped
 
-Five top-level items: **Home / Energy / Running / Misc / Code.** The
-retaxonomy landed and is live; the atlas did fold into Energy rather than keep
-a group of its own. There is **no Mind group** — a brief that describes one
-(Energy / Mind / Running / Misc) is describing a plan, not the site. `neuron`
-sits under Misc, which now carries six items (climate-cost, food, continents,
-longevity, skyline, neuron) against Energy's six and Running's two. Misc is
-the group that will need splitting when beauty lands; that is the decision
-someone will have to make, and it was not made by shipping this.
+Six top-level items: **Home / Atlas / Energy / Running / Misc / Code**, plus a
+right-pinned **About** — seven flex children. **The atlas has its own group as of
+2026-09-08.** This block said "Five top-level items" and "the atlas did fold into
+Energy rather than keep a group of its own" until then; both were true when
+written and are the state this replaced. Atlas carries four (atlas-app, atlas,
+model, library), Energy two (heat, storage), Running two, Misc six
+(climate-cost, food, continents, longevity, skyline, neuron). There is **no Mind
+group** — a brief that describes one (Energy / Mind / Running / Misc) is
+describing a plan, not the site. Misc is still the group that will need
+splitting when beauty lands; that decision has not been made.
 `rebuild_nav.py` writes the nav on every page — see section 8, trap 11 before
 hand-editing it.
 
@@ -1584,6 +1678,20 @@ generated list above, it was typed.
   **zero** rather than at "one known drift we ignore". A standing red line
   teaches the next reader to skim past the output, and the next real drift
   arrives in the same column.
+
+- **index.html's atlas sentence carries a generated number by hand.** The home
+  page's entry for the atlas says a change "reaches two nodes or seventy-seven
+  thousand". That span is computed by `update_atlas_pages.py` (reach, `:69-76`)
+  and written into three places - `atlas.html:111`, `atlas.html:126` and
+  `model.html:207` - so a payload rebuild moves all three and leaves the home
+  page saying the old number with nothing to notice. It is listed under "typed,
+  and therefore able to go stale" above, which is the minimum. **The proper fix
+  is that the generator already has the value**: patch index.html's sentence the
+  way it patches model.html's figures, and the last typed copy becomes a
+  generated one. Deliberately NOT folded into the carve-out commit - it is a
+  generator change and belongs on its own. (Noted 2026-09-08. An earlier claim
+  that 77,684 appeared nowhere else was wrong; the grep behind it was too
+  narrow.)
 
 - **longevity.html lists ten references and carries one marker.** The other
   nine point at nothing. The page is written in place by

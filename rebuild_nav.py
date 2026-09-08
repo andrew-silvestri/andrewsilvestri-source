@@ -1,14 +1,21 @@
 """
 Rebuild the top navigation on every page.
 
-The old bar put Figures, How it works and the atlas beside Home as three loose
-links, which read as three unrelated destinations. They are not: they are three
-views of the same world energy model - the thing itself, its method, and its
-output. Grouping them under one heading says so, and shortens the bar from six
-items to four.
+The navigation lives in one place here rather than in the sixteen pages that
+carry it, so adding a page is one line and cannot drift between pages. (It said
+"seventeen files" until 2026-09-08; --dry-run reports sixteen. atlas-app.html
+and the other four full-screen apps have no nav.top and are not rewritten.)
 
-The navigation lives in one place here rather than in seventeen files, so
-adding a page is one line and cannot drift between pages.
+THE BAR'S SHAPE HAS BEEN ARGUED BOTH WAYS AND BOTH ARGUMENTS BELONG HERE.
+This docstring used to open by saying the old bar "put Figures, How it works and
+the atlas beside Home as three loose links, which read as three unrelated
+destinations", that they are instead "three views of the same world energy model
+- the thing itself, its method, and its output", and that grouping them
+"shortens the bar from six items to four". The grouping argument was right about
+what those pages ARE and wrong about what the bar SAYS; it was reversed on
+2026-09-08 and the reason is above NAV. The count had been false for longer than
+that: the bar was five items plus About before this change and is six plus About
+after it.
 """
 
 import argparse
@@ -20,25 +27,62 @@ HERE = os.path.dirname(os.path.abspath(__file__))
 SITE = os.path.join(HERE, "site")
 
 # (label, href) - a group is (label, [(label, href), ...])
-# Regrouped 2026-09-05 from four groups (The atlas / Energy / Others) into
-# three. "Others" had grown to seven pages of unrelated work and said nothing
-# about any of them.
 #
-# The atlas lost its own top-level group and folds in here as the first four
-# entries. It is still the main project and does not need the nav to say so:
-# index.html opens with its hero, tagged "Main project", above every section.
+# THE ATLAS HAS ITS OWN TOP-LEVEL GROUP AGAIN, AND ANDREW'S REASON IS THE PART
+# THAT WILL OTHERWISE BE TIDIED AWAY. In his words: carved out EVEN THOUGH it is
+# about energy - that is the point. It is not a peer of heat and storage, it is
+# the main project, and grouping it with them made it look like one of several.
 #
-# Every label here is the page's own title. A nav that renames a page gives
-# the site two names for one thing, and index.html's headings are this same
-# taxonomy in a second place - if the two disagree the site has two
-# structures. Changing a label means changing the page.
+# WHAT THIS REPLACES, STATED RATHER THAN DELETED (trap 15). The list was
+# regrouped on 2026-09-05 from four groups (The atlas / Energy / Others) into
+# three: "Others" had grown to seven pages of unrelated work and said nothing
+# about any of them, and the atlas lost the group it had held until then and
+# folded into Energy as its first four entries. The justification written here
+# for that was, word for word:
+#
+#     "It is still the main project and does not need the nav to say so:
+#      index.html opens with its hero, tagged 'Main project', above every
+#      section."
+#
+# THAT CARD WAS DELETED ON 2026-09-06, when the home page became the hero and
+# the index. The justification outlived it by two publishes, sitting here
+# describing a page that no longer existed - which is trap 11 in the one file
+# trap 11 was first written about. So the nav became the only thing on the site
+# saying where the atlas belonged, and what it said was "one of six energy
+# pages". The fix is not a better sentence in this comment; it is the carve-out.
+#
+# Energy keeps heat and storage, and stays a dropdown: nav_for() collapses a
+# group to a bare link only at length 1.
+#
+# Atlas sits directly after Home because index.html's h2s are this same taxonomy
+# in a second place, and its Atlas section is first there too.
+#
+# Every LEAF label here is the page's own title. A nav that renames a page gives
+# the site two names for one thing, and if index.html's headings and this list
+# disagree the site has two structures. Changing a leaf label means changing the
+# page.
+#
+# GROUP LABELS ARE NOT PAGES, so that rule does not bind them. "Atlas",
+# "Energy", "Running" and "Misc" name no page and are free. Nobody needed the
+# distinction until a group label existed that was one word off a page title,
+# and the rule above reads as though it covers every string in this list.
+#
+# ONE DELIBERATE INCONSISTENCY, RECORDED SO IT IS NOT CORRECTED BACK:
+# index.html's entry for the atlas is titled "The atlas", not this list's leaf
+# label "About the atlas". Every other index h3 copies its leaf label exactly.
+# Under an <h2>Atlas</h2> the word "About" is noise, and "The atlas" is
+# atlas.html's own <title> stem. The leaf label is NOT changed to match, because
+# that would change the page title - one of the eighteen strings the rename
+# cancelled on 2026-09-08 was not going to touch.
 NAV = [
     ("Home", "index.html"),
-    ("Energy", [
+    ("Atlas", [
         ("Open the atlas", "atlas-app.html"),
         ("About the atlas", "atlas.html"),
         ("How the model works", "model.html"),
         ("Figures", "library.html"),
+    ]),
+    ("Energy", [
         ("Industrial heat break-even", "heat.html"),
         ("Battery revenue simulator", "storage.html"),
     ]),
