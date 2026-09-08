@@ -540,12 +540,18 @@ footer {
    The gap is var(--rhythm), the same token the panel uses. `footer` above has
    padding-top: 22px and that is a different 22 - equal today, unrelated. */
 main footer { text-align: center; }
-/* line-height, for the same reason the panel sets it: `footer` above uses the
-   `font:` shorthand, which resets line-height to normal - 19px boxes against
-   the panel's 21.75 at 1.5 - so the SAME --rhythm rendered 21px here and 23.7
-   there. One margin and two line-heights is two gaps, which is the thing this
-   token exists to prevent. Matching them is what makes the home page's footer
-   and these fourteen identical when JOB 2 moves it into <main>. */
+/* WATCH THE `font:` SHORTHAND WHEREVER A SPACING TOKEN IS USED. `font:` resets
+   line-height to normal. So an element that sets `font:` and an element that
+   sets `line-height` will render the SAME margin token as two different gaps,
+   and the token will look like it is doing its job in both places.
+   Here: `footer` above uses the shorthand (19px line boxes) and the corner
+   panel sets 1.5 (21.75px), so one --rhythm: 22px rendered 21px on the pages
+   and 23.7px in the panel - measured, Firefox 1728x1080 dpr 2.2222. That is a
+   token failing in precisely the way tokens exist to prevent, and it would have
+   shipped as "close enough" if nobody had measured the rendered gap rather than
+   reading the declaration. With the line-heights matched: 23.8 and 23.7.
+   The general rule: a shared spacing number is only shared if the line boxes
+   either side of it are the same height. Check the rendered gap, not the rule. */
 main footer p { margin: 0; line-height: 1.5; }
 main footer p + p { margin-top: var(--rhythm); }
 

@@ -320,6 +320,34 @@ report first.**
 | `build_site.py` | **Retired. Never run it.** The original generator, last valid 2026-08-01: it writes pages that are no longer on the site (dac, holdup, energy-web), a nav from before the regrouping, and its own icons. `tests/test_generators.py --retired` shows what it would do to the tree. |
 | `publish.sh` | Mirrors `site/` into the Pages repo and commits. `--dry-run` first. |
 
+### Finding which file owns a string on a page
+
+Three wrong answers were derived in one session (2026-09-07) before the right
+one, so the method matters more than any list:
+
+1. **Grepping for the string across the repo** returns every file that contains
+   it. The fourteen page footers were byte-identical, so a search for the footer
+   text named all six `*/template.html` files as the owner of every page.
+2. **Grepping generators for the markup** — `<footer` — named
+   `update_atlas_pages.py` as an owner of `atlas.html`'s footer. It is not.
+   Line 547 is `tail = t[t.index("<footer"):]`: an **index() call that PRESERVES
+   the page's existing footer**, not a write. A generator that reads a marker
+   looks exactly like a generator that writes one.
+3. **Assuming a project folder owns its page.** `longevity-quotient/` has a
+   `template.html` with no `<footer>` and an `update_page.py` with none either,
+   so `longevity.html`'s footer is typed in the page and preserved.
+
+**What works:** run the generator and see what changes. `tests/test_generators.py`
+runs each one into a throw-away copy and diffs — a page whose string survives a
+generator run is typed; one whose string is rewritten is owned. That check has
+now caught an artefact being edited instead of its source twice in one week (see
+section 11's archive note), which is the same question asked the other way round.
+
+The same trap in a different shape: `site/skyline-app.html` and
+`skyline/skyline-app.html` are both **built** — the source of a comment in them
+is `skyline/app.js`. Editing either built copy is reverted by
+`skyline/build_app.py`.
+
 ### Typical loop after changing the model
 
 ```bash
