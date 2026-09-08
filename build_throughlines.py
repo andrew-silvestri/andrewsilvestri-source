@@ -44,7 +44,7 @@ SHORT = {"sun": "Sun", "insolation": "Insolation", "weather": "Weather",
          "climate": "Climate", "event": "Event", "market": "Market",
          "supply": "Fuel", "grid": "Grid", "station": "Plant",
          "district": "District", "consumer": "Consumer",
-         "psych": "Behaviour"}
+         "psych": "Behavior"}
 SHORTCAT = {"Universe & Earth, exogenous": "Universe & Earth",
             "Technology improvement & buildout": "Technology",
             "Climate goal meetings": "Climate goals",
@@ -57,7 +57,7 @@ LABEL = {"sun": "Sun", "insolation": "Insolation", "weather": "Weather",
          "market": "Market and port", "supply": "Fuel supply",
          "grid": "National grid", "station": "Power station",
          "district": "District", "consumer": "Consumer group",
-         "psych": "Behaviour"}
+         "psych": "Behavior"}
 
 
 def style():
@@ -601,7 +601,7 @@ def main():
         ("district", "Districts carry the population GeoNames records."),
         ("consumer", "Households and industry receive the cost and use "
                      "less."),
-        ("psych", "Behaviour decides how much less."),
+        ("psych", "Behavior decides how much less."),
     ]
     # A fixed 8.7-unit step per caption fit the old 17.5in-tall canvas at
     # 9pt. On the smaller canvas the same step ran captions into each other

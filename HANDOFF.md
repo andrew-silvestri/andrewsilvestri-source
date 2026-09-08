@@ -945,6 +945,55 @@ Read this section. Every item is a real bug that shipped.
     mechanism it guarded. The lesson is recorded because the next break mode
     somebody writes will have the same shape.
 
+27. **A generator that patches by matching text can fail by matching nothing,
+    and every check in this repository is blind to it.** Found on 2026-09-07
+    while sweeping the site to American English, by changing prose that a
+    generator's own pattern was anchored to.
+
+    Two generators do phrase-anchored substitution and they behave completely
+    differently when the phrase moves:
+
+    - `add_citations.py` **reports**. Its markers anchor to phrases rather than
+      positions, and on a miss it printed `climate-cost.html  7 of 8 markers
+      placed` and `problems: climate-cost.html: phrase not found in prose -
+      'tonne-kilometre'`. Three of its anchors held British spellings and all
+      three announced themselves the moment the prose moved.
+    - `update_atlas_pages.py:593` is **silent**. With only its pattern changed,
+      the generator exits 0, prints `atlas.html rewritten from the model
+      (86,622 nodes)`, writes `site/atlas.html` **byte-identical**, and
+      `tests/test_generators.py` reports `OK  atlas pages`.
+
+    **Why no check can see it.** The drift check compares what the generator
+    produces against what is shipped. A substitution that matches nothing
+    produces exactly the shipped page — so agreement is precisely what a no-op
+    looks like, and the check cannot tell "did its job" from "did nothing". It
+    reports green either way.
+
+    **This is not trap 13.** There the generator had fallen behind the tree and
+    would have reverted a deliberate change. Here the generator is current, it
+    ran, it succeeded, and it changed nothing, which is the outcome it was
+    written to prevent. Trap 20's family — a gate that reads something other
+    than the artefact it guards — is closer, but this is narrower: the gate
+    reads the right artefact and the artefact is genuinely identical.
+
+    **The fix is already in the repository.** `add_citations.py` counts what it
+    placed and names what it could not find. **Any phrase-anchored substitution
+    should do the same**: count the substitutions it made, and say which
+    patterns matched nothing. A rule that fires zero times is either dead or
+    broken, and both are worth a line of output.
+
+    `update_atlas_pages.py:593` turned out to be **dead**, not broken — the
+    template interpolates `{psych}` directly, so the page reads `24 behaviour
+    channels` and the literal `six behaviour channels` the rule searches for is
+    never emitted. It had been inert since the template stopped needing it, and
+    nothing said so. It was deleted rather than repaired.
+
+    **Same class, different surface:** matplotlib colour strings in the figure
+    builders. Changing `'grey'` to `'gray'` there is a visual no-op that
+    surfaces only as figure-byte drift — a change with no visible effect and no
+    check that reads it. Treat any "matched text drives a build artefact"
+    relationship as needing its own count.
+
 ---
 
 ## 9. Adding a new project

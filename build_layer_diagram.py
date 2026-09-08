@@ -11,7 +11,7 @@ is the model's one structural rule: sun 0, insolation 1, weather 2, climate
 3, event 4, everything else 5, and an edge is two-way only within a rank
 (HANDOFF.md section 6). An arc's stroke is the number of links it stands for,
 on a log scale, so a two-edge link between climate and the markets is a
-hairline and the 66,000 district-to-behaviour links are the heaviest stroke.
+hairline and the 66,000 district-to-behavior links are the heaviest stroke.
 The one forced crossing is stated in the foot, so a reader who notices it
 finds it was noticed first.
 
@@ -101,7 +101,7 @@ OUT = {"wide": os.path.join(HERE, "site", "assets", "atlas_layers.png"),
 #
 # The order is the table's for the four sources, whose order is their rank.
 # Below the rule the table's order (markets, grids, plants, demand,
-# behaviour) carries no meaning, and drawn that way the arcs cross nine
+# behavior) carries no meaning, and drawn that way the arcs cross nine
 # times: events fan out to four layers, and every arc from above into grids
 # has to cut through that fan unless grids sits beyond it. No order is
 # clean: climate pushes both grids and the markets, events pushes both, and
@@ -119,12 +119,12 @@ LAYERS = [("Space", ["sun", "insolation"]),
           ("Power plants", ["station"]),
           ("Markets and fuel", ["market", "supply"]),
           ("Grids", ["grid", "district"]),
-          ("Behaviour", ["psych"])]
+          ("Behavior", ["psych"])]
 GROUP_OF = {k: g for g, ks in LAYERS for k in ks}
 TABLE_KEY = {"Space": "space", "Weather": "weather", "Climate": "climate",
              "Events": "event", "Markets and fuel": "market", "Grids": "grid",
              "Power plants": "station", "Demand": "consumer",
-             "Behaviour": "psych"}
+             "Behavior": "psych"}
 
 # Geometry per render, in CSS px (the axes are in px, one point per px).
 GEOM = {

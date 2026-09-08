@@ -41,7 +41,7 @@ TOLERANCE = 0.28
 KINDS = ["market", "climate", "grid", "supply", "district", "consumer",
          "event", "station", "psych"]
 
-# Where each of the six behaviour channels sits in the brain. Positions are in
+# Where each of the six behavior channels sits in the brain. Positions are in
 # a right-handed anatomical frame, x right, y up, z forward, in units of half
 # the brain's length. They are placed to be anatomically defensible rather than
 # precise: this is a schematic solid, not an MRI, and the page says so.

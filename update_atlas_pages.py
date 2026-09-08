@@ -132,7 +132,7 @@ def atlas_page(s):
          f"{s['countries']} countries"),
         ("Demand", s["consumer"], "Every settlement above fifteen thousand "
          "people"),
-        ("Behaviour", s["psych"], f"Behavioural channels, inside "
+        ("Behavior", s["psych"], f"Behavioral channels, inside "
          f"{f(s['anatomy'])} drawn brain structures, fed by every district "
          f"with a measured population"),
     ]
@@ -169,8 +169,8 @@ LINK_ROWS = [
     ("climate", "market", "Temperature → gas and power price", "Heating and cooling demand."),
     ("consumer", "district", "Consumer group → district", "Negative: demand response. Consumers use less when costs rise."),
     ("station", "grid", "Power station → grid", "0.20 + 0.55 × √(capacity ÷ the largest plant); the division by plant count is the engine's fan-in, section 5.3."),
-    ("district", "psych", "District → behaviour channel", "Varies by district; set in the brain build."),
-    ("psych", "consumer", "Behaviour channel → consumer group", "Fixed."),
+    ("district", "psych", "District → behavior channel", "Varies by district; set in the brain build."),
+    ("psych", "consumer", "Behavior channel → consumer group", "Fixed."),
 ]
 INERTIA_ROWS = [
     # (kinds, label, reason)
@@ -182,7 +182,7 @@ INERTIA_ROWS = [
     (("station",), "Power station", "From capacity: a larger plant changes more slowly."),
     (("climate",), "Climate system", "The climate is a slow variable."),
     (("weather",), "Weather mode", "Set per index (build_atlas_global.py)."),
-    (("psych",), "Behaviour channel", "0.30 rising by 0.02 per channel: a modeling choice, not a measurement."),
+    (("psych",), "Behavior channel", "0.30 rising by 0.02 per channel: a modeling choice, not a measurement."),
     (("sun", "insolation"), "Sun, insolation", "The sun is held; insolation follows it at once."),
 ]
 
@@ -227,7 +227,7 @@ def model_table(s):
     """model.html section 2, one row per node kind in the payload, in the
     order the layers stack. Until 2026-09-04 this table was the July Julia
     build's README table (7,192 nodes: districts 571, price benchmarks 6,
-    behaviour channels 6) with four numbers regex-patched by the rules in
+    behavior channels 6) with four numbers regex-patched by the rules in
     main() - and one of those rules keyed "National grid" to s["grid"],
     which is grids plus districts (the Grids tab), so the row said 3,546
     for 214. The rows summed to 84,258 under a stated 86,622. Now every row
@@ -246,7 +246,7 @@ def model_table(s):
         ("District", "district", "One first-level administrative division, at its settlement centroid"),
         ("Power station", "station", f"One generating unit from the world database, at its recorded coordinate; {s['countries']} countries"),
         ("Consumer group", "consumer", "The demand of one settlement above fifteen thousand people"),
-        ("Behaviour channel", "psych", "One behavioural channel, placed in a drawn brain structure and wired into demand"),
+        ("Behavior channel", "psych", "One behavioral channel, placed in a drawn brain structure and wired into demand"),
     ]
     total = sum(k[kind] for _, kind, _ in rows)
     assert total == s["n"], (total, s["n"], sorted(k))
@@ -286,7 +286,7 @@ def scen_table(D):
     return "\n".join(tbl)
 
 
-def behaviour_table(D):
+def behavior_table(D):
     """model.html section 6's table, widest first."""
     tbl = ['<table>', '<tr><th>Kind of change</th><th>Widest in that kind</th>'
            '<th class="n">Nodes that changed</th></tr>']
@@ -304,7 +304,7 @@ parameter from a public data set.</p>
 Most nodes hold a measured quantity, and every node names where it came
 from; the {assumed_total} that hold an assumption say so in their source line:
 {assumed_consumer} consumer groups carry an elasticity from the literature,
-the {psych} behaviour channels are a model of where demand is decided, and
+the {psych} behavior channels are a model of where demand is decided, and
 {ports} ports carry a name and a harbour size class and no number. Apply a
 change anywhere
 and the effect propagates along the links until it settles, which the sixty
@@ -330,7 +330,7 @@ side is hidden by the planet rather than flung to the edge of a rectangle.</p>
 <p>The space layer is drawn standing off the surface, because the sun is not
 on the Earth and neither is the sunlight arriving above the atmosphere.</p>
 
-<p>The last layer is not a place. Behaviour is drawn inside a brain, with
+<p>The last layer is not a place. Behavior is drawn inside a brain, with
 {psych} channels at anatomically defensible positions among {anatomy} named
 structures of the Allen Mouse Brain Common Coordinate Framework. The
 structures are scenery: they carry no weight, no link and no channel, and they
@@ -440,9 +440,9 @@ seasonal release of heat the ocean absorbed in summer, and by the standing wave
 the Rocky Mountains impose on the flow. The ocean stores and releases; the
 atmosphere is what carries.</p>
 
-<h2>The behaviour layer</h2>
+<h2>The behavior layer</h2>
 
-<p>Behaviour is wired in both directions: the channels reach the consumer
+<p>Behavior is wired in both directions: the channels reach the consumer
 groups, and every district that resolves to a real administrative division
 reaches the channels.</p>
 
@@ -455,11 +455,11 @@ settlement data on their administrative code, so the join is exact rather than
 a spatial guess.</p>
 
 <p>The concentration is the weight of the link from a district into the
-behaviour layer. That the measurement is real does not make the direction real:
-that a more concentrated population couples more strongly to shared behaviour
+behavior layer. That the measurement is real does not make the direction real:
+that a more concentrated population couples more strongly to shared behavior
 is a hypothesis, and it is marked assumed rather than measured.</p>
 
-<p>The behaviour tab switches between the brain and the map, because the two
+<p>The behavior tab switches between the brain and the map, because the two
 things worth seeing are the channels and the places feeding them.</p>
 
 <p>What is deliberately absent: there is no weighting of a district by the
@@ -502,7 +502,7 @@ LAYER_FIG = (
     'width="2280" height="1400" alt="The nine layers of the atlas as bands '
     'with their live node counts. Space, weather, climate and recorded events '
     'push one way, downward; demand, power plants, markets and fuel, grids and '
-    'behaviour trade back and forth.">\n'
+    'behavior trade back and forth.">\n'
     '</picture>\n'
     '<p class="small">Drawn by <code>build_layer_diagram.py</code> from the '
     'published payload: every count and every link is read from it, and the '
@@ -590,15 +590,26 @@ def main(apply=False):
         (r"\b526\b", f(s["event"])),
         (r"\b214\b", f(s["grid"])),
         (r"\b4,265\b", f(s["market"])),
-        (r"six behaviour channels", f"{f(s['psych'])} behavioural channels"),
         (r"six channels", f"{f(s['psych'])} channels"),
         (r"real United States plants", "plants worldwide"),
         (r"United States power plants", "power plants worldwide"),
     ]
+    # TRAP 27. A rule that matches nothing produces exactly the shipped
+    # page, so the drift check sees agreement and reports OK - it cannot
+    # tell "did its job" from "did nothing". The rule deleted above had
+    # been inert since the template started interpolating {psych}, and
+    # nothing said so for as long as it sat here. So: count every rule.
+    # Missing is NOT an error. The three edge-count rules are alternates -
+    # whichever number the page currently carries, the other two miss by
+    # design - and a number already correct needs no substitution. The
+    # point is that a reader can see WHICH matched nothing and decide.
     hits = 0
+    missed = []
     for pat, rep in subs:
         t2, k = re.subn(pat, rep, t2)
         hits += k
+        if k == 0:
+            missed.append(pat)
     # Section 2's table is generated whole, every row from the payload, so no
     # number in it can be left behind or mis-keyed by the rules above.
     t2, k = re.subn(r"(<h2>2\. What the model contains</h2>\s*\n\s*\n)<table>.*?</table>",
@@ -623,9 +634,9 @@ def main(apply=False):
     t2, k = re.subn(r"the prepared\s+changes settle in \d+ to \d+\.",
                     f"the prepared changes settle in {s['steps_min']} to {s['steps_max']}.", t2)
     hits += k
-    # Section 6: the behaviour table, from the scenarios' measured reach
+    # Section 6: the behavior table, from the scenarios' measured reach
     t2, k = re.subn(r"(<h2>6\. How the model behaves</h2>\s*\n\s*\n)<table>.*?</table>",
-                    lambda m: m.group(1) + behaviour_table(s["_D"]), t2, count=1, flags=re.S)
+                    lambda m: m.group(1) + behavior_table(s["_D"]), t2, count=1, flags=re.S)
     if k != 1:
         raise SystemExit("model.html: section 6 table not found")
     hits += k
@@ -647,6 +658,8 @@ def main(apply=False):
 
 
     changes.append(f"model.html: {hits} stale figures replaced")
+    if missed:
+        changes.append(f"model.html: {len(missed)} of {len(subs)} rules matched nothing: " + ", ".join(missed))
 
     for c in changes:
         print("  " + c)

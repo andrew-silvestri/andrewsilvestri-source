@@ -1,9 +1,9 @@
 """
-Give the behaviour layer measured inputs.
+Give the behavior layer measured inputs.
 
-The behaviour layer had 24 channels and no way in. Nothing fed them; they only
-fed 1,142 consumer groups. So a run could push behaviour out into the world and
-nothing in the world could ever push back on behaviour, and every district was
+The behavior layer had 24 channels and no way in. Nothing fed them; they only
+fed 1,142 consumer groups. So a run could push behavior out into the world and
+nothing in the world could ever push back on behavior, and every district was
 coupled to it identically. That is the part worth fixing.
 
 What is measured here, from GeoNames cities15000 (34,068 settlements above
@@ -19,12 +19,12 @@ Most of the atlas districts are real GeoNames admin-1 divisions carrying their
 own name and country code. Those are joined to the settlement data on their
 administrative code, which is an exact join and not a spatial guess. The
 remainder are synthetic fillers for countries where the original build could
-not resolve real divisions; they get no population and no behaviour link,
+not resolve real divisions; they get no population and no behavior link,
 because inventing one is the thing this file exists to avoid.
 
 WHAT IS NOT HERE, AND WHY.
 
-The request was to weight each district's behaviour by the value set of its
+The request was to weight each district's behavior by the value set of its
 voting bloc. I did not build that, because the data to build it honestly does
 not exist. The World Values Survey and European Values Study measure the two
 Inglehart-Welzel dimensions at national level for roughly 120 countries.
@@ -36,8 +36,8 @@ project does not do. The concentration figure below is a population statistic
 and is not a claim about anyone's politics.
 
 One modelling choice IS made and is flagged rather than hidden: concentration
-is used as the coupling strength between a district and the behaviour layer.
-That a more concentrated population couples more strongly to shared behaviour
+is used as the coupling strength between a district and the behavior layer.
+That a more concentrated population couples more strongly to shared behavior
 is a hypothesis, not a measurement. It is marked assumed in the provenance,
 alongside the consumer-response values.
 
@@ -140,7 +140,7 @@ def main(apply=False):
     districts = [i for i, k in enumerate(kind) if k == "district"]
     psych = [i for i, k in enumerate(kind) if k == "psych"]
     print(f"  {len(districts):,} districts in the model, "
-          f"{len(psych)} behaviour channels")
+          f"{len(psych)} behavior channels")
 
     srcd = D["srcDict"]
 
@@ -216,7 +216,7 @@ def main(apply=False):
     print(f"  concentration across areas: median {hs[len(hs)//2]:.3f}, "
           f"range {hs[0]:.3f} to {hs[-1]:.3f}")
     print(f"\n  links {e0:,} -> {len(D['es']):,}  (+{added:,} district to "
-          f"behaviour)")
+          f"behavior)")
     assert len(D["es"]) == len(D["et"]) == len(D["ew"])
     assert D["n"] == n0
 
