@@ -1339,7 +1339,7 @@ as though it described the page.
 2026-09-07 without a screenshot review happens now rather than then.
 **One thing it does NOT fix**, logged under "Open, by name": the floor residue
 is still unbounded on the pendulum and the Lorenz, which never reseed.
-Merged as (this commit).
+Merged as `8d143c1`.
 Rollback is the mirror's `a6959fc`, 2026-09-08 — the atlas has its own top-level
 nav group. Andrew's reason, kept verbatim above `NAV` in `rebuild_nav.py`
 because it is the part that gets tidied away: carved out EVEN THOUGH it is about
