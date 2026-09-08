@@ -164,6 +164,25 @@ function serve() {
         return out;
       });
       for (const f of fits) if (!hits.includes(f)) hits.push(f);
+      // the nav stays on one row above 620
+      const navrow = await page.evaluate(() => {
+        const nav = document.querySelector('nav.top');
+        if (!nav || getComputedStyle(nav).flexDirection === 'column') return [];
+        const kids = [...nav.children].filter(k => k.getClientRects().length);
+        if (!kids.length) return [];
+        const tops = [...new Set(kids.map(k => Math.round(k.getBoundingClientRect().top)))];
+        // Items are centred on the row, and a .dd span is a different height
+        // from a bare <a>, so their tops differ by a pixel or two on the SAME
+        // row. Rows are found by clustering tops, not by counting distinct
+        // ones - the naive version reports two rows on a bar that has one.
+        tops.sort((a, b) => a - b);
+        const rows = [tops[0]];
+        for (const t of tops) if (t - rows[rows.length - 1] > 12) rows.push(t);
+        if (rows.length === 1) return [];
+        const names = kids.map(k => (k.textContent || '').trim().split(/\s+/)[0]).join(', ');
+        return [`nav.top wrapped to ${rows.length} rows at this width (${kids.length} items: ${names})`];
+      });
+      for (const f of navrow) if (!hits.includes(f)) hits.push(f);
       // the index spec
       const entries = await page.evaluate(() => {
         const es = [...document.querySelectorAll('.index .entry')];

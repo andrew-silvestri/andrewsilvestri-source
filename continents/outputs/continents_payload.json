@@ -96,7 +96,7 @@
    "measured": "0.000 km",
    "passed": true,
    "threshold": "<= 1.0 km",
-   "what": "identity at age 0: every model returns the point it was given, recomputed from the cache rather than read from it. The only known answer this regime has, and the whole defence against a swapped coordinate order"
+   "what": "identity at age 0: every model returns the point it was given, recomputed from the cache rather than read from it. The only known answer this regime has, and the whole defense against a swapped coordinate order"
   },
   {
    "id": "C3",

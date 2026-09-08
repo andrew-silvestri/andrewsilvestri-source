@@ -85,7 +85,7 @@ PAGES = {
          "The six published cost-of-running curves with Pugh's air-resistance "
          "term, the equations this page computes with, and the reconciliation "
          "with the measured 3000 m result; open access, CC BY."),
-        ("3000 metre race times",
+        ("3000 meter race times",
          'Hoogkamer, Kipp, Spiering &amp; Kram, <i>Medicine &amp; Science in Sports '
          '&amp; Exercise</i> 48(11):2175-2180, 2016, '
          'doi:10.1249/MSS.0000000000001012.',
@@ -112,7 +112,7 @@ PAGES = {
          'Exercise</i> 52(12):2637-2645, 2020.',
          "The share of critical speed held against finish time, over 25,000 "
          "marathons; the underlying training data are held under a research "
-         "licence and are not public."),
+         "license and are not public."),
         ("fourth determinant",
          'Jones, <i>Journal of Physiology</i> 602(17):4113-4128, 2024, '
          'doi:10.1113/JP284205.',
@@ -122,7 +122,7 @@ PAGES = {
          'Effect sizes collected from thirteen papers; the individual range is '
          'Knopp <i>et al.</i>, <i>Sports Medicine</i> 53:1255-1271, 2023.',
          "The spread of published advanced-footwear effect sizes, quoted here "
-         "and analysed on its own page."),
+         "and analyzed on its own page."),
         ("variance in the threshold",
          'Coyle, <i>Exercise and Sport Sciences Reviews</i> 23:25-63, 1995, '
          'PMID 7556353.',
@@ -296,7 +296,7 @@ PAGES = {
         ("Adamo et al. 2021",
          'Adamo <i>et al.</i>, <i>Nature Plants</i> 7:574-578, 2021, '
          'doi:10.1038/s41477-021-00912-2.',
-         "113 Alpine plants; colour, conspicuousness and range predict research "
+         "113 Alpine plants; color, conspicuousness and range predict research "
          "attention. Paywalled; not read for this page."),
         ("Tam et al. 2022",
          'Tam, Lagisz, Cornwell &amp; Nakagawa, <i>GigaScience</i> 11:giac074, 2022, '
@@ -356,7 +356,7 @@ PAGES = {
          'doi:10.1111/j.1755-263X.2012.00239.x.',
          "The Christmas Island pipistrelle was monitored from 1994 and lost in "
          "2009 while a captive-breeding decision was delayed."),
-        ("zoo holdings favour large",
+        ("zoo holdings favor large",
          'Frynta <i>et al.</i>, <i>PLoS ONE</i> 8(5):e63110, 2013, '
          'doi:10.1371/journal.pone.0063110.',
          "Rated beauty and body size predict which mammal families zoos hold "
@@ -423,7 +423,7 @@ PAGES = {
          'Dynamics</i> 11(1):291-299, 2020, doi:10.5194/esd-11-291-2020. '
          'Data at OSF 8NEQ4, doi:10.17605/OSF.IO/8NEQ4, CC0 1.0.',
          "The gridded scenarios themselves, their 0.25 degree resolution, the "
-         "artificial two-degree polar land mask, and the CC0 licence."),
+         "artificial two-degree polar land mask, and the CC0 license."),
         ("it was devised for a television series and reached print in a trade "
          "book",
          'Nield, T., <i>Supercontinent: Ten Billion Years in the Life of Our '
@@ -567,7 +567,7 @@ PAGES = {
          'IPCC, <i>Sixth Assessment Report</i>, Working Group I Chapter 7, '
          'Table 7.15 - global warming potentials.',
          "Methane at 27 and nitrous oxide at 273 over a century."),
-        ("tonne-kilometre",
+        ("tonne-kilometer",
          'UK Department for Energy Security and Net Zero, <i>Greenhouse gas '
          'reporting: conversion factors</i>, 2023.',
          "Freight emission factors by mode."),

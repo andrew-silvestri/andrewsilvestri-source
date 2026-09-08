@@ -610,7 +610,7 @@ def figures(rows, summary, fit_rows):
     ga, gb = summary["global_fit"]["a"], summary["global_fit"]["b"]
     # Amphibia was #a98fd8 and Pisces #6f7fd8, which put three violets
     # (with Mammalia's #8b7ff2) in one legend; at scatter-dot size they were
-    # the same colour. Both moved to hues already in the site's cycle.
+    # the same color. Both moved to hues already in the site's cycle.
     colors = {"Mammalia": ACC, "Aves": COOL, "Reptilia": MOSS,
               "Amphibia": GOLD, "Pisces": GREY,
               "Invertebrata": ROSE}
@@ -660,7 +660,7 @@ def figures(rows, summary, fit_rows):
         ha, dx = ("right", -5) if right else ("left", 5)
         # Eight thousand dots sit behind these names. Without a plate behind
         # the text, the labels over the dense middle of the cloud were
-        # unreadable; the box is the panel colour, so it reads as a gap.
+        # unreadable; the box is the panel color, so it reads as a gap.
         t = ax.annotate(r["name"], (r["mass_g"], r["maximum"]), fontsize=FS_2,
                         xytext=(dx, 4), textcoords="offset points", ha=ha,
                         bbox=dict(boxstyle="round,pad=0.16", facecolor=BG,

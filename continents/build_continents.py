@@ -194,7 +194,7 @@ def future_block(masks, shape, prov):
             for a, b in itertools.combinations(SCENARIOS, 2)), 2),
         "naive_max_disagreement_pct": nc["naive_max_disagreement_pct"],
         "polar_cut_deg": og.POLAR_CUT,
-        "licence": prov["licence"],
+        "license": prov["license"],
     }
 
 
@@ -511,7 +511,7 @@ def past_block():
                 ident, ident_where = dd, f"{m} {pl['name']}"
     gate("C2", "identity at age 0: every model returns the point it was given, "
          "recomputed from the cache rather than read from it. The only known "
-         "answer this regime has, and the whole defence against a swapped "
+         "answer this regime has, and the whole defense against a swapped "
          "coordinate order",
          f"<= {C2_TOL} km",
          f"{ident:.3f} km" + (f" ({ident_where})" if ident > 0.001 else ""),

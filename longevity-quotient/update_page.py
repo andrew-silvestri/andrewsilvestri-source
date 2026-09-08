@@ -156,7 +156,7 @@ having no body mass in any source &mdash; mostly reptiles and amphibians,
 which are routinely measured snout to vent and never put on a scale.
 {fmt(report['mass_modelled_from_length'])} fish were kept with a mass computed
 from maximum length through FishBase's own length&ndash;weight relationship;
-those are modelled, not measured, and are marked and graded accordingly. What
+those are modeled, not measured, and are marked and graded accordingly. What
 survives is <strong>{fmt(n)} species</strong>, graded {grade_bits} as they
 arrive from their sources. The outlier rule described under the arithmetic
 then demotes {o["demoted"]} grade-B records to C, so the model runs on
@@ -267,8 +267,8 @@ def data_section(summary, report, rows):
 {rk['class']} classes, {rk['order']} orders, {rk['family']} families and
 {fmt(rk['genus'])} genera. Every record carries full taxonomy, an adult body
 mass, at least one maximum lifespan, a quality grade and its provenance.
-{fmt(wild)} have a maximum their source labelled wild, {fmt(cap)} one it
-labelled captive, and {fmt(both)} have both &mdash; the comparison this
+{fmt(wild)} have a maximum their source labeled wild, {fmt(cap)} one it
+labeled captive, and {fmt(both)} have both &mdash; the comparison this
 project was built around, and the reason the merge keeps the hand-checked table
 at the top of the precedence order rather than letting a bulk source overwrite
 it. The largest set, {fmt(unrec)} species, carries a maximum whose source did
@@ -276,7 +276,7 @@ not say where the animal lived: the Amniote and AmphiBIO compilations report
 one figure per species with no origin, FishBase population maxima do the same,
 and {fmt(anage_unrec)} AnAge rows list the
 specimen origin as unknown. Until 4 September 2026 every one of those was
-labelled wild, here and in the visualiser. A captive maximum runs longer than a
+labeled wild, here and in the visualiser. A captive maximum runs longer than a
 wild one, so the mislabelling flattered exactly the quotient this page is
 about. They are now carried, drawn and counted as what they are: a maximum of
 unrecorded origin.</p>

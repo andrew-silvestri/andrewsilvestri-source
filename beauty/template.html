@@ -21,7 +21,7 @@ birds, once you know what family a species is in, how big it is, how widely
 it ranges and how long it has been known, its Red List category tells you
 almost nothing about how many papers it gets. The published models for
 other taxa find the same.</p>
-<aside class="marginalia" style="grid-row: span {{span}}" aria-label="On this page"><p class="lab">On this page</p><ul><li><b>birds modelled</b><span class="v">{{n_modelled}}</span></li><li><b>papers, Least Concern</b><span class="v">{{lc_raw}} typical</span></li><li><b>papers, Critically Endangered</b><span class="v">{{cr_raw}}</span></li><li><b>the same, adjusted</b><span class="v">{{lc_adj}} and {{cr_adj}}</span></li><li><b>category's share of the fit</b><span class="v">{{cat_drop}} of R²</span></li></ul></aside>
+<aside class="marginalia" style="grid-row: span {{span}}" aria-label="On this page"><p class="lab">On this page</p><ul><li><b>birds modeled</b><span class="v">{{n_modelled}}</span></li><li><b>papers, Least Concern</b><span class="v">{{lc_raw}} typical</span></li><li><b>papers, Critically Endangered</b><span class="v">{{cr_raw}}</span></li><li><b>the same, adjusted</b><span class="v">{{lc_adj}} and {{cr_adj}}</span></li><li><b>category's share of the fit</b><span class="v">{{cat_drop}} of R²</span></li></ul></aside>
 <aside class="marginalia right" style="grid-row: span {{span}}"><ul><li><b>papers per threatened amphibian</b><span class="v">{{amph_per}}</span></li><li><b>per threatened bird</b><span class="v">{{birds_per}}</span></li><li><b>published models read</b><span class="v">{{n_read}} of {{n_models}}</span></li><li><b>threat null or negative</b><span class="v">{{n_null_or_neg}} of {{n_read}}</span></li><li><b>Red List</b><span class="v">{{red_list_version}}</span></li></ul></aside>
 
 <p>Everyone knows that pandas get more attention than frogs. The expected
@@ -49,7 +49,7 @@ and plants have asked the same question since 2014; of the {{n_read}} whose
 full text could be read for this page, {{n_null_or_neg}} report threat
 status as null or negative.</p>
 
-<div class="card"><div class="tag">Code and data</div><h3 style="margin-top:4px">Every number on this page is generated</h3><p>Six fetch scripts, one build and one figure script. The archive holds all of them and every input whose licence allows it. It does not hold the Red List column: the Red List's terms forbid redistributing it, so the build fetches it with the reader's own free token, and the page says so below.</p><a class="btn ghost" href="downloads/beauty-code.zip">Download code and data</a></div>
+<div class="card"><div class="tag">Code and data</div><h3 style="margin-top:4px">Every number on this page is generated</h3><p>Six fetch scripts, one build and one figure script. The archive holds all of them and every input whose license allows it. It does not hold the Red List column: the Red List's terms forbid redistributing it, so the build fetches it with the reader's own free token, and the page says so below.</p><a class="btn ghost" href="downloads/beauty-code.zip">Download code and data</a></div>
 
 <img class="fig wide" src="assets/beauty_fig1_gap.png" loading="lazy" width="" height="" alt="A slope chart with five lines, one per vertebrate class, joining each class's share of threatened vertebrate species on the left to its share of papers naming the class on the right. Birds and fishes rise; amphibians, reptiles and mammals fall, amphibians most steeply.">
 <p class="small">The five vertebrate classes: the share of all threatened
@@ -206,7 +206,7 @@ one's code.</p>
 
 <h2>Limits</h2>
 <p>Association, not cause. Nothing here was randomised. Rated
-attractiveness is itself correlated with size, colour and familiarity,
+attractiveness is itself correlated with size, color and familiarity,
 and public attention with research; what the model can say is how the
 fit partitions among named terms, and what it cannot say is that any one
 of them makes scientists choose. "Beauty determines funding" is a
@@ -232,7 +232,7 @@ the very statistic used to count it. Of the roughly two million named
 species, one estimate puts {{extinct_est}}% extinct since 1500 against
 {{extinct_rl}}% on the Red List; {{dd_mammals}}% of Data Deficient mammals
 and {{dd_amph}}% of Data Deficient amphibians are predicted to be threatened
-once modelled. This page's class figure stops at vertebrates for that
+once modeled. This page's class figure stops at vertebrates for that
 reason, and its species model stops at birds because birds are the one
 class with a rated-attractiveness dataset.</p>
 
@@ -248,7 +248,7 @@ for this page's claim.</p>
 
 <p>What is absent, and why. There is no zoo figure: captive-collection
 data at species level are held in a members-only database, and the
-published finding that zoo holdings favour large, attractive and
+published finding that zoo holdings favor large, attractive and
 non-threatened species is cited rather than drawn. There is no funding
 computation: the per-species expenditure reports exist only as scanned
 tables. There is no forecast of what the gap will cost; that is an

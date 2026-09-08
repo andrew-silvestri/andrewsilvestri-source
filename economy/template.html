@@ -19,7 +19,7 @@ try{document.documentElement.dataset.motion=matchMedia('(prefers-reduced-motion:
 <p class="dim">A shoe that makes you four per cent more efficient does not make
 you four per cent faster. How much faster it makes you depends on how fast you
 already are, and for the fastest runners it is under two thirds.</p>
-<aside class="marginalia" style="grid-row: span {{span}}" aria-label="On this page"><ul><li><b>a {{headline_pct}}% saving, at {{pace_400_hm}} pace</b><span class="v">{{gain_400_pct}}% of speed</span></li><li><b>the same, at {{pace_572_hm}} pace</b><span class="v">{{gain_572_pct}}%</span></li><li><b>the same, at {{pace_260_hm}} pace</b><span class="v">{{gain_260_pct}}%</span></li><li><b>worth exactly itself at</b><span class="v">a {{crossing_hm}} marathon</span></li><li><b>measured transfer</b><span class="v">{{transfer_measured}}</span></li><li><b>modelled transfer</b><span class="v">{{transfer_modelled}}</span></li></ul></aside>
+<aside class="marginalia" style="grid-row: span {{span}}" aria-label="On this page"><ul><li><b>a {{headline_pct}}% saving, at {{pace_400_hm}} pace</b><span class="v">{{gain_400_pct}}% of speed</span></li><li><b>the same, at {{pace_572_hm}} pace</b><span class="v">{{gain_572_pct}}%</span></li><li><b>the same, at {{pace_260_hm}} pace</b><span class="v">{{gain_260_pct}}%</span></li><li><b>worth exactly itself at</b><span class="v">a {{crossing_hm}} marathon</span></li><li><b>measured transfer</b><span class="v">{{transfer_measured}}</span></li><li><b>modeled transfer</b><span class="v">{{transfer_modelled}}</span></li></ul></aside>
 
 <p>Everyone who runs has heard the number four per cent. It came from a
 laboratory measurement of oxygen uptake, and it is a real measurement. What it
@@ -43,10 +43,10 @@ pace. The heavy line is the curve this page computes with; the band is the
 range across {{n_curves}} published cost-of-running curves, all of them fitted
 to treadmill data and corrected for air resistance. Above the dashed line a
 saving is worth more than itself, below it less. The crossing is at
-{{crossing_ms}} metres per second, a {{crossing_hm}} marathon. Right: the same
+{{crossing_ms}} meters per second, a {{crossing_hm}} marathon. Right: the same
 {{headline_pct}} per cent saving expressed as minutes off a finish time, which
 is the form a runner can use. Both axes carry a second scale in marathon
-finishes, because nobody knows their pace in metres per second.</p>
+finishes, because nobody knows their pace in meters per second.</p>
 
 <h2>Why the exchange rate is not one</h2>
 
@@ -66,7 +66,7 @@ metabolic saving buy less speed the faster you are already going.</p>
 <p>The exchange rate has been measured, once, cleanly. Adding
 {{hoogkamer_mass}} grams to each shoe of {{hoogkamer_n}} trained men raised the
 metabolic cost of running by {{hoogkamer_metabolic}} per cent and their
-3000 metre race times by {{hoogkamer_time}} per cent. Dividing one by the other
+3000 meter race times by {{hoogkamer_time}} per cent. Dividing one by the other
 gives {{transfer_measured}}: about seven tenths of a metabolic change reaches
 the clock. Computing the same quantity from the cost-of-running curve, at the
 speed that race was run, gives {{transfer_modelled}}. The two differ by
@@ -78,8 +78,8 @@ independent routes to one number, one measured on runners and one derived from
 a curve, is the strongest evidential position anything on this site rests
 on.</p>
 
-<img class="fig wide" src="assets/economy_fig2_transfer.png" loading="lazy" width="" height="" alt="A single axis showing the measured transfer coefficient at 0.70 with a wide published interval, and the modelled value at 0.71 directly beneath it, both far from the value of 1.0 that a reader assumes.">
-<p class="small">The measured exchange rate and the modelled one, on the same
+<img class="fig wide" src="assets/economy_fig2_transfer.png" loading="lazy" width="" height="" alt="A single axis showing the measured transfer coefficient at 0.70 with a wide published interval, and the modeled value at 0.71 directly beneath it, both far from the value of 1.0 that a reader assumes.">
+<p class="small">The measured exchange rate and the modeled one, on the same
 axis. The interval is the widest the two published confidence intervals allow:
 the effects were measured on the same runners and their covariance is not
 reported, so a narrower interval could not be justified. The dashed line at one
@@ -89,22 +89,22 @@ is what a reader assumes when they hear that a shoe is four per cent better.</p>
 
 <p>Marathon speed decomposes into three measured quantities: the ceiling on
 oxygen uptake, the fraction of that ceiling a runner can hold for the distance,
-and the oxygen cost of covering a kilometre. Speed is the first times the
+and the oxygen cost of covering a kilometer. Speed is the first times the
 second divided by the third. That decomposition is published and it is not
 controversial.</p>
 
 <p>What is worth seeing is how much better the product is than any term inside
 it. In the one open dataset carrying all three terms and a race result for the
 same {{lan_n}} people, the ceiling alone correlates {{r_ceiling}} with 3000
-metre speed, the sustainable fraction {{r_fraction}}, and the oxygen cost
+meter speed, the sustainable fraction {{r_fraction}}, and the oxygen cost
 {{r_economy}}. Put the ceiling over the cost and the correlation is
 {{r_product}}. None of the terms is the model. The product is.</p>
 
-<img class="fig wide" src="assets/economy_fig3_product.png" loading="lazy" width="" height="" alt="Four scatter panels of the same twenty runners, plotting 3000 metre speed against the oxygen ceiling, the fraction held, the oxygen cost, and finally the ceiling divided by the cost. The correlations are plus 0.65, plus 0.10, minus 0.16 and plus 0.87.">
+<img class="fig wide" src="assets/economy_fig3_product.png" loading="lazy" width="" height="" alt="Four scatter panels of the same twenty runners, plotting 3000 meter speed against the oxygen ceiling, the fraction held, the oxygen cost, and finally the ceiling divided by the cost. The correlations are plus 0.65, plus 0.10, minus 0.16 and plus 0.87.">
 <p class="small">{{lan_n}} recreational men, each panel the same runners against
 the same outcome. Oxygen cost correlates negatively because a lower cost is a
 better runner, which is the expected direction; on its own it explains almost
-nothing here. The fraction held explains nothing at all over 3000 metres, which
+nothing here. The fraction held explains nothing at all over 3000 meters, which
 is what a race of about ten minutes should look like. Only the product
 predicts.</p>
 
@@ -130,9 +130,9 @@ honest size of it is a fact a reader is unlikely to have been told.</p>
 
 <p>The decomposition treats its three terms as constants, and over a marathon
 none of them is. In {{zanini_n}} trained runners, two hours of running raised
-the oxygen cost of a kilometre by {{zanini_econ_120}} per cent, lowered peak
+the oxygen cost of a kilometer by {{zanini_econ_120}} per cent, lowered peak
 oxygen uptake by {{zanini_peak_120}} per cent and dropped threshold speed from
-{{zanini_thr_0}} to {{zanini_thr_120}} kilometres per hour. The fraction of
+{{zanini_thr_0}} to {{zanini_thr_120}} kilometers per hour. The fraction of
 critical speed a runner holds falls with how long they are out there: about
 {{smyth_150}} per cent for a two-and-a-half-hour finisher and
 {{smyth_360}} per cent for a six-hour one.</p>
@@ -145,11 +145,11 @@ faster third held more of it than the slower third,
 {{vic_fast}} against {{vic_slow}} per cent. Being able to hold a larger share
 of what you have is itself part of being good at the distance.</p>
 
-<img class="fig wide" src="assets/economy_fig4_drift.png" loading="lazy" width="" height="" alt="Left, three lines showing that over two hours of running the cost of a kilometre rises about six per cent while peak oxygen uptake and threshold speed both fall about seven per cent. Right, the share of critical speed held falls from 93 per cent for a two-and-a-half-hour finisher to 79 per cent for a six-hour one.">
+<img class="fig wide" src="assets/economy_fig4_drift.png" loading="lazy" width="" height="" alt="Left, three lines showing that over two hours of running the cost of a kilometer rises about six per cent while peak oxygen uptake and threshold speed both fall about seven per cent. Right, the share of critical speed held falls from 93 per cent for a two-and-a-half-hour finisher to 79 per cent for a six-hour one.">
 <p class="small">Left: {{zanini_n}} trained runners before, during and after two
 hours of running. Peak uptake and threshold speed fall by very nearly the same
 amount, which is why the two lines sit on top of each other. Right: over
-25,000 marathons, from training data held under a research licence, so these
+25,000 marathons, from training data held under a research license, so these
 are the published values rather than a recomputation. A separate literature
 argues that how well a runner resists this decay is a fourth determinant the
 three-term model leaves out, with individual differences running from almost
@@ -163,7 +163,7 @@ advanced footwear disagree with each other by a factor of nearly four, from
 where studies report individual results the range runs from
 {{shoe_ind_min}} per cent to {{shoe_ind_max}} per cent within a single group of
 runners. The size and the spread of that measurement is a separate subject and
-this page does not re-analyse it. What is on this page is the exchange rate you
+this page does not re-analyze it. What is on this page is the exchange rate you
 should apply to whatever number turns out to be true for you.</p>
 
 <h2>Method</h2>
@@ -185,9 +185,9 @@ identifier.</p>
 
 <p><b>Assumed.</b> Three things, and the page depends on all of them. The cost
 curve is fitted to a runner of {{ref_mass}} kilograms and
-{{ref_height}} metres with a {{ref_area}} square metre frontal area, and a
+{{ref_height}} meters with a {{ref_area}} square meter frontal area, and a
 reader of another size has another curve. The measured exchange rate was
-obtained by adding mass over 3000 metres in trained men, so applying it to a
+obtained by adding mass over 3000 meters in trained men, so applying it to a
 different intervention over a different distance extends it past what was
 measured. And the arithmetic moves one term while holding the others still,
 which in a real runner does not happen: the ceiling accounts for between
@@ -197,7 +197,7 @@ prediction about a person.</p>
 
 <h2>Limits</h2>
 
-<p>The product check rests on {{lan_n}} recreational men over 3000 metres,
+<p>The product check rests on {{lan_n}} recreational men over 3000 meters,
 which is the only open dataset carrying all three terms with a race result. No
 equivalent exists at marathon distance, and no per-athlete table for elite
 runners is public at all: the best-known cohort publishes its individuals only

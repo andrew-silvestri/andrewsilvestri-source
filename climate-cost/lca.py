@@ -48,7 +48,7 @@ MAX_DEPTH = 6
 
 
 def great_circle(a, b):
-    """Kilometres between two regions."""
+    """Kilometers between two regions."""
     r1, r2 = REGIONS[a], REGIONS[b]
     p1, p2 = math.radians(r1["lat"]), math.radians(r2["lat"])
     dl = math.radians(r2["lon"] - r1["lon"])
@@ -104,9 +104,9 @@ class Model:
         `alloc` is the product of every allocation factor between here and the
         product, so it is what actually reaches us.
         """
-        # A transport mode used as an input carries kilometres, not units of a
-        # process. One kilogram is a thousandth of a tonne, so kilometres
-        # become tonne-kilometres by dividing by a thousand.
+        # A transport mode used as an input carries kilometers, not units of a
+        # process. One kilogram is a thousandth of a tonne, so kilometers
+        # become tonne-kilometers by dividing by a thousand.
         if pid in TRANSPORT:
             tm = TRANSPORT[pid]
             e = tm["ef"] * (amount / 1000.0) * alloc
@@ -114,7 +114,7 @@ class Model:
                     "amount": amount, "alloc": alloc, "direct": e,
                     "total": e, "children": [], "quality": "A",
                     "note": f"{amount:,.0f} km at {tm['ef']} kg CO2e per "
-                            f"tonne-kilometre. {tm['note']}"}
+                            f"tonne-kilometer. {tm['note']}"}
         pr = PROCESSES[pid]
         direct = self.factor(pid) * amount * alloc
         node = {
@@ -146,7 +146,7 @@ class Model:
         """The freight leg. `mult` is everything that scales the emission
         (share x amortisation x waste scale x kilograms shipped); `alloc` is
         the share x amortisation that reaches the product, reported the same
-        way every other node reports it; `amount` is the tonne-kilometres
+        way every other node reports it; `amount` is the tonne-kilometers
         actually moved for one functional unit."""
         t = TRANSPORT[self.mode]
         kgco2 = t["ef"] * (self.km / 1000.0) * mult
@@ -156,7 +156,7 @@ class Model:
             "direct": kgco2, "total": kgco2, "children": [],
             "quality": "A",
             "note": (f"{self.km:,.0f} km by {t['name']} at {t['ef']} kg CO2e "
-                     f"per tonne-kilometre. {t['note']}"),
+                     f"per tonne-kilometer. {t['note']}"),
         }
 
     def run(self, two_pass=True):

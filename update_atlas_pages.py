@@ -276,7 +276,7 @@ def scen_rows(D):
 
 
 def scen_table(D):
-    """atlas.html's table, in the catalogue's own category order."""
+    """atlas.html's table, in the catalog's own category order."""
     tbl = ['<table>', '<tr><th>Category</th><th class="n">Changes</th>'
            '<th class="n">Widest reach</th><th>Widest</th></tr>']
     for label, n, reach, top in scen_rows(D):
@@ -520,7 +520,7 @@ def globe_fig(s):
         '<img class="fig wide plain" src="assets/hero_globe.png" '
         'width="1440" height="1252" alt="The model\'s '
         f'{f(s["station"])} power stations and {f(s["consumer"])} settlements '
-        'at their recorded coordinates, on an orthographic globe centred on '
+        'at their recorded coordinates, on an orthographic globe centered on '
         'the Atlantic">\n'
         '<p class="small">Every power station and every settlement in the '
         'model at its recorded coordinates, drawn on paper by '
