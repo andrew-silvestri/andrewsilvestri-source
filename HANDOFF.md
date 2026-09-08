@@ -1177,7 +1177,22 @@ So a clone of this repository serves `code.html` with sixteen dead links until
 
 ## 11. Current state, 7 September 2026
 
-**Live: the mirror's `4f2db66`**, 2026-09-07 — the favicon is an African
+**Live: the mirror's `9011f06`**, 2026-09-08 — the nav dropdowns. Two defects,
+and the second was not the reported one. `.ddmenu` had `padding: 9px 0` while
+its links are `display:block` with no margin, so the rendered spacing was 9px
+above the first item, **0 between** consecutive ones and 9px below the last —
+the dead space read at the top of the menu and nowhere else, because the
+highlight starts at the link's edge. Now 0/0/0, menu 167 → 149px.
+And **`.ddmenu a { padding: 8px 18px }` had never applied, in either layout**:
+`nav.top a` is (0,1,2) against a bare `.ddmenu a` at (0,1,1), so the bar's own
+`5px 10px` won and the menu indented 10px while the stylesheet claimed 18. The
+620px block lost the same way. Found by measuring rendered padding rather than
+reading the declaration; fixed by putting `nav.top` in the selector.
+The indent is now **26px and derived**: the menu sits at `left: -16px` from its
+`.dd` and the button's text at its own 10px inset, so 16 + 10 puts an item's
+text exactly under the text of the button that opened it — measured offset
++1.0px, against −7.0 at 18px and −15.0 at 10px. Merged as `e41d3e7`.
+Rollback is the mirror's `4f2db66`, 2026-09-07 — the favicon is an African
 penguin. `build_favicon.py` had not been touched since `0175ff5` on 4 September
 and its own docstring said it drew "the same glyph — one node with five links";
 no penguin existed anywhere in the repo.
