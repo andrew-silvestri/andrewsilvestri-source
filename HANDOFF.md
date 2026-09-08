@@ -1085,7 +1085,25 @@ So a clone of this repository serves `code.html` with sixteen dead links until
 
 ## 11. Current state, 7 September 2026
 
-**Live: the mirror's `584bdde`**, 2026-09-07 — the corner block is three lines
+**Live: the mirror's `85a4c82`**, 2026-09-07 — the site is in American English.
+91 occurrences of 19 British spellings in `site/*.html` prose, swept to 0. The
+diff is **88 insertions and 88 deletions across 19 files** — perfectly balanced,
+which is the correct signature for a pure sweep: anything added or removed would
+mean something else happened. Three of those files are PNGs
+(`atlas_layers.png`, `atlas_layers-phone.png`, `energy_model_throughlines.png`),
+because "Behaviour" is a layer and kind name drawn into the figures as well as a
+word in prose, so the label and the tables moved in one commit —
+`build_layer_diagram.py` asserts they agree and would have failed otherwise.
+Both surviving renders at 0 layout problems.
+Deliberately untouched: matplotlib's `'grey'` colour strings in the builders (a
+visual no-op that would surface only as figure-byte drift), CSS `color`/`center`
+(37 and 3 occurrences, still there), and three Python docstrings using the
+common noun. Nothing on the site was quoted material: the licence names are CC0,
+CC BY, CC BY-NC and CC BY-SA, and "USGS earthquake catalogue" is USGS's own
+**Earthquake Catalog**, so the American form is the faithful one.
+**Trap 27 came out of this** — see section 8. Merged to master as `cb7dc3a` and
+`b43aa79`.
+Rollback is the mirror's `584bdde`, 2026-09-07 — the corner block is three lines
 and there is an About page. `.herofoot`'s footer lost the `<br>`-stacked
 identity and the separate "All code is downloadable." link: it is now the
 caption, `Andrew Silvestri` linking to the new `about.html`, and the built-with
@@ -1324,6 +1342,16 @@ generated list above, it was typed.
   and `--verify` compares without writing, so what is missing is a gate that
   runs it, not a script. Deliberately **not** fixed as part of the corner-block
   change on 2026-09-07, which touched none of these files.
+  **AND THIS IS THE ONE PLACE `test_generators.py` IS NOT GREEN, WHICH IS THE
+  ARGUMENT FOR CLOSING IT.** That check caught a generated artefact being edited
+  instead of its source **twice in one week**, both times before it shipped: the
+  `modelling` sweep went 1 → 6 drifts because five per-project generators wrote
+  the old spelling straight back, and `site/skyline-app.html` was edited when the
+  string's real home was `skyline/app.js`. That is precisely the failure trap 13
+  exists for, and a gate that pays for itself twice in a week is worth keeping at
+  **zero** rather than at "one known drift we ignore". A standing red line
+  teaches the next reader to skim past the output, and the next real drift
+  arrives in the same column.
 
 - **longevity.html lists ten references and carries one marker.** The other
   nine point at nothing. The page is written in place by
