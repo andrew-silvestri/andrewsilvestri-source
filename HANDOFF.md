@@ -1813,19 +1813,41 @@ generated list above, it was typed.
   other two never reseed, so their canvases have no wipe at all. Measured at
   1728x1080, Firefox software raster, after the fix:
 
-  | pin | cover > alpha 0, t=60s | t=300s | cover > alpha 96, t=60s | t=300s |
-  |---|---|---|---|---|
-  | pendulum | 24.2% | **49.8%** | 0.204% | 0.138% |
-  | lorenz | 14.5% | **30.4%** | 0.100% | 0.042% |
+  | pin | cover > alpha 0 | t=60s | t=300s | t=600s | t=900s |
+  |---|---|---|---|---|---|
+  | pendulum | | 24.2% | 49.8% | **54.5%** | **55.9%** |
+  | lorenz | | 14.5% | 30.4% | - | - |
 
-  So the drawn line is bounded and the wash under it is not: at five minutes
-  half the pendulum's canvas carries ink at about 6% opacity, and it is still
-  climbing roughly linearly. Whether that reads as a defect or as paper texture
-  is a judgement nobody has made yet with a screenshot in front of them - the
-  numbers say it will reach the whole swept region on a long visit. **Fixing it
-  is a separate change** (a floor-clearing pass, a periodic wipe for the two
-  systems that lack one, or an `EROSION_MIN` chosen so the floor is below the
-  visible threshold) and it needs its own measurement and its own commit. Noted
+  **IT SATURATES, AND THE FIRST VERSION OF THIS ENTRY SAID IT DID NOT.** Written
+  from the t=60 and t=300 points alone, it read "still climbing roughly
+  linearly", and on two points that is what 24.2 -> 49.8 looks like. Carried to
+  t=600 and t=900 the pendulum converges on about **56%** - the fraction of the
+  canvas its three trails ever sweep - and stops. Mean alpha holds at 15.5-15.8
+  throughout and coverage above alpha 96 holds at 0.14-0.23%. **Two points
+  cannot distinguish a straight line from the first half of a curve**, and a
+  saturating quantity looks linear for exactly as long as you have not waited.
+  The state is bounded and stable, not a runaway.
+  Looked at rather than only measured: at t=900 the drawing is as clean as at
+  t=300 - three pendulums with bright trails and a faint grain confined to the
+  swept region, no flattening of contrast. **The 56% figure counts every pixel
+  above alpha 0, and most of it is at alpha 1-15 of 255, which is at or under
+  the level of paper texture.** So "half the canvas is inked" is true and
+  misleading, and this entry is here as much for that as for the residue.
+  **This is therefore not a defect, and it is not the second commit it was
+  first written up as.** What remains is a taste question: `EROSION_MIN` is
+  0.02, which puts the settling floor at alpha 15.9 for the pendulum and 25.5
+  for the Lorenz and the three-body. Raising it to 0.10 changes no system's
+  decay RATE - `setErosion` compounds `erodeF` to match - and only lowers the
+  floor: measured on the pendulum at t=300, mean alpha **15.5 -> 4.9** with
+  coverage (49.846 vs 49.847) and bright trail (0.145% vs 0.142%) unchanged.
+  The cost is that erosion lands every 4th/5th/20th frame instead of every
+  1st/1st/4th, and **whether the three-body's 20-frame gap shows as stepping is
+  NOT measured**.
+  **ANDREW LOOKED AT BOTH AND CHOSE TO LEAVE IT, 2026-09-08.** `EROSION_MIN`
+  stays 0.02. This entry is a record of a decision made with the numbers and the
+  t=900 render in front of him, not an open item - do not reopen it as a bug,
+  and do not raise `EROSION_MIN` as a tidy-up. If it is ever revisited, the
+  unmeasured stepping at `erodeN` 20 is the thing to measure first. Noted
   2026-09-08, the day the erosion started running at all.
 
 - **index.html's atlas sentence carries a generated number by hand.** The home
