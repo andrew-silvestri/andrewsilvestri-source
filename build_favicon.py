@@ -1,22 +1,53 @@
 """The favicon and the touch icon: an African penguin, in the site's palette.
 
 WHY A PENGUIN, because without the reason this is decoration. Spheniscus
-demersus is a row in this site's own data. `longevity-quotient/data/animals.csv`
-records it at 3,100 g, 27 years in the wild and 40 in captivity, and the model's
-own output in `longevity-quotient/outputs/lq_table.csv` gives it
-`lq_class_maximum` 1.3896 - it lives about 1.39x as long as a 3.1 kg bird is
-predicted to, and 2.30x as long as a 3.1 kg animal of any class. It is a
-measured outlier from a page on this site, not a mascot.
+demersus is a row in this site's own data: `longevity-quotient/data/animals.csv`
+records it at 3,100 g, 27 years in the wild and 40 in captivity.
+
+NAME THE COMPARISON OR THE FIGURE IS NOT SOURCED. "1.39x prediction" is
+ambiguous between two true numbers about the same animal, and section 4 wants a
+number to trace to an exact computation. From the model's own output,
+`longevity-quotient/outputs/lq_table.csv`, this row:
+
+    maximum          40.0      years, the captive figure
+    pred_class       28.7862   predicted for a 3.1 kg BIRD
+    pred_global      17.3793   predicted for a 3.1 kg ANIMAL, any class
+    lq_class_maximum  1.3896   40 / 28.7862   -> 1.39x, AGAINST BIRDS
+    lq_global_maximum 2.3016   40 / 17.3793   -> 2.30x, against all animals
+
+The two differ because birds are long-lived for their size, so the bar inside
+the class is higher: 28.8 years against 17.4. The icon's claim is the
+conservative one - **1.39x against other birds**. It is a measured outlier from
+a page on this site, not a mascot.
 
 WHAT IT DRAWS, and the geometry is a DESCRIPTION rather than three drawings:
 the constants below are read by both renderers, so the SVG and the two PNGs
 cannot drift. That is the whole reason this file exists rather than three
 committed assets. Change a number here and all three follow.
 
+THAT IS TRUE OF THE SOURCE, NOT OF THE OUTPUT, and the difference matters
+before someone reports a bug. Two renderers draw these constants - the browser
+rasterises the SVG, PIL rasterises the PNGs - so the files are NOT
+byte-identical and never will be. Measured 2026-09-07, SVG rasterised at 180 in
+Firefox against `favicon.png`: 4.3% of pixels differ by more than 8/255 and
+0.7% by more than 64/255, all of it antialiasing along the curves. What agrees
+is the shape: accent 24468 px against 24406, paper 6454 against 6483, moss 168
+against 194, transparent corners identical at 912, out of 32,400. A rendering
+difference of that size is the expected result and not a defect.
+
 The bird is drawn in NEGATIVE SPACE. The accent ground is the dark plumage; the
 paper marks are the facial horseshoe and the front, which is how an African
 penguin is actually marked. Nothing is outlined, because an outline at 16px is
 a smudge.
+
+DO NOT "CORRECT" THIS TO A BLUE BIRD ON A PAPER GROUND. That is the more literal
+reading of the brief - deep blue body, paper front, moss bill - and it was built
+and rendered alongside this one on 2026-09-07 before this was chosen. It loses,
+and not for a reason that was obvious in advance: with the front in paper ON a
+paper ground the body reads as a HOLLOW RING rather than a solid bird, and
+flippers wide enough to see fragment the silhouette at small sizes. At 16px this
+version is a single light figure on dark; that one is a broken outline. Both
+satisfy the same three palette words. Only one survives a tab bar.
 
 PALETTE ONLY, section 4: deep blue ground (--acc #245F73), paper front and face
 (--bg #F2F0EF), moss bill (--moss #733E24). No orange exists in this palette and
