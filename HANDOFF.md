@@ -250,6 +250,35 @@ audit reaches for F6 again, this paragraph and `hero.js`'s header are where the
 argument lives - it is no longer on the page**, and anyone restoring it should
 know it was removed on purpose rather than lost.
 
+**AND ON 2026-09-07 THE CAPTION LEFT THE PAGE ENTIRELY.** The corner panel was
+retired: the home page is the drawing and then the scroll, with no label on the
+canvas at all. This is the weaker leg going too, and it is worth being plain
+about rather than discovering later.
+
+The trade, stated so the next audit finds an argument instead of re-deriving
+one. F6 cut `force-bg.js` for being motion a reader could not account for. **An
+uncaptioned canvas is closer to that than a captioned one** - it is now a moving
+drawing with nothing on the page saying what it is. Three things are still true
+and are what the decision rests on:
+
+- it is a **named, published system** integrated from published equations, not
+  a decorative field. `tests/verify_hero_systems.js` recomputes what the
+  captions claim and still runs, because `hero.js` still computes them;
+- it is **not presented as the model**. The old failure mode was a drawing that
+  could be mistaken for the atlas; nothing here invites that reading, and the
+  page's own index says what the site is about;
+- it **respects reduced motion** and stops when scrolled past, so the reader
+  who cannot account for it is not made to sit with it.
+
+**Andrew's decision, and his word was "for now".** Putting the caption back is
+one line - `<p class="small herocap"></p>` as the first child of `<main>` in
+`index.html`. `hero.js` needs no edit: it picks a system and computes the
+caption on every load regardless, and its write is guarded. `body.home .herocap`
+is kept in `style.css` for exactly that purpose and says so.
+
+The panel's rules and the whole 1340 derivation are in
+`unpublished/RETIRED.md`, moved rather than deleted.
+
 The home page also stopped carrying the atlas card, the figure mosaic and the
 model chart the same day: it is the hero and the index now, and the Energy nav
 group is the only route to atlas-app, atlas, model and library. That orphaned
@@ -897,6 +926,21 @@ Read this section. Every item is a real bug that shipped.
     The cheap check, when two runs disagree: alternate the arms inside one
     session so machine drift is shared, and look at whether the control arm
     reproduces ITSELF before reading anything into the difference between arms.
+
+    **The narrower sibling: a claim can outlive the state it described, because
+    the work continued after the check.** "assets/hero.js is byte-identical -
+    git status reports it unmodified" was written on 2026-09-07 about a check
+    that had been run, and was true when run; the comment in that file was then
+    fixed two steps later and the claim went into the write-up unchanged. Four
+    claims this week were true when measured and false when reported. Trap 24
+    above is a measurement inheriting a condition nobody set; this is the same
+    shape in time rather than configuration. **Re-run the check that produced a
+    claim before you publish the claim** - and prefer a claim that survives the
+    work: "no behavioural change, one comment block rewritten" stays true where
+    "byte-identical" did not. Where it matters, measure the narrower claim
+    directly: stripping every comment from both copies of hero.js and hashing
+    what was left gave ea62768f0542cfd4 for each, which is the statement that
+    was actually meant.
 
 25. **Accelerated Canvas2D fails under GPU-process contention, so a canvas page
     has to be designed for the software fallback as the normal case.** Firefox
