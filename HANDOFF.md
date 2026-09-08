@@ -1036,7 +1036,28 @@ So a clone of this repository serves `code.html` with sixteen dead links until
 
 ## 11. Current state, 7 September 2026
 
-**Live: the mirror's `65dca2e`**, 2026-09-07 — the home page's caption/footer
+**Live: the mirror's `584bdde`**, 2026-09-07 — the corner block is three lines
+and there is an About page. `.herofoot`'s footer lost the `<br>`-stacked
+identity and the separate "All code is downloadable." link: it is now the
+caption, `Andrew Silvestri` linking to the new `about.html`, and the built-with
+SENTENCE linking to `code.html`. `About` is a nav item pinned top right — last
+in `rebuild_nav.py`'s `NAV`, `margin-left: auto` on the flex item in CSS, with
+`nav.top`'s "never set margin-left here" warning extended to say it means the
+rule and not its children.
+THE 1340 BREAKPOINT WAS RE-DERIVED AND THE OBVIOUS ANSWER WAS WRONG. It came
+from `energy systems modelling` at 208.8px; that string is deleted, and the same
+rule on the new longest line — the built-with sentence at 356.7px — gives 1632,
+which would take the fixed panel out of 1341–1631 including 1440 and 1366. The
+old rule was about ATOMICITY, not length: it protected one item of a stacked
+identity. A sentence wraps. Re-derived on what binds now — the sentence in ≤ 2
+lines — the requirement is W ≥ 1301, so **1340 stays with 39px of slack** where
+it had 4, and the hard failure (overflow on `Silvestri`, 78.3px, the longest
+unbreakable run) is at 1075. Broken both ways before being trusted.
+Also: `modelling` → `modeling` site-wide, 17 strings plus six per-project
+`template.html` files that own their page's footer and wrote the old spelling
+straight back. `tests/test_layout.js` is **112/112** — 16 pages now. Merged to
+master as `c9014ae`. 18 files, one of them `about.html`.
+Rollback is the mirror's `65dca2e`, 2026-09-07 — the home page's caption/footer
 block is an opaque panel and the canvas exclusion is gone. `body.home .herofoot`
 carries `background: var(--bg)` and a `--rule` hairline on its top and right
 edges; `hero.js` lost the per-frame `clearRect` pair, the cached `footRect` and
