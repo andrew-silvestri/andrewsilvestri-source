@@ -1378,7 +1378,7 @@ was **six times high on all three** — see trap 30, which this produced. And
 `test_scroll_jank.js`'s `LONG_BUCKETS` went [150, 195, 206] → **[75, 98, 103]**:
 left alone, `--long` would have kept running and printing while measuring
 something other than the tightening binary it names.
-Merged as (this commit).
+Merged as `3f6718e`.
 Rollback is the mirror's `f254215`, 2026-09-08 — the hero's trails erode, for the
 first time since the erosion was written. `setErosion(sys.FADE)` sat 165 lines
 above the `var EROSION_MIN` / `var erodeN = 1, erodeF = 0` initialisers it reads.
