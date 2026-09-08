@@ -1222,6 +1222,44 @@ Read this section. Every item is a real bug that shipped.
     them do - both give buckets that scale with path length. It took following
     identified pixels to separate the two.
 
+30. **A set of numbers checked against each other cannot catch a common-factor
+    error. Check one of them against the world.** Third instance in a week, and
+    the three look nothing alike until they are put side by side.
+
+    - **`hero.js:160`, found 2026-09-08.** "A trail survives about 1/FADE
+      frames, so these are roughly 3s, 5s and 20s of memory." 1/FADE is 33, 50
+      and 100 frames, which at the 59.6 fps the page runs is **0.56s, 0.84s and
+      1.68s**. Every figure was **six times high**. But 3 : 5 : 20 is very
+      nearly 33 : 50 : 100, so anyone auditing the line the obvious way - does
+      the slow system really have the longest memory, are these in the right
+      proportion - got a clean answer. The error was in the units, shared by all
+      three, and comparing them to each other could not see it. Somebody
+      converted frames to seconds at about 10fps and the ratios carried the
+      claim for as long as nobody divided.
+    - **The archive drift, same day.** `test_generators.py`'s headline read
+      `1 drift` throughout while the named archives went from four to nine,
+      because the headline counts GENERATORS and the detail counts ARCHIVES. The
+      number a reader verifies stayed true; the level below it changed.
+    - **Trap 16.** Three published ratios evaluated at two speeds, reproduced to
+      0.008 of a percentage point, could not pin four coefficients - because
+      they were degenerate combinations of the parameters and errors cancelled
+      inside them.
+
+    **The general form: internal consistency is not evidence of absolute
+    correctness, and it is the most convincing kind of wrong**, because every
+    cross-check a careful reader runs comes back clean. The check that works is
+    to take ONE quantity out of the set and measure it against something
+    outside: one duration in seconds against a stopwatch, one archive name
+    against the actual output, one coefficient against a synthetic fit whose
+    answer you already know.
+
+    In practice, for this repository: when a comment states a set of derived
+    quantities, compute ONE of them from first principles and print it beside
+    the claim. `hero.js:160` now carries 0.56 / 0.84 / 1.68 with the fps they
+    were computed at, the frame counts they came from, and a measured decay to
+    check them against - not because the ratios were in doubt, but because they
+    never were.
+
 ---
 
 ## 9. Adding a new project
@@ -1313,7 +1351,35 @@ So a clone of this repository serves `code.html` with sixteen dead links until
 
 ## 11. Current state, 8 September 2026
 
-**Live: the mirror's `f254215`**, 2026-09-08 — the hero's trails erode, for the
+**Live: the mirror's `f4aa0e9`**, 2026-09-08 — the three-body runs at double
+speed. `RATE` 0.30 → **0.60** at Andrew's request, and `FADE` 0.005 → **0.010**
+with it. Measured, against the predictions made before the change: strokes a
+frame **1.500 → 3.000**, chunks a frame 0.500 → 1.000, and the first reseed
+**205.2s → 102.7s**.
+**FADE DOUBLED BECAUSE THE RATE DID, and that is a derivation, not a
+preference.** `hero.js:157-162` chooses FADE per system so each shows a
+comparable LENGTH of trajectory; a trail survives a fixed number of FRAMES, so
+doubling the rate doubles the arc it spans. At equal system time (18) the new
+pair reproduces the old to a rounding — trail coverage 0.241% against 0.235%,
+bright core 0.067% against 0.064%. `erodeN` goes 4 → 2, `erodeF` stays 0.0199,
+the 8-bit floor still clears at residue 25.
+Andrew chose 0.010 over leaving 0.005 with both rendered in front of him; 0.005
+would have doubled the visible arc, which is a different picture rather than the
+same one faster.
+**No jank difference, and the honest version of that:** both arms alternated in
+one session at 1728x1080 dSF 2.2222 under `gfx.canvas.accelerated=false`, median
+**17.0ms in all six rows** and `rasterMP` **3.20 in all six**, control
+reproducing itself before anything was read across arms. The `>25ms` column is 0
+in both and carries nothing — it has never reproduced (trap 24). Doubling 1.5 to
+3.0 strokes against a 3.20 MP raster budget is below what this harness can
+resolve.
+**Two claims moved with it.** `hero.js:160`'s "roughly 3s, 5s and 20s of memory"
+was **six times high on all three** — see trap 30, which this produced. And
+`test_scroll_jank.js`'s `LONG_BUCKETS` went [150, 195, 206] → **[75, 98, 103]**:
+left alone, `--long` would have kept running and printing while measuring
+something other than the tightening binary it names.
+Merged as (this commit).
+Rollback is the mirror's `f254215`, 2026-09-08 — the hero's trails erode, for the
 first time since the erosion was written. `setErosion(sys.FADE)` sat 165 lines
 above the `var EROSION_MIN` / `var erodeN = 1, erodeF = 0` initialisers it reads.
 The function declaration hoisted so the call ran; the var initialisers did not,

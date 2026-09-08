@@ -23,10 +23,12 @@
  *     and stroke count is the cost driver established on 2026-09-07 - but the
  *     strokes are far longer and the locality is far worse.
  *   - The three-body's adaptive stepper subdivides hardest at close approaches,
- *     and the binary forms late: t = 61.4 system time, about 205s of wall clock
- *     at RATE 0.30. An early scroll sees the easy opening geometry and never
- *     the step-count peak.
- *   - The reseed ramp is 1.6s roughly every 205s, and had never been measured.
+ *     and the binary forms late: t = 61.4 system time, about 102s of wall clock
+ *     at RATE 0.60 - measured at 102.7s. An early scroll sees the easy opening
+ *     geometry and never the step-count peak. (It was ~205s at the RATE of 0.30
+ *     this file was written against; the rate doubled on 2026-09-08 and every
+ *     number here doubled with it, including the buckets below.)
+ *   - The reseed ramp is 1.6s roughly every 102s, and had never been measured.
  *
  * So: a settle before each scroll, buckets across elapsed time, and the
  * elapsed time printed beside every row. That is trap 24 one step along - the
@@ -84,9 +86,15 @@ const SOFTWARE = has('--software');
 /* Seconds of elapsed animation. 0 is the superimposed pendulums and the easy
    opening three-body geometry; 30 is well past the divergence; 60 is steady. */
 const BUCKETS = BREAK ? [0] : (ONLY_B ? ONLY_B.split(",").map(Number) : [0, 10, 30, 60]);
-/* 150 and 195 straddle the tightening binary, where the adaptive stepper
-   subdivides hardest; 206 lands on the reseed ramp. */
-const LONG_BUCKETS = [150, 195, 206];
+/* 75 and 98 straddle the tightening binary, where the adaptive stepper
+   subdivides hardest; 103 lands on the reseed ramp, measured at 102.7s.
+   THESE ARE NOT COSMETIC AND THEY ARE NOT DERIVED FROM THE COMMENT ABOVE THEM.
+   They were [150, 195, 206] against RATE 0.30. When the rate doubled on
+   2026-09-08 those three landed in the middle of the second run instead - so
+   --long would have kept running, kept printing, and stopped measuring the
+   thing it names, with nothing in its output saying so. A bucket list is a
+   claim about where the interesting part is; halve it when the clock halves. */
+const LONG_BUCKETS = [75, 98, 103];
 
 /* 1920x1200 is this machine maximised: a 3840x2400 panel at 200% scaling.
    1440x900 was the only desktop size measured before 2026-09-07 and it
