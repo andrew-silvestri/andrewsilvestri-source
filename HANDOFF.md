@@ -349,6 +349,26 @@ report first.**
 | `build_site.py` | **Retired. Never run it.** The original generator, last valid 2026-08-01: it writes pages that are no longer on the site (dac, holdup, energy-web), a nav from before the regrouping, and its own icons. `tests/test_generators.py --retired` shows what it would do to the tree. |
 | `publish.sh` | Mirrors `site/` into the Pages repo and commits. `--dry-run` first. |
 
+### publish.sh mirrors the WORKING TREE, not a commit
+
+Line 117 is `cp -a "$SITE/." "$REPO/"`. So **"committed" and "publishable"
+are different states**, and `--dry-run` reports a diff of the **working
+directory** against the mirror — not of `HEAD`.
+
+Every publish gate in this project has read that file list as though it
+described the commit. It has been correct every time so far only because
+nothing else was ever in flight. The moment two jobs overlap, the list is still
+accurate and the publish still ships uncommitted work: the list is not wrong, it
+is answering a different question than the reader is asking. Found 2026-09-07,
+when the next job's edits would have gone out with the panel retirement.
+
+**The tree must hold nothing but the change being published.** Check
+`git status --short` BEFORE `--dry-run`, not after; finish and publish one job
+before starting the next; and read the dry-run list as a statement about the
+working directory. If two changes really do overlap, commit one and stash it —
+the rule against parallel branches (section 8, trap 2's neighbour) is this same
+rule one level up.
+
 ### Finding which file owns a string on a page
 
 Three wrong answers were derived in one session (2026-09-07) before the right
@@ -1157,7 +1177,27 @@ So a clone of this repository serves `code.html` with sixteen dead links until
 
 ## 11. Current state, 7 September 2026
 
-**Live: the mirror's `0c77c6a`**, 2026-09-07 — every footer is two centered
+**Live: the mirror's `0d5a919`**, 2026-09-07 — the corner panel is retired.
+The home page is the drawing and then the scroll: no panel, no caption over the
+margin. `index.html`'s footer moved inside `<main>`, where the `main footer`
+rule centres it exactly like the other fifteen, so the site has **one** footer
+rule and no special case.
+**The display is retired; the machinery is not.** Putting the caption back is
+one line — `<p class="small herocap"></p>` as the first child of `<main>`.
+`assets/hero.js` needs no edit: it picks a system and computes its caption on
+every load and its write is guarded, so with no such element it computes and
+shows nothing. `body.home .herocap` is kept for exactly this and says so.
+Proved by adding the line, loading all three pins, and reverting.
+The panel's rules and the **whole 1340 derivation chain** are in
+`unpublished/RETIRED.md` — moved, not deleted, because that derivation cost two
+rounds and three corrections. `tests/test_panel.js` retired the way
+`test_exclusion.js` went. `body.home` stays; the sticky `.navband` needs it.
+Section 4 records the F6 trade: this removes the only label the drawing has.
+Re-measured under software raster at 1728x1080 dpr 2.2222 — median 17.0ms in all
+twelve rows, 0 frames over 25ms, `rasterMP` unchanged at 3.20, because the panel
+was a CSS layer and not canvas work. **No measurable difference.** Merged as
+`d5106c9`.
+Rollback is the mirror's `0c77c6a`, 2026-09-07 — every footer is two centered
 lines. Fifteen of them, fourteen pages plus `about.html`:
 `Andrew Silvestri` linking to `about.html`, and the built-with sentence linking
 to `code.html`. The role and the address left all of them —
