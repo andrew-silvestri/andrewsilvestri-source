@@ -1260,6 +1260,51 @@ Read this section. Every item is a real bug that shipped.
     check them against - not because the ratios were in doubt, but because they
     never were.
 
+31. **A gate can be green BECAUSE a rule is broken, and then no gate can point
+    at it.** Three declarations in the same three CSS rules have now been found
+    never to have applied, all to specificity, all in `nav.top`'s dropdown. The
+    third is a different animal from the first two and is why this entry exists.
+
+    | declaration | what it did | how it surfaced |
+    |---|---|---|
+    | `.ddmenu a { padding: 8px 18px }` | indented 10px, not 18 | **visibly** - the menu looked wrong |
+    | `.ddmenu a.on { color: var(--acc-ink) }` | left the current item `--dim` on `--acc-fill`, **1.08:1** | **visibly, and as an AA failure** - a filled highlight with unreadable text |
+    | `.ddmenu a:hover { color: var(--acc) }` | left a hovered item `--dim` on `--bg-lift`, **5.30:1** | **not at all** |
+
+    The third one **passed every contrast check there is**. `--dim` on
+    `--bg-lift` is 5.30:1, comfortably over the 4.5 floor; the rule working
+    gives `--acc` on `--bg-lift`, 5.71:1, which also passes. So the AA gate was
+    green either way, and it was green **because** the declaration was dead - the
+    fallback it fell back to happened to be a colour this palette had already
+    cleared. Nothing in the repository could have flagged it. It was found only
+    because the item beside it failed loudly and the whole rule block got read.
+
+    **This is not trap 29 and not trap 28.** Trap 29 is a check that cannot see
+    a defect - the jank harness measuring a canvas that never erodes. Trap 28 is
+    an instrument pinned to a constant. **Here the check sees the defect
+    perfectly well and reports it as a pass**, because the broken state is
+    inside the range the check accepts. A gate defines a floor, and anything
+    that fails silently INTO the acceptable region is invisible to it by
+    construction.
+
+    **What actually catches this class: assert the declaration APPLIED, not that
+    the result is acceptable.** The cheap form is to compare the rendered value
+    against the declared one - the same method that found all three, which is
+    reading `getComputedStyle` rather than reading the stylesheet. A rule that
+    never fires is the stylesheet asserting something untrue, and whether the
+    fallback happens to be fine is beside the point.
+
+    **The smallest check that would have caught all three**, and it does not
+    exist yet: enumerate the dropdown states - `nav.top a.on`, `.ddmenu a`,
+    `.ddmenu a.on`, `.ddmenu a:hover`, `.ddmenu a.on:hover` - with the menus
+    forced open, and assert for each that (a) the contrast pair clears AA and
+    (b) the rendered `color` equals the one its own rule declares. `_deslop/`'s
+    rig resolves backgrounds through CSS and could do (a) today; it has never
+    run it because **nothing enumerates dropdown states, and a current item
+    exists on only one page per menu**, so an unattended crawl of 21 pages will
+    open no menu and see no `.on` item at all. Part (b) is the new half and is
+    what makes it a check on the rule rather than on the palette.
+
 ---
 
 ## 9. Adding a new project
@@ -1351,7 +1396,33 @@ So a clone of this repository serves `code.html` with sixteen dead links until
 
 ## 11. Current state, 8 September 2026
 
-**Live: the mirror's `f4aa0e9`**, 2026-09-08 — the three-body runs at double
+**Live: the mirror's `27bf8e1`**, 2026-09-08 — the dropdown's current item is
+readable. It was **`#625C57` on `#245F73`, 1.08:1**, a filled highlight with
+unreadable text on it, and it had been live since the indent fix the day before
+put `nav.top` in front of `.ddmenu a` — (0,2,2) against a bare `.ddmenu a.on` at
+(0,2,1), so the background applied and the colour did not. Now **`#FFFFFF` on
+`#245F73`, 7.10:1**, hovered and not.
+`.on:hover` is named explicitly at (0,4,2) rather than left to source order. The
+top bar gets the same behaviour only because `nav.top a.on` happens to sit after
+`nav.top a:hover`, and an accident that works is still an accident.
+**A THIRD DECLARATION IN THOSE SAME THREE RULES HAD NEVER APPLIED**, and it is
+the one worth reading: `.ddmenu a:hover { color: var(--acc) }`. Broken it gave
+`--dim` on `--bg-lift`, **5.30:1**; working it gives `--acc` on `--bg-lift`,
+**5.71:1**. Both clear AA, so every contrast gate was green BECAUSE the rule was
+dead. **Trap 31.**
+**The indent went 26px → 16px** and the alignment it bought was spent
+deliberately: item text now lands 9.0px left of the button's, measured. 16
+because it is the only offered value re-derivable from the rule itself — 8px
+vertical, so `8px 16px` is a stated 1:2. The comment says 26's derivation was
+sound and that Andrew overruled it, so nobody re-derives 26 and puts it back.
+**The blue fill does not overlap the panel border**, though it has been reported
+that way: measured 1px inset on the top, left and bottom — exactly the border,
+every side. What is seen is `--rule #BBBDBC` on `--acc-fill #245F73` at
+**3.76:1**, the hairline dissolving against the fill. If it ever needs fixing
+the lever is the border colour, not the geometry, and that is recorded beside
+the rule.
+Merged as (this commit).
+Rollback is the mirror's `f4aa0e9`, 2026-09-08 — the three-body runs at double
 speed. `RATE` 0.30 → **0.60** at Andrew's request, and `FADE` 0.005 → **0.010**
 with it. Measured, against the predictions made before the change: strokes a
 frame **1.500 → 3.000**, chunks a frame 0.500 → 1.000, and the first reseed
