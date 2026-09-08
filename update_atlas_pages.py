@@ -182,7 +182,7 @@ INERTIA_ROWS = [
     (("station",), "Power station", "From capacity: a larger plant changes more slowly."),
     (("climate",), "Climate system", "The climate is a slow variable."),
     (("weather",), "Weather mode", "Set per index (build_atlas_global.py)."),
-    (("psych",), "Behaviour channel", "0.30 rising by 0.02 per channel: a modelling choice, not a measurement."),
+    (("psych",), "Behaviour channel", "0.30 rising by 0.02 per channel: a modeling choice, not a measurement."),
     (("sun", "insolation"), "Sun, insolation", "The sun is held; insolation follows it at once."),
 ]
 

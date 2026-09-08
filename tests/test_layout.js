@@ -42,7 +42,7 @@ const http = require('http');
 const { chromium } = require('playwright');
 
 const SITE = path.join(__dirname, '..', 'site');
-const PAGES = ['index', 'atlas', 'model', 'library', 'code', 'heat', 'storage', 'climate-cost', 'longevity', 'skyline', 'food', 'neuron', 'economy', 'shoes', 'continents'];   // desktop retired 2026-09-05
+const PAGES = ['index', 'about', 'atlas', 'model', 'library', 'code', 'heat', 'storage', 'climate-cost', 'longevity', 'skyline', 'food', 'neuron', 'economy', 'shoes', 'continents'];   // desktop retired 2026-09-05; about added 2026-09-07
 // 1920 is here because "New York" wrapping to a line of its own in a 192px
 // gutter was read as clipping (2026-09-04); the test now also fails on real
 // clipping - any marginalia element wider than its box - so the two cannot

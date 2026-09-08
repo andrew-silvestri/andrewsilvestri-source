@@ -66,6 +66,12 @@ NAV = [
         # (PHASE5); the pages were regenerated from this list the same day.
     ]),
     ("Code", "code.html"),
+    # LAST, AND IT HAS TO STAY LAST. style.css pins this one right with
+    # margin-left:auto on a flex item, which eats the free space BEFORE it -
+    # so anything appended after this line would sit right of About and the
+    # bar would read as having two right-hand items. Add new entries above
+    # "Code", not below this.
+    ("About", "about.html"),
 ]
 
 BACK = '<a href="#" class="back" id="backlink">&larr; back</a>'
