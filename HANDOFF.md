@@ -1175,9 +1175,38 @@ So a clone of this repository serves `code.html` with sixteen dead links until
 
 ---
 
-## 11. Current state, 7 September 2026
+## 11. Current state, 8 September 2026
 
-**Live: the mirror's `9011f06`**, 2026-09-08 — the nav dropdowns. Two defects,
+**Live: the mirror's `c5584ea`**, 2026-09-08 — five meta descriptions, and the
+first thing on this site that says what the atlas is FOR. No description
+anywhere mentioned it; `atlas.html`, `atlas-app.html`, `library.html` and
+`model.html` had none at all, and `index.html`'s named the field and not the
+project. `atlas.html` still opens its prose with "86,622 nodes and 197,068
+weighted links" — size, never purpose — and that sentence is what a first-time
+reader used to meet.
+**The rule they are written to, because it is not obvious and will be
+re-litigated:** no generator maintains any `<head>` on this site — `build_site.py`
+did and is retired, and `update_atlas_pages.py:546` copies the whole head
+through as a verbatim slice — **so a count in a description is a claim nobody
+re-derives** (trap 7). They say purpose and carry no numbers, which is the same
+complaint generalised.
+Verified the head survives by running the generator, not by reading line 546:
+`test_generators.py` reports `OK  atlas pages: update_atlas_pages.py --apply`
+with both new tags in place. `model.html` is the exception and was checked, not
+remembered — its `subs` loop runs over the WHOLE file (`:608-612`), and its
+description clears all thirteen literals that loop would rewrite.
+**All five sit inside the ~155-character search display cut** — 150, 153, 141,
+131, 146. The first drafts ran 159/162/141/131/168, and `atlas.html`'s 162 lost
+exactly the clause worth keeping: *every parameter from a public data set*, the
+section 4 claim, cut mid-word. A description over the limit is not merely long;
+it is a lever truncated at whichever clause happens to be last.
+The rename this job was blocked behind was **cancelled** on 2026-09-08. The name
+stays "the atlas"; the eighteen Tier A strings in
+`03 RESEARCH/rename-hero/STAGE1_RENAME_2026-09-07.md` do not change, and that
+file is a record now, not a plan. Andrew's reasoning: the name was never the
+problem, the PLACEMENT was.
+Merged as `1a544d3`.
+Rollback is the mirror's `9011f06`, 2026-09-08 — the nav dropdowns. Two defects,
 and the second was not the reported one. `.ddmenu` had `padding: 9px 0` while
 its links are `display:block` with no margin, so the rendered spacing was 9px
 above the first item, **0 between** consecutive ones and 9px below the last —
@@ -1449,7 +1478,19 @@ Typed, and therefore able to go stale: the prose on every page; the
 `build_atlas_global.py` on 2026-09-05, but typed); `model.html` §7;
 `code.html`'s row PROSE, though no longer its file counts or sizes - those
 moved to `sync_code_rows.py` on 2026-09-07; the five
-sentences on the home page; the specs in `style.css`; and the two tab
+sentences on the home page; **every `<meta name="description">` on the site**,
+because no generator writes one - `build_site.py` did and is retired, and
+`update_atlas_pages.py:546` copies the whole `<head>` through as a verbatim
+slice. That is why the five atlas-facing descriptions written on 2026-09-08 say
+purpose and carry no counts: a number in a head is a claim nobody re-derives
+(trap 7). **`model.html` is the exception to the head being safe** - its `subs`
+loop runs over the WHOLE file with no head/body boundary (`:608-612`), so its
+description was checked against all thirteen literals that loop would rewrite
+(`13,826`, `130,772`, `130,804`, `86,622`, `4,000`, `1,142`, `526`, `214`,
+`4,265`, `six channels`, `real United States plants`,
+`United States power plants`, `N channels matched`) and cleared them by check
+rather than by memory. Any future edit to that one string must clear them
+again; the specs in `style.css`; and the two tab
 subtitles inside the payload (trap 23). If a number on a page is not in the
 generated list above, it was typed.
 
@@ -1488,14 +1529,42 @@ generated list above, it was typed.
 ### Open, by name
 
 - **The download archives have drifted, and the drift is invisible in a diff.**
-  `tests/test_generators.py` reports the four `site/downloads/*-code.zip`
-  archives as differing from what their builder would write now:
-  `atlas-code.zip` (`bust_cache.py`, `sitefig.py`), `beauty-code.zip` (eleven
-  files, including `data/openalex_counts.csv`), `longevity-code.zip`
-  (`build_lq.py`) and `skyline-code.zip` (`build_app.py`). It was **one**
-  archive for most of this project and is now four: the shared files those zips
-  carry — `sitefig.py` above all — have changed since the archives were last
-  built, and nothing rebuilds them when that happens.
+  `tests/test_generators.py` reports **nine** `site/downloads/*-code.zip`
+  archives as differing from what their builder would write now: `atlas`,
+  `beauty`, `continents`, `economy`, `food`, `longevity`, `neuron`, `shoes` and
+  `skyline`. It was **one** archive for most of this project, was recorded here
+  as four on 2026-09-07, and is nine on 2026-09-08. The shared files those zips
+  carry — `sitefig.py` above all, and every project `template.html` the American
+  English sweep touched — have changed since the archives were last built, and
+  nothing rebuilds them when that happens.
+  **THE COUNT IS THE PART THAT WENT STALE WITHOUT ANYONE NOTICING, AND THE WAY
+  IT DID IS WORTH MORE THAN THE COUNT.** `test_generators.py`'s headline has read
+  `1 drift` throughout, because the drift is one GENERATOR — `rezip_downloads.py`
+  — however many archives it covers. So the number a reader checks stayed true
+  while the named contents underneath it went from four to nine and this entry
+  went on naming the wrong ones. **A record whose headline is a level of
+  aggregation above its detail can be right and useless at the same time**, and
+  it survives review precisely because the figure people verify still matches.
+  Re-read the per-archive list, not the total.
+  **AND THE LIST IS NOT STATIC - IT ACCRETES.** Every archive names source files
+  by path, so the list grows by one entry the moment any commit touches a file an
+  archive carries, and it never shrinks on its own because nothing rebuilds the
+  zips. That is how it went four to nine with nobody doing anything wrong: the
+  American English sweep moved every project `template.html`, and seven archives
+  joined at once. This same commit adds `site/atlas-app.html` to `atlas-code.zip`
+  for writing a meta description on that page. **So a per-archive list in a
+  document is a snapshot with a growth rate, and quoting one without re-running
+  `test_generators.py` is quoting a number that was true when written** - which
+  is trap 24's narrower sibling, arriving at a list instead of at a measurement.
+  (Recorded 2026-09-08. The first correction offered that day said eight archives
+  with `atlas-code.zip` dropped off, and was wrong in both halves: it came from
+  reading a `tail -40` of the output, which had cut the top of the list.
+  Truncated output is not a list. **The failure had two halves and only one has
+  been named so far.** The second is that the reviewing instance took the eight
+  and reasoned from it, publishing a conclusion built on a number it had not
+  checked against the tree - which is this project's own standing rule, applied
+  to the one class of claim that arrives already sounding like a correction. A
+  correction is a claim. Check it the way you would check the thing it corrects.)
   **`site/downloads/` is gitignored**, so this drift is machine-local. It does
   not appear in a diff, it does not appear in a clone, and two machines
   checking out the same commit can ship different archives. That is the same
