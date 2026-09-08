@@ -22,7 +22,7 @@
  *      burst measures nothing. The bound in hero.js comes from the 8-hour run
  *      here, not from a guess.
  *
- *   C. The pendulum caption says "released 0.001 rad apart", and the whole
+ *   C. The pendulum caption says "0.001 rad apart", and the whole
  *      reason there are three of them is that they diverge. That is a claim
  *      about behaviour, so it is checked rather than assumed: they must start
  *      together, still be together after a few seconds, and be visibly apart

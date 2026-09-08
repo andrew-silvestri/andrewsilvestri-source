@@ -232,9 +232,15 @@ were the longest text on the first screen and read as an apology - and the
 explicit denial went with the length. What the three still carry is the name of
 the system, its date and its published parameters:
 
-> Three double pendulums, released 0.001 rad apart.
-> Lorenz attractor, 1963. σ = 10, ρ = 28, β = 8/3.
-> Burrau's three-body problem, 1913. Masses 3, 4 and 5.
+> Three double pendulums, 0.001 rad apart.
+> Lorenz attractor. σ = 10, ρ = 28, β = 8/3.
+> Burrau's three-body problem. Masses 3, 4, 5.
+
+(The dates went on 2026-09-07 — `hero.js`'s own comment above `Pendulum()`
+records why: the double pendulum has no single publication to date, and
+inventing the symmetry was worse than losing two numbers nobody was using. The
+three strings above were re-derived from `hero.js` on 2026-09-07 after this
+block was found still quoting the dated versions; trap 11.)
 
 So the F6 answer above now rests on the weaker of its two legs. The strong one
 is unchanged: each caption names a published system, so the figure cannot be
@@ -843,6 +849,27 @@ Read this section. Every item is a real bug that shipped.
     Chromium composites in software and a fixed canvas under a scrolling layer
     is a compositing question.
 
+    **The statistics in a run divide by whether they reproduce, and only the
+    ones that do can carry a conclusion.** Added 2026-09-07, from the corner
+    block's before/after. Across ten runs of that harness, two arms: the median
+    was 17.0ms in 47 of 48 bucket-rows (one 16.0) and `rasterMP` was 3.20 in
+    every row of every run. Those reproduce, and they showed no difference
+    between the arms. The `>25ms` frame count did not reproduce - **identical
+    HEAD code gave 0, then 16, then 22**, moving with how much of Andrew's own
+    Firefox was live rather than with the diff, which is trap 25's contention
+    arriving at the harness instead of at the page.
+
+    The consequence is the part worth keeping: **a statistic that does not
+    reproduce shows nothing in either direction - not the presence of an effect,
+    and not its absence.** It cannot clear a change any more than it can condemn
+    one. So the honest verdict on that change was "no regression demonstrated,
+    AND the gate had no power to demonstrate one", and it shipped on its
+    qualitative case with no performance claim attached. Do not let a gate that
+    could not resolve the question be reported as a gate that passed.
+    The cheap check, when two runs disagree: alternate the arms inside one
+    session so machine drift is shared, and look at whether the control arm
+    reproduces ITSELF before reading anything into the difference between arms.
+
 25. **Accelerated Canvas2D fails under GPU-process contention, so a canvas page
     has to be designed for the software fallback as the normal case.** Firefox
     records canvas commands in the content process and replays them in the GPU
@@ -885,6 +912,38 @@ Read this section. Every item is a real bug that shipped.
     fast path off. `tests/test_scroll_jank.js --software` does exactly that,
     with `gfx.canvas.accelerated=false`, because real contention is not
     reproducible and a forced fallback is.
+
+26. **A `--break` mode that reports its result instead of asserting on it is
+    not a gate, and it looks exactly like one.** `tests/test_exclusion.js` ran
+    three pins with the exclusion disabled, counted how many noticed in a
+    `detected` variable, printed `sees it` or `blind` per pin — and never
+    called `say()` on the total. **It exited 0 whether three pins caught the
+    mutation or none did.** The file's own comment explains, correctly, why the
+    assertion has to be on the total rather than per pin; the total was then
+    computed and dropped on the floor. On 2026-09-07 its output — `sees it
+    pendulum: 200 ink samples` — was pasted as verification that the check
+    worked, and accepted. It happened to be true. Nothing in the run would have
+    said so if it were not.
+
+    This is not covered by trap 17. Trap 17 says break every new test before
+    trusting it, and this test *had* a break mode and *was* run in it. The gap
+    is one level down: **the break run has to FAIL. Not print something, not
+    say `blind`, not exit 0 with a line you have to read — fail, with a
+    non-zero exit.** A break mode you have to read the output of is a check on
+    the reader.
+
+    So, for any `--break`, `break_*.py` or mutation harness: run it and check
+    `$?`. If the mutated run exits 0, the harness is decoration no matter what
+    it printed. `tests/test_panel.js`, which replaced this file when the
+    exclusion was deleted, asserts `detected > 0` through `say()` so its break
+    mode exits non-zero when the mutation goes unnoticed. `beauty/break_model.py`
+    is the other pattern worth copying — it reports per mutation *and* the run
+    fails if one is missed.
+
+    The exposure here closed by deletion, not by a fix: the corner block became
+    an opaque panel on 2026-09-07 and `test_exclusion.js` went with the
+    mechanism it guarded. The lesson is recorded because the next break mode
+    somebody writes will have the same shape.
 
 ---
 
@@ -1093,7 +1152,8 @@ All of these must pass before a publish; `./publish.sh --dry-run` after.
 | `tests/test_payload.py` | The payload changing without anyone re-recording it. |
 | `tests/verify_hero_systems.js` | The hero's captions claiming something its integrator does not do. The three-body caption names an outcome and the pendulum asserts an energy bound; neither is true by construction. It found that a fixed step cannot do Burrau (energy drift 1.8e+1, encounters unresolved) and that RK4's secular drift would have breached a guessed 1e-4 bound at six hours. `--break` carries three mutations, all caught. |
 | `tests/test_atlas_interaction.js` | The app failing to boot or a node kind that cannot be clicked, against a three.js stub. 19 checks. |
-| `tests/test_layout.js` | Marginalia painting over content; a page with more than one left edge for its text blocks, or a breakout picture off the measure; the home page's index entries off spec (one sentence, no figure, same shape). 40 page-viewport combinations at 1920, 1440, 1024, 390. |
+| `tests/test_layout.js` | Marginalia painting over content; a page with more than one left edge for its text blocks, or a breakout picture off the measure; the home page's index entries off spec (one sentence, no figure, same shape); and that a `position: fixed` block is wide enough for its own text, measured as `scrollWidth > clientWidth` and so firing on the widest UNBREAKABLE run. **105 page-viewport combinations** — 15 pages at 1920, 1440, 1366, 1280, 1024, 960 and 390. (This row said 40 at four viewports until 2026-09-07; the file had grown to seven viewports and nobody re-read it.) |
+| `tests/test_panel.js` | The home page's caption/footer panel letting the hero canvas through. Screenshots its rect with the canvases showing and with them hidden and requires the two to be **identical** — an opaque ground cannot let what is behind it change what is in front of it, so this needs no colour constant and no tolerance. A control band above the panel must NOT be identical, or the check passes on a frame where the animation was elsewhere. Also asserts that the panel's right border and `.paper`'s left border paint **one** hairline and not two. Firefox at 1728x1080, dpr 2.2222; 10 checks. `--break` removes the background and must exit non-zero if no pin notices (trap 26). Replaced `tests/test_exclusion.js` on 2026-09-07 when the canvas exclusion it guarded was deleted. |
 | `tests/test_markup.py` | Markdown that never became HTML. |
 | `tests/test_units.py` | A climate-cost input against its declared unit (211). |
 | `climate-cost/test_lca.py` | The life-cycle model against its published ranges. |
@@ -1160,6 +1220,25 @@ generated list above, it was typed.
   is not part of the site.
 
 ### Open, by name
+
+- **The download archives have drifted, and the drift is invisible in a diff.**
+  `tests/test_generators.py` reports the four `site/downloads/*-code.zip`
+  archives as differing from what their builder would write now:
+  `atlas-code.zip` (`bust_cache.py`, `sitefig.py`), `beauty-code.zip` (eleven
+  files, including `data/openalex_counts.csv`), `longevity-code.zip`
+  (`build_lq.py`) and `skyline-code.zip` (`build_app.py`). It was **one**
+  archive for most of this project and is now four: the shared files those zips
+  carry — `sitefig.py` above all — have changed since the archives were last
+  built, and nothing rebuilds them when that happens.
+  **`site/downloads/` is gitignored**, so this drift is machine-local. It does
+  not appear in a diff, it does not appear in a clone, and two machines
+  checking out the same commit can ship different archives. That is the same
+  shape as `code.html`'s sixteen archive rows, ten of which were wrong until
+  `sync_code_rows.py` generated them on 2026-09-07 — a typed claim about a file
+  nobody re-derived. The fix is the same shape too: `rezip_downloads.py` exists
+  and `--verify` compares without writing, so what is missing is a gate that
+  runs it, not a script. Deliberately **not** fixed as part of the corner-block
+  change on 2026-09-07, which touched none of these files.
 
 - **longevity.html lists ten references and carries one marker.** The other
   nine point at nothing. The page is written in place by
