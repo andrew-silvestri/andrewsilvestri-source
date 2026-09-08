@@ -1421,7 +1421,7 @@ every side. What is seen is `--rule #BBBDBC` on `--acc-fill #245F73` at
 **3.76:1**, the hairline dissolving against the fill. If it ever needs fixing
 the lever is the border colour, not the geometry, and that is recorded beside
 the rule.
-Merged as (this commit).
+Merged as `febb305`.
 Rollback is the mirror's `f4aa0e9`, 2026-09-08 — the three-body runs at double
 speed. `RATE` 0.30 → **0.60** at Andrew's request, and `FADE` 0.005 → **0.010**
 with it. Measured, against the predictions made before the change: strokes a
