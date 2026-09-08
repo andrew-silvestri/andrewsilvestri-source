@@ -68,6 +68,12 @@
   /* ---- the type scale: see the table in the header --------------------- */
   --fs-2: 12px; --fs-1: 14.5px; --fs0: 17.5px; --fs1: 21px; --fs2: 25px; --fs3: 30px; --fs4: 36px;
   --lh: 1.6;
+  /* The gap between stacked lines in a footer, and the corner panel's padding.
+     It lives here rather than on .herofoot so the panel and the fourteen pages
+     SHARE one number instead of two numbers that happen to be equal. `footer`
+     below also has padding-top: 22px; that is a coincidence, not this, and if
+     the rhythm changes the padding does not follow it. */
+  --rhythm: 22px;
 }
 /* A second theme goes here as overrides, not a rewrite - for example
    [data-theme="dark"] { --bg: #000000; --ink: #D1D0D0; --dim: #988686;
@@ -523,6 +529,25 @@ footer {
   font: var(--fs-1) var(--mono);
   color: var(--dim);
 }
+/* Two lines, stacked and centred: the name, and what it is built with. The
+   role and the address left on 2026-09-07 - they are what about.html is for,
+   and repeating them under every page was that page written out fifteen times.
+   SCOPED TO main ON PURPOSE, and the scoping is free. Every page's footer is
+   inside <main>; the home page's is not - it sits in the fixed .herofoot panel
+   outside it - so this rule reaches exactly the pages it should and cannot
+   touch the panel. When the home page's footer moves into <main>, this same
+   rule picks it up and the site converges on one footer with no new selector.
+   The gap is var(--rhythm), the same token the panel uses. `footer` above has
+   padding-top: 22px and that is a different 22 - equal today, unrelated. */
+main footer { text-align: center; }
+/* line-height, for the same reason the panel sets it: `footer` above uses the
+   `font:` shorthand, which resets line-height to normal - 19px boxes against
+   the panel's 21.75 at 1.5 - so the SAME --rhythm rendered 21px here and 23.7
+   there. One margin and two line-heights is two gaps, which is the thing this
+   token exists to prevent. Matching them is what makes the home page's footer
+   and these fourteen identical when JOB 2 moves it into <main>. */
+main footer p { margin: 0; line-height: 1.5; }
+main footer p + p { margin-top: var(--rhythm); }
 
 .grid { display: grid; grid-template-columns: 1fr; gap: 26px; }
 /* library.html's cards sit inside .grid.wide so their figures can reach the
@@ -811,11 +836,8 @@ body.home .heroband { height: 0; }
    still (W-782)/2 - 68 and the 2.7px of slack at 1341 - see the breakpoint
    note below - is not spent on the border. */
 body.home .herofoot {
-  /* ONE number for the vertical rhythm, and it is a custom property rather
-     than 22px written three times so that it cannot drift into two. It is the
-     panel's top and bottom padding AND both gaps between the three groups.
-     22px is not new here: footer's own padding-top is 22px (see `footer`). */
-  --rhythm: 22px;
+  /* --rhythm is on :root now, shared with every page's footer. It is this
+     panel's top and bottom padding AND the gap between its two lines. */
   position: fixed;
   left: 0;
   bottom: 0;
