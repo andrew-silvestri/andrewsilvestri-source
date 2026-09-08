@@ -1177,7 +1177,26 @@ So a clone of this repository serves `code.html` with sixteen dead links until
 
 ## 11. Current state, 7 September 2026
 
-**Live: the mirror's `0d5a919`**, 2026-09-07 — the corner panel is retired.
+**Live: the mirror's `4f2db66`**, 2026-09-07 — the favicon is an African
+penguin. `build_favicon.py` had not been touched since `0175ff5` on 4 September
+and its own docstring said it drew "the same glyph — one node with five links";
+no penguin existed anywhere in the repo.
+Spheniscus demersus is a row in this site's own data, and the figure was
+verified against the model's output rather than the brief: 3,100 g, 27 wild, 40
+captive, `pred_class` 28.7862, **`lq_class_maximum` 1.3896**. The docstring names
+the comparison, because "1.39x" is ambiguous between two true numbers — 1.39x is
+against **birds**, 2.30x against animals of any class (`pred_global` 17.3793),
+and birds are long-lived for their size so the bar inside the class is higher.
+The **description** changed, not the assets: one set of constants drives the SVG
+and both PNGs. That is true of the source and not the output, which the docstring
+now says with the measurement — 4.3% of pixels differ by more than 8/255 between
+the browser's SVG raster and PIL's PNG, all antialiasing, with colour areas
+agreeing to within 62 px of 32,400.
+Drawn in **negative space**: the accent ground is the plumage. The literal
+reading — a blue body on a paper ground — was built and rendered first and lost
+at 16px, where a paper front on a paper ground makes the body a hollow ring.
+That is recorded so nobody corrects it back. Merged as `7bad898` and `553c8fb`.
+Rollback is the mirror's `0d5a919`, 2026-09-07 — the corner panel is retired.
 The home page is the drawing and then the scroll: no panel, no caption over the
 margin. `index.html`'s footer moved inside `<main>`, where the `main footer`
 rule centres it exactly like the other fifteen, so the site has **one** footer
