@@ -120,18 +120,30 @@ function serve(sheet) {
 
 /* page, viewport, a selector for the element, whether to hover it, the rule
    that must govern it, and which properties that rule must actually deliver.
-   `food.html` is inside Misc and `code.html` is a top-level item, so between
-   them every state exists. */
+   `continents.html` is inside Misc and `code.html` is a top-level item, so
+   between them every state exists.
+
+   This was `food.html` until 2026-09-09, when food.html was unpublished and
+   seven of the nine states reported ELEMENT NOT FOUND. The page here is not
+   arbitrary and must not be changed to just any page: DD resolves to
+   `.dd:has(.ddmenu a.on)`, the dropdown holding the current item, so the page
+   has to sit in a menu that ALSO has at least one other item - otherwise
+   `.ddmenu a:not(.on)` matches nothing and four states vanish. beauty.html
+   would not do: Mind holds it alone. Misc holds three.
+
+   The constraint is about the NAV'S SHAPE, not about this page: if Mind
+   ever gains a second entry, beauty.html becomes eligible and so does the
+   other one. Any page in a menu of two or more works. */
 const STATES = [
   { name: 'top bar, current page',   page: 'code.html', vp: 1728, sel: 'nav.top > a.on', hover: false,
     rule: 'nav.top a.on', props: ['color'] },
-  { name: 'menu item',               page: 'food.html', vp: 1728, sel: 'DD .ddmenu a:not(.on)', hover: false,
+  { name: 'menu item',               page: 'continents.html', vp: 1728, sel: 'DD .ddmenu a:not(.on)', hover: false,
     rule: 'nav.top .ddmenu a', props: ['color', 'padding-left'] },
-  { name: 'menu item, hovered',      page: 'food.html', vp: 1728, sel: 'DD .ddmenu a:not(.on)', hover: true,
+  { name: 'menu item, hovered',      page: 'continents.html', vp: 1728, sel: 'DD .ddmenu a:not(.on)', hover: true,
     rule: 'nav.top .ddmenu a:hover', props: ['color'] },
-  { name: 'menu item, current',      page: 'food.html', vp: 1728, sel: 'DD .ddmenu a.on', hover: false,
+  { name: 'menu item, current',      page: 'continents.html', vp: 1728, sel: 'DD .ddmenu a.on', hover: false,
     rule: 'nav.top .ddmenu a.on', props: ['color'] },
-  { name: 'menu item, current+hover', page: 'food.html', vp: 1728, sel: 'DD .ddmenu a.on', hover: true,
+  { name: 'menu item, current+hover', page: 'continents.html', vp: 1728, sel: 'DD .ddmenu a.on', hover: true,
     rule: 'nav.top .ddmenu a.on', props: ['color'] },
   /* TWO ENTRIES, NOT ONE, AND THE FIRST DRAFT HAD IT WRONG. At 390 the colour
      and the indent come from DIFFERENT rules: the 620px block's
@@ -139,11 +151,11 @@ const STATES = [
      still falls through to the base rule outside the media query. Asking one
      entry for both made the check report the base rule as declaring nothing,
      which was the check being right about a mistake in this table. */
-  { name: 'phone menu item',         page: 'food.html', vp: 390, sel: 'DD .ddmenu a:not(.on)', hover: false,
+  { name: 'phone menu item',         page: 'continents.html', vp: 390, sel: 'DD .ddmenu a:not(.on)', hover: false,
     rule: 'nav.top .ddmenu a', props: ['color'] },
-  { name: 'phone menu item, indent', page: 'food.html', vp: 390, sel: 'DD .ddmenu a:not(.on)', hover: false,
+  { name: 'phone menu item, indent', page: 'continents.html', vp: 390, sel: 'DD .ddmenu a:not(.on)', hover: false,
     rule: 'nav.top .ddmenu a', props: ['padding-left'], media: 620 },
-  { name: 'phone menu item, current', page: 'food.html', vp: 390, sel: 'DD .ddmenu a.on', hover: false,
+  { name: 'phone menu item, current', page: 'continents.html', vp: 390, sel: 'DD .ddmenu a.on', hover: false,
     rule: 'nav.top .ddmenu a.on', props: ['color'] },
   { name: 'phone top bar, current',  page: 'code.html', vp: 390, sel: 'nav.top > a.on', hover: false,
     rule: 'nav.top a.on', props: ['color'] },

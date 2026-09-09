@@ -22,3 +22,11 @@ neuron/data/_work/
 # Local Claude Code tool configuration, not part of the site. It was only ever
 # ignored by this machine's global git ignore, which a clone does not carry.
 .claude/settings.local.json
+
+# Credentials. Every fetch script on this site reads its key from the
+# environment and never from disk (beauty/netutil.py says so in as many
+# words), and the .env that holds them lives in the home directory, outside
+# this repo. That is where it happens to be, not a rule the repo enforces:
+# a .env copied in here for convenience would be tracked by default. Added
+# 2026-09-08, the day beauty/fetch_openalex.py first ran with a key.
+.env

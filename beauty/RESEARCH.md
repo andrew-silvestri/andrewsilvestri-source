@@ -10,6 +10,11 @@ are made here.
 
 ## 1. Verdict
 
+*The species-level fits were run on 9 September 2026 and their threat
+term came out POSITIVE, against what this section expects. This section is
+unchanged and still describes the literature correctly; section 10 records
+what the data did. Read both.*
+
 **The project exists, and the honest version is stronger than the brief's
 loud version.** The bias is an established, repeatedly replicated finding with
 species-level models behind it. The most surprising and best-supported result
@@ -220,11 +225,24 @@ sample responses are in `data_notes.md`.
 ### 3.2 Research effort
 
 - OpenAlex (CC0). **Changed in February 2026:** a free self-serve key is
-  now needed for real use ($1 per day of usage, about 10,000 filter calls),
-  and `search=` is now full-text. Per-species `title_and_abstract.search`
-  filter calls cost $0.0001 each, so 10,000 species is one day of the free
-  tier. Confirmed counts: lion 3,459 title-and-abstract works, purple frog
-  138 full-text works.
+  now needed for real use ($1 per day of usage, 10,000 credits), and
+  `search=` is now full-text. A per-species `title_and_abstract.search`
+  filter call costs **10 credits, $0.001**, whatever per-page or select it
+  carries, so a free key is **1,000 species a day** and the 11,009 AVONET
+  birds are **$11.01 spread over eleven days**; a keyless client gets 1,000
+  credits, 100 species. The meter is a daily allowance, not a balance, so
+  the calendar and not the money is what this costs. Confirmed counts: lion
+  3,459 title-and-abstract works, purple frog 138 full-text works.
+  *(Corrected 2026-09-08. This paragraph read "filter calls cost $0.0001
+  each, so 10,000 species is one day of the free tier" — ten times too
+  cheap and ten times too fast. Commit `ca1a6fe` corrected the rate in
+  `fetch_openalex.py`'s docstring on 6 September and never propagated it
+  here, so this document carried the wrong figure for two days while the
+  code beside it was right; HANDOFF trap 11. The rate is not typed
+  anywhere: `fetch_openalex.py:86` reads `meta.cost_usd` off every response
+  and writes it into the row. Re-confirmed live at $0.001 on 8 September
+  2026, and again by the run itself — a keyed day stopped at 429 after
+  exactly 1,000 species and $1.0000.)*
 - PubMed E-utilities (free, no key) as a cross-check; lion 701, one obscure
   threatened frog 6. MeSH organism tree gives class-level counts.
 - Web of Science and Scopus are paid. Every paper in §2 that used them
@@ -439,3 +457,79 @@ These are facts Stage 2 needs, not proposals:
   deposited attractiveness score; the brief's mental image is mammals.
 - Whether any species-level table can be published at all depends on the
   IUCN terms (§6.4) and on Berti's and Gerber's missing licence files.
+
+## 10. What the fits found, and it is not what section 1 expected
+
+*Added 2026-09-09, after the fits. **Sections 1 to 9 are unchanged and are not
+withdrawn.** They are a reading of the literature, they were checked against the
+literature, and they are still right about it. This section records what
+happened when the data assembled on their advice was actually fitted, because
+the answer runs against section 1's supportable claim and a reader who stops at
+section 1 would be misled.*
+
+The species-level model was fitted for the first time on 9 September 2026:
+9,113 birds, OpenAlex title-and-abstract counts for 2015-2024, family fixed
+effects, HC1 errors. Three results, all reproducible from
+`00 PUBLISH/beauty/` and all on the page:
+
+**1. Threat status is positive, large and significant - the opposite sign.**
+A Critically Endangered bird has 2.65x the papers of a Least Concern one
+(coefficient +0.974, p 1.2e-58) once family, mass, range and description year
+are held fixed. Adjusting does not collapse the gap; it widens it, because
+threatened birds tend to be the small, narrowly ranged, recently described
+ones and holding that fixed removes a handicap. Section 1's "null or negative
+in most species-level models" describes the literature accurately and does not
+describe this data.
+
+**2. The two things section 1 calls "appeal" behave nothing alike.** Rated
+attractiveness - the Santangeli scores, the proxy this project was named for -
+moves the fit by 0.0008, below body mass and indistinguishable from zero.
+English Wikipedia views move it by 0.1041, **135 times as much**. The word
+"appeal" cannot be used undivided about this data.
+
+**3. Attention looks like threat's channel, not its rival.** Holding views
+fixed takes the Critically Endangered coefficient from +0.974 to +0.642. The
+share running through attention rises with severity: 16% at Near Threatened,
+21% at Vulnerable, 21% at Endangered, 34% at Critically Endangered. **The
+direction is assumed, not shown** - a cross-section with a single-timepoint
+mediator cannot order threat to attention to research against research to a
+better article to views.
+
+### Why this is not a claim to have overturned anything
+
+A single result contradicting a literature is more likely to be wrong than the
+literature, and the differences are all nameable. The ten models in
+`models.json` used Web of Science and Zoological Record over series ending
+2008-2010, across several classes. This is OpenAlex title-and-abstract counts
+for 2015-2024, on birds alone. Fifteen years and a different index is a
+sufficient explanation for a reversal and is the more likely one.
+
+### Two rival explanations, one tested and one not
+
+**Tested: the paperwork.** A listing generates its own literature, so the
+effect could be status reviews naming the species. Refitting inside OpenAlex
+topic fields, under a rule committed in `PRESPEC_topics_2026-09-09.md` before
+any topic data existed: in molecular biology, where a status review cannot be
+published, the Critically Endangered coefficient is +0.721 (2.06x), against a
+floor set in advance at +0.20. Environmental Science, the positive control,
+gives the largest value on the page at +0.983. The artefact is real and is
+about 8% of the headline coefficient; it is not what the effect is made of.
+
+**Not tested, and it is the stronger one: the evidence requirement.** A bird
+cannot be listed Critically Endangered without population, trend and range
+data, and that data is research. The arrow may run from research to listing.
+The cheapest check points that way: the 34 Data Deficient birds - the category
+meaning nobody has enough data - are the least-studied group at every quartile,
+median 9 papers against 15 for Least Concern. Nothing here separates that
+mechanism, so **the page reports an association and does not establish its
+direction.**
+
+### What section 1's refusals cost, and what they were right about
+
+Both of section 1's refusals stand and are on the page verbatim: no causal
+claim that beauty determines funding, and no forecast. The discipline that
+produced them is why the reversal was reportable rather than embarrassing - the
+page was never committed to the loud version. Section 5's "nine of ten models"
+is the one claim here that did not survive its own file: `models.json` records
+3 null, 2 negative, 1 weak, 1 assessed-positive and **3 unread**, so five of the
+seven actually read.

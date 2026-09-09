@@ -81,7 +81,14 @@ CAT_NAMES = {"LC": "Least Concern", "NT": "Near Threatened", "VU": "Vulnerable",
 FROM_NAME = {v: k for k, v in CAT_NAMES.items()}
 REF_YEAR = 2024
 TERMS_CONF = ["family", "mass", "range", "described", "category"]
-TERMS_FULL = TERMS_CONF + ["attractiveness", "views"]
+# The TOTAL effect of category: attractiveness is in, Wikipedia views is out.
+# Views is not a competitor sitting beside threat, it is on the pathway -
+# dropping it raises every category coefficient, by 16% at Near Threatened
+# rising to 34% at Critically Endangered - so a specification that controls
+# for it answers a different question. The page quotes both and says which
+# is which: TERMS_NOVIEWS is the total, TERMS_FULL is the direct.
+TERMS_NOVIEWS = TERMS_CONF + ["attractiveness"]
+TERMS_FULL = TERMS_NOVIEWS + ["views"]
 LABELS = {"family": "Family", "mass": "Body mass", "range": "Range size",
           "described": "Years since description", "category": "Red List category",
           "attractiveness": "Rated attractiveness", "views": "Wikipedia views"}
@@ -390,6 +397,7 @@ def raw_means(m):
 
 def bootstrap(m, n_boot, rng):
     keys = {"raw": {c: [] for c in CATS}, "conf_adj": {c: [] for c in CATS},
+            "noviews_adj": {c: [] for c in CATS},
             "full_adj": {c: [] for c in CATS}, "conf_drop": {t: [] for t in TERMS_CONF},
             "full_drop": {t: [] for t in TERMS_FULL},
             "conf_cat": {c: [] for c in CATS[1:]}, "full_cat": {c: [] for c in CATS[1:]}}
@@ -398,14 +406,17 @@ def bootstrap(m, n_boot, rng):
         for c in CATS:
             sub = s[s["category"] == c]
             keys["raw"][c].append(float(np.expm1(sub["y"].mean())) if len(sub) else np.nan)
-        for tag, terms in (("conf", TERMS_CONF), ("full", TERMS_FULL)):
+        for tag, terms in (("conf", TERMS_CONF), ("noviews", TERMS_NOVIEWS),
+                           ("full", TERMS_FULL)):
             f = fit_all(s, terms)
             for c in CATS:
                 keys[tag + "_adj"][c].append(f["adjusted"][c])
-            for t in terms:
-                keys[tag + "_drop"][t].append(f["drop_r2"][t])
-            for c in CATS[1:]:
-                keys[tag + "_cat"][c].append(f["beta"]["cat_" + c])
+            if tag + "_drop" in keys:
+                for t in terms:
+                    keys[tag + "_drop"][t].append(f["drop_r2"][t])
+            if tag + "_cat" in keys:
+                for c in CATS[1:]:
+                    keys[tag + "_cat"][c].append(f["beta"]["cat_" + c])
         if (b + 1) % 50 == 0:
             print(f"  bootstrap {b + 1}/{n_boot}")
 
@@ -422,6 +433,160 @@ def robust_se(m, terms):
     res = sm.OLS(m["y"].to_numpy(float), X).fit(cov_type="HC1")
     return {n: {"coef": float(res.params[i]), "se": float(res.bse[i]), "p": float(res.pvalues[i])}
             for i, n in enumerate(names) if not n.startswith("fam_")}
+
+
+def selection(d):
+    """What conditioning the sample on a rated attractiveness score does.
+
+    The model needs an attractiveness score, which 1,472 species in an
+    otherwise-complete frame do not have. Marginally those species are
+    less-studied, smaller-ranged and later-described, and Critically
+    Endangered species are missing at nearly twice the base rate - but the
+    page's claim is a CONDITIONAL coefficient, and the dropped species
+    differ on covariates the model already adjusts for, so an unknown share
+    of the marginal gap is absorbed by the specification. A median
+    difference cannot fix the sign of a multivariate term.
+
+    So this fits the same reduced specification on both samples, with
+    attractiveness out of the model entirely, and the difference between
+    the two sets of category coefficients IS the selection effect.
+    selection_check.py is the same computation standing alone, and gates
+    itself on reproducing join()'s sample before reading anything from it.
+    """
+    import statsmodels.api as sm
+    out = {}
+    for tag, need in (("A_no_rating_required", False), ("B_modelled", True)):
+        keep = (d["works_2015_2024"].notna() & d["year"].notna()
+                & d["mass_g"].notna() & d["range_km2"].notna() & (d["range_km2"] > 0)
+                & d["category"].isin(CATS))
+        if need:
+            keep = keep & d["attractiveness"].notna()
+        s = d[keep].copy()
+        s["y"] = np.log1p(s["works_2015_2024"].astype(int))
+        s["log_mass"] = np.log10(s["mass_g"])
+        s["log_range"] = np.log10(s["range_km2"])
+        s["years_described"] = REF_YEAR - s["year"].astype(int)
+        s["category"] = pd.Categorical(s["category"], CATS)
+        X, names = design(s, TERMS_CONF)
+        res = sm.OLS(s["y"].to_numpy(float), X).fit(cov_type="HC1")
+        ci = res.conf_int()
+        cats = {}
+        for c in CATS[1:]:
+            i = names.index("cat_" + c)
+            cats[c] = {"coef": float(res.params[i]), "lo": float(ci[i][0]),
+                       "hi": float(ci[i][1]), "p": float(res.pvalues[i])}
+        out[tag] = {"n": int(len(s)), "category": cats}
+    a, b = out["A_no_rating_required"]["category"], out["B_modelled"]["category"]
+    out["difference"] = {c: {"B_minus_A": b[c]["coef"] - a[c]["coef"],
+                             "intervals_overlap": not (b[c]["lo"] > a[c]["hi"]
+                                                       or a[c]["lo"] > b[c]["hi"])}
+                         for c in CATS[1:]}
+    out["dropped"] = out["A_no_rating_required"]["n"] - out["B_modelled"]["n"]
+    return out
+
+
+def data_deficient(d):
+    """Works for Data Deficient birds, descriptive, alongside every category.
+
+    A bird cannot be listed Critically Endangered without evidence, and
+    that evidence is research: the arrow may run research -> listing rather
+    than listing -> research, which would produce the same monotone
+    gradient from a completely different mechanism. Data Deficient is the
+    category meaning nobody has enough data, so where it falls is the
+    cheapest available check on that story.
+
+    DESCRIPTIVE ONLY. 34 species does not support a fitted coefficient and
+    must not be given one, and nothing here appears as a point in a figure.
+    """
+    out = {}
+    sub = d[d["works_2015_2024"].notna() & d["category"].notna()]
+    for c in ["DD"] + CATS + ["EW", "EX"]:
+        v = sub.loc[sub["category"] == c, "works_2015_2024"].to_numpy(float)
+        if not len(v):
+            continue
+        out[c] = {"n": int(len(v)), "p25": float(np.percentile(v, 25)),
+                  "median": float(np.median(v)), "p75": float(np.percentile(v, 75)),
+                  "mean": float(v.mean())}
+    return {"by_category": out,
+            "note": "Descriptive only. Data Deficient is 34 species; no coefficient "
+                    "is fitted for it and it appears in no figure. It is the lowest "
+                    "category at every quartile, which is consistent with the Red "
+                    "List category being partly a record of how much evidence "
+                    "already existed."}
+
+
+def strata(m):
+    """The Red List coefficient within OpenAlex primary-topic fields.
+
+    Tests one rival explanation: that the effect is made of papers ABOUT
+    the listing - status reviews, Red List updates - rather than research
+    the listing may have prompted. The rule this is read against was
+    committed in PRESPEC_topics_2026-09-09.md before any topic data
+    existed: minimum cell, primary stratum, failure condition. topic_test.py
+    is the same computation standing alone and prints the verdict.
+
+    Returns every named field including the ones failing the cell floor,
+    with `reportable` false and no coefficients, so a figure cannot draw a
+    point the pre-spec forbids.
+    """
+    import statsmodels.api as sm
+    p = os.path.join(DATA, "topic_counts.csv")
+    if not os.path.exists(p):
+        return {"available": False,
+                "why": "data/topic_counts.csv is absent; run fetch_topics.py"}
+    PRIMARY, CONTROL = "13", "23"
+    SECONDARY = ["28", "24", "27", "19", "11"]
+    PRONE = {"23", "11"}
+    MIN_CELL, FLOOR, ALPHA = 30, 0.20, 0.05
+    t = pd.read_csv(p, dtype={"field_id": str})
+    wide = (t[t["field_id"] != "_none"]
+            .pivot_table(index="species", columns="field_id", values="works",
+                         aggfunc="sum", fill_value=0))
+    out = {"rule": {"min_cell_per_category": MIN_CELL, "primary_field": PRIMARY,
+                    "cr_floor": FLOOR, "alpha": ALPHA,
+                    "prespec": "PRESPEC_topics_2026-09-09.md"},
+           "fields": {}, "available": True}
+    for fid in [PRIMARY] + SECONDARY + [CONTROL]:
+        w = (wide[fid].reindex(m["species"]).fillna(0) if fid in wide.columns
+             else pd.Series(0.0, index=m["species"]))
+        w.index = m.index
+        cell = {c: int(((m["category"] == c) & (w > 0)).sum()) for c in CATS}
+        rec = {"cells": cell, "works": int(w.sum()),
+               "artefact_prone": fid in PRONE,
+               "role": ("primary" if fid == PRIMARY else
+                        "positive_control" if fid == CONTROL else "secondary")}
+        if min(cell.values()) < MIN_CELL:
+            rec["reportable"] = False
+            out["fields"][fid] = rec
+            continue
+        s = m.copy()
+        s["y"] = np.log1p(w.to_numpy(float))
+        X, names = design(s, TERMS_CONF)
+        res = sm.OLS(s["y"].to_numpy(float), X).fit(cov_type="HC1")
+        ci = res.conf_int()
+        rec["reportable"] = True
+        rec["category"] = {}
+        for c in CATS[1:]:
+            i = names.index("cat_" + c)
+            rec["category"][c] = {"coef": float(res.params[i]), "lo": float(ci[i][0]),
+                                  "hi": float(ci[i][1]), "p": float(res.pvalues[i])}
+        rec["cr_meets_threshold"] = bool(rec["category"]["CR"]["coef"] >= FLOOR
+                                         and rec["category"]["CR"]["p"] < ALPHA)
+        out["fields"][fid] = rec
+    # the crude contrast, predicted in advance to understate the effect
+    keep = [c for c in wide.columns if c not in PRONE]
+    w = wide[keep].sum(axis=1).reindex(m["species"]).fillna(0)
+    w.index = m.index
+    s = m.copy()
+    s["y"] = np.log1p(w.to_numpy(float))
+    X, names = design(s, TERMS_CONF)
+    res = sm.OLS(s["y"].to_numpy(float), X).fit(cov_type="HC1")
+    out["crude_exclusion"] = {
+        "why": "Total works minus fields 23 and 11. Predicted in the pre-spec to "
+               "understate the effect, because it deletes genuine conservation "
+               "biology, which is research effort on the species.",
+        "category": {c: float(res.params[names.index("cat_" + c)]) for c in CATS[1:]}}
+    return out
 
 
 def groups():
@@ -497,10 +662,12 @@ def main(n_boot):
     d, m, n, rl_meta, rl = join()
     print(f"  {n['avonet']:,} AVONET species, {n['modelled']:,} modelled")
     conf = fit_all(m, TERMS_CONF)
+    noviews = fit_all(m, TERMS_NOVIEWS)
     full = fit_all(m, TERMS_FULL)
     conf["robust"] = robust_se(m, TERMS_CONF)
+    noviews["robust"] = robust_se(m, TERMS_NOVIEWS)
     full["robust"] = robust_se(m, TERMS_FULL)
-    for f in (conf, full):
+    for f in (conf, noviews, full):
         f["beta"] = {k: v for k, v in f["beta"].items() if not k.startswith("fam_")}
     print(f"  R2 confounders {conf['r2']:.3f}, full {full['r2']:.3f}")
     print("  drop-one R2, full:", {LABELS[k]: round(v, 4) for k, v in full["drop_r2"].items()})
@@ -527,7 +694,13 @@ def main(n_boot):
         "n": n, **rl_meta,
         "raw_by_category": raw_means(m),
         "model_confounders": {"terms": TERMS_CONF, **conf},
+        "model_noviews": {"terms": TERMS_NOVIEWS, **noviews},
         "model_full": {"terms": TERMS_FULL, **full},
+        "mediated_share": {c: (noviews["beta"]["cat_" + c] - full["beta"]["cat_" + c])
+                              / noviews["beta"]["cat_" + c] for c in CATS[1:]},
+        "selection": selection(d),
+        "data_deficient": data_deficient(d),
+        "strata": strata(m),
         "sensitivity": sens,
         "bootstrap": boot,
         "groups": groups(),

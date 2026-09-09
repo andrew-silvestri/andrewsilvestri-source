@@ -38,6 +38,14 @@ set. "Which machine built the zips" is one of those defaults.)
 
 Sizes are formatted the way the rows already format them: whole KB below a
 megabyte, one decimal above.
+
+ASYMMETRIC, and it matters when a page is retired: this script can CONFIRM
+a row and cannot RETIRE one. It rewrites the file count and size of every
+row whose archive exists, and refuses to write at all when a named archive
+is missing - which is right for "the tree has not been built" and wrong for
+"the page was unpublished", and it cannot tell the two apart. So removing a
+row is done by hand and this script's pass afterwards is the CHECK, not the
+author. Both rows for food and neuron came out that way on 2026-09-09.
 """
 import os
 import re

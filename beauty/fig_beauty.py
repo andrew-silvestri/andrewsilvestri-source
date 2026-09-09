@@ -37,6 +37,7 @@ from sitefig import (ACC, DIM, FAINT, FS_2, FS_1, INK, MOSS, NOTES, PLOT,  # noq
 from fig_floor import floor_problems                        # noqa: E402
 
 PAYLOAD = os.path.join(HERE, "outputs", "beauty_payload.json")
+NEWLINE = chr(10)
 OUT = os.path.join(ROOT, "site", "assets")
 
 
@@ -118,6 +119,12 @@ def spread(ys, gap):
     return out
 
 
+def hi_room(vals):
+    """A label offset scaled to the data, so a value sits clear of its own
+    whisker at any magnitude rather than at a hard-coded number of units."""
+    return (max(vals) - min(vals)) * 0.045
+
+
 def fig1(P):
     rows = sorted(P["groups"]["rows"], key=lambda r: -r["share_threatened"])
     ver = re.search(r"\d{4}-\d", P["groups"]["source_table"])
@@ -147,50 +154,90 @@ def fig1(P):
     bare(ax)
     ax.spines["bottom"].set_visible(False)
     ax.tick_params(axis="x", length=0)
-    sitefig.panel(ax, "Where the threatened species are, and where the papers are")
+    sitefig.panel(ax, "What the literature says")
     fig.text(0.01, 0.01, f"Threatened species: IUCN Red List {ver.group(0) if ver else ''}, Table 1a. Papers: "
              f"OpenAlex works {P['groups']['works_years']} whose title or abstract\nnames the class, "
-             "biology or environment topics. Rising: more of the papers than of the threatened species.",
+             "biology or environment topics. Rising: more of the papers than of the threatened species.\n"
+             "FIVE POINTS, NO MODEL, AND NOT WHAT THIS PAGE TESTS - it is the between-class "
+             "picture the literature describes.\nEverything below is within ONE class, birds, "
+             "where the pattern runs the other way.",
              fontsize=FS_2, color=DIM, ha="left", va="bottom")
-    fig.subplots_adjust(left=0.02, right=0.98, top=0.9, bottom=0.2)
+    fig.subplots_adjust(left=0.02, right=0.98, top=0.9, bottom=0.28)
     return emit(fig, "beauty_fig1_gap.png")
 
 
 def fig2(P):
+    """Raw, total and direct, one row per Red List category.
+
+    Two moves, and the page reads them as two different things. Raw to
+    total is the reversal: holding family, mass, range and description year
+    fixed does not collapse the gap, it widens it. Total to direct is the
+    share of that advantage running through public attention, and its
+    DIRECTION is assumed rather than shown - a cross-section with a
+    single-timepoint mediator cannot order threat -> attention -> research
+    against research -> better article -> views.
+    """
     cats = P["categories"]
-    names = [P["category_names"][c].replace(" ", "\n") for c in cats]
+    names = [P["category_names"][c].replace(" ", NEWLINE) for c in cats]
     raw = [P["raw_by_category"][c]["typical"] for c in cats]
-    adj = [P["model_confounders"]["adjusted"][c] for c in cats]
+    tot = [P["model_noviews"]["adjusted"][c] for c in cats]
+    dirc = [P["model_full"]["adjusted"][c] for c in cats]
     ci_raw = [P["bootstrap"]["raw"][c] for c in cats]
-    ci_adj = [P["bootstrap"]["conf_adj"][c] for c in cats]
+    # the TOTAL point needs the TOTAL model's interval. It carried
+    # bootstrap["full_adj"] until 2026-09-09, which put the Critically
+    # Endangered point at 48.1 outside its own whisker, because that key
+    # is the full model's spread around a different estimate. The audit
+    # cannot see this: a point outside its interval is not text on text.
+    ci_tot = [P["bootstrap"]["noviews_adj"][c] for c in cats]
     x = np.arange(len(cats))
     fig, ax = plt.subplots(figsize=fig_size(NOTES, PLOT))
-    for xi, v, ci in zip(x - 0.12, raw, ci_raw):
+    for xi, ci in zip(x - 0.26, ci_raw):
         ax.plot([xi, xi], ci, color=DIM, lw=1.4, zorder=2)
-    for xi, v, ci in zip(x + 0.12, adj, ci_adj):
+    for xi, ci in zip(x, ci_tot):
         ax.plot([xi, xi], ci, color=ACC, lw=1.4, zorder=2)
-    ax.plot(x - 0.12, raw, "o", mfc="white", mec=DIM, mew=1.6, ms=7, zorder=3, label="as counted")
-    ax.plot(x + 0.12, adj, "o", color=ACC, ms=7, zorder=3,
-            label="holding family, body mass, range size and\nyears since description fixed")
-    hi = max(max(c[1] for c in ci_raw + ci_adj), max(raw + adj))
-    for xi, v in zip(x - 0.12, raw):
-        ax.text(xi - 0.06, v, f"{v:.1f}", ha="right", va="center", fontsize=FS_2, color=DIM)
-    for xi, v in zip(x + 0.12, adj):
-        ax.text(xi + 0.06, v, f"{v:.1f}", ha="left", va="center", fontsize=FS_2, color=ACC)
+    for xi, lo, hi_ in zip(x, dirc, tot):
+        ax.plot([xi + 0.04, xi + 0.24], [hi_, lo], color=MOSS, lw=1.0, ls=":", zorder=2)
+    ax.plot(x - 0.26, raw, "o", mfc="white", mec=DIM, mew=1.6, ms=7, zorder=3,
+            label="as counted")
+    ax.plot(x, tot, "o", color=ACC, ms=7, zorder=3,
+            label="family, mass, range and years since description held fixed")
+    ax.plot(x + 0.26, dirc, "s", color=MOSS, ms=6, zorder=3,
+            label="the same, and Wikipedia views held fixed too")
+    hi = max(max(c[1] for c in ci_raw + ci_tot), max(raw + tot + dirc))
+    off = hi_room(raw + tot + dirc)
+    for xi, v, ci in zip(x - 0.26, raw, ci_raw):
+        ax.text(xi, ci[1] + off, "%.1f" % v, ha="center", va="bottom",
+                fontsize=FS_2, color=DIM)
+    for xi, v, ci in zip(x, tot, ci_tot):
+        ax.text(xi, ci[1] + off, "%.1f" % v, ha="center", va="bottom",
+                fontsize=FS_2, color=ACC)
+    for xi, v in zip(x + 0.26, dirc):
+        ax.text(xi + 0.08, v, "%.1f" % v, ha="left", va="center",
+                fontsize=FS_2, color=MOSS)
     ax.set_xticks(x)
     ax.set_xticklabels(names, fontsize=FS_2, color=INK)
-    ax.set_ylim(0, hi * 1.25)
-    ax.set_ylabel("papers per species, 2015–2024 (typical)", fontsize=FS_2, color=DIM)
+    ax.set_xlim(-0.72, len(cats) - 0.28)
+    ax.set_ylim(0, hi * 1.42)
+    ax.set_ylabel("papers per species, 2015-2024 (typical)", fontsize=FS_2, color=DIM)
     ax.grid(axis="y", color=FAINT, lw=0.8)
     ax.set_axisbelow(True)
     bare(ax)
-    ax.legend(loc="upper left", frameon=False, fontsize=FS_2, labelcolor=INK, handletextpad=0.6)
-    sitefig.panel(ax, f"Papers per bird species by Red List category, n = {P['n']['modelled']:,}")
-    fig.text(0.01, 0.01, "Typical: back-transformed mean of log(1 + papers). Whiskers: 95% bootstrap "
-             f"intervals, {P['n_boot']} resamples.\nRed List {P['red_list_version']}; "
-             "Data Deficient, Extinct and Extinct in the Wild species left out.",
+    ax.legend(loc="upper left", frameon=False, fontsize=FS_2, labelcolor=INK,
+              handletextpad=0.6)
+    sitefig.panel(ax, "Papers per bird species by Red List category, n = %s"
+                  % format(P["n"]["modelled"], ","))
+    ms = P["mediated_share"]
+    fig.text(0.01, 0.01,
+             "Typical: back-transformed mean of log(1 + papers). Whiskers: 95%% "
+             "bootstrap intervals, %s resamples. Red List %s;%s"
+             "Data Deficient, Extinct and Extinct in the Wild species left out. The "
+             "dotted drop is the share of the advantage%s"
+             "that runs through public attention: %.0f%% at Near Threatened, %.0f%% at "
+             "Critically Endangered. Its direction is ASSUMED."
+             % (P["n_boot"], P["red_list_version"], NEWLINE, NEWLINE,
+                100 * ms["NT"], 100 * ms["CR"]),
              fontsize=FS_2, color=DIM, ha="left", va="bottom")
-    fig.subplots_adjust(left=0.1, right=0.98, top=0.9, bottom=0.24)
+    fig.subplots_adjust(left=0.1, right=0.98, top=0.9, bottom=0.30)
     return emit(fig, "beauty_fig2_category.png")
 
 
@@ -224,10 +271,80 @@ def fig3(P):
     return emit(fig, "beauty_fig3_terms.png")
 
 
+def fig4(P):
+    """The Red List coefficient inside OpenAlex topic fields.
+
+    Tests whether the effect is made of papers ABOUT the listing. The rule
+    - minimum cell, primary stratum, failure threshold - was committed in
+    PRESPEC_topics_2026-09-09.md before any topic data existed, and the
+    strata that FAIL the cell floor are drawn as named gaps carrying their
+    Critically Endangered cell count, never as points. A reader must be able
+    to see what was excluded and why without being able to read a value off
+    it.
+    """
+    S = P.get("strata", {})
+    if not S.get("available"):
+        return 0
+    order = ["13", "19", "11", "23", "28", "24", "27"]
+    fields = S["fields"]
+    rows = [f for f in order if f in fields]
+    labels = {"11": "Agricultural and\nBiological Sciences",
+              "13": "Biochemistry, Genetics\nand Molecular Biology",
+              "19": "Earth and\nPlanetary Sciences",
+              "23": "Environmental Science",
+              "24": "Immunology and\nMicrobiology",
+              "27": "Medicine", "28": "Neuroscience"}
+    y = np.arange(len(rows))[::-1]
+    fig, ax = plt.subplots(figsize=fig_size(NOTES, row_aspect(len(rows), row_px=52)))
+    floor = S["rule"]["cr_floor"]
+    ax.axvline(floor, color=MOSS, lw=1.2, ls="--", zorder=2)
+    ticks = []
+    for yi, fid in zip(y, rows):
+        rec = fields[fid]
+        prone = rec["artefact_prone"]
+        ticks.append(labels[fid])
+        if not rec["reportable"]:
+            ax.text(0.02, yi, "below the cell floor - CR n = %d, not interpreted"
+                    % rec["cells"]["CR"], fontsize=FS_2, color=DIM,
+                    ha="left", va="center", style="italic")
+            continue
+        cr = rec["category"]["CR"]
+        col = MOSS if prone else ACC
+        ax.plot([cr["lo"], cr["hi"]], [yi, yi], color=col, lw=1.6, zorder=3)
+        ax.plot([cr["coef"]], [yi], "o", color=col, ms=7, zorder=4)
+        note = "  %+.3f" % cr["coef"]
+        if rec["role"] == "primary":
+            note += "   PRIMARY"
+        elif rec["role"] == "positive_control":
+            note += "   positive control"
+        ax.text(cr["hi"] + 0.03, yi, note, fontsize=FS_2, color=INK,
+                ha="left", va="center")
+    ax.set_yticks(y)
+    ax.set_yticklabels(ticks, fontsize=FS_2, color=INK)
+    ax.set_xlim(-0.05, 1.95)
+    ax.set_xlabel("Critically Endangered vs Least Concern, log(1 + papers in that field)",
+                  fontsize=FS_2, color=DIM)
+    ax.grid(axis="x", color=FAINT, lw=0.8)
+    ax.set_axisbelow(True)
+    bare(ax)
+    ax.tick_params(axis="y", length=0)
+    sitefig.panel(ax, "Does it survive where a status review cannot go?")
+    fig.text(0.01, 0.01,
+             "Brown: fields carrying conservation writing. Blue: fields that cannot.%s"
+             "Whiskers: HC1 95%% intervals. Rule fixed before the data existed (%s):%s"
+             "minimum %d species per category, primary field Biochemistry/Genetics,%s"
+             "dashed line the %+.2f floor. Three fields fail it, named without a value."
+             % (NEWLINE, S["rule"]["prespec"], NEWLINE,
+                S["rule"]["min_cell_per_category"], NEWLINE, floor),
+             fontsize=FS_2, color=DIM, ha="left", va="bottom")
+    fig.subplots_adjust(left=0.28, right=0.97, top=0.88, bottom=0.30)
+    return emit(fig, "beauty_fig4_strata.png")
+
+
 def main():
     P = json.load(open(PAYLOAD, encoding="utf-8"))
     sitefig.style()
-    bad = fig1(P) + fig2(P) + fig3(P)
+    bad = fig1(P) + fig2(P) + fig3(P) + fig4(P)
     print(f"  {bad} layout problem(s) in total")
     return bad
 

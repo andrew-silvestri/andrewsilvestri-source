@@ -233,7 +233,7 @@ def settled_guard():
                                        "views_mean_monthly"],
                "openalex_counts.csv": ["species", "works_2015_2024", "cost_usd"]}
     filler = {"source": "gbif", "year": "1758", "months": "120", "views_total": "10",
-              "views_mean_monthly": "0.08", "works_2015_2024": "3", "cost_usd": "0.0001"}
+              "views_mean_monthly": "0.08", "works_2015_2024": "3", "cost_usd": "0.0010"}
 
     def run(stamps):
         """stamps: table -> list of `fetched` values per species, or None for
@@ -365,11 +365,27 @@ def main():
                 if bad:
                     fails.append(f"archive {name} has column(s) {bad}")
             if base.endswith(".json"):
-                keys = set(re.findall(r'"(\w+)":', z.read(name).decode("utf-8")))
-                if any(s in z.read(name).decode("utf-8") for s in sample[:50]):
-                    fails.append(f"archive {name} names species")
-                if "category" in keys and "species" in keys:
-                    fails.append(f"archive {name} has species and category keys")
+                # EVERY species name, not a sample of fifty. The thing the
+                # Red List's terms forbid is a species sitting beside its
+                # category, so the operative question is whether any bird
+                # this project models is named in a shipped JSON at all.
+                text = z.read(name).decode("utf-8")
+                named = [s for s in species if s in text]
+                if named:
+                    fails.append(f"archive {name} names species: {named[:3]}")
+                # What was here until 2026-09-09, and why it went: a check
+                # that failed when a file carried both a "species" key and a
+                # "category" key. It fired the first time a real payload was
+                # built - on looked_up.openalex_search_drift.species, which
+                # is "Panthera leo" illustrating the OpenAlex query change,
+                # and on the category COEFFICIENT dicts. Neither is a
+                # species-to-category table and no bird was named. The key
+                # heuristic was a way to catch a mapping without enumerating
+                # names; enumerating all 9,113 names is strictly stronger and
+                # does not misfire, so the heuristic adds only false
+                # positives. If it is ever restored, it must test for a
+                # binomial KEY with a category VALUE, not for two key names
+                # co-occurring anywhere in a file.
     else:
         skips.append("no site/downloads/beauty-code.zip yet (rezip_downloads.py)")
 

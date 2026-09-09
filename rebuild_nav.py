@@ -137,20 +137,48 @@ NAV = [
     # one line to move. It reads in the right direction as the site grows - Mind
     # is the group that gains a page, Misc only loses them.
     ("Mind", [
-        ("The measured neuron", "neuron.html"),
+        # Beauty landed 2026-09-09. The leaf label is the page's own title,
+        # not the folder name and not the old thesis: the project was built
+        # to show "studied, not endangered" and the fits reversed it.
+        ("Endangered, and studied", "beauty.html"),
+        # WHY MIND EXISTS AND WHAT NOW HOLDS IT ARE NO LONGER THE SAME PAGE.
+        # Historically true: this group was created earlier on 2026-09-09
+        # (cdc7535) to take neuron.html out of Misc, and the line it replaced
+        # had promised since 2026-09-06 that "when the beauty project lands,
+        # the two of them make Mind". Both halves happened, in that order,
+        # within one day.
+        #
+        # Presently true: neuron.html was unpublished 2026-09-09 at Andrew's
+        # request, for now (unpublished/RETIRED.md), so Mind holds beauty
+        # alone. The group is kept rather than collapsed back into Misc,
+        # because it was not created for neuron's sake and the reason it was
+        # created has not gone away.
+        #
+        # A one-item group renders as a DROPDOWN and that is deliberate: the
+        # length-1 collapse came out of nav_for() the same day (cdc7535), and
+        # Climate has rendered this way since. Do not "simplify" it to a bare
+        # link - that branch was removed on purpose and its argument is quoted
+        # where it stood.
     ]),
     ("Misc", [
-        ("Fat, sugar, salt", "food.html"),
         ("Where the ground goes", "continents.html"),
         ("Longevity quotient", "longevity.html"),
         ("Skylines, played", "skyline.html"),
         # "The bookshelf" (desktop.html) retired to unpublished/ on 2026-09-05
         # (PHASE5); the pages were regenerated from this list the same day.
         #
-        # Four since 2026-09-09, when climate-cost went to Climate and neuron to
-        # Mind; it held six before that. Still a dropdown, and still a group
-        # that says nothing about any of its members - the sort that question
-        # belongs to has not been done, and this change did not do it.
+        # THREE, and this group lost pages twice on 2026-09-09. It held six
+        # that morning. First climate-cost went to Climate and neuron to Mind
+        # (cdc7535), leaving four - which is what the comment here said, and
+        # it was true for a few hours. Then food.html was unpublished at
+        # Andrew's request, for now (unpublished/RETIRED.md), leaving three.
+        # The count is recorded twice on purpose: a number in a comment is a
+        # claim about the list beside it, and this one was overtaken the same
+        # day it was written.
+        #
+        # Still a dropdown, and still a group that says nothing about any of
+        # its members - the sort that question belongs to has not been done,
+        # and neither of today's changes did it.
     ]),
     ("Code", "code.html"),
     # LAST, AND IT HAS TO STAY LAST. style.css pins this one right with

@@ -89,10 +89,13 @@ GENERATORS = [
      ["update_page.py", "--apply"], "longevity-quotient", "site"),
     ("continents page: continents/update_page.py --apply",
      ["update_page.py", "--apply"], "continents", "site"),
-    ("food page: food/update_page.py --apply",
-     ["update_page.py", "--apply"], "food", "site"),
-    ("neuron page: neuron/update_page.py --apply",
-     ["update_page.py", "--apply"], "neuron", "site"),
+    # food and neuron were unpublished on 2026-09-09 (unpublished/RETIRED.md),
+    # so site/food.html and site/neuron.html no longer exist and their page
+    # generators FAILED here rather than drifting. The generators themselves
+    # are untouched in food/ and neuron/ and both projects' suites still run;
+    # what is removed is the claim that they own a shipped file, because they
+    # no longer do. Put these two entries back with the pages.
+
     ("shoes page: shoes/update_page.py --apply",
      ["update_page.py", "--apply"], "shoes", "site"),
     # add_citations.py owns the markers and the Sources list on every page that

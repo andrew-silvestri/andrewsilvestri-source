@@ -1,0 +1,1104 @@
+{
+ "categories_sha256": "1f1d4b6f1ff2c81d4249015b96445793af433f1928134ca35cc96befc9de9f63",
+ "generated_from": [
+  "fetch_traits.py",
+  "fetch_years.py",
+  "fetch_wikipedia.py",
+  "fetch_openalex.py",
+  "fetch_iucn.py",
+  "fetch_groups.py",
+  "build_beauty.py"
+ ],
+ "seed": 20260905,
+ "n_boot": 300,
+ "reference_year": 2024,
+ "categories": [
+  "LC",
+  "NT",
+  "VU",
+  "EN",
+  "CR"
+ ],
+ "category_names": {
+  "LC": "Least Concern",
+  "NT": "Near Threatened",
+  "VU": "Vulnerable",
+  "EN": "Endangered",
+  "CR": "Critically Endangered"
+ },
+ "term_labels": {
+  "family": "Family",
+  "mass": "Body mass",
+  "range": "Range size",
+  "described": "Years since description",
+  "category": "Red List category",
+  "attractiveness": "Rated attractiveness",
+  "views": "Wikipedia views"
+ },
+ "n": {
+  "avonet": 11009,
+  "with_attractiveness": 9386,
+  "with_year": 10999,
+  "with_article": 10645,
+  "with_works": 11009,
+  "with_category": 10669,
+  "category_counts_all": {
+   "LC": 8477,
+   "NT": 930,
+   "VU": 648,
+   "EN": 361,
+   "nan": 340,
+   "CR": 207,
+   "DD": 34,
+   "EX": 7,
+   "EW": 5
+  },
+  "views_shared_article": 273,
+  "shared_articles": 129,
+  "modelled": 9113,
+  "dropped_not_assessed_or_dd_ex": 260,
+  "modelled_shared_article": 12
+ },
+ "redlist_source": "api",
+ "red_list_version": "2026-1",
+ "citation": "IUCN 2026. The IUCN Red List of Threatened Species. Version 2026-1. https://www.iucnredlist.org",
+ "raw_by_category": {
+  "LC": {
+   "n": 7276,
+   "typical": 18.883437743611868,
+   "median": 16.0,
+   "mean": 36.036008796041784,
+   "share_zero": 0.0
+  },
+  "NT": {
+   "n": 808,
+   "typical": 18.116844199150457,
+   "median": 15.0,
+   "mean": 37.55074257425743,
+   "share_zero": 0.0
+  },
+  "VU": {
+   "n": 579,
+   "typical": 24.956206575171265,
+   "median": 21.0,
+   "mean": 41.67530224525043,
+   "share_zero": 0.0
+  },
+  "EN": {
+   "n": 315,
+   "typical": 25.80879143774871,
+   "median": 23.0,
+   "mean": 40.58730158730159,
+   "share_zero": 0.0
+  },
+  "CR": {
+   "n": 135,
+   "typical": 30.50292860048182,
+   "median": 28.0,
+   "mean": 43.385185185185186,
+   "share_zero": 0.0
+  }
+ },
+ "model_confounders": {
+  "terms": [
+   "family",
+   "mass",
+   "range",
+   "described",
+   "category"
+  ],
+  "beta": {
+   "intercept": 1.197290002155505,
+   "log_mass": 0.1764659204353462,
+   "log_range": 0.20882280992777724,
+   "years_described": 0.00588405774336026,
+   "cat_NT": 0.2861032218467765,
+   "cat_VU": 0.5494637085554818,
+   "cat_EN": 0.7182574364605192,
+   "cat_CR": 0.9655234979357247
+  },
+  "r2": 0.48175413104239806,
+  "drop_r2": {
+   "family": 0.15731939968013908,
+   "mass": 0.002591518672527382,
+   "range": 0.03629571876902138,
+   "described": 0.05760260897471825,
+   "category": 0.036038993028716715
+  },
+  "adjusted": {
+   "LC": 17.56120465817541,
+   "NT": 23.70922988160099,
+   "VU": 31.15401544093801,
+   "EN": 37.06636439227327,
+   "CR": 47.74473196455442
+  },
+  "n": 9113,
+  "robust": {
+   "intercept": {
+    "coef": 1.1972900021554693,
+    "se": 0.23852873381438702,
+    "p": 5.181177282698196e-07
+   },
+   "log_mass": {
+    "coef": 0.17646592043534817,
+    "se": 0.03009195675519562,
+    "p": 4.512429135531412e-09
+   },
+   "log_range": {
+    "coef": 0.20882280992777907,
+    "se": 0.008718151424717185,
+    "p": 8.671436917644465e-127
+   },
+   "years_described": {
+    "coef": 0.005884057743359583,
+    "se": 0.00020996245457582203,
+    "p": 8.210939968915308e-173
+   },
+   "cat_NT": {
+    "coef": 0.2861032218467778,
+    "se": 0.028757890077571735,
+    "p": 2.555345488110331e-23
+   },
+   "cat_VU": {
+    "coef": 0.5494637085554814,
+    "se": 0.0329995383138836,
+    "p": 2.9934149475953997e-62
+   },
+   "cat_EN": {
+    "coef": 0.7182574364605196,
+    "se": 0.04485406563293913,
+    "p": 1.0334305370874501e-57
+   },
+   "cat_CR": {
+    "coef": 0.9655234979357276,
+    "se": 0.06172503062782977,
+    "p": 3.747419127223451e-55
+   }
+  }
+ },
+ "model_noviews": {
+  "terms": [
+   "family",
+   "mass",
+   "range",
+   "described",
+   "category",
+   "attractiveness"
+  ],
+  "beta": {
+   "intercept": 0.4038399622726078,
+   "log_mass": 0.1922954655699472,
+   "log_range": 0.20556565641734115,
+   "years_described": 0.00561172337138216,
+   "cat_NT": 0.28737446077201617,
+   "cat_VU": 0.5511337904696516,
+   "cat_EN": 0.7102224735280771,
+   "cat_CR": 0.9738418982983936,
+   "attractiveness": 0.12672552039577678
+  },
+  "r2": 0.4860678221794691,
+  "drop_r2": {
+   "family": 0.15645256784555828,
+   "mass": 0.0030625017794090326,
+   "range": 0.035100438218794716,
+   "described": 0.05093685399550929,
+   "category": 0.036050193356966354,
+   "attractiveness": 0.00431369113707103
+  },
+  "adjusted": {
+   "LC": 17.56001091922051,
+   "NT": 23.739070028153556,
+   "VU": 31.205688748285276,
+   "EN": 36.75929948028686,
+   "CR": 48.14874017302918
+  },
+  "n": 9113,
+  "robust": {
+   "intercept": {
+    "coef": 0.4038399622725878,
+    "se": 0.24565778683790737,
+    "p": 0.10019423086802104
+   },
+   "log_mass": {
+    "coef": 0.19229546556994842,
+    "se": 0.030087614180922477,
+    "p": 1.6460661888608416e-10
+   },
+   "log_range": {
+    "coef": 0.2055656564173418,
+    "se": 0.008699033964457628,
+    "p": 1.8571802501697655e-123
+   },
+   "years_described": {
+    "coef": 0.005611723371382414,
+    "se": 0.0002112749989466183,
+    "p": 1.9052675674459597e-155
+   },
+   "cat_NT": {
+    "coef": 0.2873744607720169,
+    "se": 0.028686335053402758,
+    "p": 1.2728292378024839e-23
+   },
+   "cat_VU": {
+    "coef": 0.5511337904696538,
+    "se": 0.03272192016612006,
+    "p": 1.1818674946460497e-63
+   },
+   "cat_EN": {
+    "coef": 0.7102224735280777,
+    "se": 0.04469297643023799,
+    "p": 7.298470252295989e-57
+   },
+   "cat_CR": {
+    "coef": 0.9738418982983957,
+    "se": 0.06030620773491476,
+    "p": 1.1676098518287895e-58
+   },
+   "attractiveness": {
+    "coef": 0.1267255203957766,
+    "se": 0.015234675823066922,
+    "p": 8.928746687304118e-17
+   }
+  }
+ },
+ "model_full": {
+  "terms": [
+   "family",
+   "mass",
+   "range",
+   "described",
+   "category",
+   "attractiveness",
+   "views"
+  ],
+  "beta": {
+   "intercept": 0.0963745116663223,
+   "log_mass": 0.04262620731418987,
+   "log_range": 0.1432109385430802,
+   "years_described": 0.0033508254577805903,
+   "cat_NT": 0.2410780313523908,
+   "cat_VU": 0.43755113052619465,
+   "cat_EN": 0.561982362837083,
+   "cat_CR": 0.6416394217923315,
+   "attractiveness": 0.05393540525266852,
+   "log_views": 0.6229510708067716
+  },
+  "r2": 0.5901857993039457,
+  "drop_r2": {
+   "family": 0.1414561553298631,
+   "mass": 0.00014784995349792496,
+   "range": 0.016523317079284672,
+   "described": 0.016825064616432073,
+   "category": 0.020626386674331254,
+   "attractiveness": 0.0007708547685310041,
+   "views": 0.10411797712447657
+  },
+  "adjusted": {
+   "LC": 17.960844319195978,
+   "NT": 23.1299560630257,
+   "VU": 28.368631764462332,
+   "EN": 32.26009700329193,
+   "CR": 35.017878826038874
+  },
+  "n": 9113,
+  "robust": {
+   "intercept": {
+    "coef": 0.09637451166625659,
+    "se": 0.207939289774017,
+    "p": 0.6430244497214401
+   },
+   "log_mass": {
+    "coef": 0.042626207314187675,
+    "se": 0.028543466247459435,
+    "p": 0.13533805965549855
+   },
+   "log_range": {
+    "coef": 0.14321093854308822,
+    "se": 0.008219012575523836,
+    "p": 5.3919168893427126e-68
+   },
+   "years_described": {
+    "coef": 0.003350825457781072,
+    "se": 0.00022100265460740494,
+    "p": 6.31907271654914e-52
+   },
+   "cat_NT": {
+    "coef": 0.24107803135241063,
+    "se": 0.025470932078680297,
+    "p": 2.9404014403840063e-21
+   },
+   "cat_VU": {
+    "coef": 0.4375511305262049,
+    "se": 0.030085447728864994,
+    "p": 6.411657990966522e-48
+   },
+   "cat_EN": {
+    "coef": 0.5619823628371382,
+    "se": 0.040991211275445645,
+    "p": 8.8670559928898e-43
+   },
+   "cat_CR": {
+    "coef": 0.6416394217924083,
+    "se": 0.0652459013907866,
+    "p": 8.02247324135001e-23
+   },
+   "attractiveness": {
+    "coef": 0.053935405252664465,
+    "se": 0.013596509810402762,
+    "p": 7.282676682055978e-05
+   },
+   "log_views": {
+    "coef": 0.6229510708067544,
+    "se": 0.02868484371076919,
+    "p": 1.4148862639987434e-104
+   }
+  }
+ },
+ "mediated_share": {
+  "NT": 0.1611014050979077,
+  "VU": 0.20608908745491158,
+  "EN": 0.20872348625438664,
+  "CR": 0.34112567664887267
+ },
+ "selection": {
+  "A_no_rating_required": {
+   "n": 10585,
+   "category": {
+    "NT": {
+     "coef": 0.2753331965867771,
+     "lo": 0.22282593249108093,
+     "hi": 0.3278404606824732,
+     "p": 8.90108962558187e-25
+    },
+    "VU": {
+     "coef": 0.5436024938117096,
+     "lo": 0.4822873225075104,
+     "hi": 0.6049176651159087,
+     "p": 1.243750981536053e-67
+    },
+    "EN": {
+     "coef": 0.7093508264639309,
+     "lo": 0.6266947398502614,
+     "hi": 0.7920069130776004,
+     "p": 1.732118831576996e-63
+    },
+    "CR": {
+     "coef": 0.8640449876400458,
+     "lo": 0.7564255185597616,
+     "hi": 0.97166445672033,
+     "p": 8.572876648515975e-56
+    }
+   }
+  },
+  "B_modelled": {
+   "n": 9113,
+   "category": {
+    "NT": {
+     "coef": 0.2861032218467778,
+     "lo": 0.2297387930233754,
+     "hi": 0.34246765067018015,
+     "p": 2.555345488110331e-23
+    },
+    "VU": {
+     "coef": 0.5494637085554814,
+     "lo": 0.48478580195381993,
+     "hi": 0.6141416151571429,
+     "p": 2.9934149475953997e-62
+    },
+    "EN": {
+     "coef": 0.7182574364605196,
+     "lo": 0.6303450832597631,
+     "hi": 0.8061697896612762,
+     "p": 1.0334305370874501e-57
+    },
+    "CR": {
+     "coef": 0.9655234979357276,
+     "lo": 0.8445446609605495,
+     "hi": 1.0865023349109058,
+     "p": 3.747419127223451e-55
+    }
+   }
+  },
+  "difference": {
+   "NT": {
+    "B_minus_A": 0.010770025260000704,
+    "intervals_overlap": true
+   },
+   "VU": {
+    "B_minus_A": 0.005861214743771881,
+    "intervals_overlap": true
+   },
+   "EN": {
+    "B_minus_A": 0.008906609996588766,
+    "intervals_overlap": true
+   },
+   "CR": {
+    "B_minus_A": 0.10147851029568178,
+    "intervals_overlap": true
+   }
+  },
+  "dropped": 1472
+ },
+ "data_deficient": {
+  "by_category": {
+   "DD": {
+    "n": 34,
+    "p25": 7.0,
+    "median": 9.0,
+    "p75": 12.75,
+    "mean": 12.823529411764707
+   },
+   "LC": {
+    "n": 8477,
+    "p25": 9.0,
+    "median": 15.0,
+    "p75": 29.0,
+    "mean": 35.48932405332075
+   },
+   "NT": {
+    "n": 930,
+    "p25": 8.0,
+    "median": 13.0,
+    "p75": 25.0,
+    "mean": 34.13763440860215
+   },
+   "VU": {
+    "n": 648,
+    "p25": 12.0,
+    "median": 20.0,
+    "p75": 37.0,
+    "mean": 39.23765432098765
+   },
+   "EN": {
+    "n": 361,
+    "p25": 12.0,
+    "median": 22.0,
+    "p75": 41.0,
+    "mean": 38.770083102493075
+   },
+   "CR": {
+    "n": 207,
+    "p25": 13.0,
+    "median": 21.0,
+    "p75": 40.0,
+    "mean": 34.78743961352657
+   },
+   "EW": {
+    "n": 5,
+    "p25": 23.0,
+    "median": 28.0,
+    "p75": 48.0,
+    "mean": 43.6
+   },
+   "EX": {
+    "n": 7,
+    "p25": 12.5,
+    "median": 15.0,
+    "p75": 19.5,
+    "mean": 19.714285714285715
+   }
+  },
+  "note": "Descriptive only. Data Deficient is 34 species; no coefficient is fitted for it and it appears in no figure. It is the lowest category at every quartile, which is consistent with the Red List category being partly a record of how much evidence already existed."
+ },
+ "strata": {
+  "rule": {
+   "min_cell_per_category": 30,
+   "primary_field": "13",
+   "cr_floor": 0.2,
+   "alpha": 0.05,
+   "prespec": "PRESPEC_topics_2026-09-09.md"
+  },
+  "fields": {
+   "13": {
+    "cells": {
+     "LC": 6130,
+     "NT": 641,
+     "VU": 478,
+     "EN": 267,
+     "CR": 124
+    },
+    "works": 35998,
+    "artefact_prone": false,
+    "role": "primary",
+    "reportable": true,
+    "category": {
+     "NT": {
+      "coef": 0.11291379645877238,
+      "lo": 0.05608071798415003,
+      "hi": 0.16974687493339474,
+      "p": 9.861204300511328e-05
+     },
+     "VU": {
+      "coef": 0.25164591643431283,
+      "lo": 0.18087802990967888,
+      "hi": 0.3224138029589468,
+      "p": 3.1806464819047886e-12
+     },
+     "EN": {
+      "coef": 0.41362817635527316,
+      "lo": 0.3162947471623972,
+      "hi": 0.5109616055481491,
+      "p": 8.148423956047249e-17
+     },
+     "CR": {
+      "coef": 0.7210188321154867,
+      "lo": 0.5869476316830043,
+      "hi": 0.855090032547969,
+      "p": 5.622848694384954e-26
+     }
+    },
+    "cr_meets_threshold": true
+   },
+   "28": {
+    "cells": {
+     "LC": 156,
+     "NT": 20,
+     "VU": 9,
+     "EN": 5,
+     "CR": 3
+    },
+    "works": 622,
+    "artefact_prone": false,
+    "role": "secondary",
+    "reportable": false
+   },
+   "24": {
+    "cells": {
+     "LC": 1322,
+     "NT": 109,
+     "VU": 90,
+     "EN": 52,
+     "CR": 25
+    },
+    "works": 6056,
+    "artefact_prone": false,
+    "role": "secondary",
+    "reportable": false
+   },
+   "27": {
+    "cells": {
+     "LC": 1140,
+     "NT": 128,
+     "VU": 92,
+     "EN": 57,
+     "CR": 25
+    },
+    "works": 5904,
+    "artefact_prone": false,
+    "role": "secondary",
+    "reportable": false
+   },
+   "19": {
+    "cells": {
+     "LC": 3482,
+     "NT": 392,
+     "VU": 329,
+     "EN": 185,
+     "CR": 88
+    },
+    "works": 10815,
+    "artefact_prone": false,
+    "role": "secondary",
+    "reportable": true,
+    "category": {
+     "NT": {
+      "coef": 0.09826250730339482,
+      "lo": 0.05075279152504252,
+      "hi": 0.14577222308174712,
+      "p": 5.0410045931552195e-05
+     },
+     "VU": {
+      "coef": 0.17458742245133982,
+      "lo": 0.11592219024778602,
+      "hi": 0.23325265465489362,
+      "p": 5.44909965659274e-09
+     },
+     "EN": {
+      "coef": 0.20826292128544852,
+      "lo": 0.12648673452404985,
+      "hi": 0.2900391080468472,
+      "p": 5.990463818429142e-07
+     },
+     "CR": {
+      "coef": 0.35776917402650604,
+      "lo": 0.2325150364214563,
+      "hi": 0.48302331163155576,
+      "p": 2.1641951330719065e-08
+     }
+    },
+    "cr_meets_threshold": true
+   },
+   "11": {
+    "cells": {
+     "LC": 6116,
+     "NT": 664,
+     "VU": 477,
+     "EN": 269,
+     "CR": 116
+    },
+    "works": 38498,
+    "artefact_prone": true,
+    "role": "secondary",
+    "reportable": true,
+    "category": {
+     "NT": {
+      "coef": 0.20524110968231363,
+      "lo": 0.1495947627937202,
+      "hi": 0.26088745657090706,
+      "p": 4.86708850681204e-13
+     },
+     "VU": {
+      "coef": 0.25532398577516446,
+      "lo": 0.18934203895076585,
+      "hi": 0.3213059325995631,
+      "p": 3.343284061333114e-14
+     },
+     "EN": {
+      "coef": 0.41970008198858316,
+      "lo": 0.33268066041669064,
+      "hi": 0.5067195035604757,
+      "p": 3.291672644701163e-21
+     },
+     "CR": {
+      "coef": 0.6234600906182179,
+      "lo": 0.47917529918798674,
+      "hi": 0.7677448820484492,
+      "p": 2.4734050240942432e-17
+     }
+    },
+    "cr_meets_threshold": true
+   },
+   "23": {
+    "cells": {
+     "LC": 7164,
+     "NT": 782,
+     "VU": 576,
+     "EN": 309,
+     "CR": 135
+    },
+    "works": 193945,
+    "artefact_prone": true,
+    "role": "positive_control",
+    "reportable": true,
+    "category": {
+     "NT": {
+      "coef": 0.23869114538703776,
+      "lo": 0.1733908995188126,
+      "hi": 0.3039913912552629,
+      "p": 7.822438242070807e-13
+     },
+     "VU": {
+      "coef": 0.5670994507843925,
+      "lo": 0.4924696189024973,
+      "hi": 0.6417292826662877,
+      "p": 3.6360262743855454e-50
+     },
+     "EN": {
+      "coef": 0.7228974300584351,
+      "lo": 0.6244283949489995,
+      "hi": 0.8213664651678707,
+      "p": 6.082745595024045e-47
+     },
+     "CR": {
+      "coef": 0.9831659414451721,
+      "lo": 0.8456605586636846,
+      "hi": 1.1206713242266597,
+      "p": 1.2839014499386163e-44
+     }
+    },
+    "cr_meets_threshold": true
+   }
+  },
+  "available": true,
+  "crude_exclusion": {
+   "why": "Total works minus fields 23 and 11. Predicted in the pre-spec to understate the effect, because it deletes genuine conservation biology, which is research effort on the species.",
+   "category": {
+    "NT": 0.3062119110364832,
+    "VU": 0.5450137538376257,
+    "EN": 0.682708788893911,
+    "CR": 0.8878343589638297
+   }
+  }
+ },
+ "sensitivity": {
+  "unshared_article": {
+   "n": 9101,
+   "dropped": 12,
+   "r2": 0.5903645451496577,
+   "adjusted": {
+    "LC": 17.962202201135135,
+    "NT": 23.133872479006744,
+    "VU": 28.37435134288069,
+    "EN": 32.30299344010949,
+    "CR": 35.3656146673388
+   },
+   "drop_r2": {
+    "family": 0.1412262199922154,
+    "mass": 0.0001529187495752371,
+    "range": 0.016538172697603937,
+    "described": 0.01680882743021439,
+    "category": 0.020760711639913554,
+    "attractiveness": 0.0007625811770606283,
+    "views": 0.10405552307874988
+   },
+   "cat_beta": {
+    "NT": 0.24116871083345123,
+    "VU": 0.4376742503451222,
+    "EN": 0.5631996461117335,
+    "CR": 0.651176036250716
+   }
+  },
+  "has_article": {
+   "n": 8954,
+   "dropped": 159,
+   "r2": 0.6542857602036538,
+   "adjusted": {
+    "LC": 18.161440252032037,
+    "NT": 22.48343164690982,
+    "VU": 26.62769272775266,
+    "EN": 28.85460615889252,
+    "CR": 26.50098573618838
+   },
+   "drop_r2": {
+    "family": 0.12914507287892174,
+    "mass": 0.00011215975474676565,
+    "range": 0.009407507207427557,
+    "described": 0.0036395137369636954,
+    "category": 0.01273855409445035,
+    "attractiveness": 2.8134694908477087e-05,
+    "views": 0.16749153649531257
+   },
+   "cat_beta": {
+    "NT": 0.20339519674554457,
+    "VU": 0.36591868994750876,
+    "EN": 0.4434391986667884,
+    "CR": 0.36132190953453036
+   }
+  }
+ },
+ "bootstrap": {
+  "raw": {
+   "LC": [
+    18.44267409929762,
+    19.3081378020972
+   ],
+   "NT": [
+    16.823199152883287,
+    19.49551368030287
+   ],
+   "VU": [
+    23.269917901582893,
+    26.66801189478837
+   ],
+   "EN": [
+    23.35462812630492,
+    28.410673464315664
+   ],
+   "CR": [
+    26.697632921396814,
+    35.68623609332191
+   ]
+  },
+  "conf_adj": {
+   "LC": [
+    17.144301890516505,
+    17.983275047771215
+   ],
+   "NT": [
+    22.37146836152605,
+    25.083596407440318
+   ],
+   "VU": [
+    29.387392247476456,
+    33.206790325730054
+   ],
+   "EN": [
+    34.16739752256388,
+    40.79921863426188
+   ],
+   "CR": [
+    42.82295561749122,
+    54.94682793869832
+   ]
+  },
+  "noviews_adj": {
+   "LC": [
+    17.147013665726657,
+    17.975166511716125
+   ],
+   "NT": [
+    22.43230953824022,
+    25.058293511237487
+   ],
+   "VU": [
+    29.450276658913932,
+    33.201831476199054
+   ],
+   "EN": [
+    33.75224747752859,
+    40.56299259970704
+   ],
+   "CR": [
+    43.3498785555791,
+    54.69408629064004
+   ]
+  },
+  "full_adj": {
+   "LC": [
+    17.571490840625152,
+    18.37152892706472
+   ],
+   "NT": [
+    21.901462748524978,
+    24.248861505190426
+   ],
+   "VU": [
+    26.832047316044505,
+    29.956987070566175
+   ],
+   "EN": [
+    29.656132989435203,
+    35.14963946594834
+   ],
+   "CR": [
+    30.689248128667735,
+    40.65600396759364
+   ]
+  },
+  "conf_drop": {
+   "family": [
+    0.15572319597421894,
+    0.17742399511339896
+   ],
+   "mass": [
+    0.0010605082387120878,
+    0.004464797608689254
+   ],
+   "range": [
+    0.03064614639370587,
+    0.04171513453738734
+   ],
+   "described": [
+    0.04875522217064595,
+    0.06326137640035334
+   ],
+   "category": [
+    0.030645477303288073,
+    0.04171220550198339
+   ]
+  },
+  "full_drop": {
+   "family": [
+    0.139562150546721,
+    0.1631321283111591
+   ],
+   "mass": [
+    2.669365005619763e-07,
+    0.0007282226136608115
+   ],
+   "range": [
+    0.012546505322151767,
+    0.020001300079360837
+   ],
+   "described": [
+    0.012071060280498477,
+    0.020061848113267083
+   ],
+   "category": [
+    0.01604278083118329,
+    0.02449930348911041
+   ],
+   "attractiveness": [
+    0.00020651439592644374,
+    0.0016878847774069467
+   ],
+   "views": [
+    0.08812711402007066,
+    0.11832113507332968
+   ]
+  },
+  "conf_cat": {
+   "NT": [
+    0.23173451020606137,
+    0.3413347184774534
+   ],
+   "VU": [
+    0.49007584781428803,
+    0.611265666883981
+   ],
+   "EN": [
+    0.6316458665007605,
+    0.8144399165132417
+   ],
+   "CR": [
+    0.8594519434988088,
+    1.0989498703559641
+   ]
+  },
+  "full_cat": {
+   "NT": [
+    0.1866185142747595,
+    0.29086045553715756
+   ],
+   "VU": [
+    0.3815852602487755,
+    0.495829978203929
+   ],
+   "EN": [
+    0.48768477495753293,
+    0.6463029328362137
+   ],
+   "CR": [
+    0.5121350237804526,
+    0.7919344585162418
+   ]
+  }
+ },
+ "groups": {
+  "rows": [
+   {
+    "group": "Mammals",
+    "described": 6854,
+    "evaluated": 6054,
+    "pct_evaluated": 88.0,
+    "threatened": 1372,
+    "pct_threatened_best": 26,
+    "works": 53672,
+    "share_threatened": 0.11826566675286614,
+    "share_works": 0.11525486330771494,
+    "works_per_threatened": 39.119533527696795
+   },
+   {
+    "group": "Birds",
+    "described": 11185,
+    "evaluated": 11185,
+    "pct_evaluated": 100.0,
+    "threatened": 1256,
+    "pct_threatened_best": 11,
+    "works": 127724,
+    "share_threatened": 0.10826652874752177,
+    "share_works": 0.27427359071982754,
+    "works_per_threatened": 101.69108280254777
+   },
+   {
+    "group": "Reptiles",
+    "described": 12568,
+    "evaluated": 10371,
+    "pct_evaluated": 83.0,
+    "threatened": 1865,
+    "pct_threatened_best": 21,
+    "works": 19952,
+    "share_threatened": 0.16076200327557968,
+    "share_works": 0.042844780010350435,
+    "works_per_threatened": 10.698123324396782
+   },
+   {
+    "group": "Amphibians",
+    "described": 9075,
+    "evaluated": 8095,
+    "pct_evaluated": 89.0,
+    "threatened": 2940,
+    "pct_threatened_best": 41,
+    "works": 27822,
+    "share_threatened": 0.2534264287561417,
+    "share_works": 0.059744760898555016,
+    "works_per_threatened": 9.463265306122448
+   },
+   {
+    "group": "Fishes",
+    "described": 37630,
+    "evaluated": 29371,
+    "pct_evaluated": 78.0,
+    "threatened": 4168,
+    "pct_threatened_best": null,
+    "works": 236511,
+    "share_threatened": 0.3592793724678907,
+    "share_works": 0.5078820050635521,
+    "works_per_threatened": 56.744481765834934
+   }
+  ],
+  "total_threatened": 11601,
+  "total_works": 465681,
+  "source_table": "IUCN Red List 2026-1 Table 1a (last updated 09 July 2026), https://nc.iucnredlist.org/redlist/content/attachment_files/2026-1_RL_Table1a.pdf",
+  "works_fetched": "2026-09-05",
+  "works_years": "2015-2024"
+ },
+ "looked_up": {
+  "esa_top10_share": {
+   "value": "over half",
+   "source": "Metrick & Weitzman 1996, Land Economics 72:1-16",
+   "what": "share of identifiable ESA spending FY1989-91 that went to ten species"
+  },
+  "life_birds_mammals_budget": {
+   "value": 75,
+   "unit": "% of LIFE species-project budget",
+   "source": "Mammides 2019, Biodiversity and Conservation 28:1291-1296"
+  },
+  "global_threatened_ever_funded": {
+   "value": 6,
+   "unit": "% of threatened species",
+   "source": "Guenard et al. 2025, PNAS 122:e2412479122"
+  },
+  "global_funds_to_least_concern": {
+   "value": 29,
+   "unit": "% of funds",
+   "source": "Guenard et al. 2025, PNAS 122:e2412479122"
+  },
+  "dd_mammals_predicted_threatened": {
+   "value": 64,
+   "unit": "%",
+   "source": "Bland et al. 2015, Conservation Biology 29:250-259"
+  },
+  "dd_amphibians_predicted_threatened": {
+   "value": 85,
+   "unit": "%",
+   "source": "Borgelt et al. 2022, Communications Biology 5:679"
+  },
+  "extinct_since_1500_estimate": {
+   "value": "7.5-13",
+   "unit": "% of ~2 million known species",
+   "source": "Cowie, Bouchet & Fontaine 2022, Biological Reviews 97:640-663"
+  },
+  "extinct_since_1500_red_list": {
+   "value": 0.04,
+   "unit": "%",
+   "source": "Cowie, Bouchet & Fontaine 2022, Biological Reviews 97:640-663"
+  },
+  "published_models": {
+   "value": null,
+   "source": "see models.json once read from full text",
+   "what": "the ten species-level models and the sign of their threat term"
+  },
+  "openalex_search_drift": {
+   "species": "Panthera leo",
+   "common": "the lion",
+   "fulltext": 11759,
+   "title_abstract": 3459,
+   "observed": "2026-09-05",
+   "source": "OpenAlex API, https://api.openalex.org/works, queried 5 September 2026",
+   "what": "works returned for one species through the bare search= parameter, which has meant full text since February 2026, against filter=title_and_abstract.search:, which still means what search= used to"
+  }
+ },
+ "assumed": [
+  {
+   "key": "paper_definition",
+   "text": "A paper about a species is an OpenAlex work of 2015-2024 whose title or abstract contains the scientific name as a phrase."
+  },
+  {
+   "key": "attention_proxy",
+   "text": "Public attention is the mean monthly view count of the species' English Wikipedia article, 2016-2025; a species with no article is given zero, and a species sharing an article with another species is credited with the whole of it."
+  },
+  {
+   "key": "phylogeny",
+   "text": "Family fixed effects stand in for phylogeny; the published models use trees."
+  },
+  {
+   "key": "response",
+   "text": "The response is log(1 + papers); category means are back-transformed means of that, which reads as a typical rather than an average count."
+  },
+  {
+   "key": "reference_year",
+   "text": "Years since description are counted to 2024."
+  }
+ ]
+}

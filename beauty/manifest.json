@@ -1,0 +1,59 @@
+{
+ "generated": "2026-09-09",
+ "red_list_version": "2026-1",
+ "redlist_source": "api",
+ "withheld": {
+  "file": "data/iucn_aves.csv",
+  "ships": false,
+  "why": "The IUCN Red List terms of use (v3.1, June 2024, section 4) prohibit redistributing Red List data in any form, so this table is not in the archive and not in git. Fetch it with your own free token: python3 fetch_iucn.py, with IUCN_TOKEN set.",
+  "canonical_form": "sorted 'species,category' lines, LF endings, UTF-8, no header",
+  "verify": "python3 build_beauty.py --verify-categories",
+  "sha256": "1f1d4b6f1ff2c81d4249015b96445793af433f1928134ca35cc96befc9de9f63",
+  "rows": 11185
+ },
+ "inputs": [
+  {
+   "file": "data/avonet_slim.csv",
+   "sha256": "8ef974c59dbcb8b5932f830d3f6493dd54b845420a8f2ee17ae4203a680aa096",
+   "bytes": 768524,
+   "ships": true
+  },
+  {
+   "file": "data/attractiveness_slim.csv",
+   "sha256": "169c3cbdacf3bc05daed4e2edee2c5bda53558c37321203f1b722ed5150b4d65",
+   "bytes": 283239,
+   "ships": true
+  },
+  {
+   "file": "data/description_years.csv",
+   "sha256": "50eb5426af3674f10bf7ee0b4e975846762eea178e36bc38dab632734df91b25",
+   "bytes": 889511,
+   "ships": true
+  },
+  {
+   "file": "data/wikipedia_views.csv",
+   "sha256": "340551cd20a0cca99eb4315008b8156c24075919f1df9feaff7340e3636559e9",
+   "bytes": 728718,
+   "ships": true
+  },
+  {
+   "file": "data/openalex_counts.csv",
+   "sha256": "f856e22392739a56ce7a173c8b7d6530fb3cbeb1d4e485b845b839a119626781",
+   "bytes": 462242,
+   "ships": true
+  },
+  {
+   "file": "data/iucn_table1a.csv",
+   "sha256": "1d4d7ad887b833e83b86156b32ab7cea5b5e2623885a5757870f03e62058b1ee",
+   "bytes": 4101,
+   "ships": true
+  },
+  {
+   "file": "data/group_counts.csv",
+   "sha256": "b9bd952e5eb2575a01ce884c70ee1eb40bfe757972bebb0c09abbe1bbb7ddf6a",
+   "bytes": 1947,
+   "ships": true
+  }
+ ],
+ "modelled_species": 9113
+}

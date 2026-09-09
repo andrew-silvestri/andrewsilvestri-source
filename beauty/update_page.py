@@ -17,6 +17,7 @@ Run:  python3 update_page.py            report only
 import argparse
 import datetime as dt
 import json
+import math
 import os
 import re
 import sys
@@ -74,6 +75,9 @@ def values(P):
     M = json.load(open(MODELS, encoding="utf-8"))["models"]
     MAN = json.load(open(MANIFEST, encoding="utf-8"))
     dr = lu["openalex_search_drift"]
+    nov = P["model_noviews"]
+    st = P["strata"]
+    dcat = P["data_deficient"]["by_category"]
     g = {r["group"]: r for r in G["rows"]}
     read = [m for m in M if m["read"] == "full text"]
     verdicts = {}
@@ -171,6 +175,47 @@ def values(P):
         "drift_common": dr["common"], "drift_fulltext": fmt(dr["fulltext"]),
         "drift_filter": fmt(dr["title_abstract"]),
         "drift_ratio": f"{dr['fulltext'] / dr['title_abstract']:.1f}",
+        # the total effect, and the share of it running through attention
+        "cr_tot": f"{nov['adjusted']['CR']:.1f}", "lc_tot": f"{nov['adjusted']['LC']:.1f}",
+        "cr_tot_coef": f"{nov['beta']['cat_CR']:+.2f}",
+        "cr_tot_x": f"{math.exp(nov['beta']['cat_CR']):.2f}",
+        "cr_dir_coef": f"{full['beta']['cat_CR']:+.2f}",
+        "cr_dir_x": f"{math.exp(full['beta']['cat_CR']):.2f}",
+        "cr_tot_ci": f"{B['noviews_adj']['CR'][0]:.1f} to {B['noviews_adj']['CR'][1]:.1f}",
+        "med_nt": pct(P["mediated_share"]["NT"]), "med_cr": pct(P["mediated_share"]["CR"]),
+        "med_vu": pct(P["mediated_share"]["VU"]), "med_en": pct(P["mediated_share"]["EN"]),
+        "views_over_attr": f"{drop['views'] / drop['attractiveness']:.0f}",
+        # selection: what conditioning on a rated score does
+        "sel_dropped": fmt(P["selection"]["dropped"]),
+        "sel_n_a": fmt(P["selection"]["A_no_rating_required"]["n"]),
+        "sel_cr_a": f"{P['selection']['A_no_rating_required']['category']['CR']['coef']:+.3f}",
+        "sel_cr_b": f"{P['selection']['B_modelled']['category']['CR']['coef']:+.3f}",
+        # the assessment-evidence confound
+        # The DD table has its OWN frame: every bird with a Red List
+        # category and a works count. The fits need an attractiveness
+        # rating too, so they run on fewer. Two frames on one page, and
+        # the page names which is which rather than letting a reader
+        # assume one N covers both.
+        "dd_frame": fmt(sum(v["n"] for v in dcat.values())),
+        "dd_n": fmt(P["data_deficient"]["by_category"]["DD"]["n"]),
+        "nt_median": f"{dcat['NT']['median']:.0f}",
+        "en_median": f"{dcat['EN']['median']:.0f}",
+        "cr_median": f"{dcat['CR']['median']:.0f}",
+        "ew_n": fmt(dcat["EW"]["n"]), "ew_median": f"{dcat['EW']['median']:.0f}",
+        "dd_median": f"{P['data_deficient']['by_category']['DD']['median']:.0f}",
+        "lc_median": f"{P['data_deficient']['by_category']['LC']['median']:.0f}",
+        # the pre-registered stratum test
+        "strat_primary_cr": f"{st['fields']['13']['category']['CR']['coef']:+.3f}",
+        "strat_primary_x": f"{math.exp(st['fields']['13']['category']['CR']['coef']):.2f}",
+        "strat_control_cr": f"{st['fields']['23']['category']['CR']['coef']:+.3f}",
+        "strat_earth_cr": f"{st['fields']['19']['category']['CR']['coef']:+.3f}",
+        "strat_floor": f"{st['rule']['cr_floor']:+.2f}",
+        "strat_min_cell": str(st["rule"]["min_cell_per_category"]),
+        "strat_failed": fmt(sum(1 for f in st["fields"].values() if not f["reportable"])),
+        "strat_crude_cr": f"{st['crude_exclusion']['category']['CR']:+.3f}",
+        "strat_inflation": pct(1 - st["crude_exclusion"]["category"]["CR"]
+                              / conf["beta"]["cat_CR"]),
+        "conf_cr_coef": f"{conf['beta']['cat_CR']:+.3f}",
     }
     return v
 
@@ -246,7 +291,12 @@ def cite(text):
     if not refs:
         return text, ["beauty.html has no entry in add_citations.PAGES"]
     tmp = PAGE + ".render.tmp"
-    open(tmp, "w", encoding="utf-8").write(text)
+    # An explicit LF newline, and never newline="": .gitattributes stores
+    # this tree as LF, and Python text mode on Windows writes CRLF
+    # otherwise. HANDOFF trap 32, and the sweeps of 6, 7 and 9 September
+    # could not reach this generator because it had never produced a page:
+    # beauty.html was the only file in site/ with CRLF when it first ran.
+    open(tmp, "w", encoding="utf-8", newline="\n").write(text)
     try:
         out, probs = add_citations.build(os.path.basename(tmp), refs)
     finally:
@@ -266,7 +316,7 @@ def main(apply=False):
     else:
         print("  beauty.html: new page" + ("" if apply else " (not written)"))
     if apply:
-        open(PAGE, "w", encoding="utf-8").write(t)
+        open(PAGE, "w", encoding="utf-8", newline="\n").write(t)
 
 
 if __name__ == "__main__":

@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html lang="en"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Studied, not endangered — Andrew Silvestri</title>
-<meta name="description" content="Does being endangered get a bird studied? For {{n_modelled}} bird species, once family, body size, range and years since description are held fixed, Red List category predicts almost nothing about how many papers a species gets. Computed from OpenAlex, Wikipedia, AVONET and the Red List.">
+<title>Endangered, and studied — Andrew Silvestri</title>
+<meta name="description" content="Does being endangered get a bird studied? For {{n_modelled}} bird species, a Critically Endangered bird has about {{cr_tot_x}} times the papers of a Least Concern one once family, size, range and description date are held fixed — and a third of that runs through public attention. Computed from OpenAlex, Wikipedia, AVONET and the Red List.">
 <link rel="icon" href="favicon.svg" type="image/svg+xml">
 <link rel="alternate icon" href="favicon.png">
 <link rel="apple-touch-icon" href="apple-touch-icon.png">
@@ -15,14 +15,15 @@ try{document.documentElement.dataset.motion=matchMedia('(prefers-reduced-motion:
 {{nav}}
 <main class="notes">
 
-<h1>Studied, not endangered</h1>
-<p class="dim">Does being endangered get an animal studied? For the world's
-birds, once you know what family a species is in, how big it is, how widely
-it ranges and how long it has been known, its Red List category tells you
-almost nothing about how many papers it gets. The published models for
-other taxa find the same.</p>
-<aside class="marginalia" style="grid-row: span {{span}}" aria-label="On this page"><p class="lab">On this page</p><ul><li><b>birds modeled</b><span class="v">{{n_modelled}}</span></li><li><b>papers, Least Concern</b><span class="v">{{lc_raw}} typical</span></li><li><b>papers, Critically Endangered</b><span class="v">{{cr_raw}}</span></li><li><b>the same, adjusted</b><span class="v">{{lc_adj}} and {{cr_adj}}</span></li><li><b>category's share of the fit</b><span class="v">{{cat_drop}} of R²</span></li></ul></aside>
-<aside class="marginalia right" style="grid-row: span {{span}}"><ul><li><b>papers per threatened amphibian</b><span class="v">{{amph_per}}</span></li><li><b>per threatened bird</b><span class="v">{{birds_per}}</span></li><li><b>published models read</b><span class="v">{{n_read}} of {{n_models}}</span></li><li><b>threat null or negative</b><span class="v">{{n_null_or_neg}} of {{n_read}}</span></li><li><b>Red List</b><span class="v">{{red_list_version}}</span></li></ul></aside>
+<h1>Endangered, and studied</h1>
+<p class="dim">Does being endangered get a bird studied? For {{n_modelled}}
+birds, yes — a Critically Endangered species has about {{cr_tot_x}} times
+the papers of a Least Concern one, once family, size, range and description
+date are held fixed. Which direction that runs is not settled here: a bird
+cannot be listed without evidence, and evidence is research. The published
+models, on other taxa and older indexes, mostly found the opposite.</p>
+<aside class="marginalia" style="grid-row: span {{span}}" aria-label="On this page"><p class="lab">On this page</p><ul><li><b>birds modeled</b><span class="v">{{n_modelled}}</span></li><li><b>papers, Least Concern</b><span class="v">{{lc_raw}} typical</span></li><li><b>papers, Critically Endangered</b><span class="v">{{cr_raw}}</span></li><li><b>the same, adjusted</b><span class="v">{{lc_adj}} and {{cr_adj}}</span></li><li><b>Critically Endangered vs Least Concern</b><span class="v">{{cr_tot_x}}×</span></li><li><b>of that, through attention</b><span class="v">{{med_cr}}%</span></li></ul></aside>
+<aside class="marginalia right" style="grid-row: span {{span}}"><ul><li><b>papers per threatened amphibian</b><span class="v">{{amph_per}}</span></li><li><b>per threatened bird</b><span class="v">{{birds_per}}</span></li><li><b>published models read</b><span class="v">{{n_read}} of {{n_models}}</span></li><li><b>Wikipedia views vs rated beauty</b><span class="v">{{views_over_attr}}×</span></li><li><b>published models, threat null or negative</b><span class="v">{{n_null_or_neg}} of {{n_read}}</span></li><li><b>Red List</b><span class="v">{{red_list_version}}</span></li></ul></aside>
 
 <p>Everyone knows that pandas get more attention than frogs. The expected
 correction is that endangered species get more than their share, because
@@ -36,18 +37,26 @@ class, {{amph_per}} per threatened species. Birds hold
 Reptiles sit with the amphibians. That is the gap at the level of whole
 classes, and it is where most treatments stop.</p>
 
-<p>The question this page asks is narrower and, it turns out, more
-surprising. Take one class where every term can be measured for every
+<p>The question this page asks is narrower, and the answer came out the
+other way. Take one class where every term can be measured for every
 species, and ask whether a species' own Red List category predicts how
 much it is studied, once the things that make a species easy or appealing
-to study are held fixed. For {{n_modelled}} birds the answer is that it
-does not. What predicts study is where a species lives and how widely,
-how big it is, how long ago it was named, and which family it belongs to.
-Threat status, on its own, buys a species almost nothing. {{n_models_word}}
-species-level models across mammals, birds, reptiles, carnivores, turtles
-and plants have asked the same question since 2014; of the {{n_read}} whose
-full text could be read for this page, {{n_null_or_neg}} report threat
-status as null or negative.</p>
+to study are held fixed. For {{n_modelled}} birds it does, and upward: a
+Critically Endangered bird has {{cr_tot_x}} times the papers of a Least
+Concern one. Adjusting does not shrink the gap — it widens it.</p>
+
+<p>That is not what the literature says. {{n_models_word}} species-level
+models across mammals, birds, reptiles, carnivores, turtles and plants have
+asked this question since 2014; of the {{n_read}} whose full text could be
+read for this page, {{n_null_or_neg}} report threat status as null or
+negative. The disagreement is worth stating before anything is made of it.
+Those models used Web of Science and Zoological Record, over series ending
+in 2008 to 2010, across several classes. This page uses OpenAlex
+title-and-abstract counts for {{works_years}}, on birds alone. Fifteen
+years and a different index is a sufficient explanation for a reversal,
+and it is the more likely one: a single result that contradicts a
+literature is more likely to be wrong than the literature. What follows is
+what one instrument measured on one taxon over one window.</p>
 
 <div class="card"><div class="tag">Code and data</div><h3 style="margin-top:4px">Every number on this page is generated</h3><p>Six fetch scripts, one build and one figure script. The archive holds all of them and every input whose license allows it. It does not hold the Red List column: the Red List's terms forbid redistributing it, so the build fetches it with the reader's own free token, and the page says so below.</p><a class="btn ghost" href="downloads/beauty-code.zip">Download code and data</a></div>
 
@@ -81,27 +90,39 @@ of 2015 to 2024 whose title or abstract names the species. The Red List
 gives the category. Joined, with the Data Deficient, Extinct and Extinct
 in the Wild species set aside, that is {{n_modelled}} birds.</p>
 
-<img class="fig wide" src="assets/beauty_fig2_category.png" loading="lazy" width="" height="" alt="Dot plot of typical papers per bird species across the five Red List categories from Least Concern to Critically Endangered, two series: as counted, and adjusted for family, body mass, range size and years since description, each with bootstrap intervals.">
-<p class="small">Papers per bird species by Red List category, as counted
-and after adjustment. "Typical" is the back-transformed mean of
-log(1 + papers), which is closer to a median than to a mean for counts this
-skewed. The adjusted series predicts every one of the {{n_modelled}}
-species under each category in turn, with its own family, mass, range and
-age held as they are, and averages. Whiskers are 95% intervals from
-{{n_boot}} bootstrap resamples over species.</p>
+<img class="fig wide" src="assets/beauty_fig2_category.png" loading="lazy" width="" height="" alt="Dot plot of typical papers per bird species across the five Red List categories from Least Concern to Critically Endangered, three series: as counted; adjusted for family, body mass, range size and years since description; and the same with Wikipedia views also held fixed. The adjusted series rises steeply with threat category, and the third series sits below the second by a gap that widens with severity.">
+<p class="small">Papers per bird species by Red List category: as counted,
+adjusted, and adjusted with public attention held fixed as well. "Typical"
+is the back-transformed mean of log(1 + papers), which is closer to a median
+than to a mean for counts this skewed. Each adjusted series predicts every
+one of the {{n_modelled}} species under each category in turn, with its own
+family, mass, range and age held as they are, and averages. Whiskers are
+95% intervals from {{n_boot}} bootstrap resamples over species. The dotted
+drop is the share of the advantage that runs through attention; its
+direction is <em>assumed</em>, for the reason given under Limits.</p>
 
 <p>As counted, a Least Concern bird has {{lc_raw}} papers and a Critically
-Endangered one {{cr_raw}}, {{raw_cr_vs_lc_pct}}% {{raw_cr_vs_lc}}. After
-adjustment the figures are {{lc_adj}} and {{cr_adj}}: {{adj_cr_vs_lc_pct}}%
-{{adj_cr_vs_lc}}, with a 95% interval for the Critically Endangered
-species of {{cr_adj_ci}}. The Critically Endangered coefficient in the
-adjusted model is {{cr_coef}} on the log scale with a robust p-value of
-{{cr_p}}; the Endangered coefficient is {{en_coef}}, p {{en_p}}. The
-adjustment is doing the work the question asks for: it is what remains of
-"endangered" once "small, restricted, recently named and in an obscure
-family" has been accounted for. What remains is close to nothing.</p>
+Endangered one {{cr_raw}}. After adjustment the figures are {{lc_tot}} and
+{{cr_tot}}, a 95% interval of {{cr_tot_ci}} for the Critically Endangered
+species. The coefficient is {{cr_tot_coef}} on the log scale — {{cr_tot_x}}
+times — with a robust p-value {{cr_p}}. The adjustment is doing the work
+the question asks for: it is what remains of "endangered" once "small,
+restricted, recently named and in an obscure family" has been accounted
+for. What remains is larger than what it started with, because the
+convenience terms were working against threat, not with it: threatened
+birds tend to be the small, narrowly ranged, recently described ones, and
+holding that fixed removes a handicap rather than an advantage.</p>
 
-<img class="fig wide" src="assets/beauty_fig3_terms.png" loading="lazy" width="" height="" alt="Horizontal bars ranking seven terms by how much R-squared falls when each is dropped from the full model: family and range size at the top, Red List category near the bottom.">
+<p>Holding public attention fixed as well takes the coefficient to
+{{cr_dir_coef}}, {{cr_dir_x}} times. The difference between the two is the
+share of the advantage that travels with attention: {{med_nt}}% at Near
+Threatened, {{med_vu}}% at Vulnerable, {{med_en}}% at Endangered and
+{{med_cr}}% at Critically Endangered. It rises with severity. Both numbers
+are on the page because they answer different questions — the first is what
+being endangered is worth in total, the second is what it is worth among
+birds people look up equally often — and neither is the "true" one.</p>
+
+<img class="fig wide" src="assets/beauty_fig3_terms.png" loading="lazy" width="" height="" alt="Horizontal bars ranking seven terms by how much R-squared falls when each is dropped from the full model: family far ahead, then Wikipedia views, then Red List category, with rated attractiveness and body mass indistinguishable from zero at the bottom.">
 <p class="small">What the full model's fit depends on: the fall in R² when
 each term is removed and the model refitted, with 95% bootstrap intervals.
 The full model adds rated attractiveness and Wikipedia views to the
@@ -109,11 +130,16 @@ adjusted model above; R² rises from {{r2_conf}} to {{r2_full}}.</p>
 
 <p>Ranked by what the fit loses without them, {{top_term}} comes first
 ({{top_drop}}) and {{second_term}} second ({{second_drop}}). Red List
-category is {{cat_rank}}th of seven, at {{cat_drop}}: {{top_term}} matters
-{{top_over_cat}} times more. Rated attractiveness contributes
-{{attr_drop}} and public attention {{views_drop}}. The appeal terms are
-real but small next to the ease-of-study terms, and the reader should
-weigh the Wikipedia term with care: views are partly a consequence of
+category is {{cat_rank}}rd of seven at {{cat_drop}}, above range size and
+years since description.</p>
+
+<p>The two measures of appeal do not behave alike, and this page cannot use
+the word undivided. Rated attractiveness — scored from photographs by
+several thousand people — contributes {{attr_drop}}, below body mass and
+indistinguishable from zero. Wikipedia views contribute {{views_drop}},
+{{views_over_attr}} times as much. The thing this project was named for
+explains nothing here; the thing that does is how often people look a bird
+up. Weigh that second term with care: views are partly a consequence of
 research as well as a cause of it, and the model cannot tell the two
 apart.</p>
 
@@ -148,6 +174,51 @@ global database of conservation projects over twenty-five years, about
 {{global_funded_pct}}% of threatened species were ever funded and
 {{global_lc_pct}}% of the money went to species of Least Concern. Those
 are looked up, not recomputed here.</p>
+
+<h2>Is it just the paperwork?</h2>
+<p>A listing generates its own literature. Status reviews, Red List updates
+and assessment documents all name the species, so a Critically Endangered
+bird could look well studied because being assessed produces writing rather
+than because anyone studies the animal. That would make the whole finding
+an artefact of the instrument.</p>
+
+<p>It is testable, and the test was fixed in writing before the data to run
+it existed. Every OpenAlex work carries a primary topic, so the model can
+be refitted inside one field at a time. The rule — which field is the
+primary test, how many species each category needs before a field may be
+read at all, and what result would count as failure — was committed to
+<code>PRESPEC_topics_2026-09-09.md</code> before a single topic count was
+fetched, because choosing the field after seeing the coefficients would
+leave no trace: every number correctly computed and the conclusion still
+unearned.</p>
+
+<img class="fig wide" src="assets/beauty_fig4_strata.png" loading="lazy" width="" height="" alt="Dot plot of the Critically Endangered coefficient inside seven OpenAlex topic fields, with 95% intervals. Biochemistry and Genetics, the pre-registered primary field, sits well above the pre-set floor; Environmental Science, the positive control, is highest; three fields are named without a value because too few Critically Endangered species have any paper in them.">
+<p class="small">The Critically Endangered coefficient refitted inside each
+topic field, against the same terms as the adjusted model. Brown marks the
+fields that carry conservation writing; blue marks those that cannot. The
+pre-registered primary field is Biochemistry, Genetics and Molecular
+Biology, the floor was set at {{strat_floor}}, and a field is read only if
+every Red List category has at least {{strat_min_cell}} species with a
+paper in it. {{strat_failed}} fields fail that floor and are named without
+a value rather than shown at a smaller sample.</p>
+
+<p>The effect survives. In molecular biology — where a status review cannot
+be published — the Critically Endangered coefficient is
+{{strat_primary_cr}}, {{strat_primary_x}} times Least Concern, against a
+floor set in advance at {{strat_floor}}. Earth and Planetary Sciences, the
+other field clearing the cell rule, gives {{strat_earth_cr}}. Environmental
+Science, the positive control, gives the largest value on the page,
+{{strat_control_cr}}: the artefact is real and measurable, and it is not
+what the effect is made of.</p>
+
+<p>Its size can be put a number on. Refitting on all papers except the two
+conservation-carrying fields gives {{strat_crude_cr}} against
+{{conf_cr_coef}} on the whole corpus — about {{strat_inflation}}% of the
+headline coefficient is assessment writing. That comparison was predicted
+in the pre-specification to understate the effect, because deleting whole
+fields also deletes genuine conservation biology, which is research about
+the species; it is reported because it was predicted, not because it came
+out well.</p>
 
 <h2>Method</h2>
 <p>The response is log(1 + papers), where a paper is an OpenAlex work of
@@ -205,12 +276,59 @@ can be caught: it is a change in someone else's API, not a fault in this
 one's code.</p>
 
 <h2>Limits</h2>
-<p>Association, not cause. Nothing here was randomised. Rated
-attractiveness is itself correlated with size, color and familiarity,
-and public attention with research; what the model can say is how the
-fit partitions among named terms, and what it cannot say is that any one
-of them makes scientists choose. "Beauty determines funding" is a
-sentence this page does not write.</p>
+<p>Association, not cause, and here that is not a formality. A bird cannot
+be listed Critically Endangered without evidence: Least Concern is the
+cheap default, while the higher categories need population size, trend and
+range data, and that data is research. So the arrow may run from research
+to listing rather than from listing to research, and the Red List category
+may be partly a record of how well studied a species already was. The
+gradient this page reports — more threatened, more studied — is exactly
+what rising evidence requirements would produce, from a mechanism that has
+nothing to do with attention or with threat.</p>
+
+<p>The cheapest check on that story is the category that means nobody has
+enough data. {{dd_n}} birds are assessed Data Deficient, and they are the
+least-studied group in the table: a median of {{dd_median}} papers against
+{{lc_median}} for Least Concern, the lowest at every quartile. That is
+{{dd_n}} species, far too few to fit anything, so it is reported as a
+description and given no coefficient and no point on any figure. Those raw
+counts are on a wider frame than the model: all {{dd_frame}} birds with a
+Red List category and a paper count, where every fitted number on this page
+uses the {{n_modelled}} that also carry an attractiveness rating. But it
+points the way the evidence story predicts. <b>This page reports an
+association between threat category and research volume and does not
+establish its direction.</b> Two mechanisms produce that association —
+threat attracting research, and research enabling the listing — and the
+stratum test above separates only a third one, the paperwork.</p>
+
+<p>The raw counts are not monotone, and the fitted values are. Among the
+raw medians, Near Threatened ({{nt_median}}) sits below Least Concern
+({{lc_median}}), and Critically Endangered ({{cr_median}}) below Endangered
+({{en_median}}). Only the adjusted series rises without exception, because
+the raw counts are confounded by exactly what the model controls for —
+family, body mass, range size and years since description — and threatened
+birds are on the wrong side of all four. Extinct in the Wild, which the model
+leaves out, is the most-studied group of all at a median of {{ew_median}}
+papers across {{ew_n}} species: birds with captive populations generating
+literature, which is the evidence mechanism at its most visible.</p>
+
+<p>Rated attractiveness is itself correlated with size, colour and
+familiarity, and public attention with research; what the model can say is
+how the fit partitions among named terms, and what it cannot say is that
+any one of them makes scientists choose. "Beauty determines funding" is a
+sentence this page does not write. Nor is the ordering of threat, attention
+and research a finding: a cross-section with attention measured at one
+moment cannot tell threat → attention → research from research → a better
+article → views. The {{med_cr}}% is what the model attributes, and its
+direction is <em>assumed</em>.</p>
+
+<p>The model needs a rated attractiveness score, which {{sel_dropped}} of
+the {{sel_n_a}} otherwise-complete birds do not have, and those species are
+marginally less studied and more often Critically Endangered. That could
+bias the coefficient, so it was measured rather than argued: fitting the
+same terms on both samples moves the Critically Endangered coefficient from
+{{sel_cr_a}} to {{sel_cr_b}}, with every interval overlapping. The
+selection is real and its effect on this page's claim is not.</p>
 
 <p>The attention measure is the weakest of the inputs and is measured
 badly in two known ways. {{n_no_article}} species have no English

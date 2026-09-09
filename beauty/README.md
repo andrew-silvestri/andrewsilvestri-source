@@ -127,3 +127,29 @@ the API (`redlist_source: api`), and `test_beauty.py` fails otherwise.
 | `manifest.json` | written by the build: the digest of the withheld Red List table, and a hash of every shipped input |
 | `DATA_SOURCES.md` | every input, its licence, and whether it ships |
 | `RESEARCH.md` | the Stage 1 feasibility document, the provenance record |
+
+## What the fits found (2026-09-09)
+
+*Added 2026-09-09, after the fits.* The model was fitted for the first time on
+9 September 2026, and the result runs against the thesis this project was built
+to test.
+
+- **Threatened birds are studied MORE.** A Critically Endangered bird has 2.65x
+  the papers of a Least Concern one (+0.974, p 1.2e-58) with family, mass, range
+  and description year held fixed. Adjusting widens the gap rather than
+  collapsing it.
+- **Rated attractiveness explains nothing.** Drop-one R-squared 0.0008, below
+  body mass. Wikipedia views: 0.1041, 135 times as much. The project's own
+  appeal proxy is the dead one.
+- **Attention carries a third of the threat effect** at Critically Endangered
+  (34%), rising monotonically with severity. Direction assumed, not shown.
+- **The effect survives a pre-registered artefact test** (`topic_test.py`
+  against `PRESPEC_topics_2026-09-09.md`): +0.721 in molecular biology, where a
+  status review cannot be published.
+- **Direction is not established.** A bird cannot be listed without evidence,
+  and the 34 Data Deficient birds are the least-studied group at every quartile.
+  The page reports an association.
+
+The page is `site/beauty.html`, titled "Endangered, and studied".
+`STEP0_2026-09-09.md` holds the tables; `RESEARCH.md` section 10 holds the
+argument.

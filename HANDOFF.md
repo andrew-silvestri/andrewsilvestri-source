@@ -349,7 +349,22 @@ report first.**
 | `build_site.py` | **Retired. Never run it.** The original generator, last valid 2026-08-01: it writes pages that are no longer on the site (dac, holdup, energy-web), a nav from before the regrouping, and its own icons. `tests/test_generators.py --retired` shows what it would do to the tree. |
 | `publish.sh` | Mirrors `site/` into the Pages repo and commits. `--dry-run` first. |
 
-### publish.sh mirrors the WORKING TREE, not a commit
+### publish.sh mirrors the WORKING TREE, not a commit - and it is a TRUE MIRROR
+
+**Line 116 WIPES the Pages repo before line 117 copies into it**:
+`find "$REPO" -mindepth 1 -maxdepth 1 ! -name .git -exec rm -rf {} +`, then
+`cp -a "$SITE/." "$REPO/"`. So this is a mirror and not an overlay, and it
+cuts both ways: **removing a file from `site/` removes it from the live
+site.** There are no orphans and no file survives that `site/` has stopped
+carrying. Confirmed 2026-09-09 by unpublishing food.html and neuron.html:
+the dry run listed 14 `D` entries - two pages, ten figures, two archives -
+and `git add -A` in the mirror staged every one.
+
+This entry quoted line 117 alone until 2026-09-09 and read as though the
+copy were the whole operation, which implies additions and overwrites but
+no deletions. Both halves are load-bearing: 117 is why uncommitted work
+ships, 116 is why an unpublish actually unpublishes.
+
 
 Line 117 is `cp -a "$SITE/." "$REPO/"`. So **"committed" and "publishable"
 are different states**, and `--dry-run` reports a diff of the **working

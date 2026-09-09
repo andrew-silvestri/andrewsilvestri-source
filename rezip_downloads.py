@@ -155,8 +155,13 @@ TARGETS = [
     # to about 400 MB.
     target("continents", "continents-code.zip", keep={"outputs"},
            skip=("data/raw", "data/raw/*", "outputs/*.png")),
-    target("food", "food-code.zip", keep={"outputs"},
-           skip=("data/raw", "data/raw/*", "outputs/*.png")),
+    # food-code.zip retired with its page on 2026-09-09: food.html was
+    # unpublished at Andrew's request, for now, and the last build is
+    # unpublished/downloads/food-code.zip. The TARGET goes with the page,
+    # not just the archive: a target left here rebuilds the zip straight
+    # back into site/downloads/ on the next run, and an unpublish a later
+    # rezip undoes is not an unpublish. food/ itself is untouched; put
+    # this line back to republish. Same shape as bookshelf above.
     # Economy is not time: the model, both open cohort tables (CC BY, so they
     # ship and the page can be rebuilt from the archive alone), the payload and
     # the tests. Not the figures, which are the site's assets.
@@ -190,8 +195,9 @@ TARGETS = [
     # The measured neuron: the scripts, the frozen census, the opened complete
     # set and the three reconstructions the figures draw; not the 1,500 sampled
     # files, which fetch_data.py pulls again.
-    target("neuron", "neuron-code.zip", keep={"outputs"},
-           skip=("data/_work", "data/_work/*")),
+    # neuron-code.zip retired with its page on 2026-09-09, same reason and
+    # same shape as food above; last build in unpublished/downloads/.
+    # neuron/ is untouched and its suite still runs.
 ]
 
 

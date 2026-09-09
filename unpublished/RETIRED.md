@@ -5,6 +5,24 @@ nothing here ships. Each entry: what it was, when it came off, why. There
 was no note here before 2026-09-05; the list lived in HANDOFF.md section 2,
 which still carries the one-line version.
 
+- **Fat, sugar, salt** - `food.html`, `assets/food_fig1_plane.png`,
+  `food_fig2_null.png`, `food_fig3_pairs.png`, `food_fig4_groups.png`,
+  `downloads/food-code.zip`. Unpublished 2026-09-09 at Andrew's request, for
+  now. The sources stay in `food/` and are untouched; `food/test_food.py`,
+  `fig_food.py` and `update_page.py` all still run, and the page can be
+  regenerated and relinked by putting its tuple back in `rebuild_nav.py`'s
+  `NAV` and its `<h3>` back in `index.html`. The live URL 404s from the
+  publish that followed.
+- **The measured neuron** - `neuron.html`, `assets/neuron_fig1_span.png`
+  through `neuron_fig6_orders.png` (six), `downloads/neuron-code.zip`.
+  Unpublished 2026-09-09 at Andrew's request, for now. Same shape as the
+  above: `neuron/` is untouched and `neuron/test_neuron.py` and
+  `fig_neuron.py` still run. Note that `neuron-app.html` was retired
+  separately on 2026-09-06 for a different and stated reason, below; this
+  entry is the article, and the two should not be read as one decision.
+  With it gone, the **Mind** group holds `beauty.html` alone - which renders
+  as a dropdown, because the length-1 collapse came out of `nav_for()` on
+  2026-09-09. The live URL 404s from the publish that followed.
 - **The bookshelf** - `desktop.html`, `bookshelf-app.html`,
   `assets/bookshelf-demo-*.{webp,png}`, `downloads/bookshelf-code.zip`,
   `build_bookshelf_demo.js`. A wallpaper built in the browser from a

@@ -1,0 +1,2 @@
+2026-09-09	keyed	which=nonlc	species=5	rows=20	cost_usd=0.0005	
+2026-09-09	keyed	which=population	species=9108	rows=44179	cost_usd=0.9108	
