@@ -135,103 +135,109 @@ PAGES = {
          "for the fall in sustainable pace between 5 km and the marathon; "
          "CC BY 4.0."),
     ],
-    "neuron.html": [
-        ("Anchor phrase", "Source", "What it supports"),
-        ("public archive of reconstructed neurons",
-         'Ascoli, Donohue &amp; Halavi, <i>The Journal of Neuroscience</i> '
-         '27(35):9247-9251, 2007, doi:10.1523/JNEUROSCI.2055-07.2007; Tecuatl, '
-         'Ljungquist &amp; Ascoli, <i>FASEB BioAdvances</i> 6(7):207-221, 2024, '
-         'doi:10.1096/fba.2024-00048.',
-         "NeuroMorpho.Org, the archive every count on this page is computed from; "
-         "CC BY 4.0."),
-        ("a figure from electron microscopy",
-         'Shepherd &amp; Harris, <i>The Journal of Neuroscience</i> '
-         '18(20):8300-8310, 1998, doi:10.1523/JNEUROSCI.18-20-08300.1998.',
-         "The 0.17 um calibre of a CA3-to-CA1 axon shaft, the thinnest structure "
-         "a drawing at true proportions would have to render."),
-        ("visible light cannot resolve anything that small",
-         'Huang, Bates &amp; Zhuang, <i>Annual Review of Biochemistry</i> '
-         '78:993-1016, 2009, doi:10.1146/annurev.biochem.77.061906.092014.',
-         "The diffraction limit: 200-300 nm laterally, 500-700 nm axially."),
-        ("cell traced through a whole brain keeps its axon",
-         'Winnubst <i>et al.</i>, <i>Cell</i> 179(1):268-281.e13, 2019, '
-         'doi:10.1016/j.cell.2019.07.042.',
-         "Whole-brain single-neuron reconstruction; more than 85 m of axon across "
-         "more than 1,000 projection neurons."),
-        ("come from one paper",
-         'Yamashita, Vavladeli, Pala, Galan, Crochet, Petersen &amp; Petersen, '
-         '<i>Frontiers in Neuroanatomy</i> 12:33, 2018, doi:10.3389/fnana.2018.00033.',
-         "The projection cells in the complete set; its full text contains no "
-         "statement about shrinkage or a correction, and describes its axon tracing "
-         "as possibly incomplete. CC BY 4.0."),
-        ("The published figure for that is",
-         'van Pelt, van Ooyen &amp; Uylings, <i>Frontiers in Neuroanatomy</i> '
-         '8:54, 2014, doi:10.3389/fnana.2014.00054.',
-         "How much intracortical axon a 300 um slice removes: 48-49%, against "
-         "15-17% of dendrite."),
-        ("loses roughly half its thickness",
-         'Gardella <i>et al.</i>, <i>Journal of Neuroscience Methods</i> '
-         '124(1):45-59, 2003, doi:10.1016/S0165-0270(02)00363-1.',
-         "Measured shrinkage by embedding method; 80 um vibratome sections "
-         "finished at 31.78 um."),
-        ("in the preparation these files come from",
-         'Mohan <i>et al.</i>, <i>Cerebral Cortex</i> 25(12):4839-4853, 2015, '
-         'doi:10.1093/cercor/bhv188.',
-         "63 +/- 10% z shrinkage measured in 350 um slices, and the finding that "
-         "total dendritic length rises only 11 +/- 2% when corrected."),
-        ("leaving depth-derived measurements out of its own analysis",
-         'Gouwens <i>et al.</i>, <i>Nature Neuroscience</i> 22(7):1182-1195, '
-         '2019, doi:10.1038/s41593-019-0417-0.',
-         "The Allen Cell Types morphologies, and the decision to exclude "
-         "z-derived features rather than correct the coordinates."),
-        ("rather than by correcting the coordinates",
-         'Lee <i>et al.</i>, <i>eLife</i> 10:e65482, 2021, '
-         'doi:10.7554/eLife.65482.',
-         "Where a per-cell shrinkage correction is applied: downstream, in the "
-         "Patch-seq pipeline, not in the distributed files."),
-        ("which is the paper that states the shrinkage correction",
-         'Emmenegger, Qi, Wang &amp; Feldmeyer, <i>Cerebral Cortex</i> '
-         '28(4):1439-1457, 2018, doi:10.1093/cercor/bhx352, attributing Marx '
-         '<i>et al.</i>, <i>Nature Protocols</i> 7(2):394-407, 2012, '
-         'doi:10.1038/nprot.2011.449.',
-         "The x1.1 and x2.1 correction factors, and the laboratory whose cells "
-         "make up most of the fully-qualified set."),
-        ("the widths differed by about a factor of two on visually matched segments",
-         'Blackman, Grabuschnig, Legenstein &amp; Sjostrom, <i>Frontiers in '
-         'Neuroanatomy</i> 8:65, 2014, doi:10.3389/fnana.2014.00065.',
-         "The same eight cells reconstructed two ways: 1.80 +/- 0.15 um against "
-         "0.91 +/- 0.09 um."),
-        ("The field's own tracing benchmark excluded diameter",
-         'Gillette, Brown &amp; Ascoli, <i>Neuroinformatics</i> 9(2-3):233-245, '
-         '2011, doi:10.1007/s12021-011-9117-y.',
-         "Diameter left out of the DIADEM competition as too subjective at the "
-         "resolutions used for whole-arbor reconstruction."),
-        ("three experts tracing one dendrite",
-         'Fernholz, Guggiana Nilo, Bonhoeffer &amp; Kist, <i>PLoS Computational '
-         'Biology</i> 20(2):e1011774, 2024, doi:10.1371/journal.pcbi.1011774.',
-         "Inter-operator agreement on a traced arbor, and one person's agreement "
-         "with themselves."),
-        ("which contains no such factor",
-         'Megias, Emri, Freund &amp; Gulyas, <i>Neuroscience</i> '
-         '102(3):527-540, 2001, doi:10.1016/S0306-4522(00)00496-6.',
-         "Where dendritic spines are on a CA1 pyramidal cell; it carries no "
-         "membrane-area factor, though it is often cited for one."),
-        ("from a 2016 study of human cortical cells",
-         'Eyal <i>et al.</i>, <i>eLife</i> 5:e16553, 2016, '
-         'doi:10.7554/eLife.16553.',
-         "The spine membrane-area factor, F = 1.78-2.39, applied only beyond "
-         "60 um from the soma."),
-        ("comes from a 1965 paper on the frog neuromuscular junction",
-         'Katz &amp; Miledi, <i>Proceedings of the Royal Society B</i> '
-         '161(985):483-495, 1965, doi:10.1098/rspb.1965.0016.',
-         "The measured synaptic delay: a minimum of 0.4-0.5 ms and a modal value "
-         "near 0.75 ms, at 20 C in low-calcium Ringer."),
-        ("releases in about a hundred and fifty microseconds",
-         'Sabatini &amp; Regehr, <i>Nature</i> 384(6605):170-172, 1996, '
-         'doi:10.1038/384170a0.',
-         "Transmitter release 150 us after the onset of the presynaptic action "
-         "potential, at physiological temperature."),
-    ],
+    # neuron.html: UNPUBLISHED 2026-09-09 (unpublished/RETIRED.md).
+    # Commented, not deleted: these tuples ARE the citation data for that
+    # page - anchor phrase, source, what it supports - and republishing is
+    # uncommenting rather than rebuilding them from the article. Left live,
+    # the script reported 'does not exist' as a problem on every run, which
+    # teaches a reader to skip the problems block.
+    # "neuron.html": [
+    #     ("Anchor phrase", "Source", "What it supports"),
+    #     ("public archive of reconstructed neurons",
+    #      'Ascoli, Donohue &amp; Halavi, <i>The Journal of Neuroscience</i> '
+    #      '27(35):9247-9251, 2007, doi:10.1523/JNEUROSCI.2055-07.2007; Tecuatl, '
+    #      'Ljungquist &amp; Ascoli, <i>FASEB BioAdvances</i> 6(7):207-221, 2024, '
+    #      'doi:10.1096/fba.2024-00048.',
+    #      "NeuroMorpho.Org, the archive every count on this page is computed from; "
+    #      "CC BY 4.0."),
+    #     ("a figure from electron microscopy",
+    #      'Shepherd &amp; Harris, <i>The Journal of Neuroscience</i> '
+    #      '18(20):8300-8310, 1998, doi:10.1523/JNEUROSCI.18-20-08300.1998.',
+    #      "The 0.17 um calibre of a CA3-to-CA1 axon shaft, the thinnest structure "
+    #      "a drawing at true proportions would have to render."),
+    #     ("visible light cannot resolve anything that small",
+    #      'Huang, Bates &amp; Zhuang, <i>Annual Review of Biochemistry</i> '
+    #      '78:993-1016, 2009, doi:10.1146/annurev.biochem.77.061906.092014.',
+    #      "The diffraction limit: 200-300 nm laterally, 500-700 nm axially."),
+    #     ("cell traced through a whole brain keeps its axon",
+    #      'Winnubst <i>et al.</i>, <i>Cell</i> 179(1):268-281.e13, 2019, '
+    #      'doi:10.1016/j.cell.2019.07.042.',
+    #      "Whole-brain single-neuron reconstruction; more than 85 m of axon across "
+    #      "more than 1,000 projection neurons."),
+    #     ("come from one paper",
+    #      'Yamashita, Vavladeli, Pala, Galan, Crochet, Petersen &amp; Petersen, '
+    #      '<i>Frontiers in Neuroanatomy</i> 12:33, 2018, doi:10.3389/fnana.2018.00033.',
+    #      "The projection cells in the complete set; its full text contains no "
+    #      "statement about shrinkage or a correction, and describes its axon tracing "
+    #      "as possibly incomplete. CC BY 4.0."),
+    #     ("The published figure for that is",
+    #      'van Pelt, van Ooyen &amp; Uylings, <i>Frontiers in Neuroanatomy</i> '
+    #      '8:54, 2014, doi:10.3389/fnana.2014.00054.',
+    #      "How much intracortical axon a 300 um slice removes: 48-49%, against "
+    #      "15-17% of dendrite."),
+    #     ("loses roughly half its thickness",
+    #      'Gardella <i>et al.</i>, <i>Journal of Neuroscience Methods</i> '
+    #      '124(1):45-59, 2003, doi:10.1016/S0165-0270(02)00363-1.',
+    #      "Measured shrinkage by embedding method; 80 um vibratome sections "
+    #      "finished at 31.78 um."),
+    #     ("in the preparation these files come from",
+    #      'Mohan <i>et al.</i>, <i>Cerebral Cortex</i> 25(12):4839-4853, 2015, '
+    #      'doi:10.1093/cercor/bhv188.',
+    #      "63 +/- 10% z shrinkage measured in 350 um slices, and the finding that "
+    #      "total dendritic length rises only 11 +/- 2% when corrected."),
+    #     ("leaving depth-derived measurements out of its own analysis",
+    #      'Gouwens <i>et al.</i>, <i>Nature Neuroscience</i> 22(7):1182-1195, '
+    #      '2019, doi:10.1038/s41593-019-0417-0.',
+    #      "The Allen Cell Types morphologies, and the decision to exclude "
+    #      "z-derived features rather than correct the coordinates."),
+    #     ("rather than by correcting the coordinates",
+    #      'Lee <i>et al.</i>, <i>eLife</i> 10:e65482, 2021, '
+    #      'doi:10.7554/eLife.65482.',
+    #      "Where a per-cell shrinkage correction is applied: downstream, in the "
+    #      "Patch-seq pipeline, not in the distributed files."),
+    #     ("which is the paper that states the shrinkage correction",
+    #      'Emmenegger, Qi, Wang &amp; Feldmeyer, <i>Cerebral Cortex</i> '
+    #      '28(4):1439-1457, 2018, doi:10.1093/cercor/bhx352, attributing Marx '
+    #      '<i>et al.</i>, <i>Nature Protocols</i> 7(2):394-407, 2012, '
+    #      'doi:10.1038/nprot.2011.449.',
+    #      "The x1.1 and x2.1 correction factors, and the laboratory whose cells "
+    #      "make up most of the fully-qualified set."),
+    #     ("the widths differed by about a factor of two on visually matched segments",
+    #      'Blackman, Grabuschnig, Legenstein &amp; Sjostrom, <i>Frontiers in '
+    #      'Neuroanatomy</i> 8:65, 2014, doi:10.3389/fnana.2014.00065.',
+    #      "The same eight cells reconstructed two ways: 1.80 +/- 0.15 um against "
+    #      "0.91 +/- 0.09 um."),
+    #     ("The field's own tracing benchmark excluded diameter",
+    #      'Gillette, Brown &amp; Ascoli, <i>Neuroinformatics</i> 9(2-3):233-245, '
+    #      '2011, doi:10.1007/s12021-011-9117-y.',
+    #      "Diameter left out of the DIADEM competition as too subjective at the "
+    #      "resolutions used for whole-arbor reconstruction."),
+    #     ("three experts tracing one dendrite",
+    #      'Fernholz, Guggiana Nilo, Bonhoeffer &amp; Kist, <i>PLoS Computational '
+    #      'Biology</i> 20(2):e1011774, 2024, doi:10.1371/journal.pcbi.1011774.',
+    #      "Inter-operator agreement on a traced arbor, and one person's agreement "
+    #      "with themselves."),
+    #     ("which contains no such factor",
+    #      'Megias, Emri, Freund &amp; Gulyas, <i>Neuroscience</i> '
+    #      '102(3):527-540, 2001, doi:10.1016/S0306-4522(00)00496-6.',
+    #      "Where dendritic spines are on a CA1 pyramidal cell; it carries no "
+    #      "membrane-area factor, though it is often cited for one."),
+    #     ("from a 2016 study of human cortical cells",
+    #      'Eyal <i>et al.</i>, <i>eLife</i> 5:e16553, 2016, '
+    #      'doi:10.7554/eLife.16553.',
+    #      "The spine membrane-area factor, F = 1.78-2.39, applied only beyond "
+    #      "60 um from the soma."),
+    #     ("comes from a 1965 paper on the frog neuromuscular junction",
+    #      'Katz &amp; Miledi, <i>Proceedings of the Royal Society B</i> '
+    #      '161(985):483-495, 1965, doi:10.1098/rspb.1965.0016.',
+    #      "The measured synaptic delay: a minimum of 0.4-0.5 ms and a modal value "
+    #      "near 0.75 ms, at 20 C in low-calcium Ringer."),
+    #     ("releases in about a hundred and fifty microseconds",
+    #      'Sabatini &amp; Regehr, <i>Nature</i> 384(6605):170-172, 1996, '
+    #      'doi:10.1038/384170a0.',
+    #      "Transmitter release 150 us after the onset of the presynaptic action "
+    #      "potential, at physiological temperature."),
+    # ],
     "beauty.html": [
         ("Anchor phrase", "Source", "What it supports"),
         ("AVONET gives body mass",
@@ -457,60 +463,66 @@ PAGES = {
          "their captions is an area claim and because its pole line keeps the "
          "circumpolar scenario legible."),
     ],
-    "food.html": [
-        ("Anchor phrase", "Source", "What it supports"),
-        ("quantitative definition",
-         'Fazzino, Rohde &amp; Sullivan, <i>Obesity</i> 27(11):1761-1768, 2019, '
-         'doi:10.1002/oby.22639.',
-         "The three threshold pairs, how they were drawn from 75 named foods, "
-         "and the 62% of FNDDS 2015-16 items, the fresh foods not captured and "
-         "the reduced-content products that were."),
-        ("Human milk, the one whole food",
-         'DiFeliceantonio <i>et al.</i>, <i>Cell Metabolism</i> 28(1):33-44, 2018, '
-         'doi:10.1016/j.cmet.2018.05.018.',
-         "Foods combining fat and carbohydrate are valued above equally liked "
-         "fat-only or carbohydrate-only foods; the authors name breast milk as "
-         "the natural exception."),
-        ("rated 52 foods",
-         'Rogers, Vural, Flynn &amp; Brunstrom, <i>Appetite</i> 201:107596, 2024, '
-         'doi:10.1016/j.appet.2024.107596.',
-         "No difference in rated palatability between foods meeting the "
-         "hyper-palatable rule and foods not meeting it."),
-        ("rate 436 foods",
-         'Finlayson <i>et al.</i>, <i>Appetite</i> 213:108029, 2025.',
-         "Nutrient content explains about a fifth of rated liking."),
-        ("1988 to 2018",
-         'Demeke, Rohde, Chollet-Hinton, Sutton, L&rsquo;Insalata &amp; Fazzino, '
-         '<i>Public Health Nutrition</i> 26(1):182-189, 2023, '
-         'doi:10.1017/S1368980022001227.',
-         "Share of items meeting the rule in the 1988, 2001 and 2017-18 US "
-         "survey databases, and the odds for items present in all three."),
-        ("store shelves met the rule",
-         'Fazzino, Bristi, Chollet-Hinton &amp; Sutton, <i>Public Health '
-         'Nutrition</i> 29(1):e110, 2026, doi:10.1017/S1368980026102614.',
-         "Share of store items and of household purchases meeting the rule, "
-         "Circana scanner data 2015-2018."),
-        ("moderate overlap",
-         'Sutton, Stratton, L&rsquo;Insalata &amp; Fazzino, <i>Obesity</i> 32(1):166-175, '
-         '2024, doi:10.1002/oby.23897.',
-         "The 40-70% overlap between the hyper-palatable rule, the NOVA "
-         "ultra-processed class and high energy density."),
-        ("SR Legacy release of April 2018",
-         'U.S. Department of Agriculture, Agricultural Research Service, '
-         '<i>FoodData Central</i>, SR Legacy, April 2018 release (CC0).',
-         "Every computed number on the page: energy, fat, carbohydrate, sugar, "
-         "fibre and sodium per 100 g for each food, and the food groups."),
-        ("pleasantness peaks",
-         'Moskowitz, Kluter, Westerling &amp; Jacobs, <i>Science</i> '
-         '184(4136):583-585, 1974.',
-         "Perceived sweetness rises with sucrose concentration while "
-         "pleasantness rises and then falls."),
-        ("Sadler and colleagues",
-         'Sadler, McNulty &amp; Gibson, <i>Critical Reviews in Food Science and '
-         'Nutrition</i> 55(3):338-356, 2015.',
-         "The inverse fat-sugar relation in diets on a share-of-energy basis "
-         "is partly arithmetic."),
-    ],
+    # food.html: UNPUBLISHED 2026-09-09 (unpublished/RETIRED.md).
+    # Commented, not deleted: these tuples ARE the citation data for that
+    # page - anchor phrase, source, what it supports - and republishing is
+    # uncommenting rather than rebuilding them from the article. Left live,
+    # the script reported 'does not exist' as a problem on every run, which
+    # teaches a reader to skip the problems block.
+    # "food.html": [
+    #     ("Anchor phrase", "Source", "What it supports"),
+    #     ("quantitative definition",
+    #      'Fazzino, Rohde &amp; Sullivan, <i>Obesity</i> 27(11):1761-1768, 2019, '
+    #      'doi:10.1002/oby.22639.',
+    #      "The three threshold pairs, how they were drawn from 75 named foods, "
+    #      "and the 62% of FNDDS 2015-16 items, the fresh foods not captured and "
+    #      "the reduced-content products that were."),
+    #     ("Human milk, the one whole food",
+    #      'DiFeliceantonio <i>et al.</i>, <i>Cell Metabolism</i> 28(1):33-44, 2018, '
+    #      'doi:10.1016/j.cmet.2018.05.018.',
+    #      "Foods combining fat and carbohydrate are valued above equally liked "
+    #      "fat-only or carbohydrate-only foods; the authors name breast milk as "
+    #      "the natural exception."),
+    #     ("rated 52 foods",
+    #      'Rogers, Vural, Flynn &amp; Brunstrom, <i>Appetite</i> 201:107596, 2024, '
+    #      'doi:10.1016/j.appet.2024.107596.',
+    #      "No difference in rated palatability between foods meeting the "
+    #      "hyper-palatable rule and foods not meeting it."),
+    #     ("rate 436 foods",
+    #      'Finlayson <i>et al.</i>, <i>Appetite</i> 213:108029, 2025.',
+    #      "Nutrient content explains about a fifth of rated liking."),
+    #     ("1988 to 2018",
+    #      'Demeke, Rohde, Chollet-Hinton, Sutton, L&rsquo;Insalata &amp; Fazzino, '
+    #      '<i>Public Health Nutrition</i> 26(1):182-189, 2023, '
+    #      'doi:10.1017/S1368980022001227.',
+    #      "Share of items meeting the rule in the 1988, 2001 and 2017-18 US "
+    #      "survey databases, and the odds for items present in all three."),
+    #     ("store shelves met the rule",
+    #      'Fazzino, Bristi, Chollet-Hinton &amp; Sutton, <i>Public Health '
+    #      'Nutrition</i> 29(1):e110, 2026, doi:10.1017/S1368980026102614.',
+    #      "Share of store items and of household purchases meeting the rule, "
+    #      "Circana scanner data 2015-2018."),
+    #     ("moderate overlap",
+    #      'Sutton, Stratton, L&rsquo;Insalata &amp; Fazzino, <i>Obesity</i> 32(1):166-175, '
+    #      '2024, doi:10.1002/oby.23897.',
+    #      "The 40-70% overlap between the hyper-palatable rule, the NOVA "
+    #      "ultra-processed class and high energy density."),
+    #     ("SR Legacy release of April 2018",
+    #      'U.S. Department of Agriculture, Agricultural Research Service, '
+    #      '<i>FoodData Central</i>, SR Legacy, April 2018 release (CC0).',
+    #      "Every computed number on the page: energy, fat, carbohydrate, sugar, "
+    #      "fibre and sodium per 100 g for each food, and the food groups."),
+    #     ("pleasantness peaks",
+    #      'Moskowitz, Kluter, Westerling &amp; Jacobs, <i>Science</i> '
+    #      '184(4136):583-585, 1974.',
+    #      "Perceived sweetness rises with sucrose concentration while "
+    #      "pleasantness rises and then falls."),
+    #     ("Sadler and colleagues",
+    #      'Sadler, McNulty &amp; Gibson, <i>Critical Reviews in Food Science and '
+    #      'Nutrition</i> 55(3):338-356, 2015.',
+    #      "The inverse fat-sugar relation in diets on a share-of-energy basis "
+    #      "is partly arithmetic."),
+    # ],
     "storage.html": [
         ("Anchor phrase", "Source", "What it supports"),
         ("hourly prices",
@@ -688,11 +700,24 @@ def build(page, refs):
         f'<li id="ref{f["n"]}"><span class="src">{f["src"]}</span>'
         f'<span class="what">{f["what"]}</span></li>'
         for f in found)
+    # NO STANDING LINE UNDER <h2>Sources</h2>, and this is deliberate.
+    # There was one until 2026-09-09: "Numbered markers in the text above
+    # point here. Emission factors, cost ranges and lifespan figures are
+    # representative values from these sources, not measurements made for
+    # this project." It was written for climate-cost.html, where every
+    # word of it is true, and then emitted verbatim on all eight pages
+    # carrying a Sources list. On beauty.html it promised emission factors
+    # under a list of ornithology papers; on continents.html, under
+    # plate-motion models; on shoes.html, under running trials.
+    #
+    # One page's sentence became eight pages' boilerplate because the
+    # block is generated in one place - the same property that makes the
+    # rest of this script worth having. The rule is narrow: a generator
+    # may emit STRUCTURE for every page and may not emit a CLAIM, because
+    # a claim is about a particular page's sources and this script does
+    # not know what they are. A page that needs to say what its sources
+    # are for says it in its own prose, where it can be checked.
     block = (f'\n<h2>Sources</h2>\n'
-             f'<p class="small">Numbered markers in the text above point here. '
-             f'Emission factors, cost ranges and lifespan figures are '
-             f'representative values from these sources, not measurements '
-             f'made for this project.</p>\n'
              f'<ol class="refs">{items}</ol>\n\n')
     t = t[:body_end] + block + t[body_end:]
     return t, problems
