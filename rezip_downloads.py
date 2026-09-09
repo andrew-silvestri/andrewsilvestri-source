@@ -125,7 +125,14 @@ ATLAS_FILES = {
 
 
 TARGETS = [
-    files_target("atlas-code.zip", ATLAS_FILES),
+    # atlas-code.zip retired with the Atlas group on 2026-09-09: atlas.html,
+    # atlas-app.html, model.html and library.html were unpublished at
+    # Andrew's request, for now. Last build in unpublished/downloads/,
+    # alongside model-code.zip and deliverables-code.zip, which had no
+    # generator. The TARGET goes with the pages for the same reason food's
+    # and neuron's did: a target left here rebuilds the zip into
+    # site/downloads/ on the next run. ATLAS_FILES above is kept - it is
+    # the list of what the archive held, and it is what to restore from.
     target("heat", "heat-code.zip"),
     target("storage", "storage-code.zip"),
     # bookshelf-code.zip retired with its app on 2026-09-05 (PHASE5): the last

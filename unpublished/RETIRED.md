@@ -5,6 +5,23 @@ nothing here ships. Each entry: what it was, when it came off, why. There
 was no note here before 2026-09-05; the list lived in HANDOFF.md section 2,
 which still carries the one-line version.
 
+- **The atlas** - `atlas.html`, `atlas-app.html`, `model.html`,
+  `library.html`, eighteen figures (`assets/02_`-`14_*.png`, `atlas_layers.png`,
+  `hero_globe.png`, `energy_model_throughlines.png`,
+  `model_propagation_step.png`, `atlas-app.js`, `atlas-data.js`), and
+  `downloads/atlas-code.zip`, `model-code.zip`, `deliverables-code.zip`.
+  Unpublished 2026-09-09 at Andrew's request, for now. This was the site's
+  centrepiece: the first group in the bar, the first section on index.html, and
+  what the home page's `<meta name="description">` said the site was about -
+  all three were rewritten the same day. The sources are untouched in the atlas
+  build scripts and `19 Atlas v6/`; `assets/atlas-data.js` is the 9.6 MB
+  payload, gitignored where it was and gitignored where it is now, and it is
+  the one piece that is expensive to regenerate (`build_atlas_global.py` needs
+  the raw data and a day). Restoring means putting back four tuples in
+  `rebuild_nav.py`, the index section, the description, the `ATLAS_FILES`
+  target in `rezip_downloads.py`, two `tests/test_generators.py` entries
+  (`update_atlas_pages.py` and `build_layer_diagram.py`), three `PAGES` names
+  and three `code.html` rows. The live URLs 404 from the publish that followed.
 - **Fat, sugar, salt** - `food.html`, `assets/food_fig1_plane.png`,
   `food_fig2_null.png`, `food_fig3_pairs.png`, `food_fig4_groups.png`,
   `downloads/food-code.zip`. Unpublished 2026-09-09 at Andrew's request, for
@@ -20,9 +37,13 @@ which still carries the one-line version.
   `fig_neuron.py` still run. Note that `neuron-app.html` was retired
   separately on 2026-09-06 for a different and stated reason, below; this
   entry is the article, and the two should not be read as one decision.
-  With it gone, the **Mind** group holds `beauty.html` alone - which renders
-  as a dropdown, because the length-1 collapse came out of `nav_for()` on
-  2026-09-09. The live URL 404s from the publish that followed.
+  With it gone, the **Mind** group held `beauty.html` alone for a few hours -
+  and then Mind went too, later the same day, because beauty was never a
+  neuroscience page. It is bibliometrics about birds and it had landed in Mind
+  only because Mind was the group that existed. Both pages that Mind ever held
+  are now elsewhere: neuron here, beauty in **Wildlife** with the longevity
+  quotient. Mind lasted one day. The live URL 404s from the publish that
+  followed.
 - **The bookshelf** - `desktop.html`, `bookshelf-app.html`,
   `assets/bookshelf-demo-*.{webp,png}`, `downloads/bookshelf-code.zip`,
   `build_bookshelf_demo.js`. A wallpaper built in the browser from a

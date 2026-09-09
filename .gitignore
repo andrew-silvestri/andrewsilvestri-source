@@ -2,6 +2,9 @@ __pycache__/
 node_modules
 backups/
 site/assets/atlas-data.js
+# and where it went when the atlas group was unpublished, 2026-09-09.
+# 9.6 MB, and the one atlas asset that is expensive to regenerate.
+unpublished/assets/atlas-data.js
 site/downloads/
 _deslop/
 site/_preview/

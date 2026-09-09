@@ -9,9 +9,10 @@ shipped a template three palette lines behind site/. Each of those was a
 script that would have reverted a deliberate change the next time someone
 trusted it. The check is cheap: run it, diff it, every time.
 
-Scope: the text generators (pages, apps, nav, stamps, image dims), the
-download archives, and one figure builder, the layer diagram (the home page's
-hero, read from the payload). The other figure builders are out of scope -
+Scope: the text generators (pages, apps, nav, stamps, image dims) and the
+download archives. The layer diagram was the one figure builder in scope until
+2026-09-09, when the atlas group was unpublished and the picture it drew left
+site/ with it. The other figure builders are out of scope -
 each carries its own layout audit(), and PNG bytes depend on the matplotlib
 build.
 build_site.py is retired (HANDOFF: never run it; last valid 2026-08-01) and
@@ -83,8 +84,10 @@ def _ignore(root_rel):
 #                           that is supposed to be identical to it
 GENERATORS = [
     ("nav: rebuild_nav.py", ["rebuild_nav.py"], ".", "site"),
-    ("atlas pages: update_atlas_pages.py --apply",
-     ["update_atlas_pages.py", "--apply"], ".", "site"),
+    # The atlas group was unpublished 2026-09-09, so update_atlas_pages.py
+    # no longer owns a shipped file and FAILED here rather than drifting.
+    # The generator is untouched; what is removed is the claim that it
+    # writes into site/. Same shape as food and neuron above.
     ("longevity page: longevity-quotient/update_page.py --apply",
      ["update_page.py", "--apply"], "longevity-quotient", "site"),
     ("continents page: continents/update_page.py --apply",
@@ -129,7 +132,12 @@ GENERATORS = [
     # any of those move, the shipped PNGs must move with them. Agg is
     # deterministic on one machine and one matplotlib, which is what this
     # check runs on.
-    ("layer diagram: build_layer_diagram.py", ["build_layer_diagram.py"], ".", "site"),
+    # The layer diagram went with the atlas group on 2026-09-09: it drew
+    # atlas_layers.png, which was the picture above the atlas table, and
+    # that page is unpublished. It stopped being the home page's first
+    # screen on 2026-09-06 when hero.js took over, so nothing in site/
+    # carries it now and this entry FAILED rather than drifting. The
+    # builder is untouched and the three renders are in unpublished/assets/.
     # code.html's archive rows stated file counts and sizes that were typed and
     # drifted every time an archive was rebuilt - nine of sixteen disagreed on
     # 2026-09-07, longevity worst at 11 files/96KB against 21 files/811KB. The
