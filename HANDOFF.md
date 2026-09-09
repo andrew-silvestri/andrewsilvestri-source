@@ -1432,9 +1432,31 @@ So a clone of this repository serves `code.html` with sixteen dead links until
 
 ---
 
-## 11. Current state, 8 September 2026
+## 11. Current state, 9 September 2026
 
-**Live: the mirror's `27bf8e1`**, 2026-09-08 — the dropdown's current item is
+**Live: the mirror's `5751d70`**, 2026-09-09 — Climate and Mind, one page each,
+and a one-item group renders as a dropdown. Master is `cdc7535`, eighteen files.
+The bar goes seven items to nine: Home / Atlas / Energy / Climate / Running /
+Mind / Misc / Code, About pinned right. `nav_for()`'s length-1 collapse was
+removed to make it possible and its argument is quoted where it stood — the
+price is two taps to reach one page below 620px. The full account is under
+"The nav, as shipped" below; this line is the head, not the description.
+**Verified live rather than assumed** (trap 3 — browser caching looks exactly
+like a change that did not take, and `bust_cache.py` stamped 0 pages this time
+because no asset content changed, so no page got a new query string): six pages
+200, and the served `nav.top` is **byte-identical to the committed one** on all
+six, `climate-cost.html` and `neuron.html` included, both carrying `ddbtn on`
+and their single `a.on`.
+**`rebuild_nav.py` was also writing CRLF** and is fixed — trap 32, the third
+occurrence in four days.
+**THE MIRROR COMMIT'S SUBJECT IS NOT A DESCRIPTION OF THIS CHANGE.**
+`publish.sh` writes a canned subject on every publish — "Rebuild site: globe
+atlas, 3D brain, wider layout, corrected models" — which has not accurately
+described a publish for some time. It is the script's constant, not a claim
+about what shipped. **This section is where the real description lives**, for
+this publish and every one before it.
+
+Rollback is the mirror's `27bf8e1`, 2026-09-08 — the dropdown's current item is
 readable. It was **`#625C57` on `#245F73`, 1.08:1**, a filled highlight with
 unreadable text on it, and it had been live since the indent fix the day before
 put `nav.top` in front of `.ddmenu a` — (0,2,2) against a bare `.ddmenu a.on` at
