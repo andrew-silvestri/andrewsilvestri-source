@@ -5,6 +5,21 @@ nothing here ships. Each entry: what it was, when it came off, why. There
 was no note here before 2026-09-05; the list lived in HANDOFF.md section 2,
 which still carries the one-line version.
 
+- **Running** - `shoes.html`, `economy.html`, `assets/shoes_f1_measurements.png`
+  through `shoes_f4_time.png` (four), `assets/economy_fig1_elasticity.png`
+  through `economy_fig4_drift.png` (four), and `downloads/shoes-code.zip`,
+  `economy-code.zip`. Retired 2026-09-09 at Andrew's request - *"hide the two
+  running pages... I'll republish later, but retire for now"*. **Both are
+  expected back**, and this is not a judgement on either. The whole group went,
+  so the bar lost a heading rather than a page: it is seven items now, and was
+  nine this morning. `shoes/` and `economy/` are untouched, `shoes/test_shoes.py`
+  and `economy/test_economy.py` still run, and republishing is uncommenting -
+  the `NAV` tuples, the two `rezip_downloads.py` targets, the two
+  `tests/test_generators.py` entries and `add_citations.py`'s `economy.html`
+  citation data are all commented in place rather than deleted. `shoes.html` was
+  never in `add_citations.PAGES`; its Sources block is typed into the page.
+  Two `code.html` rows, two `PAGES` names and two `<loc>` came out. The live
+  URLs 404 from the publish that followed.
 - **The atlas** - `atlas.html`, `atlas-app.html`, `model.html`,
   `library.html`, eighteen figures (`assets/02_`-`14_*.png`, `atlas_layers.png`,
   `hero_globe.png`, `energy_model_throughlines.png`,

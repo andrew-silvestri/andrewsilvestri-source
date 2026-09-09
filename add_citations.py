@@ -77,64 +77,67 @@ PAGES = {
          'NREL, <i>Annual Technology Baseline</i> 2024, financial assumptions.',
          "Discount rate, economic life and the levelisation method."),
     ],
-    "economy.html": [
-        ("Anchor phrase", "Source", "What it supports"),
-        ("cost-of-running curve",
-         'Kipp, Kram &amp; Hoogkamer, <i>Frontiers in Physiology</i> 10:79, 2019, '
-         'doi:10.3389/fphys.2019.00079.',
-         "The six published cost-of-running curves with Pugh's air-resistance "
-         "term, the equations this page computes with, and the reconciliation "
-         "with the measured 3000 m result; open access, CC BY."),
-        ("3000 meter race times",
-         'Hoogkamer, Kipp, Spiering &amp; Kram, <i>Medicine &amp; Science in Sports '
-         '&amp; Exercise</i> 48(11):2175-2180, 2016, '
-         'doi:10.1249/MSS.0000000000001012.',
-         "The measured exchange rate: 100 g per shoe cost 1.11% of metabolic "
-         "rate and 0.78% of 3000 m time in 18 trained men."),
-        ("decomposes into three measured quantities",
-         'Joyner, <i>Journal of Applied Physiology</i> 70(2):683-687, 1991, '
-         'doi:10.1152/jappl.1991.70.2.683; and Joyner &amp; Coyle, <i>Journal of '
-         'Physiology</i> 586(1):35-44, 2008, doi:10.1113/jphysiol.2007.143834.',
-         "The form of the decomposition and the ranges its three terms take in "
-         "trained and elite runners."),
-        ("carrying all three terms",
-         'Lanferdini <i>et al.</i>, <i>Frontiers in Physiology</i> 11:979, 2020, '
-         'doi:10.3389/fphys.2020.00979, Supplementary Table 1.',
-         "Twenty recreational men with maximal oxygen uptake, both ventilatory "
-         "thresholds, running economy and a 3000 m time; CC BY 4.0."),
-        ("two hours of running raised",
-         'Zanini, Folland &amp; Blagrove, <i>Scandinavian Journal of Medicine &amp; '
-         'Science in Sports</i> 35:e70076, 2025.',
-         "The within-race decay of all three terms over 90 and 120 minutes in "
-         "14 trained runners."),
-        ("critical speed a runner holds",
-         'Smyth &amp; Muniz-Pumares, <i>Medicine &amp; Science in Sports &amp; '
-         'Exercise</i> 52(12):2637-2645, 2020.',
-         "The share of critical speed held against finish time, over 25,000 "
-         "marathons; the underlying training data are held under a research "
-         "license and are not public."),
-        ("fourth determinant",
-         'Jones, <i>Journal of Physiology</i> 602(17):4113-4128, 2024, '
-         'doi:10.1113/JP284205.',
-         "The argument that resistance to within-race decay is an independent "
-         "determinant the three-term model omits."),
-        ("advanced footwear disagree",
-         'Effect sizes collected from thirteen papers; the individual range is '
-         'Knopp <i>et al.</i>, <i>Sports Medicine</i> 53:1255-1271, 2023.',
-         "The spread of published advanced-footwear effect sizes, quoted here "
-         "and analyzed on its own page."),
-        ("variance in the threshold",
-         'Coyle, <i>Exercise and Sport Sciences Reviews</i> 23:25-63, 1995, '
-         'PMID 7556353.',
-         "That maximal oxygen uptake explains 31-72% of the variance in the "
-         "lactate threshold, so the three terms are not independent."),
-        ("2,303 recreational runners",
-         'Vickers &amp; Vertosick, <i>BMC Sports Science, Medicine and '
-         'Rehabilitation</i> 8:26, 2016, doi:10.1186/s13102-016-0052-y.',
-         "Self-reported race times at six distances for 2,303 runners, used "
-         "for the fall in sustainable pace between 5 km and the marathon; "
-         "CC BY 4.0."),
-    ],
+    # economy.html: RETIRED 2026-09-09 with the Running group.
+    # Commented, not deleted - these tuples are the citation data and
+    # republishing is uncommenting. Same as food and neuron above.
+    # "economy.html": [
+    #     ("Anchor phrase", "Source", "What it supports"),
+    #     ("cost-of-running curve",
+    #      'Kipp, Kram &amp; Hoogkamer, <i>Frontiers in Physiology</i> 10:79, 2019, '
+    #      'doi:10.3389/fphys.2019.00079.',
+    #      "The six published cost-of-running curves with Pugh's air-resistance "
+    #      "term, the equations this page computes with, and the reconciliation "
+    #      "with the measured 3000 m result; open access, CC BY."),
+    #     ("3000 meter race times",
+    #      'Hoogkamer, Kipp, Spiering &amp; Kram, <i>Medicine &amp; Science in Sports '
+    #      '&amp; Exercise</i> 48(11):2175-2180, 2016, '
+    #      'doi:10.1249/MSS.0000000000001012.',
+    #      "The measured exchange rate: 100 g per shoe cost 1.11% of metabolic "
+    #      "rate and 0.78% of 3000 m time in 18 trained men."),
+    #     ("decomposes into three measured quantities",
+    #      'Joyner, <i>Journal of Applied Physiology</i> 70(2):683-687, 1991, '
+    #      'doi:10.1152/jappl.1991.70.2.683; and Joyner &amp; Coyle, <i>Journal of '
+    #      'Physiology</i> 586(1):35-44, 2008, doi:10.1113/jphysiol.2007.143834.',
+    #      "The form of the decomposition and the ranges its three terms take in "
+    #      "trained and elite runners."),
+    #     ("carrying all three terms",
+    #      'Lanferdini <i>et al.</i>, <i>Frontiers in Physiology</i> 11:979, 2020, '
+    #      'doi:10.3389/fphys.2020.00979, Supplementary Table 1.',
+    #      "Twenty recreational men with maximal oxygen uptake, both ventilatory "
+    #      "thresholds, running economy and a 3000 m time; CC BY 4.0."),
+    #     ("two hours of running raised",
+    #      'Zanini, Folland &amp; Blagrove, <i>Scandinavian Journal of Medicine &amp; '
+    #      'Science in Sports</i> 35:e70076, 2025.',
+    #      "The within-race decay of all three terms over 90 and 120 minutes in "
+    #      "14 trained runners."),
+    #     ("critical speed a runner holds",
+    #      'Smyth &amp; Muniz-Pumares, <i>Medicine &amp; Science in Sports &amp; '
+    #      'Exercise</i> 52(12):2637-2645, 2020.',
+    #      "The share of critical speed held against finish time, over 25,000 "
+    #      "marathons; the underlying training data are held under a research "
+    #      "license and are not public."),
+    #     ("fourth determinant",
+    #      'Jones, <i>Journal of Physiology</i> 602(17):4113-4128, 2024, '
+    #      'doi:10.1113/JP284205.',
+    #      "The argument that resistance to within-race decay is an independent "
+    #      "determinant the three-term model omits."),
+    #     ("advanced footwear disagree",
+    #      'Effect sizes collected from thirteen papers; the individual range is '
+    #      'Knopp <i>et al.</i>, <i>Sports Medicine</i> 53:1255-1271, 2023.',
+    #      "The spread of published advanced-footwear effect sizes, quoted here "
+    #      "and analyzed on its own page."),
+    #     ("variance in the threshold",
+    #      'Coyle, <i>Exercise and Sport Sciences Reviews</i> 23:25-63, 1995, '
+    #      'PMID 7556353.',
+    #      "That maximal oxygen uptake explains 31-72% of the variance in the "
+    #      "lactate threshold, so the three terms are not independent."),
+    #     ("2,303 recreational runners",
+    #      'Vickers &amp; Vertosick, <i>BMC Sports Science, Medicine and '
+    #      'Rehabilitation</i> 8:26, 2016, doi:10.1186/s13102-016-0052-y.',
+    #      "Self-reported race times at six distances for 2,303 runners, used "
+    #      "for the fall in sustainable pace between 5 km and the marathon; "
+    #      "CC BY 4.0."),
+    # ],
     # neuron.html: UNPUBLISHED 2026-09-09 (unpublished/RETIRED.md).
     # Commented, not deleted: these tuples ARE the citation data for that
     # page - anchor phrase, source, what it supports - and republishing is

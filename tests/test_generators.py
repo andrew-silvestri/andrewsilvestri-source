@@ -99,8 +99,13 @@ GENERATORS = [
     # what is removed is the claim that they own a shipped file, because they
     # no longer do. Put these two entries back with the pages.
 
-    ("shoes page: shoes/update_page.py --apply",
-     ["update_page.py", "--apply"], "shoes", "site"),
+    # The shoes page generator went with the Running group on 2026-09-09.
+    # Running was retired at Andrew's request, for now; both pages
+    # are in unpublished/. Left registered, these FAILED rather than
+    # drifted, because they write files no longer in site/. The
+    # generators are untouched and both projects' suites still run.
+    # ("shoes page: shoes/update_page.py --apply",
+    # ["update_page.py", "--apply"], "shoes", "site"),
     # add_citations.py owns the markers and the Sources list on every page that
     # has an entry in its PAGES table, and nobody had ever run it into a copy
     # and diffed it. Added 2026-09-05 with the shoes project, which found the
@@ -112,8 +117,9 @@ GENERATORS = [
     # with the guard.
     ("citations: add_citations.py --apply",
      ["add_citations.py", "--apply"], ".", "site"),
-    ("economy page: economy/update_page.py --apply",
-     ["update_page.py", "--apply"], "economy", "site"),
+    # The economy page generator went with the Running group on 2026-09-09.
+    # ("economy page: economy/update_page.py --apply",
+    # ["update_page.py", "--apply"], "economy", "site"),
     ("longevity app: longevity-quotient/build_lq.py",
      ["build_lq.py"], "longevity-quotient",
      [("longevity-quotient/longevity.html", "site/longevity-app.html")]),

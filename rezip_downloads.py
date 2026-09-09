@@ -172,15 +172,23 @@ TARGETS = [
     # Economy is not time: the model, both open cohort tables (CC BY, so they
     # ship and the page can be rebuilt from the archive alone), the payload and
     # the tests. Not the figures, which are the site's assets.
-    target("economy", "economy-code.zip", keep={"outputs"},
-           skip=("data/raw", "data/raw/*", "outputs/*.png")),
+    # economy-code.zip and shoes-code.zip retired with the Running group on
+    # 2026-09-09, for now. Last builds in unpublished/downloads/. The
+    # TARGETS go with the pages: one left here rebuilds its zip into
+    # site/downloads/ on the next run, which is how food's and neuron's
+    # would have come back. economy/ and shoes/ are untouched and both
+    # suites still run; putting these lines back republishes the archives.
+    # target("economy", "economy-code.zip", keep={"outputs"},
+    #        skip=("data/raw", "data/raw/*", "outputs/*.png")),
     # What a fast shoe is worth: the declared table of published effect sizes,
     # the build, the figures and the tests. There is no data/ download to
     # exclude - no public dataset carries these numbers, so data/studies.py is
     # itself the data and ships. Not the figures, which are the site's assets.
-    target("shoes", "shoes-code.zip", keep={"outputs"},
-           skip=("outputs/*.png",)),
-    # Studied, not endangered: the scripts, the open inputs and the payload.
+    # target("shoes", "shoes-code.zip", keep={"outputs"},
+    #        skip=("outputs/*.png",)),
+    # Endangered, and studied: the scripts, the open inputs and the payload.
+    # (This line read "Studied, not endangered" until 2026-09-09 - the thesis
+    # the project was built to show, which the fits reversed.)
     # Not data/raw/ (re-downloaded and hash-checked by the fetch scripts),
     # not the figures, and NOT any file with a Red List category beside a
     # species name - data/iucn_aves.csv and data/birds_joined.csv - because

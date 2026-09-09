@@ -128,38 +128,48 @@ NAV = [
     ("Climate", [
         ("The true climate cost", "climate-cost.html"),
     ]),
-    ("Running", [
-        ("What a fast shoe is worth", "shoes.html"),
-        ("Economy is not time", "economy.html"),
-    ]),
-    # MIND EXISTS AS OF 2026-09-09, WITH ONE PAGE, AND ONLY BECAUSE THE LENGTH-1
-    # COLLAPSE CAME OUT OF nav_for() THE SAME DAY. What stood on the neuron line
-    # in Misc until today, word for word, because it was a promise and it is
-    # being departed from rather than found wrong (trap 15):
+    # RUNNING WAS RETIRED 2026-09-09, at Andrew's request - "hide the two
+    # running pages... I'll republish later, but retire for now". It held
+    # shoes.html and economy.html; both pages, their eight figures and two
+    # archives are in unpublished/ (RETIRED.md). Not a judgement on either
+    # page, and both are expected back.
     #
-    #     "Parked here rather than in a "Mind" group of its own. A group holding
-    #      one page is rendered by nav_for() as a bare link to that page, with
-    #      the category name dropped entirely, so a one-item Mind would have put
-    #      "Mind" on index.html and nothing of the kind in the nav. When the
-    #      beauty project lands, the two of them make Mind and this line moves."
+    # What it was, kept so republishing is restoring rather than rewriting:
+    # ("Running", [
+    # ("What a fast shoe is worth", "shoes.html"),
+    # ("Economy is not time", "economy.html"),
+    # ]),
+    # # MIND EXISTS AS OF 2026-09-09, WITH ONE PAGE, AND ONLY BECAUSE THE LENGTH-1
+    # # COLLAPSE CAME OUT OF nav_for() THE SAME DAY. What stood on the neuron line
+    # # in Misc until today, word for word, because it was a promise and it is
+    # # being departed from rather than found wrong (trap 15):
+    # #
+    # #     "Parked here rather than in a "Mind" group of its own. A group holding
+    # #      one page is rendered by nav_for() as a bare link to that page, with
+    # #      the category name dropped entirely, so a one-item Mind would have put
+    # #      "Mind" on index.html and nothing of the kind in the nav. When the
+    # #      beauty project lands, the two of them make Mind and this line moves."
+    # #
+    # # The condition it waited for was the collapse, and the collapse is gone, so
+    # # Mind is created now with neuron alone. BEAUTY JOINS IT AS A SECOND LEAF
+    # # when it lands, and costs the bar nothing: it goes inside a menu that
+    # # already exists.
+    # #
+    # # Placed between Running and Misc. Andrew specified only that Climate sits
+    # # between Energy and Running; this position was proposed and kept, and it is
+    # # one line to move. It reads in the right direction as the site grows - Mind
+    # # is the group that gains a page, Misc only loses them.
+    # # MIND IS GONE, 2026-09-09. It was created that morning (cdc7535) to
+    # # take neuron.html out of Misc, held neuron alone, then held beauty
+    # # alone when neuron was unpublished a few hours later - and beauty was
+    # # never a neuroscience page. It is bibliometrics about birds, and it
+    # # sat in Mind only because Mind was the group that existed. It is in
+    # # Wildlife now, with the longevity quotient, which is the group both
+    # # pages should always have been in. Mind lasted one day and named
+    # # nothing that is still published.
     #
-    # The condition it waited for was the collapse, and the collapse is gone, so
-    # Mind is created now with neuron alone. BEAUTY JOINS IT AS A SECOND LEAF
-    # when it lands, and costs the bar nothing: it goes inside a menu that
-    # already exists.
-    #
-    # Placed between Running and Misc. Andrew specified only that Climate sits
-    # between Energy and Running; this position was proposed and kept, and it is
-    # one line to move. It reads in the right direction as the site grows - Mind
-    # is the group that gains a page, Misc only loses them.
-    # MIND IS GONE, 2026-09-09. It was created that morning (cdc7535) to
-    # take neuron.html out of Misc, held neuron alone, then held beauty
-    # alone when neuron was unpublished a few hours later - and beauty was
-    # never a neuroscience page. It is bibliometrics about birds, and it
-    # sat in Mind only because Mind was the group that existed. It is in
-    # Wildlife now, with the longevity quotient, which is the group both
-    # pages should always have been in. Mind lasted one day and named
-    # nothing that is still published.
+    # The bar is seven items now: Home / Energy / Climate / Wildlife /
+    # Misc / Code / About. It was nine this morning.
     # Wildlife, 2026-09-09. Both members moved here from groups that were
     # about where they happened to land rather than what they are about:
     # beauty from Mind, which was a neuroscience group, and the longevity
