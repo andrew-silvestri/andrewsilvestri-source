@@ -167,12 +167,12 @@ NAV = [
     # its members. Two pages, so it is a dropdown on the ordinary rule and
     # not on the one-item exception.
     ("Wildlife", [
-        ("Endangered, and studied", "beauty.html"),
         ("Longevity quotient", "longevity.html"),
+        ("Endangered, and studied", "beauty.html"),
     ]),
     ("Misc", [
-        ("Where the ground goes", "continents.html"),
         ("Skylines, played", "skyline.html"),
+        ("Where the ground goes", "continents.html"),
         # "The bookshelf" (desktop.html) retired to unpublished/ on 2026-09-05
         # (PHASE5); the pages were regenerated from this list the same day.
         #
