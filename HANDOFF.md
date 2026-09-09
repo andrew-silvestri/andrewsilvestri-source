@@ -1305,6 +1305,43 @@ Read this section. Every item is a real bug that shipped.
     exists on only one page per menu**, so an unattended crawl of 21 pages will
     open no menu and see no `.on` item at all. Part (b) is the new half and is
     what makes it a check on the rule rather than on the palette.
+32. **A check that normalises the very thing that can break sees nothing wrong,
+    and a generator's own change check does exactly that with line endings.**
+    Third occurrence in four days, which is what makes it a class rather than a
+    bug. `.gitattributes` records the first two: **2026-09-06**, restoring
+    `site/` to its declared LF put **seven page generators into drift at once**,
+    all of them writing CRLF through Python's text mode on Windows and passing
+    only because the checked-out tree had drifted to CRLF too; **2026-09-07**,
+    `bust_cache.py` was still writing CRLF, missed in that sweep, and nothing
+    caught it because it happened to stamp nothing for the rest of the session.
+    **2026-09-09**: `rebuild_nav.py` was the third. Its one `open(..., "w")` had
+    no `newline="\n"`, so a nav change rewrote all sixteen pages to CRLF and
+    `tests/test_generators.py` reported **nine drifts where one was real** -
+    eight page generators differing on every line, none of it content.
+
+    **The general form, and it is the part that is new.** `rebuild_nav.py`
+    decides whether to write by comparing the text it read against the text it
+    built. It reads with `open(path, encoding="utf-8")` - universal newlines -
+    so CRLF becomes `\n` on the way in and the comparison can never see a
+    line-ending difference. Run it twice and the second run says **"0 page(s)
+    would be rewritten" while all sixteen files it just wrote are wrong**. The
+    check reads the right artefact (trap 20 satisfied), the comparison is
+    correct, and the defect is invisible **because the reader normalises exactly
+    what broke**. It cannot repair its own damage either; the sixteen pages had
+    to be converted outside the generator.
+
+    This is trap 27 and trap 29's family - a check that cannot see the defect by
+    construction - arriving at file encoding rather than at text substitutions
+    or at pixels. Trap 31 is its neighbour and not the same: there the check
+    sees the state perfectly and calls it a pass because it sits inside the
+    accepted range; here the check is structurally blind to the axis.
+
+    **The cheap tell: when the thing that can go wrong is bytes, compare bytes.**
+    `open(p, "rb").read()` on both sides, or `b"\r\n" in data`, not a text-mode
+    diff. And the fix stays what `.gitattributes` says it is - every generator
+    that writes into the tree passes `newline="\n"` explicitly, and never
+    `newline=""`, which preserves whatever it finds and so agrees with a drifted
+    tree.
 
 ---
 
@@ -1751,18 +1788,97 @@ history, so that nobody has to read eleven write-ups to know it.
 
 ### The nav, as shipped
 
-Six top-level items: **Home / Atlas / Energy / Running / Misc / Code**, plus a
-right-pinned **About** — seven flex children. **The atlas has its own group as of
-2026-09-08.** This block said "Five top-level items" and "the atlas did fold into
-Energy rather than keep a group of its own" until then; both were true when
-written and are the state this replaced. Atlas carries four (atlas-app, atlas,
-model, library), Energy two (heat, storage), Running two, Misc six
-(climate-cost, food, continents, longevity, skyline, neuron). There is **no Mind
-group** — a brief that describes one (Energy / Mind / Running / Misc) is
-describing a plan, not the site. Misc is still the group that will need
-splitting when beauty lands; that decision has not been made.
+Eight top-level items: **Home / Atlas / Energy / Climate / Running / Mind /
+Misc / Code**, plus a right-pinned **About** — nine flex children. **Climate and
+Mind were added on 2026-09-09, each holding one page.**
+
+WHAT THIS REPLACES, STATED RATHER THAN SWAPPED OUT (trap 15). Until 2026-09-09
+this block read, and all three of these were true when written:
+
+> Six top-level items: **Home / Atlas / Energy / Running / Misc / Code**, plus a
+> right-pinned **About** — seven flex children. […] Misc six (climate-cost,
+> food, continents, longevity, skyline, neuron). There is **no Mind group** — a
+> brief that describes one (Energy / Mind / Running / Misc) is describing a
+> plan, not the site.
+
+And before 2026-09-08 it read "Five top-level items", with the atlas folded into
+Energy. Three states, each recorded where it was replaced.
+
+Membership now: Atlas four (atlas-app, atlas, model, library), Energy two (heat,
+storage), **Climate one (climate-cost)**, Running two (shoes, economy), **Mind
+one (neuron)**, **Misc four (food, continents, longevity, skyline)** — it held
+six until climate-cost and neuron left it.
+
+**A ONE-ITEM GROUP RENDERS AS A DROPDOWN, WHICH IT COULD NOT DO BEFORE.**
+`nav_for()` collapsed a group of length 1 to a bare link to its only child and
+dropped the category name, so a one-item Climate would have put "Climate" on
+`index.html` and nothing of the kind in the bar — the bar would have read "The
+true climate cost". That branch was **removed on 2026-09-09** and its argument
+is quoted where it stood rather than deleted. Removing it was inert for every
+group that then existed (Atlas 4, Energy 2, Running 2, Misc 6; Home, Code and
+About are bare strings on a different branch), counted before the removal. The
+price, accepted rather than overlooked: below 620px the menus open on tap
+through `.dd:focus-within`, so a one-item group is **two taps to reach one
+page**.
+
+Climate is the **article**, `climate-cost.html`, not the calculator app. Mind
+sits between Running and Misc; Andrew fixed only Climate's position, between
+Energy and Running.
+
+**THE BAR IS STABLE AT NINE AND THE NEXT PERSON SHOULD NOT HAVE TO RE-MEASURE
+IT.** Nine real labels hold one row at every viewport above 620px. Spare width,
+which is About's resolved `margin-left` — the auto margin IS the free space, and
+reporting it inside a sum gives zero at every width by construction (trap 28) —
+is **684 / 684 / 610 / 524 / 268 / 204 px** at 1920 / 1440 / 1366 / 1280 / 1024 /
+960, headless Chromium at deviceScaleFactor 1. The two new buttons cost 168.86px
+in total: Climate 83.39 plus Mind 65.47 plus two more 10px gaps. **Beauty joining
+Mind later adds no bar width at all** — it is a second leaf inside a menu that
+already exists, so the next item that costs anything is a ninth top-level one,
+against 204px of spare at 960.
+
+Two checks carry that, and the arithmetic is not one of them: the seven-item
+figures from the same rig reproduce **437 and 373**, measured in a different
+session on 2026-09-08, which is the only quantity here checked against something
+outside its own run; and the row counts come from clustered element tops, not
+from any width sum. An 82-character label made `test_layout.js` exit 1 at 1024
+and 960 while 1280 and up stayed at one row, so the gate still discriminates by
+width. At 390 `nav.top` is `flex-direction: column` and the assertion returns
+`[]` — inert by design, not a pass.
+
+`site/index.html`'s `<h2>`s are this same taxonomy in a second place and were
+hand-edited to match: Atlas / Energy / Climate / Running / Mind / Misc. Both
+moved entries went across unchanged and still meet THE INDEX SPEC.
+
+**Misc at four still says nothing about any of its members.** This change moved
+two pages out of it; it did not answer the question the sort exists to answer,
+and it should not be read as having done so.
+
+**THE CHECK BUILT FOR THIS CHANGE FAILED FOR THE WRONG REASON FIRST, AND THAT IS
+THE MOST USEFUL THING IN THE RUN.** It asserts two independent properties per
+group against the shipped file: that a `span.dd` exists whose `ddbtn` reads
+"Climate" and whose `.ddmenu` holds exactly one anchor to `climate-cost.html`,
+and that **no bare top-level anchor reads "The true climate cost"** — that second
+one being the collapse's actual signature. The first version returned early when
+the group was missing, so **the bare-anchor half never ran in the very case it
+exists to catch**. Restoring the collapse branch made the run exit 1, which
+looked like proof the check worked; it was the first half firing alone and the
+second half untested. Rewritten so neither property short-circuits the other,
+the broken tree fires **both** halves on all four pages, 0/16, exit 1; restored,
+16/16, exit 0. This is trap 29 inside a break mode: a gate that fails for a
+reason you did not verify is a gate you have not tested, and it is
+indistinguishable from one you have.
+
 `rebuild_nav.py` writes the nav on every page — see section 8, trap 11 before
-hand-editing it.
+hand-editing it. **It was also writing CRLF**: its one `open(..., "w")` lacked
+`newline="\n"` and had been missed in the 2026-09-06 sweep `.gitattributes`
+records. It rewrote all sixteen pages against a tree declared LF, which put
+**eight page generators into drift at once**, all of it line endings and none of
+it content. Fixed the same day. Its change check compares text read with
+universal newlines, so it cannot see line-ending drift and will not repair its
+own — the sixteen pages had to be normalized directly. **`build_sitemap.py:93`
+has the same missing `newline="\n"` and has not been touched**; it wrote nothing
+on 2026-09-09 because the sitemap was a no-op, which is exactly how
+`bust_cache.py` hid the same bug for a day in September.
 
 ### The model
 
@@ -1802,7 +1918,7 @@ All of these must pass before a publish; `./publish.sh --dry-run` after.
 | `tests/test_payload.py` | The payload changing without anyone re-recording it. |
 | `tests/verify_hero_systems.js` | The hero's captions claiming something its integrator does not do. The three-body caption names an outcome and the pendulum asserts an energy bound; neither is true by construction. It found that a fixed step cannot do Burrau (energy drift 1.8e+1, encounters unresolved) and that RK4's secular drift would have breached a guessed 1e-4 bound at six hours. `--break` carries three mutations, all caught. |
 | `tests/test_atlas_interaction.js` | The app failing to boot or a node kind that cannot be clicked, against a three.js stub. 19 checks. |
-| `tests/test_layout.js` | Marginalia painting over content; a page with more than one left edge for its text blocks, or a breakout picture off the measure; the home page's index entries off spec (one sentence, no figure, same shape); and that a `position: fixed` block is wide enough for its own text, measured as `scrollWidth > clientWidth` and so firing on the widest UNBREAKABLE run. **105 page-viewport combinations** — 15 pages at 1920, 1440, 1366, 1280, 1024, 960 and 390. (This row said 40 at four viewports until 2026-09-07; the file had grown to seven viewports and nobody re-read it.) |
+| `tests/test_layout.js` | Marginalia painting over content; a page with more than one left edge for its text blocks, or a breakout picture off the measure; the home page's index entries off spec (one sentence, no figure, same shape); and that a `position: fixed` block is wide enough for its own text, measured as `scrollWidth > clientWidth` and so firing on the widest UNBREAKABLE run. **112 page-viewport combinations** — 16 pages at 1920, 1440, 1366, 1280, 1024, 960 and 390. (This row said 40 at four viewports until 2026-09-07; the file had grown to seven viewports and nobody re-read it. It then said **105, 15 pages** until 2026-09-09, when a run printed 112/112 and `PAGES` was counted at sixteen — `about` was added on 2026-09-07 and the count was not. Trap 11, twice in one row.) |
 | `tests/test_panel.js` | The home page's caption/footer panel letting the hero canvas through. Screenshots its rect with the canvases showing and with them hidden and requires the two to be **identical** — an opaque ground cannot let what is behind it change what is in front of it, so this needs no colour constant and no tolerance. A control band above the panel must NOT be identical, or the check passes on a frame where the animation was elsewhere. Also asserts that the panel's right border and `.paper`'s left border paint **one** hairline and not two. Firefox at 1728x1080, dpr 2.2222; 10 checks. `--break` removes the background and must exit non-zero if no pin notices (trap 26). Replaced `tests/test_exclusion.js` on 2026-09-07 when the canvas exclusion it guarded was deleted. |
 | `tests/test_nav_states.js` | A nav or dropdown state whose rule does not reach the page. Nine states over two viewports - top-bar current, menu item, hovered, current, current+hover, and the four the 620px block redefines - each asserted twice: the contrast pair clears AA, **and the rendered value equals the one its named rule declares**. The second assertion is the new one and is the point: `.ddmenu a:hover { color: var(--acc) }` never applied for a day, and every contrast gate stayed green because the fallback measured 5.30:1 against a working 5.71:1 - both over 4.5 (trap 31). It reads the declared value out of the stylesheet at run time, so it fails when a more specific selector takes over rather than when a colour is merely ugly. Forces menus open and drives hovers, which is what `_deslop/measure.js` cannot do: an unattended crawl opens no menu, and `.ddmenu a.on` exists on one page per menu. `--break` carries four mutations, one per historical defect plus one where the rule is present and losing; all four caught, and the `hover` one fires on the declared assertion ALONE. |
 | `tests/test_markup.py` | Markdown that never became HTML. |
@@ -1884,6 +2000,20 @@ generated list above, it was typed.
 
 ### Open, by name
 
+- **`build_sitemap.py:93` writes CRLF.** Same missing `newline="\n"` that
+  `rebuild_nav.py` was fixed for on 2026-09-09 (trap 32); it is the last writer
+  in the tree without it. It wrote nothing that day only because the sitemap was
+  a no-op, which is exactly how `bust_cache.py` stayed hidden for a day on
+  2026-09-07. **It fires the next time a page is added — that is the beauty
+  page.** One keyword; deliberately not changed inside a nav commit.
+- **`python3` on this machine is not the interpreter the Python suites need.**
+  `python3` is the WindowsApps shim to 3.14.3, with neither numpy nor
+  matplotlib; `python` is Programs\Python\Python312, 3.12.10, and has both.
+  Section 7's command block above says `python3` and would fail here, as did the
+  brief for the 2026-09-09 nav job; `tests/test_generators.py`'s own docstring
+  says `python` and explains why (trap 24 in miniature — three
+  ModuleNotFoundErrors dressed as three stale generators). Recorded rather than
+  swept: changing section 7's block is not a nav change.
 - **The download archives have drifted, and the drift is invisible in a diff.**
   `tests/test_generators.py` reports **nine** `site/downloads/*-code.zip`
   archives as differing from what their builder would write now: `atlas`,

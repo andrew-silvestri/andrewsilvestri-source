@@ -16,6 +16,13 @@ what those pages ARE and wrong about what the bar SAYS; it was reversed on
 2026-09-08 and the reason is above NAV. The count had been false for longer than
 that: the bar was five items plus About before this change and is six plus About
 after it.
+
+THE COUNT MOVED AGAIN ON 2026-09-09 AND THE SENTENCE ABOVE IS KEPT RATHER THAN
+SWAPPED OUT. "Six plus About" was true from 2026-09-08 until then. The bar is
+now EIGHT plus About - Home / Atlas / Energy / Climate / Running / Mind / Misc /
+Code, and About pinned right, nine flex children. Climate and Mind were added as
+one-item groups, which was impossible until the length-1 collapse came out of
+nav_for() the same day; the reversal is recorded there.
 """
 
 import argparse
@@ -63,9 +70,11 @@ SITE = os.path.join(HERE, "site")
 # page.
 #
 # GROUP LABELS ARE NOT PAGES, so that rule does not bind them. "Atlas",
-# "Energy", "Running" and "Misc" name no page and are free. Nobody needed the
-# distinction until a group label existed that was one word off a page title,
-# and the rule above reads as though it covers every string in this list.
+# "Energy", "Climate", "Running", "Mind" and "Misc" name no page and are free.
+# ("Climate" and "Mind" joined this list on 2026-09-09; it named four labels
+# until then.) Nobody needed the distinction until a group label existed that
+# was one word off a page title, and the rule above reads as though it covers
+# every string in this list.
 #
 # ONE DELIBERATE INCONSISTENCY, RECORDED SO IT IS NOT CORRECTED BACK:
 # index.html's entry for the atlas is titled "The atlas", not this list's leaf
@@ -86,28 +95,62 @@ NAV = [
         ("Industrial heat break-even", "heat.html"),
         ("Battery revenue simulator", "storage.html"),
     ]),
+    # CLIMATE IS ONE PAGE AND RENDERS AS A DROPDOWN. That is the point of the
+    # 2026-09-09 change, not an oversight - do not "simplify" it back to a bare
+    # link, which is what nav_for() used to do and why the branch below it is
+    # gone. Andrew's decision, and the part worth keeping: Climate is the
+    # ARTICLE, climate-cost.html, not the calculator app.
+    #
+    # This is the second time climate-cost has had a group of its own. This
+    # comment sat on the line in Misc until today and is moved with it rather
+    # than dropped: it was its own one-item "Climate research" group until the
+    # 2026-08-30 revamp (SITE_REVAMP_2026-08-30.md, "Navigation grouping"); the
+    # label here was "Climate cost calculator" until 2026-09-05, which matched
+    # neither the page nor its index entry.
+    #
+    # Between Energy and Running because Andrew placed it there.
+    ("Climate", [
+        ("The true climate cost", "climate-cost.html"),
+    ]),
     ("Running", [
         ("What a fast shoe is worth", "shoes.html"),
         ("Economy is not time", "economy.html"),
     ]),
+    # MIND EXISTS AS OF 2026-09-09, WITH ONE PAGE, AND ONLY BECAUSE THE LENGTH-1
+    # COLLAPSE CAME OUT OF nav_for() THE SAME DAY. What stood on the neuron line
+    # in Misc until today, word for word, because it was a promise and it is
+    # being departed from rather than found wrong (trap 15):
+    #
+    #     "Parked here rather than in a "Mind" group of its own. A group holding
+    #      one page is rendered by nav_for() as a bare link to that page, with
+    #      the category name dropped entirely, so a one-item Mind would have put
+    #      "Mind" on index.html and nothing of the kind in the nav. When the
+    #      beauty project lands, the two of them make Mind and this line moves."
+    #
+    # The condition it waited for was the collapse, and the collapse is gone, so
+    # Mind is created now with neuron alone. BEAUTY JOINS IT AS A SECOND LEAF
+    # when it lands, and costs the bar nothing: it goes inside a menu that
+    # already exists.
+    #
+    # Placed between Running and Misc. Andrew specified only that Climate sits
+    # between Energy and Running; this position was proposed and kept, and it is
+    # one line to move. It reads in the right direction as the site grows - Mind
+    # is the group that gains a page, Misc only loses them.
+    ("Mind", [
+        ("The measured neuron", "neuron.html"),
+    ]),
     ("Misc", [
-        # Was its own one-item "Climate research" group until the 2026-08-30
-        # revamp (SITE_REVAMP_2026-08-30.md, "Navigation grouping"); the label
-        # here was "Climate cost calculator" until 2026-09-05, which matched
-        # neither the page nor its index entry.
-        ("The true climate cost", "climate-cost.html"),
         ("Fat, sugar, salt", "food.html"),
         ("Where the ground goes", "continents.html"),
         ("Longevity quotient", "longevity.html"),
         ("Skylines, played", "skyline.html"),
-        # Parked here rather than in a "Mind" group of its own. A group holding
-        # one page is rendered by nav_for() as a bare link to that page, with
-        # the category name dropped entirely, so a one-item Mind would have put
-        # "Mind" on index.html and nothing of the kind in the nav. When the
-        # beauty project lands, the two of them make Mind and this line moves.
-        ("The measured neuron", "neuron.html"),
         # "The bookshelf" (desktop.html) retired to unpublished/ on 2026-09-05
         # (PHASE5); the pages were regenerated from this list the same day.
+        #
+        # Four since 2026-09-09, when climate-cost went to Climate and neuron to
+        # Mind; it held six before that. Still a dropdown, and still a group
+        # that says nothing about any of its members - the sort that question
+        # belongs to has not been done, and this change did not do it.
     ]),
     ("Code", "code.html"),
     # LAST, AND IT HAS TO STAY LAST. style.css pins this one right with
@@ -134,16 +177,37 @@ def nav_for(page):
             on = ' class="on"' if target == page else ""
             out.append(f'<a href="{target}"{on}>{label}</a>')
             continue
-        # A dropdown holding one page is a menu with nothing to choose, so
-        # the group becomes a direct link to its only child. This keeps the
-        # bar short, and on a phone it removes a tap.
-        if len(target) == 1:
-            only_l, only_h = target[0]
-            on = ' class="on"' if only_h == page else ""
-            # the child's own name, not the category: the link goes to one
-            # page and should say which
-            out.append(f'<a href="{only_h}"{on}>{only_l}</a>')
-            continue
+        # THE LENGTH-1 COLLAPSE WAS REMOVED ON 2026-09-09, AND ITS REASON WAS
+        # OVERRULED RATHER THAN FOUND WRONG. What stood here, word for word:
+        #
+        #     "A dropdown holding one page is a menu with nothing to choose, so
+        #      the group becomes a direct link to its only child. This keeps the
+        #      bar short, and on a phone it removes a tap."
+        #
+        #     if len(target) == 1:
+        #         only_l, only_h = target[0]
+        #         on = ' class="on"' if only_h == page else ""
+        #         # the child's own name, not the category: the link goes to one
+        #         # page and should say which
+        #         out.append(f'<a href="{only_h}"{on}>{only_l}</a>')
+        #         continue
+        #
+        # Both sentences are still true. Andrew's decision is that a one-item
+        # group renders as a dropdown anyway, because the bar has to say
+        # "Climate" and "Mind". With this branch in place a one-item Climate put
+        # "Climate" on index.html and NOTHING of the kind in the nav - the bar
+        # read "The true climate cost", the leaf's name, and the category the
+        # taxonomy exists to state was the one thing missing from it.
+        #
+        # WHAT IT COSTS, AND IT IS THE SENTENCE BEING OVERRULED: below 620px the
+        # dropdowns open on tap through .dd:focus-within (style.css:800), so a
+        # one-item group is now TWO TAPS TO REACH ONE PAGE where a bare link was
+        # one. Accepted as the price, not overlooked.
+        #
+        # Removing it was inert for every group that existed that day - Atlas 4,
+        # Energy 2, Running 2, Misc 6, with Home, Code and About bare strings
+        # taking the isinstance(target, str) branch above. Counted before the
+        # removal, not assumed.
         here = any(h == page for _, h in target)
         cls = "ddbtn on" if here else "ddbtn"
         # full-screen apps open in their own tab, per the house convention
@@ -178,7 +242,17 @@ def main(dry_run=False):
                      t, count=1, flags=re.S)
         changed = new != t
         if changed and not dry_run:
-            open(path, "w", encoding="utf-8").write(new)
+            # newline="\n" IS LOAD-BEARING AND THIS FILE WAS MISSED IN THE 2026-09-06
+            # SWEEP. Python's text mode on Windows translates "\n" to "\r\n", so
+            # this line rewrote all sixteen pages to CRLF against a tree
+            # .gitattributes declares as LF. Every page generator that writes
+            # LF then differs from the shipped file on every line, and
+            # tests/test_generators.py reports EIGHT drifts that are pure line
+            # endings - the identical failure .gitattributes records for
+            # 2026-09-06, and the one it records for bust_cache.py on
+            # 2026-09-07. Found 2026-09-09, the same way: by running the check
+            # after a nav change and reading the diff instead of the count.
+            open(path, "w", encoding="utf-8", newline="\n").write(new)
         n += changed
         state = ("would change" if dry_run else "updated") if changed else "unchanged"
         print(f"  {page:24s} {state}")
