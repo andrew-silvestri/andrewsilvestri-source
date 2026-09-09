@@ -1449,7 +1449,68 @@ So a clone of this repository serves `code.html` with sixteen dead links until
 
 ## 11. Current state, 9 September 2026
 
-**Live: the mirror's `5751d70`**, 2026-09-09 — Climate and Mind, one page each,
+**Live: the mirror's `be33d4d`**, 2026-09-09 — the beauty page shipped and two
+pages came off. Master is `9f0b124`, 69 files. 35 files changed in the mirror,
+448 insertions, 655 deletions, 135 files in place.
+
+**The page is `beauty.html`, "Endangered, and studied", and its own project's
+thesis is what it disproves.** `beauty/` was built to show *studied, not
+endangered* — that Red List status adds nothing once appeal and convenience are
+known. Fitted for the first time on 9,113 birds, the threat term is **positive
+and large**: a Critically Endangered bird has **2.65×** the papers of a Least
+Concern one (+0.974, p 1.2e-58) with family, mass, range and description year
+held fixed, and adjusting *widens* the gap. Rated attractiveness — the proxy the
+project is named for — moves the fit by **0.0008**, below body mass; Wikipedia
+views move it by **0.1041**, 135 times as much. The page reports an
+**association** and does not establish direction: a bird cannot be listed
+without evidence, and the 34 Data Deficient birds are the least-studied group at
+every quartile. One rival was tested under a rule fixed before the data existed
+(`beauty/PRESPEC_topics_2026-09-09.md`) and the effect survives it.
+`RESEARCH.md` §10 is the account; §§1–9 are unchanged and still right about the
+literature.
+
+**`food.html` and `neuron.html` were unpublished**, at Andrew's request, for now
+— nothing about quality. Both, their ten figures and their two archives are in
+`unpublished/`, recorded in `RETIRED.md`. **Their `rezip_downloads.py` targets
+went with them**: a target left behind rebuilds the zip into `site/downloads/`
+on the next run, and an unpublish the next rezip undoes is not an unpublish.
+Their page generators are de-registered from `tests/test_generators.py`, where
+they had gone from drift to FAILED. `tests/test_nav_states.js` hardcoded
+`food.html` and fell to **2/9**; it uses `continents.html` now, and the reason
+that page and not another is written down in it.
+
+The bar stays nine items. **Mind holds one page and Misc three** — Misc lost
+pages twice on 2026-09-09, six to four to three, and both counts are recorded in
+`rebuild_nav.py` because the first was overtaken the same day it was written.
+
+**Verified live rather than assumed** (trap 3): `/beauty.html` 200 with its
+title, h1 and four figures; `/food.html` and `/neuron.html` **404**; the served
+nav shows Mind with one entry and Misc with three, and no `food.html` or
+`neuron.html` anywhere in it.
+
+Numbers, not words: layout **105/105** (17→15 pages), nav states **9/9**,
+markup 0 hits across **20** pages, `test_generators.py` 16 generators and 1
+drift, `test_beauty.py` 0 failures, `break_model.py` **6/6**, `break_log.py`
+**5/5**, `break_topics.py` **5/5**, `fig_beauty.py` **0 layout problems** across
+four figures, sitemap **15** `<loc>`, `code.html` **15** archive rows, and
+**0 CRLF in `site/` measured as bytes**.
+
+**The one open drift, and it is not this publish's**: `atlas-code.zip` ships
+nine files behind the working tree — `README.md` at 1,499 bytes against 3,487 in
+source, plus `update_atlas_pages.py`, `sitefig.py`, `site/atlas-app.html`,
+`bust_cache.py` and four builders. `code.html`'s row is *accurate* (29 files,
+419 KB, both agreeing with the archive), so no wrong number is on the page; what
+is stale is the archive's contents. None of those sources is modified in git, so
+the zip predates their commits. Rebuilding it changes what `code.html` claims
+and ships a different atlas app, so it wants its own job.
+
+**A trap 33 is drafted in `beauty/STAGE1_2026-09-08.md` and is NOT in §8.** It
+is about a rate that names no operand, and it stays a draft until it has been
+read against the shipped 32.
+
+---
+
+**The previous head, for the record. Live: the mirror's `5751d70`**, 2026-09-09 — Climate and Mind, one page each,
 and a one-item group renders as a dropdown. Master is `cdc7535`, eighteen files.
 The bar goes seven items to nine: Home / Atlas / Energy / Climate / Running /
 Mind / Misc / Code, About pinned right. `nav_for()`'s length-1 collapse was
