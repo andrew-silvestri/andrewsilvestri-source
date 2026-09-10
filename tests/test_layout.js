@@ -42,7 +42,15 @@ const http = require('http');
 const { chromium } = require('playwright');
 
 const SITE = path.join(__dirname, '..', 'site');
-const PAGES = ['index', 'about', 'code', 'heat', 'storage', 'climate-cost', 'longevity', 'skyline', 'continents', 'beauty'];   // desktop retired 2026-09-05; about added 2026-09-07; beauty added, food+neuron and the whole atlas group unpublished 2026-09-09; Running retired 2026-09-09
+const PAGES = ['index', 'about', 'code', 'heat', 'storage', 'climate-cost', 'longevity', 'skyline', 'continents', 'beauty'];
+/* The four full-screen apps. They carry no nav.top, no <main> and no
+   .index, so most of the checks above them no-op; what they are here for is
+   the fixed-block and sideways-scroll checks, at the two widths nothing has
+   ever measured them at. They were never in PAGES - the list has only ever
+   held document pages - which is how four pages with one @media breakpoint
+   each shipped untested at 390 and 960. Added 2026-09-10. */
+const APPS = ['climate-cost-app', 'longevity-app', 'skyline-app',
+              'continents-app'];   // desktop retired 2026-09-05; about added 2026-09-07; beauty added, food+neuron and the whole atlas group unpublished 2026-09-09; Running retired 2026-09-09
 // 1920 is here because "New York" wrapping to a line of its own in a 192px
 // gutter was read as clipping (2026-09-04); the test now also fails on real
 // clipping - any marginalia element wider than its box - so the two cannot
@@ -86,7 +94,7 @@ function serve() {
   for (const [w, h] of VIEWPORTS) {
     const ctx = await browser.newContext({ viewport: { width: w, height: h }, deviceScaleFactor: 1 });
     const page = await ctx.newPage();
-    for (const p of PAGES) {
+    for (const p of PAGES.concat(APPS)) {
       await page.goto(base + p + '.html', { waitUntil: 'load' });
       await page.waitForTimeout(300);
       const H = await page.evaluate(() => document.documentElement.scrollHeight);
@@ -122,6 +130,11 @@ function serve() {
       await page.evaluate(() => scrollTo(0, 0));
       const edges = await page.evaluate(() => {
         const main = document.querySelector('main');
+        // An app has no <main>: it is a control panel beside a stage, two
+        // left edges on purpose, and the one-measure rule is a rule about
+        // prose. Returning early is the rule not applying, not the rule
+        // passing - the apps are held to the two checks below instead.
+        if (!main) return [];
         const text = new Map(), pics = [];
         const name = el => el.tagName.toLowerCase() + (typeof el.className === 'string' && el.className ? '.' + el.className.split(' ')[0] : '');
         for (const el of main.children) {
@@ -153,6 +166,16 @@ function serve() {
           if (!r.width || !r.height) continue;
           const name = el.tagName.toLowerCase() + (typeof el.className === 'string' && el.className ? '.' + el.className.trim().split(/\s+/)[0] : '');
           for (const n of [el, ...el.querySelectorAll('*')]) {
+            // An element that declares text-overflow:ellipsis with hidden
+            // overflow has SAID it truncates, and truncation is what
+            // scrollWidth > clientWidth measures - so the raw comparison
+            // cannot tell a designed ellipsis from text falling off the
+            // end. skyline-app's #hint and #notes are the designed case and
+            // failed this at three widths for doing what they declare.
+            // What is still caught: an element with no ellipsis whose text
+            // is simply cut, which is the defect this check exists for.
+            const cs = getComputedStyle(n);
+            if (cs.textOverflow === 'ellipsis' && cs.overflow !== 'visible') continue;
             if (n.scrollWidth > n.clientWidth + 1 && n.clientWidth > 0) {
               out.push(`fixed block ${name} is too narrow for its text: `
                 + `${n.tagName.toLowerCase()} needs ${n.scrollWidth}px in ${n.clientWidth}px `
@@ -164,6 +187,27 @@ function serve() {
         return out;
       });
       for (const f of fits) if (!hits.includes(f)) hits.push(f);
+      // Nothing scrolls sideways. A full-bleed canvas beside a fixed panel
+      // is the layout that breaks this way, and a reader on a phone gets a
+      // page that slides under their thumb with no way to see the right of
+      // it. Measured on the document, which is where the overflow lands
+      // however deep the element that caused it.
+      const hscroll = await page.evaluate(() => {
+        const d = document.documentElement;
+        if (d.scrollWidth <= d.clientWidth + 1) return [];
+        const wide = [...document.querySelectorAll('body *')]
+          .filter(el => el.getBoundingClientRect().right > d.clientWidth + 1
+                     && el.getClientRects().length)
+          .slice(0, 3)
+          .map(el => el.tagName.toLowerCase()
+               + (typeof el.className === 'string' && el.className
+                  ? '.' + el.className.trim().split(/\s+/)[0] : '')
+               + ' to ' + Math.round(el.getBoundingClientRect().right));
+        return ['scrolls sideways: ' + d.scrollWidth + 'px of content in '
+                + d.clientWidth + 'px' + (wide.length ? ' (' + wide.join(', ')
+                + ')' : '')];
+      });
+      for (const f of hscroll) if (!hits.includes(f)) hits.push(f);
       // the nav stays on one row above 620
       const navrow = await page.evaluate(() => {
         const nav = document.querySelector('nav.top');
@@ -215,6 +259,6 @@ function serve() {
   }
   await browser.close();
   srv.close();
-  console.log(`\n  ${checks - failures}/${checks} page-viewport combinations free of marginalia collisions, with one left edge, the index to spec`);
+  console.log(`\n  ${checks - failures}/${checks} page-viewport combinations free of marginalia collisions, with one left edge, the index to spec, and nothing scrolling sideways`);
   process.exit(failures ? 1 : 0);
 })();
