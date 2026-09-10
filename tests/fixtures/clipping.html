@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>clipping control — test_layout.js</title>
+<!--
+  The control for the fixed-block check's ellipsis exemption, added
+  2026-09-10 with the four apps.
+
+  scrollWidth > clientWidth is exactly what an intentional ellipsis produces,
+  so the check could not tell text that is LOST from text that is truncated
+  on purpose with a visible affordance, and skyline-app's #hint and #notes
+  failed at three widths for doing what they declare.
+
+  All four blocks are fixed and all four overflow the same 100px. What
+  differs is how each declares itself, and each one pins a different half of
+  the predicate:
+
+    .declared          nowrap + overflow:hidden + ellipsis   EXEMPT
+    .silent            hides its overflow, says nothing      caught
+    .ellipsis-no-clip  asks for an ellipsis, does not clip   caught
+    .wraps             hides and asks, but does not nowrap   caught
+
+  .wraps is the one that pins the nowrap term: text-overflow does nothing
+  without it, so the text is cut with no ellipsis to show for it. A predicate
+  that keys on text-overflow and overflow alone exempts .wraps and is wrong.
+  It carries one unbreakable token, because a block that can wrap does not
+  overflow horizontally and would leave that term untested.
+
+  The suite asserts the reported set is exactly {silent, ellipsis-no-clip,
+  wraps} on every run, so an edit that exempts too much fails here and one
+  that exempts too little fails here too. Served from tests/, never site/.
+-->
+<style>
+body{margin:0;background:#F2F0EF;color:#241E1A;font:14px system-ui}
+div{position:fixed;left:10px;width:100px}
+.declared{top:10px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.silent{top:40px;white-space:nowrap;overflow:hidden}
+.ellipsis-no-clip{top:70px;white-space:nowrap;text-overflow:ellipsis}
+.wraps{top:100px;overflow:hidden;text-overflow:ellipsis}
+</style>
+</head><body>
+<div class="declared">this text is far too wide for its hundred pixels</div>
+<div class="silent">this text is far too wide for its hundred pixels</div>
+<div class="ellipsis-no-clip">this text is far too wide for its hundred pixels</div>
+<div class="wraps">farTooWideForItsHundredPixelsAndNotAllowedToBreak</div>
+</body></html>

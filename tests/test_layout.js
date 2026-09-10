@@ -70,13 +70,31 @@ const APPS = ['climate-cost-app', 'longevity-app', 'skyline-app',
    low. Both are common laptop widths, and without them nothing between 1024
    and 1440 was ever measured - which is how the block shipped staying fixed
    down to 961px. */
+/* trap 17 and 26: the exemption below is a loosening, so it ships with a
+   control that runs on every pass. tests/fixtures/clipping.html holds four
+   fixed blocks that all overflow the same 100px and differ only in what they
+   declare; exactly three must be reported. --break ellipsis disables the
+   exemption and the fourth must then be reported too, or this exits 1. */
+const BREAK = (() => { const i = process.argv.indexOf('--break');
+  return i > 0 ? process.argv[i + 1] : null; })();
+if (BREAK && BREAK !== 'ellipsis') {
+  console.error('  unknown --break: ' + BREAK + ' (ellipsis)'); process.exit(2);
+}
+const FIXTURES = { 'clipping': ['silent', 'ellipsis-no-clip', 'wraps'] };
+const FIXTURE_DIR = path.join(__dirname, 'fixtures');
+
 const VIEWPORTS = [[1920, 1080], [1440, 900], [1366, 768], [1280, 800], [1024, 768], [960, 720], [390, 844]];
 const MIME = { '.html': 'text/html', '.css': 'text/css', '.js': 'text/javascript', '.png': 'image/png', '.webp': 'image/webp', '.svg': 'image/svg+xml', '.woff2': 'font/woff2', '.mp4': 'video/mp4', '.ico': 'image/x-icon' };
 
 function serve() {
   return new Promise(resolve => {
     const srv = http.createServer((req, res) => {
-      const f = path.join(SITE, decodeURIComponent(req.url.split('?')[0]));
+      const u = decodeURIComponent(req.url.split('?')[0]);
+      // Fixtures live in tests/, never in site/ - a control page that shipped
+      // would be a published page nobody meant to publish.
+      const f = u.startsWith('/_fixture/')
+        ? path.join(FIXTURE_DIR, u.slice('/_fixture/'.length))
+        : path.join(SITE, u);
       fs.readFile(f, (err, data) => {
         if (err) { res.writeHead(404); res.end(); return; }
         res.writeHead(200, { 'Content-Type': MIME[path.extname(f)] || 'application/octet-stream' });
@@ -158,7 +176,7 @@ function serve() {
       });
       for (const f of edges) if (!hits.includes(f)) hits.push(f);
       // a fixed block's text must fit inside it
-      const fits = await page.evaluate(() => {
+      const fits = await page.evaluate((noExempt) => {
         const out = [];
         for (const el of document.querySelectorAll('body *')) {
           if (getComputedStyle(el).position !== 'fixed') continue;
@@ -175,7 +193,14 @@ function serve() {
             // What is still caught: an element with no ellipsis whose text
             // is simply cut, which is the defect this check exists for.
             const cs = getComputedStyle(n);
-            if (cs.textOverflow === 'ellipsis' && cs.overflow !== 'visible') continue;
+            // All three, together. text-overflow does nothing without a
+            // clipping overflow, and nothing without nowrap either, so a
+            // block declaring an ellipsis it cannot draw is still losing
+            // text and must not be exempt. tests/fixtures/clipping.html
+            // pins each term.
+            if (!noExempt && cs.whiteSpace === 'nowrap'
+                && cs.overflowX === 'hidden'
+                && cs.textOverflow === 'ellipsis') continue;
             if (n.scrollWidth > n.clientWidth + 1 && n.clientWidth > 0) {
               out.push(`fixed block ${name} is too narrow for its text: `
                 + `${n.tagName.toLowerCase()} needs ${n.scrollWidth}px in ${n.clientWidth}px `
@@ -185,7 +210,7 @@ function serve() {
           }
         }
         return out;
-      });
+      }, BREAK === 'ellipsis');
       for (const f of fits) if (!hits.includes(f)) hits.push(f);
       // Nothing scrolls sideways. A full-bleed canvas beside a fixed panel
       // is the layout that breaks this way, and a reader on a phone gets a
@@ -255,10 +280,50 @@ function serve() {
       if (hits.length) { failures++; console.log(`  FAIL ${p}.html @${w}: ${hits.slice(0, 6).join('; ')}${hits.length > 6 ? ' …' : ''}`); }
       else console.log(`  ok   ${p}.html @${w}`);
     }
+    // The control. One viewport is enough: the predicate reads declarations,
+    // not widths.
+    if (w === 1440) {
+      for (const [name, expect] of Object.entries(FIXTURES)) {
+        await page.goto(base + '_fixture/' + name + '.html', { waitUntil: 'load' });
+        await page.waitForTimeout(120);
+        const got = await page.evaluate((noExempt) => {
+          const out = [];
+          for (const el of document.querySelectorAll('body *')) {
+            if (getComputedStyle(el).position !== 'fixed') continue;
+            const cs = getComputedStyle(el);
+            if (!noExempt && cs.whiteSpace === 'nowrap'
+                && cs.overflowX === 'hidden'
+                && cs.textOverflow === 'ellipsis') continue;
+            if (el.scrollWidth > el.clientWidth + 1 && el.clientWidth > 0)
+              out.push(el.className);
+          }
+          return out.sort();
+        }, BREAK === 'ellipsis');
+        // The expectation does NOT move under --break. That is the whole
+        // signal: with the exemption off, .declared joins the reported set,
+        // the comparison fails, and the run exits non-zero as a break run
+        // must. Widening `want` to match the mutation would make the check
+        // pass whether or not the mutation took effect.
+        const want = expect.slice().sort();
+        checks++;
+        if (got.join(',') !== want.join(',')) {
+          failures++;
+          console.log(`  FAIL fixture ${name}: reported [${got}], wanted [${want}]`);
+        } else console.log(`  ok   fixture ${name}: [${got}]`);
+      }
+    }
     await ctx.close();
   }
   await browser.close();
   srv.close();
   console.log(`\n  ${checks - failures}/${checks} page-viewport combinations free of marginalia collisions, with one left edge, the index to spec, and nothing scrolling sideways`);
+  if (BREAK) {
+    // trap 26: a break run must FAIL, not print. The mutation here is the
+    // exemption being switched off, and the fixture's .declared block is
+    // what must start being reported.
+    if (failures) console.log('  --break %s: %d check(s) failed, as they must.', BREAK, failures);
+    else console.log('  BREAK MODE NOTICED NOTHING - the exemption was disabled and every check still passed.');
+    process.exit(failures ? 0 : 1);
+  }
   process.exit(failures ? 1 : 0);
 })();
