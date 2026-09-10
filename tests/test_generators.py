@@ -129,6 +129,16 @@ GENERATORS = [
     ("skyline app: skyline/build_app.py",
      ["build_app.py"], "skyline",
      [("skyline/skyline-app.html", "site/skyline-app.html")]),
+    # continents/build_app.py is "site" mode and not a (built, shipped) pair
+    # because it has no local copy to pair with: line 31 writes
+    # site/continents-app.html directly, and write_land() writes
+    # site/assets/continents-land.js beside it. The other three apps build
+    # into their own folder and are copied out, which is what gives them a
+    # pair. That difference is probably why this one was never registered -
+    # it owns 1.57 MB of site/ and nothing diffed either file until
+    # 2026-09-10. --apply because a bare run reports and writes nothing.
+    ("continents app: continents/build_app.py",
+     ["build_app.py", "--apply"], "continents", "site"),
     ("downloads: rezip_downloads.py", ["rezip_downloads.py"], ".", "zips"),
     ("sitemap: build_sitemap.py --apply",
      ["build_sitemap.py", "--apply"], ".", "site"),

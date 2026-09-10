@@ -65,7 +65,11 @@ def write_land(apply=False):
     js = head + chr(10) + "window.LAND = " + body + ";" + chr(10)
     if apply:
         os.makedirs(os.path.dirname(LAND_OUT), exist_ok=True)
-        open(LAND_OUT, "w", encoding="utf-8").write(js)
+        # newline="\n": .gitattributes declares LF for the whole
+        # repository and Python text mode on Windows writes CRLF.
+        # Without it every --apply rewrote this file and
+        # site/continents-app.html to CRLF.
+        open(LAND_OUT, "w", encoding="utf-8", newline="\n").write(js)
     return len(js), len(land["frames"]), land["models"]
 
 
@@ -104,15 +108,21 @@ def main(apply=False):
               f"{len(models)} models ({', '.join(models)})")
     t = render(P)
     if os.path.exists(APP):
-        old = open(APP, encoding="utf-8").read()
-        print("  continents-app.html: " + ("unchanged" if old == t
+        # Compared as BYTES. Reading with universal newlines turns
+        # CRLF into a bare newline on the way in, so a text compare
+        # could not see the one thing this generator got wrong: it
+        # reported "unchanged" against a file it was rewriting to
+        # CRLF on every run (HANDOFF trap 32).
+        old = open(APP, "rb").read()
+        print("  continents-app.html: " + ("unchanged"
+                                           if old == t.encode("utf-8")
                                            else "would change" if not apply
                                            else "rewritten"))
     else:
         print("  continents-app.html: new"
               + ("" if apply else " (not written)"))
     if apply:
-        open(APP, "w", encoding="utf-8").write(t)
+        open(APP, "w", encoding="utf-8", newline="\n").write(t)
     print(f"  payload {len(json.dumps(app_payload(P), separators=(',', ':'))):,}"
           f" bytes inline, app {len(t):,} bytes")
 
