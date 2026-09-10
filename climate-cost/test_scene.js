@@ -236,6 +236,18 @@ ok(/appearance:none/.test(html) && /background-image:linear-gradient\(45deg/
      .test(html),
    'the select caret is drawn by the page, not by the platform');
 ok(doc.querySelectorAll('select').length === 4, 'four controls');
+/* The arrow keys walk the graph from a handler on window that calls
+   preventDefault, so every control that uses arrows itself has to be exempt
+   from it. It named SELECT alone until 2026-09-10 and #life is an
+   <input type="range">, so the vehicle-life slider could not be moved from
+   the keyboard at all - the scene ate the keypress. Asserted on the guard
+   rather than on the behaviour because jsdom has no real focus; the property
+   this stands in for is that a focused control keeps its own keys. */
+const guard = (html.match(/window\.addEventListener\('keydown'[\s\S]{0,240}?return;/)
+               || [''])[0];
+ok(/SELECT/.test(guard) && /INPUT/.test(guard) && /BUTTON/.test(guard),
+   'the scene lets a focused control keep its own arrow keys',
+   guard.replace(/\s+/g, ' ').slice(0, 110));
 ok((html.match(/three\.min\.js/g) || []).length === 0 ||
    fs.readFileSync(PAGE, 'utf8').includes('cdnjs.cloudflare.com'),
    'three is loaded from the CDN the rest of the site uses');
