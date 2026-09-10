@@ -280,8 +280,46 @@ function serve() {
       if (hits.length) { failures++; console.log(`  FAIL ${p}.html @${w}: ${hits.slice(0, 6).join('; ')}${hits.length > 6 ? ' …' : ''}`); }
       else console.log(`  ok   ${p}.html @${w}`);
     }
-    // The control. One viewport is enough: the predicate reads declarations,
-    // not widths.
+    /* climate-cost's label rule, asserted where it can be measured. The app
+       nudges a near-edge label inward instead of dropping it, bounded so its
+       box still covers its own node's x - position is what says which node a
+       label is for, so a label that has left its node's column is wrong
+       rather than displaced.
+
+       NOT asserted here, deliberately: "no label is nearer a neighbouring
+       node than its own." That was the first metric tried and it reported
+       seven offenders; run against the shipped build as a control it
+       reported the same for UNNUDGED labels - five of them stages at 390,
+       one 5px from a neighbour - because .lab is deliberately lifted off its
+       node by nd.r * 46 + 20 and the chain is dense. It measures the design.
+       The invariant below is what the code actually promises. */
+    if (w === 960 || w === 390) {
+      await page.goto(base + 'climate-cost-app.html', { waitUntil: 'load' });
+      await page.waitForTimeout(2600);
+      const bad = await page.evaluate(() => {
+        const L = window.__lca;
+        if (!L) return ['__lca missing: the app did not boot'];
+        const cv = document.getElementById('gl').getBoundingClientRect();
+        const cam = L.camera();
+        const out = [];
+        for (const l of L.labelPlan(cam, cv.width, cv.height, null, null)) {
+          if (!l.node || !l.node.pos) continue;
+          const v = l.node.pos.clone().project(cam);
+          const sx = (v.x * 0.5 + 0.5) * cv.width;
+          if (Math.abs(l.x - sx) > l.w / 2 + 1)
+            out.push('label "' + l.text.replace(/<[^>]*>/g, '').trim()
+              + '" is ' + Math.round(Math.abs(l.x - sx)) + 'px off its node "'
+              + l.node.name + '", past half its ' + Math.round(l.w) + 'px box');
+        }
+        return out;
+      });
+      checks++;
+      if (bad.length) { failures++; console.log('  FAIL climate-cost labels @' + w + ': ' + bad.join('; ')); }
+      else console.log('  ok   climate-cost labels @' + w + ': every label covers its own node');
+    }
+
+    // The clipping control. One viewport is enough: the predicate reads
+    // declarations, not widths.
     if (w === 1440) {
       for (const [name, expect] of Object.entries(FIXTURES)) {
         await page.goto(base + '_fixture/' + name + '.html', { waitUntil: 'load' });
