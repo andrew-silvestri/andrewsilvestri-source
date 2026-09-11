@@ -61,10 +61,15 @@ PAGES = {
          'Zuberi, Hasanbeigi &amp; Morrow, <i>Electrification of industrial '
          'process heat</i>, Lawrence Berkeley National Laboratory, 2021.',
          "Electric boiler efficiency and capital cost ranges."),
-        ("At a gas price of $3.50",
+        # The anchor carries "assumed" because the prose does: heat/model.py
+        # sets P_e and P_g as placeholders and never reads data/, so the page
+        # says assumed at first use and this phrase has to match it.
+        ("At an assumed gas price of $3.50",
          'U.S. Energy Information Administration, <i>Electric Power Monthly</i> '
          'Table 5.6.A and the Natural Gas Industrial Price series.',
-         "Texas industrial electricity and gas prices."),
+         "The series to use for Texas industrial electricity and gas prices. "
+         "The shipped run does not: its two prices are placeholders set in "
+         "<code>heat/model.py</code>."),
         ("grid carbon intensity",
          'U.S. EPA, <i>eGRID2023</i> (revised 12 June 2025), ERCT subregion '
          'output emission rates; and EPA, <i>Emission Factors for Greenhouse '
