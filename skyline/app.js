@@ -669,8 +669,23 @@
     /* The list is the wheel, in the order it is drawn, with whatever is
        currently on the near face marked. It used to be the twenty tallest in
        true-bearing order, which no longer matched anything on screen. */
-    var named = c.ring.filter(function (r) { return r[4]; })
+    /* The canvas's aria-label says "the towers ... are listed as text in the
+       panel", and for New York that was 40 of 120. A text alternative that
+       silently holds a third of the picture is a claim, not an alternative,
+       so the list says what it is: the cap is reported beside it, from the
+       same numbers the stats already carry. */
+    var onWheel = c.ring.filter(function (r) { return r[4]; });
+    var named = onWheel.slice()
                  .sort(function (p, q) { return q[3] - p[3]; }).slice(0, 40);
+    var cap = document.getElementById('listcap');
+    /* NAMED, not "on the wheel": the stat above counts every tower at or
+       above 55 m and this counts the ones with a name to list, so New York
+       reads 120 there and 119 here. Two numbers a line apart differing by one
+       is worse than either, so each says which set it is. */
+    if (cap) cap.textContent = named.length < onWheel.length
+      ? 'The tallest ' + named.length + ' of ' + onWheel.length +
+        ' named towers on the wheel. The rest are drawn but not listed.'
+      : 'All ' + onWheel.length + ' named towers on the wheel.';
     document.getElementById('towers').innerHTML = named.map(function (r) {
       var front = Math.cos((r[0] - S.az) * Math.PI / 180) > 0;
       /* A building links to the record it came from where there is one.
