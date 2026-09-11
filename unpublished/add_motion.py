@@ -1,4 +1,21 @@
 """
+RETIRED 2026-09-11. Do not run it. Kept here for the record, the way
+build_site.py and publish.ps1 are.
+
+It was a one-shot migration and the tree has moved past it. Run into a
+throw-away copy of the tree on 2026-09-11 it rewrote ALL TEN document pages,
+appending a second footer control to each:
+
+    - </footer>
+    + &middot;
+    + <button type="button" class="motion-toggle" hidden>Motion: <span
+      class="motion-state">on</span></button></footer>
+
+The head snippet it also installs is already on every page, which is what its
+idempotence check looks for; the footer button is not, and nothing here
+noticed. It writes with open(path, "w") and no newline="\n", so a run would
+have converted those ten pages to CRLF as well (section 8, trap 32).
+
 Add the data-motion contract to every shared-chrome page.
 
 The footer toggle is the contract every other item in the revamp is written
