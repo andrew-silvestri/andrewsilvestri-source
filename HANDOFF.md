@@ -337,7 +337,7 @@ report first.**
 | Script | What it does |
 |---|---|
 | `rebuild_nav.py` | Rewrites the nav on every page from the `NAV` list. |
-| `build_climate_figures.py` | The two climate-research diagrams (`nitrogen_fixation.png`, `running_shoe.png`). Boxes are drawn as text bboxes and arrows run underneath them, deliberately: a box sized by a guessed line height is a bug the layout audit cannot see. The shoe outline functions here are duplicated in `site/running-shoes-app.html`; if one changes, change both, because the flat figure and the 3D model are meant to be the same shoe. |
+| `build_climate_figures.py` | **Retired 2026-09-11 to `unpublished/`.** Both outputs are orphans - no page in `site/` references `nitrogen_fixation.png` or `running_shoe.png`, and the climate-research pages that did are unpublished - so a run added two files to `site/assets/` that `publish.sh` would ship unread and `sync_assets.py --apply` would then delete. The drawing notes are kept in its header: boxes are text bboxes with arrows underneath, deliberately, and the shoe outline is duplicated in `unpublished/running-shoes-app.html`. |
 | `add_citations.py` | Attaches superscript citations anchored to phrases, not positions. Armed and round-tripping all seven pages it owns since 2026-09-05; it was disarmed for a day while three defects it could not reproduce were fixed, and its docstring records them. |
 | `build_sitemap.py` | Writes `site/sitemap.xml` from the pages that exist, apps excluded. `--apply` to write; without it, reports and lists the urls that would be added or dropped. Carries each page's existing `lastmod` over so a run does not churn every date, which is also what makes it idempotent enough for the drift check. It was a hand-kept list and was four pages behind on 2026-09-05. |
 | `sync_assets.py` | Copies figures from project folders into `site/assets/`. |
@@ -1749,7 +1749,14 @@ enough" without measuring the rendered gap. Section 5 also gains **how to find
 which file owns a string**, after three wrong derivations in one session.
 Merged as `9c19d21` and `2efb965`.
 Rollback is the mirror's `85a4c82`, 2026-09-07 — the site is in American English.
-91 occurrences of 19 British spellings in `site/*.html` prose, swept to 0. The
+91 occurrences of 19 British spellings in `site/*.html` prose, swept to 0.
+**That last clause is stale, and this is trap 11 again.** Measured on the
+rendered text on 2026-09-11: **52 British spellings** across the ten pages'
+prose and meta descriptions — continents 25, beauty 5, longevity 5, heat 5,
+climate-cost 3, skyline 3, storage 3, index 2, code 1. Most are words the
+19-item list never held: millimetre, centres, artefact, judgement, licence,
+analyser, digitisation, palaeomagnetism, per cent. The sweep did what it said;
+the list it swept was narrower than the claim it left behind. The
 diff is **88 insertions and 88 deletions across 19 files** — perfectly balanced,
 which is the correct signature for a pure sweep: anything added or removed would
 mean something else happened. Three of those files are PNGs
@@ -2010,13 +2017,14 @@ All of these must pass before a publish; `./publish.sh --dry-run` after.
 
 | Test | Catches |
 |---|---|
-| `tests/test_generators.py` | Any of the text generators drifting from what is shipped: nav, atlas and model pages, longevity page and app, food page, neuron page and app, shoes page, economy page, citations, climate-cost app, skyline app, the download archives, thumbnails, the layer diagram, image dimensions, cache stamps. Run before trusting any generator. The `add_citations.py` entry is **armed**: the guard and the flag that bypassed it are both gone, and the comment above the entry says why. |
+| `tests/test_generators.py` | Any of the text generators drifting from what is shipped. **Fourteen live entries, counted on 2026-09-11**: nav; the longevity, continents and beauty pages; citations; the longevity, climate-cost, skyline and continents apps; the download archives; the sitemap; code rows; image dimensions; cache stamps. Run before trusting any generator. The `add_citations.py` entry is **armed**: the guard and the flag that bypassed it are both gone, and the comment above the entry says why. (This row listed atlas and model pages, food, neuron, shoes, economy, thumbnails and the layer diagram — eight entries retired with their pages — and omitted the continents page, the continents app, the sitemap and code rows. `beauty/update_page.py` was not registered at all until 2026-09-11, though it owns 286 of that page's 406 numbers. Trap 11 again, in the row that exists to catch it.) |
 | `tests/test_parity.py` | The two engines disagreeing: all 60 scenarios, every node, to 1e-12 (measured 2.2e-15), and the round counts. |
 | `tests/test_demand_response.py` | Property 5 regressing: push a consumer group, its district must fall. 40 sampled, `--all` for 1,142. |
 | `tests/test_payload.py` | The payload changing without anyone re-recording it. |
 | `tests/verify_hero_systems.js` | The hero's captions claiming something its integrator does not do. The three-body caption names an outcome and the pendulum asserts an energy bound; neither is true by construction. It found that a fixed step cannot do Burrau (energy drift 1.8e+1, encounters unresolved) and that RK4's secular drift would have breached a guessed 1e-4 bound at six hours. `--break` carries three mutations, all caught. |
 | `tests/test_atlas_interaction.js` | The app failing to boot or a node kind that cannot be clicked, against a three.js stub. 19 checks. |
-| `tests/test_layout.js` | Marginalia painting over content; a page with more than one left edge for its text blocks, or a breakout picture off the measure; the home page's index entries off spec (one sentence, no figure, same shape); and that a `position: fixed` block is wide enough for its own text, measured as `scrollWidth > clientWidth` and so firing on the widest UNBREAKABLE run. **112 page-viewport combinations** — 16 pages at 1920, 1440, 1366, 1280, 1024, 960 and 390. (This row said 40 at four viewports until 2026-09-07; the file had grown to seven viewports and nobody re-read it. It then said **105, 15 pages** until 2026-09-09, when a run printed 112/112 and `PAGES` was counted at sixteen — `about` was added on 2026-09-07 and the count was not. Trap 11, twice in one row.) |
+| `tests/test_layout.js` | Marginalia painting over content; a page with more than one left edge for its text blocks, or a breakout picture off the measure; the home page's index entries off spec (one sentence, no figure, same shape); and that a `position: fixed` block is wide enough for its own text, measured as `scrollWidth > clientWidth` and so firing on the widest UNBREAKABLE run. **It prints 108/108**, and that is a count of CHECKS, not of pages times viewports: `PAGES` holds the ten document pages (`:45`) and `APPS` the four viewers (`:52`), which is **14 pages at 7 viewports, 98 page-viewport loads**, plus the increments at `:397`, `:435`, `:473` and the fixture block at `:503`. (This row said 40 at four viewports until 2026-09-07; **112, 16 pages** until 2026-09-11, when the lists were counted rather than the printed total read. Trap 11, three times in one row.) What it does not see, measured 2026-09-11: `position: sticky` — it tests `fixed` alone at `:182` and `:487`, which is why index's 347px navband covering 40% of a 390 screen at every scroll position went unremarked — contrast of any kind, and Firefox, since it launches Chromium only. |
+| `tests/test_contrast.js` | Text that fails AA against the pixels actually under it, which every other rig on this site cannot see: they resolve a background through CSS and walk past a canvas, an image or a `background-image` to the paper behind it (trap 31). Three frames per viewport step — as rendered, with every glyph transparent, as rendered again — so a canvas that keeps drawing is not counted as ink, and a line box whose centre hit-tests to another element is dropped as covered rather than scored. Verdict on the worse quartile against 4.5 (3.0 large). `tests/fixtures/contrast.html` pins seven cases at two canvas fills, 14 expectations, and runs first every time; `--break` takes the ground from CSS instead and the fixture catches it, exit 1. 6,421 runs over 14 pages at 1440 and 390, 262s. It found skyline-app's bearing line at 2.90:1 over its meter where CSS said 5.80. |
 | `tests/test_panel.js` | The home page's caption/footer panel letting the hero canvas through. Screenshots its rect with the canvases showing and with them hidden and requires the two to be **identical** — an opaque ground cannot let what is behind it change what is in front of it, so this needs no colour constant and no tolerance. A control band above the panel must NOT be identical, or the check passes on a frame where the animation was elsewhere. Also asserts that the panel's right border and `.paper`'s left border paint **one** hairline and not two. Firefox at 1728x1080, dpr 2.2222; 10 checks. `--break` removes the background and must exit non-zero if no pin notices (trap 26). Replaced `tests/test_exclusion.js` on 2026-09-07 when the canvas exclusion it guarded was deleted. |
 | `tests/test_nav_states.js` | A nav or dropdown state whose rule does not reach the page. Nine states over two viewports - top-bar current, menu item, hovered, current, current+hover, and the four the 620px block redefines - each asserted twice: the contrast pair clears AA, **and the rendered value equals the one its named rule declares**. The second assertion is the new one and is the point: `.ddmenu a:hover { color: var(--acc) }` never applied for a day, and every contrast gate stayed green because the fallback measured 5.30:1 against a working 5.71:1 - both over 4.5 (trap 31). It reads the declared value out of the stylesheet at run time, so it fails when a more specific selector takes over rather than when a colour is merely ugly. Forces menus open and drives hovers, which is what `_deslop/measure.js` cannot do: an unattended crawl opens no menu, and `.ddmenu a.on` exists on one page per menu. `--break` carries four mutations, one per historical defect plus one where the rule is present and losing; all four caught, and the `hover` one fires on the declared assertion ALONE. |
 | `tests/test_markup.py` | Markdown that never became HTML. |
@@ -2029,6 +2037,24 @@ All of these must pass before a publish; `./publish.sh --dry-run` after.
 | Every figure builder's `audit()` | Text overlapping text, text off the canvas, anything under the 12px floor, text spilling its box, a legend's box over text, a panel label not set through `sitefig.panel()` (`save()` refuses), and on a multi-panel sheet: stacked panels not sharing a column, content off-centre, a legend under a panel off its centre (`sitefig.grid_problems()`). Every builder must print 0 problems. |
 | `_deslop/measure.js` then `analyse.js` | The page rig: every page and app at 1440 and 390, console errors, failed requests, text under 12px, every contrast pair against AA, weight. Serve `site/` on 8765 first. |
 
+### Housekeeping from the 2026-09-11 sweep
+
+- `add_motion.py` is **retired to `unpublished/`**. Its idempotence check looks
+  for the head snippet, which every page has; the footer control it also
+  installs is not there, so a run appended a second `<button
+  class="motion-toggle">` to all ten document pages, and it writes without
+  `newline="\n"` (trap 32).
+- `site/downloads/ziqapuTr` — 111,301 bytes, a skyline archive under a name
+  nobody typed, live and linked from nothing — is deleted. `site/downloads/` is
+  gitignored, so that removal is a publish, not a commit.
+- `site/assets/atlas_layers-phone.png` is an orphan: no page references it, and
+  `build_layer_diagram.py`, which draws it, was unregistered when the atlas
+  group went. `sync_assets.py --apply` will delete it; it is left for now.
+- `site/assets/motion.js` is **LF in the index and CRLF in the working copy**
+  (`git ls-files --eol`). Git normalises it on the way to the mirror, so what
+  is live is LF, but `publish.sh` copies working-tree bytes and the warning
+  shows up on every run.
+
 ### Generated against typed
 
 Generated, and regenerated by `python update_atlas_pages.py --apply` from
@@ -2039,7 +2065,9 @@ the §4.4 settle range, the §5.1 weight and §5.2 inertia tables' numbers,
 the §6 behaviour table, and every bare count. `rebuild_nav.py` writes the
 nav on every page; `bust_cache.py` the stamps; `sync_img_dims.py` the
 image sizes; `build_thumbnails.py` the mosaic's six; `build_layer_diagram.py`
-the hero and the atlas figure; `rezip_downloads.py` eleven archives (§10);
+the hero and the atlas figure; `rezip_downloads.py` **ten** archives (§10), one
+of them `climate-cost-code.zip`, which had no target at all until 2026-09-11
+and is now a `files_target` of exactly the entries it has always shipped;
 `longevity-quotient/update_page.py` the longevity page's numbers;
 `sync_code_rows.py` `code.html`'s file counts and archive sizes.
 
