@@ -1447,52 +1447,6 @@ So a clone of this repository serves `code.html` with sixteen dead links until
 
 ---
 
-## 11a. Manim Showcase, 11 September 2026
-
-**One page, one bare nav link, twelve videos.** `site/manim.html` ("Manim
-Showcase") carries twelve `<video class="fig">` elements - the first video in
-`site/` since the WebGL hero and its clips left on 2026-09-04 - plus a poster
-frame for each. The files are `site/assets/manim-*.mp4` (21 MB, largest 7.6 MB)
-and `site/assets/manim-*-poster.webp`, all at the top of `assets/` on purpose:
-`bust_cache.py` globs `assets/*.mp4` and `assets/*.webp` there and nowhere
-deeper, and stamps `src` and `poster` on this page.
-
-**The videos are scrubbed re-renders.** They were rendered from a copy of the
-source workspace in which every network, meter cluster, site figure and name is
-synthetic or illustrative, and the copy's manifest records a final grep against
-a blocked-name list and every coordinate of the original data files (0 matches).
-Nothing from that workspace is in this repository except the twelve MP4s and
-the posters cut from them. There is no `downloads/manim-code.zip` and no
-`code.html` row: the source is not published.
-
-**The bar is eight children again: Home / Energy / Climate / Wildlife / Misc /
-Manim Showcase / Code / About.** It was seven from 2026-09-09. The new entry is
-a bare link, not a group - the leaf label is the page's own title, on the rule
-above `NAV` - and it sits above Code because Code is the last content link
-before About. Measured in headless Chromium at deviceScaleFactor 1, one row at
-1920 / 1440 / 1366 / 1280 / 1024 / 960 with About's resolved `margin-left`
-(the spare) at **712 / 712 / 638 / 552 / 296 / 232 px**. **It wraps to two rows
-between 620 and 720 px**, where the seven-item bar did not; a one-word label
-("Manim") wraps from 660 and "Animations" from 680, so no label fits that band
-and the wrap is accepted. Below 620 the bar is `flex-direction: column` as
-before.
-
-**index.html is unchanged.** Its `<h2>`s are the group taxonomy and this is not
-a group; Home, Code and About have no index section either. If the page should
-also appear on the home page, it needs a section and the h2 rule decides its
-name.
-
-`tests/test_layout.js` has `manim` in PAGES. `rebuild_nav.py` reported
-"1 page(s) would be rewritten" (the new page, from its empty placeholder)
-before the NAV edit and rewrote 11 after it; `test_generators.py` reports nav,
-citations, sitemap, code rows, image dims and cache stamps OK. The three DRIFT
-rows in that run (longevity app, climate-cost app, downloads) are trap 24 -
-the run was under a Linux python3 without numpy, and `downloads/` is
-gitignored - and predate this change; confirm under `python` on the machine
-before believing them. The sitemap gained `manim.html` (11 urls).
-
----
-
 ## 11. Current state, 9 September 2026
 
 **Live: the mirror's `be33d4d`**, 2026-09-09 — the beauty page shipped and two
