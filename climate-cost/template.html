@@ -6,6 +6,10 @@
 <link rel="alternate icon" href="favicon.png">
 <link rel="apple-touch-icon" href="apple-touch-icon.png">
 <meta name="theme-color" content="#F2F0EF">
+<!-- The motion contract, set before first paint. This was the only app on the
+     site without one, and the only one with a scene that orbits.
+     skyline-app's listener is the fuller version; this is the same attribute. -->
+<script>try{document.documentElement.dataset.motion=matchMedia('(prefers-reduced-motion: reduce)').matches?'off':'on';}catch(e){document.documentElement.dataset.motion='on';}</script>
 <style>
 /* Two columns: a fixed reading panel and a stage that takes everything else.
    Every panel is a flow child of its own cell, so nothing is positioned on top
@@ -69,10 +73,34 @@ sub,sup{font-size:var(--fs-2);line-height:0}
    how tests/test_layout.js knows the claim is made rather than guessed. */
 #side{overflow:auto;background:var(--panel);
   border-right:1px solid var(--rule);padding:16px 18px 44px}
-#side .more{display:block;position:sticky;bottom:0;margin:0 -18px;
-  padding:14px 18px 8px;text-align:center;
+/* An opaque ground, not a gradient. The gradient was skyline's, and while
+   the cue only appeared on a phone it fell on padding. Shown at every width
+   it lands on a sentence, and half-faded text under a label reads as a
+   rendering fault rather than as a hint. */
+/* The share bar and its number, on every process row. The scene said this
+   with ball size; a reader who never opens the scene had kilograms and no
+   proportion. Cube root on the bar for the same reason the scene uses it:
+   linear makes everything under a few per cent invisible. */
+#list .share{display:inline-block;width:54px;height:5px;flex:0 0 54px;
+  background:var(--faint);margin:0 8px;border-radius:1px;overflow:hidden}
+#list .share i{display:block;height:100%;background:var(--acc)}
+#list .pct{flex:0 0 44px;text-align:right;font-size:var(--fs-2);
+  color:var(--dim);font-variant-numeric:tabular-nums}
+#list .more{display:block;position:sticky;bottom:0;margin:0 -18px -10px;
+  padding:12px 18px 10px;text-align:center;
   font:var(--fs-2)/1 var(--mono);color:var(--dim);
-  background:linear-gradient(to bottom,transparent,var(--panel) 45%)}
+  background:var(--panel);border-top:1px solid var(--faint)}
+#list.end .more{display:none}
+/* Below 760 the row has no width to spare: the bar goes and the number
+   stays, because the number is the information and the bar is its picture. */
+@media (max-width:760px){ #list .share{display:none} }
+#noscene{position:absolute;inset:0;display:none;align-items:center;
+  justify-content:center;text-align:center;padding:0 40px;
+  font-size:var(--fs-1);color:var(--dim);background:var(--panel)}
+#side .more{display:block;position:sticky;bottom:0;margin:0 -18px;
+  padding:12px 18px 10px;text-align:center;
+  font:var(--fs-2)/1 var(--mono);color:var(--dim);
+  background:var(--panel);border-top:1px solid var(--faint)}
 #side.end .more{display:none}
 #side h1{font:600 var(--fs1)/1.25 var(--sans);margin:0 0 2px}
 #side .sub{color:var(--dim);font-size:var(--fs-1);margin:0 0 14px}
@@ -218,7 +246,7 @@ canvas, #gl, #view, #stage { touch-action: none; }
 </style>
 </head><body>
 
-<div id="app">
+<div id="app" data-three="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js">
 <aside id="side" data-scroll-affordance="more">
   <a class="back" href="climate-cost.html">&larr; back</a>
   <h1>The true climate cost</h1>
@@ -243,9 +271,13 @@ canvas, #gl, #view, #stage { touch-action: none; }
   <p class="note" id="compare"></p>
   <p class="note" id="itemnote"></p>
 
+  <!-- The List opens, and it is not a fallback: it is the fuller view. It
+       carries the share, the quantity, the data grade and a note per process;
+       the scene carries the shape of the tree and nothing else the list does
+       not. The tabs say what each is for rather than only what it is. -->
   <div class="tabs">
-    <button id="t3d" class="on">Scene</button>
-    <button id="tls">List</button>
+    <button id="tls" class="on">Every step</button>
+    <button id="t3d">The shape</button>
   </div>
 
   <h2>Selection</h2>
@@ -276,7 +308,19 @@ canvas, #gl, #view, #stage { touch-action: none; }
   <div id="hint">drag to orbit &middot; scroll to zoom &middot; click a node
     &middot; arrow keys walk the chain</div>
   <button id="reset">Reset view</button>
-  <div id="list"></div>
+  <!-- The list is the opening view now, which makes it the surface a reader
+       scrolls. It is a scroll box inside a position:fixed #app, so the page
+       never scrolls and the only scrollbar is an overlay: 1,084px sat below
+       the fold at 1440 and 2,759px at 390 the moment it became the default.
+       Same declared cue as #side, and tests/test_layout.js checks that the
+       cue is actually visible rather than merely claimed. -->
+  <div id="list" data-scroll-affordance="more"><div class="more" aria-hidden="true">more below &darr;</div></div>
+  <!-- SEPARATE FROM #nogl ON PURPOSE. #nogl says this browser cannot draw
+       WebGL - a claim about the browser. This says a third-party file has not
+       arrived yet - a claim about the network, and the one that actually
+       happens. continents-app learned the same distinction the same week. -->
+  <div id="noscene">The shape is drawn with three.js, which is still on its
+    way from a content network. Every number is already on this page.</div>
   <div id="nogl">This scene draws the life cycle in three dimensions and needs
     WebGL, which this browser has not offered. The same numbers are in the
     list, which is the button in the panel.</div>
@@ -284,7 +328,15 @@ canvas, #gl, #view, #stage { touch-action: none; }
 </div>
 
 <script>const D = /*DATA*/;</script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<!-- three.js is NOT a <script src> any more, and that is the whole point of
+     this rebuild. As a parser-blocking tag ahead of the engine it meant the
+     page showed four empty dropdowns, a total reading "-", and a black
+     rectangle until 120,859 B arrived from a third-party host - 49% of the
+     first load, for a renderer that no number on the page depends on.
+     engine.js contains no reference to THREE at all and renderList() is
+     string building. The URL lives on #app as data-three so it is still in
+     the markup where a reader of this file expects to find it; scene.js
+     fetches it after first paint and calls initGL() when it lands. -->
 <script>/*ENGINE*/</script>
 <script>/*SCENE*/</script>
 </body></html>

@@ -221,15 +221,20 @@
   var renderer, scene, camera, sceneOK = false, hasTHREE = false;
   var group = null, meshes = [], globeGrp, routeGrp;
   var picked = null, selected = null;
+  /* The two targets are filled in by initGL, not here. A Vector3 cannot be
+     constructed before three.js exists, and this file is now parsed before
+     three.js is even requested - that is the point of the rebuild. */
   var view = { az: 0.62, el: 0.30, dist: 15.5,
-               target: new THREE.Vector3(),
+               target: null,
                want: { az: 0.62, el: 0.30, dist: 15.5,
-                       target: new THREE.Vector3() } };
+                       target: null } };
   var HOME = null;
 
   function initGL() {
     if (!window.THREE) return false;
     hasTHREE = true;
+    view.target = view.target || new THREE.Vector3();
+    view.want.target = view.want.target || new THREE.Vector3();
     scene = new THREE.Scene();
     camera = new THREE.PerspectiveCamera(36, 1, 0.05, 400);
     scene.add(new THREE.AmbientLight(0xffffff, 0.72));
@@ -517,12 +522,16 @@
   }
 
   /* ------------------------------------------------------------ picking -- */
-  var ray = new THREE.Raycaster();
+  /* Built on first use, not at parse. Everything from here down runs only
+     when a scene exists; the file itself must not need THREE to be defined,
+     because it is now parsed before three.js is even requested. */
+  var ray = null;
   function pick(cx, cy) {
     if (!sceneOK || !meshes.length) return null;
     var b = canvas.getBoundingClientRect();
     var v = new THREE.Vector2(((cx - b.left) / b.width) * 2 - 1,
                               -((cy - b.top) / b.height) * 2 + 1);
+    ray = ray || new THREE.Raycaster();
     ray.setFromCamera(v, camera);
     var hit = ray.intersectObjects(meshes, false);
     return hit.length ? hit[0].object.userData.node : null;
@@ -541,7 +550,7 @@
      This is written as a pure function of camera and viewport so that the
      test harness can measure the real placer rather than a copy of it. A copy
      is a thing that passes while the page fails. */
-  var pv = new THREE.Vector3();
+  var pv = null;                     /* see the note on ray above */
   var LADDER = [0, -15, 15, -30, 30, -46, 46];
 
   /* Label widths are MEASURED, not counted. The old estimate was
@@ -593,6 +602,7 @@
     var out = [], taken = [];
 
     function project(p) {
+      pv = pv || new THREE.Vector3();
       pv.copy(p).project(cam);
       if (pv.z > 1) return null;
       return { x: (pv.x * 0.5 + 0.5) * W, y: (-pv.y * 0.5 + 0.5) * H };
@@ -912,8 +922,8 @@
      with nothing to say so. Lifted from skyline/app.js, which hit the same
      thing on 2026-09-05; the cue hides itself at the end. Defensive, because
      the harness's DOM has no layout. */
-  (function () {
-    var side = document.getElementById('side');
+  function cueFor(id) {
+    var side = document.getElementById(id);
     if (!side || typeof side.addEventListener !== 'function') return;
     function cue() {
       var atEnd = side.scrollHeight - side.clientHeight - side.scrollTop < 4 ||
@@ -930,7 +940,9 @@
       new MutationObserver(cue).observe(side, {childList: true, subtree: true,
                                                characterData: true});
     cue();
-  })();
+  }
+  cueFor('side');
+  cueFor('list');            /* the list is the opening view; same rule */
 
   document.getElementById('reset').addEventListener('click', function () {
     select(null); resetView(false);
@@ -946,10 +958,14 @@
   }
 
   /* ---------------------------------------------------------- the list -- */
-  function branchHTML(n, max) {
+  function branchHTML(n, max, total) {
     var kids = (n.children || []).slice().sort(function (a, b) {
       return Math.abs(b.total) - Math.abs(a.total); });
-    var pct = max ? Math.min(100, Math.abs(n.total) / max * 100) : 0;
+    /* `max` and the pct it produced were computed here and never drawn - a
+       bar planned and not built. The bar below is share of the ITEM's total
+       instead, which is the quantity the stage headings already report
+       ("Fuel, burned 20.4 kg - 68.0%") and the one a reader is adding up.
+       max is still threaded through because renderList() passes it. */
     var showAlloc = Math.abs(n.alloc - 1) > 1e-9;
     return '<li class="n"><div class="row"><span class="lbl">' +
       '<i class="dot" style="background:' + colourOf(n) + '"></i>' +
@@ -960,17 +976,36 @@
       '</span>' +
       (n.quality ? '<span class="q" title="A documented, B literature ' +
         'estimate, C uncertain">' + n.quality + '</span>' : '') +
-      '</span><span class="val">' + fmt(n.total) + '</span></div>' +
+      '</span>' + shareHTML(n.total, total) +
+      '<span class="val">' + fmt(n.total) + '</span></div>' +
       (n.note ? '<div class="leafnote">' + esc(n.note) + '</div>' : '') +
       (kids.length ? '<ul class="tree">' +
-        kids.map(function (k) { return branchHTML(k, max); }).join('') +
+        kids.map(function (k) { return branchHTML(k, max, total); }).join('') +
         '</ul>' : '') +
       '</li>';
+  }
+
+  /* A row's share of the whole, as a number and as a bar. The scene said this
+     with ball size, on a cube-root scale; a reader who never opens the scene
+     had only the raw kilograms and no sense of proportion. Cube root here
+     too, for the same reason it is used there: a linear bar makes everything
+     under a few per cent invisible. */
+  function shareHTML(v, total) {
+    if (!total) return '';
+    var f = Math.abs(v) / Math.abs(total);
+    var w = Math.max(1, Math.min(100, Math.pow(f, 1 / 3) * 100));
+    return '<span class="share" title="' + (f * 100).toFixed(1) +
+      '% of the total for this item">' +
+      '<i style="width:' + w.toFixed(1) + '%"></i></span>' +
+      '<span class="pct">' + (f * 100 < 0.1 ? '<0.1' : (f * 100).toFixed(1)) +
+      '%</span>';
   }
 
   function renderList(r) {
     var max = Math.max.apply(null, r.spine.map(function (s) {
       return Math.abs(s.total); }));
+    /* innerHTML replaces everything including the sticky cue, so it is
+       re-appended below rather than living in the template alone. */
     document.getElementById('list').innerHTML = r.spine.map(function (s) {
       var kids = (s.children || []).slice().sort(function (a, b) {
         return Math.abs(b.total) - Math.abs(a.total); });
@@ -983,9 +1018,10 @@
         '</div>' +
         (s.note ? '<div class="leafnote">' + esc(s.note) + '</div>' : '') +
         (kids.length ? '<ul class="tree">' +
-          kids.map(function (k) { return branchHTML(k, max); }).join('') +
+          kids.map(function (k) { return branchHTML(k, max, r.total); }).join('') +
           '</ul>' : '');
-    }).join('');
+    }).join('') +
+      '<div class="more" aria-hidden="true">more below &darr;</div>';
   }
 
   /* ----------------------------------------------------------------- ui -- */
@@ -1083,7 +1119,16 @@
         (CUT * 100).toFixed(2) + '% cutoff.' : '');
 
     renderList(r);
-    build(r);
+    /* build() is the SCENE, and it was the last thing render() did - which is
+       why the whole page used to wait for a content network before it could
+       write a total. Everything above this line needs only the payload and
+       engine.js.
+       The gate is hasTHREE, not sceneOK. layout() does its geometry in
+       THREE.Vector3, so build() needs the library; it does NOT need a working
+       renderer, and the no-WebGL path has always relied on that - it builds
+       the tree, fails to draw it, and shows the list. Gating on sceneOK
+       instead left placed null and test_scene.js said so. */
+    if (hasTHREE) build(r);
   }
 
   /* tabs */
@@ -1097,7 +1142,12 @@
     document.getElementById('reset').style.display = on ? 'none' : '';
     if (!on) resize();
   }
-  t3d.addEventListener('click', function () { showList(false); });
+  t3d.addEventListener('click', function () {
+    /* Pressing the shape before three.js has landed asks for it now rather
+       than showing a black rectangle and waiting for an idle callback. */
+    showList(false);
+    if (!sceneAttached) loadThree();
+  });
   tls.addEventListener('click', function () { showList(true); });
 
   /* boot */
@@ -1146,9 +1196,15 @@
   });
   syncLife(D.products.tomato_field, true);
 
-  /* A particular question can be linked to, which is also how the figures
-     on the page behind this one are captured from the live tool rather than
-     drawn a second time: ?item=car_petrol&from=DE&to=US-TX&mode=sea&life=100000 */
+  /* A particular question can be linked to:
+       ?item=car_petrol&from=DE&to=US-TX&mode=sea&life=100000
+     This comment used to say it was also how the figures on the page behind
+     this one are captured from the live tool. THAT WAS NEVER TRUE. Both
+     figures are drawn by matplotlib from lca.py - build_allocation_chain.py:69
+     and climate-cost/build_allocation_figure.py:52 - and nothing on the site
+     generates a link of this shape. The only consumers are the scratch rigs
+     in _audit-climate-cost/, which use it to pin a view; that is a real use
+     and the reason the parsing stays. Corrected 2026-09-11. */
   (function () {
     var q = new URLSearchParams(location.search);
     var it = q.get('item');
@@ -1175,13 +1231,67 @@
     }
   })();
 
-  var ok = initGL();
-  if (!ok) {
-    document.getElementById('nogl').style.display = 'flex';
-    canvas.style.display = 'none';
-  }
+  /* THE NUMBERS DO NOT WAIT FOR THE RENDERER.
+     render() needs the payload and engine.js, both of which are on the page
+     already; it fills the selects, runs the model, writes the total, the
+     route, the comparison and every list row. Until 2026-09-11 none of that
+     ran until three.js arrived from cdnjs, because the tag sat ahead of the
+     engine and blocked the parser: at 1,500ms the page was four empty
+     dropdowns, a total reading "-", and a black rectangle. */
   render();
-  if (ok) { resize(); frame(); } else { showList(true); }
+  showList(true);
+
+  /* Attach the scene whenever three.js is available - now if something has
+     already defined it, otherwise when the fetch below lands. initGL()
+     already returns false without window.THREE, so the entry point existed;
+     what changes is when it is called. */
+  var sceneAttached = false;
+  function attachScene() {
+    if (sceneAttached) return true;
+    if (!initGL()) return false;
+    sceneAttached = true;
+    var ns = document.getElementById('noscene');
+    if (ns) ns.style.display = 'none';
+    resize(); render(); frame();
+    return true;
+  }
+  function sceneUnavailable(why) {
+    var ns = document.getElementById('noscene');
+    var gl = document.getElementById('nogl');
+    canvas.style.display = 'none';
+    if (why === 'webgl') {            /* a claim about the browser */
+      if (ns) ns.style.display = 'none';
+      if (gl) gl.style.display = 'flex';
+    } else {                          /* a claim about the network */
+      if (ns) {
+        ns.textContent = 'The shape could not be drawn: three.js did not '
+          + 'arrive from the content network. Every number is already on '
+          + 'this page.';
+        ns.style.display = 'flex';
+      }
+    }
+  }
+  /* The 120,859 B that used to block everything, fetched after first paint.
+     Same shape as continents-app's coastlines: the URL is in the markup, on
+     #app, so it is still where a reader of the template looks for it. */
+  function loadThree() {
+    if (window.THREE) { attachScene(); return; }
+    var url = document.getElementById('app').dataset.three;
+    if (!url) { sceneUnavailable('webgl'); return; }
+    var t = document.createElement('script');
+    t.src = url;
+    t.onload = function () { if (!attachScene()) sceneUnavailable('webgl'); };
+    t.onerror = function () { sceneUnavailable('network'); };
+    document.body.appendChild(t);
+  }
+  /* THREE already defined - a cached load, or the test harness's stub. If it
+     is here and the scene still will not start, that is the browser refusing
+     WebGL, which is #nogl's case and not the network's. test_scene.js caught
+     this: the branch existed and said nothing. */
+  if (window.THREE) { if (!attachScene()) sceneUnavailable('webgl'); }
+  else if ('requestIdleCallback' in window)
+    requestIdleCallback(loadThree, { timeout: 2000 });
+  else window.addEventListener('load', loadThree);
 
   // for the test harness: the engine, the layout, and the constants the
   // layout is measured against, so a test cannot silently drift from the
