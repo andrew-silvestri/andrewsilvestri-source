@@ -330,6 +330,58 @@ function serve() {
       for (const f of trapped) if (!hits.includes(f)) hits.push(f);
       /* A canvas is a picture with no text in it, and on these four apps it
          is often the only place some of the content exists. */
+      /* Is each control actually reachable where it is drawn? Asked with
+         elementFromPoint at the control's own centre, which is the only
+         question that matters and the only one that survives clipping.
+         A rect comparison does NOT: getBoundingClientRect returns unclipped
+         geometry, so a control scrolled half out of a panel reports a box
+         overlapping whatever is below the panel, and the first version of
+         this check duly reported climate-cost's tabs as covered by its own
+         canvas. The same mistake was made measuring the scroll cues an hour
+         earlier; an unclipped API cannot answer a question about a clipped
+         box.
+
+         The defect it exists for: longevity-app's #detail was position:fixed
+         bottom-right at 70vh and covered two controls at 1440, four at 1280
+         and NINE at 1024 - including the baseline switch, the one control
+         that page's own prose singles out. Nothing here could see it. */
+      const covering = await page.evaluate(() => {
+        const nm = el => el.tagName.toLowerCase()
+          + (el.id ? '#' + el.id : (typeof el.className === 'string' && el.className
+             ? '.' + el.className.trim().split(/\s+/)[0] : ''));
+        const out = [];
+        for (const c of document.querySelectorAll(
+              'a[href],button,select,input,textarea,[tabindex]')) {
+          if (c.tabIndex < 0) continue;
+          const b = c.getBoundingClientRect();
+          if (!b.width || !b.height) continue;
+          const x = b.left + b.width / 2, y = b.top + b.height / 2;
+          if (x < 0 || y < 0 || x > innerWidth || y > innerHeight) continue;
+          /* A control scrolled out of a panel is not covered, it is simply
+             not on screen - and its rect still says where it WOULD be, so
+             elementFromPoint there returns whatever is at that spot instead.
+             That is the third form this clipping problem has taken in this
+             file. Only ask about a control that is actually inside every
+             scrolling ancestor it has. */
+          let clipped = false;
+          for (let a = c.parentElement; a && a !== document.body; a = a.parentElement) {
+            const cs = getComputedStyle(a);
+            if (!/(auto|scroll|hidden)/.test(cs.overflowY + cs.overflowX)) continue;
+            const ab = a.getBoundingClientRect();
+            if (y < ab.top || y > ab.bottom || x < ab.left || x > ab.right) {
+              clipped = true; break;
+            }
+          }
+          if (clipped) continue;
+          const top = document.elementFromPoint(x, y);
+          if (!top || top === c || c.contains(top) || top.contains(c)) continue;
+          out.push(nm(top) + ' covers the control "'
+            + (c.textContent || c.id || c.type).trim().slice(0, 16) + '"');
+        }
+        return [...new Set(out)];
+      });
+      for (const f of covering) if (!hits.includes(f)) hits.push(f);
+
       const mute = await page.evaluate(() => [...document.querySelectorAll('canvas')]
         .filter(c => c.getBoundingClientRect().width > 0)
         // aria-hidden is a declaration that this canvas is not for the
