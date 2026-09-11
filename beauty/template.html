@@ -22,7 +22,7 @@ the papers of a Least Concern one, once family, size, range and description
 date are held fixed. Which direction that runs is not settled here: a bird
 cannot be listed without evidence, and evidence is research. The published
 models, on other taxa and older indexes, mostly found the opposite.</p>
-<aside class="marginalia" style="grid-row: span {{span}}" aria-label="On this page"><p class="lab">On this page</p><ul><li><b>birds modeled</b><span class="v">{{n_modelled}}</span></li><li><b>papers, Least Concern</b><span class="v">{{lc_raw}} typical</span></li><li><b>papers, Critically Endangered</b><span class="v">{{cr_raw}}</span></li><li><b>the same, adjusted</b><span class="v">{{lc_adj}} and {{cr_adj}}</span></li><li><b>Critically Endangered vs Least Concern</b><span class="v">{{cr_tot_x}}×</span></li><li><b>of that, through attention</b><span class="v">{{med_cr}}%</span></li></ul></aside>
+<aside class="marginalia" style="grid-row: span {{span}}" aria-label="On this page"><p class="lab">On this page</p><ul><li><b>birds modeled</b><span class="v">{{n_modelled}}</span></li><li><b>papers, Least Concern</b><span class="v">{{lc_raw}} typical</span></li><li><b>papers, Critically Endangered</b><span class="v">{{cr_raw}}</span></li><li><b>the same, adjusted</b><span class="v">{{lc_tot}} and {{cr_tot}}</span></li><li><b>Critically Endangered vs Least Concern</b><span class="v">{{cr_tot_x}}×</span></li><li><b>of that, through attention</b><span class="v">{{med_cr}}%</span></li></ul></aside>
 <aside class="marginalia right" style="grid-row: span {{span}}"><ul><li><b>papers per threatened amphibian</b><span class="v">{{amph_per}}</span></li><li><b>per threatened bird</b><span class="v">{{birds_per}}</span></li><li><b>published models read</b><span class="v">{{n_read}} of {{n_models}}</span></li><li><b>Wikipedia views vs rated beauty</b><span class="v">{{views_over_attr}}×</span></li><li><b>published models, threat null or negative</b><span class="v">{{n_null_or_neg}} of {{n_read}}</span></li><li><b>Red List</b><span class="v">{{red_list_version}}</span></li></ul></aside>
 
 <p>Everyone knows that pandas get more attention than frogs. The expected
@@ -126,7 +126,7 @@ birds people look up equally often — and neither is the "true" one.</p>
 <p class="small">What the full model's fit depends on: the fall in R² when
 each term is removed and the model refitted, with 95% bootstrap intervals.
 The full model adds rated attractiveness and Wikipedia views to the
-adjusted model above; R² rises from {{r2_conf}} to {{r2_full}}.</p>
+adjusted model above; R² rises from {{r2_noviews}} to {{r2_full}}.</p>
 
 <p>Ranked by what the fit loses without them, {{top_term}} comes first
 ({{top_drop}}) and {{second_term}} second ({{second_drop}}). Red List
@@ -233,9 +233,9 @@ use only a common name and catches a few that mention a species in
 passing, and it treats a note and a monograph alike. Two ordinary
 least-squares fits, each with a fixed effect for every family and
 heteroskedasticity-robust standard errors. The adjusted model has log body
-mass, log range size, years since description to {{ref_year}}, and the Red
-List category with Least Concern as the reference. The full model adds
-rated attractiveness and log(1 + mean monthly Wikipedia views). Family
+mass, log range size, years since description to {{ref_year}}, rated
+attractiveness, and the Red List category with Least Concern as the
+reference. The full model adds log(1 + mean monthly Wikipedia views). Family
 fixed effects standing in for a phylogeny is <em>assumed</em>; the
 published bird model used a tree and attributed 74% of the variance to it.</p>
 

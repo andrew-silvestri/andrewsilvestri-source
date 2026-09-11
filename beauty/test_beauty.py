@@ -415,6 +415,27 @@ def main():
         if rendered != open(PAGE, encoding="utf-8").read():
             fails.append("site/beauty.html differs from the template rendered from the payload")
         fails += [f"citations: {p}" for p in probs]
+
+        # 4b. "adjusted" is ONE quantity on this page, and it is model_noviews.
+        # It was two: the marginalia read model_confounders (17.6 and 47.7)
+        # while the prose read model_noviews (17.6 and 48.1), and nothing on
+        # the page said which fit "adjusted" meant. noviews is the total
+        # effect - attractiveness held, views left free - which is the
+        # estimand the mediated share is a share OF (build_beauty.py:89).
+        # Both are checked against the payload, not against each other: two
+        # numbers agreeing says nothing about which model produced them.
+        page = open(PAGE, encoding="utf-8").read()
+        want = (f"{P['model_noviews']['adjusted']['LC']:.1f}",
+                f"{P['model_noviews']['adjusted']['CR']:.1f}")
+        strip = re.search(r"the same, adjusted</b><span class=\"v\">"
+                          r"([0-9.]+) and ([0-9.]+)</span>", page)
+        prose = re.search(r"After adjustment the figures are\s+([0-9.]+)\s+and\s+([0-9.]+)", page)
+        for label, m in (("marginalia", strip), ("prose", prose)):
+            if not m:
+                fails.append(f"page: the adjusted pair could not be read from the {label}")
+            elif m.groups() != want:
+                fails.append(f"page: the {label} adjusted pair is {m.groups()}, "
+                             f"but model_noviews gives {want}")
     else:
         skips.append("no site/beauty.html yet")
 

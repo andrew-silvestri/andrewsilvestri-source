@@ -109,7 +109,14 @@ def values(P):
         "red_list_version": P["red_list_version"], "redlist_source_word":
             "the Red List API" if P["redlist_source"] == "api" else "the 2021 categories in the Santangeli deposit",
         "n_boot": fmt(P["n_boot"]), "seed": P["seed"], "ref_year": P["reference_year"],
+        # r2_noviews, not r2_conf: the page's "adjusted" is model_noviews
+        # throughout - the total effect, with attractiveness held and views
+        # left free, which is what makes the mediated share below mean
+        # anything (build_beauty.py:89). The strip used to read the
+        # confounders-only fit while the prose read this one, so one quantity
+        # had two values on the page, 47.7 and 48.1.
         "r2_conf": f"{conf['r2']:.2f}", "r2_full": f"{full['r2']:.2f}",
+        "r2_noviews": f"{nov['r2']:.2f}",
         # figure 1
         "amph_share_thr": pct(g["Amphibians"]["share_threatened"]), "amph_share_works": pct(g["Amphibians"]["share_works"]),
         "amph_per": f"{g['Amphibians']['works_per_threatened']:.0f}",
