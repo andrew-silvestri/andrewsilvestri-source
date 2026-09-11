@@ -1,0 +1,38 @@
+<!doctype html><meta charset="utf-8"><title>contrast fixture</title>
+<!-- Six cases with known answers. #625C57 (--dim) on #733E24 (--moss) is
+     1.30:1 by arithmetic, and on #F2F0EF (--bg) it is 5.80:1, so ?fill=
+     moves the two canvas cases from fail to pass and the instrument has to
+     move with it. The CSS-resolved method scores both canvas cases and the
+     background-image case as passes, which is what --break asserts. -->
+<style>
+body{margin:0;background:#F2F0EF;font:16px/1.4 sans-serif}
+.box{position:relative;width:360px;height:60px;margin:20px}
+.lab{position:absolute;left:10px;top:18px;color:#625C57;font-size:16px}
+#d1{background:#733E24;color:#625C57;width:360px;margin:20px;padding:18px 10px}
+#ok{color:#241E1A;margin:20px;padding:0 10px}
+#g1{background-image:linear-gradient(#241E1A,#241E1A);color:#241E1A;width:360px;margin:20px;padding:18px 10px}
+</style>
+<div class="box"><canvas id="cv" width="360" height="60"></canvas><span class="lab" id="c1">dim label over a canvas fill</span></div>
+<div id="d1">dim text on a CSS brown fill</div>
+<p id="ok">ink text on the paper ground</p>
+<div id="g1">ink text on a background-image fill</div>
+<div class="box"><canvas id="cv2" width="360" height="60"></canvas><span class="lab" id="pe" style="pointer-events:none">label, pointer-events none</span></div>
+<div style="position:relative;margin:20px;width:360px"><span id="cov">text under an opaque cover</span><div style="position:absolute;left:0;top:0;right:0;bottom:0;background:#245F73;color:#fff">Home</div></div>
+
+<!-- #half straddles the edge of a fill: half its glyphs really are unreadable,
+     so it must fail even though the clean half keeps its median high. That is
+     what stops the verdict being taken from the median.
+     A case for the opposite shape - a bar ending a pixel from the glyphs,
+     which longevity-app's value labels have - is NOT here. Four attempts at
+     the geometry never got the bar inside the 2px neighbourhood (p10 came
+     back exactly equal to the median every time), and a fixture that passes
+     for the wrong reason is worse than none. What that shape does on the real
+     page is in the test's docstring, measured. -->
+<div style="position:relative;margin:20px;width:360px;height:26px"><div style="position:absolute;left:0;top:0;width:150px;height:26px;background:#733E24"></div><span id="half" style="position:absolute;left:6px;top:4px;color:#625C57">half of this sits on the fill</span></div>
+<script>
+var fill = (location.search.match(/fill=([0-9A-Fa-f]{6})/) || [0, '733E24'])[1];
+['cv', 'cv2'].forEach(function (id) {
+  var x = document.getElementById(id).getContext('2d');
+  x.fillStyle = '#' + fill; x.fillRect(0, 0, 360, 60);
+});
+</script>
