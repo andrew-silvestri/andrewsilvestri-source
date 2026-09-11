@@ -280,6 +280,45 @@ function serve() {
       if (hits.length) { failures++; console.log(`  FAIL ${p}.html @${w}: ${hits.slice(0, 6).join('; ')}${hits.length > 6 ? ' …' : ''}`); }
       else console.log(`  ok   ${p}.html @${w}`);
     }
+    /* longevity's label rule. A value label is never drawn over its own
+       bar: the bar's end is where the value is encoded, and --dim on --moss
+       measures 1.30:1, so a number laid across it is simply gone. The
+       plotting area reserves a measured gutter (--gut, from setGutter) so
+       the label always has room beside the bar rather than on it.
+
+       This is deliberately NOT "no .val overflows its track". That check
+       existed, it passed 101/101, and the page was wrong in exactly the way
+       it was named for - the label was inside the track and unreadable. A
+       label in the gutter is outside the track and correct. Assert the
+       thing that broke. */
+    {
+      await page.goto(base + 'longevity-app.html', { waitUntil: 'load' });
+      await page.waitForTimeout(1800);
+      const bad = await page.evaluate(() => {
+        const out = [];
+        const rows = [...document.querySelectorAll('#chart .row')]
+          .filter(r => !r.classList.contains('hide'));
+        for (const r of rows) {
+          const v = r.querySelector('.val');
+          if (!v || !v.textContent.trim()) continue;
+          const bar = [...r.querySelectorAll('.bar,.bu,.bc,.bg1')]
+            .map(e => e.getBoundingClientRect()).filter(b => b.width > 0)
+            .sort((a, z) => z.right - a.right)[0];
+          if (!bar) continue;
+          const vb = v.getBoundingClientRect();
+          if (vb.left < bar.right - 1 && vb.right > bar.left + 1)
+            out.push('"' + (r.querySelector('.nm') || r).textContent.trim().slice(0, 24)
+              + '" value ' + v.textContent.trim() + ' is drawn over its own bar ('
+              + Math.round(bar.right - vb.left) + 'px of overlap)');
+        }
+        if (!rows.length) out.push('no rows rendered: the app did not boot');
+        return out.slice(0, 3);
+      });
+      checks++;
+      if (bad.length) { failures++; console.log('  FAIL longevity values @' + w + ': ' + bad.join('; ')); }
+      else console.log('  ok   longevity values @' + w + ': no value drawn over its own bar');
+    }
+
     /* climate-cost's label rule, asserted where it can be measured. The app
        nudges a near-edge label inward instead of dropping it, bounded so its
        box still covers its own node's x - position is what says which node a
