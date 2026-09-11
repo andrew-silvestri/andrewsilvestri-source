@@ -135,6 +135,24 @@ TARGETS = [
     # the list of what the archive held, and it is what to restore from.
     target("heat", "heat-code.zip"),
     target("storage", "storage-code.zip"),
+    # climate-cost-code.zip had no target at all until 2026-09-11: the archive
+    # was assembled once by hand, which is why code.html could say every
+    # archive carries a README.md while this one carried none. It is a
+    # files_target, not a folder target, so the archive keeps exactly the eight
+    # entries it has always shipped and gains the README beside them - a
+    # folder target would also sweep in climate-cost.html, data/coast.json and
+    # whatever else the working folder holds.
+    files_target("climate-cost-code.zip", {
+        "README.md": "climate-cost/README.md",
+        "lca.py": "climate-cost/lca.py",
+        "data/processes.py": "climate-cost/data/processes.py",
+        "engine.js": "climate-cost/engine.js",
+        "scene.js": "climate-cost/scene.js",
+        "template.html": "climate-cost/template.html",
+        "test_lca.py": "climate-cost/test_lca.py",
+        "test_scene.js": "climate-cost/test_scene.js",
+        "build_allocation_figure.py": "climate-cost/build_allocation_figure.py",
+    }),
     # bookshelf-code.zip retired with its app on 2026-09-05 (PHASE5): the last
     # build is unpublished/downloads/bookshelf-code.zip, its sources bookshelf/
     # and unpublished/bookshelf-app.html.
