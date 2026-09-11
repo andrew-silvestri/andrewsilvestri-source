@@ -863,6 +863,16 @@
     }
     side.addEventListener('scroll', cue);
     window.addEventListener('resize', cue);
+    /* The city list, the stats and the tower list are all filled by script
+       after this runs, so cue() at boot measured an empty panel, found it did
+       not scroll, and set the end class. At 1440 the panel was already long
+       enough for that to be wrong immediately; at 1920 the taller viewport
+       hid it until the panel filled, and nothing fired afterwards - 2,109px
+       sat below a cue that had hidden itself. Recompute when the content
+       changes, not only when the reader does something. */
+    if (window.MutationObserver)
+      new MutationObserver(cue).observe(side, {childList: true, subtree: true,
+                                               characterData: true});
     cue();
   })();
 

@@ -906,6 +906,32 @@
     e.preventDefault();
   });
 
+  /* The panel's "more below" cue. #side scrolls inside a position:fixed #app,
+     so the page never scrolls and the only scrollbar is an overlay that shows
+     up once you are already scrolling - it hid 261px at 1440 and 728px at 390
+     with nothing to say so. Lifted from skyline/app.js, which hit the same
+     thing on 2026-09-05; the cue hides itself at the end. Defensive, because
+     the harness's DOM has no layout. */
+  (function () {
+    var side = document.getElementById('side');
+    if (!side || typeof side.addEventListener !== 'function') return;
+    function cue() {
+      var atEnd = side.scrollHeight - side.clientHeight - side.scrollTop < 4 ||
+                  side.scrollHeight <= side.clientHeight;
+      if (side.classList && side.classList.toggle) side.classList.toggle('end', atEnd);
+    }
+    side.addEventListener('scroll', cue);
+    window.addEventListener('resize', cue);
+    /* The panel's content changes when a selection does, and cue() run once
+       at boot measured a panel that had not been filled yet - it read "at the
+       end" while 261px were still below at 1440. Scroll and resize never
+       fire on their own afterwards, so the stale answer stood. */
+    if (window.MutationObserver)
+      new MutationObserver(cue).observe(side, {childList: true, subtree: true,
+                                               characterData: true});
+    cue();
+  })();
+
   document.getElementById('reset').addEventListener('click', function () {
     select(null); resetView(false);
   });

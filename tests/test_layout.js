@@ -292,9 +292,26 @@ function serve() {
         for (const el of document.querySelectorAll('body *')) {
           const cs = getComputedStyle(el);
           if (!/(auto|scroll)/.test(cs.overflowY)) continue;
-          if (el.scrollHeight > el.clientHeight + 1)
-            out.push(nm(el) + ' hides ' + (el.scrollHeight - el.clientHeight)
-              + 'px inside a page that does not scroll');
+          if (el.scrollHeight <= el.clientHeight + 1) continue;
+          /* A panel may carry its own affordance instead - skyline-app has
+             had a sticky "more below" cue since 2026-09-05. The exemption is
+             DECLARED, not inferred: the check cannot tell a cue from any
+             other div, and guessing is how the last two metrics in this file
+             ended up measuring the design. data-scroll-affordance names the
+             class, and the element must actually be visible for it to count,
+             so the claim is checked rather than taken. */
+          const decl = el.dataset && el.dataset.scrollAffordance;
+          if (decl) {
+            const cue = el.querySelector('.' + decl);
+            if (cue && cue.getBoundingClientRect().height > 0
+                && getComputedStyle(cue).visibility !== 'hidden') continue;
+            out.push(nm(el) + ' declares a "' + decl + '" affordance that is '
+              + (cue ? 'not visible' : 'not there') + ' at this width, and hides '
+              + (el.scrollHeight - el.clientHeight) + 'px');
+            continue;
+          }
+          out.push(nm(el) + ' hides ' + (el.scrollHeight - el.clientHeight)
+            + 'px inside a page that does not scroll');
         }
         return out;
       });
@@ -303,6 +320,12 @@ function serve() {
          is often the only place some of the content exists. */
       const mute = await page.evaluate(() => [...document.querySelectorAll('canvas')]
         .filter(c => c.getBoundingClientRect().width > 0)
+        // aria-hidden is a declaration that this canvas is not for the
+        // accessibility tree - the home page draws its trails and its bodies
+        // on two layers that are one picture, and only one of them is the
+        // picture. Demanding a label on a hidden layer would be demanding a
+        // second description of the same thing.
+        .filter(c => c.getAttribute('aria-hidden') !== 'true')
         .filter(c => !c.getAttribute('role')
                   || !(c.getAttribute('aria-label') || '').trim())
         .map(c => (c.id ? 'canvas#' + c.id : 'canvas') + ' has no role or no label'));
