@@ -92,6 +92,13 @@ GENERATORS = [
      ["update_page.py", "--apply"], "longevity-quotient", "site"),
     ("continents page: continents/update_page.py --apply",
      ["update_page.py", "--apply"], "continents", "site"),
+    # beauty/update_page.py writes site/beauty.html and owns 286 of its 406
+    # numbers (the other 120 are add_citations.py's), and nothing here ran it
+    # until 2026-09-11: a digit-rotation run into a copy found it restoring
+    # every one. beauty/test_beauty.py compares the page to its template too,
+    # but only for someone who runs that project's suite first (trap 19).
+    ("beauty page: beauty/update_page.py --apply",
+     ["update_page.py", "--apply"], "beauty", "site"),
     # food and neuron were unpublished on 2026-09-09 (unpublished/RETIRED.md),
     # so site/food.html and site/neuron.html no longer exist and their page
     # generators FAILED here rather than drifting. The generators themselves
