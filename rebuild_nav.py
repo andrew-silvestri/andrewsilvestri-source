@@ -208,6 +208,13 @@ NAV = [
         # its members - the sort that question belongs to has not been done,
         # and neither of today's changes did it.
     ]),
+    # MANIM SHOWCASE, 2026-09-11. A bare link, not a group: one page of twelve
+    # animations about liquid holdup in gathering pipelines, and Andrew asked
+    # for it as its own tab. The label is the page's own title, on the leaf
+    # rule above. Above Code because Code is the last content link before
+    # About and this is content. Eight flex children now, one fewer than the
+    # nine that held one row at every width above 620px on 2026-09-09.
+    ("Manim Showcase", "manim.html"),
     ("Code", "code.html"),
     # LAST, AND IT HAS TO STAY LAST. style.css pins this one right with
     # margin-left:auto on a flex item, which eats the free space BEFORE it -
