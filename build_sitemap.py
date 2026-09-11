@@ -75,7 +75,11 @@ def render():
 
 def main(apply=False):
     new = render()
-    old = open(OUT, encoding="utf-8").read() if os.path.exists(OUT) else None
+    # newline="" on the read and "\n" on the write, both on purpose. Text mode
+    # on Windows wrote CRLF, and a universal-newline read made "unchanged" true
+    # of a file that differed on every line - tests/test_generators.py saw 53
+    # CRLF on 53 lines and nothing here could (HANDOFF section 8, trap 32).
+    old = open(OUT, encoding="utf-8", newline="").read() if os.path.exists(OUT) else None
     n = len(re.findall(r"<loc>", new))
     if old is None:
         print(f"  sitemap.xml: new file, {n} urls" + ("" if apply else " (not written)"))
@@ -90,7 +94,7 @@ def main(apply=False):
             for u in sorted(was - now):
                 print(f"    - {u}")
     if apply:
-        open(OUT, "w", encoding="utf-8").write(new)
+        open(OUT, "w", encoding="utf-8", newline="\n").write(new)
 
 
 if __name__ == "__main__":
