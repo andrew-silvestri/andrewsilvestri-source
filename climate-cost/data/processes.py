@@ -400,8 +400,16 @@ PRODUCTS = {
     "tomato_greenhouse": dict(
         name="Tomato, heated greenhouse", unit="1 kg as eaten",
         category="Vegetable", group="Food",
-        note="Northern European winter production under glass. Same plant, "
-             "same distance, different heating.",
+        # "same distance" was in this note and on the page, and it was false of
+        # the defaults sitting beside it: this entry ships from the Netherlands
+        # and the field entry from Spain. The defaults are right - both are the
+        # real product - so the claim went instead. What survives measurement is
+        # the adder: heating adds 2.4033 to 2.4538 kg CO2e per kilogram as eaten
+        # across all 784 matched origin-destination pairs, because freight,
+        # distribution, consumer and end-of-life come out identical on the two
+        # entries for any given route.
+        note="Northern European winter production under glass. Same plant as "
+             "the field entry, different heating.",
         default_origin="NL", default_dest="US-NY",
         waste_frac=0.19, transport_mode="sea",
         stages=[
