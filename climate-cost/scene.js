@@ -922,13 +922,20 @@
      with nothing to say so. Lifted from skyline/app.js, which hit the same
      thing on 2026-09-05; the cue hides itself at the end. Defensive, because
      the harness's DOM has no layout. */
-  function cueFor(id) {
+  /* The cue is a SIBLING of the scroller now, so the two ids are both
+     needed: scrollHeight, clientHeight and scrollTop are still read from the
+     scrolling box - it is the only thing that knows whether there is more -
+     and the `end` class goes on the wrapper, because that is the element the
+     cue is inside. A cue outside the box it describes has to be told about
+     that box explicitly; nothing about its own geometry says anything. */
+  function cueFor(id, wrapId) {
     var side = document.getElementById(id);
+    var wrap = document.getElementById(wrapId) || side;
     if (!side || typeof side.addEventListener !== 'function') return;
     function cue() {
       var atEnd = side.scrollHeight - side.clientHeight - side.scrollTop < 4 ||
                   side.scrollHeight <= side.clientHeight;
-      if (side.classList && side.classList.toggle) side.classList.toggle('end', atEnd);
+      if (wrap.classList && wrap.classList.toggle) wrap.classList.toggle('end', atEnd);
     }
     side.addEventListener('scroll', cue);
     window.addEventListener('resize', cue);
@@ -941,8 +948,8 @@
                                                characterData: true});
     cue();
   }
-  cueFor('side');
-  cueFor('list');            /* the list is the opening view; same rule */
+  cueFor('side', 'sidewrap');
+  cueFor('list', 'stage');   /* the list is the opening view; same rule */
 
   document.getElementById('reset').addEventListener('click', function () {
     select(null); resetView(false);
@@ -1004,8 +1011,6 @@
   function renderList(r) {
     var max = Math.max.apply(null, r.spine.map(function (s) {
       return Math.abs(s.total); }));
-    /* innerHTML replaces everything including the sticky cue, so it is
-       re-appended below rather than living in the template alone. */
     document.getElementById('list').innerHTML = r.spine.map(function (s) {
       var kids = (s.children || []).slice().sort(function (a, b) {
         return Math.abs(b.total) - Math.abs(a.total); });
@@ -1020,8 +1025,7 @@
         (kids.length ? '<ul class="tree">' +
           kids.map(function (k) { return branchHTML(k, max, r.total); }).join('') +
           '</ul>' : '');
-    }).join('') +
-      '<div class="more" aria-hidden="true">more below &darr;</div>';
+    }).join('');
   }
 
   /* ----------------------------------------------------------------- ui -- */

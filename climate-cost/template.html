@@ -71,8 +71,26 @@ sub,sup{font-size:var(--fs-2);line-height:0}
    390 with nothing to say so. skyline-app hit this on 2026-09-05 and solved
    it with a sticky cue; this is that pattern, and data-scroll-affordance is
    how tests/test_layout.js knows the claim is made rather than guessed. */
-#side{overflow:auto;background:var(--panel);
-  border-right:1px solid var(--rule);padding:16px 18px 44px}
+/* The panel is a scroller inside a wrapper; the wrapper owns the column's
+   border and holds the cue below the scroller. */
+#sidewrap{display:flex;flex-direction:column;min-height:0;
+  border-right:1px solid var(--rule);background:var(--panel)}
+#side{flex:1;min-height:0;overflow:auto;background:var(--panel);
+  padding:16px 18px 24px}
+/* THE CUE LIVES OUTSIDE THE BOX IT DESCRIBES. Sticky-inside was the first
+   attempt and it always lands on whatever is at the bottom of the scrollport
+   - prose in skyline, a form control in climate-cost at 390. Padding cannot
+   fix that: padding only adds space at the END of the content, so mid-scroll
+   the overlap returns. As a flex sibling it takes its own row and overlaps
+   nothing, ever. */
+.more{flex:none;padding:10px 18px;text-align:center;
+  font:var(--fs-2)/1 var(--mono);color:var(--dim);
+  background:var(--panel);border-top:1px solid var(--faint)}
+#sidewrap.end .more,#stage.end #listcue{display:none}
+#listcue{position:absolute;left:0;right:0;bottom:0;height:34px;display:none;
+  padding:10px 18px;text-align:center;font:var(--fs-2)/1 var(--mono);
+  color:var(--dim);background:var(--bg);border-top:1px solid var(--faint)}
+#list.on ~ #listcue{display:block}
 /* An opaque ground, not a gradient. The gradient was skyline's, and while
    the cue only appeared on a phone it fell on padding. Shown at every width
    it lands on a sentence, and half-faded text under a label reads as a
@@ -86,22 +104,12 @@ sub,sup{font-size:var(--fs-2);line-height:0}
 #list .share i{display:block;height:100%;background:var(--acc)}
 #list .pct{flex:0 0 44px;text-align:right;font-size:var(--fs-2);
   color:var(--dim);font-variant-numeric:tabular-nums}
-#list .more{display:block;position:sticky;bottom:0;margin:0 -18px -10px;
-  padding:12px 18px 10px;text-align:center;
-  font:var(--fs-2)/1 var(--mono);color:var(--dim);
-  background:var(--panel);border-top:1px solid var(--faint)}
-#list.end .more{display:none}
 /* Below 760 the row has no width to spare: the bar goes and the number
    stays, because the number is the information and the bar is its picture. */
 @media (max-width:760px){ #list .share{display:none} }
 #noscene{position:absolute;inset:0;display:none;align-items:center;
   justify-content:center;text-align:center;padding:0 40px;
   font-size:var(--fs-1);color:var(--dim);background:var(--panel)}
-#side .more{display:block;position:sticky;bottom:0;margin:0 -18px;
-  padding:12px 18px 10px;text-align:center;
-  font:var(--fs-2)/1 var(--mono);color:var(--dim);
-  background:var(--panel);border-top:1px solid var(--faint)}
-#side.end .more{display:none}
 #side h1{font:600 var(--fs1)/1.25 var(--sans);margin:0 0 2px}
 #side .sub{color:var(--dim);font-size:var(--fs-1);margin:0 0 14px}
 .back{color:var(--dim);font-size:var(--fs-2);text-decoration:none;
@@ -210,7 +218,12 @@ h2{font:600 var(--fs-2) var(--mono);text-transform:uppercase;letter-spacing:.06e
 /* ------------------------------------------------ the list, and no-GL --- */
 #list{position:absolute;inset:0;overflow:auto;padding:22px 26px 60px;
   background:var(--bg);display:none}
-#list.on{display:block}
+/* The scrollport STOPS above the cue rather than running under it. #list is
+   absolutely positioned so there is no flex sibling to push against, the way
+   #sidewrap gives #side one; reserving the strip is the same idea by the
+   other mechanism. 34px is the cue's height, and only while the list shows -
+   the scene keeps the full stage. */
+#list.on{display:block;bottom:34px}
 #list h3{font:600 var(--fs0) var(--sans);margin:24px 0 4px}
 #list .stagehead{display:flex;align-items:baseline;gap:10px}
 #list .stagehead .val{color:var(--acc)}
@@ -234,7 +247,8 @@ li.n{margin:5px 0;padding-left:4px}
 
 @media (max-width:900px){
   #app{grid-template-columns:100%;grid-template-rows:auto 1fr}
-  #side{border-right:0;border-bottom:1px solid var(--rule);max-height:46vh}
+  #sidewrap{border-right:0;border-bottom:1px solid var(--rule)}
+  #side{max-height:46vh}
 }
 
 /* Touch. Without touch-action a drag on the canvas is claimed by the page
@@ -247,7 +261,8 @@ canvas, #gl, #view, #stage { touch-action: none; }
 </head><body>
 
 <div id="app" data-three="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js">
-<aside id="side" data-scroll-affordance="more">
+<div id="sidewrap">
+<aside id="side" data-scroll-affordance="#sidecue">
   <a class="back" href="climate-cost.html">&larr; back</a>
   <h1>The true climate cost</h1>
   <p class="sub">Three inputs. Every step, and every step inside every step.</p>
@@ -298,6 +313,8 @@ canvas, #gl, #view, #stage { touch-action: none; }
   process four levels deep may send only a sliver of itself here.</p>
   <div class="more" aria-hidden="true">more below &darr;</div>
 </aside>
+<div id="sidecue" class="more" aria-hidden="true">more below &darr;</div>
+</div>
 
 <div id="stage">
   <canvas id="gl" role="img" aria-label="The life cycle of the selected item
@@ -314,7 +331,8 @@ canvas, #gl, #view, #stage { touch-action: none; }
        the fold at 1440 and 2,759px at 390 the moment it became the default.
        Same declared cue as #side, and tests/test_layout.js checks that the
        cue is actually visible rather than merely claimed. -->
-  <div id="list" data-scroll-affordance="more"><div class="more" aria-hidden="true">more below &darr;</div></div>
+  <div id="list" data-scroll-affordance="#listcue"></div>
+  <div id="listcue" aria-hidden="true">more below &darr;</div>
   <!-- SEPARATE FROM #nogl ON PURPOSE. #nogl says this browser cannot draw
        WebGL - a claim about the browser. This says a third-party file has not
        arrived yet - a claim about the network, and the one that actually

@@ -859,7 +859,11 @@
     function cue() {
       var atEnd = side.scrollHeight - side.clientHeight - side.scrollTop < 4 ||
                   side.scrollHeight <= side.clientHeight;
-      if (side.classList && side.classList.toggle) side.classList.toggle('end', atEnd);
+      /* The cue is a sibling of #side now, not a child, so the class goes on
+         the wrapper that holds both. The measurement still comes from #side:
+         it is the box that scrolls. */
+      var wrap = document.getElementById('sidewrap') || side;
+      if (wrap.classList && wrap.classList.toggle) wrap.classList.toggle('end', atEnd);
     }
     side.addEventListener('scroll', cue);
     window.addEventListener('resize', cue);

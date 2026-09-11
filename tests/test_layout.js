@@ -293,21 +293,33 @@ function serve() {
           const cs = getComputedStyle(el);
           if (!/(auto|scroll)/.test(cs.overflowY)) continue;
           if (el.scrollHeight <= el.clientHeight + 1) continue;
-          /* A panel may carry its own affordance instead - skyline-app has
-             had a sticky "more below" cue since 2026-09-05. The exemption is
+          /* A panel may carry its own affordance instead. The exemption is
              DECLARED, not inferred: the check cannot tell a cue from any
-             other div, and guessing is how the last two metrics in this file
-             ended up measuring the design. data-scroll-affordance names the
-             class, and the element must actually be visible for it to count,
-             so the claim is checked rather than taken. */
+             other div, and guessing is how two earlier metrics in this file
+             ended up measuring the design.
+
+             data-scroll-affordance is a SELECTOR now, not a class name,
+             because as of 2026-09-11 the cue is a sibling of the scroller
+             rather than a child - a sticky cue inside a scrollport lands on
+             whatever is at the bottom of it, which was prose in skyline and
+             a form control in climate-cost at 390.
+
+             Three things are required and the third is the new one: the cue
+             must exist, it must be visible at this width, and IT MUST NOT BE
+             INSIDE THE BOX IT DESCRIBES. Without the third, re-parenting it
+             back into the scrollport would pass silently and bring the
+             overlap back. */
           const decl = el.dataset && el.dataset.scrollAffordance;
           if (decl) {
-            const cue = el.querySelector('.' + decl);
-            if (cue && cue.getBoundingClientRect().height > 0
-                && getComputedStyle(cue).visibility !== 'hidden') continue;
-            out.push(nm(el) + ' declares a "' + decl + '" affordance that is '
-              + (cue ? 'not visible' : 'not there') + ' at this width, and hides '
-              + (el.scrollHeight - el.clientHeight) + 'px');
+            const cue = document.querySelector(decl);
+            const shown = cue && cue.getBoundingClientRect().height > 0
+              && getComputedStyle(cue).visibility !== 'hidden';
+            if (shown && !el.contains(cue)) continue;
+            out.push(nm(el) + ' declares "' + decl + '" and it is '
+              + (!cue ? 'not there'
+                 : !shown ? 'not visible at this width'
+                 : 'inside the scrollport it describes')
+              + ', while hiding ' + (el.scrollHeight - el.clientHeight) + 'px');
             continue;
           }
           out.push(nm(el) + ' hides ' + (el.scrollHeight - el.clientHeight)
