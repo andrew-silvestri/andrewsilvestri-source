@@ -86,7 +86,14 @@ def main(apply=False):
 
         seen += 1
         with zipfile.ZipFile(path) as zf:
-            n = len(zf.namelist())
+            # Files, not entries. namelist() counts the directory entries a zip
+            # writer chooses to store, so the rows said 11 files for an archive
+            # of 8 and 3 folders. Six of ten rows overstated on 2026-09-11:
+            # heat 11/8, storage 9/7, skyline 10/9, continents 37/35,
+            # longevity 21/19, beauty 43/41. An archive written without
+            # directory entries was counted correctly, which is why this went
+            # unnoticed - web-v3/4/5 have none.
+            n = sum(1 for i in zf.infolist() if not i.is_dir())
         size = human(os.path.getsize(path))
 
         new = FILES.sub(lambda k: k.group(1) + str(n) + k.group(3), row, count=1)
