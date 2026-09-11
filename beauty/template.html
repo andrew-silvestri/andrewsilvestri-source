@@ -153,7 +153,12 @@ alone because the full text sits behind a paywall or a bot wall, and
 {{n_none_word}} could not be read at all; their verdicts are left as
 unread rather than guessed.</p>
 
-<table><thead><tr><th>Model</th><th>Taxon, species</th><th>Threat term</th><th>Read from</th></tr></thead><tbody>{{models_rows}}</tbody></table>
+<!-- tabindex="0" because style.css:780 makes every table a sideways scroller
+     below 760px, and Chromium only makes a scroller focusable when it holds
+     nothing else focusable. This one holds citation links, so at 390 its last
+     column - 68px of it, "Read from" - could not be reached from the keyboard
+     at all; the column has no link of its own to scroll it into view. -->
+<table tabindex="0"><thead><tr><th>Model</th><th>Taxon, species</th><th>Threat term</th><th>Read from</th></tr></thead><tbody>{{models_rows}}</tbody></table>
 <p class="small">"Assessed, positive" means the paper found that species on
 the Red List at all are more studied than unassessed ones, with no further
 effect of the category; the authors of that study note the circularity,
