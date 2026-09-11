@@ -72,10 +72,16 @@ def referenced():
     are written as string literals in assets/biome-scene.js. Anything under
     --apply's prune list has to be measured against all of those, so the
     scripts are read too and any assets/... path in any of them counts.
+
+    style.css is read for the same reason. Its @font-face url()s are the only
+    reference to assets/fonts/IBMPlexSans-Italic.woff2, and until 2026-09-11
+    --apply would have deleted that font from the live site: found by running
+    this into a throw-away copy, which removed it and the font licence.
     """
     want = set()
     files = (glob.glob(os.path.join(SITE, "*.html"))
-             + glob.glob(os.path.join(SITE, "assets", "*.js")))
+             + glob.glob(os.path.join(SITE, "assets", "*.js"))
+             + [os.path.join(SITE, "style.css")])
     for page in files:
         text = open(page, encoding="utf-8", errors="ignore").read()
         for m in re.findall(r'''(?:href|src|data-src|poster)=["']([^"']+)["']'''
@@ -139,7 +145,10 @@ def main():
         else:
             stale.append((name, src))
 
-    orphans = sorted(on_disk - want)
+    # A licence is referenced by no page and must still ship beside what it
+    # licenses (the IBM Plex fonts are OFL-1.1, which requires it).
+    orphans = sorted(o for o in on_disk - want
+                     if not os.path.basename(o).upper().startswith("LICENSE"))
 
     print(f"referenced by a page : {len(want)}")
     print(f"already current      : {len(fresh)}")
