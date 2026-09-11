@@ -276,6 +276,37 @@ function serve() {
         return out;
       });
       for (const f of entries) if (!hits.includes(f)) hits.push(f);
+      /* An inner scroll region on a page that does not itself scroll hides
+         content with nothing to say it is there. Both halves matter: an
+         inner scroller on a scrolling page is ordinary, and a page that
+         scrolls can be read to its end. continents-app failed exactly this
+         until 2026-09-10 and the suite reported 108/108, because vertical
+         clipping inside a scroll container was not measured anywhere. */
+      const trapped = await page.evaluate(() => {
+        const d = document.documentElement;
+        if (d.scrollHeight > d.clientHeight + 1) return [];
+        const nm = el => el.tagName.toLowerCase()
+          + (el.id ? '#' + el.id : (typeof el.className === 'string' && el.className
+             ? '.' + el.className.trim().split(/\s+/)[0] : ''));
+        const out = [];
+        for (const el of document.querySelectorAll('body *')) {
+          const cs = getComputedStyle(el);
+          if (!/(auto|scroll)/.test(cs.overflowY)) continue;
+          if (el.scrollHeight > el.clientHeight + 1)
+            out.push(nm(el) + ' hides ' + (el.scrollHeight - el.clientHeight)
+              + 'px inside a page that does not scroll');
+        }
+        return out;
+      });
+      for (const f of trapped) if (!hits.includes(f)) hits.push(f);
+      /* A canvas is a picture with no text in it, and on these four apps it
+         is often the only place some of the content exists. */
+      const mute = await page.evaluate(() => [...document.querySelectorAll('canvas')]
+        .filter(c => c.getBoundingClientRect().width > 0)
+        .filter(c => !c.getAttribute('role')
+                  || !(c.getAttribute('aria-label') || '').trim())
+        .map(c => (c.id ? 'canvas#' + c.id : 'canvas') + ' has no role or no label'));
+      for (const f of mute) if (!hits.includes(f)) hits.push(f);
       checks++;
       if (hits.length) { failures++; console.log(`  FAIL ${p}.html @${w}: ${hits.slice(0, 6).join('; ')}${hits.length > 6 ? ' …' : ''}`); }
       else console.log(`  ok   ${p}.html @${w}`);

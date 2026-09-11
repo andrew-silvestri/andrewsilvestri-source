@@ -22,65 +22,122 @@
   /* 12 px is the floor and nothing here goes under it */
 }
 *{box-sizing:border-box}
-html,body{margin:0;height:100%}
-body{background:var(--bg);color:var(--ink);font:var(--fs-1)/1.5 var(--sans);
-  display:grid;grid-template-columns:352px 1fr;grid-template-areas:"panel stage";
-  overflow:hidden}
-@media (max-width:900px){
-  body{grid-template-columns:1fr;grid-template-rows:auto 1fr;
-       grid-template-areas:"panel" "stage";overflow:auto}
-}
-#panel{grid-area:panel;padding:18px 20px;overflow-y:auto;
-  border-right:1px solid var(--rule)}
-#stage{grid-area:stage;position:relative;display:flex;flex-direction:column}
-h1{font-size:var(--fs0);margin:0 0 2px;font-weight:600}
-.sub{color:var(--dim);font-size:var(--fs-2);margin:0 0 16px}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--bg);color:var(--ink);
+  font:var(--fs-1)/1.5 var(--sans)}
+/* ONE COLUMN, AND THE PAGE ITSELF SCROLLS.
+   Until 2026-09-10 this was a 352px panel beside a full-height stage, with
+   body{overflow:hidden} and #panel{overflow-y:auto}. Two things were wrong
+   with it and both were found by using the app rather than reading it.
+   The map took about three quarters of the pixels and carries the least:
+   at 250 Ma the eight answers are a cluster a few pixels wide on a world
+   map, while the sentence that says how far apart they are sat in a box in
+   the side column. And below 900px the panel scrolled INSIDE a page that
+   did not, so at 390 it held 960px of content in 456px - five of the eight
+   models and all four notes below a fold with nothing to say there was one.
+   A column that scrolls has neither problem. */
+.wrap{max-width:1100px;margin:0 auto;padding:22px 20px 64px}
+h1{font-size:var(--fs1);margin:0 0 2px;font-weight:600}
+.sub{color:var(--dim);font-size:var(--fs-2);margin:0 0 18px}
 .lab{font-family:var(--mono);font-size:var(--fs-2);color:var(--dim);
-  text-transform:uppercase;letter-spacing:.06em;margin:18px 0 6px}
-#places,#landpick{display:flex;flex-wrap:wrap;gap:5px}
-#places button,#landpick button{font:var(--fs-2) var(--mono);padding:4px 8px;cursor:pointer;
-  background:var(--card);color:var(--ink);border:1px solid var(--rule)}
-#places button[aria-pressed="true"],#landpick button[aria-pressed="true"]{background:var(--acc);color:var(--bg);
-  border-color:var(--acc)}
-#readout{font-family:var(--mono);font-size:var(--fs-2);color:var(--ink);
-  background:var(--card);border:1px solid var(--faint);padding:9px 10px}
+  text-transform:uppercase;letter-spacing:.06em;margin:22px 0 6px}
+
+/* The answer, and the map that gives it a place. The sentence leads because
+   it is the finding; the map is 360px because it is the context. */
+.top{display:flex;gap:20px;align-items:flex-start}
+.top .say{flex:1;min-width:0}
+#readout{font-size:var(--fs0);line-height:1.45;margin:0}
+#mapwrap{flex:0 0 360px;height:230px;position:relative;
+  border:1px solid var(--faint);background:var(--card)}
+@media (max-width:760px){
+  .top{flex-direction:column}
+  #mapwrap{flex:none;width:100%;height:210px}
+}
+#empty{position:absolute;inset:0;display:none;align-items:center;
+  justify-content:center;text-align:center;font-family:var(--mono);
+  font-size:var(--fs-2);color:var(--moss);padding:0 18px;background:var(--card)}
+
+canvas{display:block;width:100%}
+/* The divergence chart is the main view. It was 150px under the map until
+   2026-09-10; it plots latitude only, and it plots latitude only because
+   palaeomagnetism cannot determine longitude at all - see the note below,
+   which is the reason and not a caveat. */
+#strip{height:340px}
+/* The same number the sentence gives, at every age instead of one. */
+#spread{height:64px}
+@media (max-width:760px){ #strip{height:250px} #spread{height:56px} }
+
+#timebar{display:flex;align-items:center;gap:14px;margin-top:10px}
+#age{font-family:var(--mono);font-size:var(--fs0);min-width:104px}
+#slider{flex:1;accent-color:var(--acc);min-height:24px}
+
+/* One row per model, under the chart, each carrying that model's answer at
+   this age. Hovering a row lights its line. */
 #legend{list-style:none;margin:0;padding:0;font-family:var(--mono);
   font-size:var(--fs-2)}
-#legend li{display:flex;align-items:center;gap:7px;padding:2px 0;
-  color:var(--ink);cursor:default}
+#legend li{display:flex;align-items:center;gap:7px;padding:3px 0;
+  color:var(--ink);cursor:default;border-bottom:1px solid var(--faint)}
 #legend li.out{color:var(--dim)}
 #legend li.nocrust{color:var(--moss)}
 #legend .sw{width:10px;height:10px;flex:0 0 10px;border-radius:50%}
 #legend .val{margin-left:auto;color:var(--dim)}
+
+#places,#landpick{display:flex;flex-wrap:wrap;gap:5px}
+#places button,#landpick button{font:var(--fs-2) var(--mono);padding:6px 9px;
+  cursor:pointer;background:var(--card);color:var(--ink);
+  border:1px solid var(--rule);min-height:32px}
+#places button[aria-pressed="true"],#landpick button[aria-pressed="true"]{
+  background:var(--acc);color:var(--bg);border-color:var(--acc)}
+@media (max-width:760px){
+  #places button,#landpick button{min-height:44px;padding:9px 11px}
+  #slider{min-height:44px}
+}
 .note{font-size:var(--fs-2);color:var(--dim);margin-top:16px;
-  border-top:1px solid var(--faint);padding-top:10px}
-#timebar{padding:10px 20px 6px;border-top:1px solid var(--rule);
-  display:flex;align-items:center;gap:14px}
-#age{font-family:var(--mono);font-size:var(--fs0);min-width:104px}
-#slider{flex:1;accent-color:var(--acc)}
-canvas{display:block;width:100%}
-#globewrap{flex:1;min-height:0;position:relative}
-#strip{height:150px;border-top:1px solid var(--faint)}
-#empty{position:absolute;inset:0;display:none;align-items:center;
-  justify-content:center;text-align:center;font-family:var(--mono);
-  font-size:var(--fs-1);color:var(--moss);padding:0 40px}
+  border-top:1px solid var(--faint);padding-top:10px;max-width:66ch}
+.hint{font-size:var(--fs-2);color:var(--dim);margin:6px 0 0}
 </style>
 </head><body>
-<div id="panel">
+<div class="wrap">
   <h1>Where was the ground?</h1>
   <p class="sub">Eight published plate models, asked the same question.</p>
 
-  <p class="lab">Place</p>
-  <div id="places"></div>
+  <div class="top">
+    <div class="say">
+      <p class="lab">At this age</p>
+      <p id="readout"></p>
+      <!-- Place sits with the answer rather than under the charts: it is the
+           subject of the sentence above it, and it is the control a reader
+           reaches for second, after the age. -->
+      <p class="lab">Place</p>
+      <div id="places"></div>
+    </div>
+    <!-- data-src, not src: the coastlines are 1.4 MB and nothing on this
+         screen needs them to be right. They are fetched after first paint
+         (loadLand). data-src is the attribute bust_cache.py already stamps
+         for the motion-gated video pattern, so the deferred request still
+         carries its ?v= hash. -->
+    <div id="mapwrap" data-src="assets/continents-land.js">
+      <canvas id="globe"></canvas>
+      <div id="empty"></div>
+    </div>
+  </div>
 
-  <p class="lab">Land drawn by</p>
-  <div id="landpick"></div>
+  <p class="lab">How far apart the models are, at every age</p>
+  <canvas id="strip"></canvas>
+  <canvas id="spread"></canvas>
+  <div id="timebar">
+    <span id="age"></span>
+    <input id="slider" type="range" min="0" max="1" step="1" value="0"
+           aria-label="millions of years ago">
+  </div>
 
-  <p class="lab">At this age</p>
-  <div id="readout"></div>
-
-  <p class="lab">The models</p>
+  <p class="lab">The models, at this age</p>
   <ul id="legend"></ul>
+
+  <p class="lab">Coastlines drawn by</p>
+  <div id="landpick"></div>
+  <p class="hint">Three of the eight models publish reconstructed coastlines.
+  This choice changes the land on the map, not the answers above it.</p>
 
   <p class="note">The coastlines are reconstructed by the model named above,
   not modern outlines moved around: nothing on this map is today's world at
@@ -88,7 +145,8 @@ canvas{display:block;width:100%}
   same disagreement the dots show, drawn as land.</p>
   <p class="note">Palaeomagnetism determines how far from the equator a rock
   formed. It cannot determine its longitude at all. Most of the east-west
-  spread you are looking at is each model's own assumption, not a measurement.</p>
+  spread you are looking at is each model's own assumption, not a measurement.
+  It is also why the chart above plots latitude and nothing else.</p>
   <p class="note">Equal Earth is equal-area, so a polar continent is squeezed
   into a thin band along the pole line. Antarctica today is 2.7 per cent of
   the Earth's surface and takes 2.7 per cent of this map.</p>
@@ -97,20 +155,6 @@ canvas{display:block;width:100%}
   liable to change.</p>
 </div>
 
-<div id="stage">
-  <div id="globewrap">
-    <canvas id="globe"></canvas>
-    <div id="empty"></div>
-  </div>
-  <canvas id="strip"></canvas>
-  <div id="timebar">
-    <span id="age"></span>
-    <input id="slider" type="range" min="0" max="1" step="1" value="0"
-           aria-label="millions of years ago">
-  </div>
-</div>
-
-<script src="assets/continents-land.js"></script>
 <script>
 const DATA = {{payload}};
 
@@ -132,8 +176,7 @@ function gc(a,b){
 }
 const css=n=>getComputedStyle(document.documentElement).getPropertyValue(n).trim();
 
-let placeIdx=0, ageIdx=0, hi=null;
-let landModel=(typeof LAND!=="undefined" && LAND.models) ? LAND.models[0] : null;
+let placeIdx=0, ageIdx=0, hi=null, landModel=null;
 const AGES=DATA.ages, MODELS=DATA.models;
 
 /* Rings arrive delta-encoded on a quarter-degree grid: the first pair is
@@ -153,14 +196,39 @@ function landRings(model, age){
   _ringCache.set(k,out); return out;
 }
 
-function state(m,i){                       /* the three states, exhaustively */
-  if(AGES[ageIdx]>m.oldest_ma) return "out";
+/* The three states, exhaustively, at any age rather than only the current
+   one - the spread series below needs every age. */
+function stateAt(m,i){
+  if(AGES[i]>m.oldest_ma) return "out";
   const t=DATA.tracks[placeIdx].models[m.name];
-  return (t.lat[ageIdx]===null)?"nocrust":"here";
+  return (t.lat[i]===null)?"nocrust":"here";
 }
-function pos(m){
+function posAt(m,i){
   const t=DATA.tracks[placeIdx].models[m.name];
-  return [t.lon[ageIdx],t.lat[ageIdx]];
+  return [t.lon[i],t.lat[i]];
+}
+const state=m=>stateAt(m,ageIdx);
+const pos=m=>posAt(m,ageIdx);
+
+/* The widest great-circle distance between any two models that place crust
+   here, at one age. Returns null when fewer than two answer. */
+function widestAt(i){
+  const here=MODELS.filter(m=>stateAt(m,i)==="here");
+  let best=-1;
+  for(let a=0;a<here.length;a++)for(let b=a+1;b<here.length;b++){
+    const d=gc(posAt(here[a],i),posAt(here[b],i));
+    if(d>best) best=d;
+  }
+  return best>0?best:null;
+}
+/* The same number the sentence gives, at every age. Eight models over fifty
+   ages is 1,400 distances, computed once per place and cached: the sentence
+   already pays for one age of it on every render. */
+const _spread=new Map();
+function spreadSeries(){
+  if(_spread.has(placeIdx)) return _spread.get(placeIdx);
+  const s=AGES.map((_,i)=>widestAt(i));
+  _spread.set(placeIdx,s); return s;
 }
 
 function fit(cv){
@@ -175,7 +243,7 @@ function drawGlobe(){
   const cv=document.getElementById("globe");
   const [g,W,H]=fit(cv);
   g.clearRect(0,0,W,H);
-  const pad=18, s=Math.min((W-2*pad)/(2*XMAX),(H-2*pad)/(2*YMAX));
+  const pad=10, s=Math.min((W-2*pad)/(2*XMAX),(H-2*pad)/(2*YMAX));
   const px=(lon,lat)=>{const p=eeFwd(lon,lat);
     return [W/2+p[0]*s, H/2-p[1]*s];};
 
@@ -228,7 +296,7 @@ function drawGlobe(){
   for(const m of MODELS){
     if(state(m)!=="here") continue;
     const p=pos(m), q=px(p[0],p[1]);
-    g.beginPath(); g.arc(q[0],q[1],hi===m.name?6:4.2,0,7);
+    g.beginPath(); g.arc(q[0],q[1],hi===m.name?5.5:3.8,0,7);
     g.fillStyle=hi===m.name?css("--moss"):css("--acc"); g.fill();
   }
   const emp=document.getElementById("empty");
@@ -244,19 +312,24 @@ function drawGlobe(){
   return {shown:shown.length,widest:best>0?best:null};
 }
 
+/* Both charts share this geometry so the age you are reading is the same
+   x in each, and the slider under them lines up with both. */
+const CH={L:52,R:14};
+const chX=(W,a)=>CH.L+(a/AGES[AGES.length-1])*(W-CH.L-CH.R);
+
 function drawStrip(){
   const cv=document.getElementById("strip");
   const [g,W,H]=fit(cv);
   g.clearRect(0,0,W,H);
-  const L=44,Rp=12,T=10,B=22;
-  const x=a=>L+(a/AGES[AGES.length-1])*(W-L-Rp);
+  const T=12,B=24;
+  const x=a=>chX(W,a);
   const y=v=>T+((90-v)/180)*(H-T-B);
   g.strokeStyle=css("--faint"); g.lineWidth=1;
-  for(const v of [-60,-30,30,60]){g.beginPath();g.moveTo(L,y(v));g.lineTo(W-Rp,y(v));g.stroke();}
-  g.strokeStyle=css("--rule");g.beginPath();g.moveTo(L,y(0));g.lineTo(W-Rp,y(0));g.stroke();
+  for(const v of [-60,-30,30,60]){g.beginPath();g.moveTo(CH.L,y(v));g.lineTo(W-CH.R,y(v));g.stroke();}
+  g.strokeStyle=css("--rule");g.beginPath();g.moveTo(CH.L,y(0));g.lineTo(W-CH.R,y(0));g.stroke();
   g.font="12px "+css("--mono"); g.fillStyle=css("--dim");
   g.fillText("+90",4,y(90)+10); g.fillText("0",4,y(0)+4); g.fillText("-90",4,y(-90));
-  g.fillText("0 Ma",L,H-6); g.fillText(AGES[AGES.length-1]+" Ma",W-Rp-46,H-6);
+  g.fillText("north",4,y(90)+24); g.fillText("south",4,y(-90)-14);
   for(const m of MODELS){
     const t=DATA.tracks[placeIdx].models[m.name];
     g.strokeStyle=hi===m.name?css("--moss"):css("--acc");
@@ -274,6 +347,47 @@ function drawStrip(){
   g.beginPath(); g.moveTo(x(AGES[ageIdx]),T); g.lineTo(x(AGES[ageIdx]),H-B); g.stroke();
 }
 
+function drawSpread(){
+  const cv=document.getElementById("spread");
+  const [g,W,H]=fit(cv);
+  g.clearRect(0,0,W,H);
+  const T=6,B=22, s=spreadSeries();
+  const top=Math.max(1000,...s.filter(v=>v!=null));
+  const x=a=>chX(W,a);
+  const y=v=>T+(1-v/top)*(H-T-B);
+  g.strokeStyle=css("--faint"); g.lineWidth=1;
+  g.beginPath(); g.moveTo(CH.L,H-B); g.lineTo(W-CH.R,H-B); g.stroke();
+  /* filled, because the quantity has a meaningful zero: at age 0 every model
+     hands back the point it was given, which is the identity the data is
+     gated on. */
+  g.fillStyle=css("--acc"); g.globalAlpha=.16;
+  let pen=false; g.beginPath();
+  for(let i=0;i<AGES.length;i++){
+    if(s[i]==null){ if(pen){g.lineTo(x(AGES[i-1]),H-B);g.closePath();g.fill();pen=false;} continue; }
+    const q=[x(AGES[i]),y(s[i])];
+    if(!pen){ g.beginPath(); g.moveTo(q[0],H-B); pen=true; }
+    g.lineTo(...q);
+  }
+  if(pen){ g.lineTo(x(AGES[AGES.length-1]),H-B); g.closePath(); g.fill(); }
+  g.globalAlpha=1;
+  g.strokeStyle=css("--acc"); g.lineWidth=1.4;
+  pen=false; g.beginPath();
+  for(let i=0;i<AGES.length;i++){
+    if(s[i]==null){pen=false;continue;}
+    const q=[x(AGES[i]),y(s[i])];
+    pen?g.lineTo(...q):g.moveTo(...q); pen=true;
+  }
+  g.stroke();
+  g.font="12px "+css("--mono"); g.fillStyle=css("--dim");
+  g.fillText(Math.round(top).toLocaleString()+" km",4,T+10);
+  g.fillText("0",4,H-B+4);
+  g.fillText("0 Ma",CH.L,H-6);
+  const lastLabel=AGES[AGES.length-1]+" Ma";
+  g.fillText(lastLabel,W-CH.R-g.measureText(lastLabel).width,H-6);
+  g.strokeStyle=css("--ink"); g.lineWidth=1.2;
+  g.beginPath(); g.moveTo(x(AGES[ageIdx]),T); g.lineTo(x(AGES[ageIdx]),H-B); g.stroke();
+}
+
 function drawLegend(info){
   const ul=document.getElementById("legend"); ul.innerHTML="";
   for(const m of MODELS){
@@ -287,7 +401,7 @@ function drawLegend(info){
     const nm=document.createElement("span"); nm.textContent=m.name;
     const v=document.createElement("span"); v.className="val";
     v.textContent = st==="here"
-      ? pos(m)[1].toFixed(1)+"°, "+pos(m)[0].toFixed(1)+"°"
+      ? posAt(m,ageIdx)[1].toFixed(1)+"°, "+posAt(m,ageIdx)[0].toFixed(1)+"°"
       : (st==="nocrust" ? "no crust in this model"
                         : "does not reach "+AGES[ageIdx]+" Ma");
     li.append(sw,nm,v);
@@ -304,10 +418,72 @@ function drawLegend(info){
   if(info.widest) s+=" The two furthest apart are "+
         Math.round(info.widest).toLocaleString()+" km apart.";
   r.textContent=s;
+  return s;
 }
 
-function render(){ const info=drawGlobe(); drawStrip(); drawLegend(info);
-  document.getElementById("age").textContent=AGES[ageIdx]+" Ma"; }
+/* A canvas is a picture with no text in it. Both of these carry information
+   that is nowhere else on the page - the map has the legend, but the shape
+   of the disagreement over time had no words at all until this label. */
+function describe(sentence){
+  const place=DATA.tracks[placeIdx].place;
+  document.getElementById("strip").setAttribute("aria-label",
+    "Latitude against age for "+place+", one line per model, from 0 to "+
+    AGES[AGES.length-1]+" million years ago. Longitude is not plotted because "+
+    "palaeomagnetism cannot determine it. "+sentence+
+    " Every model's position at this age is listed under the chart.");
+  const s=spreadSeries(), peak=Math.max(0,...s.filter(v=>v!=null));
+  document.getElementById("spread").setAttribute("aria-label",
+    "How far apart the two furthest models are, at every age, for "+place+
+    ". Zero at 0 Ma, rising to about "+Math.round(peak).toLocaleString()+
+    " km at its widest.");
+  document.getElementById("globe").setAttribute("aria-label",
+    "Equal Earth map at "+AGES[ageIdx]+" million years ago, with a dot for "+
+    "each model that places crust at "+place+". "+sentence);
+}
+
+function render(){
+  const info=drawGlobe(); drawStrip(); drawSpread();
+  const sentence=drawLegend(info);
+  describe(sentence);
+  document.getElementById("age").textContent=AGES[ageIdx]+" Ma";
+}
+
+function buildLandpick(){
+  const lp=document.getElementById("landpick");
+  lp.innerHTML="";
+  if(typeof LAND==="undefined" || !LAND.models){
+    lp.textContent="Coastlines are still loading.";
+    return;
+  }
+  landModel=landModel||LAND.models[0];
+  LAND.models.forEach(m=>{
+    const b=document.createElement("button");
+    b.textContent=m; b.setAttribute("aria-pressed",m===landModel?"true":"false");
+    b.onclick=()=>{ landModel=m;
+      [...lp.children].forEach(c=>c.setAttribute("aria-pressed",
+        c.textContent===m?"true":"false"));
+      render(); };
+    lp.append(b);
+  });
+}
+
+/* The coastlines are 1.4 MB and the answer does not depend on them: the
+   sentence, both charts, the model list and the dots all come from the
+   payload inlined above. So the page renders first and asks for them after,
+   which takes first paint from about 466 KB over the wire to about 25 KB.
+   They stay an external cached file, which is what build_app.py's header
+   argues for; this defers the request rather than moving the data. */
+function loadLand(){
+  const src=document.getElementById("mapwrap").dataset.src;
+  if(!src) return;
+  const s=document.createElement("script");
+  s.src=src;
+  s.onload=()=>{ buildLandpick(); render(); };
+  s.onerror=()=>{ document.getElementById("landpick")
+    .textContent="Coastlines could not be loaded. The dots and the charts "+
+                 "above do not depend on them."; };
+  document.body.append(s);
+}
 
 function build(){
   const pc=document.getElementById("places");
@@ -319,30 +495,23 @@ function build(){
       render();};
     pc.append(b);
   });
-  const lp=document.getElementById("landpick");
-  if(typeof LAND!=="undefined" && LAND.models){
-    LAND.models.forEach((m,i)=>{
-      const b=document.createElement("button");
-      b.textContent=m; b.setAttribute("aria-pressed",i===0?"true":"false");
-      b.onclick=()=>{ landModel=m;
-        [...lp.children].forEach(c=>c.setAttribute("aria-pressed",
-          c.textContent===m?"true":"false"));
-        render(); };
-      lp.append(b);
-    });
-  } else {
-    lp.textContent="land data not loaded";
-  }
+  buildLandpick();
   const sl=document.getElementById("slider");
   sl.max=AGES.length-1;
   sl.oninput=()=>{ageIdx=+sl.value;render();};
   addEventListener("resize",render);
+  for(const id of ["globe","strip","spread"])
+    document.getElementById(id).setAttribute("role","img");
   render();
+  if("requestIdleCallback" in window) requestIdleCallback(loadLand,{timeout:2000});
+  else addEventListener("load",loadLand);
 }
 build();
-window.__app={DATA,state,pos,render,gc,eeFwd,landRings,
+window.__app={DATA,state,pos,stateAt,posAt,render,gc,eeFwd,landRings,
   land:()=>landModel, setLand:(m)=>{landModel=m;render();},
   set:(p,a)=>{placeIdx=p;ageIdx=a;render();},
+  spread:spreadSeries, widestAt,
+  landLoaded:()=>typeof LAND!=="undefined",
   counts:()=>{const c={here:0,nocrust:0,out:0};
     for(const m of MODELS)c[state(m)]++;return c;}};
 </script>
