@@ -1,4 +1,14 @@
 """
+RETIRED 2026-09-11. Do not run it. Kept here for the record.
+
+Both of its outputs are orphans: no page in site/ references
+nitrogen_fixation.png or running_shoe.png, and the climate-research pages that
+did are in unpublished/. Run into a throw-away copy of the tree on 2026-09-11
+it wrote both files into site/assets/, where publish.sh would have shipped them
+unread; sync_assets.py --apply then lists them as orphans and deletes them
+again. The shoe outline it draws is duplicated in
+unpublished/running-shoes-app.html, and that page is unpublished too.
+
 Figures for the climate research pages.
 
 Two diagrams, both drawn from published numbers rather than sketched:
