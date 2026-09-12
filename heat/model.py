@@ -304,3 +304,7 @@ def main():
 
 if __name__ == "__main__":
     main()
+    # The audit's verdict is the run's exit status. Until 2026-09-11 finish()
+    # discarded what audit() returned and this exited 0 with LAYOUT blocks in
+    # its own output (trap 26).
+    raise SystemExit(figstyle.verdict())

@@ -106,8 +106,16 @@ def finish(fig, path, title=None, subtitle=None, footnote=None):
         # still has to run here - skipping it whenever a caller omits title
         # and footnote left every such figure (including this one, before
         # this fix) unaudited on every run, silently.
-        audit(fig, path)
+        # AFTER the save, not before. audit() draws twice so constrained
+        # layout can settle, and on a constrained-layout figure those draws
+        # move things: auditing first bakes the measurement's own perturbation
+        # into the file that ships. heat/figstyle.py records the same reason;
+        # it was fixed there first, and storage's published figures were drawn
+        # WITH the perturbation, so this change moves them - deliberately, and
+        # in the direction of removing an artifact of the measurement from the
+        # artifact being measured.
         sitefig.save(fig, path, close=False)
+        audit(fig, path)
         plt.close(fig)
         return
 
@@ -221,12 +229,35 @@ def audit(fig, path):
     # enumeration, so it can't disagree with the checks above about what text
     # is actually on the page.
     bad += fig_floor.floor_problems(fig, [(obj, title) for _, _, _, obj, title in items])
+    name = os.path.basename(path)
     if bad:
-        name = os.path.basename(path)
         print(f"  LAYOUT  {name}")
         for b in bad[:5]:
             print(f"            {b}")
+    PROBLEMS.extend(f"{name}: {b}" for b in bad)
     return bad
+
+
+
+
+# Every problem every audit() found this run, as "figure.png: what".
+PROBLEMS = []
+
+
+def verdict():
+    """The exit status for a builder run: 0 only if every figure audited clean.
+
+    audit() printed its findings and returned them, and finish() dropped the
+    return value on the floor, so a run whose output carried five LAYOUT blocks
+    still exited 0. That is trap 26 in its purest form, and it means every
+    "must report 0 layout problems" in HANDOFF section 4, 5 and 7 has been a
+    claim about output a human reads rather than an assertion anything made.
+    A figure builder now fails when its own audit fails.
+    """
+    print(f"  {len(PROBLEMS)} layout problem(s) in total")
+    for p in PROBLEMS[:10]:
+        print("    " + p)
+    return 1 if PROBLEMS else 0
 
 
 def note(ax, text, loc="upper left"):

@@ -20,6 +20,7 @@ import os
 
 import matplotlib
 import sys as _sys, os as _os; _sys.path.insert(0, _os.path.dirname(_os.path.dirname(_os.path.abspath(__file__))))
+import fig_floor
 from sitefig import BG, INK, DIM, RULE, FAINT, ACC, COOL, MOSS, ROSE, SLATE, DISTRICT, SUPPLY, PSYCH, SUN, INSOL, GOLD, GREY, VIOLET, BLUE, GREEN, WARM, ARROW, ONE_WAY_COL, TWO_WAY_COL, NODE_COL, WARM2, KCOL, CYCLE, FS_2, FS_1, FS0, FS1, FS2, FONT, MONO, NOTES, PROSE, CARD, THUMB, fig_size, save, WIDE, PLOT, SQUARE, TALL, row_aspect, panel  # noqa: E402,F401
 import sitefig  # noqa: E402
 
@@ -158,7 +159,7 @@ def audit(fig, path):
     # those invents collisions that are not on the page.
     items = []
 
-    def add(obj, tick=False):
+    def add(obj, tick=False, is_title=False):
         try:
             if obj is None or not obj.get_visible() or not obj.get_text().strip():
                 return
@@ -167,12 +168,12 @@ def audit(fig, path):
             return
         if bb.width <= 1 or bb.height <= 1:
             return
-        items.append((obj.get_text().strip()[:40], bb, tick))
+        items.append((obj.get_text().strip()[:40], bb, tick, obj, is_title))
 
     for tx in fig.texts:
         add(tx)
     for ax in fig.axes:
-        add(ax.title)
+        add(ax.title, is_title=True)
         add(ax.xaxis.label)
         add(ax.yaxis.label)
         for tx in ax.texts:
@@ -192,13 +193,13 @@ def audit(fig, path):
 
     W, H = fig.canvas.get_width_height()
     bad = []
-    for txt, bb, _ in items:
+    for txt, bb, _, _obj, _t in items:
         if bb.x0 < -1 or bb.y0 < -1 or bb.x1 > W + 1 or bb.y1 > H + 1:
             bad.append(f"off canvas: {txt!r}")
     for i in range(len(items)):
         for j in range(i + 1, len(items)):
-            t1, b1, k1 = items[i]
-            t2, b2, k2 = items[j]
+            t1, b1, k1 = items[i][:3]
+            t2, b2, k2 = items[j][:3]
             if k1 and k2:
                 continue
             w = min(b1.x1, b2.x1) - max(b1.x0, b2.x0)
@@ -208,12 +209,41 @@ def audit(fig, path):
             frac = (w * h) / min(b1.width * b1.height, b2.width * b2.height)
             if frac > 0.12:
                 bad.append(f"{int(frac*100)}% overlap: {t1!r} x {t2!r}")
+    # The overlap/off-canvas checks above catch layout collisions; this catches
+    # the other way a figure fails its reader - type too small to read at the
+    # width the figure is drawn for. Same item enumeration, so it cannot
+    # disagree with the checks above about what text is on the page.
+    # storage/figstyle.py has had this since it was written; heat never
+    # imported fig_floor at all, so the two files disagreed about what an
+    # audit is.
+    bad += fig_floor.floor_problems(fig, [(obj, title) for _, _, _, obj, title in items])
+    name = os.path.basename(path)
     if bad:
-        name = os.path.basename(path)
         print(f"  LAYOUT  {name}")
         for b in bad[:5]:
             print(f"            {b}")
+    PROBLEMS.extend(f"{name}: {b}" for b in bad)
     return bad
+
+
+# Every problem every audit() found this run, as "figure.png: what".
+PROBLEMS = []
+
+
+def verdict():
+    """The exit status for a builder run: 0 only if every figure audited clean.
+
+    audit() printed its findings and returned them, and finish() dropped the
+    return value on the floor, so a run whose output carried five LAYOUT blocks
+    still exited 0. That is trap 26 in its purest form, and it means every
+    "must report 0 layout problems" in HANDOFF section 4, 5 and 7 has been a
+    claim about output a human reads rather than an assertion anything made.
+    A figure builder now fails when its own audit fails.
+    """
+    print(f"  {len(PROBLEMS)} layout problem(s) in total")
+    for p in PROBLEMS[:10]:
+        print("    " + p)
+    return 1 if PROBLEMS else 0
 
 
 def note(ax, text, loc="upper left"):
