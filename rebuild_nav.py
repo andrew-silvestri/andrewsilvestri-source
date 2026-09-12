@@ -228,6 +228,30 @@ def nav_for(page):
     # whose destination depended on how you arrived, and on a phone it took
     # a row of its own at the top of every page.
     out = []
+    # THE COLLAPSE CONTROL, and it is a <details> because that is what this is.
+    # Below 620px every one of the nine flex children took a row of its own:
+    # 7 children at 43.5px plus 22px of padding is 326.5px, 346.5 on index
+    # where the navband adds 26. That is 41% of a 390x844 phone, 96% of the
+    # 360px viewport a 250% zoom leaves on a 1440x900 laptop, and 154% of the
+    # 225px a 400% zoom leaves - the nav taller than the screen.
+    #
+    # It holds ONLY its summary. The nav items stay its siblings and are
+    # revealed by `details[open] ~ *` in style.css, which avoids
+    # display:contents on <details> - the obvious alternative and the one with
+    # the worst WebKit history - and keeps this generator's output flat, so the
+    # row layout above 620 is unchanged.
+    #
+    # THE FIRST ATTEMPT WAS AN <a href="#"> HELD OPEN BY :not(:focus-within),
+    # AND IT WAS DEAD ON IOS. WebKit does not focus an anchor on activation, by
+    # tap or by click; measured 2026-09-12, activeElement after a tap is BODY.
+    # Andrew found it on an iPhone and it was reverted the same day. A <details>
+    # needs no focus: the platform toggles it. site/assets/nav.js adds Escape
+    # and nothing else.
+    #
+    # Emitted here rather than written into the pages because rebuild_nav.py
+    # re-runs re.sub(r'<nav class="top">.*?</nav>') over every page and destroys
+    # anything between those tags (trap 13).
+    out.append('<details class="navmore"><summary>Menu</summary></details>')
     for label, target in NAV:
         if isinstance(target, str):
             on = ' class="on"' if target == page else ""

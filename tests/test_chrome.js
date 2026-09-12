@@ -1,7 +1,19 @@
 /* THE CHROME INVARIANT.
  *
- *   A page's own chrome occupies no more than 25% of the viewport height, at
- *   every width from 360 up and at every zoom from 100% to 400%.
+ *   A page's own chrome AT REST occupies no more than 25% of the viewport
+ * height, at every width from 360 up and at every zoom from 100% to 400%.
+ *
+ * AT REST IS THE SCOPE THE NUMBER WAS ALWAYS DERIVED FROM, not an exemption
+ * added later to fit a menu. 25% came from two at-rest measurements and no
+ * others: the horizontal nav is 76px on index and 50px elsewhere, which is
+ * 8.4% of a 900px viewport and 17% of the 450px a 200% zoom leaves on the same
+ * panel. No open state existed when it was set. And the defect it was written
+ * against was at-rest by its nature - 39-41% of the first screen at 390, 96%
+ * at 250% zoom, 154% at 400% - what made that a defect is that it ARRIVED
+ * UNASKED. A menu the reader tapped open is the thing they asked for, and is
+ * governed by the open-state properties below rather than by a height cap: no
+ * arrangement of seven 44px targets fits inside 56px, so a cap would forbid
+ * every menu rather than constrain this one.
  *
  * Chrome is nav.top plus the navband that wraps it on the home page - the
  * furniture a page carries to be part of a site, as opposed to the page's own
@@ -52,6 +64,39 @@
  * touch path - WebKit, hasTouch, page.tap() - is owed here and is not yet
  * written.
  *
+ * THE OPEN STATE IS CONSTRAINED, JUST NOT BY A HEIGHT. Three properties, each
+ * asserted below and each seen to fail:
+ *
+ *   1. closed is the default on load, on every page at every width and zoom;
+ *   2. the reader can dismiss it - the summary toggles back, and Escape closes
+ *      it (site/assets/nav.js, the one thing there that is script);
+ *   3. it does not persist across navigation.
+ *
+ * THE TOUCH PATH, AND WHY IT EXISTS. The control this replaced was an
+ * <a href="#"> held open by :not(:focus-within). WebKit does not focus an
+ * anchor on activation - by tap OR by click, activeElement afterwards is BODY -
+ * so it never opened and every link below 620px sat behind it. This file
+ * reported 980/980 and 196/196 on that nav, and was right about every
+ * configuration it could reach: it launched Chromium and Firefox, emulated no
+ * touch, and drove the control with Tab and synthetic activation, all of which
+ * work where a real tap does not. So the touch path launches WEBKIT with
+ * hasTouch and drives the control with page.tap().
+ *
+ * Playwright's WebKit is not Safari on iOS. It is the closest instrument
+ * available here; Andrew's own phone is ground truth and is where this was
+ * confirmed.
+ *
+ * WHAT THE TOUCH PATH DELIBERATELY DOES NOT ASSERT, and this is not an
+ * oversight. It does NOT check that the five dropdown GROUPS open on tap.
+ * Those work through `.dd:hover > .ddmenu` at style.css:223 - outside the 620
+ * block, written for a desktop pointer - combined with iOS Safari's first-tap
+ * hover reveal, confirmed on a real iPhone 2026-09-13. Playwright's synthetic
+ * tap leaves hover applied, so an assertion here would pass for the same
+ * accidental reason the device does: green because of the very thing it is
+ * supposed to be testing. It would read as coverage and be none. GROUP OPENING
+ * ON TOUCH IS VERIFIED ON A REAL IPHONE ONLY, IS NOT COVERED BY THIS FILE, AND
+ * CANNOT BE, because the instrument cannot separate hover from tap.
+ *
  * WHAT THIS DOES NOT ASSERT. Only nav.top and .navband: a page that grew some
  * other fixed furniture would not be counted until it is named here. Only
  * scrollY 0 - a sticky band's behaviour further down the page is
@@ -62,7 +107,11 @@
  * set.
  *
  *   node tests/test_chrome.js
- *   node tests/test_chrome.js --break    # 0 caught, non-zero blind
+ *   node tests/test_chrome.js --break          # 0 caught, non-zero blind
+ *   node tests/test_chrome.js --break notap    # the control never opens
+ *   node tests/test_chrome.js --break nodefault  # it starts open
+ *   node tests/test_chrome.js --break noescape   # Escape does not close it
+ *   node tests/test_chrome.js --break persists   # it survives navigation
  *
  * --break forces the column layout at every width and zoom - the exact fault
  * the threshold exists to refuse - and asserts only on the configurations the
@@ -81,7 +130,17 @@ const SITE = path.join(__dirname, '..', 'site');
 const PAGES = ['index', 'about', 'code', 'heat', 'storage', 'climate-cost',
                'longevity', 'skyline', 'continents', 'beauty'];
 const LIMIT = 0.25;
-const BREAK = process.argv.includes('--break');
+const bi = process.argv.indexOf('--break');
+const BREAK = bi >= 0;
+/* --break with no mode is the column-layout mutation this file shipped with;
+   the named modes mutate the touch path instead, one property each. */
+const BREAK_MODE = BREAK && process.argv[bi + 1] && !process.argv[bi + 1].startsWith('--')
+  ? process.argv[bi + 1] : null;
+const TOUCH_BREAKS = ['notap', 'nodefault', 'noescape', 'persists'];
+if (BREAK_MODE && !TOUCH_BREAKS.includes(BREAK_MODE)) {
+  console.error('  --break takes nothing, or one of: ' + TOUCH_BREAKS.join(' | '));
+  process.exit(1);
+}
 
 /* 360 is the floor the invariant names and the narrowest phone worth serving;
    the step is 20px to 1024, with every 4px through 596-644 so the 620
@@ -147,15 +206,19 @@ async function openState(page) {
   const allLinks = await page.evaluate(() =>
     document.querySelectorAll('nav.top a:not(.navmore)').length);
   const controlShown = await page.evaluate(() => {
-    const b = document.querySelector('nav.top .navmore');
+    const b = document.querySelector('nav.top > details.navmore > summary');
     return !!(b && b.getClientRects().length);
   });
+  /* Open the control the way the platform does, not by focusing something.
+     This used to focus an <a class="navmore"> because the old mechanism was
+     held by :not(:focus-within); the control is a <details> now and its state
+     is its open attribute. Left as it was, this reported 84 of 196 failures
+     against a nav that works - a check still driving a mechanism that had been
+     replaced. */
   await page.evaluate(() => {
-    const b = document.querySelector('nav.top .navmore') ||
-              document.querySelector('nav.top a');
-    if (b) b.focus();
-    for (const d of document.querySelectorAll('nav.top .dd > a')) d.focus();
-    if (b) b.focus();
+    const d = document.querySelector('nav.top > details.navmore');
+    if (d) d.open = true;
+    for (const g of document.querySelectorAll('nav.top .dd > a')) g.focus();
   });
   await page.waitForTimeout(80);
   const shown = await page.evaluate(() =>
@@ -173,12 +236,103 @@ async function openState(page) {
          The first version compared against '#|Menu ▾' and Firefox failed it
          at two widths out of forty-four while reporting all fourteen anchors
          reachable - the nav was fine and the probe was brittle. */
-      return (a.classList.contains('navmore') ? 'CONTROL' : 'LINK') + '|' +
+      return ((a.tagName === 'SUMMARY' || a.classList.contains('navmore')) ? 'CONTROL' : 'LINK') + '|' +
              (a.getAttribute('href') || '') + '|' + (a.textContent || '').trim().slice(0, 12);
     });
     if (tag) seen.add(tag);
   }
   return { declared, allLinks, shown, controlShown, control: [...seen].some(s => s.startsWith('CONTROL|')), tabbed: seen.size };
+}
+
+/* TOUCH PATH. WebKit, hasTouch, page.tap(). Returns a list of failures. */
+async function touchPath(base) {
+  const fails = [];
+  let browser;
+  try { browser = await pw.webkit.launch(); }
+  catch (e) { return [`webkit would not launch: ${e.message.split('\n')[0]}`]; }
+  const ver = browser.version();
+  const cases = [
+    { label: '390x664 phone', w: 390, h: 664 },
+    { label: '360x225 (400% zoom)', w: 360, h: 225 },
+  ];
+  for (const c of cases) {
+    for (const name of ['heat', 'index']) {
+      const ctx = await browser.newContext({
+        viewport: { width: c.w, height: c.h }, hasTouch: true, isMobile: true,
+        deviceScaleFactor: 3 });
+      const page = await ctx.newPage();
+      page.setDefaultTimeout(15000);
+      await page.goto(base + name + '.html', { waitUntil: 'load' });
+      if (BREAK_MODE === 'nodefault') {
+        await page.evaluate(() => { const d = document.querySelector('nav.top > details.navmore'); if (d) d.open = true; });
+      }
+      if (BREAK_MODE === 'notap') {
+        /* the control stops responding: exactly the :focus-within failure */
+        await page.evaluate(() => { const s = document.querySelector('nav.top > details.navmore > summary'); if (s) s.style.pointerEvents = 'none'; });
+      }
+      await page.waitForTimeout(150);
+
+      const read = () => page.evaluate(() => {
+        const d = document.querySelector('nav.top > details.navmore');
+        const all = [...document.querySelectorAll('nav.top > a, nav.top > .dd > a')];
+        return { present: !!d, open: !!(d && d.open),
+                 declared: all.length,
+                 shown: all.filter(a => a.getClientRects().length > 0).length };
+      });
+
+      /* Property 1: closed on load */
+      const load = await read();
+      if (!load.present) { fails.push(`${name} ${c.label}: no collapse control in the markup`); await ctx.close(); continue; }
+      if (load.open) fails.push(`${name} ${c.label}: open on load - closed must be the default`);
+
+      /* the tap opens it, and every declared link becomes visible */
+      let tapErr = '';
+      try { await page.tap('nav.top > details.navmore > summary'); }
+      catch (e) { tapErr = e.message.split('\n')[0]; }
+      await page.waitForTimeout(250);
+      const opened = await read();
+      if (!opened.open) fails.push(`${name} ${c.label}: a tap did not open the control${tapErr ? ' (' + tapErr + ')' : ''}`);
+      else if (opened.shown < opened.declared)
+        fails.push(`${name} ${c.label}: opened but only ${opened.shown} of ${opened.declared} links visible`);
+
+      /* Property 2a: the summary toggles it back */
+      if (opened.open) {
+        try { await page.tap('nav.top > details.navmore > summary'); } catch (e) { /* reported below */ }
+        await page.waitForTimeout(200);
+        const shut = await read();
+        if (shut.open) fails.push(`${name} ${c.label}: a second tap did not close it`);
+      }
+
+      /* Property 2b: Escape closes it */
+      await page.evaluate(() => { const d = document.querySelector('nav.top > details.navmore'); if (d) d.open = true; });
+      if (BREAK_MODE === 'noescape') {
+        await page.evaluate(() => { const s = document.createElement('script'); s.textContent = 'window.__eatEsc=1;document.addEventListener("keydown",function(e){if(e.key==="Escape")e.stopImmediatePropagation()},true)'; document.head.appendChild(s); });
+      }
+      await page.waitForTimeout(120);
+      await page.keyboard.press('Escape');
+      await page.waitForTimeout(200);
+      const esc = await read();
+      if (esc.open) fails.push(`${name} ${c.label}: Escape did not close it`);
+
+      /* Property 3: it does not persist across navigation */
+      await page.evaluate(() => { const d = document.querySelector('nav.top > details.navmore'); if (d) d.open = true; });
+      await page.waitForTimeout(120);
+      if (BREAK_MODE === 'persists') {
+        await page.evaluate(() => { try { sessionStorage.setItem('navopen', '1'); } catch (e) {} });
+      }
+      await page.goto(base + (name === 'heat' ? 'storage' : 'about') + '.html', { waitUntil: 'load' });
+      if (BREAK_MODE === 'persists') {
+        await page.evaluate(() => { try { if (sessionStorage.getItem('navopen')) { const d = document.querySelector('nav.top > details.navmore'); if (d) d.open = true; } } catch (e) {} });
+      }
+      await page.waitForTimeout(180);
+      const after = await read();
+      if (after.open) fails.push(`${name} ${c.label}: still open after navigating - it must not persist`);
+
+      await ctx.close();
+    }
+  }
+  await browser.close();
+  return fails.map(f => `[webkit ${ver}] ${f}`);
 }
 
 (async () => {
@@ -230,6 +384,7 @@ async function openState(page) {
     }
     await browser.close();
   }
+  const touchFails = await touchPath(base);
   srv.close();
 
   console.log(`  config: playwright ${require('playwright/package.json').version}, ` +
@@ -254,6 +409,14 @@ async function openState(page) {
     console.log(`\n  ${checks} page-configuration pairs, all at or under ${(LIMIT * 100).toFixed(0)}%`);
   }
 
+  if (touchFails.length) {
+    console.log(`\n  ${touchFails.length} touch-path failure(s) - WebKit, hasTouch, page.tap():`);
+    for (const f of touchFails.slice(0, 10)) console.log('    ' + f);
+  } else {
+    console.log('  touch path: WebKit tap opens the control, every link shown, ' +
+                'summary and Escape close it, closed on load, no persistence');
+  }
+
   if (openFails.length) {
     console.log(`\n  ${openFails.length} of ${openChecks} open-state checks failed ` +
                 `(a bar that collapses and never opens passes the height limit perfectly):`);
@@ -263,6 +426,12 @@ async function openState(page) {
     }
   } else {
     console.log(`  ${openChecks} open-state checks: every declared link visible when opened and reachable by Tab`);
+  }
+
+  if (BREAK_MODE) {
+    const caught = touchFails.length > 0;
+    console.log(`\n  --break ${BREAK_MODE}: ${caught ? 'caught' : 'BLIND - the touch path noticed nothing'}`);
+    process.exit(caught ? 0 : 1);
   }
 
   if (BREAK) {
@@ -284,5 +453,5 @@ async function openState(page) {
     console.log('  caught');
     process.exit(0);
   }
-  process.exit(fails.length || openFails.length ? 1 : 0);
+  process.exit(fails.length || openFails.length || touchFails.length ? 1 : 0);
 })();
