@@ -94,7 +94,27 @@ def finish(fig, path, title=None, subtitle=None):
     height, and the two meet.
     """
     if not title:
+        # No header strip to reserve, but the collision audit still has to run
+        # here - skipping it whenever a caller omits title and subtitle left
+        # every such figure unaudited on every run, silently. Both lines above
+        # force title to None, so this branch is EVERY figure this module has
+        # ever saved: all five heat figures reported nothing, and every
+        # "0 layout problems" ever recorded for them - the app run, the site
+        # sweep, every build since 2026-09-04 - came from a check that never
+        # executed. storage/figstyle.py carries the same fix and the same
+        # reason; the two files diverged when only one of them was repaired.
+        #
+        # AFTER save, not before, and that is not a style choice. audit() draws
+        # twice to let constrained layout settle, and on a constrained-layout
+        # figure those draws move things: calling it first rewrote
+        # fig3_costgap_contour.png to bytes that differ from the published
+        # file, so the repair itself would have moved a figure on a live page.
+        # Auditing after also measures the figure that actually shipped rather
+        # than a state on the way to it. storage/figstyle.py audits first and
+        # has the same exposure; it is left alone here because that is its own
+        # figure to move and its own decision.
         sitefig.save(fig, path, close=False)
+        audit(fig, path)
         plt.close(fig)
         return
 
