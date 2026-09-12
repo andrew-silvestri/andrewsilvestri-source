@@ -17,12 +17,30 @@ consistent margins and a transparent-friendly background.
 """
 
 import os
+import sys
 
 import matplotlib
 import sys as _sys, os as _os; _sys.path.insert(0, _os.path.dirname(_os.path.dirname(_os.path.abspath(__file__))))
 import fig_floor
 from sitefig import BG, INK, DIM, RULE, FAINT, ACC, COOL, MOSS, ROSE, SLATE, DISTRICT, SUPPLY, PSYCH, SUN, INSOL, GOLD, GREY, VIOLET, BLUE, GREEN, WARM, ARROW, ONE_WAY_COL, TWO_WAY_COL, NODE_COL, WARM2, KCOL, CYCLE, FS_2, FS_1, FS0, FS1, FS2, FONT, MONO, NOTES, PROSE, CARD, THUMB, fig_size, save, WIDE, PLOT, SQUARE, TALL, row_aspect, panel  # noqa: E402,F401
 import sitefig  # noqa: E402
+
+# A LAYOUT FINDING CAN CONTAIN CHARACTERS THIS CONSOLE CANNOT ENCODE, AND
+# audit() PRINTS THE TEXT IT FOUND. heat's own colourbar label carries U+2212,
+# the real minus sign ("LCOH(elec) - LCOH(gas)" is drawn with it), and on
+# 2026-09-12 a run where that label had a layout problem died with
+# UnicodeEncodeError at the print - after auditing three figures and before
+# auditing the remaining two, which were therefore never measured at all. The
+# crash only appears when there IS a finding, so a clean tree hides it
+# completely and the first time anyone sees it is the first time something is
+# wrong.
+#
+# Same fix and same reason as tests/test_generators.py and
+# build_layer_diagram.py: the pages carry characters a Windows console's
+# default code page cannot print, and a diff line - or here an audit line -
+# must never crash the report.
+if hasattr(sys.stdout, "reconfigure"):
+    sys.stdout.reconfigure(encoding="utf-8", errors="replace")
 
 matplotlib.use("Agg")
 import matplotlib.pyplot as plt
