@@ -159,6 +159,27 @@ const STATES = [
     rule: 'nav.top .ddmenu a.on', props: ['color'] },
   { name: 'phone top bar, current',  page: 'code.html', vp: 390, sel: 'nav.top > a.on', hover: false,
     rule: 'nav.top a.on', props: ['color'] },
+  /* THE COLLAPSE CONTROL IS A NAV STATE, and it was introduced into a nav whose
+     entire rule set names anchors. A <summary> is not an anchor, so it matched
+     NONE of them and fell back to inherited ink - visibly darker than Home and
+     Code, which is what Andrew reported from his phone on 2026-09-13. Not
+     specificity, which at least leaves a cascade to inspect: NON-MATCHING,
+     which produces no cascade and warns nowhere.
+     Enumerated against `nav.top > a` rather than guessed: of twenty computed
+     properties, four differed - color, padding, outlineColor (which follows
+     color), and display. The first three must match and are asserted here.
+     `display` differs ON PURPOSE and is not asserted: the anchors are
+     full-width rows when the bar is open, the control is an inline item in the
+     closed bar, and inline-flex is also what suppresses the disclosure marker.
+     ONLY color AND padding-left ARE ASSERTED HERE, and that is the probe's
+     limit rather than a judgement: resolve() above knows how to compute a
+     declared value for those two properties and no others. padding-top is
+     equally wrong when it is wrong and equally unassertable here; the full
+     twenty-property comparison lives in the commit that fixed this. */
+  { name: 'phone control',           page: 'code.html', vp: 390, sel: 'nav.top > details.navmore > summary', hover: false,
+    rule: 'nav.top > .navmore > summary', props: ['color', 'padding-left'], media: 620 },
+  { name: 'phone control, hovered',  page: 'code.html', vp: 390, sel: 'nav.top > details.navmore > summary', hover: true,
+    rule: 'nav.top > .navmore > summary:hover', props: ['color'], media: 620 },
 ];
 
 const PROBE = ({ sel, rule, props, media }) => {
