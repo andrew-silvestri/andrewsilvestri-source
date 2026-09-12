@@ -77,6 +77,21 @@ def referenced():
     reference to assets/fonts/IBMPlexSans-Italic.woff2, and until 2026-09-11
     --apply would have deleted that font from the live site: found by running
     this into a throw-away copy, which removed it and the font licence.
+
+    A srcset is caught only by the second alternative above - a quoted path
+    beginning "assets/" - so it works for a BARE SINGLE PATH and for nothing
+    else. Measured into a throw-away copy on 2026-09-11 against
+
+        srcset="assets/x-350.png 350w, assets/x-714.png 714w"
+
+    the report listed both files as orphans and --apply said
+    "copied 0, removed 3": two live figures deleted, the same way the font
+    was, for the same reason. It is not fixed here, because a pruner that
+    guesses at descriptor syntax is a second thing to be wrong about; it is
+    fixed by refusing the shape at the point markup is written.
+    sync_img_dims.py owns that rule and its --break holds it, and
+    bust_cache.py (:57) and continents/update_page.py (:207) both stamp only
+    the bare shape, so a descriptor also ships unstamped.
     """
     want = set()
     files = (glob.glob(os.path.join(SITE, "*.html"))
