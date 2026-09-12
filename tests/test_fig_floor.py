@@ -35,22 +35,46 @@ sitefig.titles (never ax.title, trap 21), axis labels, ax.texts, tick labels
 inside the view limits, legend texts - and never findobj, which returns ticks
 that were never drawn (trap 4).
 
-THE EXEMPTION LIST, AND THE THREE PROPERTIES THAT KEEP IT HONEST.
+THE EXEMPTION LIST, AND THE TWO PROPERTIES ANY SUCH GATE NEEDS. Both, not
+either: they are a pair, and the second is the one that was missing here and
+cost three figures.
 
-Twenty-seven figures fail this today. They are named in EXEMPT, one line each,
-spelled out - never a pattern, because a pattern silently covers the next
-figure somebody adds. The list is the work queue, and it is designed so that it
-can only ever get shorter:
+Twenty-seven figures failed this when it was written. They are named in
+ORIGINAL, one line each, spelled out - never a pattern, because a pattern
+silently covers the next figure somebody adds. CONVERTED is what has since been
+fixed, and EXEMPT is the remainder: the work queue.
 
-  1. A listed figure that PASSES fails the run. The conversion landed and the
-     list is stale; take the name out in the same commit.
-  2. An unlisted figure that FAILS fails the run. That is the gate.
-  3. A name that is not in ORIGINAL fails the run. ORIGINAL is frozen at the
-     twenty-seven this check was written against and is never edited. EXEMPT
-     must be a subset of it, so the list can shrink and cannot grow. A gate
-     whose exemption list can grow is a gate that documents defeat, and adding
-     to ORIGINAL is an edit somebody has to justify rather than a line somebody
-     can slip in.
+  PROPERTY 1 - THE NUMERATOR ONLY SHRINKS. The exempt set can lose names and
+  cannot gain them. ORIGINAL is frozen and EXEMPT must be a subset of it, so a
+  conversion takes a name out and nothing puts one in without editing a
+  constant somebody has to justify. A listed figure that now PASSES also fails
+  the run, because the list is then stale and the count is a lie in the
+  flattering direction. An unlisted figure that FAILS fails the run; that is
+  the gate itself.
+
+  PROPERTY 2 - THE DENOMINATOR CANNOT SILENTLY CONTRACT. Every figure the pages
+  actually serve must be measured, or a shrinking numerator means nothing. This
+  is the half that failed. min_points() keys a builder's output name through
+  ASSET_OF; a name with no entry made `asset not in served` true and the row
+  was dropped with NO MESSAGE. A2.1 added three narrow renders to the site and
+  this gate reported the same 29 figures measured as before they existed -
+  correct arithmetic over a set three smaller than the one it claimed. So any
+  PNG the pages serve that no builder row accounts for is now a problem.
+
+WHY THE PAIR IS WRITTEN OUT RATHER THAN JUST FIXED. This is the third gate in
+this project to be wrong about its denominator rather than its verdict, and all
+three were arithmetically correct on whatever they did examine:
+
+  - tests/test_contrast.js's predecessor resolved backgrounds through CSS and
+    so never looked at text over a fill (trap 31);
+  - heat/figstyle.py's audit() returned before it ran and so never looked at
+    five figures, while every "0 layout problems" ever recorded for them came
+    from a check that never executed;
+  - this file skipped any name without an ASSET_OF entry.
+
+The verdict is the easy half to get right. The next exemption-list gate built
+here should be built from both properties at once, and a gate that has only
+Property 1 should be read as unfinished rather than as strict.
 
 WHAT THIS DOES NOT ASSERT. It measures the point size matplotlib gave a text
 artist, scaled by served-over-authored width; it does not rasterise the PNG and
@@ -350,7 +374,7 @@ def main():
         print(f"  {mark:6s} {a:34s} {page:12s} authored {aw:6.0f} "
               f"served {css:6.1f}  {pt:4.1f}pt -> {px:5.1f}px")
 
-    if not_original:
+    if not_original:                                        # Property 1
         problems.append("EXEMPT holds %d name(s) not in ORIGINAL - the list may "
                         "only shrink: %s" % (len(not_original), ", ".join(not_original)))
     if listed_passing:
@@ -369,7 +393,7 @@ def main():
     # reported the same 29 figures measured after three new ones reached the
     # site - and the count was the only tell, in a line nobody reads as an
     # assertion. It is one now.
-    unexplained = sorted(set(served) - accounted)
+    unexplained = sorted(set(served) - accounted)            # Property 2
     if unexplained:
         problems.append("%d figure(s) the pages serve that no builder row "
                         "accounted for - add them to ASSET_OF or find out who "
