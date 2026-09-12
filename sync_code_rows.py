@@ -114,6 +114,26 @@ def main(apply=False):
 
     for name, on, nn, os_, ns in changed:
         print("  %-24s %s -> %s files, %s -> %s" % (name, on, nn, os_, ns))
+    # AN ARCHIVE WITH NO ROW IS THE OTHER HALF, AND IT WAS SILENT. A row whose
+    # archive is absent has always been a hard error here; an archive that no
+    # row names was ignored, so the page could quietly describe fewer downloads
+    # than the site ships and this script would report every remaining row as
+    # agreeing. That is Property 2 from tests/test_fig_floor.py in a different
+    # file - a set the check is drawn from that can contract without saying so -
+    # and it is the fourth place that shape has been found. Added 2026-09-12,
+    # when the three World Energy Web archives were removed and the row count
+    # went from ten to seven: the right number either way, but nothing would
+    # have objected if only the rows had gone.
+    on_disk = {f for f in os.listdir(DOWNLOADS) if f.endswith(".zip")}
+    linked = {m.group(1) for m in ZIP.finditer(text)}
+    orphan = sorted(on_disk - linked)
+    if orphan:
+        print("  %d archive(s) in site/downloads/ that no row names: %s"
+              % (len(orphan), ", ".join(orphan)))
+        print("  publish.sh is a true mirror, so these ship unreachable. Give "
+              "them a row or delete them.")
+        return 1
+
     if missing:
         # Loud, not silent: an absent archive means the tree has not been built,
         # and rewriting the rows from nothing would be worse than saying so.
