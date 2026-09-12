@@ -215,10 +215,17 @@ def fig_contour(p: Params, width=NOTES):
     fig.colorbar(cs, label=W("LCOH(elec) − LCOH(gas)  [$/MMBtu]"))
     ax.set_xlabel(W("Electricity price  [¢/kWh]"))
     ax.set_ylabel(W("Natural gas price  [$/MMBtu]"))
-    # THE ONE FIGURE OF THE TWO THAT NEEDS ANYTHING BESIDES A WIDTH. At 350 the
-    # three labels above run off the canvas - two axis labels and the
-    # colourbar's, which is an axis label of its own axes and the easiest of the
-    # three to forget. Wrapping was measured over all 28 figures at 350 against
+    # THE ONE FIGURE OF THE TWO THAT NEEDS ANYTHING BESIDES A WIDTH. At 350 TWO
+    # labels run off the canvas, and all three are wrapped because the third is
+    # the same shape and sits at the same risk. Attributed per axes on
+    # 2026-09-12: one primary axis label and one COLOURBAR axis label. A
+    # colourbar is its own Axes, so its label is an axis label that no
+    # enumeration of "the x and y labels" returns - and it is the only
+    # non-primary axes anywhere in this tree's 28 figures, so it is the one
+    # place this can bite. (An earlier version of this comment, and the A2.2
+    # commit message, said three labels ran off and two of them were the
+    # colourbar's. Both were mine and neither was measured; the numbers above
+    # are.) Wrapping was measured over all 28 figures at 350 against
     # off-canvas, overlap AND the axes' share of the canvas, because buying
     # off-canvas by shrinking the data region is the cheap way to make it
     # disappear; this is the one figure that came back clean. Rotating or
