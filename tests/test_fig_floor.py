@@ -128,7 +128,16 @@ ORIGINAL = (
 
 # The work queue. Take a name out when its figure is converted; the run fails
 # if you forget, and fails if you put one back.
-EXEMPT = set(ORIGINAL)
+# Converted and taken off the list. ORIGINAL is frozen; this is the queue.
+#   A2.1, 2026-09-12: storage's three, the first conversions. Two were clean at
+#   350 with no edit beyond the second render; fig2_dispatch_week needed 5% of
+#   margin, which is in storage/model.py beside the call with its numbers.
+CONVERTED = {
+    "storage_fig2_dispatch_week.png",
+    "storage_fig4_sensitivity.png",
+    "storage_fig5_monthly.png",
+}
+EXEMPT = set(ORIGINAL) - CONVERTED
 
 # Which builder draws which shipped asset. The builders write their own names
 # into their own outputs/; this maps those to the names site/assets/ uses,
@@ -160,6 +169,11 @@ ASSET_OF = {
     "fig3_duration_value.png": "storage_fig3_duration_value.png",
     "fig4_sensitivity.png": "storage_fig4_sensitivity.png",
     "fig5_monthly.png": "storage_fig5_monthly.png",
+    # A2.1's narrow renders. The builders name these without the site's prefix,
+    # the same as their wide counterparts.
+    "fig2_dispatch_week-phone.png": "storage_fig2_dispatch_week-phone.png",
+    "fig4_sensitivity-phone.png": "storage_fig4_sensitivity-phone.png",
+    "fig5_monthly-phone.png": "storage_fig5_monthly-phone.png",
     "fig0_lq_explained.png": "lq_explained.png",
     "fig1_allometry.png": "lq_allometry.png",
     "fig2_lq_ranked.png": "lq_ranked.png",
@@ -307,10 +321,12 @@ def main():
           f"{len(exempt)} of {len(ORIGINAL)} figures still on the list")
 
     rows, problems = [], []
+    accounted = set()
     for out_name, rec in sorted(run["figures"].items()):
         asset = ASSET_OF.get(out_name, out_name)
         if asset not in served:
             continue                      # drawn but not shown on a page
+        accounted.add(asset)
         if "error" in rec or not rec.get("min_pt"):
             problems.append(f"{asset}: the builder gave no text to measure "
                             f"({rec.get('error', 'no text')})")
@@ -346,6 +362,19 @@ def main():
     if listed_missing:
         problems.append("EXEMPT names %d figure(s) this run never measured: %s"
                         % (len(listed_missing), ", ".join(listed_missing)))
+    # A FIGURE THE PAGES SERVE THAT NO BUILDER ROW EXPLAINS. This closes the
+    # only way this gate can be green for a figure it never measured: a name
+    # missing from ASSET_OF made `asset not in served` true and the row was
+    # dropped in silence. A2.1's three narrow renders hit it first - the gate
+    # reported the same 29 figures measured after three new ones reached the
+    # site - and the count was the only tell, in a line nobody reads as an
+    # assertion. It is one now.
+    unexplained = sorted(set(served) - accounted)
+    if unexplained:
+        problems.append("%d figure(s) the pages serve that no builder row "
+                        "accounted for - add them to ASSET_OF or find out who "
+                        "draws them: %s" % (len(unexplained), ", ".join(unexplained)))
+
     # The docstring says ASSET_OF is asserted against site/assets/, so assert
     # it. sync_assets.py's PREFIX_SOURCE holds the same mapping; a rename on
     # either side that is not made on both would otherwise show up here as a
