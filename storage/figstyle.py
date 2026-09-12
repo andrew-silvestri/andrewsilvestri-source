@@ -293,6 +293,11 @@ def phone_path(path):
     return path[:-4] + "-phone.png" if path.endswith(".png") else path + "-phone"
 
 
+def wrap_label(text, cols=26):
+    """See sitefig.wrap_label: one implementation, four builders."""
+    return sitefig.wrap_label(text, cols)
+
+
 def note(ax, text, loc="upper left"):
     """A caption inside the axes, placed by the legend machinery so it cannot
     collide with the data."""

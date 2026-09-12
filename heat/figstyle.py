@@ -288,10 +288,10 @@ def phone_path(path):
 # figure. It is applied per figure rather than globally because the same sweep
 # made four other figures worse.
 def wrap_label(text, cols=26):
-    import textwrap
-    if not text or "\n" in text or len(text) <= cols:
-        return text
-    return "\n".join(textwrap.wrap(text, cols))
+    """Kept as a name so heat/model.py needs no edit; the implementation and
+    the reason for 26 moved to sitefig.py on 2026-09-13, when storage became
+    the second of four builders to need it."""
+    return sitefig.wrap_label(text, cols)
 
 
 def note(ax, text, loc="upper left"):

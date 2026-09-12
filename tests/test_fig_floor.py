@@ -171,6 +171,12 @@ CONVERTED = {
     #   render. build_lq.py gained an `only` parameter so that render costs
     #   one figure rather than a second pass over eight thousand species.
     "lq_allometry.png",
+    #   A2.4, 2026-09-13, grouped by builder. storage: fig1_prices needed the
+    #   second render plus its rotated Y label wrapped at 11 columns. The
+    #   measured 26 is for HORIZONTAL labels and never breaks an
+    #   18-character string, so it changed nothing here; a rotated label
+    #   overflows along the figure's short axis and wants its own count.
+    "storage_fig1_prices.png",
 }
 EXEMPT = set(ORIGINAL) - CONVERTED
 
@@ -212,6 +218,7 @@ ASSET_OF = {
     "fig2_lcoh_stacked-phone.png": "heat_fig2_lcoh_stacked-phone.png",
     "fig3_costgap_contour-phone.png": "heat_fig3_costgap_contour-phone.png",
     "fig1_allometry-phone.png": "lq_allometry-phone.png",
+    "fig1_prices-phone.png": "storage_fig1_prices-phone.png",
     "fig0_lq_explained.png": "lq_explained.png",
     "fig1_allometry.png": "lq_allometry.png",
     "fig2_lq_ranked.png": "lq_ranked.png",
