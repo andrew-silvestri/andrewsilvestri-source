@@ -263,6 +263,28 @@ def style(extra=None):
     matplotlib.rcParams.update(rc)
 
 
+def wrap_label(text, cols=26):
+    """An axis label that no longer fits its own axis at a narrower width.
+
+    Wrapping changes where the words break, not which words they are, so it is
+    mechanical rather than a rewrite - section 1 of the Phase 2 packet bans
+    changing what a page says, and this does not.
+
+    26 is measured rather than chosen: over the 28 figures at 350 it was the
+    only global lever that cleared a figure outright. It is applied PER FIGURE
+    and never as a rule, because the same sweep made four other figures worse -
+    a tool that clears the figure in front of you is a tool, not a policy.
+
+    Lives here because four builders need it. heat/figstyle.py had the first
+    copy on 2026-09-12 and now delegates to this one; a helper whose constant
+    is a measurement should have exactly one place to be wrong.
+    """
+    import textwrap
+    if not text or "\n" in text or len(text) <= cols:
+        return text
+    return "\n".join(textwrap.wrap(text, cols))
+
+
 def fig_size(display_px, aspect):
     """figsize in inches for a figure displayed display_px CSS pixels wide,
     at one point per pixel: (w, h) with w = display_px / 72."""

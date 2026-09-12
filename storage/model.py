@@ -194,21 +194,25 @@ def annualized_storage_cost_per_kw_yr():
 
 
 # --------------------------------------------------------------------- figures
-def fig_price_duration(prices, tag):
+def fig_price_duration(prices, tag, width=NOTES):
     srt = np.sort(prices)[::-1]
-    fig, (a1, a2) = plt.subplots(1, 2, figsize=fig_size(NOTES, 2.2))
+    W = figstyle.wrap_label if width != NOTES else (lambda s: s)
+    fig, (a1, a2) = plt.subplots(1, 2, figsize=fig_size(width, 2.2))
     a1.plot(srt, lw=2)
     a1.set_yscale("symlog", linthresh=100)
-    a1.set_xlabel("Hours (sorted)"); a1.set_ylabel("Price [$/MWh]")
+    a1.set_xlabel(W("Hours (sorted)")); a1.set_ylabel(W("Price [$/MWh]"))
     # These titles ran wider than a two-up subplot at the default title size,
     # colliding with each other and clipping off the right edge - shorter
     # text and a smaller size here, not just a wider figure, since the
     # figure width is capped by the site's own column width regardless.
     a1.grid(alpha=0.3)
     a2.plot(np.arange(24), [prices[h::24].mean() for h in range(24)], lw=2.5, marker="o", ms=4)
-    a2.set_xlabel("Hour of day"); a2.set_ylabel("Mean price [$/MWh]")
+    a2.set_xlabel(W("Hour of day"))
+    a2.set_ylabel(figstyle.wrap_label("Mean price [$/MWh]", 11)
+                  if width != NOTES else "Mean price [$/MWh]")
     a2.grid(alpha=0.3)
-    figstyle.finish(fig, f"{OUT}/fig1_prices.png")
+    out = f"{OUT}/fig1_prices.png"
+    figstyle.finish(fig, out if width == NOTES else figstyle.phone_path(out))
 
 
 def fig_dispatch_week(res, prices, start_day=200, width=NOTES):
@@ -388,6 +392,7 @@ def fig_monthly(res, prices, width=NOTES):
 def main():
     prices, tag = load_prices()
     fig_price_duration(prices, tag)
+    fig_price_duration(prices, tag, width=sitefig.PHONE)
     results = [optimize(prices, d) for d in (2, 4, 8)]
     r4 = results[1]
     fig_dispatch_week(r4, prices)
