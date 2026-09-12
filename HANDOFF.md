@@ -48,8 +48,12 @@ source material unless told otherwise.
                             2026-09-04. The home-page hero is the layer diagram
                             (atlas_layers-notes.png, -phone.png for a phone);
                             the globe, hero_globe.png, is on atlas.html.
-    downloads/              per-project source .zip archives (gitignored; four
-                            of the twelve are rebuilt by rezip_downloads.py)
+    downloads/              per-project source .zip archives (gitignored;
+                            SEVEN, and rezip_downloads.py rebuilds all of them.
+                            It said "four of the twelve" until 2026-09-12: the
+                            three World Energy Web builds came off code.html
+                            that day and their files with them, and the count
+                            had been wrong in both halves before that.)
     CNAME .nojekyll         GitHub Pages config — do not delete either
   tests/                    the test suites (see §7) and their Playwright
   climate-cost/             sub-project: LCA engine, data, tests, template
@@ -2138,7 +2142,7 @@ the §4.4 settle range, the §5.1 weight and §5.2 inertia tables' numbers,
 the §6 behaviour table, and every bare count. `rebuild_nav.py` writes the
 nav on every page; `bust_cache.py` the stamps; `sync_img_dims.py` the
 image sizes; `build_thumbnails.py` the mosaic's six; `build_layer_diagram.py`
-the hero and the atlas figure; `rezip_downloads.py` **ten** archives (§10), one
+the hero and the atlas figure; `rezip_downloads.py` **seven** archives (§10), one
 of them `climate-cost-code.zip`, which had no target at all until 2026-09-11
 and is now a `files_target` of exactly the entries it has always shipped;
 `longevity-quotient/update_page.py` the longevity page's numbers;
