@@ -251,11 +251,23 @@ def nav_for(page):
     # Emitted here rather than written into the pages because rebuild_nav.py
     # re-runs re.sub(r'<nav class="top">.*?</nav>') over every page and destroys
     # anything between those tags (trap 13).
-    out.append('<details class="navmore"><summary>Menu</summary></details>')
     for label, target in NAV:
         if isinstance(target, str):
             on = ' class="on"' if target == page else ""
             out.append(f'<a href="{target}"{on}>{label}</a>')
+            # THE CONTROL GOES IMMEDIATELY AFTER HOME, and the position is
+            # load-bearing twice over. The collapsed bar is Home and the
+            # control, so the control has to render beside Home rather than
+            # before it - it was emitted first and its margin-left:auto pushed
+            # it 166px right of nothing, with Home, Code and About trailing it.
+            # And style.css reveals the collapsed items with
+            # `.navmore[open] ~ a` and `~ .dd`, a GENERAL SIBLING combinator
+            # that reaches only what FOLLOWS the control: everything except
+            # Home, which is the one item that must never be hidden. Move this
+            # and both properties break at once.
+            if target == "index.html":
+                out.append('<details class="navmore">'
+                           '<summary>Menu</summary></details>')
             continue
         # THE LENGTH-1 COLLAPSE WAS REMOVED ON 2026-09-09, AND ITS REASON WAS
         # OVERRULED RATHER THAN FOUND WRONG. What stood here, word for word:

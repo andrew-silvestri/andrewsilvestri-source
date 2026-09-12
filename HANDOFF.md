@@ -1435,6 +1435,28 @@ Read this section. Every item is a real bug that shipped.
     the tool said. A zero from a command you did not watch exit is not a
     measurement.
 
+35. **A check can outlive the mechanism it was written for, and a failure
+    count against a working page is the tell.** `tests/test_chrome.js`'s
+    open-state check opened the nav by focusing `<a class="navmore">`, because
+    the collapse was held by `:not(:focus-within)` when it was written. The
+    mechanism became a `<details>` on 2026-09-13 and that element stopped
+    existing. The check then reported **84 of 196 failures against a nav that
+    worked**, and the page was fine in every engine.
+
+    **This is not the denominator pattern.** The set it examined was right and
+    complete; it was pointed at an object that had been replaced. Nothing about
+    the numbers looked like a stale selector - they looked like a broken nav,
+    which is the worst way for this to present, because the obvious response is
+    to go and "fix" a page that is correct.
+
+    So: **when a mechanism changes, every check naming it is suspect until
+    re-read.** Grep the test tree for the old element, the old class, the old
+    attribute, before trusting any suite that mentions them. And a failure
+    count against a page you have just measured as working is a fact about the
+    check, not the page - `tests/test_nav_states.js` and
+    `tests/test_chrome.js` both named `.navmore` as an anchor, and both had to
+    be re-pointed at the summary in the same commit.
+
 ---
 
 ## 9. Adding a new project

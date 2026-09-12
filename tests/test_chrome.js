@@ -97,6 +97,19 @@
  * ON TOUCH IS VERIFIED ON A REAL IPHONE ONLY, IS NOT COVERED BY THIS FILE, AND
  * CANNOT BE, because the instrument cannot separate hover from tap.
  *
+ * CLOSED CONTENTS, BECAUSE A HEIGHT IS NOT A DESIGN. This file asserted that
+ * the collapsed bar is 50px and 22.2% and was right about both, and the bar was
+ * showing Home, Code, About AND the control - three of seven links that were
+ * supposed to be behind it. `nav.top > a` is (0,1,2) and so is
+ * `nav.top a { ... display: block }` later in style.css, so the hide rule lost
+ * on source order. The height was correct because the items fitted on one row.
+ * Andrew saw it on his phone; nothing here could.
+ *
+ * So below the breakpoint the closed bar must contain EXACTLY the control and
+ * the link to index.html, and nothing else. Above it, the control must be the
+ * one thing hidden. Stated as an exact set rather than a count, because a count
+ * is satisfied by the wrong two items.
+ *
  * WHAT THIS DOES NOT ASSERT. Only nav.top and .navband: a page that grew some
  * other fixed furniture would not be counted until it is named here. Only
  * scrollY 0 - a sticky band's behaviour further down the page is
@@ -112,6 +125,7 @@
  *   node tests/test_chrome.js --break nodefault  # it starts open
  *   node tests/test_chrome.js --break noescape   # Escape does not close it
  *   node tests/test_chrome.js --break persists   # it survives navigation
+ *   node tests/test_chrome.js --break contents   # the closed bar shows too much
  *
  * --break forces the column layout at every width and zoom - the exact fault
  * the threshold exists to refuse - and asserts only on the configurations the
@@ -136,7 +150,7 @@ const BREAK = bi >= 0;
    the named modes mutate the touch path instead, one property each. */
 const BREAK_MODE = BREAK && process.argv[bi + 1] && !process.argv[bi + 1].startsWith('--')
   ? process.argv[bi + 1] : null;
-const TOUCH_BREAKS = ['notap', 'nodefault', 'noescape', 'persists'];
+const TOUCH_BREAKS = ['notap', 'nodefault', 'noescape', 'persists', 'contents'];
 if (BREAK_MODE && !TOUCH_BREAKS.includes(BREAK_MODE)) {
   console.error('  --break takes nothing, or one of: ' + TOUCH_BREAKS.join(' | '));
   process.exit(1);
@@ -341,6 +355,7 @@ async function touchPath(base) {
   const engines = [];
   const fails = [];
   const openFails = [];
+  const contentFails = [];
   let checks = 0, openChecks = 0, worst = { share: -1 };
 
   for (const eng of ['chromium', 'firefox']) {
@@ -361,6 +376,35 @@ async function touchPath(base) {
         await page.waitForTimeout(100);
         const r = await chromeShare(page);
         checks++;
+        /* CLOSED CONTENTS. The collapsed bar's visible children, as an exact
+           set. BREAK_MODE 'contents' un-hides one to prove this fires. */
+        if (BREAK_MODE === 'contents') {
+          await page.evaluate(() => {
+            const a = document.querySelector('nav.top > a[href="code.html"]');
+            if (a) a.style.setProperty('display', 'block', 'important');
+          });
+          await page.waitForTimeout(40);
+        }
+        const shownSet = await page.evaluate(() => {
+          const nav = document.querySelector('nav.top');
+          if (!nav) return null;
+          return [...nav.children]
+            .filter(c => c.getClientRects().length > 0)
+            .map(c => c.tagName === 'DETAILS' ? 'CONTROL'
+                    : (c.getAttribute && c.getAttribute('href')) || c.className || c.tagName)
+            .sort();
+        });
+        if (shownSet) {
+          const collapsed = c.kind === 'width' ? c.w <= 620 : c.w <= 620;
+          const want = collapsed ? ['CONTROL', 'index.html'] : null;
+          if (collapsed && (shownSet.length !== 2 || shownSet.join('|') !== want.join('|'))) {
+            contentFails.push(`${name} ${c.kind === 'zoom' ? c.zoom + '% zoom' : c.w + 'px'} ` +
+                              `${eng}: closed bar shows [${shownSet.join(', ')}], want [${want.join(', ')}]`);
+          }
+          if (!collapsed && shownSet.includes('CONTROL')) {
+            contentFails.push(`${name} ${c.w}px ${eng}: the control is visible above the breakpoint`);
+          }
+        }
         if (r.share > worst.share) worst = { ...r, eng, name, ...c };
         if (r.share > LIMIT + 1e-9) {
           fails.push({ eng, name, ...c, ...r });
@@ -384,6 +428,15 @@ async function touchPath(base) {
     }
     await browser.close();
   }
+  if (contentFails.length) {
+    console.log(`\n  ${contentFails.length} closed-contents failure(s) - a correct height ` +
+                `with the wrong items in it:`);
+    for (const f of contentFails.slice(0, 8)) console.log('    ' + f);
+  } else {
+    console.log('  closed contents: below 620 the bar is exactly the control and Home; ' +
+                'above it the control is hidden');
+  }
+
   const touchFails = await touchPath(base);
   srv.close();
 
@@ -429,7 +482,7 @@ async function touchPath(base) {
   }
 
   if (BREAK_MODE) {
-    const caught = touchFails.length > 0;
+    const caught = touchFails.length > 0 || contentFails.length > 0;
     console.log(`\n  --break ${BREAK_MODE}: ${caught ? 'caught' : 'BLIND - the touch path noticed nothing'}`);
     process.exit(caught ? 0 : 1);
   }
@@ -453,5 +506,6 @@ async function touchPath(base) {
     console.log('  caught');
     process.exit(0);
   }
-  process.exit(fails.length || openFails.length || touchFails.length ? 1 : 0);
+  process.exit(fails.length || openFails.length || touchFails.length
+               || contentFails.length ? 1 : 0);
 })();
