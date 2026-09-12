@@ -72,6 +72,21 @@
  *      it (site/assets/nav.js, the one thing there that is script);
  *   3. it does not persist across navigation.
  *
+ * THE NO-JS ARM. site/assets/nav.js's header claims that with the file absent
+ * the feature degrades to a working menu: closed on load, the summary toggling
+ * on tap and on click, Enter and Space, the announced expanded state - all the
+ * platform's - with Escape the only loss. That was a claim in a comment about
+ * behaviour nothing exercised, which is exactly what this project keeps finding
+ * in other people's files. #nogl and #noaudio are the precedent and the reason:
+ * this site's degradations are stated and visible, and a stated degradation
+ * nobody has run is a claim like any other.
+ *
+ * So the arm blocks nav.js at the route, in all three engines, and asserts the
+ * platform behaviours still hold AND that Escape does NOTHING. The second half
+ * is what makes the first half mean anything: without it the arm would pass
+ * identically whether nav.js were blocked or loaded, and would be testing the
+ * fully-scripted page under a misleading name.
+ *
  * THE TOUCH PATH, AND WHY IT EXISTS. The control this replaced was an
  * <a href="#"> held open by :not(:focus-within). WebKit does not focus an
  * anchor on activation - by tap OR by click, activeElement afterwards is BODY -
@@ -112,6 +127,8 @@
  *   node tests/test_chrome.js --break nodefault  # it starts open
  *   node tests/test_chrome.js --break noescape   # Escape does not close it
  *   node tests/test_chrome.js --break persists   # it survives navigation
+ *   node tests/test_chrome.js --break nojs       # the menu needs script to open
+ *   node tests/test_chrome.js --break jsleak     # nav.js loads despite the block
  *
  * --break forces the column layout at every width and zoom - the exact fault
  * the threshold exists to refuse - and asserts only on the configurations the
@@ -136,7 +153,8 @@ const BREAK = bi >= 0;
    the named modes mutate the touch path instead, one property each. */
 const BREAK_MODE = BREAK && process.argv[bi + 1] && !process.argv[bi + 1].startsWith('--')
   ? process.argv[bi + 1] : null;
-const TOUCH_BREAKS = ['notap', 'nodefault', 'noescape', 'persists'];
+const TOUCH_BREAKS = ['notap', 'nodefault', 'noescape', 'persists',
+                      'nojs', 'jsleak'];
 if (BREAK_MODE && !TOUCH_BREAKS.includes(BREAK_MODE)) {
   console.error('  --break takes nothing, or one of: ' + TOUCH_BREAKS.join(' | '));
   process.exit(1);
@@ -242,6 +260,91 @@ async function openState(page) {
     if (tag) seen.add(tag);
   }
   return { declared, allLinks, shown, controlShown, control: [...seen].some(s => s.startsWith('CONTROL|')), tabbed: seen.size };
+}
+
+/* NO-JS ARM. nav.js blocked at the route; the platform's own behaviour is
+   asserted, and Escape must do nothing. All three engines, because a native
+   disclosure is exactly the sort of thing they differ on. */
+async function noJsArm(base) {
+  const fails = [];
+  for (const eng of ['webkit', 'chromium', 'firefox']) {
+    let browser;
+    try { browser = await pw[eng].launch(); }
+    catch (e) { fails.push(`${eng} would not launch: ${e.message.split('\n')[0]}`); continue; }
+    const ctx = await browser.newContext({
+      viewport: { width: 390, height: 664 }, hasTouch: true,
+      isMobile: eng === 'webkit', deviceScaleFactor: 3 });
+    const page = await ctx.newPage();
+    page.setDefaultTimeout(15000);
+    let served = false;
+    /* --break jsleak lets the file through, so the arm should notice that
+       Escape suddenly works and object. */
+    if (BREAK_MODE !== 'jsleak') {
+      await page.route('**/assets/nav.js*', r => { served = true; return r.abort(); });
+    } else {
+      await page.route('**/assets/nav.js*', r => { served = true; return r.continue(); });
+    }
+    await page.goto(base + 'heat.html', { waitUntil: 'load' });
+    await page.waitForTimeout(200);
+
+    const read = () => page.evaluate(() => {
+      const d = document.querySelector('nav.top > details.navmore');
+      const all = [...document.querySelectorAll('nav.top > a, nav.top > .dd > a')];
+      return { present: !!d, open: !!(d && d.open),
+               declared: all.length,
+               shown: all.filter(a => a.getClientRects().length > 0).length };
+    });
+    const tag = `[${eng} no-js]`;
+
+    if (!served) fails.push(`${tag} nav.js was never requested - the block proves nothing`);
+
+    /* closed is still the default with no script at all */
+    let s = await read();
+    if (!s.present) { fails.push(`${tag} no collapse control in the markup`); await browser.close(); continue; }
+    if (s.open) fails.push(`${tag} open on load without script - closed must be the default`);
+
+    /* --break nojs: make the platform toggle unavailable, which is what a
+       script-dependent menu would look like here. */
+    if (BREAK_MODE === 'nojs') {
+      await page.evaluate(() => {
+        const d = document.querySelector('nav.top > details.navmore');
+        if (d) d.addEventListener('click', e => { e.preventDefault(); }, true);
+      });
+    }
+
+    /* tap opens, tap closes */
+    try { await page.tap('nav.top > details.navmore > summary'); } catch (e) { /* below */ }
+    await page.waitForTimeout(200);
+    s = await read();
+    if (!s.open) fails.push(`${tag} a tap did not open it without script`);
+    else if (s.shown < s.declared) fails.push(`${tag} opened but ${s.shown} of ${s.declared} links visible`);
+    if (s.open) {
+      try { await page.tap('nav.top > details.navmore > summary'); } catch (e) { /* below */ }
+      await page.waitForTimeout(200);
+      if ((await read()).open) fails.push(`${tag} a second tap did not close it without script`);
+    }
+
+    /* Enter and Space, still the platform's */
+    for (const key of ['Enter', 'Space']) {
+      await page.evaluate(() => { const d = document.querySelector('nav.top > details.navmore'); if (d) d.open = false; });
+      await page.focus('nav.top > details.navmore > summary');
+      await page.keyboard.press(key);
+      await page.waitForTimeout(180);
+      if (!(await read()).open) fails.push(`${tag} ${key} did not toggle it without script`);
+    }
+
+    /* AND ESCAPE MUST DO NOTHING. Without this the arm passes identically
+       whether nav.js was blocked or loaded. */
+    await page.evaluate(() => { const d = document.querySelector('nav.top > details.navmore'); if (d) d.open = true; });
+    await page.waitForTimeout(120);
+    await page.keyboard.press('Escape');
+    await page.waitForTimeout(200);
+    if (!(await read()).open)
+      fails.push(`${tag} Escape closed it with nav.js blocked - either the file loaded anyway or something else is handling Escape, and this arm is not testing the degraded page`);
+
+    await browser.close();
+  }
+  return fails;
 }
 
 /* TOUCH PATH. WebKit, hasTouch, page.tap(). Returns a list of failures. */
@@ -384,7 +487,7 @@ async function touchPath(base) {
     }
     await browser.close();
   }
-  const touchFails = await touchPath(base);
+  const touchFails = (await touchPath(base)).concat(await noJsArm(base));
   srv.close();
 
   console.log(`  config: playwright ${require('playwright/package.json').version}, ` +
@@ -415,6 +518,8 @@ async function touchPath(base) {
   } else {
     console.log('  touch path: WebKit tap opens the control, every link shown, ' +
                 'summary and Escape close it, closed on load, no persistence');
+    console.log('  no-js arm: nav.js blocked in all three engines - closed on load, ' +
+                'tap and Enter and Space toggle, Escape correctly does nothing');
   }
 
   if (openFails.length) {
