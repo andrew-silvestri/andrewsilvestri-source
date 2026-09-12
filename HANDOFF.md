@@ -568,6 +568,7 @@ grid's generation — the share is read from the node name.
 python3 tests/test_markup.py           # markdown that never became HTML
 python3 tests/test_units.py            # every climate-cost input against its declared unit
 python3 tests/test_generators.py       # every text generator run into a copy and diffed against site/
+python tests/test_fig_floor.py         # no figure's text under 12px at the width the PAGE SERVES it (trap 22/31); --break stale|added
 node tests/test_atlas_interaction.js   # boots the real app against a three.js stub
 python3 tests/test_parity.py           # the browser engine against the figures' engine, all 60 scenarios, to 1e-12
 python3 tests/test_payload.py          # the payload's SHA-1 against atlas_payload.json (trap 23)
