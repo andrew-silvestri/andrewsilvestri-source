@@ -1457,6 +1457,33 @@ Read this section. Every item is a real bug that shipped.
     `tests/test_chrome.js` both named `.navmore` as an anchor, and both had to
     be re-pointed at the summary in the same commit.
 
+36. **A fix that lives in a selector's specificity is invisible to whoever
+    rewrites the rule, including its author.** This is trap 15's first
+    self-inflicted instance here, and the gap between the two was six days.
+
+    `nav.top a { ... display: block }` at `site/style.css:901` is (0,1,2) and
+    sits late in the file, so any selector at (0,1,2) loses to it on `display`
+    no matter where it is written. The collapsed nav's first version hid its
+    items with `nav.top:not(:focus-within) > a`, which is (0,2,2) and won -
+    but the `:not(:focus-within)` was there to express a STATE, and its
+    specificity was a side effect nobody wrote down. When the mechanism was
+    replaced by a `<details>`, the rules were rewritten without any
+    pseudo-class, the specificity fell back to (0,1,2), and Code and About
+    reappeared in a 50px bar. Three of seven links visible. Andrew found it on
+    a phone; `tests/test_chrome.js` reported the bar at the correct 50px and
+    22.2% throughout, because the items fitted on one row.
+
+    **Same defect, same file, same author, inside a week.** The first fix was
+    correct and left nothing behind: a specificity number carries no reason, so
+    the rewrite could not see what it was deleting.
+
+    So, and this is trap 15 with a narrower target: **a rule whose SELECTOR
+    shape exists because of a bug carries that bug in a comment beside it, and
+    names the rule it is losing to.** "Raised the specificity" is not a
+    comment; "(0,1,2) loses to `nav.top a` at :901 regardless of order, so this
+    is (0,2,2)" is. The comment now above that rule says exactly that and tells
+    the next rewriter to keep it above (0,1,2) or change :901 instead.
+
 ---
 
 ## 9. Adding a new project
