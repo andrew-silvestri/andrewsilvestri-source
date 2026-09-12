@@ -255,6 +255,27 @@ def verdict():
     return 1 if PROBLEMS else 0
 
 
+# The narrow render's name, and the one place the "-phone" spelling lives.
+# storage/figstyle.py carries the same helper; the page's <source srcset> has to
+# name exactly this file and a typo there is a figure that silently never loads.
+def phone_path(path):
+    return path[:-4] + "-phone.png" if path.endswith(".png") else path + "-phone"
+
+
+# A label that no longer fits its own axis at a narrower width. Wrapping changes
+# where the words break and not which words they are, so it is mechanical
+# rather than a rewrite - section 1 bans changing what a page says, and this
+# does not. 26 characters is the measured setting: over the 28 figures at 350 it
+# was the only global lever that cleared a figure outright, and this is that
+# figure. It is applied per figure rather than globally because the same sweep
+# made four other figures worse.
+def wrap_label(text, cols=26):
+    import textwrap
+    if not text or "\n" in text or len(text) <= cols:
+        return text
+    return "\n".join(textwrap.wrap(text, cols))
+
+
 def note(ax, text, loc="upper left"):
     """A caption inside the axes, placed by the legend machinery so it cannot
     collide with the data."""
