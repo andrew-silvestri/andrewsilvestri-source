@@ -173,7 +173,16 @@ def audit(fig, path):
     for tx in fig.texts:
         add(tx)
     for ax in fig.axes:
-        add(ax.title, is_title=True)
+        # sitefig.titles(ax), never ax.title. ax.title is only the CENTRE
+        # title; sitefig.panel() sets a left-aligned one and matplotlib keeps
+        # that in ax._left_title, so an audit reading ax.title sees no panel
+        # label at all and passes a sheet whose label sits on a legend. That is
+        # trap 21, and it shipped once already on energy_model_chart.png. Both
+        # figstyle modules had it until 2026-09-11; neither heat nor storage
+        # draws a panel label today, so nothing was escaping - the first
+        # multi-panel figure either one gained would have gone unchecked.
+        for _t in sitefig.titles(ax):
+            add(_t, is_title=True)
         add(ax.xaxis.label)
         add(ax.yaxis.label)
         for tx in ax.texts:
