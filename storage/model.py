@@ -211,10 +211,10 @@ def fig_price_duration(prices, tag):
     figstyle.finish(fig, f"{OUT}/fig1_prices.png")
 
 
-def fig_dispatch_week(res, prices, start_day=200):
+def fig_dispatch_week(res, prices, start_day=200, width=NOTES):
     s, e = start_day * 24, (start_day + 7) * 24
     t = np.arange(s, e)
-    fig, (a1, a2) = plt.subplots(2, 1, figsize=fig_size(NOTES, PLOT), sharex=True)
+    fig, (a1, a2) = plt.subplots(2, 1, figsize=fig_size(width, PLOT), sharex=True)
     a1.plot(t, prices[s:e], color=figstyle.DIM, lw=1.5)
     a1.set_ylabel("Price [$/MWh]"); a1.set_yscale("symlog", linthresh=100)
     a1.grid(alpha=0.3)
@@ -235,7 +235,22 @@ def fig_dispatch_week(res, prices, start_day=200):
     fig.legend(handles, labels, loc="outside lower center", ncol=3,
                frameon=False, fontsize=FS_1)
     a2.set_xlabel("Hour of year"); a2.grid(alpha=0.3)
-    figstyle.finish(fig, f"{OUT}/fig2_dispatch_week.png")
+    out = f"{OUT}/fig2_dispatch_week.png"
+    if width != NOTES:
+        # THE ONE FIGURE OF THE THREE THAT NEEDS ANYTHING BESIDES A WIDTH. At
+        # 350 with the same margins it comes back with one off-canvas label;
+        # 5% of margin on every side clears it and takes the axes' share of the
+        # canvas from 0.45 to 0.37 with overlap staying at 0. Measured over
+        # 0.00/0.02/0.05/0.08/0.12, and 0.05 is the smallest that clears it -
+        # the counter-metrics matter here because squeezing the data region is
+        # the cheap way to make off-canvas text go away, and at 0.12 the whole
+        # sweep's overlap count nearly doubles.
+        # Expressed through the layout engine's rect rather than by hand, the
+        # way heat/figstyle.py reserves its title strip: constrained layout is
+        # live on these figures and would discard a set_position.
+        fig.get_layout_engine().set(rect=(0.05, 0.05, 0.90, 0.90))
+        out = figstyle.phone_path(out)
+    figstyle.finish(fig, out)
 
 
 def fig_duration_value(results):
@@ -334,25 +349,26 @@ def fig_duration_value(results):
                   "several revenue streams a real battery earns (capacity, ancillary services)."))
 
 
-def fig_sensitivity(prices):
+def fig_sensitivity(prices, width=NOTES):
     rtes = [0.80, 0.86, 0.92]
     degs = [0.0, 2.0, 5.0, 10.0]
-    fig, ax = plt.subplots(figsize=fig_size(NOTES, PLOT))
+    fig, ax = plt.subplots(figsize=fig_size(width, PLOT))
     for rte in rtes:
         vals = [optimize(prices, 4, rte=rte, c_deg=cd)["rev_per_kw_yr"] for cd in degs]
         ax.plot(degs, vals, marker="o", lw=2.5, label=f"RTE {rte:.0%}")
     ax.set_xlabel("Degradation cost  [$/MWh throughput]")
     ax.set_ylabel("Revenue  [$/kW-yr]")
     ax.legend(); ax.grid(alpha=0.3)
-    figstyle.finish(fig, f"{OUT}/fig4_sensitivity.png")
+    out = f"{OUT}/fig4_sensitivity.png"
+    figstyle.finish(fig, out if width == NOTES else figstyle.phone_path(out))
 
 
-def fig_monthly(res, prices):
+def fig_monthly(res, prices, width=NOTES):
     rev_m = []
     for m in range(12):
         s, e = m * 730, (m + 1) * 730
         rev_m.append(np.sum(prices[s:e] * (res["dis"][s:e] - res["ch"][s:e])) / 1000)
-    fig, ax = plt.subplots(figsize=fig_size(NOTES, WIDE))
+    fig, ax = plt.subplots(figsize=fig_size(width, WIDE))
     # Numeric positions, not the month letters as categories. Passing the
     # letters straight to bar() made matplotlib treat them as categories, and
     # because J, M and A each appear more than once it collapsed them: the
@@ -365,7 +381,8 @@ def fig_monthly(res, prices):
     ax.set_xticklabels(months)
     ax.set_ylabel("Revenue [$k, 1 MW / 4 h]")
     ax.grid(axis="y", alpha=0.3)
-    figstyle.finish(fig, f"{OUT}/fig5_monthly.png")
+    out = f"{OUT}/fig5_monthly.png"
+    figstyle.finish(fig, out if width == NOTES else figstyle.phone_path(out))
 
 
 def main():
@@ -374,9 +391,18 @@ def main():
     results = [optimize(prices, d) for d in (2, 4, 8)]
     r4 = results[1]
     fig_dispatch_week(r4, prices)
+    # THE SECOND RENDER IS A SECOND FIGURE, NOT A SCALED ONE. A 714px figure
+    # served into a 350px column renders its 12pt floor at 5.9px and its 14.5pt
+    # labels at 7.1px; dpi cannot change that, because what a reader sees is
+    # point size times served width over authored width (fig_floor.py). The
+    # page picks between them with <picture>, and tests/test_fig_floor.py
+    # measures the result at the width the page actually serves.
+    fig_dispatch_week(r4, prices, width=sitefig.PHONE)
     fig_duration_value(results)
     fig_monthly(r4, prices)
+    fig_monthly(r4, prices, width=sitefig.PHONE)
     fig_sensitivity(prices)
+    fig_sensitivity(prices, width=sitefig.PHONE)
     summary = {
         "price_source": tag,
         "price_mean": round(float(prices.mean()), 2),

@@ -269,6 +269,13 @@ def verdict():
     return 1 if PROBLEMS else 0
 
 
+# The narrow render's name. One helper rather than the string ".png" spelled
+# out at each call site, because the page's <source srcset> has to name exactly
+# this file and a typo there is a figure that silently never loads.
+def phone_path(path):
+    return path[:-4] + "-phone.png" if path.endswith(".png") else path + "-phone"
+
+
 def note(ax, text, loc="upper left"):
     """A caption inside the axes, placed by the legend machinery so it cannot
     collide with the data."""
