@@ -1,0 +1,379 @@
+"""THE FLOOR, AT THE WIDTH THE PAGE SERVES THE FIGURE AT.
+
+    No text in a figure renders below 12px at any width the page serves it at.
+
+12px is --fs-2, the smallest step of the site's own type scale, and it is the
+promise the site already keeps at 1440 on all 28 figures. A floor that holds at
+one width and not another is not a floor.
+
+WHY THIS FILE EXISTS AND fig_floor.py IS NOT ENOUGH. fig_floor.py computes
+`pt * display / (72 * width_in)` where `display` is the figure's OWN authored
+width, so it asks whether a figure would be legible if it were shown at the
+size it was drawn for. Every one of the 28 figures passes that. At 390 the
+page serves a 714px figure into a 350px column, and twenty of them render
+their smallest text at 5.9px and seven at 7.1px. The gate was green because it
+asked about the wrong width - HANDOFF section 8, trap 31, authored by nobody
+on purpose - and the repair is to ask at the served width, not to lower the
+number. Nothing here replaces fig_floor.py; that check still runs inside every
+builder's audit() and still catches a label too small for its own figure.
+
+HOW THE TWO HALVES ARE OBTAINED, AND WHY NEITHER IS READ FROM A FILE.
+
+  served width  - measured in a real browser by tests/fig_served_widths.js, at
+                  1440 and 390, in Chromium and Firefox, because nothing in a
+                  figure's source says what width a page gives it (trap 22).
+                  Where the engines disagree the SMALLEST width wins, so a
+                  disagreement makes this stricter rather than picking a winner.
+  smallest text - recomputed by running every builder into a throw-away copy of
+                  the tree and reading the point size off the text artists
+                  matplotlib actually drew. It is not read from a manifest: a
+                  gate that reads a recorded result rather than recomputing it
+                  is not a gate (trap 20).
+
+The text enumeration is the continents/beauty shape - fig.texts, titles through
+sitefig.titles (never ax.title, trap 21), axis labels, ax.texts, tick labels
+inside the view limits, legend texts - and never findobj, which returns ticks
+that were never drawn (trap 4).
+
+THE EXEMPTION LIST, AND THE THREE PROPERTIES THAT KEEP IT HONEST.
+
+Twenty-seven figures fail this today. They are named in EXEMPT, one line each,
+spelled out - never a pattern, because a pattern silently covers the next
+figure somebody adds. The list is the work queue, and it is designed so that it
+can only ever get shorter:
+
+  1. A listed figure that PASSES fails the run. The conversion landed and the
+     list is stale; take the name out in the same commit.
+  2. An unlisted figure that FAILS fails the run. That is the gate.
+  3. A name that is not in ORIGINAL fails the run. ORIGINAL is frozen at the
+     twenty-seven this check was written against and is never edited. EXEMPT
+     must be a subset of it, so the list can shrink and cannot grow. A gate
+     whose exemption list can grow is a gate that documents defeat, and adding
+     to ORIGINAL is an edit somebody has to justify rather than a line somebody
+     can slip in.
+
+WHAT THIS DOES NOT ASSERT. It measures the point size matplotlib gave a text
+artist, scaled by served-over-authored width; it does not rasterise the PNG and
+does not know what a reader can actually resolve, so a 12px label in a pale
+grey on a busy ground passes here and tests/test_contrast.js is what looks at
+that. It sees only text drawn by a builder through matplotlib: text baked into
+a raster the builder composites, and any text an app draws into a canvas, are
+invisible to it. It covers the ten document pages and not the four viewers. It
+says nothing about overlap, off-canvas text or layout at any width - each
+builder's own audit() owns that, and at 350 those counts are the Stage A2
+workload rather than this gate's business. And it measures at 1440 and 390
+only: a width between them that served some third size would not be seen.
+
+    python tests/test_fig_floor.py
+    python tests/test_fig_floor.py --break stale    # 0 caught, non-zero blind
+    python tests/test_fig_floor.py --break added    # 0 caught, non-zero blind
+    python tests/test_fig_floor.py --keep           # leave the work copy
+
+Both --break modes report 0 when the fault they inject is caught and non-zero
+when it is not, the way beauty/break_model.py points it. The third break - a
+converted figure losing its conversion - is not a flag, because it is an edit
+to the tree rather than to this file: remove the <source> from
+continents/template.html, rebuild, and continents_fig1_futures.png must fail
+here. That has been run; see the commit.
+"""
+import argparse
+import json
+import os
+import runpy
+import shutil
+import subprocess
+import sys
+import tempfile
+
+HERE = os.path.dirname(os.path.abspath(__file__))
+ROOT = os.path.dirname(HERE)
+PY = sys.executable
+
+if hasattr(sys.stdout, "reconfigure"):
+    sys.stdout.reconfigure(encoding="utf-8", errors="replace")
+
+FLOOR_PX = 12.0
+
+# Frozen. The twenty-seven figures that rendered below the floor at 390 on
+# 2026-09-11, when this check was written. NEVER EDITED - see property 3.
+ORIGINAL = (
+    "beauty_fig1_gap.png",
+    "beauty_fig2_category.png",
+    "beauty_fig3_terms.png",
+    "beauty_fig4_strata.png",
+    "climate_allocation_bases.png",
+    "climate_chain_tomato.png",
+    "continents_fig2_belts.png",
+    "continents_fig3_rigidity.png",
+    "continents_fig4_slowdown.png",
+    "continents_fig5_past.png",
+    "continents_fig6_regimes.png",
+    "heat_fig1_breakeven_price.png",
+    "heat_fig2_lcoh_stacked.png",
+    "heat_fig3_costgap_contour.png",
+    "heat_fig4_tornado.png",
+    "heat_fig5_emissions_parity.png",
+    "lq_allometry.png",
+    "lq_explained.png",
+    "lq_orders.png",
+    "lq_ranked.png",
+    "lq_wild_captive.png",
+    "skyline_towers.png",
+    "storage_fig1_prices.png",
+    "storage_fig2_dispatch_week.png",
+    "storage_fig3_duration_value.png",
+    "storage_fig4_sensitivity.png",
+    "storage_fig5_monthly.png",
+)
+
+# The work queue. Take a name out when its figure is converted; the run fails
+# if you forget, and fails if you put one back.
+EXEMPT = set(ORIGINAL)
+
+# Which builder draws which shipped asset. The builders write their own names
+# into their own outputs/; this maps those to the names site/assets/ uses,
+# because sync_assets.py renames on the way in for three projects.
+BUILDERS = [
+    ("beauty/fig_beauty.py", "beauty"),
+    ("build_allocation_chain.py", "."),
+    ("climate-cost/build_allocation_figure.py", "climate-cost"),
+    ("continents/fig_continents.py", "continents"),
+    ("heat/model.py", "heat"),
+    ("storage/model.py", "storage"),
+    ("longevity-quotient/build_lq.py", "longevity-quotient"),
+    ("longevity-quotient/fig_lq_explained.py", "longevity-quotient"),
+    ("build_skyline_figure.py", "."),
+]
+
+# outputs/ name -> site/assets/ name, where they differ. sync_assets.py's
+# PREFIX_SOURCE does the same mapping for the copy; this is the same fact and
+# the two must not be allowed to disagree silently, so ASSET_OF is asserted
+# against site/assets/ at the end of the run.
+ASSET_OF = {
+    "fig1_breakeven_price.png": "heat_fig1_breakeven_price.png",
+    "fig2_lcoh_stacked.png": "heat_fig2_lcoh_stacked.png",
+    "fig3_costgap_contour.png": "heat_fig3_costgap_contour.png",
+    "fig4_tornado.png": "heat_fig4_tornado.png",
+    "fig5_emissions_parity.png": "heat_fig5_emissions_parity.png",
+    "fig1_prices.png": "storage_fig1_prices.png",
+    "fig2_dispatch_week.png": "storage_fig2_dispatch_week.png",
+    "fig3_duration_value.png": "storage_fig3_duration_value.png",
+    "fig4_sensitivity.png": "storage_fig4_sensitivity.png",
+    "fig5_monthly.png": "storage_fig5_monthly.png",
+    "fig0_lq_explained.png": "lq_explained.png",
+    "fig1_allometry.png": "lq_allometry.png",
+    "fig2_lq_ranked.png": "lq_ranked.png",
+    "fig3_wild_vs_captive.png": "lq_wild_captive.png",
+    "fig4_orders.png": "lq_orders.png",
+}
+
+
+def served_widths():
+    """Run the browser measurement and fold it to file -> smallest CSS width."""
+    out = subprocess.run(["node", os.path.join(HERE, "fig_served_widths.js")],
+                         cwd=HERE, capture_output=True, text=True,
+                         env={**os.environ,
+                              "NODE_PATH": os.path.join(HERE, "node_modules")})
+    if out.returncode != 0:
+        sys.exit("fig_served_widths.js failed:\n" + (out.stderr or "")[-2000:])
+    data = json.loads(out.stdout)
+    served = {}
+    for r in data["rows"]:
+        if not r["file"].lower().endswith(".png"):
+            continue                      # the OpenMoji SVGs carry no figure text
+        prev = served.get(r["file"])
+        if prev is None or r["cssWidth"] < prev[0]:
+            served[r["file"]] = (r["cssWidth"], r["page"], r["viewport"], r["engine"])
+    return data["config"], served
+
+
+def min_points(work):
+    """Run every builder into `work` and record each figure's authored width
+    and smallest text, in points. Recomputed, never read from a file."""
+    code = r'''
+import json, os, runpy, sys
+ROOT = os.path.dirname(os.path.abspath(__file__))
+os.chdir(ROOT); sys.path.insert(0, ROOT)
+import matplotlib; matplotlib.use("Agg")
+import matplotlib.figure
+import sitefig
+REC = {}
+def items(fig):
+    out = [t for t in fig.texts if t.get_text().strip()]
+    titles = {id(t) for ax in fig.axes for t in sitefig.titles(ax)}
+    for ax in fig.axes:
+        for t in (sitefig.titles(ax) + [ax.xaxis.label, ax.yaxis.label] + list(ax.texts)):
+            if t.get_text().strip():
+                out.append(t)
+        if ax.axison:
+            x0, x1 = sorted(ax.get_xlim()); y0, y1 = sorted(ax.get_ylim())
+            for tk, lo, hi in ((ax.xaxis, x0, x1), (ax.yaxis, y0, y1)):
+                if not tk.get_visible():
+                    continue
+                for loc, lab in zip(tk.get_ticklocs(), tk.get_ticklabels()):
+                    if lo - 1e-9 <= loc <= hi + 1e-9 and lab.get_text().strip() and lab.get_visible():
+                        out.append(lab)
+        lg = ax.get_legend()
+        if lg:
+            out += [x for x in lg.get_texts() if x.get_text().strip()]
+    seen, uniq = set(), []
+    for t in out:
+        if id(t) not in seen:
+            seen.add(id(t)); uniq.append(t)
+    return uniq, titles
+_sf = matplotlib.figure.Figure.savefig
+def savefig(self, fname, *a, **kw):
+    name = os.path.basename(str(fname))
+    try:
+        got, _titles = items(self)
+        pts = [(float(t.get_fontsize()), t.get_text().strip()[:40]) for t in got]
+        lo = min(pts) if pts else (None, None)
+        REC[name] = {"authored": round(float(self.get_size_inches()[0]) * 72, 1),
+                     "min_pt": lo[0], "text": lo[1]}
+    except Exception as e:
+        REC[name] = {"error": repr(e)[:140]}
+    return _sf(self, fname, *a, **kw)
+matplotlib.figure.Figure.savefig = savefig
+rel, cwd, out = sys.argv[1], sys.argv[2], sys.argv[3]
+script = os.path.join(ROOT, rel); here = os.path.join(ROOT, cwd)
+os.chdir(here); sys.path.insert(0, here)
+sys.argv = [script]
+try:
+    runpy.run_path(script, run_name="__main__"); st = "ok"
+except SystemExit as e:
+    st = "SystemExit %s" % e.code
+except Exception as e:
+    st = "%s: %s" % (type(e).__name__, e)
+json.dump({"status": st, "figures": REC}, open(out, "w"))
+'''
+    runner = os.path.join(work, "_figpt_runner.py")
+    open(runner, "w", encoding="utf-8").write(code)
+    # one builder per subprocess. Nine in one interpreter made
+    # fig_lq_explained.py exit 1 where it exits 0 alone - build_lq.py runs
+    # before it and leaves state behind - so the gate was reporting a builder
+    # as broken because of how the gate ran it.
+    status, figures = {}, {}
+    for i, (rel, cwd) in enumerate(BUILDERS):
+        res = os.path.join(work, f"_figpt_{i}.json")
+        out = subprocess.run([PY, runner, rel, cwd, res], cwd=work,
+                             capture_output=True, text=True, encoding="utf-8",
+                             errors="replace")
+        if not os.path.exists(res):
+            status[rel] = ("produced nothing: "
+                           + ((out.stderr or out.stdout or "")[-300:]).replace("\n", " "))
+            continue
+        got = json.load(open(res, encoding="utf-8"))
+        status[rel] = got["status"]
+        figures.update(got["figures"])
+    return {"status": status, "figures": figures}
+
+
+def copy_tree():
+    sys.path.insert(0, HERE)
+    import test_generators as TG
+    work = tempfile.mkdtemp(prefix="figfloor-")
+    dst = os.path.join(work, "tree")
+    shutil.copytree(ROOT, dst, ignore=TG._ignore(ROOT), symlinks=True)
+    return work, dst
+
+
+def main():
+    ap = argparse.ArgumentParser()
+    ap.add_argument("--break", dest="brk", choices=["stale", "added"])
+    ap.add_argument("--keep", action="store_true")
+    args = ap.parse_args()
+
+    exempt = set(EXEMPT)
+    if args.brk == "added":
+        # A name that was never in ORIGINAL. Property 3 must refuse it.
+        exempt.add("a_figure_that_was_never_here.png")
+    cfg, served = served_widths()
+    work, tree = copy_tree()
+    try:
+        run = min_points(tree)
+    finally:
+        if not args.keep:
+            shutil.rmtree(work, ignore_errors=True)
+        else:
+            print(f"  work copy kept at {work}")
+
+    failed_builders = [f"{k}: {v}" for k, v in run["status"].items()
+                       if v not in ("ok", "SystemExit 0", "SystemExit None")]
+
+    print("  config: playwright %s, %s, deviceScaleFactor %s, viewports %s"
+          % (cfg["playwright"], ", ".join(cfg["engines"]),
+             cfg["deviceScaleFactor"], ", ".join(cfg["viewports"])))
+    print(f"  floor {FLOOR_PX:g}px at the served width; "
+          f"{len(exempt)} of {len(ORIGINAL)} figures still on the list")
+
+    rows, problems = [], []
+    for out_name, rec in sorted(run["figures"].items()):
+        asset = ASSET_OF.get(out_name, out_name)
+        if asset not in served:
+            continue                      # drawn but not shown on a page
+        if "error" in rec or not rec.get("min_pt"):
+            problems.append(f"{asset}: the builder gave no text to measure "
+                            f"({rec.get('error', 'no text')})")
+            continue
+        css, page, vp, eng = served[asset]
+        px = rec["min_pt"] * css / rec["authored"]
+        ok = px >= FLOOR_PX - 1e-6
+        if args.brk == "stale" and asset in exempt and not ok:
+            # Pretend this one was converted. Property 1 must notice that a
+            # listed figure now passes and call the list stale.
+            ok, px = True, FLOOR_PX
+        rows.append((asset, page, rec["authored"], css, rec["min_pt"], px, ok))
+
+    listed_passing = [r[0] for r in rows if r[6] and r[0] in exempt]
+    unlisted_failing = [r for r in rows if not r[6] and r[0] not in exempt]
+    not_original = sorted(exempt - set(ORIGINAL))
+    listed_missing = sorted(exempt - {r[0] for r in rows})
+
+    for a, page, aw, css, pt, px, ok in rows:
+        mark = "ok  " if ok else ("EXEMPT" if a in exempt else "FAIL")
+        print(f"  {mark:6s} {a:34s} {page:12s} authored {aw:6.0f} "
+              f"served {css:6.1f}  {pt:4.1f}pt -> {px:5.1f}px")
+
+    if not_original:
+        problems.append("EXEMPT holds %d name(s) not in ORIGINAL - the list may "
+                        "only shrink: %s" % (len(not_original), ", ".join(not_original)))
+    if listed_passing:
+        problems.append("%d listed figure(s) now meet the floor; take them out "
+                        "of EXEMPT: %s" % (len(listed_passing), ", ".join(sorted(listed_passing))))
+    for a, page, aw, css, pt, px, _ in unlisted_failing:
+        problems.append(f"{a} on {page}: {pt:g}pt at {css:g}/{aw:g} renders "
+                        f"{px:.1f}px, under the {FLOOR_PX:g}px floor")
+    if listed_missing:
+        problems.append("EXEMPT names %d figure(s) this run never measured: %s"
+                        % (len(listed_missing), ", ".join(listed_missing)))
+    # The docstring says ASSET_OF is asserted against site/assets/, so assert
+    # it. sync_assets.py's PREFIX_SOURCE holds the same mapping; a rename on
+    # either side that is not made on both would otherwise show up here as a
+    # figure quietly dropping out of the run rather than as an error.
+    assets = os.path.join(ROOT, "site", "assets")
+    ghosts = sorted(v for v in ASSET_OF.values()
+                    if not os.path.exists(os.path.join(assets, v)))
+    if ghosts:
+        problems.append("ASSET_OF names %d file(s) that are not in "
+                        "site/assets/: %s" % (len(ghosts), ", ".join(ghosts)))
+    problems += failed_builders
+
+    print()
+    if problems:
+        print(f"  {len(problems)} problem(s):")
+        for p in problems:
+            print("    - " + p)
+    else:
+        print(f"  {len(rows)} figures measured at the served width, "
+              f"{len(rows) - len(exempt)} at or above {FLOOR_PX:g}px, "
+              f"{len(exempt)} on the list")
+
+    if args.brk:
+        caught = bool(problems)
+        print(f"  --break {args.brk}: {'caught' if caught else 'BLIND'}")
+        return 0 if caught else 1
+    return 1 if problems else 0
+
+
+if __name__ == "__main__":
+    sys.exit(main())
