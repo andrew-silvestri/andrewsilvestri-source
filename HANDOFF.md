@@ -1358,6 +1358,58 @@ Read this section. Every item is a real bug that shipped.
     `newline=""`, which preserves whatever it finds and so agrees with a drifted
     tree.
 
+33. **A change ages artefacts it never touched, so a change's own checks can
+    never be its gate.** Three edits on 2026-09-11 - to
+    `beauty/template.html`, `longevity-quotient/update_page.py` and
+    `climate-cost/data/processes.py` - each put a download archive behind its
+    sources, because `rezip_downloads.py` ships those files. One of them landed
+    on a published page two steps later: rebuilding `beauty-code.zip` moved it
+    from 1,488 to 1,489 KB, and `site/beauty.html` prints that size through
+    `{{zip_kb}}`, so a prose fix to a template shipped a stale figure on a
+    page nobody had edited.
+
+    Every one of those changes ran its own checks and passed them. The page
+    generator agreed, the citations agreed, the layout agreed - and none of
+    them reads an archive. **The rule this breaks is the old one**: every suite
+    passes before a publish. It was skipped precisely because the change's own
+    checks looked sufficient, which is why it is a trap and not a reminder.
+    Nothing new needs writing; what needs writing is that "sufficient" is not
+    a judgement the author of a change is in a position to make.
+
+    The order, and it is not cosmetic - it is what makes the generated figures
+    correct rather than merely consistent:
+
+        change -> page generators -> rezip_downloads.py -> sync_code_rows.py
+        -> bust_cache.py -> tests/test_generators.py LAST
+
+    Run the drift check before a restore or a rebuild and it tells you about a
+    tree that no longer exists. It was run early twice in one day: once before
+    a `git checkout --` that reverted an uncommitted regenerated page, once
+    before the rezip above.
+
+34. **A discarded stderr and a pipe turn a crashing instrument into a clean
+    zero.** `grep -rn -i --include=*.py -e placeholder -e synthetic heat`
+    returns nothing in this Git Bash. It is not returning nothing: it is
+    **aborting** - SIGABRT, exit 134, "Aborted" on stderr - and GNU grep 3.0
+    here does that whenever `-i` meets two or more `-e` patterns, on a single
+    file as much as recursively. `-iE 'a|b'` is fine, and so is `-i` with one
+    pattern. With `2>/dev/null` and `| wc -l` around it, the crash arrives as
+    `0`, and `0` was the finding: "no project carries placeholder data" is what
+    that zero was read as, on a tree where `heat/model.py` says "placeholder"
+    three times.
+
+    Record the specific fault narrowly - it is this grep, this version, this
+    flag combination - and the general form widely, because the general form is
+    the part that outlives the tool. **This is trap 28's family with a new
+    cause.** There the instrument was pinned to a constant by something nobody
+    chose; here the instrument did not return a wrong number at all. It died,
+    and the pipeline reported its silence as data.
+
+    **Check the exit status, not the output, on anything whose zero would be a
+    finding.** `rc=$?` immediately after, or drop `2>/dev/null` and read what
+    the tool said. A zero from a command you did not watch exit is not a
+    measurement.
+
 ---
 
 ## 9. Adding a new project
