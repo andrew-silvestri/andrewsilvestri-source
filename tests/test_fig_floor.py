@@ -160,6 +160,12 @@ CONVERTED = {
     "storage_fig2_dispatch_week.png",
     "storage_fig4_sensitivity.png",
     "storage_fig5_monthly.png",
+    #   A2.2, 2026-09-12: heat's two. fig2_lcoh_stacked needed only the second
+    #   render; fig3_costgap_contour needed its three labels wrapped at 26
+    #   characters - two axis labels and the colourbar's, which is an axis label
+    #   of its own axes and the easiest of the three to forget.
+    "heat_fig2_lcoh_stacked.png",
+    "heat_fig3_costgap_contour.png",
 }
 EXEMPT = set(ORIGINAL) - CONVERTED
 
@@ -198,6 +204,8 @@ ASSET_OF = {
     "fig2_dispatch_week-phone.png": "storage_fig2_dispatch_week-phone.png",
     "fig4_sensitivity-phone.png": "storage_fig4_sensitivity-phone.png",
     "fig5_monthly-phone.png": "storage_fig5_monthly-phone.png",
+    "fig2_lcoh_stacked-phone.png": "heat_fig2_lcoh_stacked-phone.png",
+    "fig3_costgap_contour-phone.png": "heat_fig3_costgap_contour-phone.png",
     "fig0_lq_explained.png": "lq_explained.png",
     "fig1_allometry.png": "lq_allometry.png",
     "fig2_lq_ranked.png": "lq_ranked.png",

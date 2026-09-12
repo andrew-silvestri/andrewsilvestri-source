@@ -165,13 +165,13 @@ def fig_breakeven_line(p: Params):
                              "boiler, per MMBtu delivered")
 
 
-def fig_lcoh_bars(p: Params):
+def fig_lcoh_bars(p: Params, width=NOTES):
     r = lcoh(p)
     labels = ["Gas boiler", "Electric boiler"]
     fuel = [r["gas"]["fuel"], r["elec"]["fuel"]]
     cap = [r["gas"]["capex"], r["elec"]["capex"]]
     fom = [r["gas"]["fom"], r["elec"]["fom"]]
-    fig, ax = plt.subplots(figsize=fig_size(NOTES, PLOT))
+    fig, ax = plt.subplots(figsize=fig_size(width, PLOT))
     b1 = ax.bar(labels, fuel, label="Fuel/energy", color=figstyle.COOL)
     b2 = ax.bar(labels, cap, bottom=fuel, label="Levelized capex", color=figstyle.WARM)
     ax.bar(labels, fom, bottom=np.array(fuel) + np.array(cap), label="Fixed O&M", color=figstyle.GREEN)
@@ -186,13 +186,14 @@ def fig_lcoh_bars(p: Params):
     # treating them as mathtext and drew the markup raw, and the line ran off
     # the right edge of a 7in canvas. figstyle.finish already reserves a header
     # strip for exactly this, which is what every other figure here uses.
-    figstyle.finish(fig, f"{OUT}/fig2_lcoh_stacked.png",
+    out = f"{OUT}/fig2_lcoh_stacked.png"
+    figstyle.finish(fig, out if width == NOTES else figstyle.phone_path(out),
                     title="What the two boilers actually cost",
                     subtitle=f"{p.P_e*100:.1f}¢/kWh electricity, "
                              f"\\${p.P_g:g}/MMBtu gas, {p.hours:.0f} h/yr")
 
 
-def fig_contour(p: Params):
+def fig_contour(p: Params, width=NOTES):
     Pe = np.linspace(0.02, 0.12, 120)   # $/kWh
     Pg = np.linspace(1.5, 8.0, 120)
     PE, PG = np.meshgrid(Pe, Pg)
@@ -203,17 +204,28 @@ def fig_contour(p: Params):
             q = Params(**{**base, "P_e": PE[i, j], "P_g": PG[i, j]})
             r = lcoh(q)
             gap[i, j] = r["elec"]["total"] - r["gas"]["total"]
-    fig, ax = plt.subplots(figsize=fig_size(NOTES, WIDE))
+    fig, ax = plt.subplots(figsize=fig_size(width, WIDE))
     lim = np.nanmax(np.abs(gap))
     cs = ax.contourf(PE * 100, PG, gap, levels=21, cmap="RdBu_r", vmin=-lim, vmax=lim)
     zero = ax.contour(PE * 100, PG, gap, levels=[0], colors=figstyle.INK, linewidths=2)
     ax.clabel(zero, fmt="parity")
     ax.plot(p.P_e * 100, p.P_g, "*", color=figstyle.INK, ms=16)
     ax.annotate("TX baseline", (p.P_e * 100 + 0.15, p.P_g + 0.1))
-    fig.colorbar(cs, label="LCOH(elec) − LCOH(gas)  [$/MMBtu]")
-    ax.set_xlabel("Electricity price  [¢/kWh]")
-    ax.set_ylabel("Natural gas price  [$/MMBtu]")
-    figstyle.finish(fig, f"{OUT}/fig3_costgap_contour.png")
+    W = figstyle.wrap_label if width != NOTES else (lambda s: s)
+    fig.colorbar(cs, label=W("LCOH(elec) − LCOH(gas)  [$/MMBtu]"))
+    ax.set_xlabel(W("Electricity price  [¢/kWh]"))
+    ax.set_ylabel(W("Natural gas price  [$/MMBtu]"))
+    # THE ONE FIGURE OF THE TWO THAT NEEDS ANYTHING BESIDES A WIDTH. At 350 the
+    # three labels above run off the canvas - two axis labels and the
+    # colourbar's, which is an axis label of its own axes and the easiest of the
+    # three to forget. Wrapping was measured over all 28 figures at 350 against
+    # off-canvas, overlap AND the axes' share of the canvas, because buying
+    # off-canvas by shrinking the data region is the cheap way to make it
+    # disappear; this is the one figure that came back clean. Rotating or
+    # thinning ticks answers for nothing here - not one x tick label runs off a
+    # canvas anywhere in the set.
+    out = f"{OUT}/fig3_costgap_contour.png"
+    figstyle.finish(fig, out if width == NOTES else figstyle.phone_path(out))
 
 
 def fig_tornado(p: Params):
@@ -296,7 +308,12 @@ def main():
             w.writerow([k, v])
     fig_breakeven_line(p)
     fig_lcoh_bars(p)
+    # The second render is a second figure, not a scaled one: a 714px figure
+    # served into a 350px column shows its 14.5pt labels at 7.1px, and dpi
+    # cannot change that (fig_floor.py). <picture> picks between them.
+    fig_lcoh_bars(p, width=sitefig.PHONE)
     fig_contour(p)
+    fig_contour(p, width=sitefig.PHONE)
     fig_tornado(p)
     fig_emissions(p)
     print(json.dumps(summary, indent=2))
