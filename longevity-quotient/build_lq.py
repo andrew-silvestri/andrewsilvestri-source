@@ -483,6 +483,8 @@ def build(path=DATA):
     write_html(rows, summary)
     try:
         figures(rows, summary, fit_rows)
+        figures(rows, summary, fit_rows, width=sitefig.PHONE,
+                only="allometry")
     except ImportError:
         print("\nmatplotlib not present; figures skipped "
               "(the visualiser does not need them)")
@@ -599,7 +601,17 @@ def _save(fig, name):
     return bad
 
 
-def figures(rows, summary, fit_rows):
+def figures(rows, summary, fit_rows, width=NOTES, only=None):
+    """Draw the four figures. `only` draws one of them and returns.
+
+    `only` exists so the narrow render of one figure costs one figure
+    rather than four: this builder re-fits and re-plots eight thousand
+    species per call, and a second full pass to produce another copy of
+    three files that are already correct would be minutes of work thrown
+    away. It is a parameter rather than an extracted function because the
+    four figures share one rcParams block and one colour table, and
+    splitting those out is a bigger change than this one needs to be.
+    """
 
     # These four figures already carried INK/DIM and the real per-class site
     # colors (see `colors` below), but never actually switched the canvas to
@@ -629,7 +641,7 @@ def figures(rows, summary, fit_rows):
               "Amphibia": GOLD, "Pisces": GREY,
               "Invertebrata": ROSE}
 
-    fig, ax = plt.subplots(figsize=fig_size(NOTES, PLOT))
+    fig, ax = plt.subplots(figsize=fig_size(width, PLOT))
     for pool in sorted({r["pool"] for r in rows}):
         sel = [r for r in rows if r["pool"] == pool and not r["colonial"]]
         ax.scatter([r["mass_g"] for r in sel], [r["maximum"] for r in sel],
@@ -684,7 +696,16 @@ def figures(rows, summary, fit_rows):
             t.remove()
             continue
         taken.append(bb)
-    _save(fig, "fig1_allometry.png")
+    # THE SECOND RENDER IS A SECOND FIGURE, NOT A SCALED ONE. A 714px
+    # figure served into a 350px column shows its 12pt floor at 5.9px, and
+    # dpi cannot change that: what a reader sees is point size times served
+    # width over authored width (fig_floor.py). <picture> picks between
+    # them, and tests/test_fig_floor.py measures the result at the width
+    # the page actually serves.
+    _save(fig, "fig1_allometry.png" if width == NOTES
+               else "fig1_allometry-phone.png")
+    if only == "allometry":
+        return
 
     ranked = sorted([r for r in rows if r["lq_class_maximum"]
                      and not r["colonial"] and r["quality"] != "C"],
