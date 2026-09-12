@@ -228,25 +228,6 @@ def nav_for(page):
     # whose destination depended on how you arrived, and on a phone it took
     # a row of its own at the top of every page.
     out = []
-    # THE COLLAPSE CONTROL. Below 620px every one of the nine flex children
-    # took a row of its own: 7 children at 43.5px plus 22px of padding is
-    # 326.5px, and 346.5 on index where the navband adds 26. That is 41% of a
-    # 390x844 phone, 96% of the 360px viewport a 250% zoom leaves on a 1440x900
-    # laptop, and 154% of the 225px a 400% zoom leaves - the nav taller than
-    # the screen, with a reader scrolling past navigation to reach the first
-    # word of the page. Zoom is how people with low vision read.
-    #
-    # It is emitted here rather than written into the pages because
-    # rebuild_nav.py re-runs re.sub(r'<nav class="top">.*?</nav>') over every
-    # page and destroys anything between those tags (trap 13).
-    #
-    # NO SCRIPT. It opens through nav.top:focus-within, the same mechanism
-    # .dd:focus-within already uses for the dropdowns on a phone: an anchor
-    # takes focus when it is touched. So it works with JS off, and tabbing into
-    # the bar opens it, which is what keeps every link keyboard-reachable.
-    # href="#" for the same reason the dropdown buttons use it.
-    out.append('<a href="#" class="navmore" aria-haspopup="true">'
-               'Menu <span class="caret">&#9662;</span></a>')
     for label, target in NAV:
         if isinstance(target, str):
             on = ' class="on"' if target == page else ""

@@ -33,6 +33,25 @@
  * is layout-equivalent and layout is what this measures. It is not the browser
  * zoom UI and reproduces nothing zoom does to rasterisation.
  *
+ * KNOWN RED, AND WHY, AS OF 2026-09-12. This gate FAILS 420 of 980 today. The
+ * nav collapse that made it pass was reverted the same day: it was held open by
+ * :not(:focus-within), and WebKit does not focus an anchor on activation - not
+ * on tap and not on click - so the control never opened and every link below
+ * 620px was behind it. Andrew found it on an iPhone. A nav that is 154% of the
+ * viewport is a worse-looking page; a nav that cannot be opened is an unusable
+ * one, so the revert is the right way round and this gate stays red until a
+ * mechanism that opens on touch replaces it. The red is deliberate and has a
+ * named cause; do not tune the threshold to clear it.
+ *
+ * AND ITS DENOMINATOR EXCLUDES THE DEVICE CLASS THE DEFECT LIVED IN. Nothing in
+ * this file launches WebKit, and nothing emulates touch. The 196 open-state
+ * checks used Tab and synthetic activation, both of which work where a real tap
+ * does not, so this gate reported 980/980 and 196/196 on a nav that did not
+ * work on a phone. It was right about every configuration it could reach, which
+ * is the fifth instance of that pattern in this project and the largest. A
+ * touch path - WebKit, hasTouch, page.tap() - is owed here and is not yet
+ * written.
+ *
  * WHAT THIS DOES NOT ASSERT. Only nav.top and .navband: a page that grew some
  * other fixed furniture would not be counted until it is named here. Only
  * scrollY 0 - a sticky band's behaviour further down the page is
