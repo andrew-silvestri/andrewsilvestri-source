@@ -24,6 +24,19 @@ import re
 import sys
 
 import matplotlib
+# An audit line carries the text of what it found, and this tree's figures are
+# full of characters a Windows console's default code page cannot encode:
+# U+2212 in heat's colourbar label, U+2192 in the allocation figure's. Printing
+# one raises UnicodeEncodeError and the builder dies REPORTING a problem, after
+# auditing some of its figures and before auditing the rest. The crash needs a
+# finding to appear, so a clean tree hides it entirely.
+# Measured 2026-09-12: heat/model.py reported 1 of 7 figures and crashed;
+# climate-cost/build_allocation_figure.py still crashed on U+2192 after the
+# heat fix. Same fix and same reason as tests/test_generators.py and
+# build_layer_diagram.py.
+if hasattr(sys, "stdout") and hasattr(sys.stdout, "reconfigure"):
+    sys.stdout.reconfigure(encoding="utf-8", errors="replace")
+
 matplotlib.use("Agg")
 import matplotlib.pyplot as plt          # noqa: E402
 import numpy as np                       # noqa: E402
