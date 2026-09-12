@@ -166,6 +166,11 @@ CONVERTED = {
     #   of its own axes and the easiest of the three to forget.
     "heat_fig2_lcoh_stacked.png",
     "heat_fig3_costgap_contour.png",
+    #   A2.3, 2026-09-13: longevity's allometry scatter. Plumbing only - it
+    #   comes back at 0 layout problems at 350 with nothing but the second
+    #   render. build_lq.py gained an `only` parameter so that render costs
+    #   one figure rather than a second pass over eight thousand species.
+    "lq_allometry.png",
 }
 EXEMPT = set(ORIGINAL) - CONVERTED
 
@@ -206,6 +211,7 @@ ASSET_OF = {
     "fig5_monthly-phone.png": "storage_fig5_monthly-phone.png",
     "fig2_lcoh_stacked-phone.png": "heat_fig2_lcoh_stacked-phone.png",
     "fig3_costgap_contour-phone.png": "heat_fig3_costgap_contour-phone.png",
+    "fig1_allometry-phone.png": "lq_allometry-phone.png",
     "fig0_lq_explained.png": "lq_explained.png",
     "fig1_allometry.png": "lq_allometry.png",
     "fig2_lq_ranked.png": "lq_ranked.png",
