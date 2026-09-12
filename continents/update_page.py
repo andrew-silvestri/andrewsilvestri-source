@@ -219,6 +219,40 @@ def image_dims(text):
                   r'width="[^"]*" height="[^"]*"', dims, text)
 
 
+def source_dims(text):
+    """The same for a <picture>'s <source>, and it is not cosmetic.
+
+    The <img>'s width and height are what reserves the box, and they describe
+    the DESKTOP file. At 390 this page serves a 700x1750 phone render behind an
+    <img> claiming 1428x1020: measured 2026-09-11, the box was reserved at
+    350x250 and reflowed to 350x872 once the PNG arrived - 621.4px of shift in
+    Chromium, 622.0px in Firefox. With these attributes present the same probe
+    reports 0.0px and -3.0px.
+
+    The srcset must be a bare single path; sync_img_dims.py holds that rule and
+    says what deletes the file when it is not.
+
+    The count is asserted because a phrase-anchored substitution that matches
+    nothing is silent (trap 27): this must rewrite exactly as many <source>
+    tags as the page has.
+    """
+    from PIL import Image
+    pat = (r'(<source\b[^>]*\bsrcset="(assets/[^"?]+)([^"]*)"[^>]*?)'
+           r'\s+width="[^"]*"\s+height="[^"]*"')
+
+    def dims(m):
+        w, h = Image.open(os.path.join(SITE, m.group(2))).size
+        return f'{m.group(1)} width="{w}" height="{h}"'
+
+    out, n = re.subn(pat, dims, text)
+    want = len(re.findall(r'<source\b[^>]*\bsrcset="assets/', text))
+    if n != want:
+        raise SystemExit(f"source_dims: rewrote {n} of {want} <source> tags - "
+                         f"one of them is missing its width/height placeholder "
+                         f"or carries a srcset shape this cannot read")
+    return out
+
+
 def span(text):
     """The marginalia asides span the grid rows that follow them: the count
     of top-level elements in <main> after the asides, plus one."""
@@ -254,6 +288,7 @@ def render(P):
                if os.path.exists(PAGE) else None)
     t = keep_from_shipped(t, shipped)
     t = image_dims(t)
+    t = source_dims(t)
     return t.replace("{{span}}", str(span(t)))
 
 
