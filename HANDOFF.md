@@ -384,6 +384,26 @@ working directory. If two changes really do overlap, commit one and stash it —
 the rule against parallel branches (section 8, trap 2's neighbour) is this same
 rule one level up.
 
+**AND THE REASON IS BROADER THAN THE DRY RUN.** This rule was written about
+`publish.sh --dry-run` because that is the instrument that happened to have a
+rule written about it. The general form: **NO INSTRUMENT CAN DESCRIBE A TREE
+HOLDING TWO JOBS.** The dry run is not a special case, it is the first case
+anyone noticed.
+
+Found again on 2026-09-12, and not by a publish. A served-width measurement was
+run against the working tree while a break script was still mutating that tree
+to make a check fail. It reported `storage_fig4_sensitivity.png` being served
+at 350px with no narrow variant — which was true, of the tree as the mutation
+had left it half a second earlier, and was read as a finding about the change.
+The measurement was not wrong and the break script was not wrong; the tree held
+two jobs, so nothing looking at it could say which job it was describing.
+
+So: the same rule covers every instrument that reads the working tree, which is
+most of them — the drift check, `sync_assets.py`, `sync_img_dims.py`,
+`rezip --verify`, `tests/test_fig_floor.py`, `tests/test_chrome.js`, and any
+probe written for one turn. A measurement taken while something else is editing
+is not a measurement of anything. Restore the tree, then measure.
+
 ### bust_cache.py runs AFTER the generators, and the check is noisy otherwise
 
 `tests/test_generators.py` runs each generator into a copy of the tree and diffs
