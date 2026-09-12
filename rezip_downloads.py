@@ -290,13 +290,38 @@ def _order(t, src_dir, quiet=False):
     return order + sorted(n for n in all_names if n not in seen)
 
 
+# The zip epoch. Every entry is stamped with it instead of with its source
+# file's mtime, so an archive's bytes are a function of its CONTENTS and
+# nothing else.
+#
+# Why: ZipFile.write() copies the source file's modification time into the
+# entry header, and a page generator rewriting a file to byte-identical
+# content still gives it a new mtime. So every rezip produced different
+# archive bytes for identical contents, and every publish --dry-run listed
+# archives that nothing in the change had touched. A file list with phantom
+# rows trains its reader to skim, and a skimmed list is how trap 33's real
+# instances get through - the list being true is the whole value of the gate.
+#
+# The cost is that extracted files carry a 1980 date. That is the ordinary
+# trade every reproducible-build tool makes, and nothing on this site reads an
+# archive entry's timestamp: code.html's rows come from sync_code_rows.py,
+# which reads the zip's namelist and the file's own size on disk.
+ENTRY_STAMP = (1980, 1, 1, 0, 0, 0)
+ENTRY_MODE = 0o644 << 16       # and not the source file's, which varies by OS
+
+
 def _write(order, src_dir, extras, out_path):
     with zipfile.ZipFile(out_path, "w", zipfile.ZIP_DEFLATED) as z:
         for name in order:
             if name.endswith("/"):
-                z.writestr(zipfile.ZipInfo(name), "")
+                z.writestr(zipfile.ZipInfo(name), "")     # already 1980
             else:
-                z.write(extras[name] if name in extras else os.path.join(src_dir, name), name)
+                src = extras[name] if name in extras else os.path.join(src_dir, name)
+                info = zipfile.ZipInfo(name, date_time=ENTRY_STAMP)
+                info.compress_type = zipfile.ZIP_DEFLATED
+                info.external_attr = ENTRY_MODE
+                with open(src, "rb") as fh:
+                    z.writestr(info, fh.read())
 
 
 def rezip(t, src_dir):
