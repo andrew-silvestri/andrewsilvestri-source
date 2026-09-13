@@ -287,6 +287,13 @@ def wrap_label(text, cols=26):
           where 26 returned "Mean price [$/MWh]" unchanged (18 characters) and
           the audit still reported it off canvas. 11 clears it.
 
+    SUPERSEDED BY fit_label, 2026-09-13. The trigger below fired four times
+    in one session - lq_orders, heat's fig5_emissions_parity, and heat's
+    fig1 and fig4 - so the count was replaced by a measurement. This is kept
+    for heat's fig3_costgap_contour, which it already sizes correctly and
+    which is not worth re-deriving and re-publishing to prove a point. New
+    labels go to fit_label.
+
     THE TRIGGER: A THIRD COLUMN COUNT MEANS THIS PARAMETER IS THE WRONG SHAPE.
     A character count is a stand-in for a width, and this tree has a history
     with that: STATE.md's pattern 1 is estimating text dimensions instead of
@@ -309,6 +316,137 @@ def wrap_label(text, cols=26):
     if not text or "\n" in text or len(text) <= cols:
         return text
     return "\n".join(textwrap.wrap(text, cols))
+
+
+# ---- fit_label: measured against the audit's own predicate -----------------
+# NO CACHE, AND THE SPEC ASKED FOR ONE. The instruction was to cache the
+# measurement by string, which is right when what you measure is a string's
+# rendered extent. Once the acceptance test became the audit's own predicate
+# - is this box inside the canvas, does it hit any other text - the verdict
+# stopped being a property of the string and became one of the whole figure:
+# the same label passes on one figure and fails on the next. A cache keyed by
+# string would be wrong across figures and useless within one, where each
+# candidate is tried once. Stated rather than left as an empty dict with a
+# docstring about caching.
+
+def _boxes(fig, renderer, skip=None):
+    """Every drawn text's box, the way each builder's audit() enumerates them:
+    fig.texts, the titles through titles(), the axis labels, ax.texts, the tick
+    labels inside the view limits, and the legend's entries. Never findobj,
+    which returns ticks that were never drawn (trap 4)."""
+    out = []
+    for tx in fig.texts:
+        if tx is not skip and tx.get_text().strip():
+            out.append(tx)
+    for ax in fig.axes:
+        for tx in titles(ax) + [ax.xaxis.label, ax.yaxis.label] + list(ax.texts):
+            if tx is not skip and tx.get_text().strip():
+                out.append(tx)
+        if ax.axison:
+            x0, x1 = sorted(ax.get_xlim())
+            y0, y1 = sorted(ax.get_ylim())
+            for axis, lo, hi in ((ax.xaxis, x0, x1), (ax.yaxis, y0, y1)):
+                if not axis.get_visible():
+                    continue
+                for loc, lab in zip(axis.get_ticklocs(), axis.get_ticklabels()):
+                    if lo - 1e-9 <= loc <= hi + 1e-9 and lab is not skip \
+                            and lab.get_text().strip() and lab.get_visible():
+                        out.append(lab)
+        lg = ax.get_legend()
+        if lg:
+            out += [x for x in lg.get_texts()
+                    if x is not skip and x.get_text().strip()]
+    boxes = []
+    for tx in out:
+        try:
+            boxes.append(tx.get_window_extent(renderer=renderer))
+        except Exception:                                         # noqa: BLE001
+            pass
+    return boxes
+
+
+def fit_label(ax, which, text, overlap=0.15):
+    """Wrap an axis label so it neither runs off the canvas nor lands on other
+    text - or fail, saying what it tried.
+
+    A LABEL ROTATED 90 DEGREES HAS TWO CONSTRAINTS THAT PULL OPPOSITE WAYS. The
+    text runs along the axis; the LINE COUNT stacks perpendicular to it. So
+    wrapping trades one overflow for the other, and this tree has one example of
+    each:
+
+      storage's "Mean price [$/MWh]" was too long ALONG the axis. Two lines
+      halved that and it cleared, spending width it had to spare.
+      heat's "Emissions  [kgCO2 / MMBtu delivered]" was already two lines and
+      too WIDE. Wrapping it further made it wider still and put it into the
+      legend.
+
+    Same lever, opposite directions - which is why no single column count could
+    be right, and why wrap_label's 26 and 11 were never two values of one
+    number. They were two different constraints, each measured once and then
+    used as if it were the other's default.
+
+    THE ACCEPTANCE TEST IS THE AUDIT'S OWN PREDICATE, NOT A RECONSTRUCTION OF
+    IT. The first version of this computed the room from the axes box and the
+    tick labels and compared extents against it; it rejected the storage label
+    that the real figure passes, because a y label may legitimately run past
+    the axes into the figure's margins and the audit only cares about the
+    CANVAS. So each candidate is applied, drawn, and judged by exactly what
+    audit() asks: is this label's box inside the canvas, and does it overlap
+    any other drawn text by more than `overlap`. A lever judged by a
+    paraphrase of the gate is a lever that can pass while the gate fails.
+
+    Candidates run from unwrapped to narrow and the FIRST that passes wins -
+    the fewest lines, which spends the least room perpendicular to the text.
+
+    IT FAILS RATHER THAN RETURNING THE LEAST-BAD WRAP. A label that fits in
+    neither direction is a figure whose layout needs changing, and quietly
+    picking the closest miss is how a lever becomes the thing that hid the
+    problem. The ValueError names the label and every candidate tried.
+
+    Call after the axes are drawn and sized, with the figure at the size it
+    will be saved at: the canvas it measures against is the canvas the saved
+    figure has.
+    """
+    import textwrap
+    label = ax.yaxis.label if which == "y" else ax.xaxis.label
+    fig = ax.figure
+    keep = label.get_text()
+
+    def bad(candidate):
+        """(off_canvas, overlaps) for this candidate, measured after a draw."""
+        label.set_text(candidate)
+        fig.canvas.draw()
+        r = fig.canvas.get_renderer()
+        W, H = fig.canvas.get_width_height()
+        b = label.get_window_extent(renderer=r)
+        off = b.x0 < -1 or b.y0 < -1 or b.x1 > W + 1 or b.y1 > H + 1
+        hits = 0
+        for o in _boxes(fig, r, skip=label):
+            ox = min(b.x1, o.x1) - max(b.x0, o.x0)
+            oy = min(b.y1, o.y1) - max(b.y0, o.y0)
+            if ox > 0 and oy > 0:
+                area = min(b.width * b.height, o.width * o.height)
+                if area > 0 and (ox * oy) / area > overlap:
+                    hits += 1
+        return off, hits
+
+    seen, tried = set(), []
+    for cols in [len(text)] + list(range(len(text) - 1, 3, -1)):
+        cand = text if cols >= len(text) else "\n".join(textwrap.wrap(text, cols))
+        if cand in seen:
+            continue
+        seen.add(cand)
+        off, hits = bad(cand)
+        tried.append((cand.count("\n") + 1, "off" if off else "-", hits))
+        if not off and not hits:
+            return cand
+    label.set_text(keep)
+    fig.canvas.draw()
+    raise ValueError(
+        "fit_label: %r fits nowhere on this axis. Tried %d wraps; "
+        "(lines, off-canvas, overlaps) = %s. A label that fits in neither "
+        "direction is a layout to change, not a wrap to tune."
+        % (text, len(tried), tried[:6]))
 
 
 def fig_size(display_px, aspect):

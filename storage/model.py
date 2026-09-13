@@ -208,8 +208,15 @@ def fig_price_duration(prices, tag, width=NOTES):
     a1.grid(alpha=0.3)
     a2.plot(np.arange(24), [prices[h::24].mean() for h in range(24)], lw=2.5, marker="o", ms=4)
     a2.set_xlabel(W("Hour of day"))
-    a2.set_ylabel(figstyle.wrap_label("Mean price [$/MWh]", 11)
-                  if width != NOTES else "Mean price [$/MWh]")
+    a2.set_ylabel("Mean price [$/MWh]")
+    if width != NOTES:
+        # MEASURED, not a column count. sitefig.fit_label tries wraps from
+        # unwrapped down and keeps the first whose rendered box is inside
+        # the canvas and clear of every other drawn text - the audit's own
+        # predicate - and raises if none is. It returns the same two lines
+        # the hand-picked 11 produced, which is how the replacement was
+        # checked: same bytes, derived instead of guessed.
+        a2.set_ylabel(sitefig.fit_label(a2, "y", "Mean price [$/MWh]"))
     a2.grid(alpha=0.3)
     out = f"{OUT}/fig1_prices.png"
     figstyle.finish(fig, out if width == NOTES else figstyle.phone_path(out))
