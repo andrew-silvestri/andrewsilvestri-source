@@ -177,6 +177,12 @@ CONVERTED = {
     #   18-character string, so it changed nothing here; a rotated label
     #   overflows along the figure's short axis and wants its own count.
     "storage_fig1_prices.png",
+    #   longevity: lq_ranked, the second render plus its x label wrapped at
+    #   the measured 26. lq_orders was SPLIT OUT of the same group - wrapped
+    #   at 26 its label is still off canvas on a two-panel 350px figure,
+    #   which makes it the third figure wanting a count that is neither 26
+    #   nor 11 and fires the trigger recorded beside sitefig.wrap_label.
+    "lq_ranked.png",
 }
 EXEMPT = set(ORIGINAL) - CONVERTED
 
@@ -219,6 +225,7 @@ ASSET_OF = {
     "fig3_costgap_contour-phone.png": "heat_fig3_costgap_contour-phone.png",
     "fig1_allometry-phone.png": "lq_allometry-phone.png",
     "fig1_prices-phone.png": "storage_fig1_prices-phone.png",
+    "fig2_lq_ranked-phone.png": "lq_ranked-phone.png",
     "fig0_lq_explained.png": "lq_explained.png",
     "fig1_allometry.png": "lq_allometry.png",
     "fig2_lq_ranked.png": "lq_ranked.png",

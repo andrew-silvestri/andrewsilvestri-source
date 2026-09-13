@@ -485,6 +485,7 @@ def build(path=DATA):
         figures(rows, summary, fit_rows)
         figures(rows, summary, fit_rows, width=sitefig.PHONE,
                 only="allometry")
+        figures(rows, summary, fit_rows, width=sitefig.PHONE, only="ranked")
     except ImportError:
         print("\nmatplotlib not present; figures skipped "
               "(the visualiser does not need them)")
@@ -583,20 +584,31 @@ def report(rows, summary, fits, rejected, groups):
 
 # ------------------------------------------------------------------ figures
 
-def _save(fig, name):
+def _save(fig, name, want=True):
     """Save a figure only after checking that nothing on it collides.
+
+    `want=False` draws and audits but writes nothing: it is how figures() draws
+    one narrow render without leaving three more on disk that no page reads.
+    A generator that writes something nothing reads is how one goes stale.
 
     These four figures used to call savefig directly, so they were the one
     set on the site that was never checked; the audit already existed next
     door in fig_lq_explained.py and simply was not wired to them.
     """
+    if not want:
+        # Not written, so not audited and not reported. Auditing a figure
+        # this call is about to discard printed LAYOUT lines naming a file
+        # that never reaches disk, which reads as a failure and is not one.
+        plt.close(fig)
+        return []
     from fig_lq_explained import audit
     bad = audit(fig)
     if bad:
         print(f"  LAYOUT  {name}")
         for b in bad[:5]:
             print(f"            {b}")
-    sitefig.save(fig, os.path.join(OUT, name), close=False)
+    if want:
+        sitefig.save(fig, os.path.join(OUT, name), close=False)
     plt.close(fig)
     return bad
 
@@ -604,13 +616,19 @@ def _save(fig, name):
 def figures(rows, summary, fit_rows, width=NOTES, only=None):
     """Draw the four figures. `only` draws one of them and returns.
 
-    `only` exists so the narrow render of one figure costs one figure
-    rather than four: this builder re-fits and re-plots eight thousand
-    species per call, and a second full pass to produce another copy of
-    three files that are already correct would be minutes of work thrown
-    away. It is a parameter rather than an extracted function because the
-    four figures share one rcParams block and one colour table, and
-    splitting those out is a bigger change than this one needs to be.
+    `only` names the figure to WRITE; the others are still drawn and audited
+    and then discarded, so a narrow pass leaves no file on disk that no page
+    reads. It is a parameter rather than an extracted function because the four
+    figures share one rcParams block and one colour table, and splitting those
+    out is a bigger change than this one needs to be.
+
+    IT IS NOT HERE FOR SPEED, AND THE COMMENT THAT SAID SO WAS WRONG. When
+    `only` was added on 2026-09-13 this docstring claimed a second full pass
+    would be "minutes of work thrown away", because this builder re-fits eight
+    thousand species. Measured the next day: a complete run is 4.8 SECONDS. The
+    claim was written from the shape of the code rather than from a clock, which
+    is the estimate-instead-of-measure habit in its cheapest form - nothing was
+    lost by it, and it was still an unmeasured number stated as a reason.
     """
 
     # These four figures already carried INK/DIM and the real per-class site
@@ -633,6 +651,9 @@ def figures(rows, summary, fit_rows, width=NOTES, only=None):
         "axes.spines.top": False, "axes.spines.right": False,
     })
 
+    # sitefig.wrap_label at the measured 26 for horizontal labels; see its
+    # docstring for what 26 is and for the trigger that retires the count.
+    W = sitefig.wrap_label if width != NOTES else (lambda s: s)
     ga, gb = summary["global_fit"]["a"], summary["global_fit"]["b"]
     # Amphibia was #a98fd8 and Pisces #6f7fd8, which put three violets
     # (with Mammalia's #8b7ff2) in one legend; at scatter-dot size they were
@@ -703,9 +724,8 @@ def figures(rows, summary, fit_rows, width=NOTES, only=None):
     # them, and tests/test_fig_floor.py measures the result at the width
     # the page actually serves.
     _save(fig, "fig1_allometry.png" if width == NOTES
-               else "fig1_allometry-phone.png")
-    if only == "allometry":
-        return
+               else "fig1_allometry-phone.png",
+          want=only in (None, "allometry"))
 
     ranked = sorted([r for r in rows if r["lq_class_maximum"]
                      and not r["colonial"] and r["quality"] != "C"],
@@ -717,7 +737,7 @@ def figures(rows, summary, fit_rows, width=NOTES, only=None):
     # ratio, so the axis is logarithmic and every bar runs from parity rather
     # than from zero: short to the left is half as long as predicted, short to
     # the right is twice.
-    fig, ax = plt.subplots(figsize=fig_size(NOTES, row_aspect(30)))
+    fig, ax = plt.subplots(figsize=fig_size(width, row_aspect(30, display_px=width)))
     ys = range(len(sel))
     ax.hlines(list(ys), 1, [r["lq_class_maximum"] for r in sel],
               color=[colors.get(r["pool"], "#888") for r in sel], lw=3.4)
@@ -727,13 +747,15 @@ def figures(rows, summary, fit_rows, width=NOTES, only=None):
     ax.set_yticklabels([r["name"] for r in sel])
     ax.set_xscale("log")
     ax.axvline(1, color=DIM, lw=1.2, ls="--")
-    ax.set_xlabel("longevity quotient (observed ÷ predicted for its group, "
-                  "log scale)")
+    ax.set_xlabel(W("longevity quotient (observed ÷ predicted for its group, "
+                    "log scale)"))
     ax.tick_params(labelsize=FS_2)
     ax.grid(axis="x", alpha=.18, which="both")
     ax.set_axisbelow(True)
     fig.tight_layout()
-    _save(fig, "fig2_lq_ranked.png")
+    _save(fig, "fig2_lq_ranked.png" if width == NOTES
+               else "fig2_lq_ranked-phone.png",
+          want=only in (None, "ranked"))
 
     pair = [r for r in rows if r["wild"] and r["captive"]]
     pair.sort(key=lambda r: r["captive"] / r["wild"])
@@ -753,7 +775,7 @@ def figures(rows, summary, fit_rows, width=NOTES, only=None):
     ax.legend(fontsize=FS_2, frameon=False)
     ax.grid(axis="x", alpha=.18, which="both")
     fig.tight_layout()
-    _save(fig, "fig3_wild_vs_captive.png")
+    _save(fig, "fig3_wild_vs_captive.png", want=only is None)
 
     # order-level comparison, A and B only (see build())
     groups = rank_summary([r for r in rows if r["quality"] != "C"])
@@ -767,7 +789,7 @@ def figures(rows, summary, fit_rows, width=NOTES, only=None):
     half = (len(ords) + 1) // 2
     cols = [ords[:half], ords[half:]]
     hi = max(g["geo_lq"] for g in ords) * 1.06
-    fig, axes = plt.subplots(1, 2, figsize=(NOTES / 72, max(4.5, 0.235 * half + 1.6)))
+    fig, axes = plt.subplots(1, 2, figsize=(width / 72, max(4.5, 0.235 * half + 1.6)))
     for ax, part in zip(axes, cols):
         ys = range(len(part))
         ax.barh(list(ys), [g["geo_lq"] for g in part], color=ACC,
@@ -782,7 +804,9 @@ def figures(rows, summary, fit_rows, width=NOTES, only=None):
         ax.set_axisbelow(True)
         ax.tick_params(axis="x", labelsize=FS_2)
     fig.tight_layout(rect=(0, 0, 1, .975))
-    _save(fig, "fig4_orders.png")
+    _save(fig, "fig4_orders.png" if width == NOTES
+               else "fig4_orders-phone.png",
+          want=only in (None, "orders"))
     print("\nfigures written to outputs/")
 
 
