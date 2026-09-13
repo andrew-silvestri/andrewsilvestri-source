@@ -481,6 +481,13 @@ def build(path=DATA):
 
     report(rows, summary, fits, rejected, groups)
     write_html(rows, summary)
+    # THE AUDIT'S VERDICT IS THE RUN'S EXIT STATUS. Until now this builder
+    # printed LAYOUT and exited 0, which is the shape heat/figstyle.py and
+    # storage/figstyle.py had until 2026-09-12 - and the shape that let heat
+    # report 1 of 7 figures and exit clean, because a traceback and a verdict
+    # both exit non-zero and nobody was reading the output. Third builder,
+    # same gap, same one-line fix (trap 26).
+    PROBLEMS.clear()
     try:
         figures(rows, summary, fit_rows)
         figures(rows, summary, fit_rows, width=sitefig.PHONE,
@@ -489,6 +496,12 @@ def build(path=DATA):
     except ImportError:
         print("\nmatplotlib not present; figures skipped "
               "(the visualiser does not need them)")
+    else:
+        print(f"  {len(PROBLEMS)} layout problem(s) in total")
+        for p in PROBLEMS[:10]:
+            print("    " + p)
+        if PROBLEMS:
+            raise SystemExit(1)
     return rows, summary
 
 
@@ -584,6 +597,10 @@ def report(rows, summary, fits, rejected, groups):
 
 # ------------------------------------------------------------------ figures
 
+# Every problem every audit found this run, as "figure.png: what".
+PROBLEMS = []
+
+
 def _save(fig, name, want=True):
     """Save a figure only after checking that nothing on it collides.
 
@@ -607,6 +624,7 @@ def _save(fig, name, want=True):
         print(f"  LAYOUT  {name}")
         for b in bad[:5]:
             print(f"            {b}")
+    PROBLEMS.extend(f"{name}: {b}" for b in bad)
     if want:
         sitefig.save(fig, os.path.join(OUT, name), close=False)
     plt.close(fig)
