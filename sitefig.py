@@ -270,14 +270,40 @@ def wrap_label(text, cols=26):
     mechanical rather than a rewrite - section 1 of the Phase 2 packet bans
     changing what a page says, and this does not.
 
-    26 is measured rather than chosen: over the 28 figures at 350 it was the
-    only global lever that cleared a figure outright. It is applied PER FIGURE
-    and never as a rule, because the same sweep made four other figures worse -
-    a tool that clears the figure in front of you is a tool, not a policy.
-
     Lives here because four builders need it. heat/figstyle.py had the first
     copy on 2026-09-12 and now delegates to this one; a helper whose constant
     is a measurement should have exactly one place to be wrong.
+
+    THE TWO COLUMN COUNTS, AND WHAT EACH WAS MEASURED AGAINST. They are not
+    interchangeable and neither is a default:
+
+      26  HORIZONTAL labels - an x axis label, or a colourbar's. Measured over
+          all 28 figures re-rendered at 350 on 2026-09-12: of every global
+          lever tried, wrapping at 26 was the only one that cleared a figure
+          outright (heat's fig3_costgap_contour), and the same sweep made four
+          other figures worse. Applied per figure, never as a rule.
+      11  ROTATED labels - a y axis label, which overflows along the figure's
+          SHORT axis. Measured on storage's fig1_prices at 350 on 2026-09-13,
+          where 26 returned "Mean price [$/MWh]" unchanged (18 characters) and
+          the audit still reported it off canvas. 11 clears it.
+
+    THE TRIGGER: A THIRD COLUMN COUNT MEANS THIS PARAMETER IS THE WRONG SHAPE.
+    A character count is a stand-in for a width, and this tree has a history
+    with that: STATE.md's pattern 1 is estimating text dimensions instead of
+    measuring them, and every instance found has been wrong. The app run's
+    `(name.length + 6) * 6.6` was the same mistake with the multiplier written
+    down; a wrap column is the same mistake with the multiplier implied. Both
+    numbers above survive only because a figure's own audit() catches the
+    misses - they are not measurements of the label being wrapped.
+
+    So: **if a third figure needs a column count that is neither 26 nor 11,
+    do not add it.** Replace the count with a measurement - the label's
+    rendered extent, from get_window_extent at the size the figure will be
+    saved at, against the extent of the axis it runs along. The precedent is
+    longevity's label gutter (5ac8b2b): guessed at 58px, measured at 78px,
+    identical at every viewport, and the guess was the whole of what was
+    wrong. Two constants with their conditions recorded is acceptable. Three
+    is the tree saying the parameter is the wrong shape.
     """
     import textwrap
     if not text or "\n" in text or len(text) <= cols:
