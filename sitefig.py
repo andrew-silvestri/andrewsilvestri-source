@@ -449,6 +449,149 @@ def fit_label(ax, which, text, overlap=0.15):
         % (text, len(tried), tried[:6]))
 
 
+def fit_ticks(ax, which="y", overlap=0.15, settle=None):
+    """Fit an axis's TICK LABELS, or fail saying what was tried.
+
+    fit_label's sibling, and scoped the same way: it governs exactly one artist
+    class. The audit names four - hand-placed ax.text, tick labels, axis labels,
+    and legend collisions - and a lever aimed at the wrong one either raises on
+    something that was never the complaint or returns quietly having changed
+    nothing, which is indistinguishable from a tree with no problem (trap 27).
+
+    SAME CONTRACT AS fit_label, AND THE FIRST CLAUSE IS TRAP 37:
+
+      - the acceptance test is audit()'s own predicate, called directly on the
+        drawn figure. Not a restatement of it.
+      - it RAISES when no candidate satisfies the predicate. It never returns
+        the least-bad one.
+      - two constraints at once, because tick labels have the geometry problem
+        rotated labels do: the extent ALONG the axis (crowding between
+        neighbouring ticks) and the extent PERPENDICULAR to it (running off the
+        canvas) trade against each other. Wrapping a y tick shortens it
+        horizontally and makes it taller, so it buys off-canvas with crowding;
+        widening the margin buys off-canvas with plot area. Both counts are
+        reported when it raises.
+
+    CANDIDATES, ALL PRESENTATION AND NONE OF THEM CONTENT. Wrapping changes
+    where words break; a margin moves the axes. Neither changes what a label
+    says. TICK THINNING IS DELIBERATELY NOT IN THE SET: on a categorical axis
+    dropping every other tick removes a category a reader can currently read,
+    which is removal of reachable content and escalates rather than being a
+    lever's to take. Four of the five axes this was built for are categorical -
+    term names, strata, allocation bases, species names - so thinning is not
+    available on them even in principle. The fifth, continents_fig3_rigidity,
+    is NUMERIC: 0.1, 1, 10, 100 on a log axis, where thinning would drop a
+    decade a reader can currently read off the grid. Same answer, different
+    reason, and the distinction is written down because "they are all
+    categorical" was said out loud before the ticks were looked at.
+
+    `settle` IS NOT OPTIONAL DECORATION, AND IT EXISTS BECAUSE THIS LEVER
+    ALREADY GOT IT WRONG ONCE. A lever must be judged in the state the GATE
+    judges, and anything the builder runs between the lever and the audit
+    changes that state. continents/fig_continents.py calls sitefig.centre()
+    after placing the axes; called before centre(), fit_ticks measured the
+    uncentred figure, found the four log-decade ticks inside the canvas and
+    returned "unchanged" - and then centre() shifted the grid and audit()
+    reported all four off canvas. The predicate was right, the arithmetic was
+    right, and the verdict was stale: a lever that runs before the last thing
+    that moves an artist has measured a figure nobody will see. That is trap
+    37 from a new direction - not a paraphrase of the gate, but the gate's own
+    predicate applied to the wrong frame.
+
+    So: call this AFTER everything that places artists, and if something must
+    still run after it, pass it as `settle`. It is invoked after each candidate
+    is applied and before the draw that judges it, so every candidate is judged
+    in the final state and the winner leaves the figure in that state.
+
+    Returns a short description of what it applied, for the caller's comment.
+    """
+    import textwrap
+    axis = ax.yaxis if which == "y" else ax.xaxis
+    fig = ax.figure
+    fig.canvas.draw()
+
+    def labels():
+        return [l for l in (axis.get_ticklabels() or [])
+                if l.get_visible() and l.get_text().strip()]
+
+    original = [l.get_text() for l in labels()]
+    locs = list(axis.get_ticklocs())
+    base_pos = ax.get_position().bounds
+    if not original:
+        return "no tick labels"
+
+    def apply(cols, margin):
+        ax.set_position(list(base_pos))
+        if margin:
+            x0, y0, w, h = base_pos
+            if which == "y":
+                ax.set_position([x0 + margin, y0, max(0.05, w - margin), h])
+            else:
+                ax.set_position([x0, y0 + margin, w, max(0.05, h - margin)])
+        text = original if cols is None else \
+            ["\n".join(textwrap.wrap(s, cols)) or s for s in original]
+        if which == "y":
+            ax.set_yticks(locs)
+            ax.set_yticklabels(text)
+        else:
+            ax.set_xticks(locs)
+            ax.set_xticklabels(text)
+        fig.canvas.draw()
+        if settle is not None:
+            settle()
+            fig.canvas.draw()
+
+    def judge():
+        r = fig.canvas.get_renderer()
+        W, H = fig.canvas.get_width_height()
+        mine = [(l, l.get_window_extent(renderer=r)) for l in labels()]
+        others = _boxes(fig, r)
+        off = sum(1 for _, b in mine
+                  if b.x0 < -1 or b.y0 < -1 or b.x1 > W + 1 or b.y1 > H + 1)
+        hits = 0
+        for i, (_, b) in enumerate(mine):
+            for o in others:
+                if abs(o.x0 - b.x0) < 1e-6 and abs(o.y0 - b.y0) < 1e-6:
+                    continue                       # itself
+                ox = min(b.x1, o.x1) - max(b.x0, o.x0)
+                oy = min(b.y1, o.y1) - max(b.y0, o.y0)
+                if ox > 0 and oy > 0:
+                    area = min(b.width * b.height, o.width * o.height)
+                    if area > 0 and (ox * oy) / area > overlap:
+                        hits += 1
+        return off, hits
+
+    longest = max(len(s) for s in original)
+    # Least invasive first: no change, then margin alone, then wrapping alone,
+    # then both. Fewer lines and a smaller margin spend less of the figure.
+    plan = [(None, 0.0)]
+    plan += [(None, m) for m in (0.03, 0.06, 0.10, 0.14)]
+    wraps = [c for c in (longest - 2, 18, 14, 12, 10, 8) if 4 <= c < longest]
+    plan += [(c, 0.0) for c in wraps]
+    plan += [(c, m) for m in (0.03, 0.06, 0.10) for c in wraps]
+
+    tried, seen = [], set()
+    for cols, margin in plan:
+        key = (cols, round(margin, 3))
+        if key in seen:
+            continue
+        seen.add(key)
+        apply(cols, margin)
+        off, hits = judge()
+        tried.append((cols, round(margin, 2), off, hits))
+        if off == 0 and hits == 0:
+            return ("unchanged" if key == (None, 0.0) else
+                    "wrap %s, margin %+.0f%%" % (cols or "none", margin * 100))
+    apply(None, 0.0)
+    raise ValueError(
+        "fit_ticks: the %s tick labels fit nowhere on this axis. Tried %d "
+        "candidates; (wrap cols, margin, off-canvas, overlaps) = %s. Off-canvas "
+        "is the perpendicular constraint and overlaps the along-axis one; when "
+        "both stay non-zero no wrap or margin resolves it and the figure's "
+        "ARRANGEMENT is what has to change."
+        % (which, len(tried), tried[:8]))
+
+
 def fig_size(display_px, aspect):
     """figsize in inches for a figure displayed display_px CSS pixels wide,
     at one point per pixel: (w, h) with w = display_px / 72."""

@@ -307,7 +307,7 @@ def fig2_belts(D, cache={}):
     return fig
 
 
-def fig3_rigidity(D):
+def fig3_rigidity(D, width=NOTES):
     """Residual against distance to a boundary, with the counterexample in it."""
     import csv as _csv
     rows = list(_csv.DictReader(
@@ -318,7 +318,7 @@ def fig3_rigidity(D):
     big = np.array([r["plate"] == "PA" and 18.8 <= float(r["lat"]) <= 20.4
                     and -156.2 <= float(r["lon"]) <= -154.7 for r in rows])
 
-    fig, ax = plt.subplots(figsize=fig_size(NOTES, PLOT))
+    fig, ax = plt.subplots(figsize=fig_size(width, PLOT))
     ax.scatter(x[~big], y[~big], s=3, alpha=0.22, color=ACC, linewidths=0,
                zorder=2)
     ax.scatter(x[big], y[big], s=9, alpha=0.95, color=MOSS, linewidths=0,
@@ -357,7 +357,19 @@ def fig3_rigidity(D):
     ax.plot([], [], color=INK, lw=1.6, label="median")
     ax.plot([], [], color=SLATE, lw=1.0, ls=(0, (4, 2)), label="90th percentile")
     ax.legend(frameon=False, fontsize=FS_2, loc="lower left")
+    # THE LEVER RUNS LAST AND CENTRES INSIDE ITSELF. Called before centre(),
+    # it read the uncentred figure, found these four ticks inside the canvas
+    # and said "unchanged" - and centre() then shifted the grid and audit()
+    # reported 0.1, 1, 10 and 100 all off canvas. So centre() is handed to it
+    # as `settle` and runs after every candidate, which is the only way the
+    # thing it judges is the thing that gets saved.
+    #
+    # These four ticks are 0.1, 1, 10, 100 on a log axis. A margin moves them;
+    # it does not change what any of them says.
     sitefig.centre(fig)
+    did = sitefig.fit_ticks(ax, "y", settle=lambda: sitefig.centre(fig))
+    if did != "unchanged":
+        print(f"    fit_ticks rigidity @{width}: {did}")
     return fig
 
 
@@ -501,6 +513,11 @@ def main():
         (fig1_futures(D, masks, phone=True),
          "continents_fig1_futures-phone.png", 32),
         (fig2_belts(D), "continents_fig2_belts.png", 64),
+        # No second render: at 350 fit_ticks RAISES on this one - four
+        # off-canvas log-decade ticks at every margin it has, zero
+        # overlaps - which is the perpendicular constraint alone and says
+        # the arrangement is what has to change. The width parameter is
+        # what tests/test_fit_ticks.py drives it at.
         (fig3_rigidity(D), "continents_fig3_rigidity.png", 64),
         (fig4_slowdown(D), "continents_fig4_slowdown.png", 32),
         (fig5_past(D), "continents_fig5_past.png", 32),

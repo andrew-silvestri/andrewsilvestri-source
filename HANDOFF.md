@@ -1507,6 +1507,38 @@ Read this section. Every item is a real bug that shipped.
     silently picking the closest miss is how a lever becomes the thing that hid
     the problem. Full case in `03 RESEARCH/site-sweep/STATE.md`.
 
+38. **A correct predicate applied to the wrong FRAME passes while the gate
+    fails.** Trap 37 said a lever must call the gate's own predicate rather
+    than a paraphrase of it. `sitefig.fit_ticks` did exactly that and still
+    passed a figure the gate rejects, because a predicate is only half of a
+    judgement: the other half is WHEN it is asked.
+
+    `continents/fig_continents.py` places the axes, then calls
+    `sitefig.centre()`, which shifts the whole grid so the content's margins
+    are equal. `fit_ticks` was called before that. It measured the uncentred
+    figure, found 0.1, 1, 10 and 100 comfortably inside the canvas, and
+    returned "unchanged". `centre()` then moved the grid and `audit()` - the
+    gate, which runs last - reported all four off canvas. Nothing in the lever
+    was wrong except the moment it looked.
+
+    IT ALSO CORRUPTED A REPORT BEFORE IT CORRUPTED A FIGURE. A probe that
+    called `fit_ticks` at `savefig` time - after `centre()`, but with nothing
+    re-centring afterwards - said this figure cleared with a 14% margin, and
+    that number was written into a table of five figures and believed. The
+    margin only "worked" because the probe had quietly abandoned the centring
+    the site requires. `python tests/test_fit_ticks.py --break settle`
+    reproduces the same +14% on demand.
+
+    **The rule: a lever runs after everything that places an artist, and if
+    something must still run after the lever, the lever has to run it.**
+    `fit_ticks` takes a `settle` callable, invoked after each candidate and
+    before the draw that judges it, so the state it judges is the state that
+    gets saved. The general form is wider than levers: any check, probe or
+    fitter that measures a figure mid-pipeline is measuring a figure nobody
+    will see, and the three instruments in this tree that were right about
+    this - each builder's `audit()`, `fig_floor.py`, `tests/test_fig_floor.py`
+    - are right because all three run last.
+
 ---
 
 ## 9. Adding a new project

@@ -254,14 +254,15 @@ def fig2(P):
     return emit(fig, "beauty_fig2_category.png")
 
 
-def fig3(P):
+def fig3(P, width=NOTES):
     M = P["model_full"]
     terms = sorted(M["terms"], key=lambda t: M["drop_r2"][t])
     vals = [M["drop_r2"][t] for t in terms]
     cis = [P["bootstrap"]["full_drop"][t] for t in terms]
     labels = [P["term_labels"][t] for t in terms]
     y = np.arange(len(terms))
-    fig, ax = plt.subplots(figsize=fig_size(NOTES, row_aspect(len(terms), row_px=44)))
+    fig, ax = plt.subplots(figsize=fig_size(
+        width, row_aspect(len(terms), row_px=44, display_px=width)))
     cols = [MOSS if t == "category" else ACC for t in terms]
     ax.barh(y, vals, color=cols, height=0.58, zorder=3)
     for yi, ci in zip(y, cis):
@@ -281,10 +282,25 @@ def fig3(P):
     fig.text(0.01, 0.01, f"Whiskers: 95% bootstrap intervals, {P['n_boot']} resamples. "
              "Family enters as fixed effects.", fontsize=FS_2, color=DIM, ha="left", va="bottom")
     fig.subplots_adjust(left=0.3, right=0.97, top=0.86, bottom=0.2)
-    return emit(fig, "beauty_fig3_terms.png")
+    name = ("beauty_fig3_terms.png" if width == NOTES
+            else "beauty_fig3_terms-phone.png")
+    # THE SECOND RENDER IS A SECOND FIGURE, NOT A SCALED ONE. A 714px figure
+    # served into a 350px column shows its 12pt floor at 5.9px, and dpi cannot
+    # change that: what a reader sees is point size times served width over
+    # authored width (fig_floor.py). <picture> picks between them and
+    # tests/test_fig_floor.py measures the result at the served width.
+    #
+    # fit_ticks runs at BOTH widths and is a no-op at the one that already
+    # passes - it tries the unchanged figure first and returns there. What it
+    # applies at 350 is a margin, measured, judged by the same predicate
+    # audit() uses. No label's words change at either width.
+    did = sitefig.fit_ticks(ax, "y")
+    if did != "unchanged":
+        print(f"    fit_ticks {name}: {did}")
+    return emit(fig, name)
 
 
-def fig4(P):
+def fig4(P, width=NOTES):
     """The Red List coefficient inside OpenAlex topic fields.
 
     Tests whether the effect is made of papers ABOUT the listing. The rule
@@ -308,7 +324,8 @@ def fig4(P):
               "24": "Immunology and\nMicrobiology",
               "27": "Medicine", "28": "Neuroscience"}
     y = np.arange(len(rows))[::-1]
-    fig, ax = plt.subplots(figsize=fig_size(NOTES, row_aspect(len(rows), row_px=52)))
+    fig, ax = plt.subplots(figsize=fig_size(
+        width, row_aspect(len(rows), row_px=52, display_px=width)))
     floor = S["rule"]["cr_floor"]
     ax.axvline(floor, color=MOSS, lw=1.2, ls="--", zorder=2)
     ticks = []
@@ -351,12 +368,36 @@ def fig4(P):
                 S["rule"]["min_cell_per_category"], NEWLINE, floor),
              fontsize=FS_2, color=DIM, ha="left", va="bottom")
     fig.subplots_adjust(left=0.28, right=0.97, top=0.88, bottom=0.30)
-    return emit(fig, "beauty_fig4_strata.png")
+    name = ("beauty_fig4_strata.png" if width == NOTES
+            else "beauty_fig4_strata-phone.png")
+    # THE SECOND RENDER IS A SECOND FIGURE, NOT A SCALED ONE. A 714px figure
+    # served into a 350px column shows its 12pt floor at 5.9px, and dpi cannot
+    # change that: what a reader sees is point size times served width over
+    # authored width (fig_floor.py). <picture> picks between them and
+    # tests/test_fig_floor.py measures the result at the served width.
+    #
+    # fit_ticks runs at BOTH widths and is a no-op at the one that already
+    # passes - it tries the unchanged figure first and returns there. What it
+    # applies at 350 is a margin, measured, judged by the same predicate
+    # audit() uses. No label's words change at either width.
+    did = sitefig.fit_ticks(ax, "y")
+    if did != "unchanged":
+        print(f"    fit_ticks {name}: {did}")
+    return emit(fig, name)
 
 
 def main():
     P = json.load(open(PAYLOAD, encoding="utf-8"))
     sitefig.style()
+    # NO SECOND RENDER YET, AND THE `width` PARAMETER IS NOT DEAD CODE.
+    # fit_ticks clears the term and strata tick labels at 350 with a 10%
+    # margin and no wrapping, but three OTHER artist classes are still off
+    # canvas there - the x axis label, the panel() label, the fig.text
+    # footnote, and on fig4 four hand-placed value annotations. A lever
+    # governs one artist class, so these two are not conversions yet; what
+    # the parameter carries is the width the lever and tests/test_fit_ticks.py
+    # drive them at, and it changes nothing at NOTES (the shipped PNGs are
+    # byte-identical with it in place).
     bad = fig1(P) + fig2(P) + fig3(P) + fig4(P)
     print(f"  {bad} layout problem(s) in total")
     return bad
