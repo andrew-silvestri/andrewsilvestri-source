@@ -449,7 +449,7 @@ def fit_label(ax, which, text, overlap=0.15):
         % (text, len(tried), tried[:6]))
 
 
-def fit_ticks(ax, which="y", overlap=0.15):
+def fit_ticks(ax, which="y", overlap=0.15, settle=None):
     """Fit an axis's TICK LABELS, or fail saying what was tried.
 
     fit_label's sibling, and scoped the same way: it governs exactly one artist
@@ -485,6 +485,24 @@ def fit_ticks(ax, which="y", overlap=0.15):
     reason, and the distinction is written down because "they are all
     categorical" was said out loud before the ticks were looked at.
 
+    `settle` IS NOT OPTIONAL DECORATION, AND IT EXISTS BECAUSE THIS LEVER
+    ALREADY GOT IT WRONG ONCE. A lever must be judged in the state the GATE
+    judges, and anything the builder runs between the lever and the audit
+    changes that state. continents/fig_continents.py calls sitefig.centre()
+    after placing the axes; called before centre(), fit_ticks measured the
+    uncentred figure, found the four log-decade ticks inside the canvas and
+    returned "unchanged" - and then centre() shifted the grid and audit()
+    reported all four off canvas. The predicate was right, the arithmetic was
+    right, and the verdict was stale: a lever that runs before the last thing
+    that moves an artist has measured a figure nobody will see. That is trap
+    37 from a new direction - not a paraphrase of the gate, but the gate's own
+    predicate applied to the wrong frame.
+
+    So: call this AFTER everything that places artists, and if something must
+    still run after it, pass it as `settle`. It is invoked after each candidate
+    is applied and before the draw that judges it, so every candidate is judged
+    in the final state and the winner leaves the figure in that state.
+
     Returns a short description of what it applied, for the caller's comment.
     """
     import textwrap
@@ -519,6 +537,9 @@ def fit_ticks(ax, which="y", overlap=0.15):
             ax.set_xticks(locs)
             ax.set_xticklabels(text)
         fig.canvas.draw()
+        if settle is not None:
+            settle()
+            fig.canvas.draw()
 
     def judge():
         r = fig.canvas.get_renderer()
