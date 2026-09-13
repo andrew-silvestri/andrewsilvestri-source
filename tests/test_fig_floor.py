@@ -72,6 +72,20 @@ three were arithmetically correct on whatever they did examine:
     from a check that never executed;
   - this file skipped any name without an ASSET_OF entry.
 
+THE FAMILY, AND IT IS THE SAME FAILURE AT THREE LAYERS. Three instruments
+in this project have been green over a red tree, each wrong somewhere else,
+and none of the three visible from inside itself:
+
+  wrong about the SET it examines    the denominator pattern, five instances,
+                                     written out in tests/test_fig_floor.py
+  wrong about the RULE it enforces   trap 37, the paraphrase
+  wrong about the STATE it examines  trap 38, the wrong frame
+
+AN INSTRUMENT IS ONLY AS GOOD AS ITS AGREEMENT WITH WHAT SHIPS. Evaluate the
+artefact in the state it will be saved in - same set, same rule, same
+transformations applied. A check that runs on a precursor is checking
+something the reader will never see.
+
 The verdict is the easy half to get right. The next exemption-list gate built
 here should be built from both properties at once, and a gate that has only
 Property 1 should be read as unfinished rather than as strict.

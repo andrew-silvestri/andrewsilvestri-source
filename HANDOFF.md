@@ -1087,7 +1087,12 @@ Read this section. Every item is a real bug that shipped.
     reproducible and a forced fallback is.
 
 26. **A `--break` mode that reports its result instead of asserting on it is
-    not a gate, and it looks exactly like one.** `tests/test_exclusion.js` ran
+    not a gate, and it looks exactly like one.** (And once it does assert:
+    **where a check exists because something specific went wrong, its break
+    should reproduce that something.** A break that replays the historical
+    failure proves the repair addresses it; a break that injects an abstract
+    fault only proves the check is awake. Both are worth having and they are
+    not worth the same - trap 38 carries the worked pair.) `tests/test_exclusion.js` ran
     three pins with the exclusion disabled, counted how many noticed in a
     `detected` variable, printed `sees it` or `blind` per pin — and never
     called `say()` on the total. **It exited 0 whether three pins caught the
@@ -1507,6 +1512,20 @@ Read this section. Every item is a real bug that shipped.
     silently picking the closest miss is how a lever becomes the thing that hid
     the problem. Full case in `03 RESEARCH/site-sweep/STATE.md`.
 
+    THE FAMILY, AND IT IS THE SAME FAILURE AT THREE LAYERS. Three instruments
+    in this project have been green over a red tree, each wrong somewhere else,
+    and none of the three visible from inside itself:
+
+      wrong about the SET it examines    the denominator pattern, five instances,
+                                         written out in tests/test_fig_floor.py
+      wrong about the RULE it enforces   trap 37, the paraphrase
+      wrong about the STATE it examines  trap 38, the wrong frame
+
+    AN INSTRUMENT IS ONLY AS GOOD AS ITS AGREEMENT WITH WHAT SHIPS. Evaluate the
+    artefact in the state it will be saved in - same set, same rule, same
+    transformations applied. A check that runs on a precursor is checking
+    something the reader will never see.
+
 38. **A correct predicate applied to the wrong FRAME passes while the gate
     fails.** Trap 37 said a lever must call the gate's own predicate rather
     than a paraphrase of it. `sitefig.fit_ticks` did exactly that and still
@@ -1538,6 +1557,29 @@ Read this section. Every item is a real bug that shipped.
     will see, and the three instruments in this tree that were right about
     this - each builder's `audit()`, `fig_floor.py`, `tests/test_fig_floor.py`
     - are right because all three run last.
+
+    THE FAMILY, AND IT IS THE SAME FAILURE AT THREE LAYERS. Three instruments
+    in this project have been green over a red tree, each wrong somewhere else,
+    and none of the three visible from inside itself:
+
+      wrong about the SET it examines    the denominator pattern, five instances,
+                                         written out in tests/test_fig_floor.py
+      wrong about the RULE it enforces   trap 37, the paraphrase
+      wrong about the STATE it examines  trap 38, the wrong frame
+
+    AN INSTRUMENT IS ONLY AS GOOD AS ITS AGREEMENT WITH WHAT SHIPS. Evaluate the
+    artefact in the state it will be saved in - same set, same rule, same
+    transformations applied. A check that runs on a precursor is checking
+    something the reader will never see.
+
+    **AND THE BREAK REPRODUCES WHAT ACTUALLY HAPPENED, NOT AN ABSTRACT FAULT.**
+    `python tests/test_fit_ticks.py --break settle` brings back the specific
+    false +14% this trap is named for, not a generic injury. A break that
+    reproduces the historical failure proves the repair addresses the thing
+    that went wrong; a break that injects an abstract fault only proves the
+    check is awake. Where a check exists BECAUSE something specific happened,
+    its break should reproduce that something - and this file's other break,
+    `--break judge`, is the abstract kind and is worth exactly what it costs.
 
 ---
 

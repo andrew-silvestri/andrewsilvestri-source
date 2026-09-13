@@ -318,6 +318,34 @@ def wrap_label(text, cols=26):
     return "\n".join(textwrap.wrap(text, cols))
 
 
+# ---- WHAT THE TWO LEVERS ARE FOR, AND IT IS NOT THE NINETEEN ---------------
+# fit_label and fit_ticks were scoped as conversion tools for the figures that
+# render below the floor at 350, on the reasoning that five of them shared one
+# dominant cause. MEASURED 2026-09-13, THEY CONVERT NONE OF THEM:
+#
+#   fit_ticks   five figures, zero converted. Two clear their tick labels with
+#               a 10% margin and then fail in three OTHER artist classes; three
+#               raise - climate_allocation_bases and continents_fig3_rigidity
+#               perpendicular only, lq_wild_captive along-axis only.
+#   fit_label   three figures measured, three raises -
+#               heat_fig5_emissions_parity, lq_orders, continents_fig5_past.
+#
+# The two beauty figures are the informative pair: clearing one artist class
+# revealed the next, both times, at a ratio that says the binding constraint is
+# THE CANVAS rather than any one class of artist. A lever governs one class. A
+# figure whose content is wider than the canvas it is drawn on does not have a
+# lever-shaped problem, and no amount of wrapping or margin inside one class
+# was ever going to reach it. That is now known by measurement instead of by
+# argument, which is the only reason it is worth the space to say.
+#
+# NEITHER LEVER IS DEAD CODE AND NEITHER SHOULD BE DELETED FOR CONVERTING
+# NOTHING. What they are is regression prevention for figures NOT YET DRAWN: a
+# new axis label or a new set of tick labels that does not fit now fails loudly
+# at build time, naming every candidate it tried and which of the two
+# constraints it lost to, instead of shipping and being found at 350 on a
+# phone. They are also the only two things in this tree that state the two-
+# constraint geometry at all. The nineteen are an arrangement problem and are
+# somebody else's to solve; these two make sure the twentieth is not.
 # ---- fit_label: measured against the audit's own predicate -----------------
 # NO CACHE, AND THE SPEC ASKED FOR ONE. The instruction was to cache the
 # measurement by string, which is right when what you measure is a string's
@@ -451,6 +479,10 @@ def fit_label(ax, which, text, overlap=0.15):
 
 def fit_ticks(ax, which="y", overlap=0.15, settle=None):
     """Fit an axis's TICK LABELS, or fail saying what was tried.
+
+    Read "WHAT THE TWO LEVERS ARE FOR" above fit_label first: this converted
+    none of the five figures it was scoped for, and that is not a reason to
+    delete it.
 
     fit_label's sibling, and scoped the same way: it governs exactly one artist
     class. The audit names four - hand-placed ax.text, tick labels, axis labels,
