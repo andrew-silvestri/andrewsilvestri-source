@@ -1484,6 +1484,29 @@ Read this section. Every item is a real bug that shipped.
     is (0,2,2)" is. The comment now above that rule says exactly that and tells
     the next rewriter to keep it above (0,1,2) or change :901 instead.
 
+37. **A lever judged by a paraphrase of the gate can pass while the gate
+    fails.** The denominator pattern's sibling: that one is a check wrong about
+    the SET it examines, this one is a check wrong about the RULE it enforces.
+
+    `sitefig.fit_label` picks a wrap so a figure's `audit()` will pass it. Its
+    first version computed the available room from the axes box and the tick
+    labels and compared candidates against that - a restatement of the gate
+    rather than the gate. It rejected storage's "Mean price [$/MWh]", which is
+    the label the shipped figure passes, because a y label may legitimately run
+    past the axes into the figure's margins and `audit()` only asks about the
+    CANVAS.
+
+    That is the easy direction: a paraphrase STRICTER than the gate announces
+    itself when something that should pass does not. The dangerous direction is
+    LOOSER, and nothing in that implementation would have caught it. It was
+    caught only because a known-good answer existed to compare against.
+
+    **Any lever, fitter or auto-sizer whose job is to satisfy a gate calls the
+    gate's own predicate as its acceptance test.** It does not re-derive what
+    the gate means. And it fails rather than returning the least-bad candidate:
+    silently picking the closest miss is how a lever becomes the thing that hid
+    the problem. Full case in `03 RESEARCH/site-sweep/STATE.md`.
+
 ---
 
 ## 9. Adding a new project
