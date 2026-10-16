@@ -1,3 +1,14 @@
+> **RETIRED 2026-10-16. DO NOT ACT ON THIS FILE.**
+> It describes the August 2026 tree. Its open questions are moot: the pages
+> they concern were unpublished. `unpublished/RETIRED.md:23-28` -
+> "The atlas - `atlas.html`, `atlas-app.html`, `model.html`, `library.html`
+> ... Unpublished 2026-09-09 at Andrew's request, for now." `desktop.html`
+> went earlier: `unpublished/RETIRED.md:62-66` - "The bookshelf -
+> `desktop.html` ... Retired 2026-09-05 (PHASE5, Part 1)". The nav it
+> describes (Climate cost calculator at top level) has also changed.
+> Current instructions: `CLAUDE.md` (repo root) and `HANDOFF.md`.
+> Kept so nobody re-derives it. Moved here by P0 of the October 2026 run.
+
 ## Goal
 
 The published site (andrewsilvestri.com, source in `00 PUBLISH/`, served content in
