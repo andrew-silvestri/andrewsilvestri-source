@@ -22,7 +22,17 @@ set -euo pipefail
 
 HERE="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 SITE="${SITE:-$HERE/site}"
-REPO="${REPO:-$HOME/andrew-silvestri.github.io}"
+# The mirror's override is PUBLISH_MIRROR, never REPO. Until 2026-10-16 this
+# read "${REPO:-...}", and the October launchers (03 RESEARCH/oct-2026/RUN_*.bat)
+# set REPO to the SOURCE tree for their own use. Every shell they started
+# inherited it, so this script took 00 PUBLISH for the mirror: `reset --hard`
+# below, then the wipe, which deletes everything but .git - site/ and every
+# gitignored file with it - and the wipe runs before the --dry-run check, so a
+# dry run did it too. One dry run got as far as the reset and stopped only
+# because the branch had no remote. A generic name is one any caller may
+# already be using; the guard after die() below refuses the source tree
+# whatever the variable is called.
+REPO="${PUBLISH_MIRROR:-$HOME/andrew-silvestri.github.io}"
 URL="${URL:-https://github.com/andrew-silvestri/andrew-silvestri.github.io.git}"
 
 DRY=0; DISCARD=0; MSG=""
@@ -40,6 +50,23 @@ done
 step() { printf '\n== %s\n' "$1"; }
 ok()   { printf '   %s\n' "$1"; }
 die()  { printf '\n   %s\n\n' "$1" >&2; exit 1; }
+
+# --------------------------------------------------------- mirror guard -----
+# Runs before any git command touches $REPO, because both the reset and the
+# wipe below are destructive (see the note above REPO=). Refuses a mirror that
+# is, contains, or sits inside the source tree, and one whose origin is not
+# the Pages repository. --dry-run is no protection: it is checked after the
+# wipe, by design, so it can diff a real staging.
+real() { (cd "$1" 2>/dev/null && pwd -P) || printf '%s' "$1"; }
+r_repo="$(real "$REPO")"; r_here="$(real "$HERE")"; r_site="$(real "$SITE")"
+case "$r_repo/" in "$r_here"/*) die "Refusing: the mirror ($REPO) is inside the source tree ($HERE)." ;; esac
+case "$r_here/" in "$r_repo"/*) die "Refusing: the source tree is inside the mirror ($REPO)." ;; esac
+case "$r_site/" in "$r_repo"/*) die "Refusing: site/ is inside the mirror ($REPO)." ;; esac
+[ ! -e "$REPO/publish.sh" ] || die "Refusing: $REPO holds publish.sh, so it is a source tree, not the mirror."
+if [ -d "$REPO/.git" ]; then
+  origin="$(git -C "$REPO" remote get-url origin 2>/dev/null || true)"
+  [ "$origin" = "$URL" ] || die "Refusing: $REPO's origin is '$origin', expected '$URL'."
+fi
 
 # ------------------------------------------------------------ source check --
 step "Checking the source folder"
