@@ -1662,21 +1662,27 @@ than all of them.
 
 ### What a fresh clone cannot serve
 
-`site/downloads/` is gitignored in full, so **none** of the source archives are
-in this repository. `site/code.html` links sixteen of them:
+`site/downloads/` is gitignored in full, so none of the live archives are in
+this repository. `site/code.html` links seven, and **all seven have a
+generator**: `python rezip_downloads.py` rebuilds beauty, climate-cost
+(`files_target`, since 2026-09-11), continents, heat, longevity, skyline and
+storage, byte-identically for the same contents (`8361e0b`). So a clone serves
+`code.html` with seven dead links until that runs, and with none afterwards.
 
-- Ten are rebuilt by `python3 rezip_downloads.py` — atlas, continents, economy,
-  food, heat, longevity, neuron, shoes, skyline, storage. (It builds an
-  eleventh, `beauty-code.zip`, which `code.html` does not link yet.)
-- **Six have no generator at all**: `climate-cost-code.zip`,
-  `deliverables-code.zip`, `model-code.zip`, `web-v3-code.zip`,
-  `web-v4-code.zip` and `web-v5-code.zip`. They exist only in the working
-  copy's `site/downloads/` and in the published mirror. Nothing in the tree can
-  reproduce them. If they are lost, they come back from
-  `~/andrew-silvestri.github.io` or from the live site, and from nowhere else.
+Where the rest went. This paragraph said until 2026-10-17 that sixteen were
+linked and six had no generator; the tree had moved on (trap 11):
 
-So a clone of this repository serves `code.html` with sixteen dead links until
-`rezip_downloads.py` runs, and with six dead links for good afterwards.
+- Unpublished with their pages on 2026-09-05 and 2026-09-09
+  (`unpublished/RETIRED.md`): `atlas-code.zip`, `bookshelf-code.zip`,
+  `economy-code.zip`, `food-code.zip`, `neuron-code.zip`, `shoes-code.zip`,
+  and the two that never had a generator, `deliverables-code.zip` and
+  `model-code.zip`. All eight are **tracked** in `unpublished/downloads/`, so
+  a clone has them.
+- `web-v3-code.zip`, `web-v4-code.zip`, `web-v5-code.zip` left the code page in
+  `470ea11` (Andrew's decision). They have no generator and are in no tracked
+  path: the only copies are under gitignored `backups/` (e.g.
+  `backups/published-live-2026-09-04/downloads/`, 41,701 / 51,964 / 36,176 B)
+  on this disk. The mirror no longer holds them and the live URLs 404.
 
 ---
 
