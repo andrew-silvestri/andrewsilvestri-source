@@ -355,7 +355,7 @@ report first.**
 
 ### publish.sh mirrors the WORKING TREE, not a commit - and it is a TRUE MIRROR
 
-**Line 116 WIPES the Pages repo before line 117 copies into it**:
+**Line 143 WIPES the Pages repo before line 144 copies into it**:
 `find "$REPO" -mindepth 1 -maxdepth 1 ! -name .git -exec rm -rf {} +`, then
 `cp -a "$SITE/." "$REPO/"`. So this is a mirror and not an overlay, and it
 cuts both ways: **removing a file from `site/` removes it from the live
@@ -364,13 +364,23 @@ carrying. Confirmed 2026-09-09 by unpublishing food.html and neuron.html:
 the dry run listed 14 `D` entries - two pages, ten figures, two archives -
 and `git add -A` in the mirror staged every one.
 
-This entry quoted line 117 alone until 2026-09-09 and read as though the
+This entry quoted the copy line alone until 2026-09-09 and read as though the
 copy were the whole operation, which implies additions and overwrites but
-no deletions. Both halves are load-bearing: 117 is why uncommitted work
-ships, 116 is why an unpublish actually unpublishes.
+no deletions. Both halves are load-bearing: the copy is why uncommitted
+work ships, the wipe is why an unpublish actually unpublishes. (They were
+lines 116 and 117 until the mirror guard landed above them, 2026-10-16.)
+
+**The wipe deletes whatever `$REPO` is, so `$REPO` is guarded.** Until
+2026-10-16 the mirror path read `${REPO:-...}`; the October launchers set
+`REPO` to the source tree, every shell inherited it, and a dry run reached
+the `reset --hard` against `00 PUBLISH` (the wipe and the `--dry-run`
+check come after it). The override is now `PUBLISH_MIRROR`, and a guard
+before any git command refuses a mirror that is, holds or sits inside the
+source tree, holds `publish.sh`, or has an origin other than the Pages
+repository. Tested against a throwaway copy, never the real tree.
 
 
-Line 117 is `cp -a "$SITE/." "$REPO/"`. So **"committed" and "publishable"
+Line 144 is `cp -a "$SITE/." "$REPO/"`. So **"committed" and "publishable"
 are different states**, and `--dry-run` reports a diff of the **working
 directory** against the mirror — not of `HEAD`.
 
