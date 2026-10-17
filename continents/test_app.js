@@ -24,14 +24,17 @@
  *11. Switching the land model changes the land. If it did not, the selector
  *    would be telling the reader the models agree.
  *
- * Run:  node test_app.js        (from continents/, with tests/node_modules)
+ * Run:  node test_app.js                (from continents/, with tests/node_modules)
+ *       node test_app.js --break path   the land asset's path broken in this
+ *                                       test's copy of the page; must exit 1
  */
 const fs = require("fs");
 const path = require("path");
 
 const ROOT = path.resolve(__dirname, "..");
 const APP = path.join(ROOT, "site", "continents-app.html");
-const LANDJS = path.join(ROOT, "site", "assets", "continents-land.js");
+const BREAK = process.argv.includes("--break") &&
+  process.argv[process.argv.indexOf("--break") + 1] === "path";
 const { JSDOM } = require(path.join(ROOT, "tests", "node_modules", "jsdom"));
 
 /* jsdom runs the page's script the moment the document is constructed, so
@@ -58,11 +61,23 @@ function main() {
     return 1;
   }
   /* jsdom does not fetch the external land asset, so it is inlined here.
-     The app HTML is otherwise exactly what ships. */
+     The app HTML is otherwise exactly what ships. The path is read from
+     where the page reads it: #mapwrap's data-src, which loadLand() fetches
+     after first paint (311c4b5). Until 2026-10-17 this matched a
+     <script src="assets/continents-land.js"> tag the page stopped carrying
+     in that commit, matched nothing, and check 9 failed against a working
+     page (AUDIT_2026-10 B1, HANDOFF trap 35). A path that resolves to no
+     file is not skipped: nothing is inlined and check 9 fails. */
   let html = fs.readFileSync(APP, "utf8");
-  if (fs.existsSync(LANDJS)) {
-    html = html.replace(/<script src="assets\/continents-land\.js[^"]*"><\/script>/,
-      "<script>" + fs.readFileSync(LANDJS, "utf8") + "</script>");
+  if (BREAK) html = html.replace(/(id="mapwrap" data-src="[^"?]*)/, "$1.broken");
+  const m = html.match(/<div id="mapwrap" data-src="([^"]*)"/);
+  const landjs = m && path.join(ROOT, "site", m[1].split("?")[0]);
+  console.log(`  land asset: ${m ? m[1] : "no data-src on #mapwrap"}`
+    + (landjs && fs.existsSync(landjs) ? "" : " (no such file)"));
+  if (landjs && fs.existsSync(landjs)) {
+    html = html.replace('<div id="mapwrap"',
+      "<script>" + fs.readFileSync(landjs, "utf8") + "</script>"
+      + '<div id="mapwrap"');
   }
   const dom = new JSDOM(html, {
     runScripts: "dangerously", pretendToBeVisual: true,
