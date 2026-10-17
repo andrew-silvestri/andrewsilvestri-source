@@ -1283,6 +1283,17 @@
     var url = document.getElementById('app').dataset.three;
     if (!url) { sceneUnavailable('webgl'); return; }
     var t = document.createElement('script');
+    /* Subresource integrity: the site's only third-party script, so a CDN
+       that serves other bytes under this URL gets refused rather than run.
+       The hash sits beside the URL on #app (data-three-sri) and was taken
+       from the r128 file on 2026-10-17 (603,445 B, identical to
+       tests/node_modules/three/build/three.min.js). A mismatch fires onerror,
+       which is the network branch below: #nogl says the scene could not be
+       fetched. crossOrigin is required for integrity on a cross-origin
+       script; cdnjs answers Access-Control-Allow-Origin: *. Changing the
+       version means changing both attributes together. */
+    var sri = document.getElementById('app').dataset.threeSri;
+    if (sri) { t.integrity = sri; t.crossOrigin = 'anonymous'; }
     t.src = url;
     t.onload = function () { if (!attachScene()) sceneUnavailable('webgl'); };
     t.onerror = function () { sceneUnavailable('network'); };
