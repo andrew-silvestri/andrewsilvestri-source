@@ -1,4 +1,18 @@
 """
+RETIRED 2026-10-17. Do not run it. Kept for the record, the way add_motion.py
+and build_site.py are (AUDIT_2026-10 E3).
+
+It drew the sitewide background graph from site/assets/atlas-data.js and wrote
+it, plus two curve rules, INTO site/style.css. Both ends are gone: the atlas
+payload left site/ with the atlas group on 2026-09-09 (unpublished/RETIRED.md),
+so the first read is a FileNotFoundError, and style.css no longer carries the
+data-URI SVG its regex replaces, so with the payload restored it would stop at
+"could not find the background SVG". Its only other caller is
+build_force_graph_data.py, retired beside it. It also writes style.css with
+open(..., "w") and no newline="
+" (HANDOFF trap 32).
+"""
+"""
 The sitewide background graph, generated from the live atlas payload instead
 of hand-placed coordinates.
 
