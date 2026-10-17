@@ -55,8 +55,4 @@ are; only the published form lives here.
 | Battery revenue simulator | `03 Storage Revenue Stack` |
 | World energy web, v1–v5 | `10`, `11`, `13`, `14` |
 | The calibrated model and atlas | `16`, `17`, `18`, `19` |
-| Pipeline liquid holdup | `12 Targa Holdup App` — page only, code not published |
 | Longevity quotient | `00 PUBLISH/longevity-quotient` (lives here) |
-
-The holdup work came out of an internship, so the method and the result are on
-the site but the engine, the simulation library and the source workbook are not.
