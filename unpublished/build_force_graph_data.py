@@ -1,4 +1,13 @@
 """
+RETIRED 2026-10-17. Do not run it. Kept for the record (AUDIT_2026-10 E3).
+
+It wrote site/assets/force-graph-data.js from the atlas payload, by importing
+build_bg_graph (retired beside it). Neither that output nor any page reading
+FORCE_GRAPH_DATA is in site/, and neither script is in rezip_downloads.py's
+ATLAS_FILES, so restoring the atlas does not need them. It now imports a module
+from its own folder and reads a payload that is not there.
+"""
+"""
 Real graph data for the force-graph-driven background used on the
 atlas/model page cluster.
 
