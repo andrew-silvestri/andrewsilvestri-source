@@ -48,7 +48,8 @@ or touch anything that may derive from an employer.
 
 Nothing derived from the summer 2026 internship (Targa Resources) goes in this
 tree: no data, no workbook, no method ported from company files, no figure. The
-precedent is `unpublished/holdup.html`, retired for exactly this. Public
+precedent is the page `unpublished/RETIRED.md` records as deleted for exactly
+this. Public
 standards, public correlations, public data and synthetic inputs only, each
 cited.
 

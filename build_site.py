@@ -34,7 +34,6 @@ PROJECTS = [
     ("heat.html",       "Industrial heat break-even"),
     ("dac.html",        "Direct air capture TEA"),
     ("storage.html",    "Battery revenue simulator"),
-    ("holdup.html",     "Pipeline liquid holdup"),
     ("energy-web.html", "World energy web, v1–v5"),
     ("atlas.html",      "The atlas"),
 ]
@@ -429,48 +428,6 @@ of model is actually built on in industry.</p>
                 "Linear-program dispatch of a grid battery and the value of storage duration.")
 
 
-def build_holdup():
-    b = """<h1>Pipeline liquid holdup calculator</h1>
-<p class="dim">A spreadsheet with 19,653 simulation runs behind it, ported to an
-interactive tool, which then found a bug in the spreadsheet.</p>
-
-<p>Gathering pipelines accumulate liquid. How much sits in a line, how it
-responds to flow rate, and how often the line has to be pigged are planning
-questions with money attached: slug catcher sizing, tank capacity, truck
-schedules. The source workbook answered them by interpolating across a library
-of 19,653 process simulation runs laid out on a Latin hypercube.</p>
-
-<p>The port reproduces that engine exactly. It rebuilds the nine-dimensional
-normalised query space, the inverse-quartic distance kernels with their separate
-feature weightings for holdup, pressure drop and yields, the seasonal ground
-temperature model with damping by burial depth, the frozen-soil rule, and the
-downstream planning arithmetic, formula for formula.</p>
-
-<h2>What the port found</h2>
-<p>The port's kernel weights match the workbook's own cached weight columns cell
-for cell, and the query normalisation matches to machine precision. The
-workbook's <em>displayed</em> results, however, disagree with what its own
-cached kernels imply, by between two and twelve per cent. In the simple profile
-case the sheet displays 8.554 barrels per mile; recomputing from the weights
-the sheet itself has stored gives 8.359, and the port gives 8.361.</p>
-
-<p>The workbook is carrying stale values from a partial recalculation. Forcing a
-full recalculation brings it back into agreement. This is worth knowing before
-anyone quotes a number off that sheet, and it is the kind of error that only
-shows up when an independent implementation is checked against the original
-rather than against its own output.</p>
-
-<hr>
-<h2>Code</h2>
-<p>This work was done during an industrial internship. The engine, the
-simulation library and the source workbook are the company's, so they are not
-published here. The description above covers the method and the finding; the
-implementation stays private.</p>
-"""
-    return page("Pipeline liquid holdup — Andrew Silvestri", b, "holdup.html",
-                "Interactive port of a pipeline liquid holdup calculator, and the stale-cache bug it found.")
-
-
 def build_web():
     b = f"""<h1>The world energy web, five generations</h1>
 <p class="dim">How far shock propagation through the global energy system can be
@@ -593,11 +550,6 @@ Octave port exists it was written line for line from the Python and is marked in
 the archive as untested in the environment that produced it. The three
 techno-economic models also ship a formula-driven workbook carrying the same
 arithmetic, so the assumptions can be edited without running any code.</p>
-
-<h2>Not published</h2>
-<p>The <a href="holdup.html">pipeline liquid holdup</a> work was done during an
-industrial internship. Its engine, simulation library and source workbook belong
-to the company, so only the method and the result appear on this site.</p>
 """
     return page("Code — Andrew Silvestri", b, "code.html",
                 "Downloadable source for every model on the site.")
@@ -609,8 +561,7 @@ to the company, so only the method and the result appear on this site.</p>
 
 def build_index():
     b = """<h1>Andrew Silvestri</h1>
-<p class="dim">Chemical engineering at UT Austin. Energy systems modelling.
-Currently a general engineering intern at Targa Resources.</p>
+<p class="dim">Chemical engineering at UT Austin. Energy systems modelling.</p>
 
 <p>I build models of energy systems, from the thermodynamics of a single vessel
 up to a model of the world energy system with 7,192 nodes. Everything here ships
@@ -662,15 +613,6 @@ direct air capture</a></h3>
 <p>Using the laboratory's own isotherm parameters, the material holds almost
 nothing at 420 parts per million. A negative result, and the reason the project
 changed material.</p>
-</div>
-
-<div class="card">
-<div class="tag">Industry tooling</div>
-<h3 style="margin-top:4px"><a href="holdup.html">Pipeline liquid holdup
-calculator</a></h3>
-<p>A spreadsheet with 19,653 simulation runs, ported to an interactive tool.
-The port matched the workbook formulas exactly, and showed that the workbook's
-displayed values carried a stale calculation.</p>
 </div>
 
 <div class="card">
@@ -749,7 +691,6 @@ def main():
     (SITE / "heat.html").write_text(build_heat(), encoding="utf-8")
     (SITE / "dac.html").write_text(build_dac(), encoding="utf-8")
     (SITE / "storage.html").write_text(build_storage(), encoding="utf-8")
-    (SITE / "holdup.html").write_text(build_holdup(), encoding="utf-8")
     (SITE / "energy-web.html").write_text(build_web(), encoding="utf-8")
     (SITE / "code.html").write_text(build_code_page(made), encoding="utf-8")
     patch_existing()

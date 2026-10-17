@@ -80,9 +80,15 @@ which still carries the one-line version.
   in. The card copy it carried ("costs almost nothing when applied first")
   was also wrong: the shrinkage correction is the least order-dependent of
   the five. The live URL 404s from the publish that followed.
-- **dac.html**, **holdup.html**, **beans.html** - direct air capture,
-  pipeline liquid holdup, the legume symbiosis. Retired before 2026-08-30;
-  their figures are in `assets/` (moved out of the site on 2026-09-04).
+- **dac.html**, **beans.html** - direct air capture and the legume
+  symbiosis. Retired before 2026-08-30; their figures are in `assets/`
+  (moved out of the site on 2026-09-04).
+- **A third page from that set is deleted, not kept here.** It described
+  work done during the summer 2026 internship. Removed from the tree on
+  2026-10-16 (DECISIONS D-09, Andrew's call), along with its text in
+  `build_site.py` and `README.md`. Do not restore it, and do not write a
+  replacement page on the same subject from public sources: it would read
+  as the same work republished (D-06).
 - **running-shoes.html**, **running-shoes-app.html** - a shoe in parts, a
   three.js exploded view (opening state from
   `?shoe=1&part=2&explode=1&az=&el=`). Retired before 2026-08-30.
