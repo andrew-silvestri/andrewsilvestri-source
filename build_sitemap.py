@@ -15,7 +15,10 @@ index.html is listed as the bare domain at priority 1.0; everything else at
 lastmod is the date of the last commit that touched the page
 (`git log -1 --format=%cs -- site/<page>`), or today if the page in the tree
 differs from HEAD - the ordering rule runs this before the commit, so an
-edited page gets the day it is committed. Until 2026-10-17 lastmod was
+edited page gets the day it is committed. Because it reads page bytes it runs
+AFTER bust_cache.py, the last step that rewrites a page; run with the page
+generators, sync_code_rows.py rewrote code.html behind it and the drift check
+reported `DRIFT sitemap` (2026-10-18, HANDOFF trap 33). Until 2026-10-17 lastmod was
 carried over from the shipped sitemap and never moved once set: seven of ten
 pages were 33 days behind their last commit (AUDIT_2026-10 A4), and nothing
 could see it, because a carried-over date always agrees with itself.
