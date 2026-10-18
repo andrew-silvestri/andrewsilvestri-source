@@ -23,7 +23,9 @@ anything else.
 - `publish.sh` runs under Git Bash: `"C:\Program Files\Git\bin\bash.exe"`.
   The `bash` on PATH is `C:\Windows\system32\bash.exe`, which is WSL. Wrong one.
 - Ordering rule (trap 33): change -> page generators -> rezip_downloads.py ->
-  sync_code_rows.py -> bust_cache.py -> tests/test_generators.py LAST.
+  sync_code_rows.py -> bust_cache.py -> build_sitemap.py --apply ->
+  tests/test_generators.py LAST. The sitemap dates pages by their bytes, so it
+  runs after the last step that rewrites a page.
 - Publish gate: `git status --short` clean, ordering rule, full suite, then
   `./publish.sh --dry-run` with the file list reported, then publish, merge to
   master with --no-ff, check master out, `git push origin master`.

@@ -1420,7 +1420,15 @@ Read this section. Every item is a real bug that shipped.
     correct rather than merely consistent:
 
         change -> page generators -> rezip_downloads.py -> sync_code_rows.py
-        -> bust_cache.py -> tests/test_generators.py LAST
+        -> bust_cache.py -> build_sitemap.py --apply -> tests/test_generators.py LAST
+
+    `build_sitemap.py` moved to after `bust_cache.py` on 2026-10-18. Since
+    A4 (2026-10-17) it dates a page "today" when the page differs from HEAD,
+    so it reads page bytes, and `sync_code_rows.py` and `bust_cache.py` both
+    rewrite pages after the page generators. Run with the generators, it
+    dated code.html by its last commit and sync_code_rows then rewrote it:
+    `DRIFT sitemap`. Reproduced in a scratch clone with one asset byte
+    changed: old order, DRIFT sitemap, exit 1; this order, no sitemap drift.
 
     Run the drift check before a restore or a rebuild and it tells you about a
     tree that no longer exists. It was run early twice in one day: once before
