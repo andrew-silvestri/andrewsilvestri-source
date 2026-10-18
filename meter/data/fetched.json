@@ -1,0 +1,23 @@
+{
+ "RNGWHHDm.xls": {
+  "bytes": 49664,
+  "fetched": "2026-10-18",
+  "sha1": "56d401a17eb8dec2270f3126c993d09f892f1f07",
+  "url": "https://www.eia.gov/dnav/ng/hist_xls/RNGWHHDm.xls",
+  "via": "urllib"
+ },
+ "annual_gas_distribution_2010_present.zip": {
+  "bytes": 31870688,
+  "fetched": "2026-10-18",
+  "sha1": "afca09141f0464e79b5cb49a9aceec01f8ae82aa",
+  "url": "https://www.phmsa.dot.gov/sites/phmsa.dot.gov/files/data_statistics/pipeline/annual_gas_distribution_2010_present.zip",
+  "via": "chrome (403 to scripted clients)"
+ },
+ "eia_nga_table_a01.pdf": {
+  "bytes": 139635,
+  "fetched": "2026-10-18",
+  "sha1": "71ffd169062cc36c7d04b307a0a448b37d945d09",
+  "url": "https://www.eia.gov/naturalgas/annual/pdf/table_a01.pdf",
+  "via": "urllib"
+ }
+}
