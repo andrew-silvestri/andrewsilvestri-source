@@ -231,6 +231,16 @@ CONVERTED = {
     #   which never looked at patches, said 0. Same numbers and words; the 714
     #   is byte-identical.
     "lq_explained.png",
+    #   build_lq.py's last two, 2026-10-18 (October P1, one builder per branch).
+    #   lq_wild_captive sizes by rows at 350, as lq_ranked does: at the 714's
+    #   PLOT aspect 26 rows got ~7px each and every name sat on the next (26
+    #   audit problems). lq_orders keeps its two columns (the caption reads
+    #   them left then right) and says its shared x label once, under both:
+    #   each ~160px panel's own copy ran off and the two overlapped, which is
+    #   what fired the wrap trigger in 1c0ec82. One label fits unwrapped, so
+    #   no third wrap count. Same rows and words; both 714s byte-identical.
+    "lq_wild_captive.png",
+    "lq_orders.png",
 }
 EXEMPT = set(ORIGINAL) - CONVERTED
 
@@ -282,6 +292,8 @@ ASSET_OF = {
     "fig0_lq_explained.png": "lq_explained.png",
     "fig1_allometry.png": "lq_allometry.png",
     "fig2_lq_ranked.png": "lq_ranked.png",
+    "fig3_wild_vs_captive-phone.png": "lq_wild_captive-phone.png",
+    "fig4_orders-phone.png": "lq_orders-phone.png",
     "fig3_wild_vs_captive.png": "lq_wild_captive.png",
     "fig4_orders.png": "lq_orders.png",
 }

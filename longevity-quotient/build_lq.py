@@ -493,6 +493,8 @@ def build(path=DATA):
         figures(rows, summary, fit_rows, width=sitefig.PHONE,
                 only="allometry")
         figures(rows, summary, fit_rows, width=sitefig.PHONE, only="ranked")
+        figures(rows, summary, fit_rows, width=sitefig.PHONE, only="wild")
+        figures(rows, summary, fit_rows, width=sitefig.PHONE, only="orders")
     except ImportError:
         print("\nmatplotlib not present; figures skipped "
               "(the visualiser does not need them)")
@@ -778,7 +780,12 @@ def figures(rows, summary, fit_rows, width=NOTES, only=None):
     pair = [r for r in rows if r["wild"] and r["captive"]]
     pair.sort(key=lambda r: r["captive"] / r["wild"])
     sel = pair[:10] + pair[-16:]
-    fig, ax = plt.subplots(figsize=fig_size(NOTES, PLOT))
+    # At 350 the 714's PLOT aspect gave 26 rows about 7px each and every
+    # name sat on its neighbour (26 audit problems); the narrow render sizes
+    # by rows, as fig2 does. The 714 keeps PLOT and its bytes.
+    fig, ax = plt.subplots(figsize=fig_size(
+        width, PLOT if width == NOTES
+        else row_aspect(len(sel), display_px=width)))
     for i, r in enumerate(sel):
         ax.plot([r["wild"], r["captive"]], [i, i], color="#bbb", lw=1.4,
                 zorder=1)
@@ -789,11 +796,13 @@ def figures(rows, summary, fit_rows, width=NOTES, only=None):
     ax.set_yticks(range(len(sel)))
     ax.set_yticklabels([r["name"] for r in sel], fontsize=FS_2)
     ax.set_xscale("log")
-    ax.set_xlabel("maximum lifespan (years, log scale)")
+    ax.set_xlabel(W("maximum lifespan (years, log scale)"))
     ax.legend(fontsize=FS_2, frameon=False)
     ax.grid(axis="x", alpha=.18, which="both")
     fig.tight_layout()
-    _save(fig, "fig3_wild_vs_captive.png", want=only is None)
+    _save(fig, "fig3_wild_vs_captive.png" if width == NOTES
+               else "fig3_wild_vs_captive-phone.png",
+          want=only in (None, "wild"))
 
     # order-level comparison, A and B only (see build())
     groups = rank_summary([r for r in rows if r["quality"] != "C"])
@@ -817,11 +826,22 @@ def figures(rows, summary, fit_rows, width=NOTES, only=None):
         ax.invert_yaxis()
         ax.set_xlim(0, hi)
         ax.axvline(1, color=DIM, lw=1.2, ls="--")
-        ax.set_xlabel("geometric mean longevity quotient")
+        if width == NOTES:
+            ax.set_xlabel("geometric mean longevity quotient")
         ax.grid(axis="x", alpha=.18)
         ax.set_axisbelow(True)
         ax.tick_params(axis="x", labelsize=FS_2)
-    fig.tight_layout(rect=(0, 0, 1, .975))
+    if width == NOTES:
+        fig.tight_layout(rect=(0, 0, 1, .975))
+    else:
+        # At 350 each ~160px panel cannot hold its own copy of the label
+        # (off canvas, and the two copies overlap), which is what fired the
+        # wrap trigger in 1c0ec82. The two panels share one axis, so the
+        # narrow render says it once, under both, where it fits unwrapped:
+        # no third wrap count.
+        fig.tight_layout(rect=(0, .05, 1, .975))
+        fig.text(.5, .008, "geometric mean longevity quotient", ha="center",
+                 va="bottom", fontsize=plt.rcParams["axes.labelsize"])
     _save(fig, "fig4_orders.png" if width == NOTES
                else "fig4_orders-phone.png",
           want=only in (None, "orders"))
