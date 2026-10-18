@@ -216,6 +216,13 @@ CONVERTED = {
     "heat_fig1_breakeven_price.png",
     "heat_fig4_tornado.png",
     "heat_fig5_emissions_parity.png",
+    #   skyline_towers, 2026-10-18 (October P1). At 350 the bars lie down:
+    #   eight upright bars leave ~38px per tower name, and the wrapped names
+    #   collided row on row (7 audit problems at 13 columns). One-line names on
+    #   the left, the caption on two lines; same towers, heights and words.
+    #   The 714 render is byte-identical. build_skyline_figure.py now exits
+    #   non-zero on its own audit.
+    "skyline_towers.png",
 }
 EXEMPT = set(ORIGINAL) - CONVERTED
 

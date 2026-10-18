@@ -33,12 +33,13 @@ matplotlib.use("Agg")
 import matplotlib.pyplot as plt   # noqa: E402
 
 import sitefig                    # noqa: E402
-from sitefig import ACC, DIM, FAINT, FS_1, FS_2, INK, MOSS, NOTES, WIDE, fig_size  # noqa: E402
+from sitefig import ACC, DIM, FAINT, FS_1, FS_2, INK, MOSS, NOTES, PHONE, SQUARE, WIDE, fig_size  # noqa: E402
 from fig_floor import floor_problems  # noqa: E402
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 APP = os.path.join(HERE, "site", "skyline-app.html")
 OUT = os.path.join(HERE, "site", "assets", "skyline_towers.png")
+OUT_PHONE = os.path.join(HERE, "site", "assets", "skyline_towers-phone.png")
 CITY, TOP = "New York", 8
 
 
@@ -78,9 +79,7 @@ def audit(fig):
     return problems
 
 
-def main():
-    sitefig.style()
-    city, towers = load()
+def draw(city, towers):
     fig, ax = plt.subplots(figsize=fig_size(NOTES, WIDE))
     xs = range(len(towers))
     ax.bar(xs, [t["h"] for t in towers], width=0.62, color=ACC, zorder=2)
@@ -102,13 +101,57 @@ def main():
             transform=ax.transAxes, ha="right", va="top", fontsize=FS_2, color=DIM,
             fontfamily=sitefig.MONO)
     fig.tight_layout()
-    problems = audit(fig)
-    sitefig.save(fig, OUT, close=False)
-    plt.close(fig)
-    print(f"  wrote {os.path.basename(OUT)}")
-    print(f"  {len(problems)} layout problem(s)" + ("" if not problems else ":"))
-    for p in problems[:8]:
-        print("    ", p)
+    return fig
+
+
+def draw_phone(city, towers):
+    """The 350 render, a second figure rather than a scaled one (Stage A,
+    2026-10-18). Eight upright bars in a 350px column leave about 38px for each
+    tower's name, so here the bars lie down: names on the left, tallest at the
+    top, the same towers, heights and words. The caption runs two lines, split
+    at its second middle dot, because on one line it is wider than the
+    column."""
+    fig, ax = plt.subplots(figsize=fig_size(PHONE, SQUARE))
+    ys = list(range(len(towers)))[::-1]
+    ax.barh(ys, [t["h"] for t in towers], height=0.62, color=ACC, zorder=2)
+    for y, t in zip(ys, towers):
+        ax.text(t["h"] + 8, y, f"{t['h']:.0f} m", ha="left", va="center",
+                fontsize=FS_2, color=DIM)
+    ax.set_yticks(ys)
+    ax.set_yticklabels([t["n"] for t in towers],
+                       fontsize=FS_2, color=DIM)
+    ax.set_xlabel("height (m)", fontsize=FS_1, color=DIM)
+    ax.set_xlim(0, max(t["h"] for t in towers) * 1.22)
+    ax.set_xticks([0, 200, 400, 600])
+    ax.grid(axis="x", color=FAINT, alpha=0.7, zorder=0)
+    for s in ("top", "right"):
+        ax.spines[s].set_visible(False)
+    ax.tick_params(axis="y", length=0)
+    key = city["key"]["label"]
+    fig.text(0.98, 0.985, f"{CITY} · {city['n']} towers over {int(D_MIN)} m\nplayed in {key}",
+             ha="right", va="top", fontsize=FS_2, color=DIM, fontfamily=sitefig.MONO)
+    fig.tight_layout(rect=(0, 0, 1, 0.9))
+    return fig
+
+
+def main():
+    sitefig.style()
+    city, towers = load()
+    total = 0
+    for fig, out in ((draw(city, towers), OUT), (draw_phone(city, towers), OUT_PHONE)):
+        problems = audit(fig)
+        sitefig.save(fig, out, close=False)
+        plt.close(fig)
+        print(f"  wrote {os.path.basename(out)}")
+        print(f"  {len(problems)} layout problem(s)" + ("" if not problems else ":"))
+        for p in problems[:8]:
+            print("    ", p)
+        total += len(problems)
+    # Asserts on its own audit, as every figure builder does since 2026-09-12
+    # (phase2/STATE.md: a builder that cannot fail on its findings cannot be
+    # gated on them).
+    if total:
+        raise SystemExit(f"build_skyline_figure: {total} layout problem(s)")
 
 
 D_MIN = 80.0   # the app's own minHeight; read below so the label cannot drift
