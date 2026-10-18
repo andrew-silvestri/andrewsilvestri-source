@@ -264,7 +264,10 @@ def fig_dispatch_week(res, prices, start_day=200, width=NOTES):
     figstyle.finish(fig, out)
 
 
-def fig_duration_value(results):
+PHONE_ASPECT_FIG3 = 0.62
+
+
+def fig_duration_value(results, width=NOTES):
     durs = [r["duration"] for r in results]
     revs = [r["rev_per_kw_yr"] for r in results]
     cyc = [r["cycles"] for r in results]
@@ -278,16 +281,33 @@ def fig_duration_value(results):
     # sharing one scale between them used to squash the revenue bars into the
     # bottom of the panel. Giving the cost its own narrow companion axes lets
     # both be legible without either rescaling the other.
-    fig, (a1, a2) = plt.subplots(
-        1, 2, figsize=fig_size(NOTES, 1.6), gridspec_kw={"width_ratios": [2.3, 1.3]})
+    phone = width != NOTES
+    # At 350 the five in-panel labels sit ~100px apart and at FS_1 the 4h and
+    # 8h values touched (audit-clean, illegible). FS_2 is the site's floor,
+    # so it stays at 12px on the page that serves this render.
+    VAL_FS = FS_2 if phone else FS_1
+    if phone:
+        # A2, 2026-10-17: at 350 the two panels side by side leave each about
+        # 150px, and the two-line tick labels and the $/kW-yr value labels
+        # collide (16 audit problems on the first plain render). Stacked, each
+        # panel gets the full width. Same bars, same numbers, same words; tick
+        # labels break at their own spaces and the footnote re-wraps as one
+        # paragraph instead of keeping the 714 layout's hard line break.
+        fig, (a1, a2) = plt.subplots(
+            2, 1, figsize=fig_size(width, PHONE_ASPECT_FIG3),
+            gridspec_kw={"height_ratios": [1.6, 1]})
+    else:
+        fig, (a1, a2) = plt.subplots(
+            1, 2, figsize=fig_size(width, 1.6), gridspec_kw={"width_ratios": [2.3, 1.3]})
 
     bars = a1.bar(x, revs, color=figstyle.COOL, alpha=0.9, width=0.55)
     a1.set_xticks(x)
-    a1.set_xticklabels([f"{d}h\n{c:.0f} cycles/yr" for d, c in zip(durs, cyc)])
+    a1.set_xticklabels([f"{d}h\n{c:.0f}" + ("\n" if phone else " ") + "cycles/yr"
+                        for d, c in zip(durs, cyc)])
     top = max(revs) * 1.45
     for b, r in zip(bars, revs):
         a1.text(b.get_x() + b.get_width() / 2, r + top * 0.02, f"${r:.1f}/kW-yr",
-                ha="center", va="bottom", fontsize=FS_1)
+                ha="center", va="bottom", fontsize=VAL_FS)
 
     # The headline is the *step*, not the level: a dotted line holds the
     # previous bar's height out to the next bar's position, and a vertical
@@ -308,7 +328,7 @@ def fig_duration_value(results):
         a1.annotate("", xy=(x_mid, y1 - inset), xytext=(x_mid, y0 + inset),
                     arrowprops=dict(arrowstyle="-|>", color=figstyle.ACC, lw=1.8))
         a1.text(x_mid, max(y0, y1) + top * 0.09, f"+${y1 - y0:.1f}/kW-yr",
-                ha="center", va="bottom", fontsize=FS_1, color=figstyle.INK)
+                ha="center", va="bottom", fontsize=VAL_FS, color=figstyle.INK)
 
     a1.set_ylabel("Arbitrage revenue [$/kW-yr]")
     a1.set_ylim(0, top)
@@ -350,13 +370,16 @@ def fig_duration_value(results):
     # figure silently mangled into something unreadable when written with a
     # bare "$" in it.
     step_a, step_b = revs[1] - revs[0], revs[2] - revs[1]
-    figstyle.finish(fig, f"{OUT}/fig3_duration_value.png",
+    out = f"{OUT}/fig3_duration_value.png"
+    figstyle.finish(fig, out if width == NOTES else figstyle.phone_path(out),
+        lbwh=phone,
         title="Energy-arbitrage value by duration (perfect foresight upper bound)",
         subtitle=(f"Added value shrinks with duration: +{step_a:.1f}/kW-yr going "
                   f"{durs[0]}h→{durs[1]}h, then only +{step_b:.1f}/kW-yr "
                   f"going {durs[1]}h→{durs[2]}h"),
         footnote=(f"NREL ATB 2024 — annualized capex + FOM, 4h system: {cap_cost:.0f}/kW-yr. "
-                  "Scale reference, not a payback verdict: energy arbitrage is only one of\n"
+                  "Scale reference, not a payback verdict: energy arbitrage is only one of"
+                  + (" " if phone else "\n") +
                   "several revenue streams a real battery earns (capacity, ancillary services)."))
 
 
@@ -411,6 +434,7 @@ def main():
     # measures the result at the width the page actually serves.
     fig_dispatch_week(r4, prices, width=sitefig.PHONE)
     fig_duration_value(results)
+    fig_duration_value(results, width=sitefig.PHONE)
     fig_monthly(r4, prices)
     fig_monthly(r4, prices, width=sitefig.PHONE)
     fig_sensitivity(prices)

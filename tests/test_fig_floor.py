@@ -197,6 +197,15 @@ CONVERTED = {
     #   which makes it the third figure wanting a count that is neither 26
     #   nor 11 and fires the trigger recorded beside sitefig.wrap_label.
     "lq_ranked.png",
+    #   Stage A resumed, 2026-10-17 (October P1). storage: fig3_duration_value,
+    #   the last storage figure. The panels STACK at 350 (side by side they
+    #   had ~150px each and 16 audit problems); the in-panel value labels drop
+    #   to FS_2, which is the floor, because at FS_1 two of them touched with
+    #   the audit clean. And the render found a bug: storage/figstyle.finish
+    #   hands the layout engine (l, b, r, t) where it takes (l, b, w, h), so a
+    #   footnoted figure runs off the top; the phone render opts into the
+    #   correct rect and the 714 is unchanged pending D-12.
+    "storage_fig3_duration_value.png",
 }
 EXEMPT = set(ORIGINAL) - CONVERTED
 
@@ -240,6 +249,7 @@ ASSET_OF = {
     "fig1_allometry-phone.png": "lq_allometry-phone.png",
     "fig1_prices-phone.png": "storage_fig1_prices-phone.png",
     "fig2_lq_ranked-phone.png": "lq_ranked-phone.png",
+    "fig3_duration_value-phone.png": "storage_fig3_duration_value-phone.png",
     "fig0_lq_explained.png": "lq_explained.png",
     "fig1_allometry.png": "lq_allometry.png",
     "fig2_lq_ranked.png": "lq_ranked.png",
