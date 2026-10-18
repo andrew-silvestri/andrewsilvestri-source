@@ -57,12 +57,13 @@ import matplotlib.pyplot as plt         # noqa: E402
 
 import sitefig                          # noqa: E402
 from sitefig import (MONO, BG, INK, DIM, RULE, FAINT, ACC, MOSS, COOL, SLATE,  # noqa: E402,F401
-                     FS_2, FS_1, FS0, NOTES, fig_size, save)
+                     FS_2, FS_1, FS0, NOTES, PHONE, fig_size, save)
 from fig_floor import floor_problems    # noqa: E402
 import lca                              # noqa: E402  the model of record; imported, not edited
 from processes import PRODUCTS          # noqa: E402
 
 OUT = os.path.join(ROOT, "site", "assets", "climate_allocation_bases.png")
+OUT_PHONE = os.path.join(ROOT, "site", "assets", "climate_allocation_bases-phone.png")
 
 # ---------------------------------------------------------------- bases ----
 # Every factor here is quoted from a named publication. The one marked
@@ -145,6 +146,16 @@ def compute(panel):
     return rows, spread
 
 
+# The source note under the figure. Both renders print it; the 714 keeps its
+# hand-set breaks, the 350 breaks it by measured width (_fill).
+FOOT = ("Spread = highest ÷ lowest total across the published bases shown; the model’s assumed\n"
+        "2.2% is drawn but not counted. Bars: the shipped default in dark blue, published alternatives\n"
+        "in light blue; the shoe’s shipped 2.2% is an assumption and is grey. Milk–meat factors: Flysjö,\n"
+        "Cederberg, Henriksson & Ledgard 2011, Int J LCA 16:420, Table 1; IDF Bulletin 479 (2015)\n"
+        "pp. 35–36. Hide factors: Lunesu et al. 2025, Animals 15:3546. Every bar is one run of\n"
+        "climate-cost/lca.py with that factor on the contested edge; drawn by build_allocation_figure.py.")
+
+
 # ------------------------------------------------------------------ draw ----
 def draw(cheese, shoes, out):
     sitefig.style()
@@ -201,16 +212,129 @@ def draw(cheese, shoes, out):
                              transform=ax.transAxes, ha="left", va="top",
                              fontsize=FS_2, color=DIM))
 
-    foot = ("Spread = highest ÷ lowest total across the published bases shown; the model’s assumed\n"
-            "2.2% is drawn but not counted. Bars: the shipped default in dark blue, published alternatives\n"
-            "in light blue; the shoe’s shipped 2.2% is an assumption and is grey. Milk–meat factors: Flysjö,\n"
-            "Cederberg, Henriksson & Ledgard 2011, Int J LCA 16:420, Table 1; IDF Bulletin 479 (2015)\n"
-            "pp. 35–36. Hide factors: Lunesu et al. 2025, Animals 15:3546. Every bar is one run of\n"
-            "climate-cost/lca.py with that factor on the contested edge; drawn by build_allocation_figure.py.")
+    foot = FOOT
     texts.append(fig.text(0.045, 0.012, foot, fontsize=FS_2, color=DIM,
                           va="bottom", ha="left", linespacing=1.45))
     fig.subplots_adjust(left=0.30, right=0.975, top=0.94, bottom=0.30)
     sitefig.centre(fig)      # the margins above are a guess; this measures
+    problems = audit(fig, texts)
+    size = save(fig, out)
+    return size, problems
+
+
+def _fill(fig, text, room_px, **kw):
+    """Break `text` into lines no wider than `room_px` as drawn, word by word.
+
+    The 350 render's long strings (panel labels, the source note) are wrapped
+    by MEASURING each candidate line, not by a character count: sitefig's 26
+    and 11 are two such counts already, and a third is the trigger recorded
+    beside sitefig.wrap_label that says the parameter is wrong. Same words in
+    the same order; only where the lines break moves."""
+    r = fig.canvas.get_renderer()
+    probe = fig.text(0, 0, "", **kw)
+
+    def width(s):
+        probe.set_text(s)
+        return probe.get_window_extent(renderer=r).width
+
+    lines, cur = [], ""
+    for word in text.split():
+        cand = word if not cur else cur + " " + word
+        if cur and width(cand) > room_px:
+            lines.append(cur)
+            cur = word
+        else:
+            cur = cand
+    lines.append(cur)
+    too_wide = any(width(l) > room_px for l in lines)
+    probe.remove()
+    if too_wide:
+        raise SystemExit(f"_fill: a single word is wider than {room_px:.0f}px")
+    return "\n".join(lines)
+
+
+def draw_phone(cheese, shoes, out):
+    """The 350 render: a second figure, not a scaled one (Stage A, 2026-10-18).
+
+    At 350 the 714's label column leaves the bars no room: the 714 layout drawn
+    at 350 reports 53 audit problems, the row labels off the canvas at every
+    aspect tried. So each row's label sits ABOVE its bar, left-aligned, and the
+    bar runs the full width. Value and factor stay where the 714 has them; the
+    panel labels and the source note break by measured width (_fill). Same
+    rows, numbers and words."""
+    sitefig.style()
+    rows_n = len(cheese[0]) + len(shoes[0])
+    # fig_size takes width / height. Height: ~46px a row (label line + bar),
+    # ~130px per panel for its label, axis and footer line, ~180px for the
+    # ten-line note.
+    w, h = fig_size(PHONE, PHONE / (46 * rows_n + 2 * 130 + 180))
+    fig = plt.figure(figsize=(w, h))
+    W = fig.get_size_inches()[0] * fig.dpi
+    texts = []
+    xmax = 19.0
+    foot_kw = dict(fontsize=FS_2, color=DIM, linespacing=1.45)
+    foot = _fill(fig, " ".join(FOOT.split()), W * 0.92, **foot_kw)
+    foot_t = fig.text(0.04, 0.008, foot, va="bottom", ha="left", **foot_kw)
+    texts.append(foot_t)
+    fig.canvas.draw()
+    foot_top = foot_t.get_window_extent().y1 / (h * fig.dpi)
+
+    heights = [len(cheese[0]), len(shoes[0])]
+    gs = fig.add_gridspec(2, 1, height_ratios=heights, hspace=0.80,
+                          left=0.04, right=0.96, top=0.93, bottom=foot_top + 0.075)
+    axes = [fig.add_subplot(gs[0]), fig.add_subplot(gs[1])]
+    for ax, (panel, (rows, spread)) in zip(axes, ((CHEESE, cheese), (SHOES, shoes))):
+        n = len(rows)
+        ys = list(range(n))[::-1]
+        ax.set_xlim(0, xmax)
+        ax.set_ylim(-0.75, n - 0.05)
+        fig.canvas.draw()
+        r = fig.canvas.get_renderer()
+        for y, (label, share, source, default, t) in zip(ys, rows):
+            col = SLATE if source == "assumed" else (ACC if default else COOL)
+            ax.barh(y - 0.18, t, height=0.40, color=col, edgecolor="none")
+            texts.append(ax.text(0, y + 0.10, label, va="bottom", ha="left",
+                                 fontsize=FS_2, color=INK))
+            v = ax.text(t + 0.18, y - 0.18, f"{t:.1f} kg", va="center",
+                        ha="left", fontsize=FS_2, color=INK)
+            texts.append(v)
+            ftxt = f"{share*100:.1f}%" if share < 0.1 else f"{share*100:.0f}%"
+            inside = ax.text(0.18, y - 0.18, ftxt, va="center", ha="left",
+                             fontsize=FS_2, color=BG)
+            # inside the bar only if it ends inside the bar, measured; BG text
+            # past a bar's end is invisible, and no audit would say so
+            bar_end = ax.transData.transform((t, 0))[0]
+            if inside.get_window_extent(renderer=r).x1 + 3 > bar_end:
+                inside.remove()
+                vx1 = v.get_window_extent(renderer=r).x1
+                x_after = ax.transData.inverted().transform((vx1 + 8, 0))[0]
+                inside = ax.text(x_after, y - 0.18, ftxt, va="center",
+                                 ha="left", fontsize=FS_2, color=DIM)
+            texts.append(inside)
+        ax.set_yticks([])
+        ax.set_xticks(range(0, int(xmax) + 1, 5))
+        for s in ("top", "right", "left"):
+            ax.spines[s].set_visible(False)
+        ax.spines["bottom"].set_color(RULE)
+        ax.set_xlabel("kg CO₂e per functional unit", fontsize=FS_2, color=DIM)
+        ax.xaxis.grid(True, color=FAINT, linewidth=0.8)
+        ax.set_axisbelow(True)
+        lab = "\n".join(_fill(fig, part, W * 0.92, fontsize=FS_1, fontfamily=MONO)
+                        for part in panel["label"].split("\n"))
+        sitefig.panel(ax, lab, pad=8)
+        texts += sitefig.titles(ax)
+        share_of = _stage_share(panel)
+        # placed in points under the x label, not in axes fractions: the
+        # two panels differ in height, so one fraction is two distances
+        texts.append(ax.annotate(f"contested stage: {share_of:.0%} of the total",
+                                 (0, 0), xycoords="axes fraction",
+                                 xytext=(0, -40), textcoords="offset points",
+                                 ha="left", va="top", fontsize=FS_2, color=DIM))
+        texts.append(ax.annotate(f"spread ×{spread:.2f}",
+                                 (1, 0), xycoords="axes fraction",
+                                 xytext=(0, -40), textcoords="offset points",
+                                 ha="right", va="top", fontsize=FS_1, color=INK))
+    sitefig.centre(fig)
     problems = audit(fig, texts)
     size = save(fig, out)
     return size, problems
@@ -261,6 +385,9 @@ def main():
         return 0
     size, problems = draw(cheese, shoes, OUT)
     print(f"\nwritten {OUT} ({size/1024:.0f} kB)")
+    size, phone = draw_phone(cheese, shoes, OUT_PHONE)
+    print(f"written {OUT_PHONE} ({size/1024:.0f} kB)")
+    problems += [f"350: {p}" for p in phone]
     if problems:
         print("audit:")
         for p in problems:

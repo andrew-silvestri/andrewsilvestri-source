@@ -241,6 +241,13 @@ CONVERTED = {
     #   no third wrap count. Same rows and words; both 714s byte-identical.
     "lq_wild_captive.png",
     "lq_orders.png",
+    #   climate_allocation_bases, 2026-10-18 (October P1). The 714 layout at
+    #   350 gives 53 audit problems: its label column leaves the bars no room
+    #   at any aspect tried. At 350 each row's label sits above its bar; the
+    #   panel labels and source note break by MEASURED width
+    #   (build_allocation_figure._fill), not by a third character count. Same
+    #   rows, numbers and words; the 714 is byte-identical.
+    "climate_allocation_bases.png",
 }
 EXEMPT = set(ORIGINAL) - CONVERTED
 
