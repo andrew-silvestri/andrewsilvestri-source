@@ -88,7 +88,7 @@ An explainer: it states no uncertainty for any real installation. <a href="meter
 <fieldset><legend>Gas, period, price</legend>
 <label>Gas (NIST AGA8 example) <span class="v"><select id="gas"></select></span></label>
 <label>Calibrations a year <span class="v"><select id="ints"><option>1</option><option>2</option><option selected>4</option><option>12</option></select></span></label>
-<label>Price, $/MMBtu <span class="v"><input type="number" id="price" min="0" step="0.01" value="3.09" style="width:84px"></span></label>
+<label>Price, $/MMBtu <span class="v"><input type="number" id="price" min="0" step="0.01" value="3.10" style="width:84px"></span></label>
 <p class="note">Default: median Henry Hub spot price, 2025-10 to 2026-09 (EIA).</p>
 <button id="go">Run</button> <span id="prog" class="note"></span>
 </fieldset>
@@ -545,7 +545,7 @@ function draw(y, lo, hi) {
 }
 
 function fmt(r, key) {
-  const d = Math.max(0, -Math.floor(Math.log10(r.delta * 100)));
+  const d = Math.max(0, -Math.floor(Math.log10(2 * r.delta * 100) + 1e-9));   // 2 delta: the last stable digit
   return (r[key] * 100).toFixed(d) + "%";
 }
 

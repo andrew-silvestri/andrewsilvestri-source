@@ -31,6 +31,8 @@ TEMPLATE = os.path.join(HERE, "template.html")
 PAYLOAD = os.path.join(HERE, "outputs", "payload.json")
 ZIP = os.path.join(SITE, "downloads", "meter-code.zip")
 sys.path.insert(0, ROOT)
+sys.path.insert(0, HERE)
+import model as M   # noqa: E402  the stated tolerances are the model's own constants
 
 LABELS = {"C": "discharge coefficient", "dp": "differential pressure", "p1": "static pressure",
           "T1": "temperature", "d": "bore diameter", "D": "pipe diameter",
@@ -38,13 +40,23 @@ LABELS = {"C": "discharge coefficient", "dp": "differential pressure", "p1": "st
 
 
 def dec_for(delta):
-    """Decimal places that a figure with numerical tolerance delta can carry."""
-    return max(0, -int(math.floor(math.log10(delta)))) if delta > 0 else 3
+    """Decimal places a figure with 7.9.2 numerical tolerance delta can carry. delta is half
+    a unit of the last stable digit (10^l / 2), so that digit is 2 delta. The first version
+    took -log10(delta) and printed every figure one digit past what had stabilised; the
+    page review caught it."""
+    return max(0, -int(math.floor(math.log10(2 * delta) + 1e-9))) if delta > 0 else 3
 
 
 def pc(r, key="u", scale=100.0):
     """A Monte Carlo result r[key] as a percentage, to its own tolerance."""
     return f"{r[key] * scale:.{dec_for(r['delta'] * scale)}f}"
+
+
+def cents(x):
+    """Dollars to the cent, half up: the median of 3.04 and 3.15 is 3.095, held in binary as
+    3.0949999..., which an f-string rounds to 3.09."""
+    from decimal import Decimal, ROUND_HALF_UP
+    return str(Decimal(repr(round(x, 9))).quantize(Decimal("0.01"), rounding=ROUND_HALF_UP))
 
 
 def money(x, sig=2):
@@ -101,8 +113,18 @@ def values(P):
         "C0_u": pc(by0["C"]), "C1_u": pc(by1["C"]),
         "sw_tot0_1": f"{first('fC0', 'u_total') * 100:.2f}", "sw_tot0_100": f"{last('fC0', 'u_total') * 100:.3f}",
         "sw_tot1_1": f"{first('fC1', 'u_total') * 100:.2f}", "sw_tot1_100": f"{last('fC1', 'u_total') * 100:.2f}",
+        "a1_loss_pct": f"{100 * a1['losses_mmcf'] / a1['consumption_mmcf']:.1f}",
+        "a1_uaf_pct": f"{100 * a1['uaf_mmcf'] / a1['consumption_mmcf']:.1f}",
+        "hist_n": f"{P['system']['fC0']['hist']['n']:,}",
+        "hist_out_pct": f"{100 * P['system']['fC1r']['hist']['outside'] / P['system']['fC1r']['hist']['n']:.1f}",
+        "batch_k": f"{s0['imb_e']['trials'] // s0['imb_e']['batches']:,}",
+        "n_ints_word": {1: "one", 2: "two", 3: "three", 4: "four", 6: "six", 12: "twelve"}[P["intervals"]], "p_base": f"{P['base']['p_psia']:.2f}", "t_base": f"{P['base']['T_F']:.0f}",
+        "beta_r": f"{min(m['beta'] for m in P['meters'] if m['role'] == 'R'):.2f}",
+        "beta_d": f"{max(m['beta'] for m in P['meters'] if m['role'] == 'D'):.2f}",
+        "rec_D_mm": f"{P['meters'][0]['D_mm']:.1f}",
+        "u_pipe": f"{M.D_PIPE * 100:.2f}", "u_bore": f"{M.D_BORE * 100:.2f}",
         "sw_imb0_100": f"{last('fC0', 'u_imb') * 100:.3f}", "sw_imb1_100": f"{last('fC1', 'u_imb') * 100:.3f}",
-        "price_med": f"{hh['median']:.2f}", "price_mean": f"{hh['mean']:.2f}",
+        "price_med": cents(hh["median"]), "price_mean": cents(hh["mean"]),
         "price_first": hh["first"], "price_last": hh["last"], "price_max": f"{hh['max']:.2f}",
         "price_max_month": hh["max_month"],
         "a1_year": a1["year"], "a1_pct": f"{a1['printed_pct']:.1f}",
@@ -133,7 +155,15 @@ def claims(P, single, top, s0, s1, s2, m0, m1, m2, by0, by1, sw):
         ("ends apart roughly doubles C's effect", 1.7 <= P["system"]["fC1r"]["by_input"]["C"]["u"] / u(by0["C"]) <= 2.3),
         ("money is ordered between the alike and apart cases", m1["u_usd_yr"] < m0["u_usd_yr"] < m2["u_usd_yr"]),
         ("independent: total falls with N", sw["fC0"][-1]["u_total"] < 0.2 * sw["fC0"][0]["u_total"]),
-        ("shared: a hundred meters no better than one", sw["fC1"][-1]["u_total"] >= 0.9 * sw["fC1"][0]["u_total"]),
+        ("shared: a hundred meters barely better than one", sw["fC1"][-1]["u_total"] >= 0.9 * sw["fC1"][0]["u_total"]),
+        ("figure 2 alt: alike is the lowest imbalance at every N",
+         all(a["u_imb"] < b["u_imb"] for a, b in zip(sw["fC1"], sw["fC0"]))),
+        ("figure 2 alt: from two meters up, ends-apart is the largest",
+         all(a["u_imb"] > b["u_imb"] for a, b in zip(sw["fC1r"][1:], sw["fC0"][1:]))),
+        ("the histogram drops some ends-apart draws past +/-1% (caption says so)",
+         P["system"]["fC1r"]["hist"]["outside"] > 0),
+        ("one receipt per page claim: receipts and deliveries in one beta band",
+         len({int(m["beta"] * 10 + 1e-9) for m in P["meters"]}) == 1),
         ("median used because the mean is pulled up", P["price"]["mean"] > P["price"]["median"]),
         ("PHMSA: some reports negative", P["phmsa"]["negative"] > 0),
     ]

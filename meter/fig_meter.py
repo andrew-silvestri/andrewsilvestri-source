@@ -131,7 +131,7 @@ def budget(P, width, out):
     texts = []
     for yi, v, g in zip(y, vals, groups + ["all"]):
         d = s[g]["delta"] * 100
-        dec = max(0, -int(np.floor(np.log10(d))) if d > 0 else 3)
+        dec = max(0, -int(np.floor(np.log10(2 * d) + 1e-9)) if d > 0 else 3)   # update_page.dec_for
         texts.append(ax.text(v + max(vals) * 0.015, yi, f"{v:.{dec}f}%", va="center", fontsize=FS_2, color=INK))
     ax.set_xlim(0, max(vals) * 1.22)
     pct_axis(ax)

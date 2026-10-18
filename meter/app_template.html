@@ -166,7 +166,7 @@ function draw(y, lo, hi) {
 }
 
 function fmt(r, key) {
-  const d = Math.max(0, -Math.floor(Math.log10(r.delta * 100)));
+  const d = Math.max(0, -Math.floor(Math.log10(2 * r.delta * 100) + 1e-9));   // 2 delta: the last stable digit
   return (r[key] * 100).toFixed(d) + "%";
 }
 

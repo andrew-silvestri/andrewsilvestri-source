@@ -131,7 +131,8 @@ def main():
         t = TEMPLATE.read_text(encoding="utf-8")
         t = t.replace("/*ENGINE*/", (HERE / "engine.js").read_text(encoding="utf-8"))
         t = t.replace("/*TABLE*/null", json.dumps(data, separators=(",", ":")))
-        t = t.replace("{{price_med}}", f"{payload['price']['median']:.2f}")
+        from update_page import cents        # half up, as the page does
+        t = t.replace("{{price_med}}", cents(payload["price"]["median"]))
         t = t.replace("{{price_months}}", f"{payload['price']['first']} to {payload['price']['last']}")
         left = sorted(set(__import__("re").findall(r"{{(\w+)}}", t)))
         if left:
