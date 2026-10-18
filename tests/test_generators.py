@@ -253,7 +253,12 @@ def run_one(spec, pristine, tmp, limit):
     work = os.path.join(tmp, "work-" + "".join(c if c.isalnum() else "_" for c in label)[:40])
     shutil.copytree(pristine, work)
     try:
+        # The copy has no .git (SKIP_DIRS). build_sitemap.py dates each page
+        # from its last commit, so it reads the real history from here; it
+        # exits non-zero without one rather than agreeing by construction.
         r = subprocess.run([PY] + argv, cwd=os.path.join(work, cwd),
+                           env=dict(os.environ,
+                                    SITEMAP_GIT_DIR=os.path.join(ROOT, ".git")),
                            capture_output=True, text=True, timeout=900,
                            encoding="utf-8", errors="replace")
     except subprocess.TimeoutExpired:
