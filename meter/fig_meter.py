@@ -74,7 +74,24 @@ def audit(fig, texts):
     for ax in fig.axes:
         lg = ax.get_legend()
         if lg is not None:
-            boxes.append((lg.get_window_extent(renderer=r), "legend"))
+            lb = lg.get_window_extent(renderer=r)
+            boxes.append((lb, "legend"))
+            # A legend on the data hides it, and no text check sees that: the first
+            # meter_floor put its key over the two shared curves at 0.25% with this
+            # audit reporting 0 problems. Any plotted point inside the box fails.
+            # Lines and patches both: meter_imbalance draws with stairs(), a patch, and
+            # a lines-only version of this check passed its phone render with the key
+            # sitting on the tallest curve.
+            drawn = [(a, ax.transData.transform(np.column_stack(a.get_data()))) for a in ax.get_lines()]
+            drawn += [(a, a.get_transform().transform(a.get_path().vertices)) for a in ax.patches]
+            for artist, pts in drawn:
+                label = artist.get_label() or ""
+                if label.startswith("_"):
+                    continue
+                inside = ((pts[:, 0] >= lb.x0) & (pts[:, 0] <= lb.x1) &
+                          (pts[:, 1] >= lb.y0) & (pts[:, 1] <= lb.y1))
+                if inside.any():
+                    problems.append(f"legend over data: {label!r}")
     for i in range(len(boxes)):
         for j in range(i + 1, len(boxes)):
             a, b = boxes[i][0], boxes[j][0]
@@ -134,9 +151,12 @@ def floor(P, width, out):
     N = np.array(sw["N"])
     sitefig.style()
     phone = width == PHONE
-    fig = plt.figure(figsize=fig_size(width, 0.72 if phone else 1.15))
+    fig = plt.figure(figsize=fig_size(width, 0.58 if phone else 1.15))
     l, r = (0.20, 0.95) if phone else (0.13, 0.97)
-    axes = [fig.add_axes([l, 0.58, r - l, 0.33]), fig.add_axes([l, 0.12, r - l, 0.33])]
+    if phone:   # the key goes under panel B: at 350 px there is no clear band for it inside A
+        axes = [fig.add_axes([l, 0.69, r - l, 0.25]), fig.add_axes([l, 0.31, r - l, 0.25])]
+    else:
+        axes = [fig.add_axes([l, 0.58, r - l, 0.33]), fig.add_axes([l, 0.12, r - l, 0.33])]
     texts = []
     for ax, key, lab in ((axes[0], "u_total", "A  Total measured throughput"),
                          (axes[1], "u_imb", "B  Receipts minus deliveries")):
@@ -152,7 +172,11 @@ def floor(P, width, out):
             ax.spines[side].set_visible(False)
         ax.grid(axis="y", lw=0.6)
     axes[1].set_xlabel("Number of receipt meters")
-    axes[0].legend(loc="upper right", frameon=False, fontsize=FS_2)
+    if phone:
+        axes[1].legend(loc="upper center", bbox_to_anchor=(0.5, -0.42), frameon=False, fontsize=FS_2)
+    else:
+        # below the two shared curves (flat at ~0.25%) and above the independent one
+        axes[0].legend(loc="upper right", bbox_to_anchor=(1.0, 0.80), frameon=False, fontsize=FS_2)
     sitefig.centre(fig)
     problems = audit(fig, texts)
     size = save(fig, out)
@@ -163,9 +187,9 @@ def floor(P, width, out):
 def imbalance(P, width, out):
     sitefig.style()
     phone = width == PHONE
-    fig = plt.figure(figsize=fig_size(width, 1.1 if phone else 16 / 8))
-    ax = fig.add_axes([0.10 if not phone else 0.14, 0.20 if not phone else 0.24, 0.86 if not phone else 0.80,
-                       0.72 if not phone else 0.62])
+    fig = plt.figure(figsize=fig_size(width, 0.85 if phone else 16 / 8))
+    ax = fig.add_axes([0.10 if not phone else 0.10, 0.20 if not phone else 0.42, 0.86 if not phone else 0.84,
+                       0.72 if not phone else 0.52])
     for fC, col, name in CASES:
         h = P["system"][fC]["hist"]
         e = np.array(h["edges_pct"])
@@ -177,10 +201,15 @@ def imbalance(P, width, out):
     ax.set_yticks([])
     for side in ("top", "right", "left"):
         ax.spines[side].set_visible(False)
+    if phone:   # at 350 px the default quarter-per-cent ticks touch end to end
+        ax.set_xticks([-1, -0.5, 0, 0.5, 1])
     pct_axis(ax)
     ax.set_xlabel("Measured imbalance, energy, share of throughput")
     ax.axvline(0, color=RULE, lw=1)
-    ax.legend(loc="upper right", frameon=False, fontsize=FS_2)
+    if phone:   # at 350 px the spike fills the top of the axes; the key goes underneath
+        ax.legend(loc="upper center", bbox_to_anchor=(0.5, -0.30), frameon=False, fontsize=FS_2)
+    else:
+        ax.legend(loc="upper right", frameon=False, fontsize=FS_2)
     sitefig.centre(fig)
     problems = audit(fig, [])
     size = save(fig, out)

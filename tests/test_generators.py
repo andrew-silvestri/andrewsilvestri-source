@@ -151,6 +151,10 @@ GENERATORS = [
     # 2026-09-10. --apply because a bare run reports and writes nothing.
     ("continents app: continents/build_app.py",
      ["build_app.py", "--apply"], "continents", "site"),
+    # meter/build_app.py rebuilds the gas table from the compiled NIST code (meter/_build,
+    # made by build_aga8.py) and inlines it with engine.js into site/meter-app.html.
+    ("meter app: meter/build_app.py",
+     ["build_app.py"], "meter", "site"),
     ("downloads: rezip_downloads.py", ["rezip_downloads.py"], ".", "zips"),
     ("sitemap: build_sitemap.py --apply",
      ["build_sitemap.py", "--apply"], ".", "site"),
