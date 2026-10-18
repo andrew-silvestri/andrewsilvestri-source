@@ -101,7 +101,7 @@ def use():
     })
 
 
-def finish(fig, path, title=None, subtitle=None, footnote=None):
+def finish(fig, path, title=None, subtitle=None, footnote=None, lbwh=False):
     # Titles and subtitles are no longer drawn (2026-09-04): the page heading
     # above the figure and the caption under it carry that; a title inside the
     # frame at body size read as a third heading. The arguments are kept so
@@ -150,8 +150,20 @@ def finish(fig, path, title=None, subtitle=None, footnote=None):
         footnote = "\n".join(textwrap.fill(p, cols) for p in footnote.split("\n"))
     n_lines = footnote.count("\n") + 1 if footnote else 0
     bottom_strip = (0.20 + 0.22 * n_lines) / h if footnote else 0.0   # FS_1 lines at 1.5 spacing, plus the tick labels above
+    # THE RECT IS (left, bottom, WIDTH, HEIGHT), not (left, bottom, right, top)
+    # - matplotlib 3.11.1's ConstrainedLayoutEngine docstring. The default
+    # branch below passes a height of 1 - top_strip from a bottom of
+    # bottom_strip, so a figure with a footnote is laid out bottom_strip too
+    # high and its top runs off the canvas. Found 2026-10-17 on fig3's 350
+    # render (axes top at 1.155 of the figure). The 714 fig3 is the only
+    # shipped figure with a footnote, and model.py's "drop any tick that lands
+    # right under the axis top" is that overflow being patched downstream.
+    # Fixing the default moves that shipped figure, so it is escalated
+    # (DECISIONS D-12) and the correct rect is opt-in until answered.
+    rect = ((0, bottom_strip, 1, 1 - top_strip - bottom_strip) if lbwh
+            else (0, bottom_strip, 1, 1 - top_strip))
     try:
-        fig.get_layout_engine().set(rect=(0, bottom_strip, 1, 1 - top_strip))
+        fig.get_layout_engine().set(rect=rect)
     except AttributeError:                       # older matplotlib
         fig.subplots_adjust(top=1 - top_strip, bottom=bottom_strip)
 
