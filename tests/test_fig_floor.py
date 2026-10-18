@@ -223,6 +223,14 @@ CONVERTED = {
     #   The 714 render is byte-identical. build_skyline_figure.py now exits
     #   non-zero on its own audit.
     "skyline_towers.png",
+    #   lq_explained, 2026-10-18 (October P1). The three columns stay, because
+    #   the page's caption says mass rises left to right. The per-bar labels
+    #   become one legend, names and verdicts wrap, the formula breaks after
+    #   its "=". audit() now reads legend text (trap 4) and text on a sphere:
+    #   the first phone render set "4,000 kg" on the elephant and the audit,
+    #   which never looked at patches, said 0. Same numbers and words; the 714
+    #   is byte-identical.
+    "lq_explained.png",
 }
 EXEMPT = set(ORIGINAL) - CONVERTED
 
@@ -270,6 +278,7 @@ ASSET_OF = {
     "fig1_breakeven_price-phone.png": "heat_fig1_breakeven_price-phone.png",
     "fig4_tornado-phone.png": "heat_fig4_tornado-phone.png",
     "fig5_emissions_parity-phone.png": "heat_fig5_emissions_parity-phone.png",
+    "fig0_lq_explained-phone.png": "lq_explained-phone.png",
     "fig0_lq_explained.png": "lq_explained.png",
     "fig1_allometry.png": "lq_allometry.png",
     "fig2_lq_ranked.png": "lq_ranked.png",
