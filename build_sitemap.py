@@ -12,10 +12,21 @@ reached from the page that introduces them and are not separate destinations.
 index.html is listed as the bare domain at priority 1.0; everything else at
 0.7, which is what the hand-kept file used.
 
-lastmod is carried over from the shipped sitemap where a page already has one,
-so re-running this does not churn every date on every build; a page appearing
-for the first time gets today. That also makes the script idempotent, which is
-what lets tests/test_generators.py check it.
+lastmod is the date of the last commit that touched the page
+(`git log -1 --format=%cs -- site/<page>`), or today if the page in the tree
+differs from HEAD - the ordering rule runs this before the commit, so an
+edited page gets the day it is committed. Until 2026-10-17 lastmod was
+carried over from the shipped sitemap and never moved once set: seven of ten
+pages were 33 days behind their last commit (AUDIT_2026-10 A4), and nothing
+could see it, because a carried-over date always agrees with itself.
+
+The history is read from SITEMAP_GIT_DIR if set, else this tree's .git.
+tests/test_generators.py runs generators in a copy with no .git and sets
+SITEMAP_GIT_DIR to the real one, so the drift check compares against history
+rather than against the shipped file. With no history reachable this exits
+non-zero rather than falling back to the shipped dates, which would make the
+drift check agree by construction (trap 27). A page committed on an earlier
+day than the ordering rule ran shows up there as drift.
 
 Run:  python3 build_sitemap.py             report only
       python3 build_sitemap.py --apply
@@ -26,6 +37,7 @@ import datetime
 import glob
 import os
 import re
+import subprocess
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 SITE = os.path.join(HERE, "site")
@@ -43,25 +55,39 @@ def pages():
     return out
 
 
-def existing_lastmod():
-    if not os.path.exists(OUT):
-        return {}
-    t = open(OUT, encoding="utf-8").read()
-    found = {}
-    for m in re.finditer(r"<loc>([^<]*)</loc>\s*<lastmod>([^<]*)</lastmod>", t):
-        loc = m.group(1)
-        name = "index.html" if loc == BASE else loc[len(BASE):]
-        found[name] = m.group(2)
-    return found
+def git(*args):
+    gd = os.environ.get("SITEMAP_GIT_DIR") or os.path.join(HERE, ".git")
+    r = subprocess.run(["git", "--git-dir", gd] + list(args),
+                       capture_output=True)
+    if r.returncode != 0:
+        raise SystemExit(f"build_sitemap: git {' '.join(args)} failed in {gd}: "
+                         + r.stderr.decode("utf-8", "replace").strip())
+    return r.stdout
+
+
+def lastmod(name, today):
+    rel = "site/" + name
+    on_disk = open(os.path.join(SITE, name), "rb").read()
+    try:
+        head = git("show", "HEAD:" + rel)
+    except SystemExit:
+        head = None                      # not committed yet
+    if head != on_disk:
+        return today
+    return git("log", "-1", "--format=%cs", "--", rel).decode().strip()
 
 
 def render():
-    known = existing_lastmod()
     today = datetime.date.today().isoformat()
+    # First, and on its own: with no reachable history every `git show` below
+    # fails, every page reads as uncommitted, and every lastmod silently
+    # becomes today. That is how the first version of this behaved when run
+    # with SITEMAP_GIT_DIR pointing nowhere - exit 0, a plausible file.
+    git("rev-parse", "--verify", "HEAD")
     rows = []
     for name in pages():
         loc = BASE if name == "index.html" else BASE + name
-        rows.append((loc, known.get(name, today),
+        rows.append((loc, lastmod(name, today),
                      "1.0" if name == "index.html" else "0.7"))
     rows.sort(key=lambda r: r[0])
     body = "".join(
