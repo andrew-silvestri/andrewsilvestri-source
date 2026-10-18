@@ -201,6 +201,129 @@ def explain(rows, summary, path=None):
     return out, list(zip([r["name"] for r in picked], pred, obs, lq)), bad
 
 
+def explain_phone(rows, summary, path=None):
+    """The 350 render: a second figure, not a scaled one (Stage A, 2026-10-18).
+
+    The page's caption says mass rises LEFT TO RIGHT, so the three animals stay
+    in three columns here, as in the 714; a stacked layout with an animal per
+    row made that sentence false and was dropped. What changes is what each
+    ~98px column can hold. The names wrap to two lines. The "predicted from
+    mass" / "actually observed" bar labels, which collided under every pair of
+    bars, become one legend under the formula. The quotient drops a step to
+    FS1, and the verdicts wrap to three lines, both to fit the column. The
+    y label wraps after "lifespan". Same numbers and words; the spheres keep
+    one scale; the formula breaks after its "=", because on one line it is
+    wider than the column.
+    """
+    from matplotlib.patches import Patch
+    import textwrap
+    style()
+    a = summary["global_fit"]["a"]
+    b = summary["global_fit"]["b"]
+
+    by_name = {r["name"]: r for r in rows}
+    picked = [by_name[n] for n in SUBJECTS if n in by_name]
+    if len(picked) < 3:
+        raise SystemExit("explainer needs " + ", ".join(SUBJECTS))
+    picked.sort(key=lambda r: r["mass_g"])
+
+    colours = [COOL, MOSS, ACC]
+    obs = [r["maximum"] for r in picked]
+    pred = [10 ** (a + b * math.log10(r["mass_g"])) for r in picked]
+    lq = [o / p for o, p in zip(obs, pred)]
+
+    fig = plt.figure(figsize=fig_size(sitefig.PHONE, 0.72))
+    gs = fig.add_gridspec(
+        3, 3, height_ratios=[1.35, 1.0, 0.75],
+        hspace=0.30, wspace=0.12, left=0.19, right=0.985, top=0.80, bottom=0.03)
+
+    rmax = max(r["mass_g"] for r in picked) ** (1 / 3)
+    for i, r in enumerate(picked):
+        ax = fig.add_subplot(gs[0, i])
+        rad = r["mass_g"] ** (1 / 3) / rmax
+        ax.add_patch(Circle((0, rad), rad, facecolor=colours[i],
+                            alpha=0.30, edgecolor=colours[i], lw=1.6))
+        ax.set_xlim(-1.20, 1.20)
+        ax.set_ylim(-0.10, 3.50)
+        ax.set_aspect("equal")
+        ax.axis("off")
+        kg = r["mass_g"] / 1000.0
+        ax.text(0, 3.50, "\n".join(textwrap.wrap(r["name"], 12)),
+                ha="center", va="top", fontsize=FS_1, color=INK,
+                linespacing=1.15)
+        # Stood on a line just above the largest sphere's top (2.0) rather
+        # than hung from 2.30: hung, "4,000 kg" sat on the elephant.
+        ax.text(0, 2.15,
+                f"{kg:,.0f} kg" if kg >= 1 else f"{r['mass_g']:,.0f} g",
+                ha="center", va="bottom", fontsize=FS_2, color=DIM)
+        ax.plot([-1.16, 1.16], [-0.06, -0.06], color=FAINT, lw=1)
+
+    ymax = max(obs + pred) * 1.30
+    for i, r in enumerate(picked):
+        ax = fig.add_subplot(gs[1, i])
+        good = lq[i] >= 1
+        col = colours[i] if good else ROSE
+        ax.bar([0], [pred[i]], width=0.6, color="none",
+               edgecolor=DIM, lw=1.5, linestyle="--")
+        ax.bar([1], [obs[i]], width=0.6, color=col, alpha=0.92)
+        ax.text(0, pred[i] + ymax * 0.035, f"{pred[i]:.0f} yr",
+                ha="center", fontsize=FS_2, color=DIM)
+        ax.text(1, obs[i] + ymax * 0.035, f"{obs[i]:.0f} yr",
+                ha="center", fontsize=FS_2, color=col)
+        ax.set_xticks([])
+        ax.set_ylim(0, ymax)
+        ax.set_xlim(-0.55, 1.55)
+        for s in ("top", "right", "bottom"):
+            ax.spines[s].set_visible(False)
+        ax.spines["left"].set_color(FAINT)
+        if i == 0:
+            ax.set_ylabel("maximum lifespan\n(years)", fontsize=FS_2,
+                          color=DIM)
+        else:
+            ax.set_yticklabels([])
+        ax.grid(axis="y", alpha=0.16)
+        ax.set_axisbelow(True)
+
+    for i, r in enumerate(picked):
+        ax = fig.add_subplot(gs[2, i])
+        ax.axis("off")
+        good = lq[i] >= 1
+        col = colours[i] if good else ROSE
+        ax.text(0.5, 0.92, f"LQ {lq[i]:.2f}", ha="center", va="top",
+                fontsize=FS1, color=col, transform=ax.transAxes)
+        verdict = (f"lives {lq[i]:.1f} times longer than its size predicts"
+                   if lq[i] >= 1.05 else
+                   f"lives {1 / lq[i]:.1f} times shorter than its size predicts" if lq[i] <= 0.95 else
+                   "lives about exactly as long as its size predicts")
+        ax.text(0.5, 0.0, "\n".join(textwrap.wrap(verdict, 15)),
+                ha="center", va="bottom", fontsize=FS_2, color=DIM,
+                transform=ax.transAxes, linespacing=1.25)
+
+    fig.legend(handles=[
+        Patch(facecolor="none", edgecolor=DIM, lw=1.5, linestyle="--",
+              label="predicted from mass"),
+        Patch(facecolor=DIM, alpha=0.6, label="actually observed")],
+        loc="upper left", bbox_to_anchor=(0.02, 0.905), ncol=2,
+        fontsize=FS_2, frameon=False, handlelength=1.2, columnspacing=1.0,
+        handletextpad=0.5)
+    fig.text(0.02, 0.995,
+             f"predicted lifespan  =\n10^({a:.3f} + {b:.3f} × log₁₀ mass in grams)\n"
+             "LQ  =  observed ÷ predicted",
+             fontsize=FS_2, color=COOL, ha="left", va="top", linespacing=1.35,
+             fontfamily=MONO)
+
+    out = path or os.path.join(OUT, "fig0_lq_explained-phone.png")
+    sitefig.centre(fig)
+    bad = audit(fig)
+    sitefig.save(fig, out, close=False)
+    plt.close(fig)
+    if bad:
+        print("  LAYOUT PROBLEMS (350)")
+        for line in bad:
+            print("    " + line)
+    return out, bad
+
+
 def audit(fig):
     """Report text that overlaps other text, or that runs off the canvas.
 
@@ -216,6 +339,11 @@ def audit(fig):
     for t in fig.texts:
         if t.get_text().strip():
             items.append(t)
+    # legend text is a separate artist (HANDOFF trap 4); the 350 render has a
+    # figure legend, the 714 has none
+    for lg in list(fig.legends) + [ax.get_legend() for ax in fig.axes]:
+        if lg is not None:
+            items += [t for t in lg.get_texts() if t.get_text().strip()]
     for ax in fig.axes:
         for t in sitefig.titles(ax) + [ax.xaxis.label, ax.yaxis.label] + list(ax.texts):
             if t.get_text().strip():
@@ -257,6 +385,23 @@ def audit(fig):
             frac = area / min(a.width * a.height, b.width * b.height)
             if frac > 0.12:
                 out.append(f"overlap {frac:.0%}: {la!r} / {lb!r}")
+    # Text on a sphere. A patch is not text, so the checks above never saw
+    # one: the first 350 render of the explainer set "4,000 kg" on the
+    # elephant's circle and reported 0 problems (2026-10-18, HANDOFF trap 4).
+    # Exact circle-against-box, so a label beside a circle's bounding square
+    # but clear of the circle itself is not a finding.
+    for ax in fig.axes:
+        for p in ax.patches:
+            if not isinstance(p, Circle):
+                continue
+            cx, cy = ax.transData.transform(p.center)
+            r = abs(ax.transData.transform((p.center[0] + p.radius, 0))[0]
+                    - ax.transData.transform((p.center[0], 0))[0])
+            for label, bb in boxes:
+                nx = min(max(cx, bb.x0), bb.x1)
+                ny = min(max(cy, bb.y0), bb.y1)
+                if (nx - cx) ** 2 + (ny - cy) ** 2 < r * r:
+                    out.append(f"text on shape: {label!r}")
     out += sitefig.grid_problems(fig)     # columns shared, content centred (2026-09-05)
     return out
 
@@ -265,7 +410,9 @@ if __name__ == "__main__":
     import build_lq
     rows, summary = build_lq.build()
     out, table, bad = explain(rows, summary)
-    print("\n  " + out)
+    out_phone, bad_phone = explain_phone(rows, summary)
+    bad = bad + bad_phone
+    print("\n  " + out + "\n  " + out_phone)
     print(f"  {'species':24s} {'predicted':>10s} {'observed':>10s} {'LQ':>7s}")
     for name, p, o, q in table:
         print(f"  {name:24s} {p:10.1f} {o:10.1f} {q:7.2f}")
