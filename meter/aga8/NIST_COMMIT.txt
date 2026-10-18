@@ -1,0 +1,4 @@
+3bdb9ab8ff317c618b0b59d1b704c2c86ddc5fce Wed Feb 19 20:18:58 2025 -0500
+
+Copied unchanged from github.com/usnistgov/AGA8 AGA8CODE/C/ and LICENSE at the commit above,
+except line endings converted CRLF -> LF (this repository's .gitattributes: eol=lf).

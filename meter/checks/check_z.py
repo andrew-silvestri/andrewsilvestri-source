@@ -29,9 +29,9 @@ Three tiers, strongest first.
    CoolProp's disagreement decides which route the model uses; it is not a
    pass/fail, because a library differing from the reference is a finding.
 
-The compiled library is built from the NIST C++ outside this repository (see
-STAGE1.md): set METER_AGA8_DLL, or it is looked for at
-../03 RESEARCH/meter/vendor/build/aga8.dll from the repo root.
+The library is built from NIST's C++ in meter/aga8/ by meter/build_aga8.py
+(or set METER_AGA8_DLL); the workbooks come from meter/fetch_aga8_testdata.py,
+pinned to the same NIST commit.
 
 --break exchanges hydrogen and helium in every composition (the NIST code
 orders them 15 and 20; the test sheet puts them 20 and 16), the error the two
@@ -49,9 +49,11 @@ import xlrd
 BREAK = "--break" in sys.argv
 WITH_COOLPROP = "--coolprop" in sys.argv   # slow (about an hour); the gate does not need it
 ROOT = Path(__file__).resolve().parents[2]
-VENDOR = ROOT.parent / "03 RESEARCH" / "meter" / "vendor"
-DLL = Path(os.environ.get("METER_AGA8_DLL", VENDOR / "build" / "aga8.dll"))
-TESTDATA = VENDOR / "AGA8" / "TESTDATA"
+METER = ROOT / "meter"
+DLL = Path(os.environ.get("METER_AGA8_DLL",
+                          METER / "_build" / ("aga8.dll" if sys.platform == "win32" else "libaga8.so")))
+TEST_XLS = METER / "data" / "raw" / "aga8_test_data.xls"     # fetch_aga8_testdata.py
+TABLES_XLS = METER / "data" / "raw" / "aga8_tables.xls"
 
 # The test sheet's column order, and where each column goes in the NIST code's
 # order (1 methane ... 14 n-decane, 15 hydrogen, 16 oxygen, 17 CO, 18 water,
@@ -171,7 +173,7 @@ def comp_row(gas):
 
 
 def load_table():
-    wb = xlrd.open_workbook(str(TESTDATA / "Test Data.xls"))
+    wb = xlrd.open_workbook(str(TEST_XLS))
     comp = wb.sheet_by_name("Natural Gas Compositions")
     assert [c.value for c in comp.row(0)] == SHEET, "composition columns are not in the order this check assumes"
     # "Gases are identified by the row number, and start at 2 and end at 201"
@@ -282,7 +284,7 @@ def main():
     # The metering region: the five AGA8 example gases in NIST's Tables.xls and its
     # T, P grid widened to six pressures. Reference code against itself (DETAIL vs
     # GERG) and CoolProp against the reference.
-    wb = xlrd.open_workbook(str(TESTDATA / "Tables.xls"))
+    wb = xlrd.open_workbook(str(TABLES_XLS))
     s = wb.sheet_by_name("Tables")
     names = ["Gulf Coast", "Amarillo", "Ekofisk", "High N2", "High CO2"]
     comp_rows = {"Methane": "methane", "Nitrogen": "nitrogen", "CO2": "CO2", "Ethane": "ethane",
