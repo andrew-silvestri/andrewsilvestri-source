@@ -206,6 +206,16 @@ CONVERTED = {
     #   footnoted figure runs off the top; the phone render opts into the
     #   correct rect and the 714 is unchanged pending D-12.
     "storage_fig3_duration_value.png",
+    #   heat's last three, 2026-10-17 (October P1, one builder per branch).
+    #   fig1, fig4 and fig5 are SQUARE at 350 rather than 16:9: at 16:9 their
+    #   y labels ran off and fig4's and fig5's legends landed on row labels and
+    #   ticks (7 audit problems on the plain render). Legends move below the
+    #   axes; axis labels go through sitefig.fit_label; fig1's answer note and
+    #   its "fuel only" label sit higher and lower so the curves and the note
+    #   do not meet. Same words, same numbers, 714 renders byte-identical.
+    "heat_fig1_breakeven_price.png",
+    "heat_fig4_tornado.png",
+    "heat_fig5_emissions_parity.png",
 }
 EXEMPT = set(ORIGINAL) - CONVERTED
 
@@ -250,6 +260,9 @@ ASSET_OF = {
     "fig1_prices-phone.png": "storage_fig1_prices-phone.png",
     "fig2_lq_ranked-phone.png": "lq_ranked-phone.png",
     "fig3_duration_value-phone.png": "storage_fig3_duration_value-phone.png",
+    "fig1_breakeven_price-phone.png": "heat_fig1_breakeven_price-phone.png",
+    "fig4_tornado-phone.png": "heat_fig4_tornado-phone.png",
+    "fig5_emissions_parity-phone.png": "heat_fig5_emissions_parity-phone.png",
     "fig0_lq_explained.png": "lq_explained.png",
     "fig1_allometry.png": "lq_allometry.png",
     "fig2_lq_ranked.png": "lq_ranked.png",
