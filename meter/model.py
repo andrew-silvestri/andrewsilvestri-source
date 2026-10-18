@@ -288,9 +288,14 @@ class Comp:
     f: float             # shared fraction
     redraw: str          # "interval" (recalibrated) or "period" (held)
     by_class: bool = False
+    class_key: str = "beta"   # "beta": (taps, beta band); "role": receipts vs deliveries
 
 
-def default_comps(f=None):
+def default_comps(f=None, c_class="beta"):
+    """c_class: how the shared part of C is grouped. "beta" shares it among meters of one
+    tap type and beta band (the RHG equation's bias depends on beta); "role" shares it among
+    receipt meters and, separately, among delivery meters (two ends built or calibrated
+    apart). Neither grouping is sourced; the page shows what each does."""
     f = dict(f or {})
     g = lambda k, d: f.get(k, d)   # noqa: E731
     return [
@@ -301,7 +306,7 @@ def default_comps(f=None):
         Comp("T sensor", "T1", "T_K", "rect", g("T1", 0.0), "interval"),
         Comp("T transmitter", "T1", "T_K", "rect", g("T1", 0.0), "interval"),
         Comp("T installation", "T1", "T_K", "rect", g("T1", 0.0), "interval"),
-        Comp("C", "C", "rel_C", "normal", g("C", 0.0), "period", by_class=True),
+        Comp("C", "C", "rel_C", "normal", g("C", 0.0), "period", by_class=True, class_key=c_class),
         Comp("bore d", "d", "rel_d", "rect", g("d", 0.0), "period"),
         Comp("pipe D", "D", "rel_D", "rect", g("D", 0.0), "period"),
         Comp("composition", "composition", "comp", "normal", g("composition", 0.0), "interval"),
@@ -346,7 +351,9 @@ def _scale(c, s):
     raise KeyError(c.name)
 
 
-def _class_of(s):
+def _class_of(s, key="beta"):
+    if key == "role":
+        return (s.m.role,)
     return (s.m.taps, int(s.m.beta * 10 + 1e-9))
 
 
@@ -377,9 +384,9 @@ def simulate(states, x, comps, K, rng, intervals=4, relative_only=False, scale=1
     L1 = np.array([a for a, _ in L])
     L2 = np.array([b for _, b in L])
     role = np.array([1.0 if s.m.role == "R" else -1.0 for s in states])
-    classes = [_class_of(s) for s in states]
-    cls_idx = np.array([sorted(set(classes)).index(c) for c in classes])
-    ncls = len(set(classes))
+    def classes_for(key):
+        cl = [_class_of(s, key) for s in states]
+        return np.array([sorted(set(cl)).index(c) for c in cl]), len(set(cl))
 
     # true flows (the same in every interval)
     qm_true = np.array([s.qm for s in states])
@@ -399,6 +406,7 @@ def simulate(states, x, comps, K, rng, intervals=4, relative_only=False, scale=1
         """Unit draws with sharing, shape (K, T, per). Held components repeat over T."""
         Tn = T if c.redraw == "interval" else 1
         if c.by_class:
+            cls_idx, ncls = classes_for(c.class_key)
             z = _unit(rng, c.dist, (K, Tn, ncls))[:, :, cls_idx]
         else:
             z = _unit(rng, c.dist, (K, Tn, 1))

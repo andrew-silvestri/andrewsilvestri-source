@@ -99,6 +99,11 @@ GENERATORS = [
     # but only for someone who runs that project's suite first (trap 19).
     ("beauty page: beauty/update_page.py --apply",
      ["update_page.py", "--apply"], "beauty", "site"),
+    # meter/update_page.py writes site/meter.html from meter/outputs/payload.json
+    # (built by meter/build_meter.py, about half an hour of Monte Carlo, so it is
+    # the page generator that is checked here, not the payload builder).
+    ("meter page: meter/update_page.py --apply",
+     ["update_page.py", "--apply"], "meter", "site"),
     # food and neuron were unpublished on 2026-09-09 (unpublished/RETIRED.md),
     # so site/food.html and site/neuron.html no longer exist and their page
     # generators FAILED here rather than drifting. The generators themselves

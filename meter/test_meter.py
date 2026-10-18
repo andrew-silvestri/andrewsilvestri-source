@@ -123,6 +123,16 @@ def t_cancellation(states, x):
     check("shared C error, one class, cancels in the imbalance (to second order)",
           worst < 1e-3 * float(M.cd_u(0.5)), f"max |I| {worst:.2e}, bound {1e-3 * float(M.cd_u(0.5)):.1e}")
 
+    # (a2) the same shared error grouped by role (receipts share one draw, deliveries
+    # another): two independent common errors on equal totals, so u(I) = sqrt(2) u_C
+    comps = [c for c in M.default_comps({"C": 1.0}, c_class="role") if c.group == "C"]
+    if rel:
+        comps = [c for c in M.default_comps({"C": 1.0}) if c.group == "C"]   # v1 had no grouping
+    o = M.simulate(states, x, comps, K, np.random.default_rng(4), relative_only=rel)
+    got, expect = o["imb_v"].std(ddof=1), math.sqrt(2) * float(M.cd_u(0.5))
+    check("shared C error grouped by role does NOT cancel; u(I) = sqrt(2) u_C",
+          abs(got / expect - 1) < 0.03, f"MC u(I) {got:.4e} vs analytic {expect:.4e}")
+
     vb = np.array([s.qm / (s.MW * 1e-3) * s.Zb * M.R_GERG * M.T_BASE / (M.P_BASE * 1e3) for s in states])
     role = np.array([1.0 if s.m.role == "R" else -1.0 for s in states])
     through = vb[role > 0].sum()
