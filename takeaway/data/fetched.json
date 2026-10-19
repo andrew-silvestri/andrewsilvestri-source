@@ -1,0 +1,58 @@
+{
+ "10atab.pdf": {
+  "bytes": 191478,
+  "fetched": "2026-10-18",
+  "sha1": "2cd0ec727d144585599ea4f4b2618d44e558dd6f",
+  "url": "https://www.eia.gov/outlooks/steo/tables/pdf/10atab.pdf",
+  "via": "urllib"
+ },
+ "10btab.pdf": {
+  "bytes": 118421,
+  "fetched": "2026-10-18",
+  "sha1": "a7c975cac1bfbae45f5f953289d89d5c0ffae325",
+  "url": "https://www.eia.gov/outlooks/steo/tables/pdf/10btab.pdf",
+  "via": "urllib"
+ },
+ "EIA-NaturalGasPipelineProjectsAug2026.xlsx": {
+  "bytes": 1165018,
+  "fetched": "2026-10-18",
+  "sha1": "74590df379c5a9d35f7da0c4756166d7d941c82d",
+  "url": "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjectsAug2026.xlsx",
+  "via": "urllib"
+ },
+ "STEO_m.xlsx": {
+  "bytes": 1098385,
+  "fetched": "2026-10-18",
+  "sha1": "e7d7f69720e5186296d95fa1a155443bab04fbbc",
+  "url": "https://www.eia.gov/outlooks/steo/xls/STEO_m.xlsx",
+  "via": "urllib"
+ },
+ "dpr-data.xlsx": {
+  "bytes": 156163,
+  "fetched": "2026-10-18",
+  "sha1": "cb98fa4043edee8fadad82ed58a7b4b6cc8d36e2",
+  "url": "https://www.eia.gov/petroleum/drilling/xls/dpr-data.xlsx",
+  "via": "urllib"
+ },
+ "pdq-dump-user-manual.pdf": {
+  "bytes": 488959,
+  "fetched": "2026-10-18",
+  "sha1": "0e79cc53ae1d6efc91383d7683bcafb6df70bddb",
+  "url": "https://www.rrc.texas.gov/media/50ypu2cg/pdq-dump-user-manual.pdf",
+  "via": "urllib"
+ },
+ "permian-basin-2008-to-current.xlsx": {
+  "bytes": 184753,
+  "fetched": "2026-10-18",
+  "sha1": "aaa203fb1d2f14ba9fec2d8b6072c446297b8b1d",
+  "url": "https://www.rrc.texas.gov/media/aagdoxfx/permian-basin-2008-to-current.xlsx",
+  "via": "urllib"
+ },
+ "pr-disposition-codes.pdf": {
+  "bytes": 50221,
+  "fetched": "2026-10-18",
+  "sha1": "a1d5d30dd003da410c182b1047110f0188305129",
+  "url": "https://www.rrc.texas.gov/media/wzsbfq4u/pr-disposition-codes.pdf",
+  "via": "urllib"
+ }
+}
