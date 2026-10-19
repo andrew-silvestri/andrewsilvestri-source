@@ -8,7 +8,7 @@ lines that start downstream of it, and laterals.
 
 The list starts after the capacity anchor. EIA reports PointLogic's estimate
 of Permian pipeline takeaway capacity twice in the same week, at two values:
-17.5 Bcf/d (Natural Gas Weekly Update, 2022-05-25) and 18 Bcf/d "as of May
+17.5 Bcf/d (Natural Gas Weekly Update released 2022-05-26) and 18 Bcf/d "as of May
 2022" (Today in Energy 52598, 2022-06-02). The anchor carries both. That
 estimate's definition of takeaway is not published; EIA counted Double E,
 which runs from New Mexico to Waha, in the 5.5 Bcf/d "of takeaway capacity"
@@ -23,6 +23,12 @@ newer source supersedes, is an overlay below with its source and the words
 it rests on. `status` is "confirmed" only where an opened source says the
 line is in service; everything else is "expected" and the page prints it as
 "expected, per <source, date>".
+
+Override rule. Where opened sources disagree on the month a line started,
+the later month is used and the earlier is carried as `disagrees`: capacity
+is counted from the first month every source has it in service. A start the
+sources describe as a ramp is placed at the month the stated capacity is
+reached, and the status says which part is confirmed.
 """
 import datetime as dt
 
@@ -37,7 +43,7 @@ ANCHOR = {
     "date": (2022, 5),
     "bcfd": (17.5, 18.0),
     "sources": [
-        ("EIA Natural Gas Weekly Update, 2022-05-25",
+        ("EIA Natural Gas Weekly Update, released 2022-05-26",
          "https://www.eia.gov/naturalgas/weekly/archivenew_ngwu/2022/05_26/",
          "takeaway capacity in the Permian, which is currently estimated to total 17.5 Bcf/d, according to PointLogic"),
         ("EIA Today in Energy, 2022-06-02",
@@ -60,8 +66,8 @@ PROJECTS = [
     {"name": "Matterhorn Express Pipeline", "sheet": "hist",
      # The tracker's Completed Date is 2024-09-15; EIA's own article says
      # October. Industrial Info reported it "now moving small amounts of gas"
-     # on 2024-10-03. The month shown is October, and the disagreement is
-     # carried rather than resolved.
+     # on 2024-10-03. October, by the override rule; the tracker's date is
+     # carried.
      "overlay": {"month": (2024, 10), "status": "confirmed",
                  "source": ("EIA Today in Energy 64445, 2025-02-03",
                             "https://www.eia.gov/todayinenergy/detail.php?id=64445",
@@ -81,12 +87,15 @@ PROJECTS = [
                             "transportation capacity by approximately 570 MMcf/d from the Permian Basin to South Texas")}},
     {"name": "Hugh Brinson Pipeline (formerly Warrior Pipeline) Phase I & II", "sheet": "current",
      "phase": ("Phase I", 1.5 / 2.2),
-     "overlay": {"month": (2026, 9), "status": "confirmed",
+     # In commercial service is confirmed (2026-08-05); the full 1.5 Bcf/d by
+     # September 1 was a statement of expectation on that date. Placed at
+     # September, status "expected" for the full capacity.
+     "overlay": {"month": (2026, 9), "status": "expected",
                  "source": ("BIC Magazine, 2026-08-05",
                             "https://www.bicmagazine.com/projects-expansions/midstream/energy-transfer-started-hugh-brinson-pipeline/",
                             "has officially brought its Hugh Brinson Pipeline into commercial service ... on track to "
                             "reach its full Phase I capacity of 1.5 Bcf/d by September 1, 2026"),
-                 "note": "in service from 2026-08; full 1.5 Bcf/d expected by 2026-09-01, shown from September"}},
+                 "note": "in commercial service by 2026-08-05 (confirmed); full 1.5 Bcf/d expected by 2026-09-01"}},
     {"name": "Hugh Brinson Pipeline (formerly Warrior Pipeline) Phase I & II", "sheet": "current",
      "phase": ("Phase II", 0.7 / 2.2),
      "overlay": {"month": (2027, 1), "status": "expected",

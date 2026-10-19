@@ -30,6 +30,11 @@ FILES = {
     # https://www.eia.gov/dnav/ng/ng_prod_sum_dc_stx_mmcf_a.htm (and _snm_)
     "NG_PROD_SUM_DC_STX_MMCF_A.xls": "https://www.eia.gov/dnav/ng/xls/NG_PROD_SUM_DC_STX_MMCF_A.xls",
     "NG_PROD_SUM_DC_SNM_MMCF_A.xls": "https://www.eia.gov/dnav/ng/xls/NG_PROD_SUM_DC_SNM_MMCF_A.xls",
+    # Consumption by end use, annual (MMcf): lease fuel and plant fuel, the
+    # gas burned in the field and at processing plants, which EIA's marketed
+    # production includes. https://www.eia.gov/dnav/ng/ng_cons_sum_dcu_stx_a.htm
+    "NG_CONS_SUM_DCU_STX_A.xls": "https://www.eia.gov/dnav/ng/xls/NG_CONS_SUM_DCU_STX_A.xls",
+    "NG_CONS_SUM_DCU_SNM_A.xls": "https://www.eia.gov/dnav/ng/xls/NG_CONS_SUM_DCU_SNM_A.xls",
     "EIA-NaturalGasPipelineProjectsAug2026.xlsx":
         "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjectsAug2026.xlsx",
 }
