@@ -43,7 +43,7 @@ select{font:inherit;font-size:var(--fs-1);padding:3px 6px;background:var(--bg);c
 .pipe .m{font-family:var(--mono);color:var(--dim)}
 .out{margin-top:18px;border:1px solid var(--faint);background:var(--card);padding:14px}
 .big{font-size:var(--fs0);font-weight:600;margin:0}
-svg{width:100%;height:auto;display:block;margin-top:10px}
+svg{display:block;margin-top:10px;max-width:100%}
 svg text{font-family:var(--sans);font-size:12px;fill:var(--dim)}
 .note{font-size:var(--fs-2);color:var(--dim);margin:12px 0 0}
 </style>
@@ -55,7 +55,7 @@ svg text{font-family:var(--sans);font-size:12px;fill:var(--dim)}
 
 <div class="grid">
 <fieldset><legend>Production</legend>
-<label>Growth after <span id="last_lab"></span>, per year <span class="v" id="r_v"></span><input type="range" id="r" min="0" max="15" step="0.5" value="0"></label>
+<label><span>Growth after <span id="last_lab"></span>, per year</span> <span class="v" id="r_v"></span><input type="range" id="r" min="0" max="15" step="0.5" value="0"></label>
 <label>Share of new gas that leaves by pipe, k <span class="v" id="k_v"></span><input type="range" id="k" min="0.60" max="0.90" step="any"></label>
 <label>Month the pipes are assumed full <span class="v"><select id="t0"></select></span></label>
 </fieldset>
@@ -68,8 +68,8 @@ svg text{font-family:var(--sans);font-size:12px;fill:var(--dim)}
 
 <div class="out">
 <p class="big" id="result" aria-live="polite"></p>
-<svg id="chart" viewBox="0 0 720 300" role="img" aria-label="Headroom by month: the record to the latest month, then the scenario."></svg>
-<p class="note">Solid: the record, from EIA's production estimate and the pipelines in service. Dashed: the scenario. Below the line, the pipe added since the reference month is less than the gas to move. Capacity is nameplate; lines in fact ramp up, and maintenance takes capacity out. Production after <span id="last_lab2"></span> grows at the rate set here and at no other; EIA's own forecast is not used.</p>
+<svg id="chart" viewBox="0 0 720 300" width="720" height="300" role="img" aria-label="Headroom by month: the record to the latest month, then the scenario."></svg>
+<p class="note">Solid: the record, from EIA's production estimate and the pipelines in service. Dashed: the scenario. Below the line, the pipe added since the reference month is less than the gas to move. Capacity is nameplate; lines in fact ramp up, and maintenance takes capacity out. Production after <span id="last_lab2"></span> grows at the rate set here and at no other; EIA's own forecast is not used. An expected line dated on or before <span id="last_lab3"></span> counts from the month after it, since the record holds lines confirmed in service only.</p>
 </div>
 </div>
 
@@ -85,6 +85,7 @@ const entries = DATA.entries.map(e => Object.assign({}, e, { month: E.parse(e.mo
 
 $('last_lab').textContent = name(DATA.last);
 $('last_lab2').textContent = name(DATA.last);
+$('last_lab3').textContent = name(DATA.last);
 $('k').value = DATA.k_default;
 for (const t of DATA.t0_options) {
   const o = document.createElement('option');
@@ -102,7 +103,12 @@ for (const e of entries.filter(e => e.status === 'expected')) {
 
 function draw(H, t0) {
   const keys = Object.keys(H).sort();
-  const W = 720, Ht = 300, L = 46, R = 12, T = 14, B = 34;
+  // Drawn at the container's own width in CSS px, so the 12px labels stay
+  // 12px: a fixed 720-wide viewBox scaled to a phone put them near 5px.
+  const W = Math.max(280, Math.floor($('chart').parentNode.clientWidth - 28)), Ht = 300, L = 46, R = 12, T = 30, B = 34;
+  $('chart').setAttribute('viewBox', '0 0 ' + W + ' ' + Ht);
+  $('chart').setAttribute('width', W); $('chart').setAttribute('height', Ht);
+  const every = W < 520 ? 2 : 1;   // year labels every other year when narrow
   const xs = keys.map(k => E.idx(E.parse(k)));
   const x0 = xs[0], x1 = xs[xs.length - 1];
   const vals = keys.map(k => H[k]);
@@ -116,13 +122,13 @@ function draw(H, t0) {
     s += '<line x1="' + L + '" x2="' + (W - R) + '" y1="' + Y(g) + '" y2="' + Y(g) +
       '" stroke="var(--faint)"/><text x="' + (L - 6) + '" y="' + (Y(g) + 4) + '" text-anchor="end">' + g + '</text>';
   }
-  for (let y = E.parse(keys[0])[0] + 1; y <= E.parse(keys[keys.length - 1])[0]; y++) {
+  for (let y = E.parse(keys[0])[0] + 1; y <= E.parse(keys[keys.length - 1])[0]; y += every) {
     const xv = X(y * 12);
     s += '<line x1="' + xv + '" x2="' + xv + '" y1="' + (Ht - B) + '" y2="' + (Ht - B + 4) + '" stroke="var(--rule)"/>' +
       '<text x="' + xv + '" y="' + (Ht - B + 18) + '" text-anchor="middle">' + y + '</text>';
   }
   s += '<line x1="' + L + '" x2="' + (W - R) + '" y1="' + Y(0) + '" y2="' + Y(0) + '" stroke="var(--ink)"/>';
-  s += '<text x="' + (L - 6) + '" y="' + (T + 4) + '" text-anchor="end">Bcf/d</text>';
+  s += '<text x="' + (L - 6) + '" y="14" text-anchor="end">Bcf/d</text>';
   const lastI = E.idx(last);
   const hist = keys.filter(k => E.idx(E.parse(k)) <= lastI), fut = keys.filter(k => E.idx(E.parse(k)) >= lastI);
   const path = ks => ks.map((k, i) => (i ? 'L' : 'M') + X(E.idx(E.parse(k))).toFixed(1) + ' ' + Y(H[k]).toFixed(1)).join('');
@@ -146,6 +152,7 @@ function run() {
 }
 for (const id of ['r', 'k', 'd', 't0']) $(id).addEventListener('input', run);
 $('pipes').addEventListener('change', run);
+window.addEventListener('resize', run);
 run();
 </script>
 </body></html>
