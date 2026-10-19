@@ -182,6 +182,11 @@ def _mmcfd(v):
 
 def entries():
     """The list, in date order. Each entry: name, month, bcfd, status, source, record."""
+    return sorted(entries_unsorted(), key=lambda e: e["month"])
+
+
+def entries_unsorted():
+    """The list in PROJECTS order (test_takeaway.py pairs each entry with its PROJECTS row)."""
     t = _tracker()
     out = []
     for p in PROJECTS:
@@ -203,7 +208,6 @@ def entries():
         out.append({"name": label, "month": month, "bcfd": bcfd, "status": status, "source": source,
                     "disagrees": (ov or {}).get("disagrees") or p.get("disagrees"),
                     "takeaway_source": p.get("takeaway_source"), "record": rec})
-    out.sort(key=lambda e: e["month"])
     return out
 
 

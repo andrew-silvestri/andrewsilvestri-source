@@ -186,6 +186,13 @@ TARGETS = [
     # _build (a compiled library for one machine), not the figures (the site's assets).
     target("meter", "meter-code.zip", keep={"outputs"},
            skip=("data/raw", "data/raw/*", "outputs/*.png", "_build", "_build/*")),
+    # When the pipe is full: the fetchers, readers, capacity list, model,
+    # payload builder, figures, page and app builders, the JS engine and the
+    # checks, with the payload. Not data/raw: the fetchers re-download every
+    # file and the readers refuse one whose SHA-1 differs from
+    # data/fetched.json, which is shipped.
+    target("takeaway", "takeaway-code.zip", keep={"outputs"},
+           skip=("data/raw", "data/raw/*", "outputs/*.png")),
     # food-code.zip retired with its page on 2026-09-09: food.html was
     # unpublished at Andrew's request, for now, and the last build is
     # unpublished/downloads/food-code.zip. The TARGET goes with the page,

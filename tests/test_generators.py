@@ -104,6 +104,12 @@ GENERATORS = [
     # the page generator that is checked here, not the payload builder).
     ("meter page: meter/update_page.py --apply",
      ["update_page.py", "--apply"], "meter", "site"),
+    # takeaway/update_page.py writes site/takeaway.html from
+    # takeaway/outputs/payload.json; the payload builder needs the raw files
+    # under takeaway/data/raw, which a clone does not have, so the page
+    # generator is what is checked here.
+    ("takeaway page: takeaway/update_page.py --apply",
+     ["update_page.py", "--apply"], "takeaway", "site"),
     # food and neuron were unpublished on 2026-09-09 (unpublished/RETIRED.md),
     # so site/food.html and site/neuron.html no longer exist and their page
     # generators FAILED here rather than drifting. The generators themselves
@@ -155,6 +161,10 @@ GENERATORS = [
     # made by build_aga8.py) and inlines it with engine.js into site/meter-app.html.
     ("meter app: meter/build_app.py",
      ["build_app.py"], "meter", "site"),
+    # takeaway/build_app.py inlines engine.js and the payload's record into
+    # site/takeaway-app.html.
+    ("takeaway app: takeaway/build_app.py",
+     ["build_app.py"], "takeaway", "site"),
     ("downloads: rezip_downloads.py", ["rezip_downloads.py"], ".", "zips"),
     ("sitemap: build_sitemap.py --apply",
      ["build_sitemap.py", "--apply"], ".", "site"),
