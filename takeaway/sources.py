@@ -25,6 +25,8 @@ What "Permian" means differs by source, and each reader says which:
 """
 import calendar
 import datetime as dt
+import html
+import re
 
 import openpyxl
 
@@ -114,4 +116,34 @@ def dpr_permian():
             ym = (r[0].year, r[0].month)
             if ym <= DPR_LAST_ACTUAL:
                 out[ym] = r[7] / 1e6
+    return out
+
+
+PDQ_DISTRICTS = ("7C", "08", "8A")
+PDQ_SPANS = ("2008", "2023")
+
+
+def pdq_district(d):
+    """One district's PDQ web monthly totals, Mcf/month: {(y, m): (csgd, gw)}.
+
+    Columns as the page prints them: Date, Oil (BBL), Casinghead (MCF),
+    GW Gas (MCF), Condensate (BBL). Cells are parsed from the result table's
+    rows, whose first cell is a month and year.
+    """
+    out = {}
+    for y0 in PDQ_SPANS:
+        path, _ = verified(f"pdq_{d}_{y0}.html")
+        t = path.read_text(encoding="utf-8")
+        head = re.sub(r"\s+", " ", re.sub(r"<[^>]+>", " ", t))
+        assert "Date Oil (BBL) Casinghead (MCF) GW Gas (MCF) Condensate (BBL)" in head, path
+        n = int(re.search(r"(\d+) results", head).group(1))
+        got = 0
+        for tr in re.findall(r"(?s)<tr[^>]*>(.*?)</tr>", t):
+            cells = [re.sub(r"\s+", " ", html.unescape(re.sub(r"<[^>]+>", "", c))).strip()
+                     for c in re.findall(r"(?s)<td[^>]*>(.*?)</td>", tr)]
+            if len(cells) == 5 and re.fullmatch(r"[A-Z][a-z]{2} \d{4}", cells[0]):
+                mon, yr = cells[0].split()
+                out[(int(yr), MONTHS.index(mon) + 1)] = (int(cells[2]), int(cells[3]))
+                got += 1
+        assert got == n, f"{path.name}: page says {n} results, parsed {got}"
     return out

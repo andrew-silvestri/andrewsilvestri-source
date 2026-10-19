@@ -55,6 +55,48 @@
   "url": "https://www.rrc.texas.gov/media/50ypu2cg/pdq-dump-user-manual.pdf",
   "via": "urllib"
  },
+ "pdq_08_2008.html": {
+  "bytes": 113721,
+  "fetched": "2026-10-18",
+  "sha1": "e67269568899dacfc64d02b4e82d8a6577a404e7",
+  "url": "https://webapps2.rrc.texas.gov/EWA/productionQueryAction.do?view=District&district=08&from=2008-01&to=2022-12&wellType=Both",
+  "via": "curl POST of the PDQ web form"
+ },
+ "pdq_08_2023.html": {
+  "bytes": 50672,
+  "fetched": "2026-10-18",
+  "sha1": "63d33dc231f53c7a1292ef4d73a26ef5527719a8",
+  "url": "https://webapps2.rrc.texas.gov/EWA/productionQueryAction.do?view=District&district=08&from=2023-01&to=2026-12&wellType=Both",
+  "via": "curl POST of the PDQ web form"
+ },
+ "pdq_7C_2008.html": {
+  "bytes": 113153,
+  "fetched": "2026-10-18",
+  "sha1": "a5708c1f76d039efdb553b10e569ed23fa51246e",
+  "url": "https://webapps2.rrc.texas.gov/EWA/productionQueryAction.do?view=District&district=7C&from=2008-01&to=2022-12&wellType=Both",
+  "via": "curl POST of the PDQ web form"
+ },
+ "pdq_7C_2023.html": {
+  "bytes": 50420,
+  "fetched": "2026-10-18",
+  "sha1": "1c7e07a594279b6b6a805da0bb6a41aca048e412",
+  "url": "https://webapps2.rrc.texas.gov/EWA/productionQueryAction.do?view=District&district=7C&from=2023-01&to=2026-12&wellType=Both",
+  "via": "curl POST of the PDQ web form"
+ },
+ "pdq_8A_2008.html": {
+  "bytes": 112542,
+  "fetched": "2026-10-18",
+  "sha1": "4d69d11781422dc26217fda6859ed968ebc9da95",
+  "url": "https://webapps2.rrc.texas.gov/EWA/productionQueryAction.do?view=District&district=8A&from=2008-01&to=2022-12&wellType=Both",
+  "via": "curl POST of the PDQ web form"
+ },
+ "pdq_8A_2023.html": {
+  "bytes": 50255,
+  "fetched": "2026-10-18",
+  "sha1": "1e8a5584a6ca6960201a25d9d338e66221b47835",
+  "url": "https://webapps2.rrc.texas.gov/EWA/productionQueryAction.do?view=District&district=8A&from=2023-01&to=2026-12&wellType=Both",
+  "via": "curl POST of the PDQ web form"
+ },
  "permian-basin-2008-to-current.xlsx": {
   "bytes": 184753,
   "fetched": "2026-10-18",
