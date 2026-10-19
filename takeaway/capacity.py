@@ -135,6 +135,14 @@ PROJECTS = [
                  "source": (TRACKER_CITE, None, "pushing completion date from 2/15/27 unitl 2/15/30")}},
 ]
 
+# Before the anchor. Not added to any capacity level (the anchor already
+# contains them, under its own definition); used only to date the starts the
+# venting-and-flaring figure marks. Each is in the tracker's historical sheet
+# with Status Completed and a Completed Date, and its note describes takeaway
+# from the Permian to a market outside it. Double E is left out: it runs from
+# New Mexico to Waha, inside the basin by the rule above.
+PRE_ANCHOR = ["Gulf Coast Express", "Permian Highway Pipeline Project", "Whistler Pipeline Project"]
+
 EXCLUDED = {
     "Apex": "status On Hold",
     "Blackfin Pipeline": "starts in Colorado County, downstream of the basin",
@@ -196,6 +204,20 @@ def entries():
                     "disagrees": (ov or {}).get("disagrees") or p.get("disagrees"),
                     "takeaway_source": p.get("takeaway_source"), "record": rec})
     out.sort(key=lambda e: e["month"])
+    return out
+
+
+def pre_anchor():
+    """The pre-anchor starts: name, month, Bcf/d, tracker note."""
+    t = _tracker()
+    out = []
+    for name in PRE_ANCHOR:
+        rec = t[("hist", name)]
+        cd = rec["Completed Date"]
+        assert str(rec["Status"]).strip() == "Completed" and isinstance(cd, dt.datetime), (name, rec["Status"], cd)
+        out.append({"name": name, "month": (cd.year, cd.month), "bcfd": _mmcfd(rec["Additional Capacity (MMcf/d)"]) / 1000,
+                    "status": "confirmed", "source": (TRACKER_CITE, None, f"Status Completed, Completed Date {cd.date()}"),
+                    "note": rec["Project Notes"]})
     return out
 
 

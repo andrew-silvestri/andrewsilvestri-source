@@ -30,6 +30,12 @@ FILES = {
     # https://www.eia.gov/dnav/ng/ng_prod_sum_dc_stx_mmcf_a.htm (and _snm_)
     "NG_PROD_SUM_DC_STX_MMCF_A.xls": "https://www.eia.gov/dnav/ng/xls/NG_PROD_SUM_DC_STX_MMCF_A.xls",
     "NG_PROD_SUM_DC_SNM_MMCF_A.xls": "https://www.eia.gov/dnav/ng/xls/NG_PROD_SUM_DC_SNM_MMCF_A.xls",
+    # The same, monthly. Vented and flared (N9040xx2) runs to 2024-12 here;
+    # "From 2011 forward, gross withdrawals, repressuring, vented and flared
+    # ... data were obtained directly from state agencies" (EIA's table
+    # notes), which for Texas is the Railroad Commission.
+    "NG_PROD_SUM_DC_STX_MMCF_M.xls": "https://www.eia.gov/dnav/ng/xls/NG_PROD_SUM_DC_STX_MMCF_M.xls",
+    "NG_PROD_SUM_DC_SNM_MMCF_M.xls": "https://www.eia.gov/dnav/ng/xls/NG_PROD_SUM_DC_SNM_MMCF_M.xls",
     # Consumption by end use, annual (MMcf): lease fuel and plant fuel, the
     # gas burned in the field and at processing plants, which EIA's marketed
     # production includes. https://www.eia.gov/dnav/ng/ng_cons_sum_dcu_stx_a.htm

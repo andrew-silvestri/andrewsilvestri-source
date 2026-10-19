@@ -147,3 +147,84 @@ def pdq_district(d):
                 got += 1
         assert got == n, f"{path.name}: page says {n} results, parsed {got}"
     return out
+
+
+def _eia_annual(name, year):
+    """One year's row of an EIA dnav annual workbook, as {sourcekey: value}."""
+    import xlrd
+    path, _ = verified(name)
+    sh = xlrd.open_workbook(path).sheet_by_name("Data 1")
+    keys = [sh.cell_value(1, c) for c in range(sh.ncols)]
+    for r in range(3, sh.nrows):
+        if xlrd.xldate_as_datetime(sh.cell_value(r, 0), 0).year == year:
+            return {k: sh.cell_value(r, c) for c, k in enumerate(keys) if c}
+    raise KeyError(f"{name}: no row for {year}")
+
+
+def residue_share(year):
+    """EIA's statewide ratios standing in for the Permian's k (PLAN 3.2), for one year.
+
+    Returns, for "TX", "NM" and "both": dry / marketed, and (dry - lease fuel -
+    plant fuel) / marketed. Series: marketed N9050xx2, dry NA1160_Sxx_2, lease
+    fuel NA1840_Sxx_2, plant fuel NA1850_Sxx_2, all MMcf.
+    """
+    raw = {}
+    for st, code in (("TX", "STX"), ("NM", "SNM")):
+        p = _eia_annual(f"NG_PROD_SUM_DC_{code}_MMCF_A.xls", year)
+        c = _eia_annual(f"NG_CONS_SUM_DCU_{code}_A.xls", year)
+        raw[st] = {"marketed": p[f"N9050{st}2"], "dry": p[f"NA1160_{code}_2"],
+                   "lease": c[f"NA1840_{code}_2"], "plant": c[f"NA1850_{code}_2"]}
+    raw["both"] = {k: raw["TX"][k] + raw["NM"][k] for k in raw["TX"]}
+    out = {}
+    for st, v in raw.items():
+        out[st] = {"dry": v["dry"] / v["marketed"],
+                   "net": (v["dry"] - v["lease"] - v["plant"]) / v["marketed"], "raw": v}
+    return out
+
+
+def rrc_permian_mcf():
+    """The RRC workbook's monthly cells as filed, Mcf/month: {(y, m): (csgd, gw)}."""
+    path, _ = verified("permian-basin-2008-to-current.xlsx")
+    wb = openpyxl.load_workbook(path, read_only=True, data_only=True)
+    rows = list(wb["Sheet1"].iter_rows(values_only=True))
+    head = next(i for i, r in enumerate(rows) if r[0] == "Production Totals by Month")
+    return {(int(r[1]), int(r[3])): (r[5], r[6]) for r in rows[head + 2:]
+            if r[0] == "PERMIAN BASIN" and (r[5] or r[6])}
+
+
+def eia_vented_flared(state_code, years):
+    """EIA annual vented and flared (N9040xx2) and gross withdrawals (N9010xx2), MMcf."""
+    st = state_code[1:]
+    return {y: (_eia_annual(f"NG_PROD_SUM_DC_{state_code}_MMCF_A.xls", y)[f"N9040{st}2"],
+                _eia_annual(f"NG_PROD_SUM_DC_{state_code}_MMCF_A.xls", y)[f"N9010{st}2"]) for y in years}
+
+
+def eia_vented_flared_monthly(state_code):
+    """EIA monthly vented and flared and gross withdrawals, MMcf/month:
+    {(y, m): (vented_flared, gross)}, months where both are filled."""
+    import xlrd
+    path, _ = verified(f"NG_PROD_SUM_DC_{state_code}_MMCF_M.xls")
+    sh = xlrd.open_workbook(path).sheet_by_name("Data 1")
+    st = state_code[1:]
+    keys = [sh.cell_value(1, c) for c in range(sh.ncols)]
+    cv, cg = keys.index(f"N9040{st}2"), keys.index(f"N9010{st}2")
+    out = {}
+    for r in range(3, sh.nrows):
+        v, g = sh.cell_value(r, cv), sh.cell_value(r, cg)
+        if v != "" and g != "":
+            d = xlrd.xldate_as_datetime(sh.cell_value(r, 0), 0)
+            out[(d.year, d.month)] = (float(v), float(g))
+    return out
+
+
+def dpr_region_counties():
+    """Counties in EIA's Permian region by state, from dpr-data.xlsx RegionCounties."""
+    path, _ = verified("dpr-data.xlsx")
+    wb = openpyxl.load_workbook(path, read_only=True, data_only=True)
+    rows = list(wb["RegionCounties"].iter_rows(values_only=True))
+    assert rows[0][:5] == ("State", "County", "StateID", "CountyID", "Region"), rows[0]
+    out = {}
+    for r in rows[1:]:
+        if r and r[4] and "Permian" in str(r[4]):
+            out.setdefault(r[0], []).append(r[1])
+    return out
