@@ -42,7 +42,7 @@ const http = require('http');
 const { chromium } = require('playwright');
 
 const SITE = path.join(__dirname, '..', 'site');
-const PAGES = ['index', 'about', 'code', 'heat', 'storage', 'climate-cost', 'longevity', 'skyline', 'continents', 'beauty'];
+const PAGES = ['index', 'about', 'code', 'heat', 'storage', 'climate-cost', 'longevity', 'skyline', 'continents', 'beauty', 'meter'];
 /* The four full-screen apps. They carry no nav.top, no <main> and no
    .index, so most of the checks above them no-op; what they are here for is
    the fixed-block and sideways-scroll checks, at the two widths nothing has

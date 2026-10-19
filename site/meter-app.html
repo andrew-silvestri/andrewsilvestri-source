@@ -540,8 +540,12 @@ function draw(y, lo, hi) {
   }
   x.fillStyle = getComputedStyle(document.body).getPropertyValue("--dim");
   x.font = "12px " + getComputedStyle(document.body).getPropertyValue("--mono");
-  x.textAlign = "center";
-  for (const t of [-m, -m / 2, 0, m / 2, m]) x.fillText(t.toFixed(2) + "%", (t + m) / (2 * m) * W, H - 6);
+  // the outermost labels align inward: centred on the canvas edge they were cut in half
+  const ticks = [-m, -m / 2, 0, m / 2, m];
+  ticks.forEach((t, k) => {
+    x.textAlign = k === 0 ? "left" : k === ticks.length - 1 ? "right" : "center";
+    x.fillText(t.toFixed(2) + "%", (t + m) / (2 * m) * W, H - 6);
+  });
 }
 
 function fmt(r, key) {
@@ -569,7 +573,8 @@ $("go").addEventListener("click", () => {
       const price = +$("price").value;
       $("o_u").textContent = fmt(res, "u");
       $("o_ci").textContent = fmt(res, "low") + " to " + fmt(res, "high");
-      $("o_usd").textContent = "$" + Math.round(res.u * mmbtud * 365 * price).toLocaleString("en-US") + " a year";
+      // two significant figures, as on the page: u itself is known to about two
+      $("o_usd").textContent = "$" + Number((res.u * mmbtud * 365 * price).toPrecision(2)).toLocaleString("en-US") + " a year";
       $("o_tp").textContent = mmcfd.toFixed(0) + " MMcf/d";
       $("o_e").textContent = Math.round(mmbtud).toLocaleString("en-US") + " MMBtu/d";
       $("o_mc").textContent = res.trials.toLocaleString("en-US") + " trials, " + res.batches + " batches" +
