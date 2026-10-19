@@ -23,6 +23,13 @@ FILES = {
     # before DPR moved into STEO 10a. It carries total gas production by
     # region, which STEO 10a does not.
     "dpr-data.xlsx": "https://www.eia.gov/petroleum/drilling/xls/dpr-data.xlsx",
+    # Natural gas production summary by state, annual (MMcf): gross
+    # withdrawals (by well type), repressuring, vented and flared,
+    # nonhydrocarbon gases removed, marketed production, natural gas plant
+    # liquids production (gaseous equivalent), dry production.
+    # https://www.eia.gov/dnav/ng/ng_prod_sum_dc_stx_mmcf_a.htm (and _snm_)
+    "NG_PROD_SUM_DC_STX_MMCF_A.xls": "https://www.eia.gov/dnav/ng/xls/NG_PROD_SUM_DC_STX_MMCF_A.xls",
+    "NG_PROD_SUM_DC_SNM_MMCF_A.xls": "https://www.eia.gov/dnav/ng/xls/NG_PROD_SUM_DC_SNM_MMCF_A.xls",
     "EIA-NaturalGasPipelineProjectsAug2026.xlsx":
         "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjectsAug2026.xlsx",
 }

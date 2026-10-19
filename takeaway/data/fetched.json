@@ -20,6 +20,20 @@
   "url": "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjectsAug2026.xlsx",
   "via": "urllib"
  },
+ "NG_PROD_SUM_DC_SNM_MMCF_A.xls": {
+  "bytes": 34304,
+  "fetched": "2026-10-18",
+  "sha1": "96a97af077f6ddca1e782fe1ae875e20491fffda",
+  "url": "https://www.eia.gov/dnav/ng/xls/NG_PROD_SUM_DC_SNM_MMCF_A.xls",
+  "via": "urllib"
+ },
+ "NG_PROD_SUM_DC_STX_MMCF_A.xls": {
+  "bytes": 34304,
+  "fetched": "2026-10-18",
+  "sha1": "abea7fe704b21659e27ea4ec71ca4a20d921f8ae",
+  "url": "https://www.eia.gov/dnav/ng/xls/NG_PROD_SUM_DC_STX_MMCF_A.xls",
+  "via": "urllib"
+ },
  "STEO_m.xlsx": {
   "bytes": 1098385,
   "fetched": "2026-10-18",
