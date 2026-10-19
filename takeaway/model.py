@@ -62,8 +62,11 @@ def grow(P, last, r, until):
 def scenario(P, last, entries, k, t0, r, delay, until, include=None):
     """The app's run. entries: [{"month", "bcfd", "status", "key"}]. Expected
     entries move `delay` months later; `include` (a set of keys) drops any
-    expected entry not in it. Returns (H by month, first month after `last`
-    with H < 0 or None)."""
+    expected entry not in it. An expected entry never counts at or before
+    `last`, the end of the record: the record holds only lines confirmed in
+    service (the page review found the page's headline counting one that was
+    only expected). Returns (H by month, first month after `last` with H < 0
+    or None)."""
     adds = []
     for e in entries:
         m = e["month"]
@@ -71,6 +74,8 @@ def scenario(P, last, entries, k, t0, r, delay, until, include=None):
             if include is not None and e["key"] not in include:
                 continue
             m = add_months(m, delay)
+            if m <= last:
+                m = add_months(last, 1)
         adds.append((m, e["bcfd"]))
     Pg = grow(P, last, r, until)
     H = headroom(Pg, adds, k, t0, month_range(t0, until))

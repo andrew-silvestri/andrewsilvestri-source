@@ -166,7 +166,9 @@ def headroom_fig(P, width, out):
     ax.plot(x, h, color=ACC, lw=2.2, marker="o", ms=3, label="Headroom at default k")
     ax.axhline(0, color=INK, lw=1)
     texts = []
-    big = [e for e in P["entries"] if e["bcfd"] >= 0.5 and keys[0] <= e["month"] <= keys[-1]]
+    # starts on the record only: an expected line is not counted in H, so it is not marked
+    big = [e for e in P["entries"] if e["status"] == "confirmed" and e["bcfd"] >= 0.5
+           and keys[0] <= e["month"] <= keys[-1]]
     for i, e in enumerate(big):
         xm = yr(e["month"])
         ax.axvline(xm, color=RULE, lw=1, zorder=0)

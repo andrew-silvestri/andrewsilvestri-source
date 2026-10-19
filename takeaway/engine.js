@@ -61,6 +61,7 @@
       if (e.status === 'expected') {
         if (include && !include.has(e.key)) continue;
         m = addMonths(m, delay);
+        if (idx(m) <= idx(last)) m = addMonths(last, 1);   // the record holds confirmed lines only
       }
       adds.push([m, e.bcfd]);
     }

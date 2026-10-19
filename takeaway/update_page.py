@@ -116,12 +116,13 @@ def values(P):
     hb1 = next(e for e in ent if e["name"].endswith("Phase I & II Phase I"))
     cap = P["capacity"]
     cap_keys = sorted(cap)
-    cap_t0 = sum(e["bcfd"] for e in ent if t0 < e["month"] <= last)
+    cap_t0 = sum(e["bcfd"] for e in conf if t0 < e["month"] <= last)
     dP = steo[last] - steo[t0]
     neg = [m for m in sorted(H) if H[m] < 0]
     neg_hi = [m for m in sorted(H) if min(lo[m], hi[m]) < 0]
     after_m = next(m for m in sorted(H) if m >= mh["month"])
     hmin = min(H, key=H.get)
+    hpeak = max(H, key=H.get)
     fl = P["flaring"]
     share = fl["share"]
     vf_last = fl["last"]
@@ -138,6 +139,10 @@ def values(P):
         "cap_t0": f2(cap_t0), "dP_t0": f2(dP), "kdP_t0": f2(k["default"] * dP),
         "H_last": signed(H[last]), "H_after_m": signed(H[after_m]),
         "H_min": signed(H[hmin]), "H_min_month": long(hmin),
+        "H_peak": signed(H[hpeak]), "H_peak_month": long(hpeak),
+        "H_with_hb": signed(P["H_with_expected"][last]),
+        "c2_diff": signed(100 * c2["diff"]), "pl_min": signed(100 * fl["placebo_range"][0]),
+        "r_run": str(cited.reuters_run()),
         "band_max": f2(max(abs(lo[m] - hi[m]) for m in H)),
         "n_neg": str(len(neg)), "neg_months": month_list(neg), "n_neg_hi": str(len(neg_hi)),
         "k_def": f"{k['default']:.3f}", "k_year": str(k["year"]),
@@ -186,7 +191,13 @@ def claims(P, H, lo, hi, mh, after_m, peak, c1, c2, chk, neg, conf):
          P["steo"]["P"][P["anchor"]["month"]] > P["anchor"]["hi"]),
         ("'production growth then ate it': headroom fell after Matterhorn",
          min(H[m] for m in H if m > after_m) < H[after_m]),
-        ("'It was not a steady gain': headroom went below zero at least once", len(neg) > 0),
+        ("'The path between was not steady': headroom went below zero at least once", len(neg) > 0),
+        ("'less headroom than in' t0", H[P["steo"]["last_historical"]] < 0),
+        ("the record counts no expected line", all(
+            abs(H[m] - (sum(e["bcfd"] for e in conf if P["t0"] < e["month"] <= m)
+                        - P["k"]["default"] * (P["steo"]["P"][m] - P["steo"]["P"][P["t0"]]))) < 1e-9 for m in H)),
+        ("'the 2021 one only just': its fall exceeds the largest placebo fall by under a tenth of a point",
+         0 < P["flaring"]["placebo_range"][0] - c2["diff"] < 0.001),
         ("alt: near zero February to May 2026", near and all(abs(H[m]) < NEAR_ZERO for m in near)),
         ("'It was not': production did not grow faster after Matterhorn than before t0",
          P["pin"]["after"] <= P["pin"]["before"]),

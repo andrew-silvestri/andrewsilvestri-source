@@ -743,7 +743,9 @@ PAGES = {
          'Enbridge, 6 August 2026 (Blackcomb Pipeline commissioning); '
          'U.S. Energy Information Administration, <i>Today in Energy</i>, '
          '26 May 2026 (planned capacity additions in 2026 and 2027).',
-         "The in-service and expected dates the table attributes to each."),
+         "The in-service and expected dates the table attributes to each; "
+         "Enbridge for Blackcomb's commissioning, which the page does not count "
+         "as service."),
         ("Table 5a, series NGMPPM",
          'U.S. Energy Information Administration, <i>Short-Term Energy '
          'Outlook</i>, October 2026, data tables (STEO_m.xlsx).',
@@ -774,7 +776,8 @@ PAGES = {
          "notes say these come from state agencies from 2011."),
         ("shut-ins of 2020",
          'U.S. Energy Information Administration, <i>Today in Energy</i>, '
-         '22 December 2021, "U.S. crude oil production fell by 8% in 2020".',
+         '9 March 2021 (republished 22 December 2021), "U.S. crude oil production '
+         'fell by 8% in 2020".',
          "Operators shut in wells as crude prices fell from March 2020."),
         ("February 2021 winter storm",
          'U.S. Energy Information Administration, <i>Today in Energy</i>, '
@@ -786,7 +789,8 @@ PAGES = {
          'Reuters, in Pipeline &amp; Gas Journal, 28 May 2026, "Waha gas prices '
          'hit 16-week high as Permian pipeline constraints ease".',
          "Waha daily prices below zero 49 times in 2024, 39 in 2025 and 87 in "
-         "2026 to date, and the 2026 run attributed to spring maintenance."),
+         "2026 to date, and a record 78-day run below zero attributed to "
+         "spring maintenance."),
     ],
 }
 

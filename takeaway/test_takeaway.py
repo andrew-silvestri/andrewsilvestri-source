@@ -211,7 +211,7 @@ def headroom_check():
           all(abs(h[t] - (2.5 if t >= m else 0.0)) < 1e-12 for t in months), f"H(m) = {h[m]:+.3f}")
     pay = json.load(open(PAYLOAD, encoding="utf-8"))
     last, t0 = pay["steo"]["last_historical"], pay["t0"]
-    added = sum(e["bcfd"] for e in pay["entries"] if t0 < e["month"] <= last)
+    added = sum(e["bcfd"] for e in pay["entries"] if e["status"] == "confirmed" and t0 < e["month"] <= last)
     want = added - pay["k"]["default"] * (pay["steo"]["P"][last] - pay["steo"]["P"][t0])
     got = pay["H"][last] if BREAK != "sign" else added + pay["k"]["default"] * (pay["steo"]["P"][last] - pay["steo"]["P"][t0])
     check(f"5 payload H at {last} equals the hand sum", abs(got - want) < 1e-12, f"{got:+.4f} vs {want:+.4f}")
@@ -232,7 +232,7 @@ def page_numbers():
     conf = [e for e in ent if e["status"] == "confirmed"]
     exp = [e for e in ent if e["status"] == "expected"]
     dP = P[last] - P[t0]
-    added = sum(e["bcfd"] for e in ent if t0 < e["month"] <= last)
+    added = sum(e["bcfd"] for e in conf if t0 < e["month"] <= last)
     fl = pay["flaring"]
     c = [x for x in fl["clusters"] if "diff" in x]
     derived = {
@@ -240,7 +240,7 @@ def page_numbers():
         "pipe added since t0": f"{added:.2f} Bcf/d of pipe",
         "production rise": f"risen {dP:.2f} Bcf/d",
         "gas to move": f"of which {k * dP:.2f} has to leave",
-        "headroom": f"{added - k * dP:+.2f} Bcf/d of headroom",
+        "headroom": f"at {added - k * dP:+.2f} Bcf/d: on this accounting",
         "k": f"k = {k:.3f}",
         "in-service total": f"{len(conf)} additions are in service, {sum(e['bcfd'] for e in conf):.2f} Bcf/d",
         "expected total": f"Another {sum(e['bcfd'] for e in exp):.2f} Bcf/d",

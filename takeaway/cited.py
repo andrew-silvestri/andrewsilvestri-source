@@ -42,6 +42,10 @@ def eia_pct():
     return int(m.group(1)), int(m.group(2))
 
 
+def reuters_run():
+    return int(re.search(r"record (\d+) days in a row", REUTERS["cause"]).group(1))
+
+
 def reuters_counts():
     q = REUTERS["quote"]
     out = {int(y): int(n) for n, y in re.findall(r"(\d+) times in (\d{4})", q)}

@@ -75,12 +75,16 @@ def main():
                                 capacity.ANCHOR["date"], t)
         cap[key(t)] = {"lo": lo0 + a, "hi": hi0 + a, "lo_confirmed": lo0 + conf, "hi_confirmed": hi0 + conf}
 
-    # headroom
+    # headroom on the record: lines confirmed in service only (the page review
+    # found the first build counting Hugh Brinson's phase I, whose full
+    # capacity was only expected, in the headline)
+    conf_adds = [(e["month"], e["bcfd"]) for e in entries if e["status"] == "confirmed"]
     months = M.month_range(H_FROM, last)
-    H = {key(t): v for t, v in M.headroom(P, adds, k_def, T0, months).items()}
-    Hb = {name: {key(t): v for t, v in M.headroom(P, adds, kk, T0, months).items()}
+    H = {key(t): v for t, v in M.headroom(P, conf_adds, k_def, T0, months).items()}
+    H_all = {key(t): v for t, v in M.headroom(P, adds, k_def, T0, months).items()}
+    Hb = {name: {key(t): v for t, v in M.headroom(P, conf_adds, kk, T0, months).items()}
           for name, kk in (("k_lo", k_band[0]), ("k_hi", k_band[1]))}
-    Halt = {key(t0): {key(t): v for t, v in M.headroom(P, adds, k_def, t0, months).items()} for t0 in T0_ALT}
+    Halt = {key(t0): {key(t): v for t, v in M.headroom(P, conf_adds, k_def, t0, months).items()} for t0 in T0_ALT}
 
     # the t0 checks (PLAN 3.4)
     pin = {"before": M.growth(P, *PIN_BEFORE), "after": M.growth(P, *PIN_AFTER),
@@ -138,7 +142,7 @@ def main():
         "k": {"year": ky, "default": k_def, "lo": k_band[0], "hi": k_band[1],
               "by_state": {s: {"dry": v["dry"], "net": v["net"]} for s, v in ks.items()}},
         "t0": key(T0), "t0_alt": [key(t) for t in T0_ALT],
-        "H": H, "H_band": Hb, "H_alt": Halt,
+        "H": H, "H_with_expected": H_all, "H_band": Hb, "H_alt": Halt,
         "pin": pin,
         "flaring": {"source": "EIA monthly Texas vented and flared over gross withdrawals",
                     "share": {key(t): v for t, v in sorted(share.items())},
