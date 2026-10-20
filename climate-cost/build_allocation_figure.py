@@ -1,9 +1,9 @@
 """
 The allocation figure on climate-cost.html, drawn from the model of record.
 
-Two panels, one axis. Left: a kilogram of hard cheese, France to New York,
+Two panels, one axis. Above: a kilogram of hard cheese, France to New York,
 under every published way of splitting a dairy cow between her milk and her
-meat. Right: a pair of leather shoes, Italy to New York, under every published
+meat. Below: a pair of leather shoes, Italy to New York, under every published
 way of splitting a beef animal between its meat and its hide. Same model, same
 engine, same scale; the only thing that changes between bars is the one number
 on the contested edge.
