@@ -58,8 +58,10 @@ canvas{width:100%;height:180px;display:block;margin-top:10px}
 <p class="sub">Orifice meters on one gas system, every error from a cited public figure or a labelled assumption.
 An explainer: it states no uncertainty for any real installation. <a href="meter.html">The page that explains it</a></p>
 
+<div class="radio" id="sysrow"><label><input type="radio" name="sys" value="page" checked><span id="sys_page"></span></label>
+<label><input type="radio" name="sys" value="own">the system set below</label></div>
 <div class="grid">
-<fieldset><legend>Receipt meters</legend>
+<fieldset id="rf"><legend>Receipt meters</legend>
 <label>Number <span class="v" id="nr_v"></span><input type="range" id="nr" min="1" max="60" step="1" value="12"></label>
 <label>Pipe inside diameter <span class="v"><select id="rD"><option value="0.0779">77.9 mm (3 in)</option><option value="0.1023" selected>102.3 mm (4 in)</option><option value="0.1541">154.1 mm (6 in)</option></select></span></label>
 <label>Beta ratio <span class="v" id="rb_v"></span><input type="range" id="rb" min="0.2" max="0.7" step="0.01" value="0.5"></label>
@@ -67,7 +69,7 @@ An explainer: it states no uncertainty for any real installation. <a href="meter
 <label>Running at, share of dp span <span class="v" id="rs_v"></span><input type="range" id="rs" min="0.1" max="1" step="0.01" value="0.5"></label>
 </fieldset>
 
-<fieldset><legend>Delivery meters</legend>
+<fieldset id="df"><legend>Delivery meters</legend>
 <label>Number <span class="v" id="nd_v"></span><input type="range" id="nd" min="1" max="8" step="1" value="3"></label>
 <label>Pipe inside diameter <span class="v"><select id="dD"><option value="0.1541">154.1 mm (6 in)</option><option value="0.2027" selected>202.7 mm (8 in)</option><option value="0.3048">304.8 mm (12 in)</option><option value="0.3874">387.4 mm (16 in)</option></select></span></label>
 <label>Beta ratio <span class="v" id="db_v"></span><input type="range" id="db" min="0.2" max="0.7" step="0.01" value="0.55"></label>
@@ -76,13 +78,13 @@ An explainer: it states no uncertainty for any real installation. <a href="meter
 </fieldset>
 
 <fieldset><legend>Which errors are shared</legend>
-<label>Discharge coefficient <span class="v" id="fC_v"></span><input type="range" id="fC" min="0" max="1" step="0.05" value="0.5"></label>
+<label>Discharge coefficient <span class="v" id="fC_v"></span><input type="range" id="fC" min="0" max="1" step="0.05" value="0"></label>
 <div class="radio"><label><input type="radio" name="cls" value="beta" checked>by tap and beta band</label>
 <label><input type="radio" name="cls" value="role">receipts apart from deliveries</label></div>
 <label>Transmitters (dp, pressure, temperature) <span class="v" id="fX_v"></span><input type="range" id="fX" min="0" max="1" step="0.05" value="0"></label>
 <label>Bore and pipe diameters <span class="v" id="fG_v"></span><input type="range" id="fG" min="0" max="1" step="0.05" value="0"></label>
 <label>Gas analysis <span class="v" id="fA_v"></span><input type="range" id="fA" min="0" max="1" step="0.05" value="0"></label>
-<p class="note">0 is independent at every meter; 1 is one common error. The discharge coefficient's starts at 0.5 and that is arbitrary: no open source fixes it.</p>
+<p class="note">0 is independent at every meter; 1 is one common error. The discharge coefficient's starts at 0, the first row of the page's table; no open source says which value is right.</p>
 </fieldset>
 
 <fieldset><legend>Gas, period, price</legend>
@@ -127,6 +129,17 @@ const show = {
   nd: v => v, db: v => (+v).toFixed(2), dpp: v => v + " psia",
   fC: v => (+v).toFixed(2), fX: v => (+v).toFixed(2), fG: v => (+v).toFixed(2), fA: v => (+v).toFixed(2),
 };
+// the page's system, described from the data it is built from (meter/build_app.py)
+{
+  const r = TABLE.page_system.filter(m => m.role === "R"), d = TABLE.page_system.filter(m => m.role === "D");
+  const dps = r.map(m => m.dp), pct = v => Math.round(v * 100) + "%";
+  $("sys_page").textContent = "the page's system: " + r.length + " receipts at " + Math.min(...dps) + " to " + Math.max(...dps) +
+    " kPa of a " + r[0].span_dp + " kPa span; " + d.length + " deliveries taking " + d.map(m => pct(m.share)).join(", ");
+  const sync = () => { const own = document.querySelector("input[name=sys]:checked").value === "own";
+    $("rf").disabled = $("df").disabled = !own; };
+  for (const el of document.querySelectorAll("input[name=sys]")) el.addEventListener("change", sync);
+  sync();
+}
 for (const id in show) {
   const el = $(id), lab = $(id === "dpp" ? "dp_v" : id + "_v");
   const f = () => { lab.textContent = show[id](el.value); };
@@ -135,6 +148,8 @@ for (const id in show) {
 
 function system() {
   const g = TABLE.gases.find(t => t.name === gasSel.value);
+  if (document.querySelector("input[name=sys]:checked").value === "page")
+    return { g, st: E.buildSystem(g, TABLE.page_system.map(m => Object.assign({}, m))) };
   const PSI = E.PSI, TF = (60 + 10 - 32) / 1.8 + 273.15, TD = (60 - 32) / 1.8 + 273.15;
   const ms = [];
   const nr = +$("nr").value, nd = +$("nd").value;
@@ -201,6 +216,7 @@ $("go").addEventListener("click", () => {
       $("o_mc").textContent = res.trials.toLocaleString("en-US") + " trials, " + res.batches + " batches" +
         (res.stable ? "" : " (stopped at the cap before 7.9.4 was met)") + ", " + ((performance.now() - t0) / 1000).toFixed(0) + " s";
       $("out").hidden = false;
+      window.__meterLast = { u: res.u, delta: res.delta, low: res.low, high: res.high, mmcfd };   // test hook: tests/test_parity_meter.py check 4
       let all = []; for (const a of pooled) all = all.concat(Array.from(a));
       draw(all, res.low, res.high);
     } catch (e) { $("err").textContent = e.message; }

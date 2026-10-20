@@ -16,10 +16,21 @@ On the tests/test_parity.py pattern: the same inputs through both, compared.
      this is a statistical agreement, and the tolerance is the one each side
      reports for itself.
 
---break port   perturbs one RHG coefficient in the JS (0.0261 -> 0.0262), as a
-               port that drifted would; part 1 must fail, and the run exits 1.
+  4. The app's opening state against the page's table (Q2). site/meter-app.html
+     is loaded in Chromium untouched: the system it builds before anyone moves
+     a control must be model.default_meters() field for field, its sharing
+     controls must be the first row's (C independent, by tap and beta band,
+     every other shared fraction 0), its gas, calibrations and price the
+     payload's; then Run is pressed and its u(I) and throughput must agree
+     with that row's within the two sides' own tolerances.
 
-Run:  python tests/test_parity_meter.py [--break port]
+--break port     perturbs one RHG coefficient in the JS (0.0261 -> 0.0262), as a
+                 port that drifted would; part 1 must fail, and the run exits 1.
+--break opening  serves the app with its pre-Q2 opening state (its own controls'
+                 system, the C slider at 0.50), which opened at 95 MMcf/d and
+                 0.12% against the page's 101 and 0.18%; part 4 must fail, exit 1.
+
+Run:  python tests/test_parity_meter.py [--break port|opening]
 """
 import json
 import math
@@ -38,7 +49,10 @@ import model as M                        # noqa: E402
 import build_app as B                    # noqa: E402
 from aga8lib import AGA8                 # noqa: E402
 
-BREAK = "--break" in sys.argv
+BREAK_MODE = sys.argv[sys.argv.index("--break") + 1] if "--break" in sys.argv else None
+if BREAK_MODE not in (None, "port", "opening"):
+    sys.exit(f"unknown --break {BREAK_MODE}")
+BREAK = BREAK_MODE == "port"
 fails = []
 
 
@@ -150,8 +164,82 @@ def main():
         check(f"Monte Carlo {k} of the energy imbalance, JS vs Python", abs(js[k] - py[k]) <= tol,
               f"JS {js[k]:.5e} ({js['batches']} batches, {js['seconds']:.0f} s) vs Python {py[k]:.5e}; "
               f"tolerance {tol:.1e}")
+    opening()
     print(f"{len(fails)} failure(s)")
     return 1 if fails else 0
+
+
+OPEN_JS = r"""
+const pw = require('playwright');
+(async () => {
+  const b = await pw.chromium.launch();
+  const page = await b.newPage({ viewport: { width: 1440, height: 900 } });
+  await page.goto('file:///' + process.argv[2].replace(/\\/g, '/'));
+  const st = await page.evaluate(() => {
+    // the meters as handed to the engine: buildSystem solves the deliveries' dp in place
+    const orig = E.buildSystem; let seen = null;
+    E.buildSystem = (g, ms) => { seen = JSON.parse(JSON.stringify(ms)); return orig(g, ms); };
+    try { system(); } finally { E.buildSystem = orig; }
+    const v = id => document.getElementById(id).value;
+    return { meters: seen, C: +v('fC'), X: +v('fX'), G: +v('fG'), A: +v('fA'),
+             cls: document.querySelector('input[name=cls]:checked').value, gas: v('gas'),
+             ints: +v('ints'), price: v('price') };
+  });
+  await page.click('#go');
+  await page.waitForFunction(() => window.__meterLast, null, { timeout: 600000 });
+  st.run = await page.evaluate(() => window.__meterLast);
+  st.shown = { u: await page.textContent('#o_u'), tp: await page.textContent('#o_tp') };
+  process.stdout.write(JSON.stringify(st));
+  await b.close();
+})().catch(e => { console.error(e); process.exit(2); });
+"""
+
+
+def opening():
+    root = os.path.dirname(HERE)
+    app = os.path.join(root, "site", "meter-app.html")
+    pay = json.load(open(os.path.join(METER, "outputs", "payload.json"), encoding="utf-8"))
+    row = pay["system"]["fC0"]["results"]["imb_e"]
+    with tempfile.TemporaryDirectory() as td:
+        if BREAK_MODE == "opening":
+            src = open(app, encoding="utf-8").read()
+            for o, n in (('name="sys" value="page" checked>', 'name="sys" value="page">'),
+                         ('name="sys" value="own">', 'name="sys" value="own" checked>'),
+                         ('id="fC" min="0" max="1" step="0.05" value="0"', 'id="fC" min="0" max="1" step="0.05" value="0.5"')):
+                if src.count(o) != 1:
+                    check("break found its target", False, o)
+                    return
+                src = src.replace(o, n)
+            app = os.path.join(td, "meter-app.html")
+            open(app, "w", encoding="utf-8", newline="\n").write(src)
+        js = os.path.join(td, "open.js")
+        open(js, "w", encoding="utf-8").write(OPEN_JS)
+        env = dict(os.environ, NODE_PATH=os.path.join(HERE, "node_modules"))
+        r = subprocess.run(["node", js, app], capture_output=True, text=True, env=env)
+    if r.returncode != 0:
+        check("the app opened and ran in Chromium", False, f"exit {r.returncode}: {r.stderr[-500:]}")
+        return
+    o = json.loads(r.stdout)
+    want = [dict(name=m.name, role=m.role, D=m.D, beta=m.beta, p1=m.p1, T1=m.T1, span_dp=m.span_dp,
+                 dp=m.dp, share=m.share, taps=m.taps) for m in M.default_meters()]
+    got = [{k: m.get(k) for k in want[0]} for m in o["meters"]]
+    eq = lambda a, b: (abs(a - b) <= 1e-12 * max(1, abs(b))) if isinstance(b, float) else a == b  # noqa: E731
+    diff = [(w["name"], k, g[k], w[k]) for g, w in zip(got, want) for k in w if not eq(g[k], w[k])]
+    same = len(got) == len(want) and not diff
+    check("app opens on the page's system (model.default_meters, field for field)", same,
+          f"{len(got)} meters vs {len(want)}; {len(diff)} field(s) differ" + (f", first {diff[0]}" if diff else ""))
+    from update_page import cents
+    ctl = (o["C"], o["cls"], o["X"], o["G"], o["A"], o["gas"], o["ints"], o["price"])
+    exp = (0.0, "beta", 0.0, 0.0, 0.0, pay["gas"], pay["intervals"], cents(pay["price"]["median"]))
+    check("app opens on the table's first row (C independent; nothing else shared) and the payload's gas, "
+          "calibrations and price", ctl == exp, f"{ctl} vs {exp}")
+    run = o["run"]
+    tol = run["delta"] + row["delta"]
+    check("app's u(I) at opening = the page's first row", abs(run["u"] - row["u"]) <= tol,
+          f"app {run['u']:.5e} (shown {o['shown']['u']}) vs page {row['u']:.5e}; tolerance {tol:.1e}")
+    tp = pay["throughput"]["mmcfd"]
+    check("app's throughput at opening = the page's", abs(run["mmcfd"] - tp) <= 1e-9 * tp,
+          f"app {run['mmcfd']:.6f} (shown {o['shown']['tp']}) vs page {tp:.6f} MMcf/d")
 
 
 if __name__ == "__main__":

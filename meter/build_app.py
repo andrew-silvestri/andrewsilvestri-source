@@ -121,7 +121,16 @@ def main():
         print(f"  {'OK  ' if ok else 'FAIL'} {name}: worst midpoint error Z {ez:.1e}, kappa (relative) {ek:.1e}")
         tables.append(tab)
     TABLE.parent.mkdir(exist_ok=True)
-    data = {"z_ref": M.z_ref(aga), "T_F": T_F, "p_psia": P_PSIA, "gases": tables}
+    # The app opens on the page's own system and the first row of its table (C
+    # independent at every meter). Its controls alone cannot express that system
+    # (receipts at four operating points, deliveries 50/30/20 on two pipe sizes),
+    # which is why the app once opened at 95 MMcf/d and 0.12% against the page's
+    # 101 and 0.18% (Q2). tests/test_parity_meter.py check 4 holds them together.
+    data = {"z_ref": M.z_ref(aga), "T_F": T_F, "p_psia": P_PSIA, "gases": tables,
+            "page_system": [{"name": m.name, "role": m.role, "D": m.D, "beta": m.beta, "p1": m.p1,
+                             "T1": m.T1, "span_dp": m.span_dp, "dp": m.dp, "share": m.share,
+                             "taps": m.taps} for m in M.default_meters()],
+            "page_row": {"key": "fC0", "C": 0.0, "cls": "beta"}}
     with open(TABLE, "w", encoding="utf-8", newline="\n") as f:
         json.dump(data, f, separators=(",", ":"))
         f.write("\n")
