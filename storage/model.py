@@ -334,13 +334,6 @@ def fig_duration_value(results, width=NOTES):
     a1.set_ylim(0, top)
     a1.set_xlim(-0.6, len(durs) - 1 + 0.6)
     a1.grid(axis="y", alpha=0.3)
-    # Drop any auto-placed tick that lands right under the axis top: a tick
-    # label is centered on its data value, so one within a few percent of
-    # `top` pokes its upper half past the axes spine and into the reserved
-    # title strip above the figure. The headroom in `top` exists so the
-    # tallest bar and its annotation have room to breathe, not so a tick can
-    # sit flush with it.
-    a1.set_yticks([t for t in a1.get_yticks() if t <= top * 0.85])
 
     # Capital-cost reference (ATB 2024, see annualized_storage_cost_per_kw_yr
     # above for the source and the annualization math), on its own axes with
@@ -372,7 +365,6 @@ def fig_duration_value(results, width=NOTES):
     step_a, step_b = revs[1] - revs[0], revs[2] - revs[1]
     out = f"{OUT}/fig3_duration_value.png"
     figstyle.finish(fig, out if width == NOTES else figstyle.phone_path(out),
-        lbwh=phone,
         title="Energy-arbitrage value by duration (perfect foresight upper bound)",
         subtitle=(f"Added value shrinks with duration: +{step_a:.1f}/kW-yr going "
                   f"{durs[0]}h→{durs[1]}h, then only +{step_b:.1f}/kW-yr "
