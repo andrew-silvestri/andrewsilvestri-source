@@ -203,8 +203,9 @@ CONVERTED = {
     #   to FS_2, which is the floor, because at FS_1 two of them touched with
     #   the audit clean. And the render found a bug: storage/figstyle.finish
     #   hands the layout engine (l, b, r, t) where it takes (l, b, w, h), so a
-    #   footnoted figure runs off the top; the phone render opts into the
-    #   correct rect and the 714 is unchanged pending D-12.
+    #   footnoted figure runs off the top; the phone render opted into the
+    #   correct rect. D-12 (2026-10-20) made it the only rect: the 714 was
+    #   re-rendered and model.py's tick-dropping workaround deleted.
     "storage_fig3_duration_value.png",
     #   heat's last three, 2026-10-17 (October P1, one builder per branch).
     #   fig1, fig4 and fig5 are SQUARE at 350 rather than 16:9: at 16:9 their
