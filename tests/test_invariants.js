@@ -70,7 +70,7 @@ const ROOT = path.join(__dirname, '..');
 const SITE = path.join(ROOT, 'site');
 const FIX = path.join(__dirname, 'fixtures');
 const PAGES = ['index', 'about', 'code', 'heat', 'storage', 'climate-cost',
-               'longevity', 'skyline', 'continents', 'beauty', 'meter'];
+               'longevity', 'skyline', 'continents', 'beauty', 'meter', 'takeaway'];
 const WORDS_EXEMPT = ['index'];
 const MIN_WORDS = 20;
 const CUE_PX = 16;
