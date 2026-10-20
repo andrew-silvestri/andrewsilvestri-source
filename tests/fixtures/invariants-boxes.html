@@ -1,0 +1,21 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><title>invariants fixture: scroll boxes</title>
+<style>body{margin:0;font:16px/1.5 sans-serif} .box{overflow-x:auto;width:120px;margin:8px 0}
+.wide{width:400px} .tenmore{width:130px} .cue{margin:0}</style></head>
+<body>
+<!-- tests/test_invariants.js's scroll-cue and keyboard fixture. Each box is
+     named for the verdict it must get; the expectations are in EXPECT in the
+     test, and a disagreement fails the run before any page is measured. -->
+<nav class="top">Home</nav>
+<main>
+<p>This fixture page carries enough of its own words in its first screen to clear the twenty word floor without any help from the navigation, so the own words rule must pass it, whatever engine and whatever configuration it is measured in today.</p>
+<div class="box" id="f-nocue"><div class="wide">no cue and no tabindex: hidden content with nothing outside saying so</div></div>
+<div class="box" id="f-good" tabindex="0" data-scroll-affordance="#f-cue"><div class="wide">tabindex and a cue outside: the contract kept</div></div>
+<p class="cue" id="f-cue">scroll sideways for more</p>
+<div class="box" id="f-inside" tabindex="0" data-scroll-affordance="#f-incue"><div class="wide"><span id="f-incue">a cue INSIDE the box, which scrolls away with what it describes</span></div></div>
+<div class="box" id="f-small"><div class="tenmore">ten px over</div></div>
+<div class="box" id="f-neg" tabindex="-1" data-scroll-affordance="#f-negcue"><div class="wide">tabindex -1: no engine can Tab here</div></div>
+<p class="cue" id="f-negcue">scroll sideways for more</p>
+<button id="f-btn" tabindex="-1">unreachable button</button>
+</main>
+</body></html>

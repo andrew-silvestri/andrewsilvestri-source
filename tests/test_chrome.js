@@ -143,6 +143,25 @@
  *   node tests/test_chrome.js --break contents   # the closed bar shows too much
  *   node tests/test_chrome.js --break nojs       # the menu needs script to open
  *   node tests/test_chrome.js --break jsleak     # nav.js loads despite the block
+ *   node tests/test_chrome.js --enforce          # D-01 WebKit rows gate too
+ *   node tests/test_chrome.js --break d01        # column nav in the WebKit rows
+ *
+ * D-01 RULE 1 IN WEBKIT, REPORTED (Q1, 2026-10-20). D-01 adopted this file's
+ * 25% as rule 1 (answer 1A) and measured it in Chromium AND WebKit at its own
+ * matrix: 360x780, 390x844, 768x1024, 1024x768, 1440x900, and 150/200/250/400%
+ * of a 1440x900 panel. The zoom rows were already here, in Chromium and
+ * Firefox, gated since c85cb1e; what this file never launched for the height
+ * sweep is WebKit, and the device rows at their own heights (the sweep holds
+ * height at 844). So that block measures WebKit at the D-01 matrix and
+ * REPORTS: it prints its rows and its failures and does not change the exit
+ * status unless --enforce is given. Q5 turns enforcement on. A fixture runs
+ * first - a 100px nav at 360x225 must read over the limit and a 40px one
+ * under it - and a fixture failure exits 1 in every mode. --break d01 forces
+ * the column nav (the layout this threshold was written against: 154% at
+ * 400%) into the WebKit rows, counts only rows that pass unmutated, and
+ * EXITS NON-ZERO WHEN IT IS CAUGHT, 0 when blind. That is the Q1 convention
+ * for a new check and the opposite of this file's older modes above; the
+ * difference is stated here rather than left for the reader to find.
  *
  * --break forces the column layout at every width and zoom - the exact fault
  * the threshold exists to refuse - and asserts only on the configurations the
@@ -169,10 +188,19 @@ const BREAK_MODE = BREAK && process.argv[bi + 1] && !process.argv[bi + 1].starts
   ? process.argv[bi + 1] : null;
 const TOUCH_BREAKS = ['notap', 'nodefault', 'noescape', 'persists', 'contents',
                       'nojs', 'jsleak'];
-if (BREAK_MODE && !TOUCH_BREAKS.includes(BREAK_MODE)) {
-  console.error('  --break takes nothing, or one of: ' + TOUCH_BREAKS.join(' | '));
+if (BREAK_MODE && !TOUCH_BREAKS.includes(BREAK_MODE) && BREAK_MODE !== 'd01') {
+  console.error('  --break takes nothing, or one of: ' + TOUCH_BREAKS.concat(['d01']).join(' | '));
   process.exit(1);
 }
+const ENFORCE = process.argv.includes('--enforce');
+/* D-01's matrix, verbatim (DECISIONS D-01, Options). */
+const D01 = [
+  { name: '360x780', w: 360, h: 780, zoom: 100 }, { name: '390x844', w: 390, h: 844, zoom: 100 },
+  { name: '768x1024', w: 768, h: 1024, zoom: 100 }, { name: '1024x768', w: 1024, h: 768, zoom: 100 },
+  { name: '1440x900', w: 1440, h: 900, zoom: 100 },
+  { name: '960x600', w: 960, h: 600, zoom: 150 }, { name: '720x450', w: 720, h: 450, zoom: 200 },
+  { name: '576x360', w: 576, h: 360, zoom: 250 }, { name: '360x225', w: 360, h: 225, zoom: 400 },
+];
 
 /* 360 is the floor the invariant names and the narrowest phone worth serving;
    the step is 20px to 1024, with every 4px through 596-644 so the 620
@@ -452,9 +480,74 @@ async function touchPath(base) {
   return fails.map(f => `[webkit ${ver}] ${f}`);
 }
 
+/* D-01 RULE 1 IN WEBKIT. Returns { ver, fixture: [..failures], rows: [..] }.
+   mutate forces the column nav, for --break d01. */
+async function d01WebKit(base, mutate) {
+  const browser = await pw.webkit.launch();
+  const ver = browser.version();
+  const fixture = [];
+  /* Fixture first: the instrument must read a tall nav as over and a short
+     one as under, at the 400% row where the margin is thinnest. */
+  {
+    const ctx = await browser.newContext({ viewport: { width: 360, height: 225 }, deviceScaleFactor: 1 });
+    const page = await ctx.newPage();
+    for (const [px, over] of [[100, true], [40, false]]) {
+      await page.setContent(`<body style="margin:0"><nav class="top" style="display:block;height:${px}px">n</nav><p>x</p></body>`);
+      const r = await chromeShare(page);
+      if ((r.share > LIMIT + 1e-9) !== over || Math.abs(r.px - px) > 0.5)
+        fixture.push(`[webkit ${ver} fixture | 360x225 | dpr 1] a ${px}px nav read ${r.px}px, ${(r.share * 100).toFixed(1)}%; want ${over ? 'over' : 'under'} ${LIMIT * 100}%`);
+    }
+    await ctx.close();
+  }
+  const rows = [];
+  if (!fixture.length) {
+    for (const c of D01) {
+      const ctx = await browser.newContext({ viewport: { width: c.w, height: c.h }, deviceScaleFactor: 1 });
+      const page = await ctx.newPage();
+      page.setDefaultTimeout(20000);
+      for (const name of PAGES) {
+        await page.goto(base + name + '.html' + (name === 'index' ? '?hero=pendulum' : ''), { waitUntil: 'load' });
+        if (mutate) await page.addStyleTag({ content: BREAK_CSS });
+        await page.waitForTimeout(100);
+        rows.push({ page: name, w: c.w, h: c.h, zoom: c.zoom, ...(await chromeShare(page)) });
+      }
+      await ctx.close();
+    }
+  }
+  await browser.close();
+  return { ver, fixture, rows };
+}
+
+function d01Label(ver, r) {
+  return `[webkit ${ver} | ${r.w}x${r.h}` +
+         `${r.zoom !== 100 ? ' = ' + r.zoom + '% of 1440x900' : ''} | dpr 1]`;
+}
+
 (async () => {
   const srv = await serve();
   const base = `http://127.0.0.1:${srv.address().port}/`;
+
+  /* --break d01 runs only the WebKit block: unmutated, then with the column
+     nav forced, and asks whether rows that passed now fail. */
+  if (BREAK_MODE === 'd01') {
+    const clean = await d01WebKit(base, false);
+    const broken = clean.fixture.length ? clean : await d01WebKit(base, true);
+    srv.close();
+    if (clean.fixture.length) {
+      for (const f of clean.fixture) console.log('  FIXTURE ' + f);
+      console.log('  --break d01: caught by the fixture');
+      process.exit(1);
+    }
+    const passed = new Set(clean.rows.filter(r => r.share <= LIMIT + 1e-9).map(r => r.page + '|' + r.w + 'x' + r.h));
+    const caught = broken.rows.filter(r => r.share > LIMIT + 1e-9 && passed.has(r.page + '|' + r.w + 'x' + r.h));
+    console.log(`  config: playwright ${require('playwright/package.json').version}, webkit ${clean.ver}, deviceScaleFactor 1`);
+    console.log(`  --break d01: column nav forced; ${caught.length} of ${passed.size} WebKit rows that pass unmutated now exceed ${LIMIT * 100}%`);
+    for (const r of caught.slice(0, 6))
+      console.log(`    ${d01Label(clean.ver, r)} ${r.page}: ${r.px}px, ${(r.share * 100).toFixed(1)}%`);
+    console.log(caught.length ? '  caught' : '  BLIND: the mutation changed nothing the threshold refuses');
+    process.exit(caught.length ? 1 : 0);
+  }
+
   const engines = [];
   const fails = [];
   const openFails = [];
@@ -541,6 +634,7 @@ async function touchPath(base) {
   }
 
   const touchFails = (await touchPath(base)).concat(await noJsArm(base));
+  const d01 = await d01WebKit(base, false);
   srv.close();
 
   console.log(`  config: playwright ${require('playwright/package.json').version}, ` +
@@ -586,6 +680,21 @@ async function touchPath(base) {
     console.log(`  ${openChecks} open-state checks: every declared link visible when opened and reachable by Tab`);
   }
 
+  /* D-01 rule 1 in WebKit: reported; gating only under --enforce. */
+  const d01Over = d01.rows.filter(r => r.share > LIMIT + 1e-9);
+  if (d01.fixture.length) {
+    console.log('\n  D-01 RULE 1 IN WEBKIT: FIXTURE FAILED - no verdict reported:');
+    for (const f of d01.fixture) console.log('    ' + f);
+  } else {
+    const w = d01.rows.reduce((a, b) => (b.share > a.share ? b : a));
+    console.log(`\n  D-01 RULE 1 IN WEBKIT (${ENFORCE ? 'enforced' : 'reported, not enforced'}): ` +
+                `${d01Over.length} of ${d01.rows.length} page-configuration pairs over ${(LIMIT * 100).toFixed(0)}%; ` +
+                `worst ${w.page} ${d01Label(d01.ver, w)} ${w.px}px of ${w.h}, ${(w.share * 100).toFixed(1)}%`);
+    for (const r of d01Over)
+      console.log(`    ${d01Label(d01.ver, r)} ${r.page}: ${r.px}px of ${r.h}, ${(r.share * 100).toFixed(1)}%`);
+  }
+  if (d01.fixture.length) process.exit(1);
+
   if (BREAK_MODE) {
     const caught = touchFails.length > 0 || contentFails.length > 0;
     console.log(`\n  --break ${BREAK_MODE}: ${caught ? 'caught' : 'BLIND - the touch path noticed nothing'}`);
@@ -612,5 +721,5 @@ async function touchPath(base) {
     process.exit(0);
   }
   process.exit(fails.length || openFails.length || touchFails.length
-               || contentFails.length ? 1 : 0);
+               || contentFails.length || (ENFORCE && d01Over.length) ? 1 : 0);
 })();

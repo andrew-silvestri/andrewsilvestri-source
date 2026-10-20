@@ -24,6 +24,14 @@
  * disagrees makes the gate stricter rather than silently picking a winner.
  *
  *   node tests/fig_served_widths.js
+ *   node tests/fig_served_widths.js --matrix   # D-01's nine configurations
+ *
+ * --matrix measures D-01's matrix instead (DECISIONS D-01): 360x780, 390x844,
+ * 768x1024, 1024x768, 1440x900, and 150/200/250/400% zoom of a 1440x900 panel
+ * as CSS viewports 960x600, 720x450, 576x360, 360x225 - in Chromium and
+ * WebKit, the engines D-01 measured with. tests/test_fig_floor.py reads it for
+ * rule 3; each row carries its viewport, so the configuration travels with the
+ * number.
  */
 const path = require('path');
 const fs = require('fs');
@@ -33,7 +41,12 @@ const pw = require('playwright');
 const SITE = path.join(__dirname, '..', 'site');
 const PAGES = ['index', 'about', 'code', 'heat', 'storage', 'climate-cost',
                'longevity', 'skyline', 'continents', 'beauty'];
-const VIEWPORTS = [[1440, 900], [390, 844]];
+const MATRIX = process.argv.includes('--matrix');
+const VIEWPORTS = MATRIX
+  ? [[360, 780], [390, 844], [768, 1024], [1024, 768], [1440, 900],
+     [960, 600], [720, 450], [576, 360], [360, 225]]
+  : [[1440, 900], [390, 844]];
+const ENGINES = MATRIX ? ['chromium', 'webkit'] : ['chromium', 'firefox'];
 const MIME = { '.html': 'text/html', '.css': 'text/css', '.js': 'text/javascript',
                '.png': 'image/png', '.webp': 'image/webp', '.svg': 'image/svg+xml',
                '.woff2': 'font/woff2', '.mp4': 'video/mp4', '.ico': 'image/x-icon',
@@ -57,7 +70,7 @@ function serve() {
   const base = `http://127.0.0.1:${srv.address().port}/`;
   const rows = [];
   const engines = [];
-  for (const eng of ['chromium', 'firefox']) {
+  for (const eng of ENGINES) {
     const browser = await pw[eng].launch();
     engines.push(`${eng} ${browser.version()}`);
     for (const [w, h] of VIEWPORTS) {

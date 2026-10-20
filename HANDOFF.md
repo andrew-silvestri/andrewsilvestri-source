@@ -603,6 +603,8 @@ python3 tests/test_markup.py           # markdown that never became HTML
 python3 tests/test_units.py            # every climate-cost input against its declared unit
 python3 tests/test_generators.py       # every text generator run into a copy and diffed against site/
 python tests/test_fig_floor.py         # no figure's text under 12px at the width the PAGE SERVES it (trap 22/31); --break stale|added
+                                       # + D-01 rule 3 at the nine-config matrix, reported (--enforce; --break matrix exits 1)
+node tests/test_invariants.js          # D-01 rules 2, 4, 5 (own words, scroll cue, keyboard), reported (--enforce; --break words|cue|webkit exit 1)
 node tests/test_atlas_interaction.js   # boots the real app against a three.js stub
 python3 tests/test_parity.py           # the browser engine against the figures' engine, all 60 scenarios, to 1e-12
 python3 tests/test_payload.py          # the payload's SHA-1 against atlas_payload.json (trap 23)
@@ -610,6 +612,7 @@ node tests/verify_hero_systems.js      # what the home page hero's captions clai
 python3 tests/test_demand_response.py  # push consumer groups, districts must fall (engine property 5)
 node climate-cost/test_scene.js        # the climate-cost visualiser: JS engine against lca.py, layout, overlap; jsdom and three r128 from tests/node_modules
 node tests/test_layout.js              # Playwright: marginalia, measure, hierarchy at 1440/1024/390
+node tests/test_chrome.js              # chrome <= 25% (gated) + D-01 rule 1 in WebKit at the matrix, reported (--enforce; --break d01 exits 1)
 node tests/test_nav_states.js          # every nav/dropdown state: AA, and rendered == declared; --break indent|on|hover|override
 node tests/probe_scene.js              # prints what is actually in the scene graph
 python3 build_atlas_figures.py         # must say "0 layout problem(s)"
@@ -1695,6 +1698,43 @@ linked and six had no generator; the tree had moved on (trap 11):
 ---
 
 ## 11. Current state, 9 September 2026
+
+### Layout invariants (D-01): adopted 2026-10-19, reported, NOT enforced (Q1, 2026-10-20)
+
+D-01's five rules are adopted (DECISIONS D-01, answered under Andrew's
+standing delegation): 1A chrome at rest <= 25% of viewport height; 2A >= 20
+of the page's own words in the first viewport, zoom included, index exempt;
+3A no figure text under 12px at any configuration; 4B no box hides > 16px
+sideways without a visible cue outside it; 5A every scroller reachable by Tab
+in Chromium, Firefox and WebKit. The configuration matrix is D-01's: 360x780,
+390x844, 768x1024, 1024x768, 1440x900, and 150/200/250/400% of a 1440x900
+panel (CSS 960x600, 720x450, 576x360, 360x225), dpr 1.
+
+**They are reported, not enforced.** Each check prints its failures and exits
+0 by default; `--enforce` makes them gate. Q5 makes the pages pass and then
+turns enforcement on. Each runs its fixture first (a wrong fixture verdict
+exits 1 in every mode), and each `--break` reproduces the most likely or
+historical fault and **exits 1 when caught, 0 when blind** - the opposite of
+the older `--break` modes in test_chrome.js and test_fig_floor.py, which exit
+0 when caught; both files say so beside the new mode.
+
+Failures on master 60aa0bc + this change, 2026-10-20 (Playwright 1.62.1,
+Chromium 151.0.7922.34, Firefox 153.0, WebKit 26.5):
+
+| rule | where | today | pages |
+|---|---|---|---|
+| 1 chrome <= 25% | test_chrome.js, WebKit block | 0 of 90 (worst index 22.7% at 400%) | 0 |
+| 2 own words >= 20 | test_invariants.js | 18 of 162 page-configs | 8: about, code, heat, storage, climate-cost, longevity, skyline, beauty |
+| 3 figure text >= 12px | test_fig_floor.py, matrix block | 135 of 252 figure-configs (80 on the 10 exempt figures) | 7: beauty, climate-cost, continents, heat, longevity, skyline, storage |
+| 4 scroll cue | test_invariants.js | 48 of 60 box-configs | 6: code, climate-cost, longevity, skyline, continents, beauty |
+| 5 keyboard | test_invariants.js | 5 of 30 page-engines, all WebKit | 5: storage, climate-cost, longevity, skyline, continents |
+
+Rule 1 passes today, so its proof of life is `--break d01` (the column nav
+forced into the WebKit rows: 51 of 90 rows that pass clean go over, exit 1).
+The zoom rows were already measured and gated in Chromium and Firefox; what
+was missing was WebKit and the device rows at their own heights. Every
+number above matches D-01's own measurement (e.g. heat 10 words at 400%,
+about 14 / WebKit 9; skyline_towers 11.6px at 688 and 11.0px at 320).
 
 **Live: the mirror's `be33d4d`**, 2026-09-09 — the beauty page shipped and two
 pages came off. Master is `9f0b124`, 69 files. 35 files changed in the mirror,
