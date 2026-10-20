@@ -106,6 +106,30 @@ only: a width between them that served some third size would not be seen.
     python tests/test_fig_floor.py --break stale    # 0 caught, non-zero blind
     python tests/test_fig_floor.py --break added    # 0 caught, non-zero blind
     python tests/test_fig_floor.py --keep           # leave the work copy
+    python tests/test_fig_floor.py --enforce        # D-01 matrix rows gate too
+    python tests/test_fig_floor.py --break matrix   # non-zero caught, 0 blind
+
+D-01 RULE 3, AT EVERY CONFIGURATION, REPORTED (Q1, 2026-10-20). D-01 adopted
+12px "at every config" (answer 3A) and found this file green on four pages
+that are under 12px at 360 and 768-1024, because it measures 1440 and 390
+only - the last sentence of the paragraph above, now with numbers. So after
+the gate above, the same text sizes are scaled by the widths
+tests/fig_served_widths.js --matrix measures at D-01's nine configurations, in
+Chromium and WebKit, and every figure-configuration pair under the floor is
+printed with its configuration. Exempt figures are counted and marked, not
+excused. It REPORTS: it does not change the exit status unless --enforce is
+given (Q5 turns that on).
+
+  Fixture first: two synthetic rows (9pt on a 714 figure served at 350 must
+  read 4.4px and fail; 12pt on a 350 figure served at 350 must read 12.0 and
+  pass), and the matrix must MOVE - some figure must be served at different
+  widths in different configurations, or the instrument is pinned (trap 28).
+  A fixture failure exits 1 in every mode.
+
+  --break matrix measures the matrix at 1440x900 and 390x844 only, the set
+  this file had, and the coverage assertion - all nine configurations, both
+  engines - refuses it. It EXITS NON-ZERO WHEN CAUGHT, 0 when blind: the Q1
+  convention for a new check, and the opposite of --break stale|added above.
 
 Both --break modes report 0 when the fault they inject is caught and non-zero
 when it is not, the way beauty/break_model.py points it. The third break - a
@@ -418,15 +442,24 @@ def copy_tree():
 
 def main():
     ap = argparse.ArgumentParser()
-    ap.add_argument("--break", dest="brk", choices=["stale", "added"])
+    ap.add_argument("--break", dest="brk", choices=["stale", "added", "matrix"])
     ap.add_argument("--keep", action="store_true")
+    ap.add_argument("--enforce", action="store_true")
     args = ap.parse_args()
+
+    fx = matrix_fixture()                                     # fixture first
+    if fx:
+        print("  D-01 matrix FIXTURE FAILED - the arithmetic is wrong, no verdict:")
+        for f in fx:
+            print("    - " + f)
+        return 1
 
     exempt = set(EXEMPT)
     if args.brk == "added":
         # A name that was never in ORIGINAL. Property 3 must refuse it.
         exempt.add("a_figure_that_was_never_here.png")
     cfg, served = served_widths()
+    mcfg, mrows = matrix_widths(args.brk == "matrix")
     work, tree = copy_tree()
     try:
         run = min_points(tree)
@@ -522,11 +555,106 @@ def main():
               f"{len(rows) - len(exempt)} at or above {FLOOR_PX:g}px, "
               f"{len(exempt)} on the list")
 
+    mfails, mproblems = matrix_report(run, mcfg, mrows, exempt, args.enforce)
+    if args.brk == "matrix":
+        caught = bool(mproblems)
+        print(f"  --break matrix: {'caught' if caught else 'BLIND'}")
+        return 1 if caught else 0
+    if mproblems:
+        return 1
     if args.brk:
         caught = bool(problems)
         print(f"  --break {args.brk}: {'caught' if caught else 'BLIND'}")
         return 0 if caught else 1
-    return 1 if problems else 0
+    return 1 if problems or (args.enforce and mfails) else 0
+
+
+# D-01 RULE 3 -------------------------------------------------------------------
+D01_VIEWPORTS = ("360x780", "390x844", "768x1024", "1024x768", "1440x900",
+                 "960x600", "720x450", "576x360", "360x225")
+D01_ZOOM = {"960x600": 150, "720x450": 200, "576x360": 250, "360x225": 400}
+D01_ENGINES = ("chromium", "webkit")
+
+
+def matrix_px(min_pt, css, authored):
+    return min_pt * css / authored
+
+
+def matrix_fixture():
+    bad = []
+    for pt, auth, css, want_px, want_ok in ((9.0, 714.0, 350.0, 4.41, False),
+                                           (12.0, 350.0, 350.0, 12.0, True)):
+        px = matrix_px(pt, css, auth)
+        if abs(px - want_px) > 0.01 or (px >= FLOOR_PX - 1e-6) != want_ok:
+            bad.append(f"{pt}pt on a {auth:g} figure served at {css:g} read {px:.2f}px, "
+                       f"want {want_px}px and {'pass' if want_ok else 'fail'}")
+    return bad
+
+
+def matrix_widths(narrow):
+    """(config, {(file, viewport): (css, page, engine)}), smallest css across engines."""
+    out = subprocess.run(["node", os.path.join(HERE, "fig_served_widths.js"), "--matrix"],
+                         cwd=HERE, capture_output=True, text=True,
+                         env={**os.environ,
+                              "NODE_PATH": os.path.join(HERE, "node_modules")})
+    if out.returncode != 0:
+        sys.exit("fig_served_widths.js --matrix failed:\n" + (out.stderr or "")[-2000:])
+    data = json.loads(out.stdout)
+    rows = {}
+    for r in data["rows"]:
+        if not r["file"].lower().endswith(".png"):
+            continue
+        if narrow and r["viewport"] not in ("1440x900", "390x844"):
+            continue                       # --break matrix: the set this file had
+        k = (r["file"], r["viewport"])
+        if k not in rows or r["cssWidth"] < rows[k][0]:
+            rows[k] = (r["cssWidth"], r["page"], r["engine"])
+    cfg = data["config"]
+    cfg["measured"] = sorted({v for _, v in rows})
+    cfg["engines_measured"] = sorted({e.split()[0] for e in cfg["engines"]})
+    return cfg, rows
+
+
+def matrix_report(run, cfg, rows, exempt, enforce):
+    problems = []
+    missing_v = [v for v in D01_VIEWPORTS if v not in cfg["measured"]]
+    missing_e = [e for e in D01_ENGINES if e not in cfg["engines_measured"]]
+    if missing_v or missing_e:                       # coverage: the whole matrix
+        problems.append("the D-01 matrix was not measured whole: missing "
+                        + ", ".join(missing_v + missing_e))
+    # The instrument must move: some figure served at two different widths.
+    by_file = {}
+    for (f, v), (css, _p, _e) in rows.items():
+        by_file.setdefault(f, set()).add(round(css, 1))
+    if not any(len(w) > 1 for w in by_file.values()):
+        problems.append("no figure is served at more than one width across the "
+                        "matrix - the measurement is pinned (trap 28)")
+    rec_of = {ASSET_OF.get(k, k): v for k, v in run["figures"].items()}
+    fails, pairs = [], 0
+    for (f, v), (css, page, eng) in sorted(rows.items(), key=lambda x: (x[0][1], x[0][0])):
+        rec = rec_of.get(f)
+        if not rec or not rec.get("min_pt"):
+            continue            # the 1440/390 gate above already names these
+        pairs += 1
+        px = matrix_px(rec["min_pt"], css, rec["authored"])
+        if px < FLOOR_PX - 1e-6:
+            fails.append((v, f, page, rec["authored"], css, rec["min_pt"], px, f in exempt, eng))
+    print()
+    print("  D-01 RULE 3 (12px at every configuration), %s: config playwright %s, %s, "
+          "deviceScaleFactor %s" % ("enforced" if enforce else "reported, not enforced",
+                                    cfg["playwright"], ", ".join(cfg["engines"]),
+                                    cfg["deviceScaleFactor"]))
+    for v, f, page, aw, css, pt, px, ex, eng in fails:
+        z = f" = {D01_ZOOM[v]}% of 1440x900" if v in D01_ZOOM else ""
+        print(f"    [{eng} | {v}{z} | dpr 1] {'EXEMPT ' if ex else ''}{f} on {page}: "
+              f"{pt:g}pt at {css:g}/{aw:g} -> {px:.1f}px")
+    pages = sorted({x[2] for x in fails})
+    print(f"  D-01 rule 3: {len(fails)} of {pairs} figure-configuration pairs under "
+          f"{FLOOR_PX:g}px ({sum(1 for x in fails if x[7])} on exempt figures), on "
+          f"{len(pages)} page(s){': ' + ', '.join(pages) if pages else ''}")
+    for p in problems:
+        print("    - MATRIX: " + p)
+    return fails, problems
 
 
 if __name__ == "__main__":

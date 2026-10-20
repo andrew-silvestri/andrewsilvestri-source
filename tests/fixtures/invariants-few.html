@@ -1,0 +1,13 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><title>invariants fixture: few own words</title>
+<style>body{margin:0;font:16px/1.5 sans-serif} nav.top{display:block;padding:8px}</style></head>
+<body>
+<!-- tests/test_invariants.js's own-words fixture. The nav carries thirty words
+     and the page five, so the count must read 5 and FAIL: a counter that let
+     the chrome in would read 35 and pass, which is what --break words does. -->
+<nav class="top">one two three four five six seven eight nine ten eleven twelve thirteen fourteen fifteen sixteen seventeen eighteen nineteen twenty twentyone twentytwo twentythree twentyfour twentyfive twentysix twentyseven twentyeight twentynine thirty</nav>
+<main><h1>Only five words are here</h1>
+<div style="height:3000px"></div>
+<p>These words sit far below the first screen and must not be counted at all.</p>
+</main>
+</body></html>
