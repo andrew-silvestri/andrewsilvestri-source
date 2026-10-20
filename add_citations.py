@@ -598,6 +598,17 @@ PAGES = {
         ("open implementation used",
          'Bell, <i>fluids</i>, Python library, MIT licence, version 1.3.1.',
          "The Reader-Harris/Gallagher coefficient and the expansibility factor."),
+        # D-04 (b): opened by Q2 on 2026-10-20 (03 RESEARCH/meter/refs/). Section
+        # 1.7.2 names the flange-tap equation as Reader-Harris/Gallagher's; its
+        # coefficients are the 1990 form, not ISO 5167-2's, hence "adoption" only.
+        ("Reader-Harris/Gallagher discharge coefficient",
+         'American Gas Association, American Petroleum Institute and Gas Processors '
+         'Association, <i>Orifice Metering of Natural Gas and Other Related Hydrocarbon '
+         'Fluids</i>, AGA Report No. 3, Part 1, third edition, October 1990, section 1.7.2, '
+         'as incorporated by reference and hosted by law.resource.org.',
+         "The gas industry's adoption of a Reader-Harris/Gallagher equation for flange-tapped "
+         "orifice meters. It is the 1990 form of the equation; its coefficients differ from "
+         "the ISO 5167-2:2003 form this page uses."),
         ("AGA Report No. 8",
          'National Institute of Standards and Technology, <i>AGA8</i> reference code '
          '(GERG-2008, DETAIL and GROSS), github.com/usnistgov/AGA8, public domain.',
