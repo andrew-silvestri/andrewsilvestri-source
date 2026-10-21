@@ -572,6 +572,96 @@ PAGES = {
     # the page at all, and five others now match only inside the data-source
     # table. Removed 2026-09-05. Still open, and the longevity project's to
     # decide: the page lists ten references and carries one marker.
+    "meter.html": [
+        ("Anchor phrase", "Source", "What it supports"),
+        ("written into ISO 5167-2",
+         'Emerson, <i>Conditioning Orifice Technology and Orifice Standards</i>, technical '
+         'note, Table 6, quoting ISO 5167-2:2003, section 5.3.3.1.',
+         "The discharge coefficient's stated uncertainty, 0.5% for beta 0.2 to 0.6 at Reynolds "
+         "numbers above 10,000. A manufacturer quoting the standard: the standard's text is not "
+         "openly published."),
+        ("fitted to laboratory data",
+         'Reader-Harris, <i>ISO 5167: Past and Present</i>, Global Flow Measurement Workshop, '
+         '2022.',
+         "That the standard's uncertainties are expanded uncertainties at k = 2, and that the "
+         "coefficient's was derived from the data behind the equation and the manufacturing "
+         "variation the standard permits."),
+        ("A handbook on metering-station uncertainty",
+         'NORCE, <i>Handbook for Uncertainty Calculations for Gas Flow Metering Stations</i>, '
+         '2020, section 4.4.1.',
+         "Which input uncertainties are correlated between two orifice runs in parallel at one "
+         "station, and why: the coefficient, pressures and temperature not; the diameters and the "
+         "gas analysis yes."),
+        ("published uncertainty handbook",
+         'NFOGM, <i>Handbook of Uncertainty Calculations: Fiscal Metering Stations</i>, 2003.',
+         "An example orifice station at 0.55% expanded uncertainty against a 1.0% requirement."),
+        ("open implementation used",
+         'Bell, <i>fluids</i>, Python library, MIT licence, version 1.3.1.',
+         "The Reader-Harris/Gallagher coefficient and the expansibility factor."),
+        # D-04 (b): opened by Q2 on 2026-10-20 (03 RESEARCH/meter/refs/). Section
+        # 1.7.2 names the flange-tap equation as Reader-Harris/Gallagher's; its
+        # coefficients are the 1990 form, not ISO 5167-2's, hence "adoption" only.
+        ("Reader-Harris/Gallagher discharge coefficient",
+         'American Gas Association, American Petroleum Institute and Gas Processors '
+         'Association, <i>Orifice Metering of Natural Gas and Other Related Hydrocarbon '
+         'Fluids</i>, AGA Report No. 3, Part 1, third edition, October 1990, section 1.7.2, '
+         'as incorporated by reference and hosted by law.resource.org.',
+         "The gas industry's adoption of a Reader-Harris/Gallagher equation for flange-tapped "
+         "orifice meters. It is the 1990 form of the equation; its coefficients differ from "
+         "the ISO 5167-2:2003 form this page uses."),
+        ("AGA Report No. 8",
+         'National Institute of Standards and Technology, <i>AGA8</i> reference code '
+         '(GERG-2008, DETAIL and GROSS), github.com/usnistgov/AGA8, public domain.',
+         "Compressibility, the isentropic exponent and the ideal gross heating value, and the "
+         "test values the compiled code is checked against."),
+        ("how far the gas is from ideal",
+         'Ruhr-Universit&auml;t Bochum, Thermodynamics, <i>The GERG-2008 Wide-Range Equation of '
+         'State for Natural Gases</i>.',
+         "A 0.1% uncertainty in density in the gas region, used for the compressibility "
+         "equation's error (its coverage factor taken as 2: an assumption)."),
+        ("a fraction of span",
+         'Yokogawa, <i>EJX110A Differential Pressure Transmitter</i> and <i>EJX510A and EJX530A '
+         'Absolute and Gauge Pressure Transmitters</i>, general specifications.',
+         "Reference accuracy of 0.04% of span, the ambient-temperature and static-pressure "
+         "effects, for the differential and static pressure transmitters."),
+        ("temperature in kelvin",
+         'GHI GmbH, <i>Pt100 and Pt1000 tolerance classes to IEC 60751</i>.',
+         "The class A sensor tolerance, plus or minus (0.15 + 0.002 |t|) degrees Celsius."),
+        ("its transmitter",
+         'Emerson, <i>Rosemount 3144P Temperature Transmitter</i>, product data sheet.',
+         "A temperature transmitter's total error of plus or minus 0.12 degrees Celsius."),
+        ("its installation",
+         'Ingram (DNV GL), <i>Experimental Research into the Measurement of Temperature in '
+         'Natural Gas Transmission Metering Systems</i>, North Sea Flow Measurement Workshop, 2014.',
+         "Thermowell installations measuring gas temperature to within plus or minus 0.5 degrees "
+         "Celsius above 1 m/s."),
+        ("the standard's roundness limit",
+         'ISO 5167-2:2003, section 5.1.8.3, in the official preview published by the Swedish '
+         'Institute for Standards.',
+         "No diameter of the bore may differ from the mean by more than 0.05%."),
+        ("one published example budget for one chromatograph",
+         'Sutan, <i>Gas Chromatography Conditional Based Monitoring and Live Uncertainty '
+         'Calculation</i>, North Sea Flow Measurement Workshop, 2012, Table 9.',
+         "The relative uncertainty of each measured mole fraction."),
+        ("JCGM 101:2008",
+         'Joint Committee for Guides in Metrology, <i>JCGM 101:2008, Evaluation of measurement '
+         'data, Supplement 1 to the GUM: propagation of distributions using a Monte Carlo '
+         'method</i>.',
+         "The propagation, the treatment of a stated bound as a rectangular distribution, and the "
+         "adaptive stopping rule of its section 7.9.4."),
+        ("median Henry Hub spot price",
+         'U.S. Energy Information Administration, <i>Henry Hub Natural Gas Spot Price</i>, '
+         'monthly, series RNGWHHD.',
+         "The price the imbalance is valued at."),
+        ("lost and unaccounted for",
+         'U.S. Energy Information Administration, <i>Natural Gas Annual</i>, Table A1, losses and '
+         'unaccounted for volumes by state.',
+         "The national figure and what it measures, from the table's own notes."),
+        ("Pipeline and Hazardous Materials Safety Administration",
+         'Pipeline and Hazardous Materials Safety Administration, gas distribution annual report '
+         'data, 2010 to present, Form PHMSA F 7100.1-1, Part G.',
+         "The distribution operators' reported unaccounted-for gas percentages."),
+    ],
     "climate-cost.html": [
         ("Anchor phrase", "Source", "What it supports"),
         ("published literature",

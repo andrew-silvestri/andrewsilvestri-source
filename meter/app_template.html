@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Imbalance simulator — What a meter's error is worth</title>
+<link rel="canonical" href="https://andrewsilvestri.com/meter-app.html">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Imbalance simulator — What a meter's error is worth">
+<meta property="og:description" content="Set up a system of orifice gas meters, decide which of their errors are shared, and see the imbalance measurement alone produces, in gas and dollars.">
+<meta property="og:url" content="https://andrewsilvestri.com/meter-app.html">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="alternate icon" href="favicon.png">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<meta name="description" content="Set up a system of orifice gas meters, decide which of their errors are shared, and see the imbalance measurement alone produces, in gas and dollars.">
+<meta name="theme-color" content="#F2F0EF">
+<style>
+/* The site's tokens (site/style.css :root, "Yacht club"), copied by name and
+   value: this app must work alone from a folder, so nothing is imported. */
+:root{
+  --bg:#F2F0EF; --card:#FAF9F8; --ink:#241E1A; --dim:#625C57;
+  --faint:#D9D8D6; --rule:#BBBDBC; --acc:#245F73; --cool:#4A8AA0;
+  --moss:#733E24; --rose:#A9724F;
+  --sans:"IBM Plex Sans",system-ui,-apple-system,Segoe UI,Roboto,sans-serif;
+  --mono:"IBM Plex Mono",ui-monospace,SFMono-Regular,Menlo,monospace;
+  --fs-2:12px; --fs-1:14.5px; --fs0:17.5px; --fs1:21px;
+  /* 12 px is the floor and nothing here goes under it */
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--bg);color:var(--ink);font:var(--fs-1)/1.5 var(--sans)}
+.wrap{max-width:1100px;margin:0 auto;padding:22px 20px 64px}
+h1{font-size:var(--fs1);margin:0 0 2px;font-weight:600}
+.sub{color:var(--dim);font-size:var(--fs-2);margin:0 0 18px}
+.sub a{color:var(--acc)}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:14px}
+fieldset{border:1px solid var(--faint);background:var(--card);margin:0;padding:12px 14px 6px}
+legend{font-family:var(--mono);font-size:var(--fs-2);color:var(--dim);padding:0 4px}
+label{display:grid;grid-template-columns:1fr auto;gap:2px 10px;align-items:center;margin:0 0 10px}
+label span.v{font-family:var(--mono);font-size:var(--fs-2);color:var(--ink);min-width:72px;text-align:right}
+label input[type=range]{grid-column:1 / span 2;width:100%;accent-color:var(--acc);min-height:24px}
+select,input[type=number]{font:inherit;font-size:var(--fs-1);padding:3px 6px;background:var(--bg);
+  color:var(--ink);border:1px solid var(--rule)}
+.radio{display:flex;gap:14px;margin:0 0 10px;font-size:var(--fs-2)}
+.radio label{display:flex;gap:6px;margin:0}
+button{font:inherit;font-size:var(--fs-1);background:var(--acc);color:#fff;border:0;padding:9px 18px;cursor:pointer;min-height:44px}
+button:disabled{background:var(--rule);cursor:default}
+.out{margin-top:18px;border:1px solid var(--faint);background:var(--card);padding:14px}
+.big{font-size:var(--fs1);font-weight:600}
+.row{display:flex;flex-wrap:wrap;gap:8px 28px;margin:6px 0}
+.row div{min-width:180px}
+.k{font-family:var(--mono);font-size:var(--fs-2);color:var(--dim);display:block}
+canvas{width:100%;height:180px;display:block;margin-top:10px}
+.note{font-size:var(--fs-2);color:var(--dim);margin:12px 0 0}
+.err{color:var(--moss);font-family:var(--mono);font-size:var(--fs-2)}
+</style>
+</head><body>
+<div class="wrap">
+<h1>Imbalance simulator</h1>
+<p class="sub">Orifice meters on one gas system, every error from a cited public figure or a labelled assumption.
+An explainer: it states no uncertainty for any real installation. <a href="meter.html">The page that explains it</a></p>
+
+<div class="radio" id="sysrow"><label><input type="radio" name="sys" value="page" checked><span id="sys_page"></span></label>
+<label><input type="radio" name="sys" value="own">the system set below</label></div>
+<div class="grid">
+<fieldset id="rf"><legend>Receipt meters</legend>
+<label>Number <span class="v" id="nr_v"></span><input type="range" id="nr" min="1" max="60" step="1" value="12"></label>
+<label>Pipe inside diameter <span class="v"><select id="rD"><option value="0.0779">77.9 mm (3 in)</option><option value="0.1023" selected>102.3 mm (4 in)</option><option value="0.1541">154.1 mm (6 in)</option></select></span></label>
+<label>Beta ratio <span class="v" id="rb_v"></span><input type="range" id="rb" min="0.2" max="0.7" step="0.01" value="0.5"></label>
+<label>Upstream pressure <span class="v" id="rp_v"></span><input type="range" id="rp" min="150" max="1400" step="10" value="800"></label>
+<label>Running at, share of dp span <span class="v" id="rs_v"></span><input type="range" id="rs" min="0.1" max="1" step="0.01" value="0.5"></label>
+</fieldset>
+
+<fieldset id="df"><legend>Delivery meters</legend>
+<label>Number <span class="v" id="nd_v"></span><input type="range" id="nd" min="1" max="8" step="1" value="3"></label>
+<label>Pipe inside diameter <span class="v"><select id="dD"><option value="0.1541">154.1 mm (6 in)</option><option value="0.2027" selected>202.7 mm (8 in)</option><option value="0.3048">304.8 mm (12 in)</option><option value="0.3874">387.4 mm (16 in)</option></select></span></label>
+<label>Beta ratio <span class="v" id="db_v"></span><input type="range" id="db" min="0.2" max="0.7" step="0.01" value="0.55"></label>
+<label>Upstream pressure <span class="v" id="dp_v"></span><input type="range" id="dpp" min="150" max="1400" step="10" value="400"></label>
+<p class="note">Deliveries split the receipts' gas equally; each one's dp is solved from that flow.</p>
+</fieldset>
+
+<fieldset><legend>Which errors are shared</legend>
+<label>Discharge coefficient <span class="v" id="fC_v"></span><input type="range" id="fC" min="0" max="1" step="0.05" value="0"></label>
+<div class="radio"><label><input type="radio" name="cls" value="beta" checked>by tap and beta band</label>
+<label><input type="radio" name="cls" value="role">receipts apart from deliveries</label></div>
+<label>Transmitters (dp, pressure, temperature) <span class="v" id="fX_v"></span><input type="range" id="fX" min="0" max="1" step="0.05" value="0"></label>
+<label>Bore and pipe diameters <span class="v" id="fG_v"></span><input type="range" id="fG" min="0" max="1" step="0.05" value="0"></label>
+<label>Gas analysis <span class="v" id="fA_v"></span><input type="range" id="fA" min="0" max="1" step="0.05" value="0"></label>
+<p class="note">0 is independent at every meter; 1 is one common error. The discharge coefficient's starts at 0, the first row of the page's table; no open source says which value is right.</p>
+</fieldset>
+
+<fieldset><legend>Gas, period, price</legend>
+<label>Gas (NIST AGA8 example) <span class="v"><select id="gas"></select></span></label>
+<label>Calibrations a year <span class="v"><select id="ints"><option>1</option><option>2</option><option selected>4</option><option>12</option></select></span></label>
+<label>Price, $/MMBtu <span class="v"><input type="number" id="price" min="0" step="0.01" value="{{price_med}}" style="width:84px"></span></label>
+<p class="note">Default: median Henry Hub spot price, {{price_months}} (EIA).</p>
+<button id="go">Run</button> <span id="prog" class="note"></span>
+</fieldset>
+</div>
+
+<div class="out" id="out" hidden>
+<div class="row">
+<div><span class="k">Imbalance, standard uncertainty</span><span class="big" id="o_u"></span></div>
+<div><span class="k">95% of outcomes between</span><span class="big" id="o_ci"></span></div>
+<div><span class="k">Worth, one standard uncertainty</span><span class="big" id="o_usd"></span></div>
+</div>
+<div class="row">
+<div><span class="k">Throughput</span><span id="o_tp"></span></div>
+<div><span class="k">In energy</span><span id="o_e"></span></div>
+<div><span class="k">Monte Carlo</span><span id="o_mc"></span></div>
+</div>
+<canvas id="hist" aria-label="Distribution of the measured imbalance"></canvas>
+<p class="note">Measured receipts minus measured deliveries, as a share of true throughput, over one year of calibration intervals. The true gas balances exactly; every bit of imbalance here is measurement. Propagated by Monte Carlo after JCGM 101:2008, run until its 7.9.4 stopping rule is met.</p>
+</div>
+<p class="err" id="err"></p>
+</div>
+
+<script>
+/*ENGINE*/
+</script>
+<script>
+"use strict";
+const TABLE = /*TABLE*/null;
+const E = MeterEngine;
+const $ = id => document.getElementById(id);
+const gasSel = $("gas");
+for (const g of TABLE.gases) { const o = document.createElement("option"); o.textContent = g.name; gasSel.append(o); }
+
+const show = {
+  nr: v => v, rb: v => (+v).toFixed(2), rp: v => v + " psia", rs: v => Math.round(v * 100) + "%",
+  nd: v => v, db: v => (+v).toFixed(2), dpp: v => v + " psia",
+  fC: v => (+v).toFixed(2), fX: v => (+v).toFixed(2), fG: v => (+v).toFixed(2), fA: v => (+v).toFixed(2),
+};
+// the page's system, described from the data it is built from (meter/build_app.py)
+{
+  const r = TABLE.page_system.filter(m => m.role === "R"), d = TABLE.page_system.filter(m => m.role === "D");
+  const dps = r.map(m => m.dp), pct = v => Math.round(v * 100) + "%";
+  $("sys_page").textContent = "the page's system: " + r.length + " receipts at " + Math.min(...dps) + " to " + Math.max(...dps) +
+    " kPa of a " + r[0].span_dp + " kPa span; " + d.length + " deliveries taking " + d.map(m => pct(m.share)).join(", ");
+  const sync = () => { const own = document.querySelector("input[name=sys]:checked").value === "own";
+    $("rf").disabled = $("df").disabled = !own; };
+  for (const el of document.querySelectorAll("input[name=sys]")) el.addEventListener("change", sync);
+  sync();
+}
+for (const id in show) {
+  const el = $(id), lab = $(id === "dpp" ? "dp_v" : id + "_v");
+  const f = () => { lab.textContent = show[id](el.value); };
+  el.addEventListener("input", f); f();
+}
+
+function system() {
+  const g = TABLE.gases.find(t => t.name === gasSel.value);
+  if (document.querySelector("input[name=sys]:checked").value === "page")
+    return { g, st: E.buildSystem(g, TABLE.page_system.map(m => Object.assign({}, m))) };
+  const PSI = E.PSI, TF = (60 + 10 - 32) / 1.8 + 273.15, TD = (60 - 32) / 1.8 + 273.15;
+  const ms = [];
+  const nr = +$("nr").value, nd = +$("nd").value;
+  for (let i = 0; i < nr; i++) ms.push({ name: "R" + (i + 1), role: "R", D: +$("rD").value, beta: +$("rb").value,
+    p1: +$("rp").value * PSI, T1: TF, span_dp: 50, dp: 50 * +$("rs").value, share: 0, taps: "flange" });
+  for (let i = 0; i < nd; i++) ms.push({ name: "D" + (i + 1), role: "D", D: +$("dD").value, beta: +$("db").value,
+    p1: +$("dpp").value * PSI, T1: TD, span_dp: 50, dp: 0, share: 1, taps: "flange" });
+  const st = E.buildSystem(g, ms);
+  return { g, st };
+}
+
+function draw(y, lo, hi) {
+  const c = $("hist"), dpr = window.devicePixelRatio || 1, W = c.clientWidth, H = c.clientHeight;
+  c.width = W * dpr; c.height = H * dpr;
+  const x = c.getContext("2d"); x.scale(dpr, dpr); x.clearRect(0, 0, W, H);
+  const pct = Array.from(y, v => v * 100), m = Math.max(...pct.map(Math.abs)) * 1.05;
+  const bins = 60, h = new Array(bins).fill(0);
+  for (const v of pct) { const b = Math.floor((v + m) / (2 * m) * bins); if (b >= 0 && b < bins) h[b]++; }
+  const top = Math.max(...h), pad = 22;
+  x.fillStyle = getComputedStyle(document.body).getPropertyValue("--cool");
+  for (let b = 0; b < bins; b++) {
+    const bh = (H - pad - 4) * h[b] / top;
+    x.fillRect(b * W / bins + 0.5, H - pad - bh, W / bins - 1, bh);
+  }
+  x.fillStyle = getComputedStyle(document.body).getPropertyValue("--dim");
+  x.font = "12px " + getComputedStyle(document.body).getPropertyValue("--mono");
+  // the outermost labels align inward: centred on the canvas edge they were cut in half
+  const ticks = [-m, -m / 2, 0, m / 2, m];
+  ticks.forEach((t, k) => {
+    x.textAlign = k === 0 ? "left" : k === ticks.length - 1 ? "right" : "center";
+    x.fillText(t.toFixed(2) + "%", (t + m) / (2 * m) * W, H - 6);
+  });
+}
+
+function fmt(r, key) {
+  const d = Math.max(0, -Math.floor(Math.log10(2 * r.delta * 100) + 1e-9));   // 2 delta: the last stable digit
+  return (r[key] * 100).toFixed(d) + "%";
+}
+
+$("go").addEventListener("click", () => {
+  $("err").textContent = ""; $("go").disabled = true; $("prog").textContent = "running...";
+  setTimeout(() => {
+    try {
+      const { g, st } = system();
+      for (const s of st) s.J = E.gasAt(g, s.m.T1, s.m.p1).J;
+      const cls = document.querySelector("input[name=cls]:checked").value;
+      const fx = +$("fX").value, fg = +$("fG").value;
+      const cs = E.comps({ C: +$("fC").value, dp: fx, p1: fx, T1: fx, d: fg, D: fg, composition: +$("fA").value }, cls);
+      const rng = E.rngFrom(Date.now() & 0x7fffffff);
+      const ints = +$("ints").value, pooled = [];
+      const t0 = performance.now();
+      const res = E.adaptive(K => { const o = E.simulate(st, g, cs, K, rng, ints, TABLE.z_ref); pooled.push(o.imb_e); return o; },
+                             ["imb_e"], { maxBatches: 60 }).imb_e;
+      let n = 0; for (const s of st) if (s.m.role === "R") n += s.qm / (s.MW * 1e-3);
+      const vb = n * st[0].Zb * E.R_GERG * E.T_BASE / (E.P_BASE * 1e3);
+      const mmcfd = vb * 86400 / 28.316846592 / 1e3, mmbtud = n * st[0].HN * 1e3 * 86400 / 1.05505585262e9;
+      const price = +$("price").value;
+      $("o_u").textContent = fmt(res, "u");
+      $("o_ci").textContent = fmt(res, "low") + " to " + fmt(res, "high");
+      // two significant figures, as on the page: u itself is known to about two
+      $("o_usd").textContent = "$" + Number((res.u * mmbtud * 365 * price).toPrecision(2)).toLocaleString("en-US") + " a year";
+      $("o_tp").textContent = mmcfd.toFixed(0) + " MMcf/d";
+      $("o_e").textContent = Math.round(mmbtud).toLocaleString("en-US") + " MMBtu/d";
+      $("o_mc").textContent = res.trials.toLocaleString("en-US") + " trials, " + res.batches + " batches" +
+        (res.stable ? "" : " (stopped at the cap before 7.9.4 was met)") + ", " + ((performance.now() - t0) / 1000).toFixed(0) + " s";
+      $("out").hidden = false;
+      window.__meterLast = { u: res.u, delta: res.delta, low: res.low, high: res.high, mmcfd };   // test hook: tests/test_parity_meter.py check 4
+      let all = []; for (const a of pooled) all = all.concat(Array.from(a));
+      draw(all, res.low, res.high);
+    } catch (e) { $("err").textContent = e.message; }
+    $("go").disabled = false; $("prog").textContent = "";
+  }, 30);
+});
+</script>
+</body></html>

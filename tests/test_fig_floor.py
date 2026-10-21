@@ -289,6 +289,7 @@ BUILDERS = [
     ("longevity-quotient/build_lq.py", "longevity-quotient"),
     ("longevity-quotient/fig_lq_explained.py", "longevity-quotient"),
     ("build_skyline_figure.py", "."),
+    ("meter/fig_meter.py", "meter"),
 ]
 
 # outputs/ name -> site/assets/ name, where they differ. sync_assets.py's

@@ -180,6 +180,12 @@ TARGETS = [
     # to about 400 MB.
     target("continents", "continents-code.zip", keep={"outputs"},
            skip=("data/raw", "data/raw/*", "outputs/*.png")),
+    # What a meter's error is worth: the model, NIST's AGA8 C++ it compiles (public
+    # domain, LICENSE inside aga8/), the checks, the fetchers and the payload. Not
+    # data/raw (the fetchers re-download and hash-check it; PHMSA's zip is 32 MB), not
+    # _build (a compiled library for one machine), not the figures (the site's assets).
+    target("meter", "meter-code.zip", keep={"outputs"},
+           skip=("data/raw", "data/raw/*", "outputs/*.png", "_build", "_build/*")),
     # food-code.zip retired with its page on 2026-09-09: food.html was
     # unpublished at Andrew's request, for now, and the last build is
     # unpublished/downloads/food-code.zip. The TARGET goes with the page,
