@@ -127,7 +127,8 @@ def values(P):
     share = fl["share"]
     vf_last = fl["last"]
     peak = max(share, key=share.get)
-    c1, c2 = [c for c in fl["clusters"] if "diff" in c][:2]
+    c1, c2, c3 = [c for c in fl["clusters"] if "diff" in c][:3]
+    names = {s["month"]: s["name"] for s in fl["starts"]}
     chk = fl["check"]
     exp_last = max(e["month"] for e in exp)
     eia_pct, eia_year = cited.eia_pct()
@@ -141,7 +142,6 @@ def values(P):
         "H_min": signed(H[hmin]), "H_min_month": long(hmin),
         "H_peak": signed(H[hpeak]), "H_peak_month": long(hpeak),
         "H_with_hb": signed(P["H_with_expected"][last]),
-        "c2_diff": signed(100 * c2["diff"]), "pl_min": signed(100 * fl["placebo_range"][0]),
         "r_run": str(cited.reuters_run()),
         "band_max": f2(max(abs(lo[m] - hi[m]) for m in H)),
         "n_neg": str(len(neg)), "neg_months": month_list(neg), "n_neg_hi": str(len(neg_hi)),
@@ -160,9 +160,14 @@ def values(P):
         "fc_before": f2(100 * chk["before"]), "fc_after": f2(100 * chk["after"]),
         "fc_before_span": month_list(chk["before_months"]),
         "fc_after_span": month_list(chk["after_months"]),
-        "fc_missing": month_list(chk["missing"]),
         "c1_before": f2(100 * c1["before"]), "c1_after": f2(100 * c1["after"]), "c1_start": long(c1["first"]),
         "c2_before": f2(100 * c2["before"]), "c2_after": f2(100 * c2["after"]), "c2_year": str(ym(c2["first"])[0]),
+        "c3_before": f2(100 * c3["before"]), "c3_after": f2(100 * c3["after"]),
+        "c3_first_long": long(c3["first"]), "c3_last_long": long(c3["last"]),
+        "c2_rank": str(c2["rank_below"]), "c3_rank": str(c3["rank_below"]),
+        "vf_extract": (lambda d: f"{d.day} {MONTHS[d.month - 1]} {d.year}")(
+            __import__("datetime").datetime.strptime(fl["dump"]["gas_extract_date"], "%d-%b-%y")),
+        "unsettled_word": WORDS[fl["unsettled_months"]],
         "placebo_n": str(fl["placebo_n"]),
         "pl_first": str(ym(fl["placebo_months"][0])[0]), "pl_last": str(ym(fl["placebo_months"][1])[0]), "window_word": WORDS[P["window"]],
         "vf_first_long": long(fl["first"]), "vf_last_long": long(vf_last), "vf_last_short": short(vf_last),
@@ -183,6 +188,8 @@ def values(P):
 
 
 def claims(P, H, lo, hi, mh, after_m, peak, c1, c2, chk, neg, conf):
+    c3 = [c for c in P["flaring"]["clusters"] if "diff" in c][2]
+    names = {s["month"]: s["name"] for s in P["flaring"]["starts"]}
     near = [m for m in H if "2026-02" <= m <= "2026-05"]
     checks = [
         ("Matterhorn is the largest addition in service", mh["bcfd"] == max(e["bcfd"] for e in conf)),
@@ -196,19 +203,21 @@ def claims(P, H, lo, hi, mh, after_m, peak, c1, c2, chk, neg, conf):
         ("the record counts no expected line", all(
             abs(H[m] - (sum(e["bcfd"] for e in conf if P["t0"] < e["month"] <= m)
                         - P["k"]["default"] * (P["steo"]["P"][m] - P["steo"]["P"][P["t0"]]))) < 1e-9 for m in H)),
-        ("'the 2021 one only just': its fall exceeds the largest placebo fall by under a tenth of a point",
-         0 < P["flaring"]["placebo_range"][0] - c2["diff"] < 0.001),
         ("alt: near zero February to May 2026", near and all(abs(H[m]) < NEAR_ZERO for m in near)),
         ("'It was not': production did not grow faster after Matterhorn than before t0",
          P["pin"]["after"] <= P["pin"]["before"]),
         ("'They did': more venting and flaring before than after", chk["before"] > chk["after"]),
-        ("both tested starts were followed by a fall", c1["diff"] < 0 and c2["diff"] < 0),
-        ("'larger than every one' of the placebo differences", c1["rank_below"] == 0 and c2["rank_below"] == 0),
+        ("every month of both PLAN 3.4 windows is in the series", not chk["missing"]),
+        ("'fell after each of the three' tested groups", c1["diff"] < 0 and c2["diff"] < 0 and c3["diff"] < 0),
+        ("'the 2019 fall is larger than every one' of the placebo differences", c1["rank_below"] == 0),
+        ("'only the first stands out': placebo falls exceed the 2021 and Matterhorn groups'",
+         c2["rank_below"] > 0 and c3["rank_below"] > 0),
+        ("the third group runs from the Whistler expansion to Matterhorn",
+         names[c3["starts"][0]].startswith("Whistler") and names[c3["starts"][-1]].startswith("Matterhorn")
+         and c3["last"] == mh["month"]),
+        ("exactly three groups tested", len([c for c in P["flaring"]["clusters"] if "diff" in c]) == 3),
         ("the first tested start is Gulf Coast Express (2019)", c1["first"].startswith("2019")),
         ("the second tested group is 2021", c2["first"].startswith("2021")),
-        ("the Matterhorn group is untested for want of data",
-         any(c.get("skip") == "series does not cover both windows" and mh["month"] in c["starts"]
-             for c in P["flaring"]["clusters"])),
         ("alt: the venting and flaring peak comes before Gulf Coast Express", peak < c1["first"]),
         ("the placebo months lie before the first tested start", P["flaring"]["placebo_months"][1] < c1["first"]),
         ("'years when the share was rising': it ends the placebo span higher than it began",

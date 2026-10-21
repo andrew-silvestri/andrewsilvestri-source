@@ -4,7 +4,7 @@ straight into site/assets/.
 
   takeaway_capacity   pipeline capacity out of the basin, confirmed and expected
   takeaway_headroom   pipe added less gas added, since the reference month
-  takeaway_flaring    Texas vented or flared share of gross withdrawals
+  takeaway_flaring    vented or flared share of gross withdrawals, districts 7C, 08 and 8A
 
 Every figure ends in audit(): nothing under the 12px floor, nothing off the
 canvas, no two labels overlapping, no legend over data. The builder exits 1

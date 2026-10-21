@@ -769,11 +769,15 @@ PAGES = {
          'Basin is set to increase".',
          "Waha below zero every day since 26 July 2024, and Matterhorn Express "
          "expected to begin service in September 2024."),
-        ("from state agency data",
-         'U.S. Energy Information Administration, natural gas gross withdrawals '
-         'and production, Texas, monthly, and its table notes.',
-         "Texas gas vented and flared and gross withdrawals by month; the "
-         "notes say these come from state agencies from 2011."),
+        # Q2, 2026-10-20: the dump replaced EIA's statewide monthly series
+        # (anchor "from state agency data") once its host answered.
+        ("Production Data Query dump",
+         'Railroad Commission of Texas, <i>Production Data Query</i> dump '
+         '(PDQ_DSV.zip, extract of 18 September 2026) and its user manual; and '
+         'Form PR, <i>Monthly Production Report, Disposition Codes</i> '
+         '(OG-2014-001A).',
+         "Gas vented or flared (casinghead and gas-well disposition code 4, "
+         "\"Vented or flared\") and production, by lease, district and month."),
         ("shut-ins of 2020",
          'U.S. Energy Information Administration, <i>Today in Energy</i>, '
          '9 March 2021 (republished 22 December 2021), "U.S. crude oil production '

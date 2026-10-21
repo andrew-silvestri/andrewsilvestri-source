@@ -217,6 +217,48 @@ def eia_vented_flared_monthly(state_code):
     return out
 
 
+PDQ_CODES = {"7C": "09", "08": "10", "8A": "11"}   # the dump's DISTRICT_NO for each name
+PDQ_UNSETTLED = 6                                   # PLAN 3.5: the last six months still fill in
+
+
+def pdq_reduced():
+    """data/pdq_district_month.csv (pdq_dump.py), after re-hashing it against its meta file.
+    Returns (meta, rows as dicts)."""
+    import csv
+    import hashlib
+    import json
+    from pathlib import Path
+    d = Path(__file__).resolve().parent / "data"
+    meta = json.loads((d / "pdq_district_month.json").read_text(encoding="utf-8"))
+    raw = (d / "pdq_district_month.csv").read_bytes()
+    got = hashlib.sha1(raw).hexdigest()
+    if got != meta["csv_sha1"]:
+        raise RuntimeError(f"pdq_district_month.csv sha1 {got} != {meta['csv_sha1']}: rerun pdq_dump.py")
+    return meta, list(csv.DictReader(raw.decode("utf-8").splitlines()))
+
+
+def rrc_vented_flared():
+    """Monthly vented or flared (disposition code 4) and production, the three Permian
+    districts summed, Mcf/month: {(y, m): (vented_flared, produced)}. The last
+    PDQ_UNSETTLED cycle months before the dump's newest are dropped."""
+    meta, rows = pdq_reduced()
+    codes = set(PDQ_CODES.values())
+    ny = meta["dump"]["newest_prod_cycle"]
+    n = int(ny[:4]) * 12 + int(ny[4:]) - 1 - PDQ_UNSETTLED
+    last = (n // 12, n % 12 + 1)
+    out = {}
+    for r in rows:
+        if r["district_no"] not in codes:
+            continue
+        ym = (int(r["cycle_year_month"][:4]), int(r["cycle_year_month"][4:]))
+        if ym > last:
+            continue
+        v, g = out.get(ym, (0, 0))
+        out[ym] = (v + int(r["vf_gas_mcf"]) + int(r["vf_csgd_mcf"]),
+                   g + int(r["prod_gas_mcf"]) + int(r["prod_csgd_mcf"]))
+    return {k: v for k, v in out.items() if v[1] > 0}
+
+
 def dpr_region_counties():
     """Counties in EIA's Permian region by state, from dpr-data.xlsx RegionCounties."""
     path, _ = verified("dpr-data.xlsx")

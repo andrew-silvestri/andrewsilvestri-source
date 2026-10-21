@@ -90,8 +90,11 @@ def main():
     pin = {"before": M.growth(P, *PIN_BEFORE), "after": M.growth(P, *PIN_AFTER),
            "before_span": [key(m) for m in PIN_BEFORE], "after_span": [key(m) for m in PIN_AFTER]}
 
-    # venting and flaring, Texas statewide (EIA, from state-agency data)
-    vf = sources.eia_vented_flared_monthly("STX")
+    # venting and flaring, the three Permian districts (RRC PDQ dump; PLAN 3.5).
+    # Until Q2 (2026-10-20) this was EIA's statewide monthly series, because the
+    # dump's host refused every connection on 2026-10-18.
+    vf = sources.rrc_vented_flared()
+    pdq_meta, _ = sources.pdq_reduced()
     share = {t: v / g for t, (v, g) in vf.items() if t >= FLARE_FROM}
     starts = [e for e in pre] + [e for e in entries if e["status"] == "confirmed" and e["bcfd"] >= EVENT_MIN_BCFD]
     clusters = M.event_clusters([e["month"] for e in starts], WINDOW)
@@ -144,7 +147,10 @@ def main():
         "t0": key(T0), "t0_alt": [key(t) for t in T0_ALT],
         "H": H, "H_with_expected": H_all, "H_band": Hb, "H_alt": Halt,
         "pin": pin,
-        "flaring": {"source": "EIA monthly Texas vented and flared over gross withdrawals",
+        "flaring": {"source": "RRC PDQ dump, districts 7C, 08 and 8A: disposition code 4 (vented or flared) "
+                              "over gas well and casinghead production",
+                    "dump": {k: pdq_meta["dump"][k] for k in ("gas_extract_date", "newest_prod_cycle", "downloaded")},
+                    "unsettled_months": sources.PDQ_UNSETTLED,
                     "share": {key(t): v for t, v in sorted(share.items())},
                     "first": key(min(share)), "last": key(max(share)),
                     "clusters": [{"first": key(r["first"]), "last": key(r["last"]),

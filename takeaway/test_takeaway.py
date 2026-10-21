@@ -4,7 +4,7 @@ Each check has a --break that injects the fault it exists to catch, and the
 broken run must exit 1 (HANDOFF trap 26). Run them all:
 
     python test_takeaway.py
-    python test_takeaway.py --break month|district|days|tracker|employer|sign|page
+    python test_takeaway.py --break month|district|days|tracker|employer|sign|page|pdq
 
 1. Reconciliation (the packet's test). The monthly ratio of the RRC's Texas
    Permian (gross) to EIA's Permian region (marketed), over the settled
@@ -44,6 +44,15 @@ broken run must exit 1 (HANDOFF trap 26). Run them all:
    payload (not through update_page.values) must be the ones the shipped
    page prints.
    --break page: one payload number perturbed before deriving. Must fail.
+7. The PDQ dump reduction (Q2, PLAN 3.5), read from the file the build reads
+   (data/pdq_district_month.csv, re-hashed by sources.pdq_reduced): no
+   disposition row with vented or flared gas lacks a lease-cycle row; lease
+   sums equal the dump's own district table for every Permian district and
+   month; the dump's district numbers 09, 10, 11 are named 7C, 08, 8A; and
+   the production side that sources.rrc_vented_flared() divides by equals the
+   RRC Permian workbook, every month both carry, to the Mcf.
+   --break pdq: read the dump's DISTRICT_NO as if it were the district's
+   name, the likeliest slip (the dump's "08" is district 7B). Must fail.
 
 The JavaScript engine is held to model.py by tests/test_parity_takeaway.py.
 """
@@ -116,6 +125,35 @@ def district_identity():
             bad.append(t)
     check("2 RRC workbook = 7C + 08 + 8A, every filed month, to the Mcf", not bad,
           f"{len(mcf)} months, {len(bad)} differ" + (f", first {bad[0]}" if bad else ""))
+
+
+# ------------------------------------------------------------------ 7
+def pdq_check():
+    meta, rows = sources.pdq_reduced()
+    orig = dict(sources.PDQ_CODES)
+    codes = dict(orig)
+    if BREAK == "pdq":
+        sources.PDQ_CODES = {name: name for name in codes}
+        codes = dict(sources.PDQ_CODES)
+    perm = [r for r in rows if r["district_no"] in codes.values()]
+    check("7 PDQ: no vented-or-flared row without a lease-cycle row",
+          sum(int(r["join_misses"]) for r in rows) == 0 and meta["rows"]["disp_with_vf"] > 0,
+          f"{meta['rows']['disp_with_vf']:,} rows with code 4, "
+          f"{sum(int(r['join_misses']) for r in rows)} unmatched")
+    bad = [r["cycle_year_month"] for r in perm if r["dist_table_gas_mcf"] != "" and (
+        r["prod_gas_mcf"] != r["dist_table_gas_mcf"] or r["prod_csgd_mcf"] != r["dist_table_csgd_mcf"])]
+    check("7 PDQ: lease sums = the dump's district table, every Permian district-month", perm and not bad,
+          f"{len(perm)} district-months, {len(bad)} differ")
+    names = {r["district_no"]: r["district_name"] for r in perm}
+    check("7 PDQ: the dump's district numbers carry the names the page uses",
+          all(names.get(code) == name for name, code in codes.items()), f"{names}")
+    vf = sources.rrc_vented_flared()
+    mcf = sources.rrc_permian_mcf()
+    common = sorted(set(vf) & set(mcf))
+    diff = [t for t in common if vf[t][1] != sum(mcf[t])]
+    check("7 PDQ: the share's denominator = the RRC Permian workbook, to the Mcf", len(common) > 200 and not diff,
+          f"{len(common)} months in both, {len(diff)} differ" + (f", first {diff[0]}" if diff else ""))
+    sources.PDQ_CODES = orig
 
 
 # ------------------------------------------------------------------ 3
@@ -248,6 +286,8 @@ def page_numbers():
         "pin after": f"and {pay['pin']['after']:.2f} Bcf/d over the three after",
         "flaring 2019": f"averaged {100 * c[0]['before']:.2f} per cent",
         "flaring 2021": f"went from {100 * c[1]['before']:.2f} to {100 * c[1]['after']:.2f} per cent",
+        "flaring Matterhorn group": f"from {100 * c[2]['before']:.2f} to {100 * c[2]['after']:.2f} per cent",
+        "flaring t0 test": f"{100 * fl['check']['before']:.2f} per cent of gross withdrawals",
         "oil-well share": f"{100 * pay['csgd']['share']:.0f} per cent of the gas",
         "reconciliation": f"(mean {pay['reconcile']['mean']:.2f})",
         "anchor": f"{P[pay['anchor']['month']]:.2f} against",
@@ -258,7 +298,8 @@ def page_numbers():
 
 
 def main():
-    for f in (reconciliation, district_identity, units, capacity_check, employer_check, headroom_check, page_numbers):
+    for f in (reconciliation, district_identity, units, capacity_check, employer_check, headroom_check, page_numbers,
+              pdq_check):
         f()
     print(("FAIL: " + ", ".join(fails)) if fails else "all checks pass", "(break run: " + BREAK + ")" if BREAK else "")
     return 1 if fails else 0
