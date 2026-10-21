@@ -100,4 +100,7 @@ function main()
     end
 end
 
-abspath(PROGRAM_FILE) == @__FILE__ && main()
+# `@__FILE__ && main()` parses as a macro call that swallows the rest of the
+# line, so until 2026-10-21 this port raised a ParseError and never ran
+# (Julia 1.12; QA substance audit). The parentheses end the macro call.
+abspath(PROGRAM_FILE) == (@__FILE__) && main()
