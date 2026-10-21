@@ -211,6 +211,14 @@ def entries_unsorted():
     return out
 
 
+def completed(name, sheet="hist"):
+    """(year, month) of a tracker row's Completed Date; for lines the page names but does not list."""
+    rec = _tracker()[(sheet, name)]
+    cd = rec["Completed Date"]
+    assert str(rec["Status"]).strip() == "Completed" and isinstance(cd, dt.datetime), (name, rec["Status"], cd)
+    return (cd.year, cd.month)
+
+
 def pre_anchor():
     """The pre-anchor starts: name, month, Bcf/d, tracker note."""
     t = _tracker()

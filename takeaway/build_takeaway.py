@@ -104,6 +104,7 @@ def main():
     for row in ba:
         if "diff" in row:
             row["rank_below"] = sum(1 for v in plv if v < row["diff"])
+            row["placebo_below"] = sorted(key(m) for m, v in pl.items() if v < row["diff"])
             row["placebo_n"] = len(plv)
     fb = [share[t] for t in FLARE_BEFORE if t in share]
     fa = [share[t] for t in FLARE_AFTER if t in share]
@@ -151,11 +152,12 @@ def main():
                               "over gas well and casinghead production",
                     "dump": {k: pdq_meta["dump"][k] for k in ("gas_extract_date", "newest_prod_cycle", "downloaded")},
                     "unsettled_months": sources.PDQ_UNSETTLED,
+                    "double_e": key(capacity.completed("Double E Pipeline")),
                     "share": {key(t): v for t, v in sorted(share.items())},
                     "first": key(min(share)), "last": key(max(share)),
                     "clusters": [{"first": key(r["first"]), "last": key(r["last"]),
                                   "starts": [key(m) for m in r["starts"]],
-                                  **{k: r[k] for k in ("before", "after", "diff", "rank_below", "placebo_n", "skip")
+                                  **{k: r[k] for k in ("before", "after", "diff", "rank_below", "placebo_below", "placebo_n", "skip")
                                      if k in r}} for r in ba],
                     "starts": [{"name": e["name"], "month": key(e["month"]), "bcfd": e["bcfd"]} for e in starts],
                     "placebo_n": len(plv), "placebo_range": [plv[0], plv[-1]] if plv else None,

@@ -165,6 +165,10 @@ def values(P):
         "c3_before": f2(100 * c3["before"]), "c3_after": f2(100 * c3["after"]),
         "c3_first_long": long(c3["first"]), "c3_last_long": long(c3["last"]),
         "c2_rank": str(c2["rank_below"]), "c3_rank": str(c3["rank_below"]),
+        "pl_fall_year": str(fall_years(fl, c2)[0]),
+        "c3_in_falling": str(sum(1 for m in c3["placebo_below"]
+                                 if annual(share, ym(m)[0]) < annual(share, ym(m)[0] - 1))), "fc_diff": f2(100 * (chk["before"] - chk["after"])),
+        "dbl_e": long(fl["double_e"]),
         "vf_extract": (lambda d: f"{d.day} {MONTHS[d.month - 1]} {d.year}")(
             __import__("datetime").datetime.strptime(fl["dump"]["gas_extract_date"], "%d-%b-%y")),
         "unsettled_word": WORDS[fl["unsettled_months"]],
@@ -185,6 +189,23 @@ def values(P):
     }
     claims(P, H, lo, hi, mh, after_m, peak, c1, c2, chk, neg, conf)
     return v
+
+
+def add(key, n):
+    """'YYYY-MM' plus n months."""
+    y, m = ym(key)
+    i = y * 12 + m - 1 + n
+    return f"{i // 12}-{i % 12 + 1:02d}"
+
+
+def fall_years(fl, *groups):
+    """The years of the placebo months whose fall exceeds any of these groups'."""
+    return sorted({ym(m)[0] for c in groups for m in c["placebo_below"]})
+
+
+def annual(share, y):
+    v = [s for k, s in share.items() if ym(k)[0] == y]
+    return sum(v) / len(v)
 
 
 def claims(P, H, lo, hi, mh, after_m, peak, c1, c2, chk, neg, conf):
@@ -215,6 +236,13 @@ def claims(P, H, lo, hi, mh, after_m, peak, c1, c2, chk, neg, conf):
         ("the third group runs from the Whistler expansion to Matterhorn",
          names[c3["starts"][0]].startswith("Whistler") and names[c3["starts"][-1]].startswith("Matterhorn")
          and c3["last"] == mh["month"]),
+        ("'all come from' one year: the placebo falls beyond the 2021 group",
+         len(fall_years(P["flaring"], c2)) == 1),
+        ("'a year in which the share fell': its mean below the year before's",
+         all(annual(P["flaring"]["share"], y) < annual(P["flaring"]["share"], y - 1)
+             for y in fall_years(P["flaring"], c2))),
+        ("Double E's completion falls inside the 2021 group's after-window",
+         add(c2["last"], 1) <= P["flaring"]["double_e"] <= add(c2["last"], P["window"])),
         ("exactly three groups tested", len([c for c in P["flaring"]["clusters"] if "diff" in c]) == 3),
         ("the first tested start is Gulf Coast Express (2019)", c1["first"].startswith("2019")),
         ("the second tested group is 2021", c2["first"].startswith("2021")),
