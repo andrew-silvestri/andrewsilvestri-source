@@ -20,7 +20,8 @@ Download" page links the dump as https://mft.rrc.texas.gov/link/1f5ddb8d-
 that page's fileList form for the row and then requesting /link/godrivedownload
 in the same session. That host refused every connection on 2026-10-18.
 
-Run:  python pdq_dump.py <path to PDQ_DSV.zip>
+Run:  python pdq_dump.py --fetch <path to save PDQ_DSV.zip>   (3.8 GB; then reduces it)
+      python pdq_dump.py <path to PDQ_DSV.zip>
 Writes data/pdq_district_month.csv and data/pdq_district_month.json (the
 dump's size, SHA-1 and extract dates, and the CSV's SHA-1, which
 sources.rrc_vented_flared() checks before reading).
@@ -34,6 +35,8 @@ import json
 import os
 import sys
 import zipfile
+
+LINK = "https://mft.rrc.texas.gov/link/1f5ddb8d-329a-4459-b7f8-177b4f5ee60d"
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 OUT = os.path.join(HERE, "data", "pdq_district_month.csv")
@@ -56,6 +59,36 @@ def rows(z, name, want):
         for line in t:
             p = line.rstrip("\r\n").split("}")
             yield [p[i] for i in idx]
+
+
+def fetch(dest, probe=False):
+    """The GoAnywhere share as a browser walks it: the link page (session cookie and
+    the fileList form's ViewState), the form posted for the one row, then the
+    download in the same session. probe: stop after the first 4 bytes and return them."""
+    import http.cookiejar
+    import re
+    import urllib.parse
+    import urllib.request
+    op = urllib.request.build_opener(urllib.request.HTTPCookieProcessor(http.cookiejar.CookieJar()))
+    page = op.open(LINK, timeout=60).read().decode("utf-8", "replace")
+    form = page[page.index('<form id="fileList"'):]
+    form = form[:form.index("</form>")]
+    vs = re.search(r'name="javax.faces.ViewState"[^>]*value="([^"]+)"', form).group(1)
+    row = re.search(r"'(fileTable:0:[\w]+)':'fileTable:0:[\w]+'", form).group(1)
+    assert "PDQ_DSV.zip" in form, "the share no longer lists PDQ_DSV.zip"
+    data = urllib.parse.urlencode({"fileList": "fileList", "fileList_SUBMIT": "1", "fileTable_selection": "",
+                                   row: row, "javax.faces.ViewState": vs}).encode()
+    # The post answers 302 to /link/godrivedownload and urllib follows it, so this
+    # response IS the 3.8 GB file: read it as a stream, never with a bare .read().
+    with op.open(urllib.request.Request("https://mft.rrc.texas.gov/webclient/godrive/PublicGoDrive.xhtml", data),
+                 timeout=600) as r:
+        assert r.geturl().endswith("/link/godrivedownload"), r.geturl()
+        if probe:
+            return r.read(4), r.headers.get("Content-Length")
+        with open(dest, "wb") as f:
+            for blk in iter(lambda: r.read(1 << 20), b""):
+                f.write(blk)
+    return dest
 
 
 def main(zp):
@@ -112,4 +145,7 @@ def main(zp):
 
 
 if __name__ == "__main__":
-    main(sys.argv[1])
+    if sys.argv[1] == "--fetch":
+        main(fetch(sys.argv[2]))
+    else:
+        main(sys.argv[1])
