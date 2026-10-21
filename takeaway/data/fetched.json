@@ -1,0 +1,142 @@
+{
+ "10atab.pdf": {
+  "bytes": 191478,
+  "fetched": "2026-10-18",
+  "sha1": "2cd0ec727d144585599ea4f4b2618d44e558dd6f",
+  "url": "https://www.eia.gov/outlooks/steo/tables/pdf/10atab.pdf",
+  "via": "urllib"
+ },
+ "10btab.pdf": {
+  "bytes": 118421,
+  "fetched": "2026-10-18",
+  "sha1": "a7c975cac1bfbae45f5f953289d89d5c0ffae325",
+  "url": "https://www.eia.gov/outlooks/steo/tables/pdf/10btab.pdf",
+  "via": "urllib"
+ },
+ "EIA-NaturalGasPipelineProjectsAug2026.xlsx": {
+  "bytes": 1165018,
+  "fetched": "2026-10-18",
+  "sha1": "74590df379c5a9d35f7da0c4756166d7d941c82d",
+  "url": "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjectsAug2026.xlsx",
+  "via": "urllib"
+ },
+ "NG_CONS_SUM_DCU_SNM_A.xls": {
+  "bytes": 34304,
+  "fetched": "2026-10-18",
+  "sha1": "77e69c252a6f27b79808be9ede3309733b0a5d48",
+  "url": "https://www.eia.gov/dnav/ng/xls/NG_CONS_SUM_DCU_SNM_A.xls",
+  "via": "urllib"
+ },
+ "NG_CONS_SUM_DCU_STX_A.xls": {
+  "bytes": 34304,
+  "fetched": "2026-10-18",
+  "sha1": "bf90e0f0a14e06163468dd05aedc74b8a79d6dca",
+  "url": "https://www.eia.gov/dnav/ng/xls/NG_CONS_SUM_DCU_STX_A.xls",
+  "via": "urllib"
+ },
+ "NG_PROD_SUM_DC_SNM_MMCF_A.xls": {
+  "bytes": 34304,
+  "fetched": "2026-10-18",
+  "sha1": "96a97af077f6ddca1e782fe1ae875e20491fffda",
+  "url": "https://www.eia.gov/dnav/ng/xls/NG_PROD_SUM_DC_SNM_MMCF_A.xls",
+  "via": "urllib"
+ },
+ "NG_PROD_SUM_DC_SNM_MMCF_M.xls": {
+  "bytes": 72192,
+  "fetched": "2026-10-18",
+  "sha1": "ffaabfa68624a9d0329656651a06c98056537025",
+  "url": "https://www.eia.gov/dnav/ng/xls/NG_PROD_SUM_DC_SNM_MMCF_M.xls",
+  "via": "urllib"
+ },
+ "NG_PROD_SUM_DC_STX_MMCF_A.xls": {
+  "bytes": 34304,
+  "fetched": "2026-10-18",
+  "sha1": "abea7fe704b21659e27ea4ec71ca4a20d921f8ae",
+  "url": "https://www.eia.gov/dnav/ng/xls/NG_PROD_SUM_DC_STX_MMCF_A.xls",
+  "via": "urllib"
+ },
+ "NG_PROD_SUM_DC_STX_MMCF_M.xls": {
+  "bytes": 72192,
+  "fetched": "2026-10-18",
+  "sha1": "7c7978d97adfc8542dd7b038228fb73240a72d8d",
+  "url": "https://www.eia.gov/dnav/ng/xls/NG_PROD_SUM_DC_STX_MMCF_M.xls",
+  "via": "urllib"
+ },
+ "STEO_m.xlsx": {
+  "bytes": 1098385,
+  "fetched": "2026-10-18",
+  "sha1": "e7d7f69720e5186296d95fa1a155443bab04fbbc",
+  "url": "https://www.eia.gov/outlooks/steo/xls/STEO_m.xlsx",
+  "via": "urllib"
+ },
+ "dpr-data.xlsx": {
+  "bytes": 156163,
+  "fetched": "2026-10-18",
+  "sha1": "cb98fa4043edee8fadad82ed58a7b4b6cc8d36e2",
+  "url": "https://www.eia.gov/petroleum/drilling/xls/dpr-data.xlsx",
+  "via": "urllib"
+ },
+ "pdq-dump-user-manual.pdf": {
+  "bytes": 488959,
+  "fetched": "2026-10-18",
+  "sha1": "0e79cc53ae1d6efc91383d7683bcafb6df70bddb",
+  "url": "https://www.rrc.texas.gov/media/50ypu2cg/pdq-dump-user-manual.pdf",
+  "via": "urllib"
+ },
+ "pdq_08_2008.html": {
+  "bytes": 113721,
+  "fetched": "2026-10-18",
+  "sha1": "e67269568899dacfc64d02b4e82d8a6577a404e7",
+  "url": "https://webapps2.rrc.texas.gov/EWA/productionQueryAction.do?view=District&district=08&from=2008-01&to=2022-12&wellType=Both",
+  "via": "curl POST of the PDQ web form"
+ },
+ "pdq_08_2023.html": {
+  "bytes": 50672,
+  "fetched": "2026-10-18",
+  "sha1": "63d33dc231f53c7a1292ef4d73a26ef5527719a8",
+  "url": "https://webapps2.rrc.texas.gov/EWA/productionQueryAction.do?view=District&district=08&from=2023-01&to=2026-12&wellType=Both",
+  "via": "curl POST of the PDQ web form"
+ },
+ "pdq_7C_2008.html": {
+  "bytes": 113153,
+  "fetched": "2026-10-18",
+  "sha1": "a5708c1f76d039efdb553b10e569ed23fa51246e",
+  "url": "https://webapps2.rrc.texas.gov/EWA/productionQueryAction.do?view=District&district=7C&from=2008-01&to=2022-12&wellType=Both",
+  "via": "curl POST of the PDQ web form"
+ },
+ "pdq_7C_2023.html": {
+  "bytes": 50420,
+  "fetched": "2026-10-18",
+  "sha1": "1c7e07a594279b6b6a805da0bb6a41aca048e412",
+  "url": "https://webapps2.rrc.texas.gov/EWA/productionQueryAction.do?view=District&district=7C&from=2023-01&to=2026-12&wellType=Both",
+  "via": "curl POST of the PDQ web form"
+ },
+ "pdq_8A_2008.html": {
+  "bytes": 112542,
+  "fetched": "2026-10-18",
+  "sha1": "4d69d11781422dc26217fda6859ed968ebc9da95",
+  "url": "https://webapps2.rrc.texas.gov/EWA/productionQueryAction.do?view=District&district=8A&from=2008-01&to=2022-12&wellType=Both",
+  "via": "curl POST of the PDQ web form"
+ },
+ "pdq_8A_2023.html": {
+  "bytes": 50255,
+  "fetched": "2026-10-18",
+  "sha1": "1e8a5584a6ca6960201a25d9d338e66221b47835",
+  "url": "https://webapps2.rrc.texas.gov/EWA/productionQueryAction.do?view=District&district=8A&from=2023-01&to=2026-12&wellType=Both",
+  "via": "curl POST of the PDQ web form"
+ },
+ "permian-basin-2008-to-current.xlsx": {
+  "bytes": 184753,
+  "fetched": "2026-10-18",
+  "sha1": "aaa203fb1d2f14ba9fec2d8b6072c446297b8b1d",
+  "url": "https://www.rrc.texas.gov/media/aagdoxfx/permian-basin-2008-to-current.xlsx",
+  "via": "urllib"
+ },
+ "pr-disposition-codes.pdf": {
+  "bytes": 50221,
+  "fetched": "2026-10-18",
+  "sha1": "a1d5d30dd003da410c182b1047110f0188305129",
+  "url": "https://www.rrc.texas.gov/media/wzsbfq4u/pr-disposition-codes.pdf",
+  "via": "urllib"
+ }
+}

@@ -703,6 +703,99 @@ PAGES = {
          "Hide share of the animal: 2.7% by economic allocation (2023 mean), "
          "5.9% by live weight (range 4.2-6.9%)."),
     ],
+    # takeaway/update_page.py applies this entry itself (meter/update_page.py's
+    # idiom), so the page's generator and this table cannot disagree.
+    "takeaway.html": [
+        ("Anchor phrase", "Source", "What it supports"),
+        ("basin's three districts",
+         'Railroad Commission of Texas, <i>Permian Basin Information</i> and its '
+         'workbook <i>Permian Basin 2008 To Current</i> (production by month, '
+         'from the Production Data Query).',
+         "The Permian as districts 7C, 08 and 8A; gas from oil wells "
+         "(casinghead) and from gas wells, by month."),
+        ("may have reached capacity",
+         'Railroad Commission of Texas, <i>Flaring Regulation</i> (Oil and Gas '
+         'FAQ).',
+         "Statewide Rule 32, and that flaring may be needed where existing "
+         "pipelines have reached capacity."),
+        ("can fall below zero",
+         'U.S. Energy Information Administration, <i>Today in Energy</i>, '
+         '3 February 2025, "Natural gas spot prices fell across key regional '
+         'trading hubs in 2024".',
+         "Waha below zero on 42% of trading days in 2024 (Natural Gas "
+         "Intelligence data), and Matterhorn Express entering service in "
+         "October 2024."),
+        ("quoting PointLogic",
+         'U.S. Energy Information Administration, <i>Natural Gas Weekly '
+         'Update</i>, released 26 May 2022; and <i>Today in Energy</i>, 2 June '
+         '2022, "Natural gas production in the Permian Basin reached an annual '
+         'high in 2021".',
+         "PointLogic's estimate of Permian takeaway capacity: 17.5 Bcf/d in "
+         "the first, 18 Bcf/d as of May 2022 in the second."),
+        ("EIA's project tracker",
+         'U.S. Energy Information Administration, <i>Natural Gas Pipeline '
+         'Projects</i> tracker, August 2026 edition.',
+         "Each line's capacity, status and, where it gives one, completion "
+         "date or expected year."),
+        ("where a newer report gives a date",
+         'Pipeline &amp; Gas Journal, 23 July 2026 (Kinder Morgan second-quarter '
+         'results); BIC Magazine, 5 August 2026 (Hugh Brinson Pipeline); '
+         'Enbridge, 6 August 2026 (Blackcomb Pipeline commissioning); '
+         'U.S. Energy Information Administration, <i>Today in Energy</i>, '
+         '26 May 2026 (planned capacity additions in 2026 and 2027).',
+         "The in-service and expected dates the table attributes to each; "
+         "Enbridge for Blackcomb's commissioning, which the page does not count "
+         "as service."),
+        ("Table 5a, series NGMPPM",
+         'U.S. Energy Information Administration, <i>Short-Term Energy '
+         'Outlook</i>, October 2026, data tables (STEO_m.xlsx).',
+         "Marketed natural gas production, Permian region, monthly."),
+        ("drawn by county",
+         'U.S. Energy Information Administration, <i>Drilling Productivity '
+         'Report</i>, its methodology (August 2014) and data workbook (May '
+         '2024, RegionCounties sheet).',
+         "The Permian region's counties, and that the regions follow county "
+         "lines rather than geology."),
+        ("EIA gives both by state",
+         'U.S. Energy Information Administration, natural gas gross withdrawals '
+         'and production, and consumption by end use, Texas and New Mexico, '
+         'annual; and the definitions for those tables.',
+         "Marketed and dry production, lease and plant fuel; marketed "
+         "production includes gas used in field and plant operations; plant "
+         "liquids are reported by state of origin."),
+        ("every day since July 26",
+         'U.S. Energy Information Administration, <i>Today in Energy</i>, '
+         '10 September 2024, "Natural gas pipeline capacity from the Permian '
+         'Basin is set to increase".',
+         "Waha below zero every day since 26 July 2024, and Matterhorn Express "
+         "expected to begin service in September 2024."),
+        # Q2, 2026-10-20: the dump replaced EIA's statewide monthly series
+        # (anchor "from state agency data") once its host answered.
+        ("Production Data Query dump",
+         'Railroad Commission of Texas, <i>Production Data Query</i> dump '
+         '(PDQ_DSV.zip, extract of 18 September 2026) and its user manual; and '
+         'Form PR, <i>Monthly Production Report, Disposition Codes</i> '
+         '(OG-2014-001A).',
+         "Gas vented or flared (casinghead and gas-well disposition code 4, "
+         "\"Vented or flared\") and production, by lease, district and month."),
+        ("shut-ins of 2020",
+         'U.S. Energy Information Administration, <i>Today in Energy</i>, '
+         '9 March 2021 (republished 22 December 2021), "U.S. crude oil production '
+         'fell by 8% in 2020".',
+         "Operators shut in wells as crude prices fell from March 2020."),
+        ("February 2021 winter storm",
+         'U.S. Energy Information Administration, <i>Today in Energy</i>, '
+         '10 May 2021, "February 2021 weather triggers largest monthly '
+         'decline in U.S. natural gas production".',
+         "Texas gas production fell by a record 4.3 Bcf/d in February 2021, "
+         "mostly from freeze-offs."),
+        ("spring maintenance",
+         'Reuters, in Pipeline &amp; Gas Journal, 28 May 2026, "Waha gas prices '
+         'hit 16-week high as Permian pipeline constraints ease".',
+         "Waha daily prices below zero 49 times in 2024, 39 in 2025 and 87 in "
+         "2026 to date, and a record 78-day run below zero attributed to "
+         "spring maintenance."),
+    ],
 }
 
 

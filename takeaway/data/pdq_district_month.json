@@ -1,0 +1,20 @@
+{
+ "csv_sha1": "111ae15ad41026a9c75a459f9a0e6619985dd97c",
+ "dump": {
+  "bytes": 3847917794,
+  "downloaded": "2026-10-20",
+  "file": "PDQ_DSV.zip",
+  "gas_extract_date": "18-SEP-26",
+  "newest_prod_cycle": "202607",
+  "oil_extract_date": "18-SEP-26",
+  "oldest_prod_cycle": "199301",
+  "sha1": "dc0697a7a2f8b0b34d19bb75bfe79bc664a3f482",
+  "url": "https://mft.rrc.texas.gov/link/1f5ddb8d-329a-4459-b7f8-177b4f5ee60d"
+ },
+ "rows": {
+  "disp": 48730777,
+  "disp_with_vf": 3624099,
+  "lease": 79130816
+ },
+ "written": "2026-10-20"
+}

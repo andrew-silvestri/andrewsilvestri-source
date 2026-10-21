@@ -111,6 +111,7 @@ NAV = [
         ("Industrial heat break-even", "heat.html"),
         ("Battery revenue simulator", "storage.html"),
         ("What a meter's error is worth", "meter.html"),
+        ("When the pipe is full", "takeaway.html"),
     ]),
     # CLIMATE IS ONE PAGE AND RENDERS AS A DROPDOWN. That is the point of the
     # 2026-09-09 change, not an oversight - do not "simplify" it back to a bare
