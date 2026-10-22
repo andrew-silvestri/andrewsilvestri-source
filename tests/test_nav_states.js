@@ -120,7 +120,7 @@ function serve(sheet) {
 
 /* page, viewport, a selector for the element, whether to hover it, the rule
    that must govern it, and which properties that rule must actually deliver.
-   `continents.html` is inside Misc and `code.html` is a top-level item, so
+   `meter.html` is inside Gas and `code.html` is a top-level item, so
    between them every state exists.
 
    This was `food.html` until 2026-09-09, when food.html was unpublished and
@@ -133,17 +133,23 @@ function serve(sheet) {
 
    The constraint is about the NAV'S SHAPE, not about this page: if Mind
    ever gains a second entry, beauty.html becomes eligible and so does the
-   other one. Any page in a menu of two or more works. */
+   other one. Any page in a menu of two or more works.
+
+   It was `continents.html` until 2026-10-22, when R0 unlisted longevity,
+   beauty and skyline (D-39) and Other was left holding continents alone:
+   four states reported ELEMENT NOT FOUND against a nav that worked (trap
+   35). `meter.html` is in Gas with takeaway. If Gas ever drops to one item,
+   pick another menu of two or more. */
 const STATES = [
   { name: 'top bar, current page',   page: 'code.html', vp: 1728, sel: 'nav.top > a.on', hover: false,
     rule: 'nav.top a.on', props: ['color'] },
-  { name: 'menu item',               page: 'continents.html', vp: 1728, sel: 'DD .ddmenu a:not(.on)', hover: false,
+  { name: 'menu item',               page: 'meter.html', vp: 1728, sel: 'DD .ddmenu a:not(.on)', hover: false,
     rule: 'nav.top .ddmenu a', props: ['color', 'padding-left'] },
-  { name: 'menu item, hovered',      page: 'continents.html', vp: 1728, sel: 'DD .ddmenu a:not(.on)', hover: true,
+  { name: 'menu item, hovered',      page: 'meter.html', vp: 1728, sel: 'DD .ddmenu a:not(.on)', hover: true,
     rule: 'nav.top .ddmenu a:hover', props: ['color'] },
-  { name: 'menu item, current',      page: 'continents.html', vp: 1728, sel: 'DD .ddmenu a.on', hover: false,
+  { name: 'menu item, current',      page: 'meter.html', vp: 1728, sel: 'DD .ddmenu a.on', hover: false,
     rule: 'nav.top .ddmenu a.on', props: ['color'] },
-  { name: 'menu item, current+hover', page: 'continents.html', vp: 1728, sel: 'DD .ddmenu a.on', hover: true,
+  { name: 'menu item, current+hover', page: 'meter.html', vp: 1728, sel: 'DD .ddmenu a.on', hover: true,
     rule: 'nav.top .ddmenu a.on', props: ['color'] },
   /* TWO ENTRIES, NOT ONE, AND THE FIRST DRAFT HAD IT WRONG. At 390 the colour
      and the indent come from DIFFERENT rules: the 620px block's
@@ -151,11 +157,11 @@ const STATES = [
      still falls through to the base rule outside the media query. Asking one
      entry for both made the check report the base rule as declaring nothing,
      which was the check being right about a mistake in this table. */
-  { name: 'phone menu item',         page: 'continents.html', vp: 390, sel: 'DD .ddmenu a:not(.on)', hover: false,
+  { name: 'phone menu item',         page: 'meter.html', vp: 390, sel: 'DD .ddmenu a:not(.on)', hover: false,
     rule: 'nav.top .ddmenu a', props: ['color'] },
-  { name: 'phone menu item, indent', page: 'continents.html', vp: 390, sel: 'DD .ddmenu a:not(.on)', hover: false,
+  { name: 'phone menu item, indent', page: 'meter.html', vp: 390, sel: 'DD .ddmenu a:not(.on)', hover: false,
     rule: 'nav.top .ddmenu a', props: ['padding-left'], media: 620 },
-  { name: 'phone menu item, current', page: 'continents.html', vp: 390, sel: 'DD .ddmenu a.on', hover: false,
+  { name: 'phone menu item, current', page: 'meter.html', vp: 390, sel: 'DD .ddmenu a.on', hover: false,
     rule: 'nav.top .ddmenu a.on', props: ['color'] },
   { name: 'phone top bar, current',  page: 'code.html', vp: 390, sel: 'nav.top > a.on', hover: false,
     rule: 'nav.top a.on', props: ['color'] },
@@ -258,7 +264,10 @@ const PROBE = ({ sel, rule, props, media }) => {
     await page.goto(base + st.page, { waitUntil: 'load' });
     // menus are display:none until hovered or focused; force them so the
     // states exist to read at all. This is the enumeration _deslop/ lacks.
-    await page.addStyleTag({ content: '.ddmenu { display: block !important; }' });
+    // Only the menu holding the current item: with every menu forced open,
+    // Power's sits over Gas's and a hover on a Gas item is intercepted
+    // (2026-10-22, when the fixture moved from the last menu to the first).
+    await page.addStyleTag({ content: '.dd:has(.ddmenu a.on) .ddmenu { display: block !important; }' });
     if (st.hover) {
       const el = await page.$(st.sel.startsWith('DD ') ? '.dd:has(.ddmenu a.on) ' + st.sel.slice(3) : st.sel);
       if (el) { await el.hover(); await page.waitForTimeout(200); }
