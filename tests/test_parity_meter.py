@@ -23,14 +23,20 @@ On the tests/test_parity.py pattern: the same inputs through both, compared.
      every other shared fraction 0), its gas, calibrations and price the
      payload's; then Run is pressed and its u(I) and throughput must agree
      with that row's within the two sides' own tolerances.
+  5. A failed run (QA 2026-10-22). The own system at 30 receipts overranges the
+     default deliveries; the engine refuses it, and the app must show the error
+     with the last run's figures hidden. It used to leave them showing, so a
+     reader saw the previous system's 0.18% beside the new system's error.
 
 --break port     perturbs one RHG coefficient in the JS (0.0261 -> 0.0262), as a
                  port that drifted would; part 1 must fail, and the run exits 1.
 --break opening  serves the app with its pre-Q2 opening state (its own controls'
                  system, the C slider at 0.50), which opened at 95 MMcf/d and
                  0.12% against the page's 101 and 0.18%; part 4 must fail, exit 1.
+--break stale    serves the app with the shipped error path (figures left showing);
+                 part 5 must fail, exit 1.
 
-Run:  python tests/test_parity_meter.py [--break port|opening]
+Run:  python tests/test_parity_meter.py [--break port|opening|stale]
 """
 import json
 import math
@@ -50,7 +56,7 @@ import build_app as B                    # noqa: E402
 from aga8lib import AGA8                 # noqa: E402
 
 BREAK_MODE = sys.argv[sys.argv.index("--break") + 1] if "--break" in sys.argv else None
-if BREAK_MODE not in (None, "port", "opening"):
+if BREAK_MODE not in (None, "port", "opening", "stale"):
     sys.exit(f"unknown --break {BREAK_MODE}")
 BREAK = BREAK_MODE == "port"
 fails = []
@@ -189,6 +195,13 @@ const pw = require('playwright');
   await page.waitForFunction(() => window.__meterLast, null, { timeout: 600000 });
   st.run = await page.evaluate(() => window.__meterLast);
   st.shown = { u: await page.textContent('#o_u'), tp: await page.textContent('#o_tp') };
+  // then a system the engine rejects: 30 receipts overrange the default deliveries
+  await page.click('input[name=sys][value=own]');
+  await page.evaluate(() => { const e = document.getElementById('nr'); e.value = '30'; e.dispatchEvent(new Event('input')); });
+  await page.click('#go');
+  await page.waitForFunction(() => !document.getElementById('go').disabled, null, { timeout: 600000 });
+  st.failed = await page.evaluate(() => ({ err: document.getElementById('err').textContent,
+                                           outHidden: document.getElementById('out').hidden }));
   process.stdout.write(JSON.stringify(st));
   await b.close();
 })().catch(e => { console.error(e); process.exit(2); });
@@ -212,7 +225,16 @@ def opening():
                 src = src.replace(o, n)
             app = os.path.join(td, "meter-app.html")
             open(app, "w", encoding="utf-8", newline="\n").write(src)
-        js = os.path.join(td, "open.js")
+        if BREAK_MODE == "stale":   # the shipped fault: the error path left the last run's figures showing
+            src = open(app, encoding="utf-8").read()
+            o = '$("out").hidden = true; $("err").textContent = e.message;'
+            if src.count(o) != 1:
+                check("break found its target", False, o)
+                return
+            src = src.replace(o, '$("err").textContent = e.message;')
+            app = os.path.join(td, "meter-app.html")
+            open(app, "w", encoding="utf-8", newline="\n").write(src)
+        js =os.path.join(td, "open.js")
         open(js, "w", encoding="utf-8").write(OPEN_JS)
         env = dict(os.environ, NODE_PATH=os.path.join(HERE, "node_modules"))
         r = subprocess.run(["node", js, app], capture_output=True, text=True, env=env)
@@ -240,6 +262,9 @@ def opening():
     tp = pay["throughput"]["mmcfd"]
     check("app's throughput at opening = the page's", abs(run["mmcfd"] - tp) <= 1e-9 * tp,
           f"app {run['mmcfd']:.6f} (shown {o['shown']['tp']}) vs page {tp:.6f} MMcf/d")
+    f = o["failed"]
+    check("a failed run shows its error and hides the last run's figures", bool(f["err"]) and f["outHidden"],
+          f"error {f['err']!r}, figures hidden {f['outHidden']}")
 
 
 if __name__ == "__main__":
