@@ -54,6 +54,11 @@ def pages():
         name = os.path.basename(path)
         if name.endswith("-app.html"):
             continue
+        # A page that asks not to be indexed is not offered to the indexer
+        # either (D-39: five pages unlisted with noindex, 2026-10-22).
+        with open(path, encoding="utf-8") as fh:
+            if 'name="robots" content="noindex"' in fh.read():
+                continue
         out.append(name)
     return out
 
