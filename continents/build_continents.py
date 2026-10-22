@@ -194,7 +194,11 @@ def future_block(masks, shape, prov):
             for a, b in itertools.combinations(SCENARIOS, 2)), 2),
         "naive_max_disagreement_pct": nc["naive_max_disagreement_pct"],
         "polar_cut_deg": og.POLAR_CUT,
-        "license": prov["license"],
+        # "licence" is a data key, not prose: fetch_osf.py writes it and the
+        # payload has always carried it. The 2026-09-07 American English sweep
+        # (cb7dc3a) respelled both sides of this line and the build has raised
+        # KeyError since (QA 2026-10-22). Keep it in step with fetch_osf.py:200.
+        "licence": prov["licence"],
     }
 
 

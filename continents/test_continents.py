@@ -29,8 +29,10 @@ page rather than an error, which is why it gets a test rather than a comment.
 10. The artificial polar mask is excluded from every area statistic.
 11. The page equals the payload.
 12. Nothing on the page is unsourced.
+14. Every provenance key the payload builder reads is one the fetcher writes
+    (--break licence replays the spelling sweep that broke it).
 
-Run:  python3 test_continents.py
+Run:  python3 test_continents.py [--break licence]
 """
 import json
 import math
@@ -223,6 +225,24 @@ def main():
               f"{len(forbidden)} forbidden")
     else:
         print("  13. continents-code.zip not built yet, skipped")
+
+    # 14 ---------------------------------------------------------------
+    # Every key the payload builder reads from a fetcher's provenance file
+    # exists in that file. A spelling sweep once respelled prov["licence"]
+    # to prov["license"] and build_continents.py raised KeyError for six
+    # weeks while the shipped payload, built before it, kept every check
+    # here green (QA 2026-10-22). --break licence replays that edit.
+    src = open(os.path.join(HERE, "build_continents.py"), encoding="utf-8").read()
+    if "--break" in sys.argv and "licence" in sys.argv:
+        src = src.replace('prov["licence"]', 'prov["license"]')
+    osf = json.load(open(os.path.join(HERE, "data", "osf_provenance.json"),
+                         encoding="utf-8"))
+    read = sorted(set(re.findall(r'prov\["([A-Za-z_]+)"\]', src)))
+    missing = [k for k in read if k not in osf]
+    if missing or not read:
+        fails.append(f"14. build_continents.py reads provenance keys the "
+                     f"fetcher does not write: {missing}")
+    print(f"  14. provenance keys read by the builder: {read}; missing {missing}")
 
     print("")
     if fails:
