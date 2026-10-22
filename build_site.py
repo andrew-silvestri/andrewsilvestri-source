@@ -24,7 +24,7 @@ ASSETS.mkdir(parents=True, exist_ok=True)
 DL.mkdir(parents=True, exist_ok=True)
 
 FOOTER = ('<footer>Andrew Silvestri · energy systems modelling ·\n'
-          '<a href="mailto:dasilvestri@utexas.edu">dasilvestri@utexas.edu</a></footer>')
+          '<a href="about.html">About</a></footer>')   # no address (D-43)
 
 # --------------------------------------------------------------------------
 # 1. Navigation

@@ -84,6 +84,10 @@ def _ignore(root_rel):
 #                           that is supposed to be identical to it
 GENERATORS = [
     ("nav: rebuild_nav.py", ["rebuild_nav.py"], ".", "site"),
+    # build_about.py writes About's contact block (D-43). It reads
+    # WEB3FORMS_ACCESS_KEY through envfile.get(); on a machine without the key
+    # it writes the LinkedIn-only block, so this entry drifts there by design.
+    ("about contact: build_about.py", ["build_about.py"], ".", "site"),
     # The atlas group was unpublished 2026-09-09, so update_atlas_pages.py
     # no longer owns a shipped file and FAILED here rather than drifting.
     # The generator is untouched; what is removed is the claim that it
