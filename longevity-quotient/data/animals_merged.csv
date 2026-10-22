@@ -5,12 +5,12 @@ Small-eyed sculpin,Abyssocottus korotneffi,Animalia,Chordata,Actinopterygii,Perc
 Roughhead blenny,Acanthemblemaria aspera,Animalia,Chordata,Actinopterygii,Blenniiformes,Chaenopsidae,Acanthemblemaria,0.294054,,,4,no,C,"mass estimated from maximum length by FishBase's length-weight relationship, not weighed"
 Spinyhead blenny,Acanthemblemaria spinosa,Animalia,Chordata,Actinopterygii,Blenniiformes,Chaenopsidae,Acanthemblemaria,0.167327,,,4,no,C,"mass estimated from maximum length by FishBase's length-weight relationship, not weighed"
 Tigris bream,Acanthobrama marmid,Animalia,Chordata,Actinopterygii,Cypriniformes,Leuciscidae,Acanthobrama,226.432,,,4,no,C,"mass estimated from maximum length by FishBase's length-weight relationship, not weighed"
-nan,Acanthobrama thisbeae,Animalia,Chordata,Actinopterygii,Cypriniformes,Leuciscidae,Acanthobrama,203.89,8,,,no,C,
+Acanthobrama thisbeae,Acanthobrama thisbeae,Animalia,Chordata,Actinopterygii,Cypriniformes,Leuciscidae,Acanthobrama,203.89,8,,,no,C,
 Urmia Lake chub,Acanthobrama urmianus,Animalia,Chordata,Actinopterygii,Cypriniformes,Leuciscidae,Acanthobrama,40,,,7,no,C,
 Taumaka,Acanthoclinus fuscus,Animalia,Chordata,Actinopterygii,Perciformes,Plesiopidae,Acanthoclinus,179.41,9,,,no,B,
-nan,Acanthoclinus littoreus,Animalia,Chordata,Actinopterygii,Ovalentaria/misc,Plesiopidae,Acanthoclinus,50.8397,9,,,no,C,"mass estimated from maximum length by FishBase's length-weight relationship, not weighed"
+Acanthoclinus littoreus,Acanthoclinus littoreus,Animalia,Chordata,Actinopterygii,Ovalentaria/misc,Plesiopidae,Acanthoclinus,50.8397,9,,,no,C,"mass estimated from maximum length by FishBase's length-weight relationship, not weighed"
 Wahoo,Acanthocybium solandri,Animalia,Chordata,Actinopterygii,Scombriformes,Scombridae,Acanthocybium,83000,,,9.3,no,C,
-nan,Acanthogobius hasta,Animalia,Chordata,Actinopterygii,Gobiiformes,Gobiidae,Acanthogobius,400,1,,,no,C,
+Acanthogobius hasta,Acanthogobius hasta,Animalia,Chordata,Actinopterygii,Gobiiformes,Gobiidae,Acanthogobius,400,1,,,no,C,
 Pighead prickleback,Acantholumpenus mackayi,Animalia,Chordata,Actinopterygii,Perciformes/Zoarcoidei,Lumpenidae,Acantholumpenus,1097.85,12,,,no,C,"mass estimated from maximum length by FishBase's length-weight relationship, not weighed"
 Arabian yellowfin seabream,Acanthopagrus arabicus,Animalia,Chordata,Actinopterygii,Eupercaria/misc,Sparidae,Acanthopagrus,1589.75,,,14,no,C,"mass estimated from maximum length by FishBase's length-weight relationship, not weighed"
 Surf bream,Acanthopagrus australis,Animalia,Chordata,Actinopterygii,Perciformes,Sparidae,Acanthopagrus,2475,12,,,no,B,
@@ -55,15 +55,15 @@ Giant grenadier,Albatrossia pectoralis,Animalia,Chordata,Actinopterygii,Gadiform
 Bonefish,Albula vulpes,Animalia,Chordata,Actinopterygii,Albuliformes,Albulidae,Albula,10000,,,20,no,C,
 Schneider,Alburnoides bipunctatus,Animalia,Chordata,Actinopterygii,Cypriniformes,Leuciscidae,Alburnoides,31,,,6,no,C,
 Kura chub,Alburnoides eichwaldii,Animalia,Chordata,Actinopterygii,Cypriniformes,Leuciscidae,Alburnoides,28.7232,,,6,no,C,"mass estimated from maximum length by FishBase's length-weight relationship, not weighed"
-nan,Alburnoides qanati,Animalia,Chordata,Actinopterygii,Cypriniformes,Leuciscidae,Alburnoides,7.44492,,,11.9,no,C,"mass estimated from maximum length by FishBase's length-weight relationship, not weighed"
+Alburnoides qanati,Alburnoides qanati,Animalia,Chordata,Actinopterygii,Cypriniformes,Leuciscidae,Alburnoides,7.44492,,,11.9,no,C,"mass estimated from maximum length by FishBase's length-weight relationship, not weighed"
 Tabarestan riffle minnow,Alburnoides tabarestanensis,Animalia,Chordata,Actinopterygii,Cypriniformes,Leuciscidae,Alburnoides,23.34,5,,,no,C,
 Bleak,Alburnus alburnus,Animalia,Chordata,Actinopterygii,Cypriniformes,Leuciscidae,Alburnus,100,,,7,no,C,
-nan,Alburnus belvica,Animalia,Chordata,Actinopterygii,Cypriniformes,Leuciscidae,Alburnus,141.178,8,,,no,C,"mass estimated from maximum length by FishBase's length-weight relationship, not weighed"
+Alburnus belvica,Alburnus belvica,Animalia,Chordata,Actinopterygii,Cypriniformes,Leuciscidae,Alburnus,141.178,8,,,no,C,"mass estimated from maximum length by FishBase's length-weight relationship, not weighed"
 Danube bleak,Alburnus chalcoides,Animalia,Chordata,Actinopterygii,Cypriniformes,Leuciscidae,Alburnus,1250,,,9,no,C,
 North Caucasian bleak,Alburnus hohenackeri,Animalia,Chordata,Actinopterygii,Cypriniformes,Leuciscidae,Alburnus,47.9705,3,,,no,C,"mass estimated from maximum length by FishBase's length-weight relationship, not weighed"
-nan,Alburnus mentoides,Animalia,Chordata,Actinopterygii,Cypriniformes,Leuciscidae,Alburnus,36.7236,5,,,no,C,"mass estimated from maximum length by FishBase's length-weight relationship, not weighed"
+Alburnus mentoides,Alburnus mentoides,Animalia,Chordata,Actinopterygii,Cypriniformes,Leuciscidae,Alburnus,36.7236,5,,,no,C,"mass estimated from maximum length by FishBase's length-weight relationship, not weighed"
 Mossul bleak,Alburnus mossulensis,Animalia,Chordata,Actinopterygii,Cypriniformes,Leuciscidae,Alburnus,97.6,,,4,no,C,
-nan,Alburnus scoranza,Animalia,Chordata,Actinopterygii,Cypriniformes,Leuciscidae,Alburnus,47.4,5,,,no,C,
+Alburnus scoranza,Alburnus scoranza,Animalia,Chordata,Actinopterygii,Cypriniformes,Leuciscidae,Alburnus,47.4,5,,,no,C,
 Yellow-eye mullet,Aldrichetta forsteri,Animalia,Chordata,Actinopterygii,Mugiliformes,Mugilidae,Aldrichetta,522.5,7,,,no,B,
 Baird's smoothhead,Alepocephalus bairdii,Animalia,Chordata,Actinopterygii,Osmeriformes,Alepocephalidae,Alepocephalus,14305,38,,,no,B,
 Risso's smooth-head,Alepocephalus rostratus,Animalia,Chordata,Actinopterygii,Alepocephaliformes,Alepocephalidae,Alepocephalus,1443.76,23,,,no,C,"mass estimated from maximum length by FishBase's length-weight relationship, not weighed"
@@ -145,10 +145,10 @@ Pirate perch,Aphredoderus sayanus,Animalia,Chordata,Actinopterygii,Percopsiforme
 Freshwater drum,Aplodinotus grunniens,Animalia,Chordata,Actinopterygii,Perciformes,Sciaenidae,Aplodinotus,13292.5,13,,,no,B,
 Hawaiian ruby cardinalfish,Apogon erythrinus,Animalia,Chordata,Actinopterygii,Kurtiformes,Apogonidae,Apogon,1.88877,,,0.33,no,C,"mass estimated from maximum length by FishBase's length-weight relationship, not weighed"
 Cardinal fish,Apogon imberbis,Animalia,Chordata,Actinopterygii,Kurtiformes,Apogonidae,Apogon,87.821,5,,,no,C,"mass estimated from maximum length by FishBase's length-weight relationship, not weighed"
-nan,Apricaphanius baeticus,Animalia,Chordata,Actinopterygii,Cyprinodontiformes,Aphaniidae,Apricaphanius,0.81852,,,2,no,C,"mass estimated from maximum length by FishBase's length-weight relationship, not weighed"
+Apricaphanius baeticus,Apricaphanius baeticus,Animalia,Chordata,Actinopterygii,Cyprinodontiformes,Aphaniidae,Apricaphanius,0.81852,,,2,no,C,"mass estimated from maximum length by FishBase's length-weight relationship, not weighed"
 Spanish toothcarp,Apricaphanius iberus,Animalia,Chordata,Actinopterygii,Cyprinodontiformes,Aphaniidae,Apricaphanius,2.09777,,,2,no,C,"mass estimated from maximum length by FishBase's length-weight relationship, not weighed"
 Blue-gray snapper,Aprion virescens,Animalia,Chordata,Actinopterygii,Perciformes,Lutjanidae,Aprion,8470,21,,,no,B,
-nan,Arabibarbus arabicus,Animalia,Chordata,Actinopterygii,Cypriniformes,Cyprinidae,Arabibarbus,337.436,7,,,no,C,"mass estimated from maximum length by FishBase's length-weight relationship, not weighed"
+Arabibarbus arabicus,Arabibarbus arabicus,Animalia,Chordata,Actinopterygii,Cypriniformes,Cyprinidae,Arabibarbus,337.436,7,,,no,C,"mass estimated from maximum length by FishBase's length-weight relationship, not weighed"
 Shabout,Arabibarbus grypus,Animalia,Chordata,Actinopterygii,Cypriniformes,Cyprinidae,Arabibarbus,30000,17,,,no,C,
 Arapaima,Arapaima gigas,Animalia,Chordata,Actinopterygii,Osteoglossiformes,Arapaimidae,Arapaima,100000,20,20,,no,B,
 Sacramento perch,Archoplites interruptus,Animalia,Chordata,Actinopterygii,Perciformes,Centrarchidae,Archoplites,792,6,,,no,B,
@@ -178,7 +178,7 @@ Australian herring,Arripis georgiana,Animalia,Chordata,Actinopterygii,Scombrifor
 Australian ruff,Arripis georgianus,Animalia,Chordata,Actinopterygii,Perciformes,Arripidae,Arripis,440,7,,,no,B,
 Australian salmon,Arripis trutta,Animalia,Chordata,Actinopterygii,Perciformes,Arripidae,Arripis,5170,26,,,no,B,
 Western Australian salmon,Arripis truttacea,Animalia,Chordata,Actinopterygii,Perciformes,Arripidae,Arripis,5775,9,,,no,B,
-nan,Artediellus camchaticus,Animalia,Chordata,Actinopterygii,Perciformes/Cottoidei,Cottidae,Artediellus,370,9,,,no,C,
+Artediellus camchaticus,Artediellus camchaticus,Animalia,Chordata,Actinopterygii,Perciformes/Cottoidei,Cottidae,Artediellus,370,9,,,no,C,
 Alligatorfish,Aspidophoroides monopterygius,Animalia,Chordata,Actinopterygii,Perciformes/Cottoidei,Agonidae,Aspidophoroides,4.85,,,7,no,C,
 Asp,Aspius aspius,Animalia,Chordata,Actinopterygii,Cypriniformes,Cyprinidae,Aspius,4950,11,,,no,B,
 Starry goby,Asterropteryx semipunctata,Animalia,Chordata,Actinopterygii,Gobiiformes,Gobiidae,Asterropteryx,3.70515,,,1.33,no,C,"mass estimated from maximum length by FishBase's length-weight relationship, not weighed"
@@ -213,18 +213,18 @@ Bluespotted triggerfish,Balistes punctatus,Animalia,Chordata,Actinopterygii,Tetr
 Queen triggerfish,Balistes vetula,Animalia,Chordata,Actinopterygii,Tetraodontiformes,Balistidae,Balistes,5440,23,,,no,C,
 Zope,Ballerus ballerus,Animalia,Chordata,Actinopterygii,Cypriniformes,Leuciscidae,Ballerus,2200,,,10,no,C,
 Stone loach,Barbatula barbatula,Animalia,Chordata,Actinopterygii,Cypriniformes,Balitoridae,Barbatula,200,7,,,no,B,
-nan,Barbatula zetensis,Animalia,Chordata,Actinopterygii,Cypriniformes,Nemacheilidae,Barbatula,3.85874,2,,,no,C,"mass estimated from maximum length by FishBase's length-weight relationship, not weighed"
+Barbatula zetensis,Barbatula zetensis,Animalia,Chordata,Actinopterygii,Cypriniformes,Nemacheilidae,Barbatula,3.85874,2,,,no,C,"mass estimated from maximum length by FishBase's length-weight relationship, not weighed"
 Carnatic carp,Barbodes carnaticus,Animalia,Chordata,Actinopterygii,Cypriniformes,Cyprinidae,Barbodes,12000,5,,,no,C,
 Barbel,Barbus barbus,Animalia,Chordata,Actinopterygii,Cypriniformes,Cyprinidae,Barbus,12000,,,17,no,C,
-nan,Barbus caninus,Animalia,Chordata,Actinopterygii,Cypriniformes,Cyprinidae,Barbus,235.311,5,,,no,C,"mass estimated from maximum length by FishBase's length-weight relationship, not weighed"
+Barbus caninus,Barbus caninus,Animalia,Chordata,Actinopterygii,Cypriniformes,Cyprinidae,Barbus,235.311,5,,,no,C,"mass estimated from maximum length by FishBase's length-weight relationship, not weighed"
 Terek barbel,Barbus ciscaucasicus,Animalia,Chordata,Actinopterygii,Cypriniformes,Cyprinidae,Barbus,1989.83,7,,,no,C,"mass estimated from maximum length by FishBase's length-weight relationship, not weighed"
 Round-scaled barbell,Barbus cyclolepis,Animalia,Chordata,Actinopterygii,Cypriniformes,Cyprinidae,Barbus,275.708,,,7,no,C,"mass estimated from maximum length by FishBase's length-weight relationship, not weighed"
 Papermouth,Barbus mattozi,Animalia,Chordata,Actinopterygii,Cypriniformes,Cyprinidae,Barbus,745.25,9,,,no,B,
-nan,Barbus strumicae,Animalia,Chordata,Actinopterygii,Cypriniformes,Cyprinidae,Barbus,237.529,7,,,no,C,"mass estimated from maximum length by FishBase's length-weight relationship, not weighed"
-nan,Barbus tyberinus,Animalia,Chordata,Actinopterygii,Cypriniformes,Cyprinidae,Barbus,4000,9,,,no,C,
+Barbus strumicae,Barbus strumicae,Animalia,Chordata,Actinopterygii,Cypriniformes,Cyprinidae,Barbus,237.529,7,,,no,C,"mass estimated from maximum length by FishBase's length-weight relationship, not weighed"
+Barbus tyberinus,Barbus tyberinus,Animalia,Chordata,Actinopterygii,Cypriniformes,Cyprinidae,Barbus,4000,9,,,no,C,
 Blackfin poacher,Bathyagonus nigripinnis,Animalia,Chordata,Actinopterygii,Perciformes/Cottoidei,Agonidae,Bathyagonus,80.8172,9,,,no,C,"mass estimated from maximum length by FishBase's length-weight relationship, not weighed"
 Meggitt's goby,Bathygobius meggitti,Animalia,Chordata,Actinopterygii,Gobiiformes,Gobiidae,Bathygobius,2.25027,3,,,no,C,"mass estimated from maximum length by FishBase's length-weight relationship, not weighed"
-nan,Bathymaster derjugini,Animalia,Chordata,Actinopterygii,Perciformes/Zoarcoidei,Bathymasteridae,Bathymaster,32.0959,,,8,no,C,"mass estimated from maximum length by FishBase's length-weight relationship, not weighed"
+Bathymaster derjugini,Bathymaster derjugini,Animalia,Chordata,Actinopterygii,Perciformes/Zoarcoidei,Bathymasteridae,Bathymaster,32.0959,,,8,no,C,"mass estimated from maximum length by FishBase's length-weight relationship, not weighed"
 Searcher,Bathymaster signatus,Animalia,Chordata,Actinopterygii,Perciformes/Zoarcoidei,Bathymasteridae,Bathymaster,370,9,,,no,C,
 Mediterranean spiderfish,Bathypterois mediterraneus,Animalia,Chordata,Actinopterygii,Aulopiformes,Ipnopidae,Bathypterois,76.5228,,,15,no,C,"mass estimated from maximum length by FishBase's length-weight relationship, not weighed"
 Mottled twister,Bellapiscis lesleyae,Animalia,Chordata,Actinopterygii,Perciformes,Tripterygiidae,Bellapiscis,3.31119,3,,,no,B,
@@ -251,7 +251,7 @@ Arctic cod,Boreogadus saida,Animalia,Chordata,Actinopterygii,Gadiformes,Gadidae,
 Panama snaggletooth,Borostomias panamensis,Animalia,Chordata,Actinopterygii,Stomiiformes,Stomiidae,Borostomias,162.178,,,5.5,no,C,"mass estimated from maximum length by FishBase's length-weight relationship, not weighed"
 Nightfish,Bostockia porosa,Animalia,Chordata,Actinopterygii,Centrarchiformes,Percichthyidae,Bostockia,29.8,6,,,no,C,
 Wide-eyed flounder,Bothus podas,Animalia,Chordata,Actinopterygii,Pleuronectiformes,Bothidae,Bothus,700,6,,,no,C,
-nan,Bovichtus diacanthus,Animalia,Chordata,Actinopterygii,Perciformes/Notothenioidei,Bovichtidae,Bovichtus,98,,,5,no,C,
+Bovichtus diacanthus,Bovichtus diacanthus,Animalia,Chordata,Actinopterygii,Perciformes/Notothenioidei,Bovichtidae,Bovichtus,98,,,5,no,C,
 Spot-tail,Brachyalestes imberi,Animalia,Chordata,Actinopterygii,Characiformes,Alestidae,Brachyalestes,300,5,,,no,C,
 Bigeye grunt,Brachydeuterus auritus,Animalia,Chordata,Actinopterygii,Eupercaria/misc,Haemulidae,Brachydeuterus,389.449,7,,,no,C,"mass estimated from maximum length by FishBase's length-weight relationship, not weighed"
 Lenok,Brachymystax lenok,Animalia,Chordata,Actinopterygii,Salmoniformes,Salmonidae,Brachymystax,8000,,,11,no,C,
@@ -277,8 +277,8 @@ Banarescu's barb,Capoeta banarescui,Animalia,Chordata,Actinopterygii,Cypriniform
 Bergama barb,Capoeta bergamae,Animalia,Chordata,Actinopterygii,Cypriniformes,Cyprinidae,Capoeta,177,,,4,no,C,
 Seven khramulya,Capoeta capoeta,Animalia,Chordata,Actinopterygii,Cypriniformes,Cyprinidae,Capoeta,559.387,,,10,no,C,"mass estimated from maximum length by FishBase's length-weight relationship, not weighed"
 Mesopotamian barb,Capoeta damascina,Animalia,Chordata,Actinopterygii,Cypriniformes,Cyprinidae,Capoeta,1199.37,8,,,no,C,"mass estimated from maximum length by FishBase's length-weight relationship, not weighed"
-nan,Capoeta fusca,Animalia,Chordata,Actinopterygii,Cypriniformes,Cyprinidae,Capoeta,25.9,,,5,no,C,
-nan,Capoeta gracilis,Animalia,Chordata,Actinopterygii,Cypriniformes,Cyprinidae,Capoeta,330.796,,,5,no,C,"mass estimated from maximum length by FishBase's length-weight relationship, not weighed"
+Capoeta fusca,Capoeta fusca,Animalia,Chordata,Actinopterygii,Cypriniformes,Cyprinidae,Capoeta,25.9,,,5,no,C,
+Capoeta gracilis,Capoeta gracilis,Animalia,Chordata,Actinopterygii,Cypriniformes,Cyprinidae,Capoeta,330.796,,,5,no,C,"mass estimated from maximum length by FishBase's length-weight relationship, not weighed"
 Tigris scraper,Capoeta umbla,Animalia,Chordata,Actinopterygii,Cypriniformes,Cyprinidae,Capoeta,1034.21,,,12,no,C,"mass estimated from maximum length by FishBase's length-weight relationship, not weighed"
 Pink maomao,Caprodon longimanus,Animalia,Chordata,Actinopterygii,Perciformes/Serranoidei,Anthiadidae,Caprodon,730,,,8,no,C,
 Boarfish,Capros aper,Animalia,Chordata,Actinopterygii,Acanthuriformes,Caproidae,Capros,278.921,,,30,no,C,"mass estimated from maximum length by FishBase's length-weight relationship, not weighed"
@@ -297,7 +297,7 @@ Crucian carp,Carassius carassius,Animalia,Chordata,Actinopterygii,Cypriniformes,
 Prussian carp,Carassius gibelio,Animalia,Chordata,Actinopterygii,Cypriniformes,Cyprinidae,Carassius,4840,10,,,no,C,
 Alaska snailfish,Careproctus colletti,Animalia,Chordata,Actinopterygii,Perciformes/Cottoidei,Liparidae,Careproctus,1200,6,,,no,C,
 Blacktail snailfish,Careproctus melanurus,Animalia,Chordata,Actinopterygii,Perciformes/Cottoidei,Liparidae,Careproctus,1700,8,,,no,C,
-nan,Careproctus zachirus,Animalia,Chordata,Actinopterygii,Perciformes/Cottoidei,Liparidae,Careproctus,500,7,,,no,C,
+Careproctus zachirus,Careproctus zachirus,Animalia,Chordata,Actinopterygii,Perciformes/Cottoidei,Liparidae,Careproctus,500,7,,,no,C,
 River carpsucker,Carpiodes carpio,Animalia,Chordata,Actinopterygii,Cypriniformes,Catostomidae,Carpiodes,2524.5,10,,,no,B,
 Quillback,Carpiodes cyprinus,Animalia,Chordata,Actinopterygii,Cypriniformes,Catostomidae,Carpiodes,1617,11,,,no,B,
 Highfin carpsucker,Carpiodes velifer,Animalia,Chordata,Actinopterygii,Cypriniformes,Catostomidae,Carpiodes,2072,11,,,no,B,
@@ -370,7 +370,7 @@ Thicklipped mullet,Chelon labrosus,Animalia,Chordata,Actinopterygii,Mugiliformes
 Thinlip grey mullet,Chelon ramada,Animalia,Chordata,Actinopterygii,Mugiliformes,Mugilidae,Chelon,2900,10,,,no,C,
 Leaping mullet,Chelon saliens,Animalia,Chordata,Actinopterygii,Mugiliformes,Mugilidae,Chelon,1065.92,4,,,no,C,"mass estimated from maximum length by FishBase's length-weight relationship, not weighed"
 Pennant-tailed suckermouth,Chiloglanis anoterus,Animalia,Chordata,Actinopterygii,Siluriformes,Mochokidae,Chiloglanis,6.86561,2.5,,,no,C,"mass estimated from maximum length by FishBase's length-weight relationship, not weighed"
-nan,Chionodraco hamatus,Animalia,Chordata,Actinopterygii,Perciformes/Notothenioidei,Channichthyidae,Chionodraco,633,,,10,no,C,
+Chionodraco hamatus,Chionodraco hamatus,Animalia,Chordata,Actinopterygii,Perciformes/Notothenioidei,Channichthyidae,Chionodraco,633,,,10,no,C,
 Myers' icefish,Chionodraco myersi,Animalia,Chordata,Actinopterygii,Perciformes/Notothenioidei,Channichthyidae,Chionodraco,428,,,17,no,C,
 Red moki,Chirodactylus spectabilis,Animalia,Chordata,Actinopterygii,Centrarchiformes,Latridae,Chirodactylus,11220.2,97,,,no,C,"mass estimated from maximum length by FishBase's length-weight relationship, not weighed"
 Pacific slopehead parrotfish,Chlorurus frontalis,Animalia,Chordata,Actinopterygii,Eupercaria/misc,Scaridae,Chlorurus,2818,,,11,no,C,
@@ -380,9 +380,9 @@ Daisy parrotfish,Chlorurus sordidus,Animalia,Chordata,Actinopterygii,Eupercaria/
 Pacific bullethead parrotfish,Chlorurus spilurus,Animalia,Chordata,Actinopterygii,Eupercaria/misc,Scaridae,Chlorurus,2738,,,9,no,C,
 Blackspot tuskfish,Choerodon schoenleinii,Animalia,Chordata,Actinopterygii,Eupercaria/misc,Labridae,Choerodon,15500,,,17,no,C,
 Izmir nase,Chondrostoma holmwoodii,Animalia,Chordata,Actinopterygii,Cypriniformes,Leuciscidae,Chondrostoma,261,,,5,no,C,
-nan,Chondrostoma knerii,Animalia,Chordata,Actinopterygii,Cypriniformes,Leuciscidae,Chondrostoma,226.949,7.5,,,no,C,"mass estimated from maximum length by FishBase's length-weight relationship, not weighed"
+Chondrostoma knerii,Chondrostoma knerii,Animalia,Chordata,Actinopterygii,Cypriniformes,Leuciscidae,Chondrostoma,226.949,7.5,,,no,C,"mass estimated from maximum length by FishBase's length-weight relationship, not weighed"
 Sneep,Chondrostoma nasus,Animalia,Chordata,Actinopterygii,Cypriniformes,Leuciscidae,Chondrostoma,825,15,,,no,B,
-nan,Chondrostoma prespense,Animalia,Chordata,Actinopterygii,Cypriniformes,Leuciscidae,Chondrostoma,374.563,5,,,no,C,"mass estimated from maximum length by FishBase's length-weight relationship, not weighed"
+Chondrostoma prespense,Chondrostoma prespense,Animalia,Chordata,Actinopterygii,Cypriniformes,Leuciscidae,Chondrostoma,374.563,5,,,no,C,"mass estimated from maximum length by FishBase's length-weight relationship, not weighed"
 Brond-snout,Chondrostoma regium,Animalia,Chordata,Actinopterygii,Cypriniformes,Leuciscidae,Chondrostoma,1000,,,7,no,C,
 Volga undermouth,Chondrostoma variabile,Animalia,Chordata,Actinopterygii,Cypriniformes,Leuciscidae,Chondrostoma,497.291,7,,,no,C,"mass estimated from maximum length by FishBase's length-weight relationship, not weighed"
 Blackside dace,Chrosomus cumberlandensis,Animalia,Chordata,Actinopterygii,Cypriniformes,Leuciscidae,Chrosomus,2.1784,4,,,no,B,
@@ -413,12 +413,12 @@ Anchovy sprat,Clupeonella engrauliformis,Animalia,Chordata,Actinopterygii,Clupei
 Southern Caspian sprat,Clupeonella grimmi,Animalia,Chordata,Actinopterygii,Clupeiformes,Ehiravidae,Clupeonella,32.3,8,,,no,C,
 Freshwater tyulka,Clupeonella tscharchalensis,Animalia,Chordata,Actinopterygii,Clupeiformes,Ehiravidae,Clupeonella,8.94685,5,,,no,C,"mass estimated from maximum length by FishBase's length-weight relationship, not weighed"
 Cobbler,Cnidoglanis macrocephalus,Animalia,Chordata,Actinopterygii,Siluriformes,Plotosidae,Cnidoglanis,1375,13,,,no,B,
-nan,Cobitis bilineata,Animalia,Chordata,Actinopterygii,Cypriniformes,Cobitidae,Cobitis,11.6641,4,,,no,C,"mass estimated from maximum length by FishBase's length-weight relationship, not weighed"
+Cobitis bilineata,Cobitis bilineata,Animalia,Chordata,Actinopterygii,Cypriniformes,Cobitidae,Cobitis,11.6641,4,,,no,C,"mass estimated from maximum length by FishBase's length-weight relationship, not weighed"
 Lamprehuela,Cobitis calderoni,Animalia,Chordata,Actinopterygii,Cypriniformes,Cobitidae,Cobitis,9.24672,3,,,no,C,"mass estimated from maximum length by FishBase's length-weight relationship, not weighed"
-nan,Cobitis elongatoides,Animalia,Chordata,Actinopterygii,Cypriniformes,Cobitidae,Cobitis,19.7044,5,,,no,C,"mass estimated from maximum length by FishBase's length-weight relationship, not weighed"
-nan,Cobitis meridionalis,Animalia,Chordata,Actinopterygii,Cypriniformes,Cobitidae,Cobitis,15.6587,1,,,no,C,"mass estimated from maximum length by FishBase's length-weight relationship, not weighed"
-nan,Cobitis narentana,Animalia,Chordata,Actinopterygii,Cypriniformes,Cobitidae,Cobitis,4.74118,5,,,no,C,"mass estimated from maximum length by FishBase's length-weight relationship, not weighed"
-nan,Cobitis ohridana,Animalia,Chordata,Actinopterygii,Cypriniformes,Cobitidae,Cobitis,3.52138,,,3.5,no,C,"mass estimated from maximum length by FishBase's length-weight relationship, not weighed"
+Cobitis elongatoides,Cobitis elongatoides,Animalia,Chordata,Actinopterygii,Cypriniformes,Cobitidae,Cobitis,19.7044,5,,,no,C,"mass estimated from maximum length by FishBase's length-weight relationship, not weighed"
+Cobitis meridionalis,Cobitis meridionalis,Animalia,Chordata,Actinopterygii,Cypriniformes,Cobitidae,Cobitis,15.6587,1,,,no,C,"mass estimated from maximum length by FishBase's length-weight relationship, not weighed"
+Cobitis narentana,Cobitis narentana,Animalia,Chordata,Actinopterygii,Cypriniformes,Cobitidae,Cobitis,4.74118,5,,,no,C,"mass estimated from maximum length by FishBase's length-weight relationship, not weighed"
+Cobitis ohridana,Cobitis ohridana,Animalia,Chordata,Actinopterygii,Cypriniformes,Cobitidae,Cobitis,3.52138,,,3.5,no,C,"mass estimated from maximum length by FishBase's length-weight relationship, not weighed"
 Raboseta,Cobitis paludica,Animalia,Chordata,Actinopterygii,Cypriniformes,Cobitidae,Cobitis,29.7127,5,,,no,C,"mass estimated from maximum length by FishBase's length-weight relationship, not weighed"
 Sakarya spined loach,Cobitis simplicispina,Animalia,Chordata,Actinopterygii,Cypriniformes,Cobitidae,Cobitis,15.1,,,4,no,C,
 Spined loach,Cobitis taenia,Animalia,Chordata,Actinopterygii,Cypriniformes,Cobitidae,Cobitis,7.3,,,8,no,C,
@@ -427,12 +427,12 @@ Hollowsnout grenadier,Coelorinchus caelorhincus,Animalia,Chordata,Actinopterygii
 Spearsnouted grenadier,Coelorinchus labiatus,Animalia,Chordata,Actinopterygii,Gadiformes,Macrouridae,Coelorinchus,645.23,10,,,no,C,"mass estimated from maximum length by FishBase's length-weight relationship, not weighed"
 Osbeck's grenadier anchovy,Coilia mystus,Animalia,Chordata,Actinopterygii,Clupeiformes,Engraulidae,Coilia,19.2,5,,,no,C,
 Japanese grenadier anchovy,Coilia nasus,Animalia,Chordata,Actinopterygii,Clupeiformes,Engraulidae,Coilia,110,,,5,no,C,
-nan,Colistium guentheri,Animalia,Chordata,Actinopterygii,Pleuronectiformes,Rhombosoleidae,Colistium,1800,21,,,no,C,
-nan,Colistium nudipinnis,Animalia,Chordata,Actinopterygii,Pleuronectiformes,Rhombosoleidae,Colistium,1500,16,,,no,C,
+Colistium guentheri,Colistium guentheri,Animalia,Chordata,Actinopterygii,Pleuronectiformes,Rhombosoleidae,Colistium,1800,21,,,no,C,
+Colistium nudipinnis,Colistium nudipinnis,Animalia,Chordata,Actinopterygii,Pleuronectiformes,Rhombosoleidae,Colistium,1500,16,,,no,C,
 Pacific saury,Cololabis saira,Animalia,Chordata,Actinopterygii,Beloniformes,Scomberesocidae,Cololabis,180,2,,,no,B,
 Big Baikal oilfish,Comephorus baikalensis,Animalia,Chordata,Actinopterygii,Perciformes/Cottoidei,Cottidae,Comephorus,77.9415,,,7,no,C,"mass estimated from maximum length by FishBase's length-weight relationship, not weighed"
 European conger,Conger conger,Animalia,Chordata,Actinopterygii,Anguilliformes,Congridae,Conger,110000,,,20,no,C,
-nan,Conger erebennus,Animalia,Chordata,Actinopterygii,Anguilliformes,Congridae,Conger,7750,,,11,no,C,
+Conger erebennus,Conger erebennus,Animalia,Chordata,Actinopterygii,Anguilliformes,Congridae,Conger,7750,,,11,no,C,
 Beach conger,Conger japonicus,Animalia,Chordata,Actinopterygii,Anguilliformes,Congridae,Conger,12600,,,6,no,C,
 Whitespotted conger,Conger myriaster,Animalia,Chordata,Actinopterygii,Anguilliformes,Congridae,Conger,1698.24,8,,,no,C,"mass estimated from maximum length by FishBase's length-weight relationship, not weighed"
 Prickly toadfish,Contusus richei,Animalia,Chordata,Actinopterygii,Tetraodontiformes,Tetraodontidae,Contusus,524.362,7,,,no,B,
@@ -441,19 +441,19 @@ Redbreast tilapia,Coptodon rendalli,Animalia,Chordata,Actinopterygii,Cichliforme
 Redbelly tilapia,Coptodon zillii,Animalia,Chordata,Actinopterygii,Cichliformes,Cichlidae,Coptodon,300,7,,,no,C,
 Vendace,Coregonus albula,Animalia,Chordata,Actinopterygii,Salmoniformes,Salmonidae,Coregonus,550,10,,,no,B,
 Cisco,Coregonus artedi,Animalia,Chordata,Actinopterygii,Salmoniformes,Salmonidae,Coregonus,1842,11,,,no,B,
-nan,Coregonus atterensis,Animalia,Chordata,Actinopterygii,Salmoniformes,Salmonidae,Coregonus,472.55,6,,,no,C,"mass estimated from maximum length by FishBase's length-weight relationship, not weighed"
-nan,Coregonus austriacus,Animalia,Chordata,Actinopterygii,Salmoniformes,Salmonidae,Coregonus,228.651,5,,,no,C,"mass estimated from maximum length by FishBase's length-weight relationship, not weighed"
+Coregonus atterensis,Coregonus atterensis,Animalia,Chordata,Actinopterygii,Salmoniformes,Salmonidae,Coregonus,472.55,6,,,no,C,"mass estimated from maximum length by FishBase's length-weight relationship, not weighed"
+Coregonus austriacus,Coregonus austriacus,Animalia,Chordata,Actinopterygii,Salmoniformes,Salmonidae,Coregonus,228.651,5,,,no,C,"mass estimated from maximum length by FishBase's length-weight relationship, not weighed"
 Arctic cisco,Coregonus autumnalis,Animalia,Chordata,Actinopterygii,Salmoniformes,Salmonidae,Coregonus,2100,,,20,no,C,
-nan,Coregonus baerii,Animalia,Chordata,Actinopterygii,Salmoniformes,Salmonidae,Coregonus,2668.05,10,,,no,C,"mass estimated from maximum length by FishBase's length-weight relationship, not weighed"
+Coregonus baerii,Coregonus baerii,Animalia,Chordata,Actinopterygii,Salmoniformes,Salmonidae,Coregonus,2668.05,10,,,no,C,"mass estimated from maximum length by FishBase's length-weight relationship, not weighed"
 Lake whitefish,Coregonus clupeaformis,Animalia,Chordata,Actinopterygii,Salmoniformes,Salmonidae,Coregonus,10450,,,50,no,B,
-nan,Coregonus danneri,Animalia,Chordata,Actinopterygii,Salmoniformes,Salmonidae,Coregonus,135.547,6,,,no,C,"mass estimated from maximum length by FishBase's length-weight relationship, not weighed"
-nan,Coregonus hoferi,Animalia,Chordata,Actinopterygii,Salmoniformes,Salmonidae,Coregonus,579.748,6,,,no,C,"mass estimated from maximum length by FishBase's length-weight relationship, not weighed"
+Coregonus danneri,Coregonus danneri,Animalia,Chordata,Actinopterygii,Salmoniformes,Salmonidae,Coregonus,135.547,6,,,no,C,"mass estimated from maximum length by FishBase's length-weight relationship, not weighed"
+Coregonus hoferi,Coregonus hoferi,Animalia,Chordata,Actinopterygii,Salmoniformes,Salmonidae,Coregonus,579.748,6,,,no,C,"mass estimated from maximum length by FishBase's length-weight relationship, not weighed"
 Bloater,Coregonus hoyi,Animalia,Chordata,Actinopterygii,Salmoniformes,Salmonidae,Coregonus,351,10,,,no,B,
-nan,Coregonus kiletz,Animalia,Chordata,Actinopterygii,Salmoniformes,Salmonidae,Coregonus,1353.03,19,,,no,C,"mass estimated from maximum length by FishBase's length-weight relationship, not weighed"
+Coregonus kiletz,Coregonus kiletz,Animalia,Chordata,Actinopterygii,Salmoniformes,Salmonidae,Coregonus,1353.03,19,,,no,C,"mass estimated from maximum length by FishBase's length-weight relationship, not weighed"
 Kiyi,Coregonus kiyi,Animalia,Chordata,Actinopterygii,Salmoniformes,Salmonidae,Coregonus,551.95,10,,,no,B,
 European whitefish,Coregonus lavaretus,Animalia,Chordata,Actinopterygii,Salmoniformes,Salmonidae,Coregonus,10000,,,15,no,C,
-nan,Coregonus lucinensis,Animalia,Chordata,Actinopterygii,Salmoniformes,Salmonidae,Coregonus,50.0267,,,6,no,C,"mass estimated from maximum length by FishBase's length-weight relationship, not weighed"
-nan,Coregonus lutokka,Animalia,Chordata,Actinopterygii,Salmoniformes,Salmonidae,Coregonus,777.626,10,,,no,C,"mass estimated from maximum length by FishBase's length-weight relationship, not weighed"
+Coregonus lucinensis,Coregonus lucinensis,Animalia,Chordata,Actinopterygii,Salmoniformes,Salmonidae,Coregonus,50.0267,,,6,no,C,"mass estimated from maximum length by FishBase's length-weight relationship, not weighed"
+Coregonus lutokka,Coregonus lutokka,Animalia,Chordata,Actinopterygii,Salmoniformes,Salmonidae,Coregonus,777.626,10,,,no,C,"mass estimated from maximum length by FishBase's length-weight relationship, not weighed"
 Muksun,Coregonus muksun,Animalia,Chordata,Actinopterygii,Salmoniformes,Salmonidae,Coregonus,7590,23,,,no,B,
 Broad whitefish,Coregonus nasus,Animalia,Chordata,Actinopterygii,Salmoniformes,Salmonidae,Coregonus,8800,15,,,no,B,
 Blackfin cisco,Coregonus nigripinnis,Animalia,Chordata,Actinopterygii,Salmoniformes,Salmonidae,Coregonus,713.228,14,,,no,B,
@@ -461,12 +461,12 @@ Peled,Coregonus peled,Animalia,Chordata,Actinopterygii,Salmoniformes,Salmonidae,
 Humpback whitefish,Coregonus pidschian,Animalia,Chordata,Actinopterygii,Salmoniformes,Salmonidae,Coregonus,1900,14,,,no,B,
 Irish pollan,Coregonus pollan,Animalia,Chordata,Actinopterygii,Salmoniformes,Salmonidae,Coregonus,247.5,10,,,no,B,
 Shortnose cisco,Coregonus reighardi,Animalia,Chordata,Actinopterygii,Salmoniformes,Salmonidae,Coregonus,296.45,8,,,no,B,
-nan,Coregonus renke,Animalia,Chordata,Actinopterygii,Salmoniformes,Salmonidae,Coregonus,321.819,7,,,no,C,"mass estimated from maximum length by FishBase's length-weight relationship, not weighed"
+Coregonus renke,Coregonus renke,Animalia,Chordata,Actinopterygii,Salmoniformes,Salmonidae,Coregonus,321.819,7,,,no,C,"mass estimated from maximum length by FishBase's length-weight relationship, not weighed"
 Least cisco,Coregonus sardinella,Animalia,Chordata,Actinopterygii,Salmoniformes,Salmonidae,Coregonus,305.25,26,,,no,B,
 Tugun,Coregonus tugun,Animalia,Chordata,Actinopterygii,Salmoniformes,Salmonidae,Coregonus,35,,,5.5,no,C,
 Amur whitefish,Coregonus ussuriensis,Animalia,Chordata,Actinopterygii,Salmoniformes,Salmonidae,Coregonus,2100,10,,,no,C,
-nan,Coregonus vandesius,Animalia,Chordata,Actinopterygii,Salmoniformes,Salmonidae,Coregonus,100.584,,,10,no,C,"mass estimated from maximum length by FishBase's length-weight relationship, not weighed"
-nan,Coregonus vessicus,Animalia,Chordata,Actinopterygii,Salmoniformes,Salmonidae,Coregonus,100.584,2.5,,,no,C,"mass estimated from maximum length by FishBase's length-weight relationship, not weighed"
+Coregonus vandesius,Coregonus vandesius,Animalia,Chordata,Actinopterygii,Salmoniformes,Salmonidae,Coregonus,100.584,,,10,no,C,"mass estimated from maximum length by FishBase's length-weight relationship, not weighed"
+Coregonus vessicus,Coregonus vessicus,Animalia,Chordata,Actinopterygii,Salmoniformes,Salmonidae,Coregonus,100.584,2.5,,,no,C,"mass estimated from maximum length by FishBase's length-weight relationship, not weighed"
 Valaam whitefish,Coregonus widegreni,Animalia,Chordata,Actinopterygii,Salmoniformes,Salmonidae,Coregonus,2000,20,,,no,C,
 Longjaw cisco,Coregonus zenithicus,Animalia,Chordata,Actinopterygii,Salmoniformes,Salmonidae,Coregonus,773.808,11,,,no,B,
 Neko-gigi,Coreobagrus ichikawai,Animalia,Chordata,Actinopterygii,Siluriformes,Bagridae,Coreobagrus,17.0825,4,,,no,C,"mass estimated from maximum length by FishBase's length-weight relationship, not weighed"
@@ -510,7 +510,7 @@ Black musselcracker,Cymatoceps nasutus,Animalia,Chordata,Actinopterygii,Eupercar
 Shiner perch,Cymatogaster aggregata,Animalia,Chordata,Actinopterygii,Perciformes,Embiotocidae,Cymatogaster,145.634,8,,,no,B,
 Three-lined tongue sole,Cynoglossus abbreviatus,Animalia,Chordata,Actinopterygii,Pleuronectiformes,Cynoglossidae,Cynoglossus,251.8,,,5,no,C,
 Red tonguesole,Cynoglossus joyneri,Animalia,Chordata,Actinopterygii,Pleuronectiformes,Cynoglossidae,Cynoglossus,236.9,5,,,no,C,
-nan,Cynoglossus robustus,Animalia,Chordata,Actinopterygii,Pleuronectiformes,Cynoglossidae,Cynoglossus,580.9,,,11,no,C,
+Cynoglossus robustus,Cynoglossus robustus,Animalia,Chordata,Actinopterygii,Pleuronectiformes,Cynoglossidae,Cynoglossus,580.9,,,11,no,C,
 Sand weakfish,Cynoscion arenarius,Animalia,Chordata,Actinopterygii,Eupercaria/misc,Sciaenidae,Cynoscion,2780,5,,,no,C,
 Jamaica weakfish,Cynoscion jamaicensis,Animalia,Chordata,Actinopterygii,Eupercaria/misc,Sciaenidae,Cynoscion,2200,,,6,no,C,
 Spotted seatrout,Cynoscion nebulosus,Animalia,Chordata,Actinopterygii,Perciformes,Sciaenidae,Cynoscion,4356,18,,,no,B,
@@ -518,7 +518,7 @@ Silver seatrout,Cynoscion nothus,Animalia,Chordata,Actinopterygii,Eupercaria/mis
 Gulf weakfish,Cynoscion othonopterus,Animalia,Chordata,Actinopterygii,Eupercaria/misc,Sciaenidae,Cynoscion,2430,,,9,no,C,
 Squeteague,Cynoscion regalis,Animalia,Chordata,Actinopterygii,Eupercaria/misc,Sciaenidae,Cynoscion,8850,,,18,no,C,
 Striped weakfish,Cynoscion striatus,Animalia,Chordata,Actinopterygii,Eupercaria/misc,Sciaenidae,Cynoscion,1954.83,,,15,no,C,"mass estimated from maximum length by FishBase's length-weight relationship, not weighed"
-nan,Cyphocottus megalops,Animalia,Chordata,Actinopterygii,Perciformes/Cottoidei,Cottidae,Cyphocottus,49.9516,9,,,no,C,"mass estimated from maximum length by FishBase's length-weight relationship, not weighed"
+Cyphocottus megalops,Cyphocottus megalops,Animalia,Chordata,Actinopterygii,Perciformes/Cottoidei,Cottidae,Cyphocottus,49.9516,9,,,no,C,"mass estimated from maximum length by FishBase's length-weight relationship, not weighed"
 Satinfin shiner,Cyprinella analostana,Animalia,Chordata,Actinopterygii,Cypriniformes,Leuciscidae,Cyprinella,8.68422,4,,,no,B,
 Whitetail shiner,Cyprinella galactura,Animalia,Chordata,Actinopterygii,Cypriniformes,Leuciscidae,Cyprinella,22.7847,4,,,no,B,
 Red shiner,Cyprinella lutrensis,Animalia,Chordata,Actinopterygii,Cypriniformes,Leuciscidae,Cyprinella,3.8,2,,,no,B,
@@ -548,7 +548,7 @@ Large-eye dentex,Dentex macrophthalmus,Animalia,Chordata,Actinopterygii,Eupercar
 Morocco dentex,Dentex maroccanus,Animalia,Chordata,Actinopterygii,Eupercaria/misc,Sparidae,Dentex,1442.89,,,10,no,C,"mass estimated from maximum length by FishBase's length-weight relationship, not weighed"
 Painted sweetlips,Diagramma pictum,Animalia,Chordata,Actinopterygii,Eupercaria/misc,Haemulidae,Diagramma,6300,13,,,no,C,
 Dumeril's lanternfish,Diaphus dumerilii,Animalia,Chordata,Actinopterygii,Myctophiformes,Myctophidae,Diaphus,3.6,,,1.2,no,C,
-nan,Diaphus suborbitalis,Animalia,Chordata,Actinopterygii,Myctophiformes,Myctophidae,Diaphus,5.60571,,,2.5,no,C,"mass estimated from maximum length by FishBase's length-weight relationship, not weighed"
+Diaphus suborbitalis,Diaphus suborbitalis,Animalia,Chordata,Actinopterygii,Myctophiformes,Myctophidae,Diaphus,5.60571,,,2.5,no,C,"mass estimated from maximum length by FishBase's length-weight relationship, not weighed"
 California headlightfish,Diaphus theta,Animalia,Chordata,Actinopterygii,Myctophiformes,Myctophidae,Diaphus,16.3302,,,6,no,C,"mass estimated from maximum length by FishBase's length-weight relationship, not weighed"
 Watases lanternfish,Diaphus watasei,Animalia,Chordata,Actinopterygii,Myctophiformes,Myctophidae,Diaphus,71.9056,,,3.7,no,C,"mass estimated from maximum length by FishBase's length-weight relationship, not weighed"
 European seabass,Dicentrarchus labrax,Animalia,Chordata,Actinopterygii,Perciformes,Moronidae,Dicentrarchus,6600,15,,,no,B,
@@ -563,7 +563,7 @@ Common two-banded seabream,Diplodus vulgaris,Animalia,Chordata,Actinopterygii,Eu
 Patagonian toothfish,Dissostichus eleginoides,Animalia,Chordata,Actinopterygii,Perciformes,Nototheniidae,Dissostichus,9600,,,50,no,B,
 Antarctic toothfish,Dissostichus mawsoni,Animalia,Chordata,Actinopterygii,Perciformes,Nototheniidae,Dissostichus,44000,31,,,no,B,
 Nile distichodus,Distichodus niloticus,Animalia,Chordata,Actinopterygii,Characiformes,Citharinidae,Distichodus,3410,,7.5,,no,B,
-nan,Dolloidraco longedorsalis,Animalia,Chordata,Actinopterygii,Perciformes/Notothenioidei,Artedidraconidae,Dolloidraco,21.3,,,19,no,C,
+Dolloidraco longedorsalis,Dolloidraco longedorsalis,Animalia,Chordata,Actinopterygii,Perciformes/Notothenioidei,Artedidraconidae,Dolloidraco,21.3,,,19,no,C,
 American gizzard shad,Dorosoma cepedianum,Animalia,Chordata,Actinopterygii,Clupeiformes,Clupeidae,Dorosoma,1089,6,,,no,B,
 Threadfin shad,Dorosoma petenense,Animalia,Chordata,Actinopterygii,Clupeiformes,Clupeidae,Dorosoma,309.283,4,,,no,B,
 Cochero,Dules auriga,Animalia,Chordata,Actinopterygii,Perciformes/Serranoidei,Serranidae,Dules,97.8152,,,9,no,C,"mass estimated from maximum length by FishBase's length-weight relationship, not weighed"
@@ -592,12 +592,12 @@ Californian anchoveta,Engraulis mordax,Animalia,Chordata,Actinopterygii,Clupeifo
 Peruvian anchoveta,Engraulis ringens,Animalia,Chordata,Actinopterygii,Clupeiformes,Engraulidae,Engraulis,57.9,3,,,no,B,
 Hawaiian blackhead triplefin,Enneapterygius atriceps,Animalia,Chordata,Actinopterygii,Blenniiformes,Tripterygiidae,Enneapterygius,0.205693,,,0.32,no,C,"mass estimated from maximum length by FishBase's length-weight relationship, not weighed"
 Chubbyhead barb,Enteromius anoplus,Animalia,Chordata,Actinopterygii,Cypriniformes,Cyprinidae,Enteromius,17.0959,2,,,no,C,"mass estimated from maximum length by FishBase's length-weight relationship, not weighed"
-nan,Enteromius liberiensis,Animalia,Chordata,Actinopterygii,Cypriniformes,Cyprinidae,Enteromius,20.8903,,,4,no,C,"mass estimated from maximum length by FishBase's length-weight relationship, not weighed"
+Enteromius liberiensis,Enteromius liberiensis,Animalia,Chordata,Actinopterygii,Cypriniformes,Cyprinidae,Enteromius,20.8903,,,4,no,C,"mass estimated from maximum length by FishBase's length-weight relationship, not weighed"
 Papermouth,Enteromius mattozi,Animalia,Chordata,Actinopterygii,Cypriniformes,Cyprinidae,Enteromius,1355,8.5,,,no,C,
 Treur barb,Enteromius treurensis,Animalia,Chordata,Actinopterygii,Cypriniformes,Cyprinidae,Enteromius,15509.8,6,,,no,C,"mass estimated from maximum length by FishBase's length-weight relationship, not weighed"
 Petrale sole,Eopsetta jordani,Animalia,Chordata,Actinopterygii,Pleuronectiformes,Pleuronectidae,Eopsetta,1980,25,,,no,B,
 Amber deepwater cardinalfish,Epigonus angustifrons,Animalia,Chordata,Actinopterygii,Acropomatiformes,Epigonidae,Epigonus,595,,,15,no,C,
-nan,Epigonus elegans,Animalia,Chordata,Actinopterygii,Acropomatiformes,Epigonidae,Epigonus,43,8,,,no,C,
+Epigonus elegans,Epigonus elegans,Animalia,Chordata,Actinopterygii,Acropomatiformes,Epigonidae,Epigonus,43,8,,,no,C,
 Telescope cardinal,Epigonus telescopus,Animalia,Chordata,Actinopterygii,Perciformes,Epigonidae,Epigonus,7545.39,104,,,no,B,
 Breaksea cod,Epinephelides armatus,Animalia,Chordata,Actinopterygii,Perciformes/Serranoidei,Anthiadidae,Epinephelides,3000,,,19,no,C,
 Rock hind,Epinephelus adscensionis,Animalia,Chordata,Actinopterygii,Perciformes/Serranoidei,Epinephelidae,Epinephelus,4500,25,,,no,C,
@@ -626,16 +626,16 @@ Smallscaled grouper,Epinephelus polylepis,Animalia,Chordata,Actinopterygii,Perci
 Camouflage grouper,Epinephelus polyphekadion,Animalia,Chordata,Actinopterygii,Perciformes/Serranoidei,Epinephelidae,Epinephelus,19205.7,,,31,no,C,"mass estimated from maximum length by FishBase's length-weight relationship, not weighed"
 Nassau grouper,Epinephelus striatus,Animalia,Chordata,Actinopterygii,Perciformes,Serranidae,Epinephelus,13750,16,,,no,B,
 Potato grouper,Epinephelus tukula,Animalia,Chordata,Actinopterygii,Perciformes/Serranoidei,Epinephelidae,Epinephelus,110000,,,26,no,C,
-nan,Epiplatys bifasciatus,Animalia,Chordata,Actinopterygii,Cyprinodontiformes,Nothobranchiidae,Epiplatys,1.62608,,,7,no,C,"mass estimated from maximum length by FishBase's length-weight relationship, not weighed"
+Epiplatys bifasciatus,Epiplatys bifasciatus,Animalia,Chordata,Actinopterygii,Cyprinodontiformes,Nothobranchiidae,Epiplatys,1.62608,,,7,no,C,"mass estimated from maximum length by FishBase's length-weight relationship, not weighed"
 Silverjaw minnow,Ericymba buccata,Animalia,Chordata,Actinopterygii,Cypriniformes,Leuciscidae,Ericymba,5.35,3,,,no,C,
 Skilfish,Erilepis zonifer,Animalia,Chordata,Actinopterygii,Perciformes/Cottoidei,Anoplopomatidae,Erilepis,91000,12,,,no,C,
 Creek chubsucker,Erimyzon oblongus,Animalia,Chordata,Actinopterygii,Cypriniformes,Catostomidae,Erimyzon,820.962,6,,,no,B,
 Lake chubsucker,Erimyzon sucetta,Animalia,Chordata,Actinopterygii,Cypriniformes,Catostomidae,Erimyzon,802.565,8,,,no,C,"mass estimated from maximum length by FishBase's length-weight relationship, not weighed"
 Japanese rubyfish,Erythrocles schlegelii,Animalia,Chordata,Actinopterygii,Eupercaria/misc,Emmelichthyidae,Erythrocles,310,,,8,no,C,
 White sardine,Escualosa thoracata,Animalia,Chordata,Actinopterygii,Clupeiformes,Dorosomatidae,Escualosa,13.7,1,,,no,C,
-nan,Esmaeilius sophiae,Animalia,Chordata,Actinopterygii,Cyprinodontiformes,Aphaniidae,Esmaeilius,2.79173,,,4,no,C,"mass estimated from maximum length by FishBase's length-weight relationship, not weighed"
+Esmaeilius sophiae,Esmaeilius sophiae,Animalia,Chordata,Actinopterygii,Cyprinodontiformes,Aphaniidae,Esmaeilius,2.79173,,,4,no,C,"mass estimated from maximum length by FishBase's length-weight relationship, not weighed"
 Redfin pickerel,Esox americanus,Animalia,Chordata,Actinopterygii,Esociformes,Esocidae,Esox,1020,,,8,no,C,
-nan,Esox cisalpinus,Animalia,Chordata,Actinopterygii,Esociformes,Esocidae,Esox,10000,13,,,no,C,
+Esox cisalpinus,Esox cisalpinus,Animalia,Chordata,Actinopterygii,Esociformes,Esocidae,Esox,10000,13,,,no,C,
 Northern pike,Esox lucius,Animalia,Chordata,Actinopterygii,Esociformes,Esocidae,Esox,5000,30,,,no,B,
 Muskellunge,Esox masquinongy,Animalia,Chordata,Actinopterygii,Esociformes,Esocidae,Esox,17490,30,,,no,B,
 Chain pickerel,Esox niger,Animalia,Chordata,Actinopterygii,Esociformes,Esocidae,Esox,2337.5,9,,,no,B,
@@ -678,7 +678,7 @@ Missouri saddled darter,Etheostoma tetrazonum,Animalia,Chordata,Actinopterygii,P
 Variegate darter,Etheostoma variatum,Animalia,Chordata,Actinopterygii,Perciformes,Percidae,Etheostoma,11.44,4,,,no,B,
 Banded darter,Etheostoma zonale,Animalia,Chordata,Actinopterygii,Perciformes,Percidae,Etheostoma,5.24926,4,,,no,B,
 Fringed flounder,Etropus crossotus,Animalia,Chordata,Actinopterygii,Pleuronectiformes,Paralichthyidae,Etropus,117.4,2,,,no,B,
-nan,Etrumeus golanii,Animalia,Chordata,Actinopterygii,Clupeiformes,Dussumieriidae,Etrumeus,90,,,5,no,C,
+Etrumeus golanii,Etrumeus golanii,Animalia,Chordata,Actinopterygii,Clupeiformes,Dussumieriidae,Etrumeus,90,,,5,no,C,
 Red-eye round herring,Etrumeus sadina,Animalia,Chordata,Actinopterygii,Clupeiformes,Dussumieriidae,Etrumeus,108.5,,,3,no,C,
 Splendid ponyfish,Eubleekeria splendens,Animalia,Chordata,Actinopterygii,Acanthuriformes,Leiognathidae,Eubleekeria,214.148,2.3,,,no,C,"mass estimated from maximum length by FishBase's length-weight relationship, not weighed"
 Tidewater goby,Eucyclogobius newberryi,Animalia,Chordata,Actinopterygii,Perciformes,Gobiidae,Eucyclogobius,1.46359,1,,,no,B,
@@ -688,7 +688,7 @@ Grey gurnard,Eutrigla gurnardus,Animalia,Chordata,Actinopterygii,Perciformes/Sco
 Divine dwarfgoby,Eviota epiphanes,Animalia,Chordata,Actinopterygii,Gobiiformes,Gobiidae,Eviota,0.0271426,,,0.16,no,C,"mass estimated from maximum length by FishBase's length-weight relationship, not weighed"
 Pygmy goby,Eviota sigillata,Animalia,Chordata,Actinopterygii,Perciformes,Gobiidae,Eviota,0.386181,0.16,,,no,B,
 Threadfin porgy,Evynnis cardinalis,Animalia,Chordata,Actinopterygii,Eupercaria/misc,Sparidae,Evynnis,900,,,12,no,C,
-nan,Evynnis ehrenbergii,Animalia,Chordata,Actinopterygii,Eupercaria/misc,Sparidae,Evynnis,1196,,,10,no,C,
+Evynnis ehrenbergii,Evynnis ehrenbergii,Animalia,Chordata,Actinopterygii,Eupercaria/misc,Sparidae,Evynnis,1196,,,10,no,C,
 Yellowback seabream,Evynnis tumifrons,Animalia,Chordata,Actinopterygii,Eupercaria/misc,Sparidae,Evynnis,1000,,,12,no,C,
 Tonguetied minnow,Exoglossum laurae,Animalia,Chordata,Actinopterygii,Cypriniformes,Leuciscidae,Exoglossum,42.1315,4,,,no,B,
 Cutlip minnow,Exoglossum maxillingua,Animalia,Chordata,Actinopterygii,Cypriniformes,Leuciscidae,Exoglossum,42.1315,2,,,no,B,
@@ -716,7 +716,7 @@ Black-stripe minnow,Galaxiella nigrostriata,Animalia,Chordata,Actinopterygii,Osm
 Eastern dwarf galaxias,Galaxiella pusilla,Animalia,Chordata,Actinopterygii,Galaxiiformes,Galaxiidae,Galaxiella,1.21854,1,,,no,C,"mass estimated from maximum length by FishBase's length-weight relationship, not weighed"
 Mosquitofish,Gambusia affinis,Animalia,Chordata,Actinopterygii,Cyprinodontiformes,Poeciliidae,Gambusia,3.75973,,,3,no,B,
 Eastern mosquitofish,Gambusia holbrooki,Animalia,Chordata,Actinopterygii,Cyprinodontiformes,Poeciliidae,Gambusia,7.60076,1,,,no,C,"mass estimated from maximum length by FishBase's length-weight relationship, not weighed"
-nan,Garcialebias viarius,Animalia,Chordata,Actinopterygii,Cyprinodontiformes,Rivulidae,Garcialebias,4.82797,,,0.46,no,C,"mass estimated from maximum length by FishBase's length-weight relationship, not weighed"
+Garcialebias viarius,Garcialebias viarius,Animalia,Chordata,Actinopterygii,Cyprinodontiformes,Rivulidae,Garcialebias,4.82797,,,0.46,no,C,"mass estimated from maximum length by FishBase's length-weight relationship, not weighed"
 Ereğli minnow,Garra kemali,Animalia,Chordata,Actinopterygii,Cypriniformes,Cyprinidae,Garra,2.97921,,,4,no,C,"mass estimated from maximum length by FishBase's length-weight relationship, not weighed"
 Sucker fish,Garra mullya,Animalia,Chordata,Actinopterygii,Cypriniformes,Cyprinidae,Garra,150,4,,,no,C,
 Red garra,Garra rufa,Animalia,Chordata,Actinopterygii,Cypriniformes,Cyprinidae,Garra,26.6145,,,4,no,C,"mass estimated from maximum length by FishBase's length-weight relationship, not weighed"
@@ -745,7 +745,7 @@ Deep-sea smelt,Glossanodon semifasciatus,Animalia,Chordata,Actinopterygii,Argent
 Witch flounder,Glyptocephalus cynoglossus,Animalia,Chordata,Actinopterygii,Pleuronectiformes,Pleuronectidae,Glyptocephalus,1375,25,,,no,B,
 Blackfin flounder,Glyptocephalus stelleri,Animalia,Chordata,Actinopterygii,Pleuronectiformes,Pleuronectidae,Glyptocephalus,1500,23,,,no,C,
 Rex sole,Glyptocephalus zachirus,Animalia,Chordata,Actinopterygii,Pleuronectiformes,Pleuronectidae,Glyptocephalus,825,24,,,no,B,
-nan,Glyptosternon maculatum,Animalia,Chordata,Actinopterygii,Siluriformes,Sisoridae,Glyptosternon,374,13,,,no,C,
+Glyptosternon maculatum,Glyptosternon maculatum,Animalia,Chordata,Actinopterygii,Siluriformes,Sisoridae,Glyptosternon,374,13,,,no,C,
 Manchurian gudgeon,Gnathopogon strigatus,Animalia,Chordata,Actinopterygii,Cypriniformes,Gobionidae,Gnathopogon,11.6,,,3,no,C,
 California clingfish,Gobiesox rhessodon,Animalia,Chordata,Actinopterygii,Gobiesociformes,Gobiesocidae,Gobiesox,3.23197,,,5,no,C,"mass estimated from maximum length by FishBase's length-weight relationship, not weighed"
 Gudgeon,Gobio gobio,Animalia,Chordata,Actinopterygii,Cypriniformes,Cyprinidae,Gobio,220,8,,,no,B,
@@ -761,17 +761,17 @@ Rock goby,Gobius paganellus,Animalia,Chordata,Actinopterygii,Perciformes,Gobiida
 Devilfish,Gymnapistes marmoratus,Animalia,Chordata,Actinopterygii,Perciformes,Scorpaenidae,Gymnapistes,264.953,14,,,no,B,
 Fish doctor,Gymnelus viridis,Animalia,Chordata,Actinopterygii,Perciformes/Zoarcoidei,Zoarcidae,Gymnelus,1039.25,,,12,no,C,"mass estimated from maximum length by FishBase's length-weight relationship, not weighed"
 Slender fusilier,Gymnocaesio gymnoptera,Animalia,Chordata,Actinopterygii,Eupercaria/misc,Caesionidae,Gymnocaesio,73.4563,,,18,no,C,"mass estimated from maximum length by FishBase's length-weight relationship, not weighed"
-nan,Gymnocanthus detrisus,Animalia,Chordata,Actinopterygii,Perciformes/Cottoidei,Cottidae,Gymnocanthus,900,,,17,no,C,
+Gymnocanthus detrisus,Gymnocanthus detrisus,Animalia,Chordata,Actinopterygii,Perciformes/Cottoidei,Cottidae,Gymnocanthus,900,,,17,no,C,
 Armorhead sculpin,Gymnocanthus galeatus,Animalia,Chordata,Actinopterygii,Perciformes/Cottoidei,Cottidae,Gymnocanthus,1099.45,13,,,no,C,"mass estimated from maximum length by FishBase's length-weight relationship, not weighed"
-nan,Gymnocanthus herzensteini,Animalia,Chordata,Actinopterygii,Perciformes/Cottoidei,Cottidae,Gymnocanthus,1000,17,,,no,C,
+Gymnocanthus herzensteini,Gymnocanthus herzensteini,Animalia,Chordata,Actinopterygii,Perciformes/Cottoidei,Cottidae,Gymnocanthus,1000,17,,,no,C,
 Threaded sculpin,Gymnocanthus pistilliger,Animalia,Chordata,Actinopterygii,Perciformes/Cottoidei,Cottidae,Gymnocanthus,240,,,13,no,C,
 Arctic staghorn sculpin,Gymnocanthus tricuspis,Animalia,Chordata,Actinopterygii,Perciformes/Cottoidei,Cottidae,Gymnocanthus,479.341,,,9,no,C,"mass estimated from maximum length by FishBase's length-weight relationship, not weighed"
 Ruffe,Gymnocephalus cernua,Animalia,Chordata,Actinopterygii,Perciformes/Percoidei,Percidae,Gymnocephalus,400,,,11,no,C,
 Schraetzer,Gymnocephalus schraetser,Animalia,Chordata,Actinopterygii,Perciformes/Percoidei,Percidae,Gymnocephalus,250,15,,,no,C,
 Collared large-eye bream,Gymnocranius audleyi,Animalia,Chordata,Actinopterygii,Eupercaria/misc,Lethrinidae,Gymnocranius,751,,,13,no,C,
-nan,Gymnocypris eckloni,Animalia,Chordata,Actinopterygii,Cypriniformes,Cyprinidae,Gymnocypris,1036.8,,,12,no,C,
-nan,Gymnocypris firmispinatus,Animalia,Chordata,Actinopterygii,Cypriniformes,Cyprinidae,Gymnocypris,140.216,,,13,no,C,"mass estimated from maximum length by FishBase's length-weight relationship, not weighed"
-nan,Gymnocypris przewalskii,Animalia,Chordata,Actinopterygii,Cypriniformes,Cyprinidae,Gymnocypris,1993.26,,,14,no,C,"mass estimated from maximum length by FishBase's length-weight relationship, not weighed"
+Gymnocypris eckloni,Gymnocypris eckloni,Animalia,Chordata,Actinopterygii,Cypriniformes,Cyprinidae,Gymnocypris,1036.8,,,12,no,C,
+Gymnocypris firmispinatus,Gymnocypris firmispinatus,Animalia,Chordata,Actinopterygii,Cypriniformes,Cyprinidae,Gymnocypris,140.216,,,13,no,C,"mass estimated from maximum length by FishBase's length-weight relationship, not weighed"
+Gymnocypris przewalskii,Gymnocypris przewalskii,Animalia,Chordata,Actinopterygii,Cypriniformes,Cyprinidae,Gymnocypris,1993.26,,,14,no,C,"mass estimated from maximum length by FishBase's length-weight relationship, not weighed"
 Brauer's lanternfish,Gymnoscopelus braueri,Animalia,Chordata,Actinopterygii,Myctophiformes,Myctophidae,Gymnoscopelus,142.874,,,6,no,C,"mass estimated from maximum length by FishBase's length-weight relationship, not weighed"
 California moray,Gymnothorax mordax,Animalia,Chordata,Actinopterygii,Anguilliformes,Muraenidae,Gymnothorax,6861.94,30,,,no,C,"mass estimated from maximum length by FishBase's length-weight relationship, not weighed"
 Tomtate grunt,Haemulon aurolineatum,Animalia,Chordata,Actinopterygii,Eupercaria/misc,Haemulidae,Haemulon,139.5,9,,,no,C,
@@ -781,19 +781,19 @@ Rock wrasse,Halichoeres semicinctus,Animalia,Chordata,Actinopterygii,Eupercaria/
 Abyssal halosaur,Halosauropsis macrochir,Animalia,Chordata,Actinopterygii,Notacanthiformes,Halosauridae,Halosauropsis,850.206,,,36,no,C,"mass estimated from maximum length by FishBase's length-weight relationship, not weighed"
 Giant clingfish,Haplocylix littoreus,Animalia,Chordata,Actinopterygii,Perciformes,Gobiesocidae,Haplocylix,21.0342,6,,,no,B,
 Scaled herring,Harengula jaguana,Animalia,Chordata,Actinopterygii,Clupeiformes,Clupeidae,Harengula,102.766,3,,,no,B,
-nan,Harpadon microchir,Animalia,Chordata,Actinopterygii,Aulopiformes,Synodontidae,Harpadon,422.1,,,7,no,C,
+Harpadon microchir,Harpadon microchir,Animalia,Chordata,Actinopterygii,Aulopiformes,Synodontidae,Harpadon,422.1,,,7,no,C,
 Antarctic spiny plunderfish,Harpagifer antarcticus,Animalia,Chordata,Actinopterygii,Perciformes,Harpagiferidae,Harpagifer,10.439,9,,,no,B,
 Magellan plunderfish,Harpagifer bispinis,Animalia,Chordata,Actinopterygii,Perciformes/Notothenioidei,Harpagiferidae,Harpagifer,10.439,,,9,no,C,"mass estimated from maximum length by FishBase's length-weight relationship, not weighed"
 Kashgarian loach,Hedinichthys yarkandensis,Animalia,Chordata,Actinopterygii,Cypriniformes,Nemacheilidae,Hedinichthys,224.34,,,7,no,C,"mass estimated from maximum length by FishBase's length-weight relationship, not weighed"
 Blackbelly rosefish,Helicolenus dactylopterus,Animalia,Chordata,Actinopterygii,Perciformes/Scorpaenoidei,Sebastidae,Helicolenus,1550,43,,,no,C,
-nan,Helicolenus lahillei,Animalia,Chordata,Actinopterygii,Perciformes/Scorpaenoidei,Sebastidae,Helicolenus,1427.43,,,44,no,C,"mass estimated from maximum length by FishBase's length-weight relationship, not weighed"
-nan,Helicolenus lengerichi,Animalia,Chordata,Actinopterygii,Perciformes/Scorpaenoidei,Sebastidae,Helicolenus,762.02,7,,,no,C,"mass estimated from maximum length by FishBase's length-weight relationship, not weighed"
+Helicolenus lahillei,Helicolenus lahillei,Animalia,Chordata,Actinopterygii,Perciformes/Scorpaenoidei,Sebastidae,Helicolenus,1427.43,,,44,no,C,"mass estimated from maximum length by FishBase's length-weight relationship, not weighed"
+Helicolenus lengerichi,Helicolenus lengerichi,Animalia,Chordata,Actinopterygii,Perciformes/Scorpaenoidei,Sebastidae,Helicolenus,762.02,7,,,no,C,"mass estimated from maximum length by FishBase's length-weight relationship, not weighed"
 Sea perch,Helicolenus percoides,Animalia,Chordata,Actinopterygii,Perciformes,Scorpaenidae,Helicolenus,770,42,,,no,B,
 Opalfish,Hemerocoetes monopterygius,Animalia,Chordata,Actinopterygii,Acropomatiformes,Hemerocoetidae,Hemerocoetes,127.389,3,,,no,C,"mass estimated from maximum length by FishBase's length-weight relationship, not weighed"
 Barbel steed,Hemibarbus labeo,Animalia,Chordata,Actinopterygii,Cypriniformes,Gobionidae,Hemibarbus,3000,15,,,no,C,
 Sharpbelly,Hemiculter leucisculus,Animalia,Chordata,Actinopterygii,Cypriniformes,Xenocyprididae,Hemiculter,232.3,,,6,no,C,
 Ussuri sharpbelly,Hemiculter lucidus,Animalia,Chordata,Actinopterygii,Cypriniformes,Xenocyprididae,Hemiculter,70,7,,,no,C,
-nan,Hemigrammus rodwayi,Animalia,Chordata,Actinopterygii,Characiformes,Acestrorhamphidae,Hemigrammus,2.11472,4,,,no,C,"mass estimated from maximum length by FishBase's length-weight relationship, not weighed"
+Hemigrammus rodwayi,Hemigrammus rodwayi,Animalia,Chordata,Actinopterygii,Characiformes,Acestrorhamphidae,Hemigrammus,2.11472,4,,,no,C,"mass estimated from maximum length by FishBase's length-weight relationship, not weighed"
 Gilbert's Irish Lord,Hemilepidotus gilberti,Animalia,Chordata,Actinopterygii,Perciformes/Cottoidei,Cottidae,Hemilepidotus,800,12,,,no,C,
 Yellow Irish lord,Hemilepidotus jordani,Animalia,Chordata,Actinopterygii,Perciformes/Cottoidei,Cottidae,Hemilepidotus,2100,30,,,no,C,
 Longfin Irish lord,Hemilepidotus zapus,Animalia,Chordata,Actinopterygii,Perciformes/Cottoidei,Cottidae,Hemilepidotus,330,9,,,no,C,
@@ -843,7 +843,7 @@ Antarctic butterfish,Hyperoglyphe antarctica,Animalia,Chordata,Actinopterygii,Pe
 Spotfin surfperch,Hyperprosopon anale,Animalia,Chordata,Actinopterygii,Ovalentaria/misc,Embiotocidae,Hyperprosopon,122.502,,,3,no,C,"mass estimated from maximum length by FishBase's length-weight relationship, not weighed"
 Walleye surfperch,Hyperprosopon argenteum,Animalia,Chordata,Actinopterygii,Ovalentaria/misc,Embiotocidae,Hyperprosopon,464.569,6,,,no,C,"mass estimated from maximum length by FishBase's length-weight relationship, not weighed"
 Silver surfperch,Hyperprosopon ellipticum,Animalia,Chordata,Actinopterygii,Perciformes,Embiotocidae,Hyperprosopon,339.743,7,,,no,B,
-nan,Hypomesus japonicus,Animalia,Chordata,Actinopterygii,Osmeriformes,Osmeridae,Hypomesus,158,8,,,no,C,
+Hypomesus japonicus,Hypomesus japonicus,Animalia,Chordata,Actinopterygii,Osmeriformes,Osmeridae,Hypomesus,158,8,,,no,C,
 Pond smelt,Hypomesus olidus,Animalia,Chordata,Actinopterygii,Osmeriformes,Osmeridae,Hypomesus,50,5,,,no,B,
 Surf smelt,Hypomesus pretiosus,Animalia,Chordata,Actinopterygii,Osmeriformes,Osmeridae,Hypomesus,188.465,5,,,no,B,
 Delta smelt,Hypomesus transpacificus,Animalia,Chordata,Actinopterygii,Osmeriformes,Osmeridae,Hypomesus,9.795,1,,,no,C,"mass estimated from maximum length by FishBase's length-weight relationship, not weighed"
@@ -865,7 +865,7 @@ Mussel blenny,Hypsoblennius jenkinsi,Animalia,Chordata,Actinopterygii,Blenniifor
 Garibaldi damselfish,Hypsypops rubicundus,Animalia,Chordata,Actinopterygii,Ovalentaria/misc,Pomacentridae,Hypsypops,943.643,57,,,no,C,"mass estimated from maximum length by FishBase's length-weight relationship, not weighed"
 Volga dwarf goby,Hyrcanogobius bergi,Animalia,Chordata,Actinopterygii,Gobiiformes,Gobiidae,Hyrcanogobius,0.952337,1,,,no,C,"mass estimated from maximum length by FishBase's length-weight relationship, not weighed"
 Russian river tule perch,Hysterocarpus traskii,Animalia,Chordata,Actinopterygii,Ovalentaria/misc,Embiotocidae,Hysterocarpus,59.2913,5,,,no,C,"mass estimated from maximum length by FishBase's length-weight relationship, not weighed"
-nan,Iberochondrostoma almacai,Animalia,Chordata,Actinopterygii,Cypriniformes,Leuciscidae,Iberochondrostoma,34.247,4,,,no,C,"mass estimated from maximum length by FishBase's length-weight relationship, not weighed"
+Iberochondrostoma almacai,Iberochondrostoma almacai,Animalia,Chordata,Actinopterygii,Cypriniformes,Leuciscidae,Iberochondrostoma,34.247,4,,,no,C,"mass estimated from maximum length by FishBase's length-weight relationship, not weighed"
 Blacknose sculpin,Icelus canaliculatus,Animalia,Chordata,Actinopterygii,Perciformes/Cottoidei,Cottidae,Icelus,80,9,,,no,C,
 Scaly-belly sculpin,Icelus perminovi,Animalia,Chordata,Actinopterygii,Perciformes/Cottoidei,Cottidae,Icelus,50,7,,,no,C,
 Spatulate sculpin,Icelus spatula,Animalia,Chordata,Actinopterygii,Perciformes/Cottoidei,Cottidae,Icelus,160,7,,,no,C,
@@ -876,7 +876,7 @@ Bigmouth buffalo,Ictiobus cyprinellus,Animalia,Chordata,Actinopterygii,Cyprinifo
 Black buffalo,Ictiobus niger,Animalia,Chordata,Actinopterygii,Cypriniformes,Catostomidae,Ictiobus,15785,24,,,no,B,
 Elongate ilisha,Ilisha elongata,Animalia,Chordata,Actinopterygii,Clupeiformes,Pristigasteridae,Ilisha,140,,,7,no,C,
 Blue rockcod,Indonotothenia cyanobrancha,Animalia,Chordata,Actinopterygii,Perciformes/Notothenioidei,Nototheniidae,Indonotothenia,347.618,,,8,no,C,"mass estimated from maximum length by FishBase's length-weight relationship, not weighed"
-nan,Inimicus japonicus,Animalia,Chordata,Actinopterygii,Perciformes/Scorpaenoidei,Synanceiidae,Inimicus,480,,,9,no,C,
+Inimicus japonicus,Inimicus japonicus,Animalia,Chordata,Actinopterygii,Perciformes/Scorpaenoidei,Synanceiidae,Inimicus,480,,,9,no,C,
 Butter sole,Isopsetta isolepis,Animalia,Chordata,Actinopterygii,Pleuronectiformes,Pleuronectidae,Isopsetta,2265.29,11,,,no,B,
 Goldman's goby,Istigobius goldmanni,Animalia,Chordata,Actinopterygii,Gobiiformes,Gobiidae,Istigobius,4.26057,,,1.08,no,C,"mass estimated from maximum length by FishBase's length-weight relationship, not weighed"
 Black marlin,Istiompax indica,Animalia,Chordata,Actinopterygii,Carangiformes,Istiophoridae,Istiompax,750000,,,11,no,C,
@@ -899,21 +899,21 @@ Dotted gizzard shad,Konosirus punctatus,Animalia,Chordata,Actinopterygii,Clupeif
 Rhombic lanternfish,Krefftichthys anderssoni,Animalia,Chordata,Actinopterygii,Myctophiformes,Myctophidae,Krefftichthys,5.81341,,,2,no,C,"mass estimated from maximum length by FishBase's length-weight relationship, not weighed"
 Rednose labeo,Labeo altivelis,Animalia,Chordata,Actinopterygii,Cypriniformes,Cyprinidae,Labeo,1980,9,,,no,B,
 Boggut labeo,Labeo boggut,Animalia,Chordata,Actinopterygii,Cypriniformes,Cyprinidae,Labeo,250,,,3,no,C,
-nan,Labeo horie,Animalia,Chordata,Actinopterygii,Cypriniformes,Cyprinidae,Labeo,1577.1,,,5,no,C,"mass estimated from maximum length by FishBase's length-weight relationship, not weighed"
+Labeo horie,Labeo horie,Animalia,Chordata,Actinopterygii,Cypriniformes,Cyprinidae,Labeo,1577.1,,,5,no,C,"mass estimated from maximum length by FishBase's length-weight relationship, not weighed"
 Rohu,Labeo rohita,Animalia,Chordata,Actinopterygii,Cypriniformes,Cyprinidae,Labeo,24750,10,,,no,B,
-nan,Labeo senegalensis,Animalia,Chordata,Actinopterygii,Cypriniformes,Cyprinidae,Labeo,3750,6,,,no,C,
+Labeo senegalensis,Labeo senegalensis,Animalia,Chordata,Actinopterygii,Cypriniformes,Cyprinidae,Labeo,3750,6,,,no,C,
 Smallmouth yellowfish,Labeobarbus aeneus,Animalia,Chordata,Actinopterygii,Cypriniformes,Cyprinidae,Labeobarbus,4310.35,12,,,no,B,
 Brook silverside,Labidesthes sicculus,Animalia,Chordata,Actinopterygii,Atheriniformes,Atherinopsidae,Labidesthes,10.874,2,,,no,B,
 Cleaner fish,Labroides dimidiatus,Animalia,Chordata,Actinopterygii,Perciformes,Labridae,Labroides,25.3062,4,,,no,B,
 Ballan wrasse,Labrus bergylta,Animalia,Chordata,Actinopterygii,Perciformes,Labridae,Labrus,2392.5,,,29,no,B,
 Brown wrasse,Labrus merula,Animalia,Chordata,Actinopterygii,Perciformes,Labridae,Labrus,2091.64,17,,,no,B,
 Cuckoo wrasse,Labrus mixtus,Animalia,Chordata,Actinopterygii,Eupercaria/misc,Labridae,Labrus,1493.14,20,,,no,C,"mass estimated from maximum length by FishBase's length-weight relationship, not weighed"
-nan,Labrus viridis,Animalia,Chordata,Actinopterygii,Eupercaria/misc,Labridae,Labrus,1996.19,,,18,no,C,"mass estimated from maximum length by FishBase's length-weight relationship, not weighed"
+Labrus viridis,Labrus viridis,Animalia,Chordata,Actinopterygii,Eupercaria/misc,Labridae,Labrus,1996.19,,,18,no,C,"mass estimated from maximum length by FishBase's length-weight relationship, not weighed"
 Hogfish,Lachnolaimus maximus,Animalia,Chordata,Actinopterygii,Eupercaria/misc,Labridae,Lachnolaimus,11000,23,,,no,C,
 Longfin codling,Laemonema longipes,Animalia,Chordata,Actinopterygii,Gadiformes,Moridae,Laemonema,1500,26,,,no,C,
 Silver-cheeked toadfish,Lagocephalus sceleratus,Animalia,Chordata,Actinopterygii,Tetraodontiformes,Tetraodontidae,Lagocephalus,9000,,,7,no,C,
 Pinfish,Lagodon rhomboides,Animalia,Chordata,Actinopterygii,Eupercaria/misc,Sparidae,Lagodon,1510,,,7,no,C,
-nan,Laimosemion xiphidius,Animalia,Chordata,Actinopterygii,Cyprinodontiformes,Rivulidae,Laimosemion,0.699775,3,,,no,C,"mass estimated from maximum length by FishBase's length-weight relationship, not weighed"
+Laimosemion xiphidius,Laimosemion xiphidius,Animalia,Chordata,Actinopterygii,Cyprinodontiformes,Rivulidae,Laimosemion,0.699775,3,,,no,C,"mass estimated from maximum length by FishBase's length-weight relationship, not weighed"
 Hector's lanternfish,Lampanyctodes hectoris,Animalia,Chordata,Actinopterygii,Myctophiformes,Myctophidae,Lampanyctodes,3.83184,3,,,no,B,
 Rakery beaconlamp,Lampanyctus macdonaldi,Animalia,Chordata,Actinopterygii,Myctophiformes,Myctophidae,Lampanyctus,57.2686,,,6,no,C,"mass estimated from maximum length by FishBase's length-weight relationship, not weighed"
 Pinpoint lampfish,Lampanyctus regalis,Animalia,Chordata,Actinopterygii,Myctophiformes,Myctophidae,Lampanyctus,95.0341,,,4.5,no,C,"mass estimated from maximum length by FishBase's length-weight relationship, not weighed"
@@ -987,10 +987,10 @@ Danilevskii's dace,Leuciscus danilewskii,Animalia,Chordata,Actinopterygii,Cyprin
 Ide,Leuciscus idus,Animalia,Chordata,Actinopterygii,Cypriniformes,Leuciscidae,Leuciscus,2200,,29.8,,no,B,
 Common dace,Leuciscus leuciscus,Animalia,Chordata,Actinopterygii,Cypriniformes,Leuciscidae,Leuciscus,550,16,,,no,B,
 Tigris asp,Leuciscus vorax,Animalia,Chordata,Actinopterygii,Cypriniformes,Leuciscidae,Leuciscus,10000,24,,,no,C,
-nan,Leucos aula,Animalia,Chordata,Actinopterygii,Cypriniformes,Leuciscidae,Leucos,200.917,7,,,no,C,"mass estimated from maximum length by FishBase's length-weight relationship, not weighed"
-nan,Leucos basak,Animalia,Chordata,Actinopterygii,Cypriniformes,Leuciscidae,Leucos,169.119,,,10,no,C,"mass estimated from maximum length by FishBase's length-weight relationship, not weighed"
+Leucos aula,Leucos aula,Animalia,Chordata,Actinopterygii,Cypriniformes,Leuciscidae,Leucos,200.917,7,,,no,C,"mass estimated from maximum length by FishBase's length-weight relationship, not weighed"
+Leucos basak,Leucos basak,Animalia,Chordata,Actinopterygii,Cypriniformes,Leuciscidae,Leucos,169.119,,,10,no,C,"mass estimated from maximum length by FishBase's length-weight relationship, not weighed"
 Acheloos roach,Leucos panosi,Animalia,Chordata,Actinopterygii,Cypriniformes,Leuciscidae,Leucos,355.7,10,,,no,C,
-nan,Leucos ylikiensis,Animalia,Chordata,Actinopterygii,Cypriniformes,Leuciscidae,Leucos,372.171,10,,,no,C,"mass estimated from maximum length by FishBase's length-weight relationship, not weighed"
+Leucos ylikiensis,Leucos ylikiensis,Animalia,Chordata,Actinopterygii,Cypriniformes,Leuciscidae,Leucos,372.171,10,,,no,C,"mass estimated from maximum length by FishBase's length-weight relationship, not weighed"
 California grunion,Leuresthes tenuis,Animalia,Chordata,Actinopterygii,Atheriniformes,Atherinopsidae,Leuresthes,43.2288,8,,,no,B,
 California smoothtongue,Leuroglossus stilbius,Animalia,Chordata,Actinopterygii,Argentiniformes,Bathylagidae,Leuroglossus,14.9344,,,5,no,C,"mass estimated from maximum length by FishBase's length-weight relationship, not weighed"
 Longhead flathead,Leviprora inops,Animalia,Chordata,Actinopterygii,Perciformes/Scorpaenoidei,Platycephalidae,Leviprora,3321.8,20,,,no,C,"mass estimated from maximum length by FishBase's length-weight relationship, not weighed"
@@ -998,7 +998,7 @@ Yellowfin sole,Limanda aspera,Animalia,Chordata,Actinopterygii,Pleuronectiformes
 Yellowtail flounder,Limanda ferruginea,Animalia,Chordata,Actinopterygii,Pleuronectiformes,Pleuronectidae,Limanda,825,12,,,no,B,
 Common dab,Limanda limanda,Animalia,Chordata,Actinopterygii,Pleuronectiformes,Pleuronectidae,Limanda,1000,12,,,no,C,
 Sakhalin sole,Limanda sakhalinensis,Animalia,Chordata,Actinopterygii,Pleuronectiformes,Pleuronectidae,Limanda,500,8,,,no,C,
-nan,Limnocottus pallidus,Animalia,Chordata,Actinopterygii,Perciformes/Cottoidei,Cottidae,Limnocottus,16,12,,,no,C,
+Limnocottus pallidus,Limnocottus pallidus,Animalia,Chordata,Actinopterygii,Perciformes/Cottoidei,Cottidae,Limnocottus,16,12,,,no,C,
 Arctic flounder,Liopsetta glacialis,Animalia,Chordata,Actinopterygii,Pleuronectiformes,Pleuronectidae,Liopsetta,331.936,26,,,no,C,"mass estimated from maximum length by FishBase's length-weight relationship, not weighed"
 Gelatinous snailfish,Liparis fabricii,Animalia,Chordata,Actinopterygii,Perciformes/Cottoidei,Liparidae,Liparis,129.648,,,6,no,C,"mass estimated from maximum length by FishBase's length-weight relationship, not weighed"
 Tang's snapper,Lipocheilus carnolabrum,Animalia,Chordata,Actinopterygii,Eupercaria/misc,Lutjanidae,Lipocheilus,5436.38,,,14,no,C,"mass estimated from maximum length by FishBase's length-weight relationship, not weighed"
@@ -1016,12 +1016,12 @@ Cape monk,Lophius vomerinus,Animalia,Chordata,Actinopterygii,Lophiiformes,Lophii
 Blue tilefish,Lopholatilus chamaeleonticeps,Animalia,Chordata,Actinopterygii,Perciformes,Malacanthidae,Lopholatilus,16500,35,,,no,B,
 Burbot,Lota lota,Animalia,Chordata,Actinopterygii,Gadiformes,Gadidae,Lota,18700,20,,,no,B,
 Bluefin killifish,Lucania goodei,Animalia,Chordata,Actinopterygii,Cyprinodontiformes,Fundulidae,Lucania,1.65119,2,,,no,B,
-nan,Luciobarbus albanicus,Animalia,Chordata,Actinopterygii,Cypriniformes,Cyprinidae,Luciobarbus,3000,,,14,no,C,
-nan,Luciobarbus bocagei,Animalia,Chordata,Actinopterygii,Cypriniformes,Cyprinidae,Luciobarbus,11600,11,,,no,C,
-nan,Luciobarbus graellsii,Animalia,Chordata,Actinopterygii,Cypriniformes,Cyprinidae,Luciobarbus,2000,16,,,no,C,
-nan,Luciobarbus guiraonis,Animalia,Chordata,Actinopterygii,Cypriniformes,Cyprinidae,Luciobarbus,10890,7,,,no,C,
+Luciobarbus albanicus,Luciobarbus albanicus,Animalia,Chordata,Actinopterygii,Cypriniformes,Cyprinidae,Luciobarbus,3000,,,14,no,C,
+Luciobarbus bocagei,Luciobarbus bocagei,Animalia,Chordata,Actinopterygii,Cypriniformes,Cyprinidae,Luciobarbus,11600,11,,,no,C,
+Luciobarbus graellsii,Luciobarbus graellsii,Animalia,Chordata,Actinopterygii,Cypriniformes,Cyprinidae,Luciobarbus,2000,16,,,no,C,
+Luciobarbus guiraonis,Luciobarbus guiraonis,Animalia,Chordata,Actinopterygii,Cypriniformes,Cyprinidae,Luciobarbus,10890,7,,,no,C,
 Andalusian barbel,Luciobarbus sclateri,Animalia,Chordata,Actinopterygii,Cypriniformes,Cyprinidae,Luciobarbus,9530,18,,,no,C,
-nan,Luciobarbus steindachneri,Animalia,Chordata,Actinopterygii,Cypriniformes,Cyprinidae,Luciobarbus,919.283,6,,,no,C,"mass estimated from maximum length by FishBase's length-weight relationship, not weighed"
+Luciobarbus steindachneri,Luciobarbus steindachneri,Animalia,Chordata,Actinopterygii,Cypriniformes,Cyprinidae,Luciobarbus,919.283,6,,,no,C,"mass estimated from maximum length by FishBase's length-weight relationship, not weighed"
 Longsnout prickleback,Lumpenella longirostris,Animalia,Chordata,Actinopterygii,Perciformes/Zoarcoidei,Lumpenidae,Lumpenella,150,8,,,no,C,
 Snakeblenny,Lumpenus lampretaeformis,Animalia,Chordata,Actinopterygii,Perciformes/Zoarcoidei,Lumpenidae,Lumpenus,154.853,,,9,no,C,"mass estimated from maximum length by FishBase's length-weight relationship, not weighed"
 Snake prickleback,Lumpenus sagitta,Animalia,Chordata,Actinopterygii,Perciformes/Zoarcoidei,Lumpenidae,Lumpenus,164.299,8,,,no,C,"mass estimated from maximum length by FishBase's length-weight relationship, not weighed"
@@ -1061,11 +1061,11 @@ Striped shiner,Luxilus chrysocephalus,Animalia,Chordata,Actinopterygii,Cyprinifo
 Warpaint shiner,Luxilus coccogenis,Animalia,Chordata,Actinopterygii,Cypriniformes,Leuciscidae,Luxilus,18.3848,5,,,no,B,
 Common shiner,Luxilus cornutus,Animalia,Chordata,Actinopterygii,Cypriniformes,Leuciscidae,Luxilus,65.8858,4,,,no,B,
 Bleeding shiner,Luxilus zonatus,Animalia,Chordata,Actinopterygii,Cypriniformes,Leuciscidae,Luxilus,14.6004,3,,,no,B,
-nan,Lycenchelys hureaui,Animalia,Chordata,Actinopterygii,Perciformes/Zoarcoidei,Zoarcidae,Lycenchelys,31.4146,12,,,no,C,"mass estimated from maximum length by FishBase's length-weight relationship, not weighed"
+Lycenchelys hureaui,Lycenchelys hureaui,Animalia,Chordata,Actinopterygii,Perciformes/Zoarcoidei,Zoarcidae,Lycenchelys,31.4146,12,,,no,C,"mass estimated from maximum length by FishBase's length-weight relationship, not weighed"
 Whitebar eelpout,Lycodes albolineatus,Animalia,Chordata,Actinopterygii,Perciformes/Zoarcoidei,Zoarcidae,Lycodes,3700,14,,,no,C,
 Tawnystripe eelpout,Lycodes brunneofasciatus,Animalia,Chordata,Actinopterygii,Perciformes/Zoarcoidei,Zoarcidae,Lycodes,3300,13,,,no,C,
 Glacial eelpout,Lycodes frigidus,Animalia,Chordata,Actinopterygii,Perciformes/Zoarcoidei,Zoarcidae,Lycodes,3891.36,,,33,no,C,"mass estimated from maximum length by FishBase's length-weight relationship, not weighed"
-nan,Lycodes gracilis,Animalia,Chordata,Actinopterygii,Perciformes/Zoarcoidei,Zoarcidae,Lycodes,122.984,,,10,no,C,"mass estimated from maximum length by FishBase's length-weight relationship, not weighed"
+Lycodes gracilis,Lycodes gracilis,Animalia,Chordata,Actinopterygii,Perciformes/Zoarcoidei,Zoarcidae,Lycodes,122.984,,,10,no,C,"mass estimated from maximum length by FishBase's length-weight relationship, not weighed"
 Blackbelly eelpout,Lycodes pacificus,Animalia,Chordata,Actinopterygii,Perciformes,Zoarcidae,Lycodes,608.246,5,,,no,B,
 Scalebelly eelpout,Lycodes squamiventer,Animalia,Chordata,Actinopterygii,Perciformes/Zoarcoidei,Zoarcidae,Lycodes,29.2695,,,21,no,C,"mass estimated from maximum length by FishBase's length-weight relationship, not weighed"
 Slender sole,Lyopsetta exilis,Animalia,Chordata,Actinopterygii,Pleuronectiformes,Pleuronectidae,Lyopsetta,677.905,,,20,no,C,"mass estimated from maximum length by FishBase's length-weight relationship, not weighed"
@@ -1096,7 +1096,7 @@ Silvery lightfish,Maurolicus muelleri,Animalia,Chordata,Actinopterygii,Stomiifor
 Mexican mojarra,Mayaheros urophthalmus,Animalia,Chordata,Actinopterygii,Cichliformes,Cichlidae,Mayaheros,1130,,,7,no,C,
 Halfmoon,Medialuna californiensis,Animalia,Chordata,Actinopterygii,Centrarchiformes,Scorpididae,Medialuna,1448.68,8,,,no,C,"mass estimated from maximum length by FishBase's length-weight relationship, not weighed"
 Torpedo scad,Megalaspis cordyla,Animalia,Chordata,Actinopterygii,Carangiformes,Carangidae,Megalaspis,4000,5,,,no,C,
-nan,Megalobrama pellegrini,Animalia,Chordata,Actinopterygii,Cypriniformes,Xenocyprididae,Megalobrama,2600,,,7,no,C,
+Megalobrama pellegrini,Megalobrama pellegrini,Animalia,Chordata,Actinopterygii,Cypriniformes,Xenocyprididae,Megalobrama,2600,,,7,no,C,
 Tarpon,Megalops atlanticus,Animalia,Chordata,Actinopterygii,Elopiformes,Megalopidae,Megalops,88550,55,,,no,B,
 Oxeye,Megalops cyprinoides,Animalia,Chordata,Actinopterygii,Elopiformes,Megalopidae,Megalops,9900,44,,,no,B,
 Haddock,Melanogrammus aeglefinus,Animalia,Chordata,Actinopterygii,Gadiformes,Gadidae,Melanogrammus,9240,20,,,no,B,
@@ -1124,7 +1124,7 @@ Southern blue whiting,Micromesistius australis,Animalia,Chordata,Actinopterygii,
 Blue whiting,Micromesistius poutassou,Animalia,Chordata,Actinopterygii,Gadiformes,Gadidae,Micromesistius,456.5,20,,,no,B,
 Amur longnose gudgeon,Microphysogobio amurensis,Animalia,Chordata,Actinopterygii,Cypriniformes,Gobionidae,Microphysogobio,12.3367,,,3,no,C,"mass estimated from maximum length by FishBase's length-weight relationship, not weighed"
 Whitemouth drummer,Micropogonias furnieri,Animalia,Chordata,Actinopterygii,Perciformes,Sciaenidae,Micropogonias,55.3,7,,,no,B,
-nan,Micropogonias megalops,Animalia,Chordata,Actinopterygii,Eupercaria/misc,Sciaenidae,Micropogonias,573.36,,,16,no,C,"mass estimated from maximum length by FishBase's length-weight relationship, not weighed"
+Micropogonias megalops,Micropogonias megalops,Animalia,Chordata,Actinopterygii,Eupercaria/misc,Sciaenidae,Micropogonias,573.36,,,16,no,C,"mass estimated from maximum length by FishBase's length-weight relationship, not weighed"
 Atlantic croaker,Micropogonias undulatus,Animalia,Chordata,Actinopterygii,Perciformes,Sciaenidae,Micropogonias,1419,5,,,no,B,
 Redeye bass,Micropterus coosae,Animalia,Chordata,Actinopterygii,Centrarchiformes,Centrarchidae,Micropterus,3710,10,,,no,C,
 Smallmouth bass,Micropterus dolomieu,Animalia,Chordata,Actinopterygii,Perciformes,Centrarchidae,Micropterus,2975.5,26,,,no,B,
@@ -1213,7 +1213,7 @@ Monkey goby,Neogobius fluviatilis,Animalia,Chordata,Actinopterygii,Gobiiformes,G
 Round goby,Neogobius melanostomus,Animalia,Chordata,Actinopterygii,Perciformes,Gobiidae,Neogobius,381.42,4,,,no,B,
 Caspian sand goby,Neogobius pallasi,Animalia,Chordata,Actinopterygii,Gobiiformes,Gobiidae,Neogobius,153.477,,,3,no,C,"mass estimated from maximum length by FishBase's length-weight relationship, not weighed"
 Tiger flathead,Neoplatycephalus richardsoni,Animalia,Chordata,Actinopterygii,Perciformes,Platycephalidae,Neoplatycephalus,1650,12,,,no,B,
-nan,Neosalanx pseudotaihuensis,Animalia,Chordata,Actinopterygii,Osmeriformes,Salangidae,Neosalanx,0.674605,1,,,no,C,"mass estimated from maximum length by FishBase's length-weight relationship, not weighed"
+Neosalanx pseudotaihuensis,Neosalanx pseudotaihuensis,Animalia,Chordata,Actinopterygii,Osmeriformes,Salangidae,Neosalanx,0.674605,1,,,no,C,"mass estimated from maximum length by FishBase's length-weight relationship, not weighed"
 Yangtze icefish,Neosalanx taihuensis,Animalia,Chordata,Actinopterygii,Osmeriformes,Salangidae,Neosalanx,2.96551,1,,,no,C,"mass estimated from maximum length by FishBase's length-weight relationship, not weighed"
 Stone-bream,Neoscorpis lithophilus,Animalia,Chordata,Actinopterygii,Centrarchiformes,Kyphosidae,Neoscorpis,2600,10,,,no,C,
 Giant catfish,Netuma thalassina,Animalia,Chordata,Actinopterygii,Siluriformes,Ariidae,Netuma,1000,,,19,no,C,
@@ -1289,12 +1289,12 @@ Singida tilapia,Oreochromis esculentus,Animalia,Chordata,Actinopterygii,Percifor
 Kariba tilapia,Oreochromis mortimeri,Animalia,Chordata,Actinopterygii,Perciformes,Cichlidae,Oreochromis,4100,8,,,no,B,
 Mozambique mouth-breeder,Oreochromis mossambicus,Animalia,Chordata,Actinopterygii,Perciformes,Cichlidae,Oreochromis,621.5,11,,,no,B,
 Nile tilapia,Oreochromis niloticus,Animalia,Chordata,Actinopterygii,Cichliformes,Cichlidae,Oreochromis,600,9,12,,no,B,
-nan,Oreochromis saka,Animalia,Chordata,Actinopterygii,Cichliformes,Cichlidae,Oreochromis,1234.7,,,5,no,C,"mass estimated from maximum length by FishBase's length-weight relationship, not weighed"
+Oreochromis saka,Oreochromis saka,Animalia,Chordata,Actinopterygii,Cichliformes,Cichlidae,Oreochromis,1234.7,,,5,no,C,"mass estimated from maximum length by FishBase's length-weight relationship, not weighed"
 Dwarf altai osman,Oreoleuciscus humilis,Animalia,Chordata,Actinopterygii,Cypriniformes,Leuciscidae,Oreoleuciscus,13.75,15,,,no,B,
 Altai osman,Oreoleuciscus potanini,Animalia,Chordata,Actinopterygii,Cypriniformes,Leuciscidae,Oreoleuciscus,5500,40,,,no,B,
 Sacramento blackfish,Orthodon microlepidotus,Animalia,Chordata,Actinopterygii,Cypriniformes,Leuciscidae,Orthodon,2191.31,5,,,no,C,"mass estimated from maximum length by FishBase's length-weight relationship, not weighed"
 Pigfish,Orthopristis chrysoptera,Animalia,Chordata,Actinopterygii,Perciformes,Haemulidae,Orthopristis,500,4,,,no,B,
-nan,Oryzias sinensis,Animalia,Chordata,Actinopterygii,Beloniformes,Adrianichthyidae,Oryzias,0.307291,1,,,no,C,"mass estimated from maximum length by FishBase's length-weight relationship, not weighed"
+Oryzias sinensis,Oryzias sinensis,Animalia,Chordata,Actinopterygii,Beloniformes,Adrianichthyidae,Oryzias,0.307291,1,,,no,C,"mass estimated from maximum length by FishBase's length-weight relationship, not weighed"
 Pacific rainbow smelt,Osmerus dentex,Animalia,Chordata,Actinopterygii,Osmeriformes,Osmeridae,Osmerus,200,,,15,no,C,
 Smelt,Osmerus eperlanus,Animalia,Chordata,Actinopterygii,Osmeriformes,Osmeridae,Osmerus,178,10,,,no,B,
 Rainbow smelt,Osmerus mordax,Animalia,Chordata,Actinopterygii,Osmeriformes,Osmeridae,Osmerus,314.1,7,,,no,B,
@@ -1304,7 +1304,7 @@ Rubyspot cardinalfish,Ostorhinchus rubrimacula,Animalia,Chordata,Actinopterygii,
 Harlequin fish,Othos dentex,Animalia,Chordata,Actinopterygii,Perciformes/Serranoidei,Anthiadidae,Othos,5625.83,,,37,no,C,"mass estimated from maximum length by FishBase's length-weight relationship, not weighed"
 Tigertooth croaker,Otolithes ruber,Animalia,Chordata,Actinopterygii,Eupercaria/misc,Sciaenidae,Otolithes,7000,5,,,no,C,
 Bronze croaker,Otolithoides biauritus,Animalia,Chordata,Actinopterygii,Eupercaria/misc,Sciaenidae,Otolithoides,49140.4,6,,,no,C,"mass estimated from maximum length by FishBase's length-weight relationship, not weighed"
-nan,Oxygymnocypris stewartii,Animalia,Chordata,Actinopterygii,Cypriniformes,Cyprinidae,Oxygymnocypris,2968.1,,,25,no,C,
+Oxygymnocypris stewartii,Oxygymnocypris stewartii,Animalia,Chordata,Actinopterygii,Cypriniformes,Cyprinidae,Oxygymnocypris,2968.1,,,25,no,C,
 Señorita,Oxyjulis californica,Animalia,Chordata,Actinopterygii,Eupercaria/misc,Labridae,Oxyjulis,124.026,4,,,no,C,"mass estimated from maximum length by FishBase's length-weight relationship, not weighed"
 Painted greenling,Oxylebius pictus,Animalia,Chordata,Actinopterygii,Perciformes/Cottoidei,Zaniolepididae,Oxylebius,199.406,8,,,no,C,"mass estimated from maximum length by FishBase's length-weight relationship, not weighed"
 Shorthead eelpout,Pachycara brachycephalum,Animalia,Chordata,Actinopterygii,Perciformes/Zoarcoidei,Zoarcidae,Pachycara,538.468,,,14,no,C,"mass estimated from maximum length by FishBase's length-weight relationship, not weighed"
@@ -1328,7 +1328,7 @@ White amur bream,Parabramis pekinensis,Animalia,Chordata,Actinopterygii,Cyprinif
 Saddleback snapper,Paracaesio kusakarii,Animalia,Chordata,Actinopterygii,Eupercaria/misc,Lutjanidae,Paracaesio,221,,,19,no,C,
 Cocoa snapper,Paracaesio stonei,Animalia,Chordata,Actinopterygii,Eupercaria/misc,Lutjanidae,Paracaesio,4893.32,,,15,no,C,"mass estimated from maximum length by FishBase's length-weight relationship, not weighed"
 Ceyhan scraper,Paracapoeta erhani,Animalia,Chordata,Actinopterygii,Cypriniformes,Cyprinidae,Paracapoeta,360,6,,,no,C,
-nan,Paracapoeta trutta,Animalia,Chordata,Actinopterygii,Cypriniformes,Cyprinidae,Paracapoeta,1865.79,,,7,no,C,"mass estimated from maximum length by FishBase's length-weight relationship, not weighed"
+Paracapoeta trutta,Paracapoeta trutta,Animalia,Chordata,Actinopterygii,Cypriniformes,Cyprinidae,Paracapoeta,1865.79,,,7,no,C,"mass estimated from maximum length by FishBase's length-weight relationship, not weighed"
 Soffie,Parachondrostoma toxostoma,Animalia,Chordata,Actinopterygii,Cypriniformes,Leuciscidae,Parachondrostoma,350,,,10,no,C,
 Western crested loach,Paracobitis malapterura,Animalia,Chordata,Actinopterygii,Cypriniformes,Nemacheilidae,Paracobitis,9.58,3,,,no,C,
 Stone sculpin,Paracottus knerii,Animalia,Chordata,Actinopterygii,Perciformes/Cottoidei,Cottidae,Paracottus,32.6656,,,6,no,C,"mass estimated from maximum length by FishBase's length-weight relationship, not weighed"
@@ -1341,13 +1341,13 @@ Barred sand bass,Paralabrax nebulifer,Animalia,Chordata,Actinopterygii,Perciform
 California halibut,Paralichthys californicus,Animalia,Chordata,Actinopterygii,Pleuronectiformes,Paralichthyidae,Paralichthys,18150,30,,,no,B,
 Summer flounder,Paralichthys dentatus,Animalia,Chordata,Actinopterygii,Pleuronectiformes,Paralichthyidae,Paralichthys,12000,9,,,no,C,
 Southern flounder,Paralichthys lethostigma,Animalia,Chordata,Actinopterygii,Pleuronectiformes,Paralichthyidae,Paralichthys,5131.5,8,,,no,B,
-nan,Paralichthys orbignyanus,Animalia,Chordata,Actinopterygii,Pleuronectiformes,Paralichthyidae,Paralichthys,6285.4,11,,,no,C,"mass estimated from maximum length by FishBase's length-weight relationship, not weighed"
+Paralichthys orbignyanus,Paralichthys orbignyanus,Animalia,Chordata,Actinopterygii,Pleuronectiformes,Paralichthyidae,Paralichthys,6285.4,11,,,no,C,"mass estimated from maximum length by FishBase's length-weight relationship, not weighed"
 Indian glassy fish,Parambassis ranga,Animalia,Chordata,Actinopterygii,Ovalentaria/misc,Ambassidae,Parambassis,11.53,,,3,no,C,
 New Zealand blue cod,Parapercis colias,Animalia,Chordata,Actinopterygii,Perciformes/Uranoscopoidei,Pinguipedidae,Parapercis,2500,17,,,no,C,
 Short boarfish,Parazanclistius hutchinsi,Animalia,Chordata,Actinopterygii,Acropomatiformes,Pentacerotidae,Parazanclistius,812.365,,,49,no,C,"mass estimated from maximum length by FishBase's length-weight relationship, not weighed"
 Yellowspotted boarfish,Paristiopterus gallipavo,Animalia,Chordata,Actinopterygii,Acropomatiformes,Pentacerotidae,Paristiopterus,20892.9,,,36,no,C,"mass estimated from maximum length by FishBase's length-weight relationship, not weighed"
 White-ear scalyfin,Parma microlepis,Animalia,Chordata,Actinopterygii,Ovalentaria/misc,Pomacentridae,Parma,96.6358,37,,,no,C,"mass estimated from maximum length by FishBase's length-weight relationship, not weighed"
-nan,Parodon nasus,Animalia,Chordata,Actinopterygii,Characiformes,Parodontidae,Parodon,38.9184,,,7,no,C,"mass estimated from maximum length by FishBase's length-weight relationship, not weighed"
+Parodon nasus,Parodon nasus,Animalia,Chordata,Actinopterygii,Characiformes,Parodontidae,Parodon,38.9184,,,7,no,C,"mass estimated from maximum length by FishBase's length-weight relationship, not weighed"
 English sole,Parophrys vetulus,Animalia,Chordata,Actinopterygii,Pleuronectiformes,Pleuronectidae,Parophrys,1500,22,,,no,C,
 Cinnabar goatfish,Parupeneus heptacantha,Animalia,Chordata,Actinopterygii,Mulliformes,Mullidae,Parupeneus,877,6,,,no,C,
 Adriatic sole,Pegusa impar,Animalia,Chordata,Actinopterygii,Pleuronectiformes,Soleidae,Pegusa,638.038,12,,,no,B,
@@ -1366,10 +1366,10 @@ Yellow perch,Perca flavescens,Animalia,Chordata,Actinopterygii,Perciformes,Perci
 European perch,Perca fluviatilis,Animalia,Chordata,Actinopterygii,Perciformes,Percidae,Perca,400,22,,,no,B,
 Estuary perch,Percalates colonorum,Animalia,Chordata,Actinopterygii,Centrarchiformes,Percalatidae,Percalates,10000,40,,,no,C,
 Australian bass,Percalates novemaculeatus,Animalia,Chordata,Actinopterygii,Centrarchiformes,Percalatidae,Percalates,3900,22,,,no,C,
-nan,Percarina maeotica,Animalia,Chordata,Actinopterygii,Perciformes/Percoidei,Percidae,Percarina,12.7179,4,,,no,C,"mass estimated from maximum length by FishBase's length-weight relationship, not weighed"
+Percarina maeotica,Percarina maeotica,Animalia,Chordata,Actinopterygii,Perciformes/Percoidei,Percidae,Percarina,12.7179,4,,,no,C,"mass estimated from maximum length by FishBase's length-weight relationship, not weighed"
 Chinese sleeper,Perccottus glenii,Animalia,Chordata,Actinopterygii,Gobiiformes,Odontobutidae,Perccottus,250,,,10,no,C,
 Creole perch,Percichthys trucha,Animalia,Chordata,Actinopterygii,Centrarchiformes,Percichthyidae,Percichthys,8160,,,15,no,C,
-nan,Percilia irwini,Animalia,Chordata,Actinopterygii,Centrarchiformes,Perciliidae,Percilia,11.129,4,,,no,C,"mass estimated from maximum length by FishBase's length-weight relationship, not weighed"
+Percilia irwini,Percilia irwini,Animalia,Chordata,Actinopterygii,Centrarchiformes,Perciliidae,Percilia,11.129,4,,,no,C,"mass estimated from maximum length by FishBase's length-weight relationship, not weighed"
 Tangerine darter,Percina aurantiaca,Animalia,Chordata,Actinopterygii,Perciformes,Percidae,Percina,48.8656,,,4.5,no,B,
 Blotchside logperch,Percina burtoni,Animalia,Chordata,Actinopterygii,Perciformes,Percidae,Percina,33.7984,4,,,no,B,
 Logperch,Percina caprodes,Animalia,Chordata,Actinopterygii,Perciformes,Percidae,Percina,58.4334,3,,,no,B,
@@ -1387,14 +1387,14 @@ Saddleback darter,Percina vigil,Animalia,Chordata,Actinopterygii,Perciformes,Per
 Brazilian flathead,Percophis brasiliensis,Animalia,Chordata,Actinopterygii,Perciformes/Percophoidei,Percophidae,Percophis,907.4,19,,,no,C,
 Trout-perch,Percopsis omiscomaycus,Animalia,Chordata,Actinopterygii,Percopsiformes,Percopsidae,Percopsis,67.486,4,,,no,B,
 Sand roller,Percopsis transmontana,Animalia,Chordata,Actinopterygii,Percopsiformes,Percopsidae,Percopsis,6.24303,6,,,no,B,
-nan,Petrocephalus bovei,Animalia,Chordata,Actinopterygii,Osteoglossiformes,Mormyridae,Petrocephalus,30,2.5,,,no,C,
+Petrocephalus bovei,Petrocephalus bovei,Animalia,Chordata,Actinopterygii,Osteoglossiformes,Mormyridae,Petrocephalus,30,2.5,,,no,C,
 Dnieper chub,Petroleuciscus borysthenicus,Animalia,Chordata,Actinopterygii,Cypriniformes,Leuciscidae,Petroleuciscus,759.397,8,,,no,C,"mass estimated from maximum length by FishBase's length-weight relationship, not weighed"
 Red steenbras,Petrus rupestris,Animalia,Chordata,Actinopterygii,Eupercaria/misc,Sparidae,Petrus,80000,,,33,no,C,
 White seaperch,Phanerodon furcatus,Animalia,Chordata,Actinopterygii,Ovalentaria/misc,Embiotocidae,Phanerodon,513.699,,,8,no,C,"mass estimated from maximum length by FishBase's length-weight relationship, not weighed"
 Pile perch,Phanerodon vacca,Animalia,Chordata,Actinopterygii,Ovalentaria/misc,Embiotocidae,Phanerodon,2650.31,,,10,no,C,"mass estimated from maximum length by FishBase's length-weight relationship, not weighed"
 Suckermouth minnow,Phenacobius mirabilis,Animalia,Chordata,Actinopterygii,Cypriniformes,Leuciscidae,Phenacobius,11.3829,3,,,no,B,
 Rock gunnel,Pholis gunnellus,Animalia,Chordata,Actinopterygii,Perciformes,Pholidae,Pholis,105.982,5,,,no,B,
-nan,Phoxinellus pseudalepidotus,Animalia,Chordata,Actinopterygii,Cypriniformes,Leuciscidae,Phoxinellus,15,,,4,no,C,
+Phoxinellus pseudalepidotus,Phoxinellus pseudalepidotus,Animalia,Chordata,Actinopterygii,Cypriniformes,Leuciscidae,Phoxinellus,15,,,4,no,C,
 Minnow,Phoxinus phoxinus,Animalia,Chordata,Actinopterygii,Cypriniformes,Leuciscidae,Phoxinus,27.469,13,,,no,B,
 Greater forkbeard,Phycis blennoides,Animalia,Chordata,Actinopterygii,Gadiformes,Gadidae,Phycis,1947,20,,,no,B,
 Forkbeard,Phycis phycis,Animalia,Chordata,Actinopterygii,Gadiformes,Phycidae,Phycis,3910,,,5,no,C,
@@ -1418,7 +1418,7 @@ Bartail flathead,Platycephalus indicus,Animalia,Chordata,Actinopterygii,Percifor
 Rock flathead,Platycephalus laevigatus,Animalia,Chordata,Actinopterygii,Perciformes/Scorpaenoidei,Platycephalidae,Platycephalus,812.488,,,25,no,C,"mass estimated from maximum length by FishBase's length-weight relationship, not weighed"
 Tiger flathead,Platycephalus richardsoni,Animalia,Chordata,Actinopterygii,Perciformes/Scorpaenoidei,Platycephalidae,Platycephalus,3000,12,,,no,C,
 Southern bluespotted flathead,Platycephalus speculator,Animalia,Chordata,Actinopterygii,Perciformes/Scorpaenoidei,Platycephalidae,Platycephalus,4995.85,,,12,no,C,"mass estimated from maximum length by FishBase's length-weight relationship, not weighed"
-nan,Platycephalus westraliae,Animalia,Chordata,Actinopterygii,Perciformes/Scorpaenoidei,Platycephalidae,Platycephalus,2050.93,,,8,no,C,"mass estimated from maximum length by FishBase's length-weight relationship, not weighed"
+Platycephalus westraliae,Platycephalus westraliae,Animalia,Chordata,Actinopterygii,Perciformes/Scorpaenoidei,Platycephalidae,Platycephalus,2050.93,,,8,no,C,"mass estimated from maximum length by FishBase's length-weight relationship, not weighed"
 Ayu,Plecoglossus altivelis,Animalia,Chordata,Actinopterygii,Osmeriformes,Osmeridae,Plecoglossus,1887.99,,,3,no,B,
 Sordid rubberlip,Plectorhinchus sordidus,Animalia,Chordata,Actinopterygii,Eupercaria/misc,Haemulidae,Plectorhinchus,2876.68,14,,,no,C,"mass estimated from maximum length by FishBase's length-weight relationship, not weighed"
 Squaretail coralgrouper,Plectropomus areolatus,Animalia,Chordata,Actinopterygii,Perciformes/Serranoidei,Epinephelidae,Plectropomus,7004.74,,,14,no,C,"mass estimated from maximum length by FishBase's length-weight relationship, not weighed"
@@ -1434,7 +1434,7 @@ Alaska plaice,Pleuronectes quadrituberculatus,Animalia,Chordata,Actinopterygii,P
 Diamond turbot,Pleuronichthys guttulatus,Animalia,Chordata,Actinopterygii,Pleuronectiformes,Pleuronectidae,Pleuronichthys,1678.42,9,,,no,C,"mass estimated from maximum length by FishBase's length-weight relationship, not weighed"
 Blacktip sea catfish,Plicofollis dussumieri,Animalia,Chordata,Actinopterygii,Siluriformes,Ariidae,Plicofollis,1400,,,7,no,C,
 Striped eel-catfish,Plotosus lineatus,Animalia,Chordata,Actinopterygii,Siluriformes,Plotosidae,Plotosus,85.88,7,,,no,B,
-nan,Podothecus sturioides,Animalia,Chordata,Actinopterygii,Perciformes/Cottoidei,Agonidae,Podothecus,192,6,,,no,C,
+Podothecus sturioides,Podothecus sturioides,Animalia,Chordata,Actinopterygii,Perciformes/Cottoidei,Agonidae,Podothecus,192,6,,,no,C,
 Guppy,Poecilia reticulata,Animalia,Chordata,Actinopterygii,Cyprinodontiformes,Poeciliidae,Poecilia,0.2,2,5,,no,B,
 Gila topminnow,Poeciliopsis occidentalis,Animalia,Chordata,Actinopterygii,Cyprinodontiformes,Poeciliidae,Poeciliopsis,2.84049,1,,,no,B,
 Black drum,Pogonias cromis,Animalia,Chordata,Actinopterygii,Perciformes,Sciaenidae,Pogonias,28215,43,,,no,B,
@@ -1444,7 +1444,7 @@ Pollock,Pollachius virens,Animalia,Chordata,Actinopterygii,Gadiformes,Gadidae,Po
 Mormyrid,Pollimyrus isidori,Animalia,Chordata,Actinopterygii,Osteoglossiformes,Mormyridae,Pollimyrus,4,29,,,no,B,
 King threadfin,Polydactylus macrochir,Animalia,Chordata,Actinopterygii,Perciformes,Polynemidae,Polydactylus,24750,20,,,no,B,
 Stout beardfish,Polymixia nobilis,Animalia,Chordata,Actinopterygii,Polymixiiformes,Polymixiidae,Polymixia,1552.29,14,,,no,C,"mass estimated from maximum length by FishBase's length-weight relationship, not weighed"
-nan,Polymixia yuri,Animalia,Chordata,Actinopterygii,Polymixiiformes,Polymixiidae,Polymixia,145.411,,,9,no,C,"mass estimated from maximum length by FishBase's length-weight relationship, not weighed"
+Polymixia yuri,Polymixia yuri,Animalia,Chordata,Actinopterygii,Polymixiiformes,Polymixiidae,Polymixia,145.411,,,9,no,C,"mass estimated from maximum length by FishBase's length-weight relationship, not weighed"
 American paddlefish,Polyodon spathula,Animalia,Chordata,Actinopterygii,Acipenseriformes,Polyodontidae,Polyodon,25000,55,,,no,B,
 Wreckfish,Polyprion americanus,Animalia,Chordata,Actinopterygii,Acropomatiformes,Polyprionidae,Polyprion,100000,80,,,no,C,
 Hapuka,Polyprion oxygeneios,Animalia,Chordata,Actinopterygii,Perciformes,Polyprionidae,Polyprion,55000,60,,,no,B,
@@ -1485,7 +1485,7 @@ Streaked prochilod,Prochilodus lineatus,Animalia,Chordata,Actinopterygii,Characi
 Rock carp,Procypris rabaudi,Animalia,Chordata,Actinopterygii,Cypriniformes,Cyprinidae,Procypris,4500,,,8,no,C,
 Roudi escolar,Promethichthys prometheus,Animalia,Chordata,Actinopterygii,Scombriformes,Gempylidae,Promethichthys,8795.51,11,,,no,C,"mass estimated from maximum length by FishBase's length-weight relationship, not weighed"
 Roughtongue bass,Pronotogrammus martinicensis,Animalia,Chordata,Actinopterygii,Perciformes/Serranoidei,Anthiadidae,Pronotogrammus,90,15,,,no,C,
-nan,Prosomyleus rhomboidalis,Animalia,Chordata,Actinopterygii,Characiformes,Serrasalmidae,Prosomyleus,5000,,,5,no,C,
+Prosomyleus rhomboidalis,Prosomyleus rhomboidalis,Animalia,Chordata,Actinopterygii,Characiformes,Serrasalmidae,Prosomyleus,5000,,,5,no,C,
 Pygmy whitefish,Prosopium coulterii,Animalia,Chordata,Actinopterygii,Salmoniformes,Salmonidae,Prosopium,159.984,9,,,no,B,
 Round whitefish,Prosopium cylindraceum,Animalia,Chordata,Actinopterygii,Salmoniformes,Salmonidae,Prosopium,1498,16,,,no,B,
 Bonneville cisco,Prosopium gemmifer,Animalia,Chordata,Actinopterygii,Salmoniformes,Salmonidae,Prosopium,72.7416,6,,,no,B,
@@ -1527,11 +1527,11 @@ Panga seabream,Pterogymnus laniarius,Animalia,Chordata,Actinopterygii,Eupercaria
 Red firefish,Pterois volitans,Animalia,Chordata,Actinopterygii,Perciformes,Scorpaenidae,Pterois,1442,10,,,no,B,
 Bluehead shiner,Pteronotropis hubbsi,Animalia,Chordata,Actinopterygii,Cypriniformes,Leuciscidae,Pteronotropis,2.0948,2,,,no,B,
 Bigmouth croaker,Pterotolithus lateoides,Animalia,Chordata,Actinopterygii,Eupercaria/misc,Sciaenidae,Pterotolithus,2675.49,,,4,no,C,"mass estimated from maximum length by FishBase's length-weight relationship, not weighed"
-nan,Ptychobarbus dipogon,Animalia,Chordata,Actinopterygii,Cypriniformes,Cyprinidae,Ptychobarbus,2241.1,,,44,no,C,
+Ptychobarbus dipogon,Ptychobarbus dipogon,Animalia,Chordata,Actinopterygii,Cypriniformes,Cyprinidae,Ptychobarbus,2241.1,,,44,no,C,
 Sacramento pikeminnow,Ptychocheilus grandis,Animalia,Chordata,Actinopterygii,Cypriniformes,Leuciscidae,Ptychocheilus,4080,9,,,no,C,
 Colorado pikeminnow,Ptychocheilus lucius,Animalia,Chordata,Actinopterygii,Cypriniformes,Leuciscidae,Ptychocheilus,36290,12,,,no,B,
 Northern pikeminnow,Ptychocheilus oregonensis,Animalia,Chordata,Actinopterygii,Cypriniformes,Leuciscidae,Ptychocheilus,13000,11,,,no,C,
-nan,Pungitius hellenicus,Animalia,Chordata,Actinopterygii,Perciformes/Gasterosteoidei,Gasterosteidae,Pungitius,0.842744,1.5,,,no,C,"mass estimated from maximum length by FishBase's length-weight relationship, not weighed"
+Pungitius hellenicus,Pungitius hellenicus,Animalia,Chordata,Actinopterygii,Perciformes/Gasterosteoidei,Gasterosteidae,Pungitius,0.842744,1.5,,,no,C,"mass estimated from maximum length by FishBase's length-weight relationship, not weighed"
 Ninespine stickleback,Pungitius pungitius,Animalia,Chordata,Actinopterygii,Gasterosteiformes,Gasterosteidae,Pungitius,3.73482,5,,,no,B,
 Royal angelfish,Pygoplites diacanthus,Animalia,Chordata,Actinopterygii,Perciformes,Pomacanthidae,Pygoplites,581.814,14.5,,,no,B,
 Flathead catfish,Pylodictis olivaris,Animalia,Chordata,Actinopterygii,Siluriformes,Ictaluridae,Pylodictis,30717.5,20,,,no,B,
@@ -1546,13 +1546,13 @@ Short-lined escolar,Rexea brevilineata,Animalia,Chordata,Actinopterygii,Percifor
 Silver gemfish,Rexea solandri,Animalia,Chordata,Actinopterygii,Perciformes,Gempylidae,Rexea,8800,16,,,no,B,
 Goldlined seabream,Rhabdosargus sarba,Animalia,Chordata,Actinopterygii,Eupercaria/misc,Sparidae,Rhabdosargus,12000,,,5,no,C,
 Rubberlip seaperch,Rhacochilus toxotes,Animalia,Chordata,Actinopterygii,Ovalentaria/misc,Embiotocidae,Rhacochilus,1762.51,,,10,no,C,"mass estimated from maximum length by FishBase's length-weight relationship, not weighed"
-nan,Rhinelepis aspera,Animalia,Chordata,Actinopterygii,Siluriformes,Loricariidae,Rhinelepis,2196,10,,,no,C,
+Rhinelepis aspera,Rhinelepis aspera,Animalia,Chordata,Actinopterygii,Siluriformes,Loricariidae,Rhinelepis,2196,10,,,no,C,
 Blacknose dace,Rhinichthys atratulus,Animalia,Chordata,Actinopterygii,Cypriniformes,Leuciscidae,Rhinichthys,19.8064,4,,,no,B,
 Longnose dace,Rhinichthys cataractae,Animalia,Chordata,Actinopterygii,Cypriniformes,Leuciscidae,Rhinichthys,132.708,5,,,no,B,
 Loach minnow,Rhinichthys cobitis,Animalia,Chordata,Actinopterygii,Cypriniformes,Cyprinidae,Rhinichthys,1.31841,5,,,no,B,
 Blackeye goby,Rhinogobiops nicholsii,Animalia,Chordata,Actinopterygii,Gobiiformes,Gobiidae,Rhinogobiops,35.4841,5,,,no,C,"mass estimated from maximum length by FishBase's length-weight relationship, not weighed"
-nan,Rhinogobius cliffordpopei,Animalia,Chordata,Actinopterygii,Gobiiformes,Gobiidae,Rhinogobius,32.2572,,,1.23,no,C,"mass estimated from maximum length by FishBase's length-weight relationship, not weighed"
-nan,Rhinogobius giurinus,Animalia,Chordata,Actinopterygii,Gobiiformes,Gobiidae,Rhinogobius,14.9,,,1.45,no,C,
+Rhinogobius cliffordpopei,Rhinogobius cliffordpopei,Animalia,Chordata,Actinopterygii,Gobiiformes,Gobiidae,Rhinogobius,32.2572,,,1.23,no,C,"mass estimated from maximum length by FishBase's length-weight relationship, not weighed"
+Rhinogobius giurinus,Rhinogobius giurinus,Animalia,Chordata,Actinopterygii,Gobiiformes,Gobiidae,Rhinogobius,14.9,,,1.45,no,C,
 European bitterling,Rhodeus amarus,Animalia,Chordata,Actinopterygii,Cypriniformes,Acheilognathidae,Rhodeus,18.7317,5,,,no,C,"mass estimated from maximum length by FishBase's length-weight relationship, not weighed"
 Bitterling,Rhodeus sericeus,Animalia,Chordata,Actinopterygii,Cypriniformes,Cyprinidae,Rhodeus,15.034,5,,,no,B,
 Vermilion snapper,Rhomboplites aurorubens,Animalia,Chordata,Actinopterygii,Perciformes,Lutjanidae,Rhomboplites,1743.5,10,,,no,B,
@@ -1563,40 +1563,40 @@ Lake minnow,Rhynchocypris percnura,Animalia,Chordata,Actinopterygii,Cypriniforme
 Lahontan redside,Richardsonius egregius,Animalia,Chordata,Actinopterygii,Cypriniformes,Leuciscidae,Richardsonius,50.7194,5,,,no,B,
 White-finned gudgeon,Romanogobio albipinnatus,Animalia,Chordata,Actinopterygii,Cypriniformes,Gobionidae,Romanogobio,15,5,,,no,C,
 Northern whitefin gudgeon,Romanogobio belingi,Animalia,Chordata,Actinopterygii,Cypriniformes,Gobionidae,Romanogobio,22.8465,5,,,no,C,"mass estimated from maximum length by FishBase's length-weight relationship, not weighed"
-nan,Romanogobio benacensis,Animalia,Chordata,Actinopterygii,Cypriniformes,Gobionidae,Romanogobio,14.7721,4,,,no,C,"mass estimated from maximum length by FishBase's length-weight relationship, not weighed"
+Romanogobio benacensis,Romanogobio benacensis,Animalia,Chordata,Actinopterygii,Cypriniformes,Gobionidae,Romanogobio,14.7721,4,,,no,C,"mass estimated from maximum length by FishBase's length-weight relationship, not weighed"
 North Caucasian longbarbel gudgeon,Romanogobio ciscaucasicus,Animalia,Chordata,Actinopterygii,Cypriniformes,Gobionidae,Romanogobio,28.1452,6,,,no,C,"mass estimated from maximum length by FishBase's length-weight relationship, not weighed"
 Kessler's gudgeon,Romanogobio kesslerii,Animalia,Chordata,Actinopterygii,Cypriniformes,Gobionidae,Romanogobio,18.0096,5,,,no,C,"mass estimated from maximum length by FishBase's length-weight relationship, not weighed"
 Don whitefin gudgeon,Romanogobio tanaiticus,Animalia,Chordata,Actinopterygii,Cypriniformes,Gobionidae,Romanogobio,18.2266,5,,,no,C,"mass estimated from maximum length by FishBase's length-weight relationship, not weighed"
-nan,Romanogobio vladykovi,Animalia,Chordata,Actinopterygii,Cypriniformes,Gobionidae,Romanogobio,22.8465,4,,,no,C,"mass estimated from maximum length by FishBase's length-weight relationship, not weighed"
+Romanogobio vladykovi,Romanogobio vladykovi,Animalia,Chordata,Actinopterygii,Cypriniformes,Gobionidae,Romanogobio,22.8465,4,,,no,C,"mass estimated from maximum length by FishBase's length-weight relationship, not weighed"
 Spotfin croaker,Roncador stearnsii,Animalia,Chordata,Actinopterygii,Eupercaria/misc,Sciaenidae,Roncador,4800,15,,,no,C,
 Caspian roach,Rutilus caspicus,Animalia,Chordata,Actinopterygii,Cypriniformes,Leuciscidae,Rutilus,2000,10,,,no,C,
 Kutum,Rutilus frisii,Animalia,Chordata,Actinopterygii,Cypriniformes,Leuciscidae,Rutilus,2750,12,,,no,B,
-nan,Rutilus kutum,Animalia,Chordata,Actinopterygii,Cypriniformes,Leuciscidae,Rutilus,2834.18,,,9,no,C,"mass estimated from maximum length by FishBase's length-weight relationship, not weighed"
-nan,Rutilus pigus,Animalia,Chordata,Actinopterygii,Cypriniformes,Leuciscidae,Rutilus,3210,9,,,no,C,
+Rutilus kutum,Rutilus kutum,Animalia,Chordata,Actinopterygii,Cypriniformes,Leuciscidae,Rutilus,2834.18,,,9,no,C,"mass estimated from maximum length by FishBase's length-weight relationship, not weighed"
+Rutilus pigus,Rutilus pigus,Animalia,Chordata,Actinopterygii,Cypriniformes,Leuciscidae,Rutilus,3210,9,,,no,C,
 Roach,Rutilus rutilus,Animalia,Chordata,Actinopterygii,Cypriniformes,Leuciscidae,Rutilus,1012,14,,,no,B,
 Golden spined loach,Sabanejewia aurata,Animalia,Chordata,Actinopterygii,Cypriniformes,Cobitidae,Sabanejewia,7.4276,,,3,no,C,"mass estimated from maximum length by FishBase's length-weight relationship, not weighed"
 Balcan spined loach,Sabanejewia balcanica,Animalia,Chordata,Actinopterygii,Cypriniformes,Cobitidae,Sabanejewia,11.9534,,,4.5,no,C,"mass estimated from maximum length by FishBase's length-weight relationship, not weighed"
 Freshwater blenny,Salariopsis fluviatilis,Animalia,Chordata,Actinopterygii,Blenniiformes,Blenniidae,Salariopsis,45.4531,5,,,no,C,"mass estimated from maximum length by FishBase's length-weight relationship, not weighed"
 Dorado,Salminus brasiliensis,Animalia,Chordata,Actinopterygii,Characiformes,Bryconidae,Salminus,31400,9,,,no,C,
-nan,Salmo carpio,Animalia,Chordata,Actinopterygii,Salmoniformes,Salmonidae,Salmo,2688.75,5,,,no,C,"mass estimated from maximum length by FishBase's length-weight relationship, not weighed"
-nan,Salmo cenerinus,Animalia,Chordata,Actinopterygii,Salmoniformes,Salmonidae,Salmo,11169.5,8,,,no,C,"mass estimated from maximum length by FishBase's length-weight relationship, not weighed"
-nan,Salmo ferox,Animalia,Chordata,Actinopterygii,Salmoniformes,Salmonidae,Salmo,17920,23,,,no,C,
-nan,Salmo marmoratus,Animalia,Chordata,Actinopterygii,Salmoniformes,Salmonidae,Salmo,50000,10,,,no,C,
-nan,Salmo ohridanus,Animalia,Chordata,Actinopterygii,Salmoniformes,Salmonidae,Salmo,685,12,,,no,C,
+Salmo carpio,Salmo carpio,Animalia,Chordata,Actinopterygii,Salmoniformes,Salmonidae,Salmo,2688.75,5,,,no,C,"mass estimated from maximum length by FishBase's length-weight relationship, not weighed"
+Salmo cenerinus,Salmo cenerinus,Animalia,Chordata,Actinopterygii,Salmoniformes,Salmonidae,Salmo,11169.5,8,,,no,C,"mass estimated from maximum length by FishBase's length-weight relationship, not weighed"
+Salmo ferox,Salmo ferox,Animalia,Chordata,Actinopterygii,Salmoniformes,Salmonidae,Salmo,17920,23,,,no,C,
+Salmo marmoratus,Salmo marmoratus,Animalia,Chordata,Actinopterygii,Salmoniformes,Salmonidae,Salmo,50000,10,,,no,C,
+Salmo ohridanus,Salmo ohridanus,Animalia,Chordata,Actinopterygii,Salmoniformes,Salmonidae,Salmo,685,12,,,no,C,
 Atlantic salmon,Salmo salar,Animalia,Chordata,Actinopterygii,Salmoniformes,Salmonidae,Salmo,4500,13,,,no,B,
 Brown trout,Salmo trutta,Animalia,Chordata,Actinopterygii,Salmoniformes,Salmonidae,Salmo,1000,20,18,,no,B,
 Arctic char,Salvelinus alpinus,Animalia,Chordata,Actinopterygii,Salmoniformes,Salmonidae,Salvelinus,18000,,,40,no,B,
 Angayukaksurak char,Salvelinus anaktuvukensis,Animalia,Chordata,Actinopterygii,Salmoniformes,Salmonidae,Salvelinus,302.307,9,,,no,C,"mass estimated from maximum length by FishBase's length-weight relationship, not weighed"
-nan,Salvelinus faroensis,Animalia,Chordata,Actinopterygii,Salmoniformes,Salmonidae,Salvelinus,91.392,8,,,no,C,"mass estimated from maximum length by FishBase's length-weight relationship, not weighed"
+Salvelinus faroensis,Salvelinus faroensis,Animalia,Chordata,Actinopterygii,Salmoniformes,Salmonidae,Salvelinus,91.392,8,,,no,C,"mass estimated from maximum length by FishBase's length-weight relationship, not weighed"
 "Brook trout, or Bunnylake brook trout",Salvelinus fontinalis,Animalia,Chordata,Actinopterygii,Salmoniformes,Salmonidae,Salvelinus,4397.25,24,,,no,B,
-nan,Salvelinus gracillimus,Animalia,Chordata,Actinopterygii,Salmoniformes,Salmonidae,Salvelinus,517.996,,,8,no,C,"mass estimated from maximum length by FishBase's length-weight relationship, not weighed"
+Salvelinus gracillimus,Salvelinus gracillimus,Animalia,Chordata,Actinopterygii,Salmoniformes,Salmonidae,Salvelinus,517.996,,,8,no,C,"mass estimated from maximum length by FishBase's length-weight relationship, not weighed"
 Whitespotted char,Salvelinus leucomaenis,Animalia,Chordata,Actinopterygii,Salmoniformes,Salmonidae,Salvelinus,15000,9,,,no,C,
 Dolly varden,Salvelinus malma,Animalia,Chordata,Actinopterygii,Salmoniformes,Salmonidae,Salvelinus,18300,,,12,no,C,
-nan,Salvelinus murta,Animalia,Chordata,Actinopterygii,Salmoniformes,Salmonidae,Salvelinus,2309.44,18,,,no,C,"mass estimated from maximum length by FishBase's length-weight relationship, not weighed"
+Salvelinus murta,Salvelinus murta,Animalia,Chordata,Actinopterygii,Salmoniformes,Salmonidae,Salvelinus,2309.44,18,,,no,C,"mass estimated from maximum length by FishBase's length-weight relationship, not weighed"
 Lake trout,Salvelinus namaycush,Animalia,Chordata,Actinopterygii,Salmoniformes,Salmonidae,Salvelinus,5000,62,,,no,B,
 Bear Island charr,Salvelinus salvelinoinsularis,Animalia,Chordata,Actinopterygii,Salmoniformes,Salmonidae,Salvelinus,1090.41,16,,,no,C,"mass estimated from maximum length by FishBase's length-weight relationship, not weighed"
-nan,Salvelinus struanensis,Animalia,Chordata,Actinopterygii,Salmoniformes,Salmonidae,Salvelinus,963.149,8,,,no,C,"mass estimated from maximum length by FishBase's length-weight relationship, not weighed"
-nan,Salvelinus thingvallensis,Animalia,Chordata,Actinopterygii,Salmoniformes,Salmonidae,Salvelinus,280.786,17,,,no,C,"mass estimated from maximum length by FishBase's length-weight relationship, not weighed"
+Salvelinus struanensis,Salvelinus struanensis,Animalia,Chordata,Actinopterygii,Salmoniformes,Salmonidae,Salvelinus,963.149,8,,,no,C,"mass estimated from maximum length by FishBase's length-weight relationship, not weighed"
+Salvelinus thingvallensis,Salvelinus thingvallensis,Animalia,Chordata,Actinopterygii,Salmoniformes,Salmonidae,Salvelinus,280.786,17,,,no,C,"mass estimated from maximum length by FishBase's length-weight relationship, not weighed"
 Golden charr,Salvelinus youngeri,Animalia,Chordata,Actinopterygii,Salmoniformes,Salmonidae,Salvelinus,317.886,,,9,no,C,"mass estimated from maximum length by FishBase's length-weight relationship, not weighed"
 Rocky kurper,Sandelia bainsii,Animalia,Chordata,Actinopterygii,Anabantiformes,Anabantidae,Sandelia,130,,,5,no,C,
 Sauger,Sander canadensis,Animalia,Chordata,Actinopterygii,Perciformes,Percidae,Sander,2000,18,,,no,B,
@@ -1604,7 +1604,7 @@ Zander,Sander lucioperca,Animalia,Chordata,Actinopterygii,Perciformes,Percidae,S
 Walleye,Sander vitreus,Animalia,Chordata,Actinopterygii,Perciformes,Percidae,Sander,11000,29,,,no,B,
 Volga pikeperch,Sander volgensis,Animalia,Chordata,Actinopterygii,Perciformes/Percoidei,Percidae,Sander,3200,12,,,no,C,
 Cherskii's thicklip gudgeon,Sarcocheilichthys czerskii,Animalia,Chordata,Actinopterygii,Cypriniformes,Gobionidae,Sarcocheilichthys,12.0226,,,3,no,C,"mass estimated from maximum length by FishBase's length-weight relationship, not weighed"
-nan,Sarcocheilichthys lacustris,Animalia,Chordata,Actinopterygii,Cypriniformes,Gobionidae,Sarcocheilichthys,69.058,,,6,no,C,"mass estimated from maximum length by FishBase's length-weight relationship, not weighed"
+Sarcocheilichthys lacustris,Sarcocheilichthys lacustris,Animalia,Chordata,Actinopterygii,Cypriniformes,Gobionidae,Sarcocheilichthys,69.058,,,6,no,C,"mass estimated from maximum length by FishBase's length-weight relationship, not weighed"
 Atlantic bonito,Sarda sarda,Animalia,Chordata,Actinopterygii,Perciformes,Scombridae,Sarda,6050,5,,,no,B,
 True sardine,Sardina pilchardus,Animalia,Chordata,Actinopterygii,Clupeiformes,Clupeidae,Sardina,145,15,,,no,B,
 Round sardinella,Sardinella aurita,Animalia,Chordata,Actinopterygii,Clupeiformes,Clupeidae,Sardinella,125.95,7,,,no,B,
@@ -1620,7 +1620,7 @@ Sabre squirrelfish,Sargocentron spiniferum,Animalia,Chordata,Actinopterygii,Holo
 Rainbow happy,Sargochromis carlottae,Animalia,Chordata,Actinopterygii,Cichliformes,Cichlidae,Sargochromis,1000,5.5,,,no,C,
 Green happy,Sargochromis codringtonii,Animalia,Chordata,Actinopterygii,Perciformes,Cichlidae,Sargochromis,1215.5,7,,,no,B,
 Pink happy,Sargochromis giardi,Animalia,Chordata,Actinopterygii,Perciformes,Cichlidae,Sargochromis,1595,7,,,no,B,
-nan,Sarmarutilus rubilio,Animalia,Chordata,Actinopterygii,Cypriniformes,Leuciscidae,Sarmarutilus,190.571,,,9,no,C,"mass estimated from maximum length by FishBase's length-weight relationship, not weighed"
+Sarmarutilus rubilio,Sarmarutilus rubilio,Animalia,Chordata,Actinopterygii,Cypriniformes,Leuciscidae,Sarmarutilus,190.571,,,9,no,C,"mass estimated from maximum length by FishBase's length-weight relationship, not weighed"
 Salema,Sarpa salpa,Animalia,Chordata,Actinopterygii,Eupercaria/misc,Sparidae,Sarpa,3416.22,,,15,no,C,"mass estimated from maximum length by FishBase's length-weight relationship, not weighed"
 Slender lizardfish,Saurida elongata,Animalia,Chordata,Actinopterygii,Aulopiformes,Synodontidae,Saurida,676,7,,,no,C,
 Greater lizardfish,Saurida tumbil,Animalia,Chordata,Actinopterygii,Aulopiformes,Synodontidae,Saurida,2565.9,7,,,no,C,"mass estimated from maximum length by FishBase's length-weight relationship, not weighed"
@@ -1628,9 +1628,9 @@ Brushtooth lizardfish,Saurida undosquamis,Animalia,Chordata,Actinopterygii,Aulop
 Chinese lizard gudgeon,Saurogobio dabryi,Animalia,Chordata,Actinopterygii,Cypriniformes,Gobionidae,Saurogobio,106.3,,,3,no,C,
 Pallid sturgeon,Scaphirhynchus albus,Animalia,Chordata,Actinopterygii,Acipenseriformes,Acipenseridae,Scaphirhynchus,130000,,,100,no,C,
 Shovelnose sturgeon,Scaphirhynchus platorynchus,Animalia,Chordata,Actinopterygii,Acipenseriformes,Acipenseridae,Scaphirhynchus,6580,43,,,no,C,
-nan,Scardinius acarnanicus,Animalia,Chordata,Actinopterygii,Cypriniformes,Leuciscidae,Scardinius,620,11,,,no,C,
+Scardinius acarnanicus,Scardinius acarnanicus,Animalia,Chordata,Actinopterygii,Cypriniformes,Leuciscidae,Scardinius,620,11,,,no,C,
 Pearl roach,Scardinius erythrophthalmus,Animalia,Chordata,Actinopterygii,Cypriniformes,Leuciscidae,Scardinius,1153.35,19,,,no,B,
-nan,Scardinius hesperidicus,Animalia,Chordata,Actinopterygii,Cypriniformes,Leuciscidae,Scardinius,1829.32,15,,,no,C,"mass estimated from maximum length by FishBase's length-weight relationship, not weighed"
+Scardinius hesperidicus,Scardinius hesperidicus,Animalia,Chordata,Actinopterygii,Cypriniformes,Leuciscidae,Scardinius,1829.32,15,,,no,C,"mass estimated from maximum length by FishBase's length-weight relationship, not weighed"
 Filament-finned parrotfish,Scarus altipinnis,Animalia,Chordata,Actinopterygii,Eupercaria/misc,Scaridae,Scarus,3100,,,14,no,C,
 Chameleon parrotfish,Scarus chameleon,Animalia,Chordata,Actinopterygii,Eupercaria/misc,Scaridae,Scarus,477.338,,,6,no,C,"mass estimated from maximum length by FishBase's length-weight relationship, not weighed"
 Midnight parrotfish,Scarus coelestinus,Animalia,Chordata,Actinopterygii,Eupercaria/misc,Scaridae,Scarus,7000,31,,,no,C,
@@ -1647,10 +1647,10 @@ Yellowband parrotfish,Scarus schlegeli,Animalia,Chordata,Actinopterygii,Eupercar
 Princess parrotfish,Scarus taeniopterus,Animalia,Chordata,Actinopterygii,Eupercaria/misc,Scaridae,Scarus,689.487,11,,,no,C,"mass estimated from maximum length by FishBase's length-weight relationship, not weighed"
 Silver catfish,Schilbe intermedius,Animalia,Chordata,Actinopterygii,Siluriformes,Schilbeidae,Schilbe,1380,,,5,no,C,
 African butter catfish,Schilbe mystus,Animalia,Chordata,Actinopterygii,Siluriformes,Schilbeidae,Schilbe,250,7,,,no,C,
-nan,Schilbe uranoscopus,Animalia,Chordata,Actinopterygii,Siluriformes,Schilbeidae,Schilbe,558.814,,,3,no,C,"mass estimated from maximum length by FishBase's length-weight relationship, not weighed"
+Schilbe uranoscopus,Schilbe uranoscopus,Animalia,Chordata,Actinopterygii,Siluriformes,Schilbeidae,Schilbe,558.814,,,3,no,C,"mass estimated from maximum length by FishBase's length-weight relationship, not weighed"
 Schindler's fish,Schindleria praematura,Animalia,Chordata,Actinopterygii,Gobiiformes,Schindleriidae,Schindleria,0.0678536,0.5,,,no,C,"mass estimated from maximum length by FishBase's length-weight relationship, not weighed"
 Selincuo naked carp,Schizopygopsis selincuoensis,Animalia,Chordata,Actinopterygii,Cypriniformes,Cyprinidae,Schizopygopsis,362.656,,,29,no,C,"mass estimated from maximum length by FishBase's length-weight relationship, not weighed"
-nan,Schizopygopsis younghusbandi,Animalia,Chordata,Actinopterygii,Cypriniformes,Cyprinidae,Schizopygopsis,589,,,17,no,C,
+Schizopygopsis younghusbandi,Schizopygopsis younghusbandi,Animalia,Chordata,Actinopterygii,Cypriniformes,Cyprinidae,Schizopygopsis,589,,,17,no,C,
 Couma sea catfish,Sciades couma,Animalia,Chordata,Actinopterygii,Siluriformes,Ariidae,Sciades,30000,5,,,no,C,
 Gillbacker sea catfish,Sciades parkeri,Animalia,Chordata,Actinopterygii,Siluriformes,Ariidae,Sciades,50000,4,,,no,C,
 Crucifix sea catfish,Sciades proops,Animalia,Chordata,Actinopterygii,Siluriformes,Ariidae,Sciades,9000,3.5,,,no,C,
@@ -1675,7 +1675,7 @@ Turbot,Scophthalmus maximus,Animalia,Chordata,Actinopterygii,Pleuronectiformes,S
 Brill,Scophthalmus rhombus,Animalia,Chordata,Actinopterygii,Pleuronectiformes,Scophthalmidae,Scophthalmus,4400,6,,,no,B,
 Eastern red scorpionfish,Scorpaena cardinalis,Animalia,Chordata,Actinopterygii,Perciformes/Scorpaenoidei,Scorpaenidae,Scorpaena,1369.82,33,,,no,C,"mass estimated from maximum length by FishBase's length-weight relationship, not weighed"
 California scorpionfish,Scorpaena guttata,Animalia,Chordata,Actinopterygii,Perciformes/Scorpaenoidei,Scorpaenidae,Scorpaena,2064.18,21,,,no,C,"mass estimated from maximum length by FishBase's length-weight relationship, not weighed"
-nan,Scorpaena jacksoniensis,Animalia,Chordata,Actinopterygii,Perciformes/Scorpaenoidei,Scorpaenidae,Scorpaena,1427.16,33,,,no,C,"mass estimated from maximum length by FishBase's length-weight relationship, not weighed"
+Scorpaena jacksoniensis,Scorpaena jacksoniensis,Animalia,Chordata,Actinopterygii,Perciformes/Scorpaenoidei,Scorpaenidae,Scorpaena,1427.16,33,,,no,C,"mass estimated from maximum length by FishBase's length-weight relationship, not weighed"
 Cadenat's rockfish,Scorpaena loppei,Animalia,Chordata,Actinopterygii,Perciformes/Scorpaenoidei,Scorpaenidae,Scorpaena,60.1734,5,,,no,C,"mass estimated from maximum length by FishBase's length-weight relationship, not weighed"
 Small red scorpionfish,Scorpaena notata,Animalia,Chordata,Actinopterygii,Perciformes/Scorpaenoidei,Scorpaenidae,Scorpaena,142,8,,,no,C,
 Black scorpionfish,Scorpaena porcus,Animalia,Chordata,Actinopterygii,Perciformes/Scorpaenoidei,Scorpaenidae,Scorpaena,870,,,11,no,C,
@@ -1714,7 +1714,7 @@ Black rockfish,Sebastes melanops,Animalia,Chordata,Actinopterygii,Perciformes,Se
 Blackgill rockfish,Sebastes melanostomus,Animalia,Chordata,Actinopterygii,Perciformes/Scorpaenoidei,Sebastidae,Sebastes,3530,90,,,no,C,
 Deepwater redfish,Sebastes mentella,Animalia,Chordata,Actinopterygii,Perciformes,Scorpaenidae,Sebastes,4714.95,75,,,no,B,
 Vermilion rockfish,Sebastes miniatus,Animalia,Chordata,Actinopterygii,Perciformes,Scorpaenidae,Sebastes,3700,43,,,no,B,
-nan,Sebastes minor,Animalia,Chordata,Actinopterygii,Perciformes/Scorpaenoidei,Sebastidae,Sebastes,120.574,11,,,no,C,"mass estimated from maximum length by FishBase's length-weight relationship, not weighed"
+Sebastes minor,Sebastes minor,Animalia,Chordata,Actinopterygii,Perciformes/Scorpaenoidei,Sebastidae,Sebastes,120.574,11,,,no,C,"mass estimated from maximum length by FishBase's length-weight relationship, not weighed"
 Blue rockfish,Sebastes mystinus,Animalia,Chordata,Actinopterygii,Perciformes,Scorpaenidae,Sebastes,2084.5,44,,,no,B,
 China rockfish,Sebastes nebulosus,Animalia,Chordata,Actinopterygii,Perciformes,Scorpaenidae,Sebastes,918.5,79,,,no,B,
 Tiger rockfish,Sebastes nigrocinctus,Animalia,Chordata,Actinopterygii,Perciformes,Scorpaenidae,Sebastes,1221,116,,,no,B,
@@ -1735,7 +1735,7 @@ Stripetail rockfish,Sebastes saxicola,Animalia,Chordata,Actinopterygii,Perciform
 Korean rockfish,Sebastes schlegelii,Animalia,Chordata,Actinopterygii,Perciformes/Scorpaenoidei,Sebastidae,Sebastes,3140,20,,,no,C,
 Halfbanded rockfish,Sebastes semicinctus,Animalia,Chordata,Actinopterygii,Perciformes/Scorpaenoidei,Sebastidae,Sebastes,102.292,15,,,no,C,"mass estimated from maximum length by FishBase's length-weight relationship, not weighed"
 Olive rockfish,Sebastes serranoides,Animalia,Chordata,Actinopterygii,Perciformes,Scorpaenidae,Sebastes,900,25,,,no,B,
-nan,Sebastes steindachneri,Animalia,Chordata,Actinopterygii,Perciformes/Scorpaenoidei,Sebastidae,Sebastes,701.041,17,,,no,C,"mass estimated from maximum length by FishBase's length-weight relationship, not weighed"
+Sebastes steindachneri,Sebastes steindachneri,Animalia,Chordata,Actinopterygii,Perciformes/Scorpaenoidei,Sebastidae,Sebastes,701.041,17,,,no,C,"mass estimated from maximum length by FishBase's length-weight relationship, not weighed"
 Light dusky rockfish,Sebastes variabilis,Animalia,Chordata,Actinopterygii,Perciformes/Scorpaenoidei,Sebastidae,Sebastes,1948.13,50,,,no,C,"mass estimated from maximum length by FishBase's length-weight relationship, not weighed"
 Harlequin rockfish,Sebastes variegatus,Animalia,Chordata,Actinopterygii,Perciformes,Scorpaenidae,Sebastes,761.257,47,,,no,B,
 Norway haddock,Sebastes viviparus,Animalia,Chordata,Actinopterygii,Perciformes,Scorpaenidae,Sebastes,550,40,,,no,B,
@@ -1775,7 +1775,7 @@ Stout whiting,Sillago robusta,Animalia,Chordata,Actinopterygii,Eupercaria/misc,S
 Western sand whiting,Sillago schomburgkii,Animalia,Chordata,Actinopterygii,Perciformes,Sillaginidae,Sillago,533.51,12,,,no,B,
 Northern whiting,Sillago sihama,Animalia,Chordata,Actinopterygii,Perciformes,Sillaginidae,Sillago,96,7,,,no,B,
 Western school whiting,Sillago vittata,Animalia,Chordata,Actinopterygii,Eupercaria/misc,Sillaginidae,Sillago,524.671,,,7,no,C,"mass estimated from maximum length by FishBase's length-weight relationship, not weighed"
-nan,Silurus aristotelis,Animalia,Chordata,Actinopterygii,Siluriformes,Siluridae,Silurus,547.36,10,,,no,C,"mass estimated from maximum length by FishBase's length-weight relationship, not weighed"
+Silurus aristotelis,Silurus aristotelis,Animalia,Chordata,Actinopterygii,Siluriformes,Siluridae,Silurus,547.36,10,,,no,C,"mass estimated from maximum length by FishBase's length-weight relationship, not weighed"
 Wels catfish,Silurus glanis,Animalia,Chordata,Actinopterygii,Siluriformes,Siluridae,Silurus,50000,60,,,no,B,
 Soldatov's catfish,Silurus soldatovi,Animalia,Chordata,Actinopterygii,Siluriformes,Siluridae,Silurus,40000,20,,,no,C,
 Tigris catfish,Silurus triostegus,Animalia,Chordata,Actinopterygii,Siluriformes,Siluridae,Silurus,8500,11,,,no,C,
@@ -1799,7 +1799,7 @@ Yellowstripe barracuda,Sphyraena chrysotaenia,Animalia,Chordata,Actinopterygii,C
 Yellowtail barracuda,Sphyraena flavicauda,Animalia,Chordata,Actinopterygii,Carangaria/misc,Sphyraenidae,Sphyraena,1093.6,98.8,,,no,C,"mass estimated from maximum length by FishBase's length-weight relationship, not weighed"
 Red barracuda,Sphyraena pinguis,Animalia,Chordata,Actinopterygii,Carangaria/misc,Sphyraenidae,Sphyraena,653.088,,,11,no,C,"mass estimated from maximum length by FishBase's length-weight relationship, not weighed"
 European barracuda,Sphyraena sphyraena,Animalia,Chordata,Actinopterygii,Carangaria/misc,Sphyraenidae,Sphyraena,3620,,,8,no,C,
-nan,Spicara flexuosum,Animalia,Chordata,Actinopterygii,Eupercaria/misc,Sparidae,Spicara,120,,,5,no,C,
+Spicara flexuosum,Spicara flexuosum,Animalia,Chordata,Actinopterygii,Eupercaria/misc,Sparidae,Spicara,120,,,5,no,C,
 Blotched picarel,Spicara maena,Animalia,Chordata,Actinopterygii,Eupercaria/misc,Sparidae,Spicara,160,,,4,no,C,
 Picarel,Spicara smaris,Animalia,Chordata,Actinopterygii,Eupercaria/misc,Sparidae,Spicara,92.23,,,7,no,C,
 Night smelt,Spirinchus starksi,Animalia,Chordata,Actinopterygii,Osmeriformes,Osmeridae,Spirinchus,77.033,3,,,no,C,"mass estimated from maximum length by FishBase's length-weight relationship, not weighed"
@@ -1814,9 +1814,9 @@ Barbel chub,Squaliobarbus curriculus,Animalia,Chordata,Actinopterygii,Cyprinifor
 Bordallo,Squalius carolitertii,Animalia,Chordata,Actinopterygii,Cypriniformes,Leuciscidae,Squalius,176.845,,,5,no,C,"mass estimated from maximum length by FishBase's length-weight relationship, not weighed"
 Chub,Squalius cephalus,Animalia,Chordata,Actinopterygii,Cypriniformes,Leuciscidae,Squalius,8000,22,,,no,C,
 Rhodes minnow,Squalius ghigii,Animalia,Chordata,Actinopterygii,Cypriniformes,Leuciscidae,Squalius,19.4406,3,,,no,C,"mass estimated from maximum length by FishBase's length-weight relationship, not weighed"
-nan,Squalius pyrenaicus,Animalia,Chordata,Actinopterygii,Cypriniformes,Leuciscidae,Squalius,483.266,7,,,no,C,"mass estimated from maximum length by FishBase's length-weight relationship, not weighed"
-nan,Squalius squalus,Animalia,Chordata,Actinopterygii,Cypriniformes,Leuciscidae,Squalius,4741.54,15,,,no,C,"mass estimated from maximum length by FishBase's length-weight relationship, not weighed"
-nan,Squalius svallize,Animalia,Chordata,Actinopterygii,Cypriniformes,Leuciscidae,Squalius,281.441,,,7,no,C,"mass estimated from maximum length by FishBase's length-weight relationship, not weighed"
+Squalius pyrenaicus,Squalius pyrenaicus,Animalia,Chordata,Actinopterygii,Cypriniformes,Leuciscidae,Squalius,483.266,7,,,no,C,"mass estimated from maximum length by FishBase's length-weight relationship, not weighed"
+Squalius squalus,Squalius squalus,Animalia,Chordata,Actinopterygii,Cypriniformes,Leuciscidae,Squalius,4741.54,15,,,no,C,"mass estimated from maximum length by FishBase's length-weight relationship, not weighed"
+Squalius svallize,Squalius svallize,Animalia,Chordata,Actinopterygii,Cypriniformes,Leuciscidae,Squalius,281.441,,,7,no,C,"mass estimated from maximum length by FishBase's length-weight relationship, not weighed"
 Acapulco major,Stegastes acapulcoensis,Animalia,Chordata,Actinopterygii,Ovalentaria/misc,Pomacentridae,Stegastes,96.9926,32,,,no,C,"mass estimated from maximum length by FishBase's length-weight relationship, not weighed"
 Island major,Stegastes arcifrons,Animalia,Chordata,Actinopterygii,Ovalentaria/misc,Pomacentridae,Stegastes,78.8686,27,,,no,C,"mass estimated from maximum length by FishBase's length-weight relationship, not weighed"
 Southern whitetail major,Stegastes beebei,Animalia,Chordata,Actinopterygii,Ovalentaria/misc,Pomacentridae,Stegastes,120.811,,,19,no,C,"mass estimated from maximum length by FishBase's length-weight relationship, not weighed"
@@ -1828,12 +1828,12 @@ Inconnu,Stenodus leucichthys,Animalia,Chordata,Actinopterygii,Salmoniformes,Salm
 Longspine porgy,Stenotomus caprinus,Animalia,Chordata,Actinopterygii,Eupercaria/misc,Sparidae,Stenotomus,359.481,,,3,no,C,"mass estimated from maximum length by FishBase's length-weight relationship, not weighed"
 Scup,Stenotomus chrysops,Animalia,Chordata,Actinopterygii,Perciformes,Sparidae,Stenotomus,1133,19,,,no,B,
 Giant sea bass,Stereolepis gigas,Animalia,Chordata,Actinopterygii,Perciformes,Polyprionidae,Stereolepis,140580,75,,,no,B,
-nan,Stiphodon percnopterygionus,Animalia,Chordata,Actinopterygii,Gobiiformes,Gobiidae,Stiphodon,1.60761,,,2,no,C,"mass estimated from maximum length by FishBase's length-weight relationship, not weighed"
+Stiphodon percnopterygionus,Stiphodon percnopterygionus,Animalia,Chordata,Actinopterygii,Gobiiformes,Gobiidae,Stiphodon,1.60761,,,2,no,C,"mass estimated from maximum length by FishBase's length-weight relationship, not weighed"
 Pelagic goby,Sufflogobius bibarbatus,Animalia,Chordata,Actinopterygii,Gobiiformes,Gobiidae,Sufflogobius,51.719,7,,,no,C,"mass estimated from maximum length by FishBase's length-weight relationship, not weighed"
 Grey wrasse,Symphodus cinereus,Animalia,Chordata,Actinopterygii,Eupercaria/misc,Labridae,Symphodus,59.2615,6,,,no,C,"mass estimated from maximum length by FishBase's length-weight relationship, not weighed"
 Axillary wrasse,Symphodus mediterraneus,Animalia,Chordata,Actinopterygii,Eupercaria/misc,Labridae,Symphodus,124.565,8,,,no,C,"mass estimated from maximum length by FishBase's length-weight relationship, not weighed"
 Corkwing wrasse,Symphodus melops,Animalia,Chordata,Actinopterygii,Perciformes,Labridae,Symphodus,520,9,,,no,B,
-nan,Symphodus ocellatus,Animalia,Chordata,Actinopterygii,Eupercaria/misc,Labridae,Symphodus,81.69,5,,,no,C,
+Symphodus ocellatus,Symphodus ocellatus,Animalia,Chordata,Actinopterygii,Eupercaria/misc,Labridae,Symphodus,81.69,5,,,no,C,
 Five-spotted wrasse,Symphodus roissali,Animalia,Chordata,Actinopterygii,Eupercaria/misc,Labridae,Symphodus,99.2574,8,,,no,C,"mass estimated from maximum length by FishBase's length-weight relationship, not weighed"
 Sublet,Symphodus rostratus,Animalia,Chordata,Actinopterygii,Eupercaria/misc,Labridae,Symphodus,73.88,4,,,no,C,
 East Atlantic peacock wrasse,Symphodus tinca,Animalia,Chordata,Actinopterygii,Eupercaria/misc,Labridae,Symphodus,1692.89,15,,,no,C,"mass estimated from maximum length by FishBase's length-weight relationship, not weighed"
@@ -1847,10 +1847,10 @@ Atlantic lizardfish,Synodus saurus,Animalia,Chordata,Actinopterygii,Aulopiformes
 Japanese pufferfish,Takifugu rubripes,Animalia,Chordata,Actinopterygii,Tetraodontiformes,Tetraodontidae,Takifugu,5848.21,,,9,no,C,"mass estimated from maximum length by FishBase's length-weight relationship, not weighed"
 Australian freshwater catfish,Tandanus tandanus,Animalia,Chordata,Actinopterygii,Siluriformes,Plotosidae,Tandanus,6800,8,,,no,C,
 Sickle pomfret,Taractichthys steindachneri,Animalia,Chordata,Actinopterygii,Perciformes,Bramidae,Taractichthys,6050,8,,,no,B,
-nan,Tarphops oligolepis,Animalia,Chordata,Actinopterygii,Pleuronectiformes,Paralichthyidae,Tarphops,5.09588,2,,,no,C,"mass estimated from maximum length by FishBase's length-weight relationship, not weighed"
+Tarphops oligolepis,Tarphops oligolepis,Animalia,Chordata,Actinopterygii,Pleuronectiformes,Paralichthyidae,Tarphops,5.09588,2,,,no,C,"mass estimated from maximum length by FishBase's length-weight relationship, not weighed"
 Tautog,Tautoga onitis,Animalia,Chordata,Actinopterygii,Perciformes,Labridae,Tautoga,6215,34,,,no,B,
 Cunner,Tautogolabrus adspersus,Animalia,Chordata,Actinopterygii,Perciformes,Labridae,Tautogolabrus,550,6,,,no,B,
-nan,Telestes pleurobipunctatus,Animalia,Chordata,Actinopterygii,Cypriniformes,Leuciscidae,Telestes,204.064,9,,,no,C,"mass estimated from maximum length by FishBase's length-weight relationship, not weighed"
+Telestes pleurobipunctatus,Telestes pleurobipunctatus,Animalia,Chordata,Actinopterygii,Cypriniformes,Leuciscidae,Telestes,204.064,9,,,no,C,"mass estimated from maximum length by FishBase's length-weight relationship, not weighed"
 Hilsa shad,Tenualosa ilisha,Animalia,Chordata,Actinopterygii,Clupeiformes,Dorosomatidae,Tenualosa,680,5,,,no,C,
 Reeves shad,Tenualosa reevesii,Animalia,Chordata,Actinopterygii,Clupeiformes,Dorosomatidae,Tenualosa,5000,8,,,no,C,
 Toli shad,Tenualosa toli,Animalia,Chordata,Actinopterygii,Clupeiformes,Dorosomatidae,Tenualosa,3106.48,2,,,no,C,"mass estimated from maximum length by FishBase's length-weight relationship, not weighed"
@@ -1874,7 +1874,7 @@ Baikal black grayling,Thymallus baicalensis,Animalia,Chordata,Actinopterygii,Sal
 Kosogol grayling,Thymallus nigrescens,Animalia,Chordata,Actinopterygii,Salmoniformes,Salmonidae,Thymallus,844.729,,,17,no,C,"mass estimated from maximum length by FishBase's length-weight relationship, not weighed"
 Grayling,Thymallus thymallus,Animalia,Chordata,Actinopterygii,Salmoniformes,Salmonidae,Thymallus,6700,14,,,no,C,
 lower Amur grayling,Thymallus tugarinae,Animalia,Chordata,Actinopterygii,Salmoniformes,Salmonidae,Thymallus,253.048,6,,,no,C,"mass estimated from maximum length by FishBase's length-weight relationship, not weighed"
-nan,Thyriscus anoplus,Animalia,Chordata,Actinopterygii,Perciformes/Cottoidei,Cottidae,Thyriscus,35,6,,,no,C,
+Thyriscus anoplus,Thyriscus anoplus,Animalia,Chordata,Actinopterygii,Perciformes/Cottoidei,Cottidae,Thyriscus,35,6,,,no,C,
 Atun,Thyrsites atun,Animalia,Chordata,Actinopterygii,Perciformes,Gempylidae,Thyrsites,3300,10,,,no,B,
 Redbreast tilapia,Tilapia rendalli,Animalia,Chordata,Actinopterygii,Perciformes,Cichlidae,Tilapia,1375,7,,,no,B,
 Redbelly tilapia,Tilapia zillii,Animalia,Chordata,Actinopterygii,Perciformes,Cichlidae,Tilapia,165,7,,,no,B,
@@ -1882,9 +1882,9 @@ Tench,Tinca tinca,Animalia,Chordata,Actinopterygii,Cypriniformes,Tincidae,Tinca,
 Tor barb,Tor tor,Animalia,Chordata,Actinopterygii,Cypriniformes,Cyprinidae,Tor,9000,10,,,no,C,
 Totoaba,Totoaba macdonaldi,Animalia,Chordata,Actinopterygii,Perciformes,Sciaenidae,Totoaba,100000,15,,,no,B,
 Striped clingfish,Trachelochismus melobesia,Animalia,Chordata,Actinopterygii,Perciformes,Gobiesocidae,Trachelochismus,0.693084,4,,,no,B,
-nan,Trachelyopterus galeatus,Animalia,Chordata,Actinopterygii,Siluriformes,Auchenipteridae,Trachelyopterus,675,3,,,no,C,
+Trachelyopterus galeatus,Trachelyopterus galeatus,Animalia,Chordata,Actinopterygii,Siluriformes,Auchenipteridae,Trachelyopterus,675,3,,,no,C,
 Snakefish,Trachinocephalus myops,Animalia,Chordata,Actinopterygii,Aulopiformes,Synodontidae,Trachinocephalus,375.328,7,,,no,B,
-nan,Trachinocephalus trachinus,Animalia,Chordata,Actinopterygii,Aulopiformes,Synodontidae,Trachinocephalus,1804.56,,,11,no,C,"mass estimated from maximum length by FishBase's length-weight relationship, not weighed"
+Trachinocephalus trachinus,Trachinocephalus trachinus,Animalia,Chordata,Actinopterygii,Aulopiformes,Synodontidae,Trachinocephalus,1804.56,,,11,no,C,"mass estimated from maximum length by FishBase's length-weight relationship, not weighed"
 Florida pompano,Trachinotus carolinus,Animalia,Chordata,Actinopterygii,Carangiformes,Carangidae,Trachinotus,3760,7,,,no,C,
 Permit,Trachinotus falcatus,Animalia,Chordata,Actinopterygii,Carangiformes,Carangidae,Trachinotus,36000,23,,,no,C,
 Greenback horse mackerel,Trachurus declivis,Animalia,Chordata,Actinopterygii,Perciformes,Carangidae,Trachurus,1700,25,,,no,B,
@@ -1907,9 +1907,9 @@ Dusky rockcod,Trematomus newnesi,Animalia,Chordata,Actinopterygii,Perciformes/No
 Spotted notothen,Trematomus nicolai,Animalia,Chordata,Actinopterygii,Perciformes/Notothenioidei,Nototheniidae,Trematomus,637.5,,,19,no,C,
 Sharp-spined notothenia,Trematomus pennellii,Animalia,Chordata,Actinopterygii,Perciformes/Notothenioidei,Nototheniidae,Trematomus,342,,,20,no,C,
 Crowned rockcod,Trematomus scotti,Animalia,Chordata,Actinopterygii,Perciformes/Notothenioidei,Nototheniidae,Trematomus,124.6,,,22,no,C,
-nan,Trichiurus japonicus,Animalia,Chordata,Actinopterygii,Scombriformes,Trichiuridae,Trichiurus,7318.06,15,,,no,C,"mass estimated from maximum length by FishBase's length-weight relationship, not weighed"
+Trichiurus japonicus,Trichiurus japonicus,Animalia,Chordata,Actinopterygii,Scombriformes,Trichiuridae,Trichiurus,7318.06,15,,,no,C,"mass estimated from maximum length by FishBase's length-weight relationship, not weighed"
 Atlantic cutlassfish,Trichiurus lepturus,Animalia,Chordata,Actinopterygii,Perciformes,Trichiuridae,Trichiurus,2750,15,,,no,B,
-nan,Trichomycterus itacarambiensis,Animalia,Chordata,Actinopterygii,Siluriformes,Trichomycteridae,Trichomycterus,7.52377,7,,,no,C,"mass estimated from maximum length by FishBase's length-weight relationship, not weighed"
+Trichomycterus itacarambiensis,Trichomycterus itacarambiensis,Animalia,Chordata,Actinopterygii,Siluriformes,Trichomycteridae,Trichomycterus,7.52377,7,,,no,C,"mass estimated from maximum length by FishBase's length-weight relationship, not weighed"
 Lyre gurnard,Trigla lyra,Animalia,Chordata,Actinopterygii,Perciformes,Triglidae,Trigla,1100,7,,,no,B,
 Scissortail sculpin,Triglops forficatus,Animalia,Chordata,Actinopterygii,Perciformes/Cottoidei,Cottidae,Triglops,111,6,,,no,C,
 Ribbed sculpin,Triglops pingelii,Animalia,Chordata,Actinopterygii,Perciformes/Cottoidei,Cottidae,Triglops,50,6,,,no,C,
@@ -1923,9 +1923,9 @@ Pout whiting,Trisopterus luscus,Animalia,Chordata,Actinopterygii,Gadiformes,Gadi
 Poor cod,Trisopterus minutus,Animalia,Chordata,Actinopterygii,Gadiformes,Gadidae,Trisopterus,118,,,6,no,C,
 Tvarnun simon,Tristramella simonis,Animalia,Chordata,Actinopterygii,Cichliformes,Cichlidae,Tristramella,300.469,,,6,no,C,"mass estimated from maximum length by FishBase's length-weight relationship, not weighed"
 Blunthead cichlid,Tropheus moorii,Animalia,Chordata,Actinopterygii,Cichliformes,Cichlidae,Tropheus,42.9033,10,,,no,C,"mass estimated from maximum length by FishBase's length-weight relationship, not weighed"
-nan,Tropidophoxinellus hellenicus,Animalia,Chordata,Actinopterygii,Cypriniformes,Leuciscidae,Tropidophoxinellus,16.4,,,4,no,C,
-nan,Tropidophoxinellus spartiaticus,Animalia,Chordata,Actinopterygii,Cypriniformes,Leuciscidae,Tropidophoxinellus,15.8936,4,,,no,C,"mass estimated from maximum length by FishBase's length-weight relationship, not weighed"
-nan,Turcinoemacheilus bahaii,Animalia,Chordata,Actinopterygii,Cypriniformes,Nemacheilidae,Turcinoemacheilus,3.87,5,,,no,C,
+Tropidophoxinellus hellenicus,Tropidophoxinellus hellenicus,Animalia,Chordata,Actinopterygii,Cypriniformes,Leuciscidae,Tropidophoxinellus,16.4,,,4,no,C,
+Tropidophoxinellus spartiaticus,Tropidophoxinellus spartiaticus,Animalia,Chordata,Actinopterygii,Cypriniformes,Leuciscidae,Tropidophoxinellus,15.8936,4,,,no,C,"mass estimated from maximum length by FishBase's length-weight relationship, not weighed"
+Turcinoemacheilus bahaii,Turcinoemacheilus bahaii,Animalia,Chordata,Actinopterygii,Cypriniformes,Nemacheilidae,Turcinoemacheilus,3.87,5,,,no,C,
 Agujon needlefish,Tylosurus acus,Animalia,Chordata,Actinopterygii,Beloniformes,Belonidae,Tylosurus,3710,,,5,no,C,
 Hound needlefish,Tylosurus crocodilus,Animalia,Chordata,Actinopterygii,Beloniformes,Belonidae,Tylosurus,6350,,,6,no,C,
 Southern cavefish,Typhlichthys subterraneus,Animalia,Chordata,Actinopterygii,Percopsiformes,Amblyopsidae,Typhlichthys,3.69178,4,,,no,B,
@@ -4174,7 +4174,7 @@ Blue stingray,Dasyatis chrysonota,Animalia,Chordata,Chondrichthyes,Myliobatiform
 Common stingray,Dasyatis pastinaca,Animalia,Chordata,Chondrichthyes,Myliobatiformes,Dasyatidae,Dasyatis,14602,,21,,no,B,
 Birdbeak dogfish,Deania calceus,Animalia,Chordata,Chondrichthyes,Squaliformes,Centrophoridae,Deania,8700,,,35,no,C,
 "Blue skate, or Common skate",Dipturus batis,Animalia,Chordata,Chondrichthyes,Rajiformes,Rajidae,Dipturus,53405,50,,,no,B,
-nan,Dipturus chinensis,Animalia,Chordata,Chondrichthyes,Rajiformes,Rajidae,Dipturus,2544.8,15,,,no,C,"mass estimated from maximum length by FishBase's length-weight relationship, not weighed"
+Dipturus chinensis,Dipturus chinensis,Animalia,Chordata,Chondrichthyes,Rajiformes,Rajidae,Dipturus,2544.8,15,,,no,C,"mass estimated from maximum length by FishBase's length-weight relationship, not weighed"
 New Zealand smooth skate,Dipturus innominatus,Animalia,Chordata,Chondrichthyes,Rajiformes,Rajidae,Dipturus,115315,24,,,no,B,
 Slime skate,Dipturus pullopunctatus,Animalia,Chordata,Chondrichthyes,Rajiformes,Rajidae,Dipturus,21608.2,18,,,no,B,
 Roughskin skate,Dipturus trachyderma,Animalia,Chordata,Chondrichthyes,Rajiformes,Rajidae,Dipturus,110,26,,,no,B,

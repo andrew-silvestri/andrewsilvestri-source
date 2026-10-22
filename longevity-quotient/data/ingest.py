@@ -378,8 +378,12 @@ def load_fishbase():
                     "length-weight relationship, not weighed")
         f_, o_, cl = fam.get(r.get("FamCode"), ("", "", "Actinopterygii"))
         from_wild = age_wild.get(code) == life
+        # A missing FBname is a float NaN, which is truthy, so `or ""` let it
+        # through as the common name "nan" on 144 fish (QA 2026-10-22).
+        fb = r.get("FBname")
+        common = "" if fb is None or fb != fb else str(fb).strip()
         out.append(rec("fishbase", f"{g} {s}", cl or "Actinopterygii", o_, f_,
-                       g, str(r.get("FBname") or "").strip(), mass,
+                       g, common, mass,
                        life if from_wild else None, None, "C", note=note,
                        unknown=None if from_wild else life))
     return out
