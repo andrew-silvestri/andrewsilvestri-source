@@ -96,6 +96,7 @@ def optimize(prices, duration_h=4, p_max=1.0, rte=0.86, c_deg=2.0,
         c = pulp.LpVariable.dicts("c", T, 0, p_max)
         d = pulp.LpVariable.dicts("d", T, 0, p_max)
         x = pulp.LpVariable.dicts("soc", range(s, e + 1), 0, E)
+        u = pulp.LpVariable.dicts("charging", T, cat="Binary")
         prob += pulp.lpSum(prices[t] * (d[t] - c[t]) - c_deg * 0.5 * (d[t] + c[t])
                            for t in T)
         prob += x[s] == soc[s]
@@ -108,9 +109,16 @@ def optimize(prices, duration_h=4, p_max=1.0, rte=0.86, c_deg=2.0,
             # 0.5*c_deg*c*(1+rte), which pays whenever the price is below
             # about -$13/MWh at these defaults. The synthetic price series
             # never triggers it, but ERCOT reaches -$250/MWh, so a real price
-            # file would. One linear constraint closes it: at most one of the
-            # two can run at full power, which is what a real inverter does.
-            prob += c[t] + d[t] <= p_max
+            # file would. It takes a binary per hour: the hour is a charging
+            # hour or a discharging hour, which is what a real inverter does.
+            # The linear constraint that stood here, c + d <= p_max, did NOT
+            # close it: it only capped the sum, and with 12 hours forced to
+            # -$250 the 2h case charged 0.538 and discharged 0.462 MW at once
+            # in 10 of them (QA substance audit, 2026-10-21). On the synthetic
+            # year the binary changes no value in outputs/ (three "-0.0" cells
+            # in dispatch_4h.csv became "0.0"; summary and figures identical).
+            prob += c[t] <= p_max * u[t]
+            prob += d[t] <= p_max * (1 - u[t])
         prob.solve(pulp.PULP_CBC_CMD(msg=0))
         for t in T:
             ch[t] = c[t].value(); dis[t] = d[t].value()
