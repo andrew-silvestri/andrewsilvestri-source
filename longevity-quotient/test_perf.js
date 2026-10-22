@@ -25,7 +25,14 @@ const path = require('path');
 const { JSDOM } = require('jsdom');
 
 const PAGE = path.join(__dirname, 'longevity.html');
-const html = fs.readFileSync(PAGE, 'utf8');
+let html = fs.readFileSync(PAGE, 'utf8');
+// --break stale: the shipped groups cache key, without S.base (QA 2026-10-22); the
+// "groups view after a press" check must fail and the run exit 1
+if (process.argv.includes('--break') && process.argv.includes('stale')) {
+  const fixed = "+'|'+S.minn+'|'+S.base;";
+  if (html.split(fixed).length !== 2) { console.error('break did not find its target'); process.exit(3); }
+  html = html.replace(fixed, "+'|'+S.minn;");
+}
 
 let fails = 0, checks = 0;
 function ok(cond, label, detail) {
@@ -115,6 +122,35 @@ const cached = time(() => press('rankSeg', rankKeys[0]), 6);
 ok(cached < grouped, 'repeating a render hits the cache',
    `${cached.toFixed(0)} ms against ${grouped.toFixed(0)} ms cold`);
 
+// A cached render must be the render a fresh page gives in the same state: the
+// groups cache once kept the previous baseline's quotients (QA 2026-10-22).
+// Rows are positioned by transform, not reordered, and rows that leave are kept
+// with class "hide" (sweep()), so read the shown ones in screen order.
+function shownGroups(d) {
+  return [...d.querySelectorAll('#chart .row')]
+    .filter(e => !e.classList.contains('hide'))
+    .map(e => [+((e.style.transform.match(/translateY\(([-\d.]+)px\)/) || [])[1]), e.textContent.replace(/\s+/g, ' ').trim()])
+    .sort((a, b) => a[0] - b[0]).map(x => x[1]).join(' / ');
+}
+function freshAt(hash) {
+  return new JSDOM(html, { url: 'https://example.invalid/longevity-app.html#' + hash,
+    runScripts: 'dangerously', pretendToBeVisual: true,
+    beforeParse(w) {
+      w.requestAnimationFrame = (f) => { f(0); return 0; };
+      w.matchMedia = () => ({ matches: false, addEventListener() {} });
+    } }).window.document;
+}
+press('rankSeg', 'cl');
+const gBefore = shownGroups(doc);
+for (const [seg, k, hash] of [['baseSeg', 'g', 'view=gr&base=g'], ['metSeg', 'w', 'view=gr&base=g&met=w']]) {
+  press(seg, k);
+  const pressed = shownGroups(doc), fresh = shownGroups(freshAt(hash));
+  ok(pressed === fresh && pressed !== gBefore, `the groups view after a press = a fresh load (${hash})`,
+     pressed === fresh ? '' : (() => { const A = pressed.split(' / '), B = fresh.split(' / ');
+       const i = A.findIndex((x, j) => x !== B[j]);
+       return `${A.length} vs ${B.length} rows; first difference at ${i}: "${A[i]}" vs "${B[i]}"`; })());
+}
+press('metSeg', 'mx'); press('baseSeg', 'c');
 press('viewSeg', 'sp');
 
 console.log('\n  The DOM does not grow without bound');
