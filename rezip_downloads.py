@@ -193,6 +193,12 @@ TARGETS = [
     # data/fetched.json, which is shipped.
     target("takeaway", "takeaway-code.zip", keep={"outputs"},
            skip=("data/raw", "data/raw/*", "outputs/*.png")),
+    # What utilities report as lost gas: fetchers (PHMSA through a browser
+    # session), readers, payload builder, measurement model, figures, page and
+    # app builders, the JS engine and the checks, with the payload and the
+    # operator table (PHMSA's names as published). Not data/raw.
+    target("lauf", "lauf-code.zip", keep={"outputs"},
+           skip=("data/raw", "data/raw/*", "outputs/*.png")),
     # food-code.zip retired with its page on 2026-09-09: food.html was
     # unpublished at Andrew's request, for now, and the last build is
     # unpublished/downloads/food-code.zip. The TARGET goes with the page,

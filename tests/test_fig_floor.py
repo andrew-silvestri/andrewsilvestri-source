@@ -291,6 +291,7 @@ BUILDERS = [
     ("build_skyline_figure.py", "."),
     ("meter/fig_meter.py", "meter"),
     ("takeaway/fig_takeaway.py", "takeaway"),
+    ("lauf/fig_lauf.py", "lauf"),
 ]
 
 # outputs/ name -> site/assets/ name, where they differ. sync_assets.py's

@@ -13,7 +13,7 @@
 <meta property="og:description" content="What U.S. gas distribution operators report each year as lost and unaccounted for, how that figure is reported, and how much of its year-to-year spread measurement alone could produce.">
 <meta property="og:url" content="https://andrewsilvestri.com/lauf.html">
 <script>try{document.documentElement.dataset.motion=matchMedia('(prefers-reduced-motion: reduce)').matches?'off':'on';}catch(e){document.documentElement.dataset.motion='on';}</script>
-<link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="style.css?v=ca8f66cd">
 </head><body>
 <nav class="top"><a href="index.html">Home</a><details class="navmore"><summary>Menu</summary></details><span class="dd"><a href="#" class="ddbtn on" aria-haspopup="true">Gas <span class="caret">&#9662;</span></a><span class="ddmenu"><a href="meter.html">What a meter's error is worth</a><a href="takeaway.html">When the pipe is full</a><a href="lauf.html" class="on">What utilities report as lost gas</a></span></span><span class="dd"><a href="#" class="ddbtn" aria-haspopup="true">Power <span class="caret">&#9662;</span></a><span class="ddmenu"><a href="heat.html">Industrial heat break-even</a><a href="storage.html">Battery revenue simulator</a></span></span><span class="dd"><a href="#" class="ddbtn" aria-haspopup="true">Climate <span class="caret">&#9662;</span></a><span class="ddmenu"><a href="climate-cost.html">The true climate cost</a></span></span><span class="dd"><a href="#" class="ddbtn" aria-haspopup="true">Other <span class="caret">&#9662;</span></a><span class="ddmenu"><a href="longevity.html">Longevity quotient</a><a href="beauty.html">Endangered, and studied</a><a href="skyline.html">Skylines, played</a><a href="continents.html">Where the ground goes</a></span></span><a href="code.html">Code</a><a href="about.html">About</a></nav>
 <main class="notes">
@@ -55,8 +55,8 @@
 <p>About a third of reports are zero or below, every year. From 2010 to 2025, between 28.7 and 33.2 per cent of reports were at or below zero. Until 2017 the form did not allow a negative figure; from the 2018 reports it does, and PHMSA changed the denominator from the gas taken in to the gas consumed at the same time, to match the Energy Information Administration<sup class="cite" id="cr3"><a href="#ref3">3</a></sup>. The share at or below zero did not move. Exact zeros fell from 29.6 to 15.1 per cent of reports while negatives rose from none to 17.1, and of the 91 negative reports in 2018, 34 came from systems that had reported exactly zero the year before. A negative figure cannot be gas physically lost: more gas was accounted for going out than coming in.</p>
 
 <picture>
-<source media="(max-width:760px)" srcset="assets/lauf_reporting-phone.png" width="700" height="608">
-<img class="fig wide" src="assets/lauf_reporting.png" loading="lazy" width="1428" height="803" alt="Share of natural gas distribution reports each year, 2010 to 2025: at or below zero, between 28.7 and 33.2 per cent throughout; exactly zero, falling after 2017; negative, none until 2018 and 17.1 per cent by 2025; whole numbers among non-zero reports; and reports identical to the year before.">
+<source media="(max-width:760px)" srcset="assets/lauf_reporting-phone.png?v=391ca6a2" width="700" height="608">
+<img class="fig wide" src="assets/lauf_reporting.png?v=4ba83e63" loading="lazy" width="1428" height="803" alt="Share of natural gas distribution reports each year, 2010 to 2025: at or below zero, between 28.7 and 33.2 per cent throughout; exactly zero, falling after 2017; negative, none until 2018 and 17.1 per cent by 2025; whole numbers among non-zero reports; and reports identical to the year before.">
 </picture>
 
 <p>The rest of the figure is heaped and repeated. Among non-zero reports, 24.3 to 31.7 per cent are whole numbers, and 18.7 to 34.6 per cent of systems report exactly the figure they reported the year before. So the spread below is shown twice: on every report, and on the informative ones, which leaves out zeros, whole numbers and repeats.</p>
@@ -64,8 +64,8 @@
 <p>The middle half of systems reported between 0 and 3.10 per cent in 2025, and the median was 1. On informative reports the middle half is 0.05 to 3.23 per cent and the median 1.20. In Texas, 117 reports, the middle half ran from 0 to 7 per cent; in Oklahoma, 66 reports, from 0.38 to 8.70.</p>
 
 <picture>
-<source media="(max-width:760px)" srcset="assets/lauf_spread-phone.png" width="700" height="608">
-<img class="fig wide" src="assets/lauf_spread.png" loading="lazy" width="1428" height="803" alt="Reported unaccounted-for gas by year, 2010 to 2025, as the middle half of systems and lines to the 10th and 90th percentiles, on all reports and on informative reports. On all reports the lower quartile is zero in every year and the median sits near one per cent; in 2025 the middle half of informative reports runs from 0.05 to 3.23 per cent.">
+<source media="(max-width:760px)" srcset="assets/lauf_spread-phone.png?v=4e4787c5" width="700" height="608">
+<img class="fig wide" src="assets/lauf_spread.png?v=3a4d0a0b" loading="lazy" width="1428" height="803" alt="Reported unaccounted-for gas by year, 2010 to 2025, as the middle half of systems and lines to the 10th and 90th percentiles, on all reports and on informative reports. On all reports the lower quartile is zero in every year and the median sits near one per cent; in 2025 the middle half of informative reports runs from 0.05 to 3.23 per cent.">
 </picture>
 
 <p>No state total is shown. A report carries a percentage and no volume, so a state figure has to weight systems by something, and by services the largest operator in Oklahoma holds 81 per cent of the state's: its figure would be the state's. The distribution of systems needs no weight, and it describes systems, not gas.</p>
@@ -75,8 +75,8 @@
 <p>Measurement alone can move the figure that much in the middle, but not in the tails. The model behind this page takes a system that loses nothing, measures what comes in at a city-gate station and what goes out through 2,000 customer meters, and draws each error as a part that stays with the system and a part redrawn each year: the station, the customer meters' shared drift and their own scatter, the meters that do not correct for temperature, and the billing periods that do not line up with the reporting year. At its default assumptions, the middle half of systems moves between −0.6 and +0.6 points from one year to the next, against −0.7 to +1.0 reported, but one in ten moves by more than 1.2, against 4.2 reported. Double every uncertainty and the tails reach −2.4 and +2.4 while the middle half widens to −1.3 to +1.3; triple them and the tails reach −3.6 and +3.7, with a middle half of −1.9 to +1.9. No single scale of symmetric measurement error gives both the middle and the tails reported.</p>
 
 <picture>
-<source media="(max-width:760px)" srcset="assets/lauf_change-phone.png" width="700" height="666">
-<img class="fig wide" src="assets/lauf_change.png" loading="lazy" width="1428" height="803" alt="Change in a system's reported figure from 2024 to 2025, middle half and 10th to 90th percentiles: reported, −0.7 to +1.0 points with tails to −3.6 and 4.2; measurement alone at the default assumptions, −0.6 to +0.6 with tails to −1.2 and 1.2; with every uncertainty doubled and tripled, wider in the middle before the tails reach what is reported.">
+<source media="(max-width:760px)" srcset="assets/lauf_change-phone.png?v=453f8396" width="700" height="666">
+<img class="fig wide" src="assets/lauf_change.png?v=65729050" loading="lazy" width="1428" height="803" alt="Change in a system's reported figure from 2024 to 2025, middle half and 10th to 90th percentiles: reported, −0.7 to +1.0 points with tails to −3.6 and 4.2; measurement alone at the default assumptions, −0.6 to +0.6 with tails to −1.2 and 1.2; with every uncertainty doubled and tripled, wider in the middle before the tails reach what is reported.">
 </picture>
 
 <p>That leaves the tails to something else, and this page does not say what. PHMSA's report puts it plainly: "LAUF gas is not a valid proxy for either unknown leak volume or methane emissions." It also lists what the measurement itself does to the figure: "Volume meters have a tendency to drift away from accurate measurement over time."</p>
@@ -101,7 +101,7 @@
 
 <h2>The code</h2>
 
-<p>Python: the fetch scripts, each recording where and when its file came from (PHMSA refuses scripted downloads, so its files are fetched through a browser session and recorded as such); the readers; the payload builder; the measurement model; the figures and the page generator; and the tests, each shown failing before it is trusted. JavaScript: the simulator's engine, held to the Python model by a parity test. The archive holds no raw data. 0 KB.</p>
+<p>Python: the fetch scripts, each recording where and when its file came from (PHMSA refuses scripted downloads, so its files are fetched through a browser session and recorded as such); the readers; the payload builder; the measurement model; the figures and the page generator; and the tests, each shown failing before it is trusted. JavaScript: the simulator's engine, held to the Python model by a parity test. The archive holds no raw data. 409 KB.</p>
 
 <p><a class="btn" href="downloads/lauf-code.zip">Download source</a>
 <a class="btn ghost" href="code.html">All code</a></p>
@@ -115,7 +115,7 @@
 <p><a href="code.html">Built with Python, Julia, JavaScript and public data.</a></p>
 </footer>
 </main>
-<script src="assets/motion.js"></script>
-<script src="assets/lightbox.js"></script>
-<script src="assets/nav.js"></script>
+<script src="assets/motion.js?v=67bafc62"></script>
+<script src="assets/lightbox.js?v=0bce1245"></script>
+<script src="assets/nav.js?v=17d2b89b"></script>
 </body></html>

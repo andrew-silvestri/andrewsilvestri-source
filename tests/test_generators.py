@@ -110,6 +110,11 @@ GENERATORS = [
     # generator is what is checked here.
     ("takeaway page: takeaway/update_page.py --apply",
      ["update_page.py", "--apply"], "takeaway", "site"),
+    # lauf/update_page.py writes site/lauf.html from lauf/outputs/payload.json;
+    # the payload builder needs the raw files under lauf/data/raw (gitignored),
+    # so the page is the generator checked here, as for takeaway.
+    ("lauf page: lauf/update_page.py --apply",
+     ["update_page.py", "--apply"], "lauf", "site"),
     # food and neuron were unpublished on 2026-09-09 (unpublished/RETIRED.md),
     # so site/food.html and site/neuron.html no longer exist and their page
     # generators FAILED here rather than drifting. The generators themselves
@@ -165,6 +170,10 @@ GENERATORS = [
     # site/takeaway-app.html.
     ("takeaway app: takeaway/build_app.py",
      ["build_app.py"], "takeaway", "site"),
+    # lauf/build_app.py inlines engine.js and the payload's defaults and
+    # reported distributions into site/lauf-app.html.
+    ("lauf app: lauf/build_app.py",
+     ["build_app.py"], "lauf", "site"),
     ("downloads: rezip_downloads.py", ["rezip_downloads.py"], ".", "zips"),
     ("sitemap: build_sitemap.py --apply",
      ["build_sitemap.py", "--apply"], ".", "site"),

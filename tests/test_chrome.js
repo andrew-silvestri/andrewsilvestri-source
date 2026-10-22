@@ -178,7 +178,7 @@ const pw = require('playwright');
 
 const SITE = path.join(__dirname, '..', 'site');
 const PAGES = ['index', 'about', 'code', 'heat', 'storage', 'climate-cost',
-               'longevity', 'skyline', 'continents', 'beauty', 'meter', 'takeaway'];
+               'longevity', 'skyline', 'continents', 'beauty', 'meter', 'takeaway', 'lauf'];
 const LIMIT = 0.25;
 const bi = process.argv.indexOf('--break');
 const BREAK = bi >= 0;
