@@ -114,7 +114,7 @@ def main():
         "partg": S.quote("gd_annual_form_cy2018_forward.pdf", "Unaccounted for gas as a percent of total consumption", 70),
         "tx_cap": S.quote("tx_16tac_ch7_2024.pdf", "The maximum allowable for a distribution system", 160),
         "tx_presumed": S.quote("tx_16tac_ch7_2024.pdf", "All lost and unaccounted for gas shall be presumed", 120),
-        "ok_measure": S.quote("ok_oac165_ch45_2024.pdf", "All gas transmitted by any utility shall be measured accurately by proper apparatus, and", 200),
+        "ok_measure": S.quote("ok_oac165_ch45_2024.pdf", "All gas transmitted by any utility shall be measured accurately by proper apparatus, and", 320),
     }
     # measurement alone (model.py): the defaults, and every uncertainty input scaled together, so the
     # page can say what scale reproduces the middle of the observed spread and what it cannot reach
@@ -133,6 +133,7 @@ def main():
         "concentration_top_share": conc, "eia_a1": eia, "quotes": quotes,
         "tx_cap_on_consumption_pct": round(100 * 5.0 / 95.0, 2),
         "excluded_non_natural_gas": sum(1 for r in S.phmsa_reports() if not S.natural_gas(r)),
+        "commodity_from": min(r["year"] for r in S.phmsa_reports() if r["commodity"] is not None),
     }
     os.makedirs(os.path.dirname(OUT), exist_ok=True)
     with open(OUT, "w", encoding="utf-8", newline="\n") as f:

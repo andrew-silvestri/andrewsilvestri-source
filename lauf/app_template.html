@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Lost-gas simulator — What utilities report as lost gas</title>
+<link rel="canonical" href="https://andrewsilvestri.com/lauf-app.html">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Lost-gas simulator — What utilities report as lost gas">
+<meta property="og:description" content="Set the meters of a gas distribution system that loses nothing and see what it reports as lost and unaccounted for, beside what U.S. operators did report.">
+<meta property="og:url" content="https://andrewsilvestri.com/lauf-app.html">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="alternate icon" href="favicon.png">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<meta name="description" content="Set the meters of a gas distribution system that loses nothing and see what it reports as lost and unaccounted for, beside what U.S. operators did report.">
+<meta name="theme-color" content="#F2F0EF">
+<style>
+/* The site's tokens (site/style.css :root), copied by name and value as takeaway-app.html does:
+   this app must work alone from a folder, so nothing is imported. */
+:root{
+  --bg:#F2F0EF; --card:#FAF9F8; --ink:#241E1A; --dim:#625C57;
+  --faint:#D9D8D6; --rule:#BBBDBC; --acc:#245F73; --cool:#4A8AA0;
+  --moss:#733E24; --rose:#A9724F;
+  --sans:"IBM Plex Sans",system-ui,-apple-system,Segoe UI,Roboto,sans-serif;
+  --mono:"IBM Plex Mono",ui-monospace,SFMono-Regular,Menlo,monospace;
+  --fs-2:12px; --fs-1:14.5px; --fs0:17.5px; --fs1:21px;
+  /* 12 px is the floor and nothing here goes under it */
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--bg);color:var(--ink);font:var(--fs-1)/1.5 var(--sans)}
+.wrap{max-width:1100px;margin:0 auto;padding:22px 20px 64px}
+h1{font-size:var(--fs1);margin:0 0 2px;font-weight:600}
+.sub{color:var(--dim);font-size:var(--fs-2);margin:0 0 18px}
+.sub a{color:var(--acc)}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:14px}
+fieldset{border:1px solid var(--faint);background:var(--card);margin:0;padding:12px 14px 6px;min-width:0}
+legend{font-family:var(--mono);font-size:var(--fs-2);color:var(--dim);padding:0 4px}
+label{display:grid;grid-template-columns:1fr auto;gap:2px 10px;align-items:center;margin:0 0 10px}
+label span.v{font-family:var(--mono);font-size:var(--fs-2);color:var(--ink);min-width:72px;text-align:right}
+label input[type=range]{grid-column:1 / span 2;width:100%;accent-color:var(--acc);min-height:24px}
+button{font:inherit;font-size:var(--fs-2);padding:5px 10px;background:var(--bg);color:var(--acc);border:1px solid var(--rule);cursor:pointer;min-height:32px}
+.out{margin-top:18px;border:1px solid var(--faint);background:var(--card);padding:14px}
+.big{font-size:var(--fs0);font-weight:600;margin:0}
+svg{display:block;margin-top:10px;max-width:100%}
+svg text{font-family:var(--sans);font-size:12px;fill:var(--dim)}
+.note{font-size:var(--fs-2);color:var(--dim);margin:12px 0 0}
+</style>
+</head><body>
+<div class="wrap">
+<h1>Lost-gas simulator</h1>
+<p class="sub">A gas distribution system that loses nothing, measured in at a city-gate station and out through customer meters. What it reports is all measurement. Every input is an assumption with a default, not a measurement of any system.
+<a href="lauf.html">The page that explains it</a></p>
+
+<div class="grid">
+<fieldset><legend>Receipts and the system</legend>
+<label>City-gate standard uncertainty, % <span class="v" id="cg_u_v"></span><input type="range" id="cg_u"></label>
+<label>Share of it that persists year to year <span class="v" id="cg_persist_v"></span><input type="range" id="cg_persist"></label>
+<label>Customer meters in the system <span class="v" id="n_meters_v"></span><input type="range" id="n_meters"></label>
+</fieldset>
+<fieldset><legend>Customer meters</legend>
+<label>Fleet's shared error, sd between systems, % <span class="v" id="fleet_mean_sd_v"></span><input type="range" id="fleet_mean_sd"></label>
+<label>Its drift from one year to the next, % <span class="v" id="fleet_drift_v"></span><input type="range" id="fleet_drift"></label>
+<label>Each meter's own error, % <span class="v" id="meter_sd_v"></span><input type="range" id="meter_sd"></label>
+</fieldset>
+<fieldset><legend>Temperature and billing</legend>
+<label>Meters without temperature correction <span class="v" id="uncomp_share_v"></span><input type="range" id="uncomp_share"></label>
+<label>Mean gas temperature at the meter, °F <span class="v" id="gas_temp_f_v"></span><input type="range" id="gas_temp_f"></label>
+<label>Its year-to-year variation, °F <span class="v" id="gas_temp_sd_f_v"></span><input type="range" id="gas_temp_sd_f"></label>
+<label>Billing-period mismatch, % <span class="v" id="timing_sd_v"></span><input type="range" id="timing_sd"></label>
+<p><button id="reset" type="button">Back to the defaults</button></p>
+</fieldset>
+</div>
+
+<div class="out">
+<p class="big" id="result" aria-live="polite"></p>
+<svg id="chart" viewBox="0 0 720 260" width="720" height="260" role="img" aria-label="Middle half and 10th to 90th percentiles of the reported figure and of its year-to-year change: reported, and measurement alone at the settings above."></svg>
+<p class="note">Bars: the middle half of systems; lines: the 10th to 90th percentiles. Reported: natural gas distribution systems, PHMSA annual reports, <span id="yr"></span>. Measurement alone: <span id="nsys"></span> simulated systems at the settings above, the same seed each time, so a change in the picture is the change you made. Symmetric, normal errors; nothing for theft, unmetered use, estimated reads, accounting adjustments or leaks.</p>
+</div>
+</div>
+
+<script>/*ENGINE*/</script>
+<script>
+const DATA = /*DATA*/null;
+const E = window.LaufEngine;
+const $ = id => document.getElementById(id);
+const KEYS = Object.keys(DATA.defaults);
+const STEP = {n_meters: 50, cg_persist: 0.05, uncomp_share: 0.05, gas_temp_f: 1, gas_temp_sd_f: 0.1};
+const FMT = {n_meters: v => (+v).toLocaleString('en-US'), cg_persist: v => Math.round(v * 100) + '%',
+             uncomp_share: v => Math.round(v * 100) + '%', gas_temp_f: v => (+v).toFixed(0)};
+for (const k of KEYS) {
+  const el = $(k), [lo, hi] = DATA.limits[k];
+  el.min = lo; el.max = hi; el.step = STEP[k] || 0.05; el.value = DATA.defaults[k];
+}
+$('yr').textContent = DATA.observed.year_prev + ' and ' + DATA.observed.year;
+$('nsys').textContent = DATA.n_systems.toLocaleString('en-US');
+
+function params() { const p = {}; for (const k of KEYS) p[k] = +$(k).value; return p; }
+const sgn = v => (v > 0 ? '+' : v < 0 ? '−' : '') + Math.abs(v).toFixed(1);
+
+function draw(rows) {
+  const W = Math.max(300, Math.floor($('chart').parentNode.clientWidth - 28)), H = 260;
+  const narrow = W < 560, L = narrow ? 8 : 230, R = 14, T = 16, rowH = (H - T - 34) / rows.length;
+  $('chart').setAttribute('viewBox', '0 0 ' + W + ' ' + H); $('chart').setAttribute('width', W); $('chart').setAttribute('height', H);
+  let lo = 0, hi = 0;
+  for (const r of rows) { lo = Math.min(lo, r.q.p10); hi = Math.max(hi, r.q.p90); }
+  lo = Math.floor(lo - 0.5); hi = Math.ceil(hi + 0.5);
+  const X = v => L + (v - lo) / (hi - lo) * (W - L - R);
+  let s = '';
+  for (let g = lo; g <= hi; g++) {
+    if ((hi - lo) > 12 && g % 2) continue;
+    s += '<line x1="' + X(g) + '" x2="' + X(g) + '" y1="' + T + '" y2="' + (H - 30) + '" stroke="var(--faint)"/>' +
+         '<text x="' + X(g) + '" y="' + (H - 12) + '" text-anchor="middle">' + (g > 0 ? '+' + g : g) + '</text>';
+  }
+  rows.forEach((r, i) => {
+    const y = T + rowH * i + rowH * (narrow ? 0.62 : 0.5);
+    s += '<line x1="' + X(r.q.p10) + '" x2="' + X(r.q.p90) + '" y1="' + y + '" y2="' + y + '" stroke="' + r.col + '" stroke-width="1.6"/>';
+    s += '<rect x="' + X(r.q.p25) + '" y="' + (y - 6) + '" width="' + Math.max(1, X(r.q.p75) - X(r.q.p25)) + '" height="12" fill="' + r.col + '"/>';
+    s += '<line x1="' + X(r.q.p50) + '" x2="' + X(r.q.p50) + '" y1="' + (y - 8) + '" y2="' + (y + 8) + '" stroke="var(--rule)" stroke-width="2"/>';
+    s += narrow ? '<text x="' + L + '" y="' + (y - 11) + '">' + r.label + '</text>'
+                : '<text x="' + (L - 10) + '" y="' + (y + 4) + '" text-anchor="end">' + r.label + '</text>';
+  });
+  $('chart').innerHTML = s;
+}
+
+function run() {
+  const p = params();
+  for (const k of KEYS) $(k + '_v').textContent = (FMT[k] || (v => (+v).toFixed(2)))(p[k]);
+  const m = E.summary(p, DATA.n_systems, DATA.seed);
+  const ob = DATA.observed;
+  draw([
+    {label: 'Reported, change ' + ob.year_prev + ' to ' + ob.year, q: ob.change, col: 'var(--ink)'},
+    {label: 'Measurement alone, change', q: m.change, col: 'var(--acc)'},
+    {label: 'Reported, ' + ob.year + ', informative', q: ob.level_informative, col: 'var(--moss)'},
+    {label: 'Measurement alone, one year', q: m.level, col: 'var(--cool)'},
+  ]);
+  $('result').textContent = 'Measurement alone: the middle half of systems moves ' + sgn(m.change.p25) + ' to ' +
+    sgn(m.change.p75) + ' points a year, and one in ten more than ' + m.change.p90.toFixed(1) +
+    ' up. Reported: ' + sgn(ob.change.p25) + ' to ' + sgn(ob.change.p75) + ', and ' + ob.change.p90.toFixed(1) + '.';
+}
+for (const k of KEYS) $(k).addEventListener('input', run);
+$('reset').addEventListener('click', () => { for (const k of KEYS) $(k).value = DATA.defaults[k]; run(); });
+window.addEventListener('resize', run);
+run();
+</script>
+</body></html>

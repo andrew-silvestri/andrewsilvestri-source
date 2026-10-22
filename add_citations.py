@@ -796,6 +796,44 @@ PAGES = {
          "2026 to date, and a record 78-day run below zero attributed to "
          "spring maintenance."),
     ],
+    # lauf/update_page.py applies this entry itself (takeaway's idiom). Every source
+    # here was opened on 2026-10-22 (SOURCES_VERIFIED, Q6 entries).
+    "lauf.html": [
+        ("Anchor phrase", "Source", "What it supports"),
+        ("as a percentage of that use",
+         'Pipeline and Hazardous Materials Safety Administration, <i>Gas Distribution '
+         'Annual Data, 2010 to present</i>, Form PHMSA F 7100.1-1, Part G; and the form '
+         'itself, rev. 10/11/2018 ("CY 2018 and forward").',
+         "Each operator's percent unaccounted for, by state of operation, and the "
+         "Part G definition."),
+        ("says what it is",
+         'Pipeline and Hazardous Materials Safety Administration, <i>Report on lost '
+         'and unaccounted for natural gas metrics</i>, report to Congress under '
+         'section 29 of the PIPES Act of 2016, May 2017.',
+         "That LAUF combines measurement inaccuracy and unknown leaks in "
+         "unknowable shares, is not a proxy for leaks or emissions, and how "
+         "customer meters and regulators drift."),
+        ("to match the Energy Information Administration",
+         'Federal Register 83 FR 3462, 25 January 2018, "Pipeline Safety: '
+         'Information Collection Activities".',
+         "PHMSA's change to a consumption denominator and its allowing negative "
+         "values, to harmonize with EIA."),
+        ("allows at most",
+         'Railroad Commission of Texas, 16 Texas Administrative Code s.7.5525, Lost '
+         'and Unaccounted for Gas (Chapter 7 compilation effective 8 April 2024).',
+         "The presumption that LAUF is lost gas, and the 5.0% of gas metered in "
+         "allowed for a distribution system."),
+        ("Oklahoma's rule requires gas to be measured",
+         'Oklahoma Corporation Commission, Oklahoma Administrative Code 165:45-7-11, '
+         'Gas measurement requirements (Chapter 45 effective 1 October 2024).',
+         "Measurement so that LAUF in distribution may be determined; monthly "
+         "input and output records."),
+        ("EIA's Natural Gas Annual",
+         'U.S. Energy Information Administration, <i>Natural Gas Annual</i>, Table A1, '
+         'Natural gas losses and unaccounted for by state, 2018 to 2024 editions.',
+         "What EIA's state figure counts: losses and unaccounted for over the "
+         "state's total consumption, from Form EIA-176."),
+    ],
 }
 
 

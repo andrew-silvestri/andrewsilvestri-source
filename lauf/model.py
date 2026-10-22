@@ -60,25 +60,37 @@ def temp_bias_pct(gas_temp_f):
     return 100.0 * (t / tb - 1.0)
 
 
-def simulate(p, n_systems, rng):
-    """LAUF (%) for n_systems systems in year 1 and year 2, measurement only. Returns (y1, y2)."""
+DRAWS = (("cg_p", 1), ("cg_t", 2), ("fleet", 1), ("drift", 1), ("scatter", 2), ("temp", 2), ("timing", 2))
+
+
+def draws(n, rng):
+    """The standard normal draws one run uses, by name; (1, n) or (2, n) for one or two years."""
+    return {k: rng.standard_normal((rows, n)) for k, rows in DRAWS}
+
+
+def from_draws(p, z):
+    """LAUF (%) in year 1 and year 2 for the systems whose draws are z, measurement only.
+    All the arithmetic is here, so engine.js can be held to it on identical draws."""
     p = {**DEFAULTS, **p}
-    n = n_systems
     cg_var = p["cg_u"] ** 2
-    cg_p = rng.standard_normal(n) * np.sqrt(cg_var * p["cg_persist"])
-    cg_t = rng.standard_normal((2, n)) * np.sqrt(cg_var * (1 - p["cg_persist"]))
-    fleet = rng.standard_normal(n) * p["fleet_mean_sd"]
-    drift = rng.standard_normal(n) * p["fleet_drift"]
-    scatter = rng.standard_normal((2, n)) * p["meter_sd"] / np.sqrt(p["n_meters"])
-    temps = p["gas_temp_f"] + rng.standard_normal((2, n)) * p["gas_temp_sd_f"]
-    tbias = p["uncomp_share"] * temp_bias_pct(temps)
-    timing = rng.standard_normal((2, n)) * p["timing_sd"]
+    cg_p = z["cg_p"][0] * np.sqrt(cg_var * p["cg_persist"])
+    cg_t = z["cg_t"] * np.sqrt(cg_var * (1 - p["cg_persist"]))
+    fleet = z["fleet"][0] * p["fleet_mean_sd"]
+    drift = z["drift"][0] * p["fleet_drift"]
+    scatter = z["scatter"] * p["meter_sd"] / np.sqrt(p["n_meters"])
+    tbias = p["uncomp_share"] * temp_bias_pct(p["gas_temp_f"] + z["temp"] * p["gas_temp_sd_f"])
+    timing = z["timing"] * p["timing_sd"]
     out = []
     for y in (0, 1):
         e_in = cg_p + cg_t[y]                                    # % error on measured receipts
         e_out = fleet + (drift if y == 1 else 0.0) + scatter[y] + tbias[y] + timing[y]   # % on deliveries
         out.append(100.0 * ((1 + e_in / 100.0) / (1 + e_out / 100.0) - 1.0))
     return out[0], out[1]
+
+
+def simulate(p, n_systems, rng):
+    """LAUF (%) for n_systems systems in year 1 and year 2, measurement only. Returns (y1, y2)."""
+    return from_draws(p, draws(n_systems, rng))
 
 
 def summary(p, n_systems=200000, seed=20261022):

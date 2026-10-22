@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>What utilities report as lost gas — Andrew Silvestri</title>
+<meta name="description" content="What U.S. gas distribution operators report each year as lost and unaccounted for, how that figure is reported, and how much of its year-to-year spread measurement alone could produce.">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="alternate icon" href="favicon.png">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<meta name="theme-color" content="#F2F0EF">
+<link rel="canonical" href="https://andrewsilvestri.com/lauf.html">
+<meta property="og:type" content="website">
+<meta property="og:title" content="What utilities report as lost gas — Andrew Silvestri">
+<meta property="og:description" content="What U.S. gas distribution operators report each year as lost and unaccounted for, how that figure is reported, and how much of its year-to-year spread measurement alone could produce.">
+<meta property="og:url" content="https://andrewsilvestri.com/lauf.html">
+<script>try{document.documentElement.dataset.motion=matchMedia('(prefers-reduced-motion: reduce)').matches?'off':'on';}catch(e){document.documentElement.dataset.motion='on';}</script>
+<link rel="stylesheet" href="style.css">
+</head><body>
+{{nav}}
+<main class="notes">
+<h1>What utilities report as lost gas</h1>
+<p class="dim">What U.S. gas distribution operators report each year as lost and unaccounted for, how that figure is reported, and how much of its year-to-year spread measurement alone could produce.</p>
+
+<aside class="marginalia" style="grid-row: span {{span}}" aria-label="On this page">
+<p class="lab">On this page</p>
+<ul>
+<li><b>Reports, {{y1}}</b><span class="v">{{n_last}}</span></li>
+<li><b>At or below zero, {{y1}}</b><span class="v">{{lez_last}}%</span></li>
+<li><b>Negative, {{y1}}</b><span class="v">{{neg_last}}%</span></li>
+<li><b>Median reported, {{y1}}</b><span class="v">{{med_last}}%</span></li>
+</ul>
+</aside>
+<aside class="marginalia right" style="grid-row: span {{span}}">
+<ul>
+<li><b>Same as the year before</b><span class="v">{{rep_last}}%</span></li>
+<li><b>Whole numbers, of non-zero</b><span class="v">{{whole_last}}%</span></li>
+<li><b>Year-to-year rank correlation</b><span class="v">{{rho_last}}</span></li>
+<li><b>Texas cap, on PHMSA's basis</b><span class="v">{{tx_cap_c}}%</span></li>
+</ul>
+</aside>
+
+<p>Every year each U.S. gas distribution operator tells the Pipeline and Hazardous Materials Safety Administration what share of its gas it cannot account for: the gas it bought or produced, less the gas its customers and the company used, as a percentage of that use. The figure is lost and unaccounted-for gas, and PHMSA's own report to Congress on it says what it is: "{{q_mix}}"</p>
+
+<p>This page reads {{n_reports}} of those reports, from natural gas systems, {{y0}} to {{y1}}, and asks two things: how the figure is reported, and how much of its movement from one year to the next measurement alone could produce on a system that loses nothing. It follows <a href="meter.html">What a meter's error is worth</a>, which asks the same question of a pipeline's meters.</p>
+
+<div class="card">
+<div class="tag">Try it</div>
+<h3 style="margin-top:4px">Set the meters and see what a system with no loss reports</h3>
+<p>Choose how good the city-gate station is, how far the customer meters drift together, how many of them correct for temperature, and how much billing periods slip against the reporting year. The app draws many systems that lose nothing and shows what they report, beside what operators did report. Every input is an assumption, labelled as one.</p>
+<p><a class="btn" href="lauf-app.html" target="_blank" rel="noopener">Open the lost-gas simulator</a>
+<a class="btn ghost" href="downloads/lauf-code.zip">Download code</a></p>
+</div>
+
+<h2>What it finds</h2>
+
+<p>About a third of reports are zero or below, every year. From {{y0}} to {{y1}}, between {{lez_min}} and {{lez_max}} per cent of reports were at or below zero. Until {{rule_prev}} the form did not allow a negative figure; from the {{rule_year}} reports it does, and PHMSA changed the denominator from the gas taken in to the gas consumed at the same time, to match the Energy Information Administration. The share at or below zero did not move. Exact zeros fell from {{zero_prev}} to {{zero_last}} per cent of reports while negatives rose from none to {{neg_last}}, and of the {{neg_rule}} negative reports in {{rule_year}}, {{neg_rule_zero}} came from systems that had reported exactly zero the year before. A negative figure cannot be gas physically lost: more gas was accounted for going out than coming in.</p>
+
+<picture>
+<source media="(max-width:760px)" srcset="assets/lauf_reporting-phone.png" width="1" height="1">
+<img class="fig wide" src="assets/lauf_reporting.png" loading="lazy" width="1" height="1" alt="Share of natural gas distribution reports each year, {{y0}} to {{y1}}: at or below zero, between {{lez_min}} and {{lez_max}} per cent throughout; exactly zero, falling after {{rule_prev}}; negative, none until {{rule_year}} and {{neg_last}} per cent by {{y1}}; whole numbers among non-zero reports; and reports identical to the year before.">
+</picture>
+
+<p>The rest of the figure is heaped and repeated. Among non-zero reports, {{whole_min}} to {{whole_max}} per cent are whole numbers, and {{rep_min}} to {{rep_max}} per cent of systems report exactly the figure they reported the year before. So the spread below is shown twice: on every report, and on the informative ones, which leaves out zeros, whole numbers and repeats.</p>
+
+<p>The middle half of systems reported between {{p25_last}} and {{p75_last}} per cent in {{y1}}, and the median was {{med_last}}. On informative reports the middle half is {{ip25_last}} to {{ip75_last}} per cent and the median {{imed_last}}. In Texas, {{tx_n}} reports, the middle half ran from {{tx_p25}} to {{tx_p75}} per cent; in Oklahoma, {{ok_n}} reports, from {{ok_p25}} to {{ok_p75}}.</p>
+
+<picture>
+<source media="(max-width:760px)" srcset="assets/lauf_spread-phone.png" width="1" height="1">
+<img class="fig wide" src="assets/lauf_spread.png" loading="lazy" width="1" height="1" alt="Reported unaccounted-for gas by year, {{y0}} to {{y1}}, as the middle half of systems and lines to the 10th and 90th percentiles, on all reports and on informative reports. On all reports the lower quartile is zero in every year and the median sits near one per cent; in {{y1}} the middle half of informative reports runs from {{ip25_last}} to {{ip75_last}} per cent.">
+</picture>
+
+<p>No state total is shown. A report carries a percentage and no volume, so a state figure has to weight systems by something, and by services the largest operator in Oklahoma holds {{ok_top}} per cent of the state's: its figure would be the state's. The distribution of systems needs no weight, and it describes systems, not gas.</p>
+
+<p>A system's figure tends to stay where it was. Between one year and the next the rank correlation runs from {{rho_min}} to {{rho_max}}. From {{y1m}} to {{y1}}, the middle half of systems moved between {{ch_p25}} and {{ch_p75}} points, and one in ten moved by more than {{ch_p90}} up or {{ch_p10a}} down.</p>
+
+<p>Measurement alone can move the figure that much in the middle, but not in the tails. The model behind this page takes a system that loses nothing, measures what comes in at a city-gate station and what goes out through {{m_n}} customer meters, and draws each error as a part that stays with the system and a part redrawn each year: the station, the customer meters' shared drift and their own scatter, the meters that do not correct for temperature, and the billing periods that do not line up with the reporting year. At its default assumptions, the middle half of systems moves between {{m1_p25}} and {{m1_p75}} points from one year to the next, against {{ch_p25}} to {{ch_p75}} reported, but one in ten moves by more than {{m1_p90}}, against {{ch_p90}} reported. Double every uncertainty and the tails reach {{m2_p10}} and {{m2_p90}} while the middle half widens to {{m2_p25}} to {{m2_p75}}; triple them and the tails reach {{m3_p10}} and {{m3_p90}}, with a middle half of {{m3_p25}} to {{m3_p75}}. No single scale of symmetric measurement error gives both the middle and the tails reported.</p>
+
+<picture>
+<source media="(max-width:760px)" srcset="assets/lauf_change-phone.png" width="1" height="1">
+<img class="fig wide" src="assets/lauf_change.png" loading="lazy" width="1" height="1" alt="Change in a system's reported figure from {{y1m}} to {{y1}}, middle half and 10th to 90th percentiles: reported, {{ch_p25}} to {{ch_p75}} points with tails to {{ch_p10}} and {{ch_p90}}; measurement alone at the default assumptions, {{m1_p25}} to {{m1_p75}} with tails to {{m1_p10}} and {{m1_p90}}; with every uncertainty doubled and tripled, wider in the middle before the tails reach what is reported.">
+</picture>
+
+<p>That leaves the tails to something else, and this page does not say what. PHMSA's report puts it plainly: "{{q_proxy}}" It also lists what the measurement itself does to the figure: "{{q_meters}}"</p>
+
+<p>The two states this series looks at treat the figure differently. Texas presumes that all of it is gas actually lost unless a utility shows otherwise in a rate case, and allows at most {{tx_cap}} per cent of the gas metered in for a distribution system; on PHMSA's basis, gas consumed, that is {{tx_cap_c}} per cent. Oklahoma's rule requires gas to be measured "{{q_ok}}", and sets no percentage.</p>
+
+<h2>Method</h2>
+
+<p><b>The reports.</b> PHMSA's gas distribution annual reports, Form 7100.1-1, Part G, field PERCENT_UNACC_GAS, from the bulk file of {{y0}} to {{y1}} reports. The form defines the figure as "{{q_partg}}" and the reports from {{rule_year}} on divide by consumption. Each report covers one operator in one state, by the state of operation, not the office address. From {{commodity_from}} the reports say which gas a system carries, and only natural gas systems are kept ({{n_excluded}} propane, landfill, synthetic and other reports are left out); before {{commodity_from}} every report is kept. Where an operator filed twice for one state in a year, one report is used.</p>
+
+<p><b>Informative reports.</b> Reports that are not exactly zero, not a whole number, and not identical to the same system's report the year before. The rule is mechanical; a whole number can be a real figure, and a repeat can be a coincidence. It is used to show how much the reporting pattern shapes the distribution, not to correct it.</p>
+
+<p><b>Persistence.</b> Systems are matched across consecutive years by operator and state. The rank correlation uses average ranks for ties, because the figures are heaped.</p>
+
+<p><b>Measurement alone.</b> A system with no loss: receipts measured at a city-gate station, deliveries through {{m_n}} customer meters, reported figure (in − out) / out. Each error is a relative error on a volume, normal, split into a part that persists from year to year and a part redrawn each year. The defaults, every one an assumption: city-gate standard uncertainty {{m_cg}} per cent, half of it persistent; the fleet's shared error {{m_fleet}} per cent between systems and its drift {{m_drift}} per cent a year; each meter's own error {{m_meter}} per cent, which averages away over many meters; {{m_uncomp}} per cent of meters without temperature correction, at a mean gas temperature of {{m_temp}} °F that varies by {{m_tempsd}} °F from year to year; billing-period mismatch {{m_timing}} per cent. An uncorrected meter reads actual volume and bills it as if at {{m_tbase}} °F, so it misstates standard volume by the ratio of absolute temperatures. The sweep scales every uncertainty together; {{m_systems}} systems are drawn for each setting.</p>
+
+<p><b>Beside EIA.</b> EIA's Natural Gas Annual Table A1 gives losses and unaccounted for by state, over the whole state's system and calendar year, from a different form. It is not the same quantity as PHMSA's, and the page does not set one against the other.</p>
+
+<h2>Limits</h2>
+
+<p>The reports are the operators' own figures, filed on a form; nothing here checks one. The model's inputs are assumptions with defaults, not measurements of any system; its result depends on them, which is why the simulator lets each be moved and why the page reports a range of scales rather than one. The errors are drawn as normal and symmetric; a real meter fleet can be skewed, and the model has nothing for theft, unmetered use, estimated reads, accounting adjustments or leaks, all of which can be in a reported figure. Pressure correction is left out, as are the two-year effects of a billing lag. No operator is named on this page or in its figures; the downloadable table carries PHMSA's operator names as PHMSA publishes them.</p>
+
+<h2>The code</h2>
+
+<p>Python: the fetch scripts, each recording where and when its file came from (PHMSA refuses scripted downloads, so its files are fetched through a browser session and recorded as such); the readers; the payload builder; the measurement model; the figures and the page generator; and the tests, each shown failing before it is trusted. JavaScript: the simulator's engine, held to the Python model by a parity test. The archive holds no raw data. {{zip_kb}} KB.</p>
+
+<p><a class="btn" href="downloads/lauf-code.zip">Download source</a>
+<a class="btn ghost" href="code.html">All code</a></p>
+
+<footer>
+<p><a href="about.html">Andrew Silvestri</a></p>
+<p><a href="code.html">Built with Python, Julia, JavaScript and public data.</a></p>
+</footer>
+</main>
+<script src="assets/motion.js"></script>
+<script src="assets/lightbox.js"></script>
+<script src="assets/nav.js"></script>
+</body></html>

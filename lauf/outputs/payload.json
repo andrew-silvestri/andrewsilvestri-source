@@ -1,5 +1,6 @@
 {
  "built": "2026-10-22",
+ "commodity_from": 2015,
  "concentration_top_share": {
   "OK": {
    "2015": 0.8151,
@@ -1232,7 +1233,7 @@
  },
  "quotes": {
   "fr_change": "PHMSA will calculate the percent of LAUF gas by dividing the LAUF volume by the gas consumption volume. PHMSA will allow a negative value to be reported for the percent of LAUF gas. These ch",
-  "ok_measure": "All gas transmitted by any utility shall be measured accurately by proper apparatus, and all gas consumed for light, heat, or power in connection with its distribution shall be measured in order that ",
+  "ok_measure": "All gas transmitted by any utility shall be measured accurately by proper apparatus, and all gas consumed for light, heat, or power in connection with its distribution shall be measured in order that the \"lost and unaccounted for\" gas in distribution may be accurately determined. (c) Each utility shall keep a record of",
   "partg": "Unaccounted for gas as a percent of total consumption for the12 months",
   "report_meters": "Volume meters have a tendency to drift away from accurate measurement over time.",
   "report_mix": "LAUF gas is a combination of measurement inaccuracy and unknown leaks, but it is impossible to know the portion attributable to each.",
