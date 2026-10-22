@@ -116,6 +116,7 @@ NAV = [
     ("Gas", [
         ("What a meter's error is worth", "meter.html"),
         ("When the pipe is full", "takeaway.html"),
+        ("What utilities report as lost gas", "lauf.html"),
     ]),
     ("Power", [
         ("Industrial heat break-even", "heat.html"),
