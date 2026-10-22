@@ -29,6 +29,7 @@ import numpy as np
 HERE = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, HERE)
 
+import model as M     # noqa: E402
 import sources as S   # noqa: E402
 
 OUT = os.path.join(HERE, "outputs", "payload.json")
@@ -115,7 +116,17 @@ def main():
         "tx_presumed": S.quote("tx_16tac_ch7_2024.pdf", "All lost and unaccounted for gas shall be presumed", 120),
         "ok_measure": S.quote("ok_oac165_ch45_2024.pdf", "All gas transmitted by any utility shall be measured accurately by proper apparatus, and", 200),
     }
+    # measurement alone (model.py): the defaults, and every uncertainty input scaled together, so the
+    # page can say what scale reproduces the middle of the observed spread and what it cannot reach
+    scaled = ("cg_u", "fleet_mean_sd", "fleet_drift", "meter_sd", "gas_temp_sd_f", "timing_sd")
+    sweep = {}
+    for k in (0.5, 1.0, 1.5, 2.0, 3.0, 4.0):
+        p = {name: M.DEFAULTS[name] * k for name in scaled}
+        sweep[str(k)] = M.summary(p)
+    model_block = {"defaults": M.DEFAULTS, "at_defaults": M.summary({}), "scale_sweep": sweep,
+                   "scaled_inputs": list(scaled), "limits": M.LIMITS}
     payload = {
+        "model": model_block,
         "built": dt.date.today().isoformat(), "years": [years[0], years[-1]], "rule_year": RULE_YEAR,
         "reporting": rep, "distribution": dist, "persistence": persist,
         "rule_change": {"negative_2018": len(neg18), "were_zero_2017": was_zero},
