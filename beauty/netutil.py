@@ -9,12 +9,30 @@ environment only.
 
 import json
 import os
+import re
 import sys
 import time
 import urllib.error
 import urllib.request
 
-UA = "andrewsilvestri.com-beauty/1.0 (https://andrewsilvestri.com; dasilvestri@utexas.edu) python-urllib"
+UA = "andrewsilvestri.com-beauty/1.0 (https://andrewsilvestri.com) python-urllib"
+
+# OpenAlex's polite pool asks for a contact address. It comes from the
+# environment (OPENALEX_MAILTO), never from a file: an address typed here
+# shipped in beauty-code.zip, and one baked into a recorded request URL
+# shipped in data/group_counts.csv (D-30, D-43). Without it the request goes
+# to the common pool, which answers the same.
+def polite(params):
+    """Add mailto= to an OpenAlex query dict when OPENALEX_MAILTO is set."""
+    m = os.environ.get("OPENALEX_MAILTO", "").strip()
+    if m:
+        params["mailto"] = m
+    return params
+
+
+def scrub(url):
+    """A request URL fit to record: no mailto=, no api_key=."""
+    return re.sub(r"[&?](?:mailto|api_key)=[^&]*", "", url)
 
 
 class Budget(Exception):

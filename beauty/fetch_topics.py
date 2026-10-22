@@ -85,7 +85,7 @@ import urllib.parse
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, HERE)
-from netutil import get_json, check_header, trim_partial_row, Budget, Lock  # noqa: E402
+from netutil import get_json, check_header, trim_partial_row, Budget, Lock, polite  # noqa: E402
 
 DATA = os.path.join(HERE, "data")
 OUT = os.path.join(DATA, "topic_counts.csv")
@@ -94,13 +94,12 @@ JOINED = os.path.join(DATA, "birds_joined.csv")
 LC_MATCHED = os.path.join(DATA, "lc_matched.csv")
 COLS = ["species", "field_id", "works", "cost_usd", "fetched"]
 YEARS = "2015-2024"
-MAILTO = "dasilvestri@utexas.edu"
 NONE = "_none"
 
 
 def url_for(name, key):
     flt = f'title_and_abstract.search:"{name}",publication_year:{YEARS}'
-    q = {"filter": flt, "group_by": "primary_topic.field.id", "mailto": MAILTO}
+    q = polite({"filter": flt, "group_by": "primary_topic.field.id"})
     if key:
         q["api_key"] = key
     return "https://api.openalex.org/works?" + urllib.parse.urlencode(q)

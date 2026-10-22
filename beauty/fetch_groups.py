@@ -28,7 +28,7 @@ import urllib.request
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, HERE)
-from netutil import get_json, Budget, UA  # noqa: E402
+from netutil import get_json, Budget, UA, polite, scrub  # noqa: E402
 
 RAW = os.path.join(HERE, "data", "raw")
 VERSION = "2026-1"
@@ -37,7 +37,6 @@ PDF = os.path.join(RAW, f"iucn_table1a_{VERSION}.pdf")
 PDF_SHA = "fefba9c933226cb5e9c8c616ee41d16cd339cfa00ebe3aadf842542f4540fc10"
 TABLE_OUT = os.path.join(HERE, "data", "iucn_table1a.csv")
 COUNTS_OUT = os.path.join(HERE, "data", "group_counts.csv")
-MAILTO = "dasilvestri@utexas.edu"
 TOPIC = "primary_topic.field.id:11|23"
 YEARS = "2015-2024"
 
@@ -115,14 +114,14 @@ def fetch_counts():
     try:
         for g, q in CLASSES.items():
             flt = f"title_and_abstract.search:{q},{TOPIC},publication_year:{YEARS}"
-            params = {"filter": flt, "per-page": 1, "mailto": MAILTO}
+            params = polite({"filter": flt, "per-page": 1})
             if key:
                 params["api_key"] = key
             url = "https://api.openalex.org/works?" + urllib.parse.urlencode(params, quote_via=urllib.parse.quote)
             j = get_json(url)
             rows.append({"group": g, "search": q, "topic_filter": TOPIC, "years": YEARS,
                          "works": j["meta"]["count"], "cost_usd": j["meta"].get("cost_usd", ""),
-                         "fetched": today, "url": url.replace(key, "OPENALEX_KEY") if key else url})
+                         "fetched": today, "url": scrub(url)})
             print(f"  {g:12s} {j['meta']['count']:>9,}")
             time.sleep(0.3)
     except Budget as e:

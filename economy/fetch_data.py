@@ -37,8 +37,8 @@ import urllib.request
 HERE = os.path.dirname(os.path.abspath(__file__))
 DATA = os.path.join(HERE, "data")
 
-MAILTO = "dasilvestri12@gmail.com"
-AGENT = f"andrewsilvestri.com economy figures ({MAILTO})"
+# No address in the User-Agent: one typed here was the Gmail address (D-30, D-43).
+AGENT = "andrewsilvestri.com economy figures (https://andrewsilvestri.com)"
 
 SOURCES = {
     "lanferdini_2020_table1.xlsx": {
