@@ -45,6 +45,7 @@ Run:
 import argparse
 import fnmatch
 import os
+import re
 import sys
 import tempfile
 import time
@@ -323,6 +324,26 @@ ENTRY_STAMP = (1980, 1, 1, 0, 0, 0)
 ENTRY_MODE = 0o644 << 16       # and not the source file's, which varies by OS
 
 
+# No personal address ships in an archive, in any encoding (D-30, D-43).
+# beauty-code.zip carried the Gmail address five times inside recorded
+# OpenAlex request URLs (mailto=...%40gmail.com) and the utexas address in
+# four fetch scripts, and no rule here looked at file CONTENT, only names.
+# The fix lives in the fetchers (the contact comes from OPENALEX_MAILTO), and
+# this is the last code that could still ship one (trap 19). Matched by
+# domain, so this file names no address. Third-party addresses (NIST's, in
+# meter's AGA8 sources) are other domains and pass.
+PERSONAL = re.compile(rb"[A-Za-z0-9._%+-]+(?:@|%40|&#0*64;|&#x0*40;)(?:gmail|utexas)(?:\.|%2e)(?:com|edu)\b",
+                      re.I)
+
+
+def personal(name, data):
+    """Raise when data, a file about to be archived as name, holds one."""
+    n = len(PERSONAL.findall(data))
+    if n:
+        raise SystemExit(f"refusing to archive {name}: {n} personal email address(es) in it "
+                         "(D-43; read contacts from the environment, never a file)")
+
+
 def _write(order, src_dir, extras, out_path):
     with zipfile.ZipFile(out_path, "w", zipfile.ZIP_DEFLATED) as z:
         for name in order:
@@ -334,7 +355,9 @@ def _write(order, src_dir, extras, out_path):
                 info.compress_type = zipfile.ZIP_DEFLATED
                 info.external_attr = ENTRY_MODE
                 with open(src, "rb") as fh:
-                    z.writestr(info, fh.read())
+                    data = fh.read()
+                personal(name, data)
+                z.writestr(info, data)
 
 
 def rezip(t, src_dir):
@@ -407,7 +430,11 @@ def scan_all():
         t = by_zip.get(p)
         with zipfile.ZipFile(p) as z:
             entries = z.namelist()
+            leaks = [n for n in entries if PERSONAL.search(z.read(n))]
         bad = polluted(entries, t["keep"] if t else (), t["skip"] if t else ())
+        if leaks:
+            ok = False
+            print(f"  {f}: personal email address in {len(leaks)} entries: {leaks[:5]}")
         tag = "generated" if t else "no generator"
         if bad:
             ok = False

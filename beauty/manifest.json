@@ -1,5 +1,5 @@
 {
- "generated": "2026-09-09",
+ "generated": "2026-10-22",
  "red_list_version": "2026-1",
  "redlist_source": "api",
  "withheld": {
@@ -50,8 +50,8 @@
   },
   {
    "file": "data/group_counts.csv",
-   "sha256": "b9bd952e5eb2575a01ce884c70ee1eb40bfe757972bebb0c09abbe1bbb7ddf6a",
-   "bytes": 1947,
+   "sha256": "adc3ee9440194e2a311a63fc6f48780f5cc0c025a2f32d76d60c3de28b709b08",
+   "bytes": 1776,
    "ships": true
   }
  ],

@@ -45,19 +45,18 @@ import urllib.parse
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, HERE)
-from netutil import get_json, check_header, trim_partial_row, Budget, Lock  # noqa: E402
+from netutil import get_json, check_header, trim_partial_row, Budget, Lock, polite  # noqa: E402
 
 SPECIES = os.path.join(HERE, "data", "avonet_slim.csv")
 OUT = os.path.join(HERE, "data", "openalex_counts.csv")
 LOG = os.path.join(HERE, "data", "openalex_run_log.txt")
 COLS = ["species", "works_2015_2024", "cost_usd", "fetched"]
 YEARS = "2015-2024"
-MAILTO = "dasilvestri@utexas.edu"
 
 
 def url_for(name, key):
     flt = f'title_and_abstract.search:"{name}",publication_year:{YEARS}'
-    q = {"filter": flt, "per-page": 1, "mailto": MAILTO}
+    q = polite({"filter": flt, "per-page": 1})
     if key:
         q["api_key"] = key
     return "https://api.openalex.org/works?" + urllib.parse.urlencode(q)
