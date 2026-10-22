@@ -1045,6 +1045,14 @@
     "p75": 0.23,
     "p90": 1.9
    },
+   "change_informative": {
+    "n": 496,
+    "p10": -1.9,
+    "p25": -0.78,
+    "p50": -0.06,
+    "p75": 0.54,
+    "p90": 1.7
+   },
    "pairs": 1388,
    "rank_corr": 0.72
   },
@@ -1057,6 +1065,14 @@
     "p50": 0.0,
     "p75": 0.4,
     "p90": 2.06
+   },
+   "change_informative": {
+    "n": 501,
+    "p10": -1.55,
+    "p25": -0.6,
+    "p50": -0.03,
+    "p75": 0.63,
+    "p90": 2.11
    },
    "pairs": 1424,
    "rank_corr": 0.686
@@ -1071,6 +1087,14 @@
     "p75": 0.25,
     "p90": 1.91
    },
+   "change_informative": {
+    "n": 502,
+    "p10": -1.78,
+    "p25": -0.71,
+    "p50": -0.04,
+    "p75": 0.64,
+    "p90": 1.7
+   },
    "pairs": 1456,
    "rank_corr": 0.698
   },
@@ -1083,6 +1107,14 @@
     "p50": 0.0,
     "p75": 0.49,
     "p90": 2.03
+   },
+   "change_informative": {
+    "n": 542,
+    "p10": -1.74,
+    "p25": -0.43,
+    "p50": 0.04,
+    "p75": 0.79,
+    "p90": 1.91
    },
    "pairs": 1470,
    "rank_corr": 0.704
@@ -1097,6 +1129,14 @@
     "p75": 0.32,
     "p90": 1.9
    },
+   "change_informative": {
+    "n": 536,
+    "p10": -2.2,
+    "p25": -0.73,
+    "p50": -0.08,
+    "p75": 0.51,
+    "p90": 1.42
+   },
    "pairs": 1419,
    "rank_corr": 0.716
   },
@@ -1109,6 +1149,14 @@
     "p50": 0.0,
     "p75": 0.4,
     "p90": 2.23
+   },
+   "change_informative": {
+    "n": 542,
+    "p10": -1.47,
+    "p25": -0.7,
+    "p50": -0.02,
+    "p75": 0.8,
+    "p90": 2.42
    },
    "pairs": 1400,
    "rank_corr": 0.714
@@ -1123,6 +1171,14 @@
     "p75": 0.33,
     "p90": 2.11
    },
+   "change_informative": {
+    "n": 548,
+    "p10": -1.7,
+    "p25": -0.69,
+    "p50": 0.02,
+    "p75": 0.66,
+    "p90": 1.98
+   },
    "pairs": 1406,
    "rank_corr": 0.715
   },
@@ -1135,6 +1191,14 @@
     "p50": 0.0,
     "p75": 0.48,
     "p90": 2.2
+   },
+   "change_informative": {
+    "n": 570,
+    "p10": -2.73,
+    "p25": -0.8,
+    "p50": -0.01,
+    "p75": 0.67,
+    "p90": 1.85
    },
    "pairs": 1408,
    "rank_corr": 0.614
@@ -1149,6 +1213,14 @@
     "p75": 0.54,
     "p90": 2.64
    },
+   "change_informative": {
+    "n": 633,
+    "p10": -2.58,
+    "p25": -0.89,
+    "p50": -0.05,
+    "p75": 0.64,
+    "p90": 2.4
+   },
    "pairs": 1398,
    "rank_corr": 0.66
   },
@@ -1161,6 +1233,14 @@
     "p50": 0.0,
     "p75": 0.5,
     "p90": 2.29
+   },
+   "change_informative": {
+    "n": 661,
+    "p10": -2.3,
+    "p25": -0.88,
+    "p50": -0.03,
+    "p75": 0.8,
+    "p90": 2.64
    },
    "pairs": 1377,
    "rank_corr": 0.676
@@ -1175,6 +1255,14 @@
     "p75": 0.58,
     "p90": 3.0
    },
+   "change_informative": {
+    "n": 647,
+    "p10": -3.2,
+    "p25": -0.7,
+    "p50": 0.01,
+    "p75": 0.77,
+    "p90": 2.41
+   },
    "pairs": 1369,
    "rank_corr": 0.624
   },
@@ -1187,6 +1275,14 @@
     "p50": 0.0,
     "p75": 0.65,
     "p90": 3.1
+   },
+   "change_informative": {
+    "n": 648,
+    "p10": -3.22,
+    "p25": -1.02,
+    "p50": -0.01,
+    "p75": 0.74,
+    "p90": 3.0
    },
    "pairs": 1366,
    "rank_corr": 0.591
@@ -1201,6 +1297,14 @@
     "p75": 0.76,
     "p90": 3.0
    },
+   "change_informative": {
+    "n": 682,
+    "p10": -3.13,
+    "p25": -0.9,
+    "p50": -0.04,
+    "p75": 0.86,
+    "p90": 2.78
+   },
    "pairs": 1363,
    "rank_corr": 0.601
   },
@@ -1211,6 +1315,14 @@
     "p10": -3.2,
     "p25": -0.73,
     "p50": 0.0,
+    "p75": 0.91,
+    "p90": 3.2
+   },
+   "change_informative": {
+    "n": 696,
+    "p10": -2.68,
+    "p25": -0.73,
+    "p50": 0.01,
     "p75": 0.91,
     "p90": 3.2
    },
@@ -1227,6 +1339,14 @@
     "p75": 1.0,
     "p90": 4.16
    },
+   "change_informative": {
+    "n": 690,
+    "p10": -2.8,
+    "p25": -0.69,
+    "p50": 0.02,
+    "p75": 1.16,
+    "p90": 3.82
+   },
    "pairs": 1345,
    "rank_corr": 0.564
   }
@@ -1238,6 +1358,7 @@
   "report_meters": "Volume meters have a tendency to drift away from accurate measurement over time.",
   "report_mix": "LAUF gas is a combination of measurement inaccuracy and unknown leaks, but it is impossible to know the portion attributable to each.",
   "report_proxy": "LAUF gas is not a valid proxy for either unknown leak volume or methane emissions.",
+  "report_zero": "PHMSA instructs companies that calculate a negative value for percent of LAUF gas to report zero.",
   "tx_cap": "The maximum allowable for a distribution system is 5.0% of the amount metered in, and the maximum allowable for a transmission system is 3.0% of the amount mete",
   "tx_presumed": "All lost and unaccounted for gas shall be presumed to be lost gas unless the portion represented by unaccounted for gas,"
  },

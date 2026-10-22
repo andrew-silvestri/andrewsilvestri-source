@@ -53,15 +53,29 @@ def pctv(x):
     return f"{x:.0f}" if float(x).is_integer() else f"{x:.2f}"
 
 
+def width(q):
+    return q["p75"] - q["p25"]
+
+
+def best_scale(m, ch):
+    """The swept scale whose middle half of year-to-year change is closest in width to the reported one."""
+    return min(m, key=lambda k: abs(width(m[k]["change"]) - width(ch)))
+
+
 def claims(P, y0, y1, lez, rho, m, ch):
+    # ch here is the change on systems not zero, whole or repeated in either year (finding 3)
     rule = P["rule_year"]
     rep = P["reporting"]
     c = [
         ("'about a third ... every year': at or below zero within 0.28-0.36 in every year",
          all(0.28 <= v <= 0.36 for v in lez)),
-        ("'did not move': at or below zero before and after the rule differ by under 3 points on average",
+        ("'did not change when the rule did': the year before and the rule year differ by under 2 points",
+         abs(rep[str(rule)]["at_or_below_zero"] - rep[str(rule - 1)]["at_or_below_zero"]) < 0.02),
+        ("and over the whole span the averages before and after differ by under 3 points",
          abs(sum(rep[str(y)]["at_or_below_zero"] for y in range(rule, y1 + 1)) / (y1 - rule + 1)
              - sum(rep[str(y)]["at_or_below_zero"] for y in range(y0, rule)) / (rule - y0)) < 0.03),
+        ("'one report in all the years before' (alt text): exactly one negative report before the rule year",
+         sum(round(rep[str(y)]["negative"] * rep[str(y)]["n"]) for y in range(y0, rule)) == 1),
         ("'did not allow a negative figure': under 0.2% negative before the rule year",
          all(rep[str(y)]["negative"] < 0.002 for y in range(y0, rule))),
         ("'negatives rose from none': the first rule year has negatives", rep[str(rule)]["negative"] > 0),
@@ -70,10 +84,10 @@ def claims(P, y0, y1, lez, rho, m, ch):
          all(rep[str(y)]["whole_of_nonzero"] > 1 / 6 for y in range(y0, y1 + 1))
          and all(rep[str(y)]["repeat_of_pairs"] > 1 / 6 for y in range(y0 + 1, y1 + 1))),
         ("'tends to stay where it was': rank correlation above 0.5 every year", min(rho) > 0.5),
-        ("'can move the figure that much in the middle': default middle half within 0.4 points of reported",
-         abs(m["1.0"]["change"]["p25"] - ch["p25"]) < 0.4 and abs(m["1.0"]["change"]["p75"] - ch["p75"]) < 0.4),
-        ("'but not in the tails': reported 90th percentile beyond the default model's by a point",
-         ch["p90"] - m["1.0"]["change"]["p90"] > 1.0),
+        ("'as much as that in the middle': the closest scale's middle half is within 0.3 points of the reported width",
+         abs(width(m[best_scale(m, ch)]["change"]) - width(ch)) < 0.3),
+        ("'but not in the tails': at that scale the reported 90th percentile is beyond the model's by a point",
+         ch["p90"] - m[best_scale(m, ch)]["change"]["p90"] > 1.0),
         ("'no single scale gives both': where the doubled or tripled model reaches the reported tails, its "
          "middle half is already wider than reported",
          all(not (m[k]["change"]["p90"] >= ch["p90"]) or (m[k]["change"]["p75"] - m[k]["change"]["p25"]
@@ -97,8 +111,9 @@ def values(P):
     rho = [per[str(y)]["rank_corr"] for y in range(y0 + 1, y1 + 1)]
     last = dist[str(y1)]
     ch = per[str(y1)]["change"]
+    chi = per[str(y1)]["change_informative"]
     m = mod["scale_sweep"]
-    claims(P, y0, y1, lez, rho, m, ch)
+    claims(P, y0, y1, lez, rho, m, chi)
     q = P["quotes"]
     d = mod["defaults"]
     tx_cap = float(re.search(r"distribution system is ([\d.]+)%", q["tx_cap"]).group(1))
@@ -125,6 +140,8 @@ def values(P):
         "ok_top": f"{100 * P['concentration_top_share']['OK'][str(y1)]:.0f}",
         "ch_p25": sp(ch["p25"]), "ch_p75": sp(ch["p75"]), "ch_p90": f1(ch["p90"]), "ch_p10": sp(ch["p10"]),
         "ch_p10a": f1(-ch["p10"]),
+        "ch_i_n": f"{chi['n']:,}", "chi_p25": sp(chi["p25"]), "chi_p75": sp(chi["p75"]), "chi_p90": f1(chi["p90"]),
+        "chi_p10a": f1(-chi["p10"]), "q_zero": q["report_zero"],
         "tx_cap": f1(tx_cap), "tx_cap_c": f2(100 * tx_cap / (100 - tx_cap)),
         "q_mix": q["report_mix"], "q_proxy": q["report_proxy"], "q_meters": q["report_meters"],
         "q_ok": ok_q.group(1).replace('"', "’").replace("’lost", "‘lost"),
@@ -140,6 +157,9 @@ def values(P):
         c = m[key]["change"]
         v[f"{k}_p25"], v[f"{k}_p75"] = sp(c["p25"]), sp(c["p75"])
         v[f"{k}_p10"], v[f"{k}_p90"] = sp(c["p10"]), (sp(c["p90"]) if k != "m1" else f1(c["p90"]))
+    k = best_scale(m, chi)
+    v["mk"] = f"{float(k):g}"
+    v["mk_p25"], v["mk_p75"], v["mk_p90"] = sp(m[k]["change"]["p25"]), sp(m[k]["change"]["p75"]), f1(m[k]["change"]["p90"])
     v["zip_kb"] = f"{os.path.getsize(ZIP) / 1024:,.0f}" if os.path.exists(ZIP) else "0"
     return v
 

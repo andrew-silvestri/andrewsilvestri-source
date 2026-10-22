@@ -73,7 +73,7 @@ svg text{font-family:var(--sans);font-size:12px;fill:var(--dim)}
 <div class="out">
 <p class="big" id="result" aria-live="polite"></p>
 <svg id="chart" viewBox="0 0 720 260" width="720" height="260" role="img" aria-label="Middle half and 10th to 90th percentiles of the reported figure and of its year-to-year change: reported, and measurement alone at the settings above."></svg>
-<p class="note">Bars: the middle half of systems; lines: the 10th to 90th percentiles. Reported: natural gas distribution systems, PHMSA annual reports, <span id="yr"></span>. Measurement alone: <span id="nsys"></span> simulated systems at the settings above, the same seed each time, so a change in the picture is the change you made. Symmetric, normal errors; nothing for theft, unmetered use, estimated reads, accounting adjustments or leaks.</p>
+<p class="note">Bars: the middle half of systems; lines: the 10th to 90th percentiles. Reported: natural gas distribution systems, PHMSA annual reports, <span id="yr"></span>; * only reports that are not zero, not a whole number and not identical to the year before, since many reports are zero or below and many repeat the year before exactly (the page gives the shares). Measurement alone: <span id="nsys"></span> simulated systems at the settings above, the same seed each time, so a change in the picture is the change you made. Symmetric, normal errors; nothing for theft, unmetered use, estimated reads, accounting adjustments or leaks.</p>
 </div>
 </div>
 
@@ -127,9 +127,9 @@ function run() {
   const m = E.summary(p, DATA.n_systems, DATA.seed);
   const ob = DATA.observed;
   draw([
-    {label: 'Reported, change ' + ob.year_prev + ' to ' + ob.year, q: ob.change, col: 'var(--ink)'},
+    {label: 'Reported, change ' + ob.year_prev + ' to ' + ob.year + '*', q: ob.change, col: 'var(--ink)'},
     {label: 'Measurement alone, change', q: m.change, col: 'var(--acc)'},
-    {label: 'Reported, ' + ob.year + ', informative', q: ob.level_informative, col: 'var(--moss)'},
+    {label: 'Reported, ' + ob.year + '*', q: ob.level_informative, col: 'var(--moss)'},
     {label: 'Measurement alone, one year', q: m.level, col: 'var(--cool)'},
   ]);
   $('result').textContent = 'Measurement alone: the middle half of systems moves ' + sgn(m.change.p25) + ' to ' +

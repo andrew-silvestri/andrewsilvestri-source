@@ -22,7 +22,9 @@ SEED = 20261022
 def app_data(P):
     y0, y1 = P["years"]
     obs = {"year": y1, "year_prev": y1 - 1,
-           "change": P["persistence"][str(y1)]["change"],
+           # the change on systems not zero, whole or repeated in either year: all pairs include
+           # exact repeats (a change of zero), which pull the middle in (page claims check, finding 3)
+           "change": P["persistence"][str(y1)]["change_informative"],
            "level_informative": P["distribution"][str(y1)]["US"]["informative"]}
     return {"defaults": P["model"]["defaults"], "limits": P["model"]["limits"], "observed": obs,
             "n_systems": N_SYSTEMS, "seed": SEED}

@@ -90,8 +90,13 @@ def main():
         if prev:
             x = [prev[k]["lauf"] for k in pairs]; z = [cur[k]["lauf"] for k in pairs]
             ch = [b - a for a, b in zip(x, z)]
+            # the same change on pairs whose figure is informative in both years and not repeated:
+            # 19-35% of pairs repeat exactly (change 0), which pulls the middle of "all pairs" in
+            # (page claims check, finding 3)
+            inf = [(a, b) for a, b in zip(x, z) if a != b and a != 0 and b != 0 and not whole(a) and not whole(b)]
             persist[y] = {"rank_corr": round(spearman(x, z), 3), "change": pct(ch), "pairs": len(pairs),
-                          "abs_change_median": round(float(np.median(np.abs(ch))), 3)}
+                          "abs_change_median": round(float(np.median(np.abs(ch))), 3),
+                          "change_informative": pct([b - a for a, b in inf])}
         prev = cur
     # the 2018 change: negatives that had reported exactly zero the year before
     neg18 = [k for k, r in by[RULE_YEAR].items() if r["lauf"] < 0]
@@ -110,6 +115,7 @@ def main():
         "report_mix": S.quote("report_congress_lauf_2017.pdf", "LAUF gas is a combination", 135).rsplit(".", 1)[0] + ".",
         "report_proxy": S.quote("report_congress_lauf_2017.pdf", "LAUF gas is not a valid proxy", 84).rsplit(".", 1)[0] + ".",
         "report_meters": S.quote("report_congress_lauf_2017.pdf", "Volume meters have a tendency", 80).rsplit(".", 1)[0] + ".",
+        "report_zero": S.quote("report_congress_lauf_2017.pdf", "PHMSA instructs companies that calculate a negative value", 110).rsplit(".", 1)[0] + ".",
         "fr_change": S.quote("fr_2018-01324.pdf", "PHMSA will calculate the percent of LAUF gas", 190),
         "partg": S.quote("gd_annual_form_cy2018_forward.pdf", "Unaccounted for gas as a percent of total consumption", 70),
         "tx_cap": S.quote("tx_16tac_ch7_2024.pdf", "The maximum allowable for a distribution system", 160),

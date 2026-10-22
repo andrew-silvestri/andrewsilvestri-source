@@ -73,7 +73,7 @@ svg text{font-family:var(--sans);font-size:12px;fill:var(--dim)}
 <div class="out">
 <p class="big" id="result" aria-live="polite"></p>
 <svg id="chart" viewBox="0 0 720 260" width="720" height="260" role="img" aria-label="Middle half and 10th to 90th percentiles of the reported figure and of its year-to-year change: reported, and measurement alone at the settings above."></svg>
-<p class="note">Bars: the middle half of systems; lines: the 10th to 90th percentiles. Reported: natural gas distribution systems, PHMSA annual reports, <span id="yr"></span>. Measurement alone: <span id="nsys"></span> simulated systems at the settings above, the same seed each time, so a change in the picture is the change you made. Symmetric, normal errors; nothing for theft, unmetered use, estimated reads, accounting adjustments or leaks.</p>
+<p class="note">Bars: the middle half of systems; lines: the 10th to 90th percentiles. Reported: natural gas distribution systems, PHMSA annual reports, <span id="yr"></span>; * only reports that are not zero, not a whole number and not identical to the year before, since many reports are zero or below and many repeat the year before exactly (the page gives the shares). Measurement alone: <span id="nsys"></span> simulated systems at the settings above, the same seed each time, so a change in the picture is the change you made. Symmetric, normal errors; nothing for theft, unmetered use, estimated reads, accounting adjustments or leaks.</p>
 </div>
 </div>
 
@@ -161,7 +161,7 @@ svg text{font-family:var(--sans);font-size:12px;fill:var(--dim)}
 })(typeof window !== 'undefined' ? window : this);
 </script>
 <script>
-const DATA = {"defaults":{"cg_persist":0.5,"cg_u":0.5,"fleet_drift":0.2,"fleet_mean_sd":0.5,"gas_temp_f":55.0,"gas_temp_sd_f":1.5,"meter_sd":1.0,"n_meters":2000,"timing_sd":0.5,"uncomp_share":0.7},"limits":{"cg_persist":[0.0,1.0],"cg_u":[0.0,2.0],"fleet_drift":[0.0,1.0],"fleet_mean_sd":[0.0,2.0],"gas_temp_f":[40.0,75.0],"gas_temp_sd_f":[0.0,5.0],"meter_sd":[0.0,3.0],"n_meters":[50,200000],"timing_sd":[0.0,2.0],"uncomp_share":[0.0,1.0]},"n_systems":20000,"observed":{"change":{"n":1345,"p10":-3.57,"p25":-0.748,"p50":0.0,"p75":1.0,"p90":4.16},"level_informative":{"n":841,"p10":-1.4,"p25":0.05,"p50":1.2,"p75":3.23,"p90":7.5},"year":2025,"year_prev":2024},"seed":20261022};
+const DATA = {"defaults":{"cg_persist":0.5,"cg_u":0.5,"fleet_drift":0.2,"fleet_mean_sd":0.5,"gas_temp_f":55.0,"gas_temp_sd_f":1.5,"meter_sd":1.0,"n_meters":2000,"timing_sd":0.5,"uncomp_share":0.7},"limits":{"cg_persist":[0.0,1.0],"cg_u":[0.0,2.0],"fleet_drift":[0.0,1.0],"fleet_mean_sd":[0.0,2.0],"gas_temp_f":[40.0,75.0],"gas_temp_sd_f":[0.0,5.0],"meter_sd":[0.0,3.0],"n_meters":[50,200000],"timing_sd":[0.0,2.0],"uncomp_share":[0.0,1.0]},"n_systems":20000,"observed":{"change":{"n":690,"p10":-2.8,"p25":-0.69,"p50":0.02,"p75":1.16,"p90":3.82},"level_informative":{"n":841,"p10":-1.4,"p25":0.05,"p50":1.2,"p75":3.23,"p90":7.5},"year":2025,"year_prev":2024},"seed":20261022};
 const E = window.LaufEngine;
 const $ = id => document.getElementById(id);
 const KEYS = Object.keys(DATA.defaults);
@@ -209,9 +209,9 @@ function run() {
   const m = E.summary(p, DATA.n_systems, DATA.seed);
   const ob = DATA.observed;
   draw([
-    {label: 'Reported, change ' + ob.year_prev + ' to ' + ob.year, q: ob.change, col: 'var(--ink)'},
+    {label: 'Reported, change ' + ob.year_prev + ' to ' + ob.year + '*', q: ob.change, col: 'var(--ink)'},
     {label: 'Measurement alone, change', q: m.change, col: 'var(--acc)'},
-    {label: 'Reported, ' + ob.year + ', informative', q: ob.level_informative, col: 'var(--moss)'},
+    {label: 'Reported, ' + ob.year + '*', q: ob.level_informative, col: 'var(--moss)'},
     {label: 'Measurement alone, one year', q: m.level, col: 'var(--cool)'},
   ]);
   $('result').textContent = 'Measurement alone: the middle half of systems moves ' + sgn(m.change.p25) + ' to ' +

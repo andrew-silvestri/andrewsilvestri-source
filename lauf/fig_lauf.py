@@ -164,7 +164,7 @@ def spread_fig(P, width, out):
     sitefig.style()
     fig = plt.figure(figsize=fig_size(width, 1.15 if phone else 16 / 9))
     ax = fig.add_axes([0.15, 0.36, 0.81, 0.58] if phone else [0.08, 0.16, 0.60, 0.76])
-    for key, col, dx, lab in (("all", MOSS, -0.18, "All reports"), ("informative", ACC, 0.18, "Informative reports")):
+    for key, col, dx, lab in (("all", MOSS, -0.18, "All reports"), ("informative", ACC, 0.18, "Not zero, whole or repeated")):
         q = {p: np.array([D[str(y)]["US"][key][p] for y in years]) for p in ("p10", "p25", "p50", "p75", "p90")}
         ax.vlines(x + dx, q["p10"], q["p90"], color=col, lw=1.2, alpha=0.6)
         ax.vlines(x + dx, q["p25"], q["p75"], color=col, lw=3.5 if phone else 6, alpha=0.9, label=lab)
@@ -185,13 +185,14 @@ def spread_fig(P, width, out):
 def change_fig(P, width, out):
     phone = width == PHONE
     last = str(max(int(y) for y in P["persistence"]))
-    rows = [(f"Reported, {int(last) - 1} to {last}", P["persistence"][last]["change"], INK)]
+    rows = [(f"Reported, {int(last) - 1} to {last}", P["persistence"][last]["change"], INK),
+            ("Reported, not zero, whole or repeated", P["persistence"][last]["change_informative"], DIM)]
     for k, lab in (("1.0", "Measurement alone, defaults"), ("2.0", "Every uncertainty doubled"),
                    ("3.0", "Every uncertainty tripled")):
         rows.append((lab, P["model"]["scale_sweep"][k]["change"], ACC if k == "1.0" else MOSS))
     sitefig.style()
-    fig = plt.figure(figsize=fig_size(width, 1.05 if phone else 16 / 9))
-    ax = fig.add_axes([0.08, 0.24, 0.88, 0.70] if phone else [0.36, 0.16, 0.60, 0.76])
+    fig = plt.figure(figsize=fig_size(width, 1.25 if phone else 16 / 9))
+    ax = fig.add_axes([0.08, 0.20, 0.88, 0.74] if phone else [0.40, 0.16, 0.56, 0.76])
     texts = []
     n = len(rows)
     for i, (lab, q, col) in enumerate(rows):

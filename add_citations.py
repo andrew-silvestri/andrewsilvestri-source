@@ -818,11 +818,12 @@ PAGES = {
          'Information Collection Activities".',
          "PHMSA's change to a consumption denominator and its allowing negative "
          "values, to harmonize with EIA."),
-        ("allows at most",
+        ("disallows the expense of lost gas",
          'Railroad Commission of Texas, 16 Texas Administrative Code s.7.5525, Lost '
          'and Unaccounted for Gas (Chapter 7 compilation effective 8 April 2024).',
-         "The presumption that LAUF is lost gas, and the 5.0% of gas metered in "
-         "allowed for a distribution system."),
+         "The presumption that LAUF is lost gas; for ratemaking, lost-gas expense above "
+         "5.0% of gas metered in is disallowed for a distribution system unless the "
+         "Commission allows more."),
         ("Oklahoma's rule requires gas to be measured",
          'Oklahoma Corporation Commission, Oklahoma Administrative Code 165:45-7-11, '
          'Gas measurement requirements (Chapter 45 effective 1 October 2024).',
