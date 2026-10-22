@@ -119,7 +119,12 @@ NAV = [
     ]),
     ("Power", [
         ("Industrial heat break-even", "heat.html"),
-        ("Battery revenue simulator", "storage.html"),
+        # UNLISTED 2026-10-22 (D-39, packet R0 section 2): storage, climate-cost,
+        # longevity, beauty and skyline left the bar and the home index while
+        # their rework or repair runs (R4, R5). Their URLs and apps keep
+        # serving, with <meta name="robots" content="noindex">. Each comes back
+        # as the tuple it was, in the place it was, when its packet relists it:
+        # ("Battery revenue simulator", "storage.html"),
     ]),
     # CLIMATE IS ONE PAGE AND RENDERS AS A DROPDOWN. That is the point of the
     # 2026-09-09 change, not an oversight - do not "simplify" it back to a bare
@@ -136,9 +141,15 @@ NAV = [
     #
     # Placed between Energy and Running by Andrew; since D-18 (2026-10-21)
     # it follows Power (and, once it exists, Tools) and precedes Other.
-    ("Climate", [
-        ("The true climate cost", "climate-cost.html"),
-    ]),
+    # CLIMATE IS GONE FOR NOW, 2026-10-22 (D-39, R0 section 2). Its one page,
+    # climate-cost.html, is unlisted while R5 reworks it, which left the group
+    # empty, and an empty dropdown is never shown (packet QN's rule for Tools).
+    # The comment above still holds for when it returns: Climate is the
+    # article, it renders as a dropdown of one, and it sits after Power (and
+    # Tools) and before Other. Restore it as:
+    # ("Climate", [
+    #     ("The true climate cost", "climate-cost.html"),
+    # ]),
     # RUNNING WAS RETIRED 2026-09-09, at Andrew's request - "hide the two
     # running pages... I'll republish later, but retire for now". It held
     # shoes.html and economy.html; both pages, their eight figures and two
@@ -196,10 +207,12 @@ NAV = [
     # is that group, named honestly.
     # "The bookshelf" (desktop.html) retired to unpublished/ on 2026-09-05
     # (PHASE5); the pages were regenerated from this list the same day.
+    # Longevity, beauty and skyline unlisted 2026-10-22 (D-39; see Power above).
+    # Their tuples, in their order, for relisting:
+    # ("Longevity quotient", "longevity.html"),
+    # ("Endangered, and studied", "beauty.html"),
+    # ("Skylines, played", "skyline.html"),
     ("Other", [
-        ("Longevity quotient", "longevity.html"),
-        ("Endangered, and studied", "beauty.html"),
-        ("Skylines, played", "skyline.html"),
         ("Where the ground goes", "continents.html"),
     ]),
     ("Code", "code.html"),
