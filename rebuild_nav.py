@@ -107,11 +107,19 @@ NAV = [
     # same day. Putting it back means restoring these four tuples, the
     # index section, the description, the rezip target, the
     # test_generators entry and three code.html rows.
-    ("Energy", [
-        ("Industrial heat break-even", "heat.html"),
-        ("Battery revenue simulator", "storage.html"),
+    # GAS AND POWER REPLACE ENERGY, 2026-10-21, Andrew's decision (DECISIONS
+    # D-18; built by packet QN on 2026-10-22). Energy held all four energy
+    # pages in the order heat, storage, meter, takeaway; the split keeps that
+    # order inside each group. New gas pages go in Gas, new power pages in
+    # Power. A Tools group, for calculators, goes between Power and Climate
+    # when its first page exists - never as an empty dropdown (packet QN).
+    ("Gas", [
         ("What a meter's error is worth", "meter.html"),
         ("When the pipe is full", "takeaway.html"),
+    ]),
+    ("Power", [
+        ("Industrial heat break-even", "heat.html"),
+        ("Battery revenue simulator", "storage.html"),
     ]),
     # CLIMATE IS ONE PAGE AND RENDERS AS A DROPDOWN. That is the point of the
     # 2026-09-09 change, not an oversight - do not "simplify" it back to a bare
@@ -126,7 +134,8 @@ NAV = [
     # label here was "Climate cost calculator" until 2026-09-05, which matched
     # neither the page nor its index entry.
     #
-    # Between Energy and Running because Andrew placed it there.
+    # Placed between Energy and Running by Andrew; since D-18 (2026-10-21)
+    # it follows Power (and, once it exists, Tools) and precedes Other.
     ("Climate", [
         ("The true climate cost", "climate-cost.html"),
     ]),
@@ -170,45 +179,28 @@ NAV = [
     # # pages should always have been in. Mind lasted one day and named
     # # nothing that is still published.
     #
-    # The bar is seven items now: Home / Energy / Climate / Wildlife /
-    # Misc / Code / About. It was nine this morning.
-    # Wildlife, 2026-09-09. Both members moved here from groups that were
-    # about where they happened to land rather than what they are about:
-    # beauty from Mind, which was a neuroscience group, and the longevity
-    # quotient from Misc, which is a group that says nothing about any of
-    # its members. Two pages, so it is a dropdown on the ordinary rule and
-    # not on the one-item exception.
-    ("Wildlife", [
+    # OTHER REPLACES WILDLIFE AND MISC, 2026-10-21 (DECISIONS D-18; built by
+    # QN 2026-10-22). The order is the old order: Wildlife's longevity and
+    # beauty, then Misc's skyline and continents. The bar is eight items:
+    # Home / Gas / Power / Climate / Other / Code / About, plus Tools later.
+    #
+    # What the two groups were, kept because this is a regrouping and not a
+    # discovery that either was wrong (trap 15). Wildlife, 2026-09-09: both
+    # members moved there from groups that were about where they happened to
+    # land rather than what they are about - beauty from Mind (a neuroscience
+    # group it never belonged in) and the longevity quotient from Misc. Misc
+    # held six pages on the morning of 2026-09-09 and lost them three times
+    # that day (climate-cost to Climate, neuron to Mind, food unpublished,
+    # longevity to Wildlife), leaving skyline and continents; its own comment
+    # said it was "a group that says nothing about any of its members". Other
+    # is that group, named honestly.
+    # "The bookshelf" (desktop.html) retired to unpublished/ on 2026-09-05
+    # (PHASE5); the pages were regenerated from this list the same day.
+    ("Other", [
         ("Longevity quotient", "longevity.html"),
         ("Endangered, and studied", "beauty.html"),
-    ]),
-    ("Misc", [
         ("Skylines, played", "skyline.html"),
         ("Where the ground goes", "continents.html"),
-        # "The bookshelf" (desktop.html) retired to unpublished/ on 2026-09-05
-        # (PHASE5); the pages were regenerated from this list the same day.
-        #
-        # TWO, and this group lost pages THREE times on 2026-09-09. It held
-        # six that morning. climate-cost went to Climate and neuron to Mind
-        # (cdc7535), leaving four. Then food.html was unpublished, leaving
-        # three. Then the longevity quotient went to Wildlife, leaving
-        # continents and skyline. The running count is kept rather than
-        # replaced because it has now been overtaken twice in one day, and
-        # a number in a comment is a claim about the list beside it.
-        #
-        # The earlier note, for the record: THREE, and this group lost
-        # pages twice on 2026-09-09. It held six
-        # that morning. First climate-cost went to Climate and neuron to Mind
-        # (cdc7535), leaving four - which is what the comment here said, and
-        # it was true for a few hours. Then food.html was unpublished at
-        # Andrew's request, for now (unpublished/RETIRED.md), leaving three.
-        # The count is recorded twice on purpose: a number in a comment is a
-        # claim about the list beside it, and this one was overtaken the same
-        # day it was written.
-        #
-        # Still a dropdown, and still a group that says nothing about any of
-        # its members - the sort that question belongs to has not been done,
-        # and neither of today's changes did it.
     ]),
     ("Code", "code.html"),
     # LAST, AND IT HAS TO STAY LAST. style.css pins this one right with
