@@ -9,7 +9,7 @@ runs, and the number on the page is wrong by an amount nobody can see.
 
 So the things that would be invisible are measured.
 
-Run:  python3 test_merge.py
+Run:  python3 test_merge.py [--break nan]
 """
 
 import collections
@@ -43,6 +43,11 @@ def ok(cond, label, detail=""):
 
 
 rows = list(csv.DictReader(open(MERGED, encoding="utf-8")))
+if "--break" in sys.argv and "nan" in sys.argv:
+    # the shipped fault (QA 2026-10-22): a missing FishBase name read as "nan"
+    for r in rows:
+        if r["scientific_name"] == "Dolloidraco longedorsalis":
+            r["common_name"] = "nan"
 seed = list(csv.DictReader(open(SEED, encoding="utf-8")))
 prov = list(csv.DictReader(open(PROV, encoding="utf-8")))
 summary = json.load(open(os.path.join(HERE, "outputs", "summary.json"),
@@ -184,6 +189,13 @@ for k, f in summary["class_fits"].items():
         worse.append((k, round(f["r2"], 3)))
 ok(not worse, "each surviving group fit beats the global one on its own group",
    f"global r2 {g['r2']:.3f}" if not worse else f"weaker: {worse}")
+
+# A missing value read through pandas is a float NaN, which str() turns into
+# the word "nan"; 144 fish carried it as their common name (QA 2026-10-22).
+bad = [r["scientific_name"] for r in rows
+       if r["common_name"].strip().lower() in ("nan", "none", "null")]
+ok(not bad, "no common name is a missing value written out as a word",
+   f"{len(bad)}: {bad[:3]}" if bad else "")
 
 print("\n  Coverage against the old table")
 ok(len(rows) > len(seed) * 10, "the table grew by more than tenfold",
