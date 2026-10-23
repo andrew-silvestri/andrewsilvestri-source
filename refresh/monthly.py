@@ -192,6 +192,19 @@ def publish_files(out):
     return [ln.strip() for ln in out.splitlines() if re.match(r"^   [MADRCT]\d*\t\S", ln)]
 
 
+def back_to_master(run, branch, delete):
+    """Leave the run's branch for master, and rebuild the download archives.
+    site/downloads/ is gitignored, so switching branches restores the sources
+    but not the archives built from them: on 2026-10-23 a dry run's rezip left
+    meter-code.zip holding the newly fetched data/fetched.json while master
+    held the old one, and tests/test_generators.py reported DRIFT downloads on
+    every run after it."""
+    run.git("switch", "-q", "master", check=False)
+    if delete:
+        run.git("branch", "-q", "-D", branch, check=False)
+    run.sh(["python", "rezip_downloads.py"], check=False)
+
+
 def ordering(run):
     spec = importlib.util.spec_from_file_location("tg", os.path.join(ROOT, "tests", "test_generators.py"))
     tg = importlib.util.module_from_spec(spec)
@@ -274,8 +287,7 @@ def main():
         if untracked:
             raise Red("new untracked file(s) the registry does not declare: %s" % ", ".join(untracked[:5]))
         if not status:
-            run.git("switch", "-q", "master")
-            run.git("branch", "-q", "-D", branch)
+            back_to_master(run, branch, delete=True)
             runlog("%s NOCHANGE %s: fetched %s, ordering and %d suites green, nothing on the site changed; log %s"
                    % (tag, month, pages or "nothing", len(cmds), os.path.relpath(run.logpath, ROOT)))
             run.log("nothing changed")
@@ -287,8 +299,7 @@ def main():
         run.log("publish.sh --dry-run: %d file(s)\n    %s" % (len(files), "\n    ".join(files)))
         if a.dry_run:
             run.on(branch)
-            run.git("switch", "-q", "master")
-            run.git("branch", "-q", "-D", branch)
+            back_to_master(run, branch, delete=True)
             runlog("%s %s: fetched %s, ordering and %d suites green, publish dry run %d file(s); nothing published, branch deleted; log %s"
                    % (tag, month, pages, len(cmds), len(files), os.path.relpath(run.logpath, ROOT)))
             return 0
@@ -322,10 +333,8 @@ def main():
                 if new:
                     run.git("add", "--", *new, check=False)
                 run.git("commit", "-q", "-m", "refresh %s: RED, kept for reading\n\n%s" % (month, e), check=False)
-            run.git("switch", "-q", "master", check=False)
-            if a.dry_run:
-                run.git("branch", "-q", "-D", branch, check=False)
-            else:
+            back_to_master(run, branch, delete=a.dry_run)
+            if not a.dry_run:
                 kept = "; branch %s kept, not pushed" % branch
         runlog("%s RED %s: %s; nothing published%s; log %s" % (tag, month, e, kept, os.path.relpath(run.logpath, ROOT)))
         return 1

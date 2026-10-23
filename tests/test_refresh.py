@@ -20,6 +20,10 @@
   guard     a run whose tree has left its branch stops before any write.
             --break guard: the check removed - what happened on 2026-10-23,
             when a dry run's cleanup switched another branch to master.
+  archives  a run that returns to master unmerged rebuilds site/downloads,
+            which is gitignored and so not restored by the switch.
+            --break archives: the rebuild removed - the DRIFT downloads of
+            2026-10-23 (meter-code.zip holding a dry run's fetched.json).
   month     only a DONE or NOCHANGE line for this month stops a repeat run;
             a DRY, BUSY or RED line does not.
   publish   publish.sh's --dry-run file lines (letter, TAB, path) are what
@@ -37,7 +41,7 @@ import xml.etree.ElementTree as ET
 HERE = os.path.dirname(os.path.abspath(__file__))
 ROOT = os.path.dirname(HERE)
 RF = os.path.join(ROOT, "refresh")
-BREAKS = ["coverage", "stamp", "preflight", "lock", "guard"]
+BREAKS = ["coverage", "stamp", "preflight", "lock", "guard", "archives"]
 BREAK = sys.argv[sys.argv.index("--break") + 1] if "--break" in sys.argv else None
 if BREAK is not None and BREAK not in BREAKS:
     sys.exit("--break takes one of: " + " | ".join(BREAKS))
@@ -105,6 +109,7 @@ say(not nostamp, "stamp: %d enabled entr(y/ies), each page shows Data through <m
 # preflight
 MUT = {"preflight": ('    if status.strip():\n        return "the tree has', '    if False:\n        return "the tree has'),
        "lock": ("os.O_CREAT | os.O_EXCL | os.O_WRONLY", "os.O_CREAT | os.O_WRONLY"),
+       "archives": ('    run.sh(["python", "rezip_downloads.py"], check=False)', '    pass'),
        "guard": ('        if cur != branch:\n            raise Red("the tree moved', '        if False:\n            raise Red("the tree moved')}
 monthly = load("monthly", mutate=MUT.get(BREAK))
 cases = [(" M site/index.html", "master", {}, False), ("", "rework/takeaway", {}, False),
@@ -158,7 +163,28 @@ log ="\n".join(["2026-11-02 06:00 REFRESH DRY 2026-11: ...", "2026-11-02 06:00 R
 m_ok = (not monthly.done_this_month("2026-11", log) and not monthly.done_this_month("2026-12", log)
         and monthly.done_this_month("2026-11", log + "\n2026-11-04 06:30 REFRESH DONE 2026-11: ...")
         and monthly.done_this_month("2027-01", "2027-01-02 06:00 REFRESH NOCHANGE 2027-01: no page"))
-say(m_ok, "month: DRY, BUSY and RED lines do not end a month; DONE and NOCHANGE do")
+
+
+# leaving a branch unmerged rebuilds the gitignored archives on master
+class RecRun:
+    def __init__(self):
+        self.calls = []
+
+    def git(self, *a, check=True):
+        self.calls.append("git " + " ".join(a))
+        return ""
+
+    def sh(self, cmd, cwd=None, timeout=None, check=True):
+        self.calls.append(" ".join(cmd))
+        return 0, ""
+
+
+rr = RecRun()
+monthly.back_to_master(rr, "data/refresh-2026-10-dry-1", delete=True)
+say(rr.calls[:2] == ["git switch -q master", "git branch -q -D data/refresh-2026-10-dry-1"]
+    and rr.calls[-1] == "python rezip_downloads.py",
+    "archives: a run that leaves its branch unmerged switches to master, then rebuilds site/downloads")
+say(m_ok,"month: DRY, BUSY and RED lines do not end a month; DONE and NOCHANGE do")
 
 # the file list a run logs and counts, against publish.sh's real format
 # (`git diff --cached --name-status | sed 's/^/   /'`: letter, TAB, path).
