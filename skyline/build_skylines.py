@@ -539,7 +539,7 @@ def build(apply=False):
         print("\n  report only. Re-run with --apply.")
         return out
     os.makedirs(os.path.dirname(OUT), exist_ok=True)
-    with open(OUT, "w", encoding="utf-8") as fh:
+    with open(OUT, "w", encoding="utf-8", newline="\n") as fh:
         json.dump({"bins": BINS, "minHeight": MIN_HEIGHT,
                    "ringFloor": RING_FLOOR, "cities": out}, fh,
                   separators=(",", ":"))

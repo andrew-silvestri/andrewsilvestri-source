@@ -196,7 +196,7 @@ def main(which, limit):
     stopped = ""
     try:
         with Lock("topics", HERE) as lk, open(OUT, "a", encoding="utf-8", newline="") as fh:
-            w = csv.writer(fh)
+            w = csv.writer(fh, lineterminator="\n")
             if new:
                 w.writerow(COLS)
             try:

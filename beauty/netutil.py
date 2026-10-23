@@ -70,7 +70,7 @@ class Lock:
         return self
 
     def beat(self):
-        with open(self.path, "w", encoding="utf-8") as fh:
+        with open(self.path, "w", encoding="utf-8", newline="\n") as fh:
             fh.write(f"{os.getpid()} {time.time():.0f} {self.name}\n")
 
     def __exit__(self, *exc):

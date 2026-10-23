@@ -177,7 +177,7 @@ def main():
             r["colonial"] = "no"
 
     with open(args.out, "w", newline="", encoding="utf-8") as fh:
-        w = csv.DictWriter(fh, fieldnames=COLS, extrasaction="ignore")
+        w = csv.DictWriter(fh, fieldnames=COLS, extrasaction="ignore", lineterminator="\n")
         w.writeheader()
         w.writerows(merged)
 
@@ -244,7 +244,7 @@ def main():
                     add(f"    AnAge only  : {', '.join(only_a[:12])}")
 
     text = "\n".join(lines)
-    open(REPORT, "w", encoding="utf-8").write(text + "\n")
+    open(REPORT, "w", encoding="utf-8", newline="\n").write(text + "\n")
     print(text)
     print(f"\nwritten: {args.out}")
     print(f"report : {REPORT}")

@@ -151,7 +151,7 @@ def main(js):
         p = os.path.join(HERE, js)
         os.makedirs(os.path.dirname(p), exist_ok=True)
         json.dump({"terms": TERMS, "n_A": na, "n_B": nb, "r2_A": r2a, "r2_B": r2b,
-                   "categories": rows}, open(p, "w", encoding="utf-8"), indent=1)
+                   "categories": rows}, open(p, "w", encoding="utf-8", newline="\n"), indent=1)
         print(f"\n  -> {os.path.relpath(p, HERE)}")
 
 

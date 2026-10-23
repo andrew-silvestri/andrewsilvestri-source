@@ -116,7 +116,7 @@ def main(n_want):
           f" ({tvd:.3f} vs {tvd_r:.3f})")
 
     with open(OUT, "w", encoding="utf-8", newline="") as fh:
-        w = csv.writer(fh)
+        w = csv.writer(fh, lineterminator="\n")
         w.writerow(["species", "family", "mass_bin", "year_decade"])
         for s in picked:
             f_, mb, dec = info[s]

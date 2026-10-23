@@ -166,7 +166,7 @@ def main():
             have[f"{m}@{a}"] = frame(m, a)
         except Exception as exc:                                # noqa: BLE001
             print(f"    {m}@{a}: {exc}")
-            json.dump({"frames": have}, open(OUT, "w", encoding="utf-8"))
+            json.dump({"frames": have}, open(OUT, "w", encoding="utf-8", newline="\n"))
             sys.exit("fetch_land: a request failed; rerun with --resume. "
                      "Progress was kept.")
         if k % 20 == 0:
@@ -187,7 +187,7 @@ def main():
                  "the first pair is absolute and each pair after it is a step."),
         "frames": have,
     }
-    json.dump(payload, open(OUT, "w", encoding="utf-8"), separators=(",", ":"))
+    json.dump(payload, open(OUT, "w", encoding="utf-8", newline="\n"), separators=(",", ":"))
     print(f"  wrote {os.path.relpath(OUT, HERE)}  "
           f"{os.path.getsize(OUT):,} bytes  {len(have)} frames")
 

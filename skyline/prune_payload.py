@@ -45,7 +45,7 @@ for c in d["cities"]:
         c.pop("listFloor", None)
 out = {"bins": d["bins"], "minHeight": d["minHeight"], "ringFloor": d["ringFloor"],
        "cities": d["cities"]}
-with open(PATH, "w", encoding="utf-8") as fh:
+with open(PATH, "w", encoding="utf-8", newline="\n") as fh:
     json.dump(out, fh, separators=(",", ":"))
 print(f"  {os.path.basename(PATH)}: {before/1024:.0f} kB -> {os.path.getsize(PATH)/1024:.0f} kB, "
       f"{len(out['cities'])} cities, fields: {sorted(out['cities'][0].keys())}")

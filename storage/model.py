@@ -447,15 +447,15 @@ def main():
         **{f"rev_$/kW-yr_{r['duration']}h": round(r["rev_per_kw_yr"], 1) for r in results},
         **{f"cycles_{r['duration']}h": round(r["cycles"], 1) for r in results},
     }
-    with open(f"{OUT}/summary.json", "w") as f:
+    with open(f"{OUT}/summary.json", "w", newline="\n") as f:
         json.dump(summary, f, indent=2)
     with open(f"{OUT}/summary.csv", "w", newline="") as f:
-        w = csv.writer(f)
+        w = csv.writer(f, lineterminator="\n")
         w.writerow(["metric", "value"])
         [w.writerow([k, v]) for k, v in summary.items()]
     # hourly dispatch CSV for the workbook
     with open(f"{OUT}/dispatch_4h.csv", "w", newline="") as f:
-        w = csv.writer(f)
+        w = csv.writer(f, lineterminator="\n")
         w.writerow(["hour", "price_usd_mwh", "charge_mw", "discharge_mw", "soc_mwh"])
         for t in range(len(prices)):
             w.writerow([t, round(prices[t], 2), round(r4["ch"][t], 4),

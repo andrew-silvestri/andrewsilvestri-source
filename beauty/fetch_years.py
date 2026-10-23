@@ -71,7 +71,7 @@ def main():
     n, missing = 0, 0
     today = dt.date.today().isoformat()
     with Lock("years", HERE) as lk, open(OUT, "a", encoding="utf-8", newline="") as fh:
-        w = csv.writer(fh)
+        w = csv.writer(fh, lineterminator="\n")
         if new:
             w.writerow(COLS)
         try:

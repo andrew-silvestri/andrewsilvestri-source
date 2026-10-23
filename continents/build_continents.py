@@ -335,7 +335,7 @@ def present_block():
                           "p90_mm_yr": round(float(np.percentile(sel, 90)), 2)})
 
     with open(FITCSV, "w", encoding="utf-8", newline="") as f:
-        w = csv.writer(f)
+        w = csv.writer(f, lineterminator="\n")
         w.writerow(["sta", "plate", "lat", "lon", "dist_km",
                     "residual_mm_yr", "kept"])
         keptset = {(c, x["sta"]) for c, v in fits.items() for x in v["kept"]}
@@ -632,7 +632,7 @@ def main():
                        "static": static},
     }
     os.makedirs(OUT, exist_ok=True)
-    json.dump(payload, open(PAYLOAD, "w", encoding="utf-8"),
+    json.dump(payload, open(PAYLOAD, "w", encoding="utf-8", newline="\n"),
               indent=1, sort_keys=True)
     print(f"\n  all {len(anchors)} gates passed")
     print(f"  wrote {os.path.relpath(PAYLOAD, HERE)}  "
