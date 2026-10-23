@@ -1,7 +1,7 @@
 # Where the ground goes
 
-Three questions that look like one, with answers five orders of magnitude
-apart: how well present-day plate motion is measured, how much published
+Three questions that look like one, with answers in three different
+units: how well present-day plate motion is measured, how much published
 reconstructions of the past disagree, and how far apart the published futures
 are.
 
@@ -60,7 +60,8 @@ build never touches the network.
 - That a scenario's south polar land is Antarctica. The future grids carry no
   plate identities, so the page says "land in the south polar region".
 - Any cause for the boundaries that have changed speed.
-- Anything past 500 million years, where fewer than half the models reach.
+- Anything past 500 million years, the last age asked for; 4 of the 8
+  models reach that far.
 
 ## The two traps
 
@@ -76,8 +77,8 @@ the result against twelve named points whose answer comes from an ordinary
 world map — an anchor from outside the data, because four grids read by one
 reader cannot catch an error they share.
 
-**A station that is not on its plate.** Kilauea's south flank moves for its
-own reasons and it contaminates the Pacific's fitted rotation; `ILSG` on
+**A station that is not on its plate.** The ground on the Big Island's
+volcanoes moves for its own reasons and it contaminates the Pacific's fitted rotation; `ILSG` on
 Salas y Gomez is filed under the Pacific and is on Nazca. The first ruins the
 rotation, the second ruins the residual while leaving the rotation intact, so
 there are two gates and not one. The exclusion is a stated rule, not a list of

@@ -3,8 +3,9 @@
 Source
 ------
 gws.gplates.org, EarthByte / University of Sydney, serving the same rotation
-models EarthByte publishes on Zenodo. Each model is cited on the page; the
-service itself is infrastructure, not a source.
+models EarthByte publishes on Zenodo. Each model is named in every request
+and in the cache; the page's Sources list does not cite them individually.
+The service itself is infrastructure, not a source.
 
 WHY THIS IS CACHED AND PINNED
 -----------------------------

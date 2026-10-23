@@ -431,8 +431,10 @@ PAGES = {
          'Geophysics, Geosystems</i> 12(11):Q11001, 2011, '
          'doi:10.1029/2011GC003751.',
          "NNR-MORVEL56, the geologically averaged plate motions, with their "
-         "95% uncertainties. Not openly licensed: the authors reserve "
-         "commercial rights."),
+         "95% uncertainties. The paper states 'This paper is not subject to "
+         "U.S. copyright'; the MORVEL website reserves its authors' "
+         "commercial rights to the graphics and results generated from "
+         "that site."),
         ("MORVEL's averaging interval is not one number",
          'DeMets, C., Gordon, R.G. &amp; Argus, D.F., <i>Geophysical Journal '
          'International</i> 181(1):1-80, 2010, '
@@ -445,7 +447,9 @@ PAGES = {
          'Planetary Change</i> 169:133-144, 2018, '
          'doi:10.1016/j.gloplacha.2018.07.015.',
          "The one paper that built all four future geometries, in a "
-         "deliberately standardised way, and its own description of them."),
+         "deliberately standardised way, and its statement that the "
+         "supercontinent-cycle modes they stand for 'should be treated as "
+         "end-members of a spectrum of possibilities'."),
         ("The grids are a digitisation of maps that were drawn",
          'Davies, H.S., Green, J.A.M. &amp; Duarte, J.C., <i>Earth System '
          'Dynamics</i> 11(1):291-299, 2020, doi:10.5194/esd-11-291-2020. '
@@ -456,9 +460,10 @@ PAGES = {
          "book",
          'Nield, T., <i>Supercontinent: Ten Billion Years in the Life of Our '
          'Planet</i>, Granta, 2007.',
-         "Novopangaea's only source. Roy Livermore devised it for the BBC "
-         "series The Future Is Wild in the late 1990s; it has no "
-         "peer-reviewed primary source."),
+         "Novopangaea's only source. Roy Livermore devised it in the late "
+         "1990s for The Future Is Wild, a 2002 television series "
+         "co-produced by Arte, ZDF, ORF, Mediaset, Animal Planet and "
+         "Discovery; it has no peer-reviewed primary source."),
         ("the field's own review names uncertainty quantification as an "
          "open problem",
          'Seton, M. <i>et al.</i>, <i>Nature Reviews Earth &amp; Environment</i> '
@@ -468,15 +473,18 @@ PAGES = {
          'Buffan, L., Jones, L.A., Domeier, M., Scotese, C.R., Zahirovic, S. '
          '&amp; Varela, S., <i>Methods in Ecology and Evolution</i> '
          '14:3007-3019, 2023, doi:10.1111/2041-210X.14204.',
-         "Inter-model disagreement measured on a global grid, and the caveat "
-         "that shared ancestry makes the true spread of admissible "
-         "reconstructions wider than the measured spread between models."),
-        ("cannot determine its longitude at all",
+         "Inter-model disagreement measured on a global grid, and the "
+         "common ancestry it documents between several of the models. That "
+         "the true spread is therefore wider is this page's inference, not "
+         "the paper's."),
+        ("cannot determine its longitude at all unless further assumptions "
+         "are made",
          'M&#252;ller, R.D. <i>et al.</i>, <i>Solid Earth</i> 13(7):1127-1159, '
          '2022, doi:10.5194/se-13-1127-2022.',
-         "Verbatim: because the Earth's magnetic dipole field is radially "
-         "symmetric, palaeo-longitudinal information cannot be determined "
-         "from palaeomagnetic data alone."),
+         "Verbatim: since the Earth's magnetic dipole field is radially "
+         "symmetric, paleo-longitudinal information cannot be determined "
+         "from paleomagnetic data alone unless further assumptions are "
+         "made."),
         ("Equal Earth, which is equal-area",
          'Savri&#269;, B., Patterson, T. &amp; Jenny, B., <i>International '
          'Journal of Geographical Information Science</i> 33(3):454-465, 2019, '
