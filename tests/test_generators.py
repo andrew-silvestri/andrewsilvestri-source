@@ -165,10 +165,7 @@ GENERATORS = [
     # made by build_aga8.py) and inlines it with engine.js into site/meter-app.html.
     ("meter app: meter/build_app.py",
      ["build_app.py"], "meter", "site"),
-    # takeaway/build_app.py inlines engine.js and the payload's record into
-    # site/takeaway-app.html.
-    ("takeaway app: takeaway/build_app.py",
-     ["build_app.py"], "takeaway", "site"),
+    # takeaway/build_app.py and site/takeaway-app.html dropped 2026-10-23 (R2).
     ("downloads: rezip_downloads.py", ["rezip_downloads.py"], ".", "zips"),
     ("sitemap: build_sitemap.py --apply",
      ["build_sitemap.py", "--apply"], ".", "site"),

@@ -5,6 +5,7 @@ broken run must exit 1 (HANDOFF trap 26). Run them all:
 
     python test_takeaway.py
     python test_takeaway.py --break month|district|days|tracker|employer|sign|page|pdq
+                                    |preanchor|gap|t0|tarzan|count|app
 
 1. Reconciliation (the packet's test). The monthly ratio of the RRC's Texas
    Permian (gross) to EIA's Permian region (marketed), over the settled
@@ -40,10 +41,10 @@ broken run must exit 1 (HANDOFF trap 26). Run them all:
    the last historical month equals a hand sum of that month's additions
    since t0 less k times EIA's change.
    --break sign: the production term's sign flipped. Must fail.
-6. Page numbers against the payload: numbers re-derived here from the
-   payload (not through update_page.values) must be the ones the shipped
-   page prints.
-   --break page: one payload number perturbed before deriving. Must fail.
+6. Page numbers against the payload (R2 page): numbers re-derived here from
+   the payload (not through update_page.values) must be the ones the shipped
+   page prints, takeaways and readings table included.
+   --break page: the default reading perturbed before deriving. Must fail.
 7. The PDQ dump reduction (Q2, PLAN 3.5), read from the file the build reads
    (data/pdq_district_month.csv, re-hashed by sources.pdq_reduced): no
    disposition row with vented or flared gas lacks a lease-cycle row; lease
@@ -54,7 +55,28 @@ broken run must exit 1 (HANDOFF trap 26). Run them all:
    --break pdq: read the dump's DISTRICT_NO as if it were the district's
    name, the likeliest slip (the dump's "08" is district 7B). Must fail.
 
-The JavaScript engine is held to model.py by tests/test_parity_takeaway.py.
+8. (R2) The lines counted before the May 2022 anchor agree with an
+   independent read of the tracker, and the hero's pipe line at its first
+   month is minus exactly those and the confirmed lines up to t0.
+   --break preanchor: a line (Gulf Coast Express) missing. Must fail.
+9. (R2) The DPR splice: the frozen ratio inside its fitted range; the live
+   overlap, while it is 12 months or more, still inside it; and a STEO window
+   that no longer meets DPR (the 2028 release) stops the build (review 1).
+   --break gap: p_long without its gap check. Must fail.
+10. (R2) The hero's gap is model.headroom() from the raw files, every month,
+   and the default reading equals the record's own H.
+   --break t0: recompute with t0 a month later. Must fail.
+11. (R2) Readings: Hugh Brinson at full = H_with_expected; Tarzan dropped =
+   default less its capacity; the k readings in k order.
+   --break tarzan: the Tarzan reading set to the default. Must fail.
+12. (R2) The hero's bars are Reuters's counts as cited.py parses them from the
+   quote; a year the list does not name is a dash, never 0 (review 5).
+   --break count: one bar's value moved. Must fail.
+13. (R2) The page has no rail, no app link and no old figure, and has its stamp
+   and hero.
+   --break app: a link to takeaway-app.html. Must fail.
+
+The app, its engine and tests/test_parity_takeaway.py were dropped in R2.
 """
 import datetime as dt
 import hashlib
@@ -256,50 +278,167 @@ def headroom_check():
 
 
 # ------------------------------------------------------------------ 6
-def page_numbers():
-    pay = json.load(open(PAYLOAD, encoding="utf-8"))
-    if BREAK == "page":
-        pay["steo"]["P"][pay["steo"]["last_historical"]] += 0.37
+def _page_text():
     t = open(PAGE, encoding="utf-8").read()
     main = t[t.index("<main"):t.index("<h2>Sources") if "<h2>Sources" in t else len(t)]
-    text = html.unescape(re.sub(r"\s+", " ", re.sub(r"<[^>]+>", " ", main))).replace("−", "-")
-    last, t0 = pay["steo"]["last_historical"], pay["t0"]
-    P = pay["steo"]["P"]
-    k = pay["k"]["default"]
-    ent = pay["entries"]
-    conf = [e for e in ent if e["status"] == "confirmed"]
-    exp = [e for e in ent if e["status"] == "expected"]
-    dP = P[last] - P[t0]
-    added = sum(e["bcfd"] for e in conf if t0 < e["month"] <= last)
-    fl = pay["flaring"]
-    c = [x for x in fl["clusters"] if "diff" in x]
+    main = re.sub(r'<script type="application/json".*?</script>', " ", main, flags=re.S)
+    return t, html.unescape(re.sub(r"\s+", " ", re.sub(r"<[^>]+>", " ", main))).replace("−", "-")
+
+
+def page_numbers():
+    pay = json.load(open(PAYLOAD, encoding="utf-8"))
+    S = pay["story"]
+    if BREAK == "page":
+        S["readings"][0]["H"] += 0.37
+    _, text = _page_text()
+    Y = {r["year"]: r for r in S["years"]}
+    since21 = [r for r in S["years"] if "vf_share" in r and r["year"] >= 2021]
+    big = S["lines"]
+    months = [l["months_default"] for l in big] + [l["months_low"] for l in big]
     derived = {
-        "production now": f"{P[last]:.2f} Bcf/d",
-        "pipe added since t0": f"{added:.2f} Bcf/d of pipe",
-        "production rise": f"risen {dP:.2f} Bcf/d",
-        "gas to move": f"of which {k * dP:.2f} has to leave",
-        "headroom": f"at {added - k * dP:+.2f} Bcf/d: on this accounting",
-        "k": f"k = {k:.3f}",
-        "in-service total": f"{len(conf)} additions are in service, {sum(e['bcfd'] for e in conf):.2f} Bcf/d",
-        "expected total": f"Another {sum(e['bcfd'] for e in exp):.2f} Bcf/d",
-        "pin before": f"grew {pay['pin']['before']:.2f} Bcf/d",
-        "pin after": f"and {pay['pin']['after']:.2f} Bcf/d over the three after",
-        "flaring 2019": f"averaged {100 * c[0]['before']:.2f} per cent",
-        "flaring 2021": f"went from {100 * c[1]['before']:.2f} to {100 * c[1]['after']:.2f} per cent",
-        "flaring Matterhorn group": f"from {100 * c[2]['before']:.2f} to {100 * c[2]['after']:.2f} per cent",
-        "flaring t0 test": f"{100 * fl['check']['before']:.2f} per cent of gross withdrawals",
+        "pace range (takeaway 1)": f"on average, {S['pace']['k_fit']:.1f} to {S['pace']['default']:.1f} billion cubic feet",
+        "months range (takeaway 1)": f"holds only {min(months):.0f} to {max(months):.0f} months",
+        "flaring 2019 share": f"{100 * Y[2019]['vf_share']:.1f} per cent of their gas in 2019",
+        "flaring max since 2021": f"no more than {100 * max(r['vf_share'] for r in since21):.1f} per cent",
+        "flaring 2019 volume": f"{Y[2019]['vf_bcfd']:.2f} Bcf/d was vented or flared in 2019",
+        "pace default": f"grown by {S['pace']['default']:.2f} Bcf/d a year",
+        "Matterhorn recovery": f"Matterhorn Express {big[3]['recovery_months']}.",
+        "default reading row": f"Default: k = {pay['k']['default']:.3f}, lines confirmed in service "
+                               f"{S['readings'][0]['H']:+.2f} {len(S['readings'][0]['below'])}",
+        "headline magnitude": f"carry {abs(S['readings'][0]['H']):.2f} Bcf/d",
+        "two-point k": f"as full as August 2024 is {S['k_fit']['list']:.2f}",
+        "2019 reference, default": f"gives {S['H_ref_2019']['default']:+.2f} Bcf/d of room that month",
+        "EIA Permian k": f"or {S['k_permian']['net']:.3f} less fuel",
         "oil-well share": f"{100 * pay['csgd']['share']:.0f} per cent of the gas",
-        "reconciliation": f"(mean {pay['reconcile']['mean']:.2f})",
-        "anchor": f"{P[pay['anchor']['month']]:.2f} against",
+        "k default": f"({pay['k']['default']:.3f})",
     }
     missing = [n for n, s in derived.items() if s not in text]
     check("6 numbers derived from the payload are the ones the page prints", not missing,
           f"{len(derived)} checked" + (f"; not on the page: {missing}" if missing else ""))
 
 
+# ------------------------------------------------------------------ 8
+def pre_anchor_check():
+    """The lines counted before the anchor, read independently from the tracker,
+    and the hero's pipe line at its first month built from exactly them."""
+    t = _tracker_independently()
+    pay = json.load(open(PAYLOAD, encoding="utf-8"))
+    S = pay["story"]
+    bad = []
+    for e in S["pre_anchor"]:
+        cap_raw, cd, status = t[e["name"]]
+        if not (status == "Completed" and isinstance(cd, dt.datetime) and e["month"] == f"{cd.year}-{cd.month:02d}"
+                and abs(e["bcfd"] * 1000 - float(cap_raw)) < 1e-9):
+            bad.append(e["name"])
+    check("8 pre-anchor lines agree with an independent read of the tracker", S["pre_anchor"] and not bad, str(bad))
+    pipe0 = S["hero"]["pipe"][0]
+    if BREAK == "preanchor":
+        # the fault: a line missing from the list (here Gulf Coast Express)
+        pipe0 += next(e["bcfd"] for e in S["pre_anchor"] if e["name"] == "Gulf Coast Express")
+    x0, t0 = S["hero"]["x"][0], pay["t0"]
+    want = -(sum(e["bcfd"] for e in S["pre_anchor"] if e["month"] > x0)
+             + sum(e["bcfd"] for e in pay["entries"] if e["status"] == "confirmed" and e["month"] <= t0))
+    check(f"8 the hero's pipe line at {x0} is minus every listed line from then to {t0}", abs(pipe0 - want) < 1e-9,
+          f"{pipe0:+.3f} vs {want:+.3f}")
+
+
+# ------------------------------------------------------------------ 9
+def splice_check():
+    import story
+    lo, hi = story.SPLICE_RANGE
+    check("9 the frozen splice ratio lies inside the range it was fitted over", lo <= story.SPLICE <= hi,
+          f"{story.SPLICE} in {story.SPLICE_RANGE}")
+    steo, dpr = sources.steo_permian(), sources.dpr_permian()
+    ov = [t for t in steo if t in dpr]
+    if len(ov) >= 12:
+        m = sum(steo[t] / dpr[t] for t in ov) / len(ov)
+        check("9 the live STEO/DPR overlap still averages inside the frozen range", lo <= m <= hi,
+              f"{len(ov)} months, mean {m:.4f}")
+    else:
+        print(f"       overlap now {len(ov)} months (< 12): the frozen ratio stands alone, as designed")
+    # the 2028 case: STEO's window starts after DPR ends; p_long must refuse
+    late = {t: v for t, v in steo.items() if t >= (2024, 1)}
+    orig = story.p_long
+    if BREAK == "gap":
+        story.p_long = lambda P, d: {**{t: v * story.SPLICE for t, v in d.items()}, **P}   # the check removed
+    try:
+        story.p_long(late, dpr)
+        raised = False
+    except RuntimeError:
+        raised = True
+    story.p_long = orig
+    check("9 a STEO window that no longer meets DPR stops the build", raised)
+
+
+# ------------------------------------------------------------------ 10
+def hero_check():
+    """The hero's gap is model.headroom(), month by month, from the raw files."""
+    import story
+    pay = json.load(open(PAYLOAD, encoding="utf-8"))
+    S = pay["story"]
+    t0 = tuple(int(x) for x in pay["t0"].split("-"))
+    if BREAK == "t0":
+        t0 = M.add_months(t0, 1)
+    P = story.p_long(sources.steo_permian(), sources.dpr_permian())
+    adds = [(tuple(int(x) for x in e["month"].split("-")), e["bcfd"]) for e in S["pre_anchor"]] + \
+           [(tuple(int(x) for x in e["month"].split("-")), e["bcfd"]) for e in pay["entries"] if e["status"] == "confirmed"]
+    months = [tuple(int(x) for x in k.split("-")) for k in S["hero"]["x"]]
+    H = M.headroom(P, adds, pay["k"]["default"], t0, months)
+    bad = [m for i, m in enumerate(months) if abs((S["hero"]["pipe"][i] - S["hero"]["gas"][i]) - H[m]) > 1e-9]
+    check("10 hero: pipe minus gas = model.headroom() every month", not bad,
+          f"{len(months)} months, {len(bad)} differ" + (f", first {bad[0]}" if bad else ""))
+    d = next(r for r in S["readings"] if r["name"] == "default")
+    check("10 the default reading = the record's own H at the last month (build_takeaway path)",
+          abs(d["H"] - pay["H"][pay["steo"]["last_historical"]]) < 1e-9, f"{d['H']:+.4f}")
+
+
+# ------------------------------------------------------------------ 11
+def readings_check():
+    pay = json.load(open(PAYLOAD, encoding="utf-8"))
+    S = pay["story"]
+    rd = {r["name"]: r for r in S["readings"]}
+    last = pay["steo"]["last_historical"]
+    hb = rd["hb_full"]["H"]
+    if BREAK == "tarzan":
+        rd["no_tarzan"]["H"] = rd["default"]["H"]
+    tz = next(e for e in pay["entries"] if e["name"].startswith("Tarzan"))
+    check("11 Hugh Brinson at full = the build's H_with_expected at the last month",
+          abs(hb - pay["H_with_expected"][last]) < 1e-9, f"{hb:+.4f}")
+    check("11 Tarzan dropped = default less Tarzan's capacity",
+          abs(rd["no_tarzan"]["H"] - (rd["default"]["H"] - tz["bcfd"])) < 1e-9, f"{rd['no_tarzan']['H']:+.4f}")
+    check("11 the k readings fall in k order (a higher k, less room)",
+          rd["k_hi"]["H"] < rd["default"]["H"] < rd["k_lo"]["H"] < rd["k_permian"]["H"] < rd["k_fit"]["H"])
+
+
+# ------------------------------------------------------------------ 12
+def bars_check():
+    import cited
+    t, _ = _page_text()
+    spec = json.loads(re.search(r'<script type="application/json" class="scrolly-spec">(.*?)</script>', t, re.S)
+                      .group(1).replace("<\\/", "</"))
+    bars = spec["under"][0]["bars"]
+    if BREAK == "count":
+        bars[0]["value"] += 1
+    rc = cited.reuters_counts()
+    bad = [b for b in bars if (int(b["at"]) in rc and (b["value"], b["text"]) != (rc[int(b["at"])], str(rc[int(b["at"])])))
+           or (int(b["at"]) not in rc and (b["value"], b["text"]) != (0, "–"))]
+    check("12 the hero's bars are Reuters's counts, unnamed years a dash", bars and not bad, str(bad[:2]))
+
+
+# ------------------------------------------------------------------ 13
+def page_shape():
+    t, _ = _page_text()
+    if BREAK == "app":
+        t = t.replace("</main>", '<a href="takeaway-app.html">app</a></main>')
+    probs = [p for p, bad in (("marginalia", 'class="marginalia' in t), ("app link", "takeaway-app.html" in t),
+                              ("old figure", "takeaway_headroom" in t or "takeaway_capacity" in t),
+                              ("no stamp", 'class="stamp"' not in t), ("no hero", 'id="takeaway-hero"' not in t)) if bad]
+    check("13 page: no rail, no app, no old figures; stamp and hero present", not probs, str(probs))
+
+
 def main():
     for f in (reconciliation, district_identity, units, capacity_check, employer_check, headroom_check, page_numbers,
-              pdq_check):
+              pdq_check, pre_anchor_check, splice_check, hero_check, readings_check, bars_check, page_shape):
         f()
     print(("FAIL: " + ", ".join(fails)) if fails else "all checks pass", "(break run: " + BREAK + ")" if BREAK else "")
     return 1 if fails else 0

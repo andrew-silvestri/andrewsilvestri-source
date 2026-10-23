@@ -290,7 +290,8 @@ BUILDERS = [
     ("longevity-quotient/fig_lq_explained.py", "longevity-quotient"),
     ("build_skyline_figure.py", "."),
     ("meter/fig_meter.py", "meter"),
-    ("takeaway/fig_takeaway.py", "takeaway"),
+    # takeaway/fig_takeaway.py dropped 2026-10-23 (R2): the page has no PNG figures; its
+    # charts are SVG from site/assets/charts.js, held by tests/test_kit.js.
 ]
 
 # outputs/ name -> site/assets/ name, where they differ. sync_assets.py's

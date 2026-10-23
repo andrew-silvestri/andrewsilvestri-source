@@ -11,8 +11,14 @@
 - EIA-NaturalGasPipelineProjectsAug2026.xlsx: the pipeline projects tracker.
   Index https://www.eia.gov/naturalgas/pipelines/
 
-Run:  python fetch_eia.py
+Run:  python fetch_eia.py              every file
+      python fetch_eia.py --monthly    STEO only: what the monthly refresh
+                                       fetches (refresh/registry.py). The
+                                       tracker, DPR and the annual series stay
+                                       at the editions the page names.
 """
+import sys
+
 from netfetch import fetch
 
 FILES = {
@@ -45,6 +51,9 @@ FILES = {
         "https://www.eia.gov/naturalgas/pipelines/EIA-NaturalGasPipelineProjectsAug2026.xlsx",
 }
 
+MONTHLY = ("STEO_m.xlsx",)
+
 if __name__ == "__main__":
     for name, url in FILES.items():
-        fetch(url, name)
+        if "--monthly" not in sys.argv or name in MONTHLY:
+            fetch(url, name)

@@ -41,6 +41,7 @@ def digest(path):
 def main():
     css = digest(os.path.join(SITE, "style.css"))
     vers = {a: digest(os.path.join(SITE, a)) for a in scripts()}
+    sheets = {"assets/" + os.path.basename(c): digest(c) for c in glob.glob(os.path.join(SITE, "assets", "*.css"))}
     for d in IMAGE_DIRS:
         for ext in ("*.png", "*.svg", "*.mp4", "*.webp"):
             for img in glob.glob(os.path.join(SITE, d, ext)):
@@ -51,6 +52,11 @@ def main():
         o = t
         t = re.sub(r'href="style\.css(\?v=[0-9a-f]+)?"',
                    f'href="style.css?v={css}"', t)
+        # assets/*.css (the insight kit's scrolly.css, R1): takeaway.html was
+        # the first live page to link one, and it shipped unstamped (R2,
+        # 2026-10-23) because only style.css was matched here.
+        for c, v in sheets.items():
+            t = re.sub(r'href="' + re.escape(c) + r'(\?v=[0-9a-f]+)?"', f'href="{c}?v={v}"', t)
         for a, v in vers.items():
             # src / data-src (the motion-gated <video> pattern) / poster /
             # srcset (a <picture>'s narrow variant, one file per source)

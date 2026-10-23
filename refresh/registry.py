@@ -36,13 +36,16 @@ ENTRIES = [
     {
         "page": "takeaway",
         "cwd": "takeaway",
-        "fetch": [["python", "fetch_eia.py"], ["python", "fetch_rrc.py"],
-                  ["python", "fetch_pdq_districts.py"]],
+        # R2 (2026-10-23): production only. The pipeline tracker carries
+        # hand-checked overlays and the PDQ dump is 3.8 GB, so both stay at the
+        # editions the page names beside its stamp; a new edition is a change
+        # with its own review. update_page.claims() stops the build if a new
+        # month contradicts the page's words, and the suite then publishes
+        # nothing.
+        "fetch": [["python", "fetch_eia.py", "--monthly"]],
         "build": [["python", "build_takeaway.py"]],
         "keys": [],
-        "enabled": False,
-        "why": "R2 reworks the page. fetch_eia.py names a month-stamped pipeline "
-               "workbook (EIA-NaturalGasPipelineProjectsAug2026.xlsx) and the PDQ dump "
-               "is up to 5 GB; R2 decides what the monthly run fetches.",
+        "enabled": True,
+        "why": "",
     },
 ]
