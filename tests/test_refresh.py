@@ -17,6 +17,8 @@
             would start in a tree a terminal is working in.
   month     only a DONE or NOCHANGE line for this month stops a repeat run;
             a DRY, BUSY or RED line does not.
+  publish   publish.sh's --dry-run file lines (letter, TAB, path) are what
+            monthly.publish_files() counts.
   task      the XML the task is registered from asks for StartWhenAvailable,
             the monthly and the daily trigger, and this repository's
             monthly.py. (What Windows holds is read back by
@@ -110,6 +112,16 @@ m_ok = (not monthly.done_this_month("2026-11", log) and not monthly.done_this_mo
         and monthly.done_this_month("2026-11", log + "\n2026-11-04 06:30 REFRESH DONE 2026-11: ...")
         and monthly.done_this_month("2027-01", "2027-01-02 06:00 REFRESH NOCHANGE 2027-01: no page"))
 say(m_ok, "month: DRY, BUSY and RED lines do not end a month; DONE and NOCHANGE do")
+
+# the file list a run logs and counts, against publish.sh's real format
+# (`git diff --cached --name-status | sed 's/^/   /'`: letter, TAB, path).
+# A first version split on a space and would have counted zero files.
+sample = ("   1 file changed, 2 insertions(+)\n\n   Dry run: nothing committed or pushed.\n"
+          "   Changed paths (first 40):\n\n   M\tmeter.html\n   A\tassets/clips/x.mp4\n   R100\ta.png\tb.png\n"
+          "   M not-a-file-line\n")
+got = monthly.publish_files(sample)
+say(got == ["M\tmeter.html", "A\tassets/clips/x.mp4", "R100\ta.png\tb.png"],
+    "publish list: publish.sh's name-status lines are read, prose lines are not (%d read)" % len(got))
 
 # task
 reg = load("register_task")

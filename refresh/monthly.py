@@ -40,6 +40,7 @@ import argparse
 import datetime
 import importlib.util
 import os
+import re
 import subprocess
 import sys
 import time
@@ -150,9 +151,11 @@ def entries(with_pages, dry, reg=None):
 
 
 def publish_files(out):
-    """The file lines publish.sh --dry-run prints (indented status + path)."""
-    return [ln.strip() for ln in out.splitlines()
-            if len(ln) > 4 and ln.startswith("   ") and ln.strip()[:2] in ("M ", "A ", "D ", "R ")]
+    """The file lines publish.sh --dry-run prints: `git diff --cached
+    --name-status | head -40`, indented three spaces, so a status letter, a
+    TAB and a path ("   M\\tindex.html"). At most 40; the shortstat line above
+    them carries the full count."""
+    return [ln.strip() for ln in out.splitlines() if re.match(r"^   [MADRCT]\d*\t\S", ln)]
 
 
 def ordering(run):
