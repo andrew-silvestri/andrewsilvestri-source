@@ -143,6 +143,35 @@ PROJECTS = [
 # New Mexico to Waha, inside the basin by the rule above.
 PRE_ANCHOR = ["Gulf Coast Express", "Permian Highway Pipeline Project", "Whistler Pipeline Project"]
 
+# Before the anchor, as capacity (R2, 2026-10-23). The hero draws capacity
+# from January 2018, so the months before May 2022 are the anchor less what
+# entered service between them and the anchor, by the same rule as
+# PROJECTS: origin in the basin, carries gas out of it. Read from the
+# tracker's historical sheet by exact name; the tracker's Completed Date is
+# the month. Each line's reason is the tracker's own note where it has one.
+# This list is a choice the page shows the dependence on (D-24's lesson): it
+# moves the 2019 back-cast, not the record since the anchor.
+PRE_ANCHOR_TAKEAWAY = [
+    # TX, NM, AZ, CA in the tracker's state column, no note: westbound out of
+    # the basin. Counted and flagged, like South Mainline below.
+    ("Permian North Expansion Project", "westbound TX to CA; no tracker note (ambiguous)"),
+    ("North Texas Pipeline Expansion/Old Ocean Pipeline", "tracker note: expansion on North Texas pipeline to provide Permian takeaway"),
+    ("ONEOK WestTex Expansion", "tracker note: Permian takeaway to Texas panhandle"),
+    ("Gulf Coast Express", "tracker note: takeaway capacity from Permian to Gulf Coast"),
+    # El Paso's westbound mainline from the Permian to Arizona, California and
+    # Mexico; the tracker has no note. Counted, and flagged on the page as the
+    # one ambiguous entry.
+    ("South Mainline Expansion Project", "El Paso westbound from TX and NM; no tracker note (ambiguous)"),
+    ("Permian Highway Pipeline Project", "tracker note: takeaway capacity out of Permian to Gulf Coast"),
+    ("Whistler Pipeline Project", "tracker note: takeaway out of Permian/Waha to Agua Dulce"),
+]
+# Not counted before the anchor, by the rule (each ends at Waha or inside the
+# basin): Double E (EIA counted it as takeaway in 2021; the page shows what
+# counting it would do), Agua Blanca and its expansion, Roadrunner Eastbound,
+# Red Bluff Express, Lockridge Extension, Sendero Carlsbad Gateway, Carlsbad
+# South, Northern Delaware Basin Expansion.
+PRE_ANCHOR_SEEN = "Double E Pipeline"
+
 EXCLUDED = {
     "Apex": "status On Hold",
     "Blackfin Pipeline": "starts in Colorado County, downstream of the basin",
@@ -230,6 +259,21 @@ def pre_anchor():
         out.append({"name": name, "month": (cd.year, cd.month), "bcfd": _mmcfd(rec["Additional Capacity (MMcf/d)"]) / 1000,
                     "status": "confirmed", "source": (TRACKER_CITE, None, f"Status Completed, Completed Date {cd.date()}"),
                     "note": rec["Project Notes"]})
+    return out
+
+
+def pre_anchor_takeaway(names=None):
+    """PRE_ANCHOR_TAKEAWAY as entries: name, month, Bcf/d, reason. All must be
+    Completed, with a Completed Date before the anchor."""
+    t = _tracker()
+    out = []
+    for name, why in PRE_ANCHOR_TAKEAWAY if names is None else [(n, "") for n in names]:
+        rec = t[("hist", name)]
+        cd = rec["Completed Date"]
+        assert str(rec["Status"]).strip() == "Completed" and isinstance(cd, dt.datetime), (name, rec["Status"], cd)
+        assert (cd.year, cd.month) < ANCHOR["date"], (name, cd)
+        out.append({"name": name, "month": (cd.year, cd.month),
+                    "bcfd": _mmcfd(rec["Additional Capacity (MMcf/d)"]) / 1000, "why": why})
     return out
 
 

@@ -41,7 +41,7 @@ const PAGES = ['about', 'beauty', 'climate-cost', 'code', 'continents', 'heat', 
    from tests/ and never from site/, so the kit is measured by this gate as it
    ships before any page uses it (packet R1: the kit passes the existing gates
    on a fixture page). Built by tests/fixtures/build_kit_fixture.py. */
-const APPS = ['climate-cost-app', 'continents-app', 'longevity-app', 'meter-app', 'skyline-app', 'takeaway-app'];
+const APPS = ['climate-cost-app', 'continents-app', 'longevity-app', 'meter-app', 'skyline-app'];   // takeaway-app dropped 2026-10-23 (R2: the page has no app)
 const MIME = { '.html': 'text/html', '.css': 'text/css', '.js': 'text/javascript', '.json': 'application/json', '.png': 'image/png', '.webp': 'image/webp', '.svg': 'image/svg+xml', '.woff2': 'font/woff2', '.mp4': 'video/mp4', '.ico': 'image/x-icon' };
 const BREAK = process.argv.includes('--break');
 const QUICK = process.argv.includes('--quick');

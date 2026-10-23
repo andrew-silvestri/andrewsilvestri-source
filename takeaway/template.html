@@ -2,7 +2,7 @@
 <html lang="en"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>When the pipe is full — Andrew Silvestri</title>
-<meta name="description" content="Permian gas production against the pipeline capacity that carries it out of the basin, from public data, and what venting and flaring did as the gap closed and reopened.">
+<meta name="description" content="Permian gas fills each new pipeline out of the basin in a year to a year and a half; then the price at the Waha hub goes below zero. From EIA, Railroad Commission and pipeline-tracker data.">
 <link rel="icon" href="favicon.svg" type="image/svg+xml">
 <link rel="alternate icon" href="favicon.png">
 <link rel="apple-touch-icon" href="apple-touch-icon.png">
@@ -10,81 +10,77 @@
 <link rel="canonical" href="https://andrewsilvestri.com/takeaway.html">
 <meta property="og:type" content="website">
 <meta property="og:title" content="When the pipe is full — Andrew Silvestri">
-<meta property="og:description" content="Permian gas production against the pipeline capacity that carries it out of the basin, from public data, and what venting and flaring did as the gap closed and reopened.">
+<meta property="og:description" content="Permian gas fills each new pipeline out of the basin in a year to a year and a half; then the price at the Waha hub goes below zero. From EIA, Railroad Commission and pipeline-tracker data.">
 <meta property="og:url" content="https://andrewsilvestri.com/takeaway.html">
 <script>try{document.documentElement.dataset.motion=matchMedia('(prefers-reduced-motion: reduce)').matches?'off':'on';}catch(e){document.documentElement.dataset.motion='on';}</script>
 <link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="assets/scrolly.css">
 </head><body>
 {{nav}}
-<main class="notes">
-<h1>When the pipe is full</h1>
-<p class="dim">Permian gas production set against the pipeline capacity that carries it out of the basin, from public data, and what venting and flaring did as the gap closed and reopened.</p>
+<main>
+<h1>Permian gas fills each new pipeline in a year to a year and a half, and then sellers pay to get rid of it</h1>
+<p class="dim">Oil wells in West Texas and New Mexico bring gas up with the oil whether or not there is a pipe to carry it away. Pipelines out of the basin arrive every few years; production fills each one, and when they are full the price at the Waha hub, where the basin's gas is traded, falls below zero.</p>
+{{stamp}}
+<p class="stamp">Venting and flaring through {{vf_last_long}}, from the Railroad Commission's dump of {{vf_extract}}; pipelines from EIA's pipeline tracker, {{tracker_edition}} edition.</p>
+{{takeaways}}
 
-<aside class="marginalia" style="grid-row: span {{span}}" aria-label="On this page">
-<p class="lab">On this page</p>
-<ul>
-<li><b>Production, {{last_short}}</b><span class="v">{{P_last}} Bcf/d</span></li>
-<li><b>Pipe added since {{t0_short}}</b><span class="v">{{cap_t0}} Bcf/d</span></li>
-<li><b>Gas to move since {{t0_short}}</b><span class="v">{{kdP_t0}} Bcf/d</span></li>
-<li><b>Headroom since {{t0_short}}</b><span class="v">{{H_last}} Bcf/d</span></li>
-</ul>
-</aside>
-<aside class="marginalia right" style="grid-row: span {{span}}">
-<ul>
-<li><b>k, default</b><span class="v">{{k_def}}</span></li>
-<li><b>Expected, being built</b><span class="v">{{exp_built}} Bcf/d</span></li>
-<li><b>Expected, not yet begun, by {{exp_last_year}}</b><span class="v">{{exp_not}} Bcf/d</span></li>
-<li><b>Permian vented or flared, {{vf_last_short}}</b><span class="v">{{vf_end}}%</span></li>
-<li><b>Gas from oil wells, {{csgd_year}}</b><span class="v">{{csgd_pct}}%</span></li>
-</ul>
-</aside>
+<h2>Gas grows every year; pipe arrives in steps</h2>
 
-<p>Most of the gas in the Permian Basin comes up with oil. In {{csgd_year}}, {{csgd_pct}} per cent of the gas the Texas Railroad Commission recorded in the basin's three districts came from oil wells, and an oil well does not stop producing gas just because the gas has nowhere to go, though an operator can shut the well in, as many did in 2020. When the pipelines out of the basin are full, the price at the Waha hub can fall below zero, and gas that cannot be moved is burned or released at the lease. The Commission's own account of flaring says as much: in existing fields, flaring "may be necessary because existing pipelines may have reached capacity".</p>
+<p>The chart sets two things against each other, both measured from {{t0_long}}, the month EIA reported Waha's price below zero "every day since July 26". One is pipe capacity out of the basin; each step is a line entering service. The other is the gas that needs a pipe out: production, times the share k of it that is not taken out as liquids or burned as fuel in the field and at plants. That share is uncertain, so the gas is drawn twice: at the statewide figure EIA's data give ({{k_def}}), and at the lower share that makes mid-2019, when EIA said the pipes were constrained, as full as {{t0_long}} ({{kfit}}). Where the pipe line is above the gas lines there is room; where it is below them, there is more gas than this accounting can place. Underneath are the days Waha's price went below zero and the share of gas vented or flared in the basin's three Texas districts.</p>
 
-<p>This page asks how close production runs to the capacity that carries it out, and what happens to venting and flaring as that gap closes and reopens around each new pipe. It uses only public data: EIA's estimate of the region's production, a dated list of pipeline capacity built from EIA's project tracker and dated reports of when lines started, and the venting and flaring operators in the basin's three Texas districts report to the Commission.</p>
+{{hero}}
 
-<div class="card">
-<div class="tag">Try it</div>
-<h3 style="margin-top:4px">Grow production and see when the headroom runs out</h3>
-<p>Set a growth rate for production, delay the pipelines that are only expected, change how much of each new unit of gas has to leave by pipe, and move the month the pipes are assumed full. It is a scenario, not a forecast: the model on this page, run forward in the browser.</p>
-<p><a class="btn" href="takeaway-app.html" target="_blank" rel="noopener">Open the headroom scenario</a>
-<a class="btn ghost" href="downloads/takeaway-code.zip">Download code</a></p>
-</div>
+<p class="dim">The two lines are drawn to meet in {{t0_long}}: the chart shows the change in room since then, not how much room there was. The further it runs from that month, the more the two gas lines part, which is the subject of <a href="#check">the check on 2019</a> below. Below-zero days are Reuters's count of days Waha's daily average was below zero; a dash marks a year its list does not name, and {{neg_last_year}} runs to {{r_date}}. EIA, from Natural Gas Intelligence data, counts differently: Waha traded below zero on {{eia_pct}}% of trading days in {{eia_year}}.</p>
 
-<h2>What it finds</h2>
+<h2>Why the gas keeps coming</h2>
 
-<p>Pipe has been added in steps, and most of what is still to come is only expected. EIA, quoting PointLogic, put the basin's takeaway capacity at {{anchor_lo}} to {{anchor_hi}} Bcf/d in {{anchor_month}}. Since then {{n_conf}} additions are in service, {{conf_total}} Bcf/d between them, the largest Matterhorn Express at {{matterhorn}} Bcf/d. Another {{exp_total}} Bcf/d is expected by {{exp_last}}, {{exp_by}} Bcf/d of it by the end of {{exp_by_year}}. Of that, {{exp_built}} Bcf/d is on lines the tracker shows under construction or partly complete; the other {{exp_not}} Bcf/d ({{exp_not_names}}) is not yet being built. None of the expected lines is counted as in service until an opened source says it is.</p>
+<p>In {{csgd_year}}, {{csgd_pct}} per cent of the gas the Railroad Commission recorded in the basin's three districts came from oil wells. Those wells are drilled for oil, and the gas comes up with it. Reuters put the economics in one sentence: "{{q_losses}}" A low or negative gas price does not, by itself, stop the oil. An operator can shut a well in, as many did in 2020, but that stops the oil too. When the pipes are full, the gas that cannot be moved is sold at whatever Waha pays, or burned or released at the lease; the Commission's own account of flaring says that in existing fields it "may be necessary because existing pipelines may have reached capacity".</p>
 
-<picture>
-<source media="(max-width:760px)" srcset="assets/takeaway_capacity-phone.png" width="1" height="1">
-<img class="fig wide" src="assets/takeaway_capacity.png" loading="lazy" width="1" height="1" alt="Pipeline capacity out of the Permian Basin from {{anchor_month}}, as a band {{anchor_width}} Bcf/d wide for the uncertainty in the starting estimate. Lines in service step up from {{anchor_lo}} to {{anchor_hi}} Bcf/d to {{conf_lo_end}} to {{conf_hi_end}} Bcf/d; with the expected lines the band reaches {{all_lo_end}} to {{all_hi_end}} Bcf/d by {{exp_last}}.">
-</picture>
+<p>Since {{pace_from_year}}, the gas that needs a pipe out has grown by {{pace_def}} Bcf/d a year at the default share, or {{pace_low}} at the lowest share this page considers. Every calendar year added at least {{yr_min}} Bcf/d except 2020, when operators cut back and it added {{yr_2020}}. The four big lines built since 2019 each added {{big_lo}} to {{big_hi}} Bcf/d, which is {{months_lo}} to {{months_hi}} months of that growth. How long each actually lasted on the chart differs, because the lines did not arrive evenly: Gulf Coast Express took {{rec_gcx}} months to be used up, over the 2020 slowdown; Permian Highway and Whistler, six months apart, {{rec_php}} and {{rec_wh}}; Matterhorn Express {{rec_mh}}.</p>
 
-<p>Production and capacity cannot be drawn on one axis. EIA's production figure is marketed gas, measured before the natural gas liquids are taken out and before gas is burned in the field and at processing plants, and it already exceeded the capacity estimate in {{anchor_month}} ({{P_anchor}} against {{anchor_lo}} to {{anchor_hi}} Bcf/d). What can be compared is the change. From a month when the pipes are taken to be full, the pipe added since, less the share of the production added since that has to leave by pipe, is the headroom gained or lost.</p>
+<h2>Prices and flaring</h2>
 
-<p>Taking {{t0_long}} as that month, {{cap_t0}} Bcf/d of pipe confirmed in service has been added since, and production has risen {{dP_t0}} Bcf/d, of which {{kdP_t0}} has to leave by pipe at the default share, k = {{k_def}}. That puts {{last_long}} at {{H_last}} Bcf/d: on this accounting, less headroom than in {{t0_long}}. The path between was not steady. After Matterhorn the headroom stood at {{H_after_m}} Bcf/d and reached {{H_peak}} in {{H_peak_month}}; production growth then ate it, and at the default k it was below zero in {{n_neg}} months ({{neg_months}}), and at the top of k's range in {{n_neg_hi}}. Hugh Brinson's first phase, {{hb1}} Bcf/d, was reported in commercial service in August and expected to reach that capacity by September 1 (the trade report puts both phases together at up to 2.3 Bcf/d, against the tracker's 2.2). No source in hand says it did, so it is not counted; counted in full from September, it would put {{last_long}} at {{H_with_hb}} Bcf/d.</p>
+<p>EIA describes the mechanism: "{{q_mechanism}}" The years line up with it. Reuters dates Waha's first below-zero daily average to {{first_neg}}, the year before Gulf Coast Express; it lists no such day in 2021 or 2022, the years that hold the chart's widest room; then {{n2023}} in 2023, {{n2024}} in 2024 as the room ran out, {{n2025}} in 2025 and {{n2026}} in 2026 by {{r_date}}, including a record run of {{r_run}} days in a row that it put down to "pipeline constraints from spring maintenance", which a capacity list like this one does not contain. Negative prices, in Reuters's words, "{{q_pay}}".</p>
 
-<picture>
-<source media="(max-width:760px)" srcset="assets/takeaway_headroom-phone.png" width="1" height="1">
-<img class="fig wide" src="assets/takeaway_headroom.png" loading="lazy" width="1" height="1" alt="Headroom gained or lost since {{t0_long}}, monthly to {{last_long}}. It jumps to {{H_after_m}} Bcf/d when Matterhorn enters service, peaks at {{H_peak}} Bcf/d in {{H_peak_month}}, falls through 2025 as production grows, sits near zero from February to May 2026, drops to {{H_min}} Bcf/d in {{H_min_month}} and is {{H_last}} Bcf/d in {{last_long}}. The shaded band is the range of k, at most {{band_max}} Bcf/d wide.">
-</picture>
+<p>Venting and flaring tell a different story after 2019. In the three Texas districts, {{vf2019_bcfd}} Bcf/d was vented or flared in 2019, {{vf2019}} per cent of the gas produced there. In every year from 2021 to {{vf_lastyear}} it stayed between {{vf_min_since}} and {{vf_max_since}} per cent, even as output rose from {{gross2021}} to {{gross_last}} Bcf/d and the below-zero days returned. As the pipes refilled from 2022 to 2024 the share moved from {{vf2022}} to {{vf2024}} per cent. So the full pipes of 2024 to 2026 show in the price far more than in flaring. The data cannot say why. Reuters offers a view, in its own words: "{{q_flare}}"</p>
 
-<p>Whether {{t0_long}} really was a full month decides how to read that line, and two things outside the model were set down beforehand as the test of it. If the pipes were full, production should have been held back before Matterhorn and released after it. It was not: production grew {{pin_before}} Bcf/d over the three months to {{t0_long}} and {{pin_after}} Bcf/d over the three after Matterhorn opened. If the pipes were full, operators in the three districts should have vented or flared more before than after. They did, by {{fc_diff}} of a point: {{fc_before}} per cent of gross withdrawals over {{fc_before_span}} against {{fc_after}} per cent over {{fc_after_span}}. One test for and one against, so the reference month is not established. The line is best read as the pipe added less the gas added since {{t0_long}}, not as spare capacity.</p>
+<p>Each fall in flaring after a new line can also be tested against ordinary months. Averaged over the {{window_word}} months before and after, the share fell from {{c1_before}} to {{c1_after}} per cent around Gulf Coast Express, from {{c2_before}} to {{c2_after}} around Permian Highway and Whistler, and from {{c3_before}} to {{c3_after}} around the group ending with Matterhorn. Of {{placebo_n}} before-and-after differences at months clear of any start, none fell as far as the 2019 one; {{c2_rank}} fell further than the 2021 group's and {{c3_rank}} further than the Matterhorn group's. Only the first stands out. None of this shows that a pipe caused a fall: the 2019 window runs into the price collapse and shut-ins of 2020, and the 2021 window takes in the February 2021 winter storm.</p>
 
-<p>Venting and flaring fell after each of the three pipes, or groups of pipes, the data can test. In the three Permian districts, the share of gross withdrawals vented or flared averaged {{c1_before}} per cent in the {{window_word}} months before Gulf Coast Express started in {{c1_start}} and {{c1_after}} per cent in the {{window_word}} after; around Permian Highway and Whistler in {{c2_year}} it went from {{c2_before}} to {{c2_after}} per cent; and around the group that runs from the Whistler expansion in {{c3_first_long}} to Matterhorn in {{c3_last_long}}, from {{c3_before}} to {{c3_after}} per cent. Set against the {{placebo_n}} before-and-after differences at months clear of the starts listed here, the 2019 fall is larger than every one; {{c2_rank}} of them fell further than the 2021 group did and {{c3_rank}} further than the Matterhorn group, so only the first stands out. Those months all fall between {{pl_first}} and {{pl_last}}, a span over which the share rose, which leans towards making a fall look unusual; but the placebo falls that exceed the 2021 group all come from {{pl_fall_year}}, a year in which the share fell, and {{c3_in_falling}} of the {{c3_rank}} that exceed the Matterhorn group come from years in which it fell. The list does not date lines before 2019, and those months are not all clear of new pipe: the tracker completes Trans-Pecos in March 2017 and Nautilus in June 2017, inside the windows of some of them. None of this is evidence that a pipe caused a fall: the 2019 window runs into the price collapse and shut-ins of 2020, and the 2021 window opens on that year and takes in the February 2021 winter storm.</p>
+<h2>How full the pipes are now</h2>
 
-<picture>
-<source media="(max-width:760px)" srcset="assets/takeaway_flaring-phone.png" width="1" height="1">
-<img class="fig wide" src="assets/takeaway_flaring.png" loading="lazy" width="1" height="1" alt="Gas vented or flared in the three Permian districts as a share of gross withdrawals, monthly from {{vf_first_long}} to {{vf_last_long}}, with a dashed line at each start listed. It peaks at {{vf_peak}} per cent in {{vf_peak_month}}, before Gulf Coast Express, and is {{vf_end}} per cent in {{vf_last_long}}.">
-</picture>
+<p>In {{last_long}}, on the default reading, the pipes carry {{H_last_abs}} Bcf/d {{H_last_dir}} than this accounting says they had room for in {{t0_long}}. That number is fragile. Each row below changes one choice:</p>
 
-<p>Prices are not drawn here, because no free daily series for Waha exists. The counts that are published measure different things and are left apart. EIA, from Natural Gas Intelligence data, put Waha "below zero for {{eia_pct}}% of trading days in {{eia_year}}". Reuters counted daily averages below zero {{r_2024}} times in 2024, {{r_2025}} times in 2025 and {{r_2026}} times in 2026 by {{r_date}}, and put a record run of {{r_run}} days in a row down to "pipeline constraints from spring maintenance", which a capacity list like this one does not contain.</p>
+<table>
+<thead><tr><th>Reading</th><th class="n">Room vs {{t0_short}}, Bcf/d</th><th class="n">Months below zero since</th></tr></thead>
+<tbody>
+{{reading_rows}}
+</tbody>
+</table>
+
+<p>On {{n_within}} of the {{n_readings}} readings the pipes in {{last_long}} are within {{near}} Bcf/d of how full they were in {{t0_long}}, about {{near_months}} months of growth, and the sign changes with the choices, so the page does not say which side they are on. Two rows go further: assuming the pipes were full a month earlier, and counting Hugh Brinson's first phase, {{hb1}} Bcf/d, at its full capacity from September. That line was reported in commercial service in August and expected to reach its capacity by September 1; no source in hand says it did. A negative reading does not mean gas is being carried that cannot be: it means more gas than this accounting can place, and something it leaves out is taking it, such as lines running above their nameplate, capacity added without a project of its own, more gas burned in the basin, or a smaller share needing a pipe.</p>
+
+<h2>What is expected</h2>
+
+<p>The tracker and the pipelines' own reports expect {{exp_total}} Bcf/d more by {{exp_last}}: {{exp_built}} Bcf/d on lines the tracker shows under construction or partly complete, {{exp_not}} Bcf/d ({{exp_not_names}}) on lines not yet being built. None is counted above until an opened source says it is in service. The last column is arithmetic, each line's capacity divided by the {{pace_from_year}}-{{last_year}} pace at the default share; it is not a forecast of when it fills.</p>
+
+<table>
+<thead><tr><th>Line</th><th class="n">Bcf/d</th><th>Expected</th><th>Tracker status</th><th class="n">Months of growth at the past pace</th></tr></thead>
+<tbody>
+{{exp_rows}}
+</tbody>
+</table>
+
+<h2 id="check">Appendix: the check on 2019</h2>
+
+<p>The chart runs back to {{hero_from_year}} on the same arithmetic, and there it shows room the prices did not. In {{ref19_long}}, the month before Gulf Coast Express began taking gas, EIA wrote that takeaway "{{q_eia2019}}". The default reading gives {{ref19_def}} Bcf/d of room that month; with EIA's own Permian ratio (k = {{kp_net}}) it gives {{ref19_kp}}. A share that makes {{ref19_long}} exactly as full as {{t0_long}} is {{kfit}}; it moves to {{kfit_nosm}} without South Mainline, an ambiguous westbound line, and to {{kfit_dbl}} if Double E, which EIA counted as takeaway in 2021, is counted too. That is too sensitive to print as a measurement, but every version is below the default, and the price evidence leans the same way. With the lower share the pipes in {{last_long}} come out slightly emptier than in {{t0_long}} rather than fuller ({{H_fit}} Bcf/d in the table), which is why the page gives no sign.</p>
 
 <h2>Method</h2>
 
-<p><b>Production.</b> EIA's Short-Term Energy Outlook, {{steo_release}} release, Table 5a, series NGMPPM: marketed natural gas, Permian region, monthly, history to {{last_long}}. The region is drawn by county, {{n_tx_counties}} in Texas and {{n_nm_counties}} in New Mexico. Its forecast months are not used. The Railroad Commission's figures for the Permian, which it defines as districts 7C, 08 and 8A, are Texas only and measured at the lease before any gas is taken out; they were checked against EIA month by month over {{rec_n}} months ({{rec_first}} to {{rec_last}}), and the ratio of the two held between {{rec_min}} and {{rec_max}} (mean {{rec_mean}}). The two are different measures whose ratio drifts slowly, so EIA's is used for every comparison with capacity, because the pipes carry New Mexico gas too.</p>
+<p><b>Production.</b> EIA's Short-Term Energy Outlook, {{steo_release}} release, Table 5a, series NGMPPM: marketed natural gas, Permian region, monthly, history to {{last_long}}; its forecast months are not used, and its latest months are estimates. The region is drawn by county, {{n_tx_counties}} in Texas and {{n_nm_counties}} in New Mexico. Before {{steo_first_long}}, which the workbook does not reach, the chart uses EIA's last Drilling Productivity Report (total gas, the same counties) times {{splice}}, the mean ratio of the two over the {{splice_n}} months they share (range {{splice_lo}} to {{splice_hi}}). The ratio drifts up over those months, so applying it to 2018 and 2019, when more gas was flared, slightly overstates production then and understates the 2019 discrepancy. The ratio is fixed at that value so the monthly refresh cannot move it. The Railroad Commission's Permian figures (districts 7C, 08 and 8A, Texas only, measured at the lease) were checked against EIA's over {{rec_n}} months; the ratio held between {{rec_min}} and {{rec_max}}.</p>
 
-<p><b>Capacity.</b> A line is counted when it starts in the basin and a cited source describes it as carrying gas out of the Permian. Lines inside the basin, lines that start downstream of it, and laterals are not. Capacity and dates are read from EIA's pipeline projects tracker; where a newer report gives a date, it is used and the source named. Where sources disagree on the month a line started, the later month is used. A line is "in service" only where an opened source says it is; every other date is an expectation and is shown as one.</p>
+<p><b>The share k.</b> Not every unit of marketed gas leaves by pipe: liquids are taken out, and some gas is burned in the field and at plants. EIA gives both by state; for {{k_year}}, dry gas less lease and plant fuel was {{k_both_net}} of marketed production across Texas and New Mexico, the default; Texas alone {{k_tx_net}}, and dry gas alone {{k_both_dry}}. These are statewide ratios standing in for the Permian. EIA's Permian-only figures (STEO Table 10b, shale formations, over Table 5a) give {{kp_dry}}, or {{kp_net}} less fuel; that ratio is biased low, because the formations table leaves out conventional gas.</p>
+
+<p><b>Capacity.</b> A line counts when it starts in the basin and a cited source describes it as carrying gas out of the Permian; lines inside the basin, lines that start downstream, and laterals do not. Capacity and dates are read from EIA's project tracker by exact name; where a newer report gives a date, it is used and named, and where sources disagree on a start, the later month is used. A line is in service only where an opened source says so. Before May 2022 the chart counts the lines in the second table, by the same rule; South Mainline and Permian North, westbound with no note in the tracker, are the ambiguous ones. The headroom arithmetic uses changes only, so the level of capacity never enters it.</p>
 
 <table>
 <thead><tr><th>Line</th><th class="n">Bcf/d</th><th>Start</th><th>Status, per</th></tr></thead>
@@ -93,19 +89,22 @@
 </tbody>
 </table>
 
-<p><b>The share k.</b> Not every unit of marketed gas leaves by pipe: the liquids are taken out, and some gas is burned in the field and at the plants. EIA gives both by state. For {{k_year}}, dry gas less lease and plant fuel was {{k_both_net}} of marketed production across Texas and New Mexico; Texas alone {{k_tx_net}}, and dry gas alone {{k_both_dry}}. The default is the first, and the band in the headroom figure runs between the other two. These are statewide ratios standing in for the Permian. One known error pushes the true value lower: gas burned in the basin by power plants and industry is not removed. A k that is too high makes the headroom look smaller, so the default leans towards finding the pipes full.</p>
+<table>
+<thead><tr><th>Before May 2022</th><th class="n">Bcf/d</th><th>Start</th><th>Why it counts</th></tr></thead>
+<tbody>
+{{pre_rows}}
+</tbody>
+</table>
 
-<p><b>The reference month.</b> EIA reported on {{eia_t0_date}} that Waha was below zero "every day since July 26", so {{t0_long}} falls wholly inside that run; September does not, because Matterhorn was expected to begin service that month. The app moves it a month either way.</p>
-
-<p><b>Venting and flaring.</b> The Railroad Commission's Production Data Query dump, extracted {{vf_extract}}: gas reported vented or flared (disposition code 4, which does not separate the two) over gas-well and casinghead production, districts 7C, 08 and 8A, {{vf_first_long}} to {{vf_last_long}}. The {{unsettled_word}} most recent months in the dump are left out, because late reports still change them. Every disposition row with gas vented or flared joins a production row for the same lease and month, and the production side equals the Commission's Permian workbook month by month. Before-and-after windows are {{window_word}} months each, so each pair covers the same calendar months; starts less than {{window_word}} months apart are taken together, and a group is tested only if both its windows are complete and hold no other start. The starts are the tracker's completion months for lines that leave the basin and add at least {{event_min}} Bcf/d; smaller additions count as capacity but not as starts. Double E, which EIA counted as takeaway in 2021, runs from New Mexico to Waha, inside the basin, and is not one of them; the tracker completes it in {{dbl_e}}, inside the 2021 group's after-window.</p>
+<p><b>Venting and flaring.</b> The Railroad Commission's Production Data Query dump, extracted {{vf_extract}}: gas reported vented or flared (disposition code 4, which does not separate the two) over gas-well and casinghead production, districts 7C, 08 and 8A. The {{unsettled_word}} most recent months are left out because late reports still change them. Before-and-after windows are {{window_word}} months each; starts less than {{window_word}} months apart are taken together; a start is a line of at least {{event_min}} Bcf/d.</p>
 
 <h2>Limits</h2>
 
-<p>The production figure is an estimate, and EIA revises its latest months. The capacity anchor is a third-party estimate whose definition is not published, and the additions follow a narrower rule than it does; the anchor cancels out of the headroom, the rule does not. Capacity is nameplate and enters as a full step, while lines ramp up over months and maintenance takes capacity out. The reference month is an inference from prices, and one of the two tests set for it went against it. Venting and flaring are what operators report, and the code they report it under does not separate the two. They are reported at the lease: flaring at gathering systems and processing plants, filed on the Commission's Form R-3, is not counted here, so gas held back there would not show. Several in-service dates rest on trade press reporting what the pipelines' owners said, because no primary filing could be opened. The page forecasts nothing, and it names no company as the cause of anything.</p>
+<p>The production figure is an estimate and EIA revises its latest months. Capacity is nameplate and enters as a full step, while lines ramp up and maintenance takes capacity out, so prices can go below zero while the chart still shows room. The reference month is an inference from prices. The share k is a statewide ratio and the check on 2019 says it is probably too high for this purpose. Venting and flaring are what operators report at the lease; flaring at gathering systems and plants (Form R-3) is not counted. Several in-service dates rest on trade press reporting what the pipelines' owners said. The page forecasts nothing and names no company as the cause of anything.</p>
 
 <h2>The code</h2>
 
-<p>Python: the fetch scripts, each recording where and when its file came from; the readers, the capacity list with every source and quote, the model, the payload builder, the figures and the page generator; the scenario's JavaScript engine and its parity test; and the checks, each shown failing before it is trusted. The archive holds no raw data; the fetch scripts download it. {{zip_kb}} KB.</p>
+<p>Python: the fetch scripts, each recording where and when its file came from; the readers; the capacity list with every source and quote; the model; the payload builder and the page generator; and the checks, each shown failing before it is trusted. The archive holds no raw data; the fetch scripts download it. {{zip_kb}} KB.</p>
 
 <p><a class="btn" href="downloads/takeaway-code.zip">Download source</a>
 <a class="btn ghost" href="code.html">All code</a></p>
@@ -118,4 +117,6 @@
 <script src="assets/motion.js"></script>
 <script src="assets/lightbox.js"></script>
 <script src="assets/nav.js"></script>
+<script src="assets/charts.js"></script>
+<script src="assets/scrolly.js"></script>
 </body></html>

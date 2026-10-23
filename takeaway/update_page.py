@@ -38,8 +38,10 @@ import cited   # noqa: E402
 MONTHS = ["January", "February", "March", "April", "May", "June", "July", "August", "September",
           "October", "November", "December"]
 WORDS = {12: "twelve", 6: "six", 3: "three"}
-EXP_BY_YEAR = 2027      # "of it by the end of ..." - a reading point, not a forecast
-NEAR_ZERO = 0.25        # Bcf/d: the alt text's "sits near zero"
+# "within NEAR Bcf/d of t0 on most readings": the band the page says the
+# readings mostly fall in. Set after the readings were computed (they gave
+# 4 of 9 within 0.5, 7 of 9 within 0.7); claims() holds the "most".
+NEAR = 0.7
 
 
 def ym(key):
@@ -102,111 +104,215 @@ def cap_rows(P):
     return "\n".join(rows)
 
 
+def reading_label(r):
+    k = r["why"].split("=")[1].split(",")[0].strip() if "k =" in r["why"] else ""
+    if r["name"].startswith("t0_"):
+        return "Pipes full in " + long(r["name"][3:]) + " instead"
+    return {"default": f"Default: k = {k}, lines confirmed in service",
+            "k_lo": f"k from Texas alone ({k})", "k_hi": f"k from dry gas, no fuel ({k})",
+            "k_permian": f"k from EIA's Permian figures less fuel ({k})",
+            "k_fit": f"k that makes mid-2019 as full ({k})", "no_tarzan": "Tarzan compressor not counted",
+            "hb_full": "Hugh Brinson phase I counted at full capacity"}[r["name"]]
+
+
+def reading_rows(S):
+    return "\n".join(f'<tr><td>{reading_label(r)}</td><td class="n">{signed(r["H"])}</td>'
+                     f'<td class="n">{len(r["below"])}</td></tr>' for r in S["readings"])
+
+
+def exp_rows(S, P):
+    rows = []
+    for e in S["expected"]:
+        pe = next(x for x in P["entries"] if x["name"] == e["name"] and x["month"] == e["month"])
+        when = str(ym(e["month"])[0]) if pe["year_only"] else short(e["month"])
+        name = html.escape(e["name"].replace(" (formerly Warrior Pipeline) Phase I & II", ""))
+        rows.append(f'<tr><td>{name}</td><td class="n">{e["bcfd"]:.2f}</td><td>{when}</td>'
+                    f'<td>{html.escape(e["stage"])}</td><td class="n">{e["months_default"]:.0f}</td></tr>')
+    return "\n".join(rows)
+
+
+def pre_rows(S):
+    return "\n".join(f'<tr><td>{html.escape(e["name"])}</td><td class="n">{e["bcfd"]:.2f}</td>'
+                     f'<td>{short(e["month"])}</td><td>{html.escape(e["why"])}</td></tr>' for e in S["pre_anchor"])
+
+
+def t_of(S, k):
+    xs = S["hero"]["x"]
+    return round(xs.index(k) / (len(xs) - 1), 4)
+
+
+# The hero's annotation labels: full name on a wide chart, short on a phone.
+ANN = {"Gulf Coast Express": ("Gulf Coast Express", "GCX"), "Permian Highway": ("Permian Highway", "PHP"),
+       "Whistler": ("Whistler", "WH"), "Matterhorn Express": ("Matterhorn", "MXP"),
+       "Gulf Coast Express expansion": ("GCX exp.", "GCX+")}
+
+
+def hero_spec(P, S):
+    h = S["hero"]
+    neg = cited.reuters_counts()
+    first = cited.reuters_first_year()
+    years = range(ym(h["x"][0])[0], ym(h["x"][-1])[0] + 1)
+    # a year the Reuters list does not name is a dash, never a zero (review 5)
+    bars = [{"at": str(y), "value": neg.get(y, 0), "text": str(neg[y]) if y in neg else "–"}
+            for y in years if y >= first]
+    anns = [{"at": s["month"], "text": ANN[s["name"]][0], "short": ANN[s["name"]][1]}
+            for s in h["starts"] if s["name"] in ANN]
+    return {"id": "takeaway-hero", "type": "series",
+            "title": f"Pipe capacity out of the Permian and the gas that needs it, as change from {long(P['t0'])}, "
+                     f"{short(h['x'][0])} to {short(h['x'][-1])}, with Waha's below-zero days and the share "
+                     "vented or flared",
+            "x": h["x"], "y": {"label": "Bcf/d vs " + short(P["t0"])},
+            "series": [{"key": "pipe", "label": "Pipe out", "color": "acc", "values": [round(x, 4) for x in h["pipe"]]},
+                       {"key": "gas", "label": f"Gas needing a pipe, k {P['k']['default']:.2f}", "color": "moss",
+                        "values": [round(x, 4) for x in h["gas"]]},
+                       {"key": "fit", "label": f"k {S['k_fit']['list']:.2f}", "color": "ink",
+                        "values": [round(x, 4) for x in h["gas_fit"]]}],
+            # one colour both sides: the band is the range of k, not room
+            "band": {"a": "fit", "b": "gas", "pos": {"color": "moss", "label": "Range of k"},
+                     "neg": {"color": "moss"}},
+            "annotations": anns,
+            "under": [{"kind": "bars", "label": "Days Waha below zero (Reuters)", "color": "moss", "height": 56,
+                       "bars": bars},
+                      {"kind": "line", "label": "Vented or flared, % (Texas Permian)", "color": "ink", "height": 48,
+                       "values": [None if x is None else round(100 * x, 3) for x in h["vf"]]}]}
+
+
+def hero(P, S):
+    """The scrolly: spec and steps. Every number in a step is from the payload."""
+    import insight
+    Y = {r["year"]: r for r in S["years"]}
+    L = {l["name"]: l for l in S["lines"]}
+    gcx, php, wh, mh = L["Gulf Coast Express"], L["Permian Highway"], L["Whistler"], L["Matterhorn Express"]
+    ly = ym(S["last"])[0]
+    steps = [
+        (f"<p><b>2018 to mid-2019.</b> Production rises fast and no large line leaves the basin. EIA wrote in "
+         f"September 2019 that limited takeaway had kept Waha's prices \"very low, or even negative, in recent "
+         f"months\". In 2019 the three Texas districts vented or flared {Y[2019]['vf_bcfd']:.2f} Bcf/d, "
+         f"{100 * Y[2019]['vf_share']:.1f} per cent of their gas.</p>", {"t": t_of(S, S["ref_2019"])}),
+        (f"<p><b>Gulf Coast Express, {long(gcx['month'])}.</b> {gcx['bcfd']:.2f} Bcf/d to the Texas coast. "
+         f"The share vented or flared is {100 * Y[2020]['vf_share']:.1f} per cent in 2020, half 2019's; "
+         f"2020's price collapse stalls production too.</p>", {"t": t_of(S, "2020-12")}),
+        (f"<p><b>Permian Highway and Whistler, 2021.</b> {php['bcfd']:.1f} and {wh['bcfd']:.1f} Bcf/d, six months "
+         f"apart: the widest room on the chart. Reuters lists no below-zero day at Waha in 2021 or 2022.</p>",
+         {"t": t_of(S, "2022-06")}),
+        (f"<p><b>2023 to {short(P['t0'])}.</b> About two Bcf/d of new gas a year uses the room up. By "
+         f"{long(P['t0'])} Waha is below zero every day; the chart is lined up so the two lines meet here.</p>",
+         {"t": t_of(S, P["t0"])}),
+        (f"<p><b>Matterhorn Express, {long(mh['month'])}.</b> {mh['bcfd']:g} Bcf/d, the largest line yet, about "
+         f"{mh['months_default']:.0f} months of growth. The room it opened was gone by {long(mh['recovered'])}. "
+         f"Waha went below zero {Y[2025]['neg']} times in 2025.</p>", {"t": t_of(S, mh["recovered"])}),
+        (f"<p><b>{ly}.</b> {Y[ly]['neg']} below-zero days by {cited.REUTERS['date']}, a record. In "
+         f"{long(S['last'])}, on the default reading, the gap sits at {signed(S['H_hero'][S['last']])} Bcf/d: "
+         f"within {NEAR:g} Bcf/d of {long(P['t0'])} on most of the readings below.</p>", {"t": 1}),
+    ]
+    return insight.scrolly(hero_spec(P, S), steps, from_state={"t": 0})
+
+
+def year_adds(S):
+    """k x production growth per calendar year, December to December, from the hero's gas series."""
+    xs, g = S["hero"]["x"], S["hero"]["gas"]
+    out = {}
+    for y in range(int(xs[0][:4]) + 1, int(S["last"][:4])):
+        a, b = f"{y - 1}-12", f"{y}-12"
+        if a in xs and b in xs:
+            out[y] = g[xs.index(b)] - g[xs.index(a)]
+    return out
+
+
 def values(P):
+    import insight
+    S = P["story"]
     steo = P["steo"]["P"]
     last = P["steo"]["last_historical"]
     t0 = P["t0"]
-    H = P["H"]
-    lo, hi = P["H_band"]["k_lo"], P["H_band"]["k_hi"]
     k = P["k"]
-    ent = P["entries"]
-    conf = [e for e in ent if e["status"] == "confirmed"]
-    exp = [e for e in ent if e["status"] == "expected"]
-    mh = next(e for e in ent if e["name"] == "Matterhorn Express Pipeline")
-    hb1 = next(e for e in ent if e["name"].endswith("Phase I & II Phase I"))
-    cap = P["capacity"]
-    cap_keys = sorted(cap)
-    cap_t0 = sum(e["bcfd"] for e in conf if t0 < e["month"] <= last)
-    dP = steo[last] - steo[t0]
-    neg = [m for m in sorted(H) if H[m] < 0]
-    neg_hi = [m for m in sorted(H) if min(lo[m], hi[m]) < 0]
-    after_m = next(m for m in sorted(H) if m >= mh["month"])
-    hmin = min(H, key=H.get)
-    hpeak = max(H, key=H.get)
+    exp = [e for e in P["entries"] if e["status"] == "expected"]
+    hb1 = next(e for e in P["entries"] if e["name"].endswith("Phase I & II Phase I"))
     fl = P["flaring"]
-    share = fl["share"]
-    vf_last = fl["last"]
-    peak = max(share, key=share.get)
     c1, c2, c3 = [c for c in fl["clusters"] if "diff" in c][:3]
-    names = {s["month"]: s["name"] for s in fl["starts"]}
-    chk = fl["check"]
-    exp_last = max(e["month"] for e in exp)
-    eia_pct, eia_year = cited.eia_pct()
+    Y = {r["year"]: r for r in S["years"]}
+    vfy = [r for r in S["years"] if "vf_share" in r]
+    since21 = [r for r in vfy if r["year"] >= 2021]
     rc = cited.reuters_counts()
-    csgd = P["csgd"]
-    v = {
-        "last_short": short(last), "last_long": long(last), "t0_short": short(t0), "t0_long": long(t0),
-        "P_last": f2(steo[last]), "P_anchor": f2(steo[P["anchor"]["month"]]),
-        "cap_t0": f2(cap_t0), "dP_t0": f2(dP), "kdP_t0": f2(k["default"] * dP),
-        "H_last": signed(H[last]), "H_after_m": signed(H[after_m]),
-        "H_min": signed(H[hmin]), "H_min_month": long(hmin),
-        "H_peak": signed(H[hpeak]), "H_peak_month": long(hpeak),
-        "H_with_hb": signed(P["H_with_expected"][last]),
-        "r_run": str(cited.reuters_run()),
-        "band_max": f2(max(abs(lo[m] - hi[m]) for m in H)),
-        "n_neg": str(len(neg)), "neg_months": month_list(neg), "n_neg_hi": str(len(neg_hi)),
+    eia_pct, eia_year = cited.eia_pct()
+    big = S["lines"]
+    months = [l["months_default"] for l in big] + [l["months_low"] for l in big]
+    rd = {r["name"]: r for r in S["readings"]}
+    H_last = rd["default"]["H"]
+    within = [r for r in S["readings"] if abs(r["H"]) <= NEAR]
+    yr = year_adds(S)
+    claims(P, S, months, within, yr)
+    return {
+        "stamp": insight.stamp(last, "EIA's Short-Term Energy Outlook"),
+        "takeaways": insight.takeaways([
+            f"Oil wells in the Permian add {S['pace']['k_fit']:.1f} to {S['pace']['default']:.1f} Bcf/d of gas that "
+            f"needs a pipe out every year, and each big pipeline built since 2019 holds only {min(months):.0f} to "
+            f"{max(months):.0f} months of that growth.",
+            f"When the pipes fill, Waha's price goes below zero and sellers pay buyers to take their gas: Reuters "
+            f"counts {rc[2019]} such days in 2019, {rc[2024]} in 2024 and {rc[2026]} in 2026 before the end of "
+            f"{cited.REUTERS['date'].split()[0]}.",
+            f"Flaring has not come back with the full pipes: the three Texas districts vented or flared "
+            f"{100 * Y[2019]['vf_share']:.1f} per cent of their gas in 2019 and no more than "
+            f"{100 * max(r['vf_share'] for r in since21):.1f} per cent in any year since 2021."]),
+        "hero": hero(P, S),
+        "t0_long": long(t0), "t0_short": short(t0), "last_long": long(last), "last_year": str(ym(last)[0]),
         "k_def": f"{k['default']:.3f}", "k_year": str(k["year"]),
         "k_both_net": f"{k['by_state']['both']['net']:.3f}", "k_tx_net": f"{k['by_state']['TX']['net']:.3f}",
         "k_both_dry": f"{k['by_state']['both']['dry']:.3f}",
-        "anchor_lo": f"{P['anchor']['lo']:g}", "anchor_hi": f"{P['anchor']['hi']:g}",
-        "anchor_month": long(P["anchor"]["month"]), "anchor_width": f"{P['anchor']['hi'] - P['anchor']['lo']:g}",
-        "n_conf": str(len(conf)), "conf_total": f2(sum(e["bcfd"] for e in conf)), "matterhorn": f"{mh['bcfd']:g}",
-        "exp_total": f2(sum(e["bcfd"] for e in exp)), "exp_last": long(exp_last), "exp_last_year": str(ym(exp_last)[0]),
-        "exp_by": f2(sum(e["bcfd"] for e in exp if ym(e["month"])[0] <= EXP_BY_YEAR)), "exp_by_year": str(EXP_BY_YEAR),
-        # D-25 item 5: the expected total mixes lines being built with lines
-        # not yet started; split it by the tracker's status.
+        "kp_dry": f"{S['k_permian']['dry']:.3f}", "kp_net": f"{S['k_permian']['net']:.3f}",
+        "vf_last_long": long(fl["last"]), "tracker_edition": "August 2026",
+        "vf_extract": (lambda d: f"{d.day} {MONTHS[d.month - 1]} {d.year}")(
+            __import__("datetime").datetime.strptime(fl["dump"]["gas_extract_date"], "%d-%b-%y")),
+        "neg_last_year": str(max(rc)), "r_date": cited.REUTERS["date"],
+        "eia_pct": str(eia_pct), "eia_year": str(eia_year),
+        "csgd_year": str(P["csgd"]["year"]), "csgd_pct": f"{100 * P['csgd']['share']:.0f}",
+        "q_losses": cited.REUTERS_MORE["losses"], "q_pay": cited.REUTERS_MORE["pay"],
+        "q_flare": cited.REUTERS_MORE["flare"], "q_mechanism": cited.EIA_T0["mechanism"],
+        "q_eia2019": "kept prices very low, or even negative, in recent months",
+        "pace_from_year": S["pace_from"][:4], "pace_def": f"{S['pace']['default']:.2f}",
+        "pace_low": f"{S['pace']['k_fit']:.2f}",
+        "yr_min": f"{min(x for y, x in yr.items() if y != 2020):.1f}", "yr_2020": f"{yr[2020]:.2f}",
+        "big_lo": f"{min(l['bcfd'] for l in big):g}", "big_hi": f"{max(l['bcfd'] for l in big):g}",
+        "months_lo": f"{min(months):.0f}", "months_hi": f"{max(months):.0f}",
+        "rec_gcx": str(big[0]["recovery_months"]), "rec_php": str(big[1]["recovery_months"]),
+        "rec_wh": str(big[2]["recovery_months"]), "rec_mh": str(big[3]["recovery_months"]),
+        "first_neg": str(cited.reuters_first_year()),
+        "n2023": "one" if rc[2023] == 1 else str(rc[2023]), "n2024": str(rc[2024]), "n2025": str(rc[2025]),
+        "n2026": str(rc[2026]), "r_run": str(cited.reuters_run()),
+        "vf2019_bcfd": f"{Y[2019]['vf_bcfd']:.2f}", "vf2019": f"{100 * Y[2019]['vf_share']:.1f}",
+        "vf_lastyear": str(max(r["year"] for r in vfy)),
+        "vf_min_since": f"{100 * min(r['vf_share'] for r in since21):.1f}",
+        "vf_max_since": f"{100 * max(r['vf_share'] for r in since21):.1f}",
+        "gross2021": f"{Y[2021]['gross_bcfd']:.1f}", "gross_last": f"{vfy[-1]['gross_bcfd']:.1f}",
+        "vf2022": f"{100 * Y[2022]['vf_share']:.1f}", "vf2024": f"{100 * Y[2024]['vf_share']:.1f}",
+        "window_word": WORDS[P["window"]],
+        "c1_before": f2(100 * c1["before"]), "c1_after": f2(100 * c1["after"]),
+        "c2_before": f2(100 * c2["before"]), "c2_after": f2(100 * c2["after"]),
+        "c3_before": f2(100 * c3["before"]), "c3_after": f2(100 * c3["after"]),
+        "c2_rank": str(c2["rank_below"]), "c3_rank": str(c3["rank_below"]), "placebo_n": str(fl["placebo_n"]),
+        "H_last_abs": f2(abs(H_last)), "H_last_dir": "more gas" if H_last < 0 else "less gas",
+        "reading_rows": reading_rows(S), "near": f"{NEAR:g}",
+        "near_months": f"{12 * NEAR / S['pace']['default']:.0f}", "n_within": str(len(within)), "n_readings": str(len(S["readings"])),
+        "hb1": f"{hb1['bcfd']:g}", "H_fit": signed(rd["k_fit"]["H"]),
+        "exp_total": f2(sum(e["bcfd"] for e in exp)), "exp_last": long(max(e["month"] for e in exp)),
         "exp_built": f2(sum(e["bcfd"] for e in exp if e["stage"] in BUILDING)),
         "exp_not": f2(sum(e["bcfd"] for e in exp if e["stage"] not in BUILDING)),
         "exp_not_names": and_list([short_name(e["name"]) for e in exp if e["stage"] not in BUILDING]),
-        "event_min": f"{EVENT_MIN_BCFD:g}",
-        "conf_lo_end": f2(cap[cap_keys[-1]]["lo_confirmed"]), "conf_hi_end": f2(cap[cap_keys[-1]]["hi_confirmed"]),
-        "all_lo_end": f2(cap[cap_keys[-1]]["lo"]), "all_hi_end": f2(cap[cap_keys[-1]]["hi"]),
-        "hb1": f"{hb1['bcfd']:g}",
-        "pin_before": f2(P["pin"]["before"]), "pin_after": f2(P["pin"]["after"]),
-        "fc_before": f2(100 * chk["before"]), "fc_after": f2(100 * chk["after"]),
-        "fc_before_span": month_list(chk["before_months"]),
-        "fc_after_span": month_list(chk["after_months"]),
-        "c1_before": f2(100 * c1["before"]), "c1_after": f2(100 * c1["after"]), "c1_start": long(c1["first"]),
-        "c2_before": f2(100 * c2["before"]), "c2_after": f2(100 * c2["after"]), "c2_year": str(ym(c2["first"])[0]),
-        "c3_before": f2(100 * c3["before"]), "c3_after": f2(100 * c3["after"]),
-        "c3_first_long": long(c3["first"]), "c3_last_long": long(c3["last"]),
-        "c2_rank": str(c2["rank_below"]), "c3_rank": str(c3["rank_below"]),
-        "pl_fall_year": str(fall_years(fl, c2)[0]),
-        "c3_in_falling": str(sum(1 for m in c3["placebo_below"]
-                                 if annual(share, ym(m)[0]) < annual(share, ym(m)[0] - 1))), "fc_diff": f2(100 * (chk["before"] - chk["after"])),
-        "dbl_e": long(fl["double_e"]),
-        "vf_extract": (lambda d: f"{d.day} {MONTHS[d.month - 1]} {d.year}")(
-            __import__("datetime").datetime.strptime(fl["dump"]["gas_extract_date"], "%d-%b-%y")),
-        "unsettled_word": WORDS[fl["unsettled_months"]],
-        "placebo_n": str(fl["placebo_n"]),
-        "pl_first": str(ym(fl["placebo_months"][0])[0]), "pl_last": str(ym(fl["placebo_months"][1])[0]), "window_word": WORDS[P["window"]],
-        "vf_first_long": long(fl["first"]), "vf_last_long": long(vf_last), "vf_last_short": short(vf_last),
-        "vf_peak": f2(100 * share[peak]), "vf_peak_month": long(peak), "vf_end": f2(100 * share[vf_last]),
-        "csgd_year": str(csgd["year"]), "csgd_pct": f"{100 * csgd['share']:.0f}",
-        "steo_release": P["steo"]["release"],
-        "rec_n": str(P["reconcile"]["n"]), "rec_first": long(P["reconcile"]["first"]),
-        "rec_last": long(P["reconcile"]["last"]), "rec_min": f"{P['reconcile']['min']:.2f}",
-        "rec_max": f"{P['reconcile']['max']:.2f}", "rec_mean": f"{P['reconcile']['mean']:.2f}",
+        "exp_rows": exp_rows(S, P),
+        "hero_from_year": S["hero"]["x"][0][:4], "ref19_long": long(S["ref_2019"]),
+        "ref19_def": signed(S["H_ref_2019"]["default"]), "ref19_kp": signed(S["H_ref_2019"]["k_permian"]),
+        "kfit": f"{S['k_fit']['list']:.2f}", "kfit_nosm": f"{S['k_fit']['no_south_mainline']:.2f}",
+        "kfit_dbl": f"{S['k_fit']['with_double_e']:.2f}",
+        "steo_release": P["steo"]["release"], "steo_first_long": long(min(steo)),
         "n_tx_counties": str(P["region"]["TX"]), "n_nm_counties": str(P["region"]["NM"]),
-        "eia_pct": str(eia_pct), "eia_year": str(eia_year), "eia_t0_date": cited.EIA_T0["date"],
-        "r_2024": str(rc[2024]), "r_2025": str(rc[2025]), "r_2026": str(rc[2026]), "r_date": cited.REUTERS["date"],
-        "cap_rows": cap_rows(P),
+        "splice": f"{S['splice']:.3f}", "splice_n": str(S["splice_n"]), "splice_lo": f"{S['splice_range'][0]:.3f}",
+        "splice_hi": f"{S['splice_range'][1]:.3f}",
+        "rec_n": str(P["reconcile"]["n"]), "rec_min": f"{P['reconcile']['min']:.2f}",
+        "rec_max": f"{P['reconcile']['max']:.2f}",
+        "cap_rows": cap_rows(P), "pre_rows": pre_rows(S),
+        "unsettled_word": WORDS[fl["unsettled_months"]], "event_min": f"{EVENT_MIN_BCFD:g}",
         "zip_kb": f"{round(os.path.getsize(ZIP) / 1024) if os.path.exists(ZIP) else 0:,}",
     }
-    claims(P, H, lo, hi, mh, after_m, peak, c1, c2, chk, neg, conf)
-    return v
-
-
-def add(key, n):
-    """'YYYY-MM' plus n months."""
-    y, m = ym(key)
-    i = y * 12 + m - 1 + n
-    return f"{i // 12}-{i % 12 + 1:02d}"
-
-
-def fall_years(fl, *groups):
-    """The years of the placebo months whose fall exceeds any of these groups'."""
-    return sorted({ym(m)[0] for c in groups for m in c["placebo_below"]})
 
 
 # The tracker's statuses that mean a line is being built (D-25 item 5);
@@ -226,60 +332,60 @@ def and_list(xs):
     return xs[0] if len(xs) == 1 else ", ".join(xs[:-1]) + " and " + xs[-1]
 
 
-def annual(share, y):
-    v = [s for k, s in share.items() if ym(k)[0] == y]
-    return sum(v) / len(v)
-
-
-def claims(P, H, lo, hi, mh, after_m, peak, c1, c2, chk, neg, conf):
-    c3 = [c for c in P["flaring"]["clusters"] if "diff" in c][2]
-    names = {s["month"]: s["name"] for s in P["flaring"]["starts"]}
-    near = [m for m in H if "2026-02" <= m <= "2026-05"]
+def claims(P, S, months, within, yr):
+    """Every direction and range the template's words commit to. A refresh
+    that moves one stops the build rather than ship prose the data contradicts."""
+    Y = {r["year"]: r for r in S["years"]}
+    rc = cited.reuters_counts()
+    rd = {r["name"]: r for r in S["readings"]}
+    vfy = [r for r in S["years"] if "vf_share" in r]
+    since21 = [r for r in vfy if r["year"] >= 2021]
+    Hh = S["H_hero"]
+    widest = max(Hh, key=Hh.get)
+    fl = P["flaring"]
+    c1, c2, c3 = [c for c in fl["clusters"] if "diff" in c][:3]
+    L = {l["name"]: l for l in S["lines"]}
     checks = [
-        ("Matterhorn is the largest addition in service", mh["bcfd"] == max(e["bcfd"] for e in conf)),
-        ("Matterhorn is in service", mh["status"] == "confirmed"),
-        ("marketed production exceeded the anchor in its month",
-         P["steo"]["P"][P["anchor"]["month"]] > P["anchor"]["hi"]),
-        ("'production growth then ate it': headroom fell after Matterhorn",
-         min(H[m] for m in H if m > after_m) < H[after_m]),
-        ("'The path between was not steady': headroom went below zero at least once", len(neg) > 0),
-        ("'less headroom than in' t0", H[P["steo"]["last_historical"]] < 0),
-        ("the record counts no expected line", all(
-            abs(H[m] - (sum(e["bcfd"] for e in conf if P["t0"] < e["month"] <= m)
-                        - P["k"]["default"] * (P["steo"]["P"][m] - P["steo"]["P"][P["t0"]]))) < 1e-9 for m in H)),
-        ("alt: near zero February to May 2026", near and all(abs(H[m]) < NEAR_ZERO for m in near)),
-        ("'It was not': production did not grow faster after Matterhorn than before t0",
-         P["pin"]["after"] <= P["pin"]["before"]),
-        ("'They did': more venting and flaring before than after", chk["before"] > chk["after"]),
-        ("every month of both PLAN 3.4 windows is in the series", not chk["missing"]),
-        ("'fell after each of the three' tested groups", c1["diff"] < 0 and c2["diff"] < 0 and c3["diff"] < 0),
-        ("'the 2019 fall is larger than every one' of the placebo differences", c1["rank_below"] == 0),
-        ("'only the first stands out': placebo falls exceed the 2021 and Matterhorn groups'",
-         c2["rank_below"] > 0 and c3["rank_below"] > 0),
-        ("the third group runs from the Whistler expansion to Matterhorn",
-         names[c3["starts"][0]].startswith("Whistler") and names[c3["starts"][-1]].startswith("Matterhorn")
-         and c3["last"] == mh["month"]),
-        ("'all come from' one year: the placebo falls beyond the 2021 group",
-         len(fall_years(P["flaring"], c2)) == 1),
-        ("'a year in which the share fell': its mean below the year before's",
-         all(annual(P["flaring"]["share"], y) < annual(P["flaring"]["share"], y - 1)
-             for y in fall_years(P["flaring"], c2))),
-        ("Double E's completion falls inside the 2021 group's after-window",
-         add(c2["last"], 1) <= P["flaring"]["double_e"] <= add(c2["last"], P["window"])),
-        ("exactly three groups tested", len([c for c in P["flaring"]["clusters"] if "diff" in c]) == 3),
-        ("the first tested start is Gulf Coast Express (2019)", c1["first"].startswith("2019")),
-        ("the second tested group is 2021", c2["first"].startswith("2021")),
-        ("alt: the venting and flaring peak comes before Gulf Coast Express", peak < c1["first"]),
-        ("the placebo months lie before the first tested start", P["flaring"]["placebo_months"][1] < c1["first"]),
-        ("'years when the share was rising': it ends the placebo span higher than it began",
-         P["flaring"]["share"][P["flaring"]["placebo_months"][1]] > P["flaring"]["share"][P["flaring"]["placebo_months"][0]]),
+        ("h1: each big line holds a year to a year and a half of growth (12-19.5 months)",
+         12 <= min(months) and max(months) < 19.5),
+        ("'every calendar year ... except 2020': 2020 is the smallest year and the only one under 1",
+         min(yr, key=yr.get) == 2020 and all(x >= 1 for y, x in yr.items() if y != 2020)),
+        ("'the widest room on the chart' lies in 2021-2022", widest[:4] in ("2021", "2022")),
+        ("Reuters lists no 2021 or 2022, and does list 2019, 2023-2026",
+         2021 not in rc and 2022 not in rc and all(y in rc for y in (2019, 2023, 2024, 2025, 2026))),
+        ("Reuters's first below-zero year is the year of Gulf Coast Express",
+         cited.reuters_first_year() == int(L["Gulf Coast Express"]["month"][:4])),
+        ("2026's count is a record", rc[2026] == max(rc.values())),
+        ("'as the room ran out': 2024 has more days than 2023", rc[2024] > rc[2023]),
+        ("flaring 2019 above every year since 2021", all(Y[2019]["vf_share"] > r["vf_share"] for r in since21)),
+        ("'half 2019's' in 2020: between 0.4 and 0.6 of it", 0.4 <= Y[2020]["vf_share"] / Y[2019]["vf_share"] <= 0.6),
+        ("'output rose' 2021 to the last full flaring year", vfy[-1]["gross_bcfd"] > Y[2021]["gross_bcfd"]),
+        ("'the share moved' 2022 to 2024 upward", Y[2024]["vf_share"] > Y[2022]["vf_share"]),
+        ("'fell' around each of the three tested groups", c1["diff"] < 0 and c2["diff"] < 0 and c3["diff"] < 0),
+        ("'none fell as far as the 2019 one'", c1["rank_below"] == 0),
+        ("'only the first stands out'", c2["rank_below"] > 0 and c3["rank_below"] > 0),
+        ("'within half a Bcf/d on most readings'", 2 * len(within) > len(S["readings"])),
+        ("'the sign changes with the choices'", any(r["H"] < 0 for r in within) and any(r["H"] > 0 for r in within)),
+        ("'two rows go further': exactly t0 a month earlier and Hugh Brinson at full",
+         sorted(r["name"] for r in S["readings"] if abs(r["H"]) > NEAR)
+         == sorted(["hb_full", "t0_" + __import__("story").key(__import__("model").add_months(
+             tuple(int(x) for x in P["t0"].split("-")), -1))])),
+        ("'every version is below the default' k", max(S["k_fit"].values()) < P["k"]["default"]),
+        ("'with the lower share ... emptier'", rd["k_fit"]["H"] > 0),
+        ("the 2019 check: the default shows room in the reference month", S["H_ref_2019"]["default"] > 0),
+        ("'Matterhorn Express, the largest line yet'",
+         L["Matterhorn Express"]["bcfd"] == max(e["bcfd"] for e in S["pre_anchor"] + [x for x in P["entries"] if x["status"] == "confirmed"])),
+        ("Matterhorn's room was used up (a recovery month exists)", L["Matterhorn Express"]["recovered"] is not None),
+        ("'six months apart': Permian Highway and Whistler",
+         __import__("model").months_between(tuple(map(int, L["Permian Highway"]["month"].split("-"))),
+                                            tuple(map(int, L["Whistler"]["month"].split("-")))) == 6),
         ("most gas in the three districts comes from oil wells", P["csgd"]["share"] > 0.5),
-        ("the expected total splits into building and not yet building",
-         abs(sum(e["bcfd"] for e in P["entries"] if e["status"] == "expected")
-             - sum(e["bcfd"] for e in P["entries"] if e["status"] == "expected" and e["stage"] in BUILDING)
-             - sum(e["bcfd"] for e in P["entries"] if e["status"] == "expected" and e["stage"] not in BUILDING)) < 1e-9),
-        ("every expected line has a tracker status",
-         all(e["stage"] for e in P["entries"] if e["status"] == "expected")),
+        ("the reference month's room is positive on EIA's Permian k too, but smaller",
+         0 < S["H_ref_2019"]["k_permian"] < S["H_ref_2019"]["default"]),
+        ("the record counts no expected line: the hero's pipe at the last month is the confirmed additions since t0",
+         abs(S["hero"]["pipe"][-1] - sum(e["bcfd"] for e in P["entries"]
+                                         if e["status"] == "confirmed" and P["t0"] < e["month"] <= S["last"])) < 1e-9),
+        ("every expected line has a tracker status", all(e["stage"] for e in S["expected"])),
     ]
     bad = [name for name, ok in checks if not ok]
     if bad:
@@ -314,29 +420,10 @@ def image_dims(text):
                   lambda m: dims(m).replace('" width', '" loading="lazy" width', 1), text)
 
 
-def span(text):
-    """The marginalia asides span the grid rows after them (beauty/update_page.py's rule)."""
-    main = text[text.index("<main"):text.index("</main>")]
-    body = re.sub(r"<aside.*?</aside>", "", main, flags=re.S)
-    body = body[body.index(">") + 1:]
-    depth, n = 0, 0
-    for m in re.finditer(r"<(/?)(\w+)[^>]*?>", body):
-        close, tag = m.group(1), m.group(2)
-        if tag in ("img", "br", "hr", "meta", "link", "input", "source"):
-            n += depth == 0
-            continue
-        if close:
-            depth -= 1
-        else:
-            n += depth == 0
-            depth += 1
-    return n + 1
-
-
 def render(P):
     t = open(TEMPLATE, encoding="utf-8").read()
     v = values(P)
-    missing = sorted(set(re.findall(r"{{(\w+)}}", t)) - set(v) - {"nav", "span"})
+    missing = sorted(set(re.findall(r"{{(\w+)}}", t)) - set(v) - {"nav"})
     if missing:
         raise SystemExit(f"template placeholders without a value: {missing}")
     unused = sorted(set(v) - set(re.findall(r"{{(\w+)}}", t)))
@@ -347,7 +434,6 @@ def render(P):
     shipped = open(PAGE, encoding="utf-8").read() if os.path.exists(PAGE) else None
     t = keep_from_shipped(t, shipped)
     t = image_dims(t)
-    t = t.replace("{{span}}", str(span(t)))
     return t
 
 

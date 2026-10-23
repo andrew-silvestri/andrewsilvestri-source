@@ -55,7 +55,7 @@ const PAGES = ['index', 'about', 'code', 'heat', 'storage', 'climate-cost', 'lon
    held document pages - which is how four pages with one @media breakpoint
    each shipped untested at 390 and 960. Added 2026-09-10. */
 const APPS = ['climate-cost-app', 'longevity-app', 'skyline-app',
-              'continents-app', 'takeaway-app'];   // takeaway-app added 2026-10-18; desktop retired 2026-09-05; about added 2026-09-07; beauty added, food+neuron and the whole atlas group unpublished 2026-09-09; Running retired 2026-09-09
+              'continents-app'];   // takeaway-app added 2026-10-18, dropped 2026-10-23 (R2); desktop retired 2026-09-05; about added 2026-09-07; beauty added, food+neuron and the whole atlas group unpublished 2026-09-09; Running retired 2026-09-09
 // 1920 is here because "New York" wrapping to a line of its own in a 192px
 // gutter was read as clipping (2026-09-04); the test now also fails on real
 // clipping - any marginalia element wider than its box - so the two cannot

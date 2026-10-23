@@ -27,7 +27,7 @@ FIXED = [
 # run when present: page suites and parity checks that arrive with their pages
 OPTIONAL = [
     "python meter/test_meter.py", "python tests/test_parity_meter.py",
-    "python takeaway/test_takeaway.py", "python tests/test_parity_takeaway.py",
+    "python takeaway/test_takeaway.py",
     "node tests/test_kit.js", "python tests/test_refresh.py",
 ]
 # test files in tests/ that are not suites in their own right

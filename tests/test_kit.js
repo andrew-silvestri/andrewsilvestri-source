@@ -29,6 +29,11 @@
  *            its predicted width (trap 31: assert the declaration applied).
  *            --break font: a stylesheet that sets chart text to 14px.
  *   served   no chart SVG on screen is scaled below the size it was drawn at.
+ *   under    (R2) panels under a series: every bar's count is drawn whole,
+ *            outside the reveal clip, at every width; the site's own kit
+ *            specs (takeaway.html's hero) join the parity and layout sweeps.
+ *            --break under: the panel labels go back inside the clip, the
+ *            fault that showed "17" as "1" on the phone chart mid-reveal.
  *   counter  links to an existing source entry, animates, and ends on the
  *            exact text it shipped with.
  *   clip     files under 4 MB, captions load (3 cues), the play button
@@ -45,7 +50,7 @@ const { JSDOM } = require('jsdom');
 const PUB = path.join(__dirname, '..');
 const SITE = path.join(PUB, 'site');
 const FIX = path.join(__dirname, 'fixtures');
-const BREAKS = ['parity', 'font', 'rail', 'motion'];
+const BREAKS = ['parity', 'font', 'rail', 'motion', 'under'];
 const BREAK = (() => { const i = process.argv.indexOf('--break'); return i > 0 ? process.argv[i + 1] : null; })();
 if (BREAK !== null && !BREAKS.includes(BREAK)) { console.error('  --break takes one of: ' + BREAKS.join(' | ')); process.exit(2); }
 
@@ -61,16 +66,24 @@ function mutate(src, a, b, what) {
 }
 const CHARTS_SRC = fs.readFileSync(path.join(SITE, 'assets', 'charts.js'), 'utf8');
 const SCROLLY_SRC = fs.readFileSync(path.join(SITE, 'assets', 'scrolly.js'), 'utf8');
-const chartsSrc = BREAK === 'parity'
+let chartsSrc = BREAK === 'parity'
   ? mutate(CHARTS_SRC, "if (!el) continue;", "if (!el || key === 'clip') continue;", 'parity') : CHARTS_SRC;
+if (BREAK === 'under') {
+  chartsSrc = mutate(chartsSrc, "    s.push('</g>');\n    // panel frames", "    // panel frames", 'under 1');
+  chartsSrc = mutate(chartsSrc, "    s.push('<text class=\"ch-now\"", "    s.push('</g>');\n    s.push('<text class=\"ch-now\"", 'under 2');
+}
 const scrollySrc = BREAK === 'motion'
   ? mutate(SCROLLY_SRC, "function motionOn() { return root.dataset.motion !== 'off'; }", 'function motionOn() { return true; }', 'motion') : SCROLLY_SRC;
 function loadCharts(src) { const m = { exports: {} }; new Function('module', 'exports', src)(m, m.exports); return m.exports; }
 const Charts = loadCharts(chartsSrc);
 
 const KIT = fs.readFileSync(path.join(FIX, 'kit.html'), 'utf8');
-const SPECS = [...KIT.matchAll(/<script type="application\/json" class="scrolly-spec">([\s\S]*?)<\/script>/g)]
+const SPECS_FIX = [...KIT.matchAll(/<script type="application\/json" class="scrolly-spec">([\s\S]*?)<\/script>/g)]
   .map(m => JSON.parse(m[1].replace(/<\\\//g, '</')));
+// R2: every site page's kit specs join the sweeps (takeaway.html's hero)
+const SPECS = SPECS_FIX.concat(fs.readdirSync(SITE).filter(f => f.endsWith('.html')).flatMap(f =>
+  [...fs.readFileSync(path.join(SITE, f), 'utf8').matchAll(/<script type="application\/json" class="scrolly-spec">([\s\S]*?)<\/script>/g)]
+    .map(m => JSON.parse(m[1].replace(/<\\\//g, '</')))));
 
 /* ------------------------------------------------------------ parity --- */
 function canon(svgText) {
@@ -97,11 +110,28 @@ function canon(svgText) {
 /* ------------------------------------------------------------ layout --- */
 {
   const probs = SPECS.map(s => Charts.check(s)).flat();
-  say(SPECS.length >= 2 && probs.length === 0, 'layout: ' + SPECS.length + ' fixture specs render strictly at every width 320-1140' + (probs.length ? ': ' + probs.slice(0, 3).join('; ') : ''));
+  say(SPECS.length >= 2 && probs.length === 0, 'layout: ' + SPECS.length + ' specs (fixture and site) render strictly at every width 320-1140' + (probs.length ? ': ' + probs.slice(0, 3).join('; ') : ''));
   const ctl = JSON.parse(JSON.stringify(SPECS.find(s => s.type === 'series')));
   ctl.annotations.forEach(a => { delete a.short; });
   const refused = Charts.check(ctl);
   say(refused.length > 0, 'layout control: a spec whose labels cannot fit at 320px is refused (' + refused.length + ' widths refused)');
+}
+
+/* ------------------------------------------------------------- under --- */
+{
+  const withBars = SPECS.filter(s => (s.under || []).some(u => u.kind === 'bars'));
+  const bad = [];
+  let n = 0;
+  for (const spec of withBars) for (let w = 320; w <= 1140; w += 10) for (const t of [0.1, 0.5, 1]) {
+    const d = new JSDOM('<body>' + Charts.render(spec, { t }, { width: w }) + '</body>').window.document;
+    const clipped = new Set([...d.querySelectorAll('g[clip-path] text')].map(e => e.textContent));
+    const outside = [...d.querySelectorAll('svg > text')].map(e => e.textContent);
+    for (const u of spec.under.filter(u => u.kind === 'bars')) for (const b of u.bars) {
+      n++;
+      if ((clipped.has(b.text) || !outside.includes(b.text)) && bad.length < 3) bad.push(spec.id + ' @' + w + ' t=' + t + ' "' + b.text + '"');
+    }
+  }
+  say(withBars.length >= 1 && n > 0 && bad.length === 0, 'under: ' + n + ' bar labels over ' + withBars.length + ' spec(s) drawn whole, outside the reveal' + (bad.length ? ': ' + bad.join('; ') : ''));
 }
 
 /* -------------------------------------------------------------- rail --- */

@@ -4,7 +4,9 @@
  *   series  a time series that draws as the reader scrolls; annotations
  *           appear when the line reaches their date; an optional band fills
  *           the gap between two series, in one colour where the first is
- *           above the second and another where it is below.
+ *           above the second and another where it is below. spec.under adds
+ *           panels below the plot on the same x scale (bars by year, or a
+ *           second line on its own y), revealed with the lines.
  *   split   one bar, the total, that opens into its parts ("where it goes").
  *
  * ONE IMPLEMENTATION, TWO CONSUMERS. render(spec, state, opt) returns an SVG
@@ -173,7 +175,33 @@
     var xt = [];
     for (var yv = Math.ceil(x0 - 1e-9); yv <= x1 + 1e-9; yv++) if (yv % ystep === 0) xt.push(yv);
 
-    return { w: w, h: h, xs: xs, X: X, Y: Y, pl: pl, pr: pr, pw: pw, ptop: ptop, pb: pb,
+    // panels under the plot (R2, 2026-10-23): same x scale, own y, drawn
+    // inside the same reveal clip so they move in step with the lines. They
+    // carry no state, so update()/render() parity is untouched.
+    var under = (spec.under || []).map(function (u) {
+      var PH = u.height || 64, top0 = h + 6, ly = top0 + 12, py0 = top0 + LANE + 4, py1 = py0 + PH;
+      if (strict && u.label.length * CW > w) throw new Error('charts: ' + spec.id + ' at ' + w + 'px: panel label wider than the chart: ' + u.label);
+      var P = { u: u, ly: ly, py0: py0, py1: py1 };
+      if (u.kind === 'bars') {
+        var mx = Math.max.apply(null, u.bars.map(function (b) { return b.value; })) || 1;
+        P.bars = u.bars.map(function (b) {
+          var a = Math.max(xval(b.at), x0), z = Math.min(xval(b.at) + 1, x1);
+          var bx = X(a) + 1, bw = Math.max(X(z) - X(a) - 2, 1), bh = (PH - LANE) * b.value / mx;
+          var tw = String(b.text).length * CW;
+          if (strict && tw > X(z) - X(a) + 4) throw new Error('charts: ' + spec.id + ' at ' + w + 'px: bar label "' + b.text + '" wider than its year');
+          return { x: bx, w: bw, y: py1 - bh, h: bh, tx: bx + bw / 2, ty: py1 - bh - 4, text: b.text };
+        });
+      } else if (u.kind === 'line') {
+        var vmax = Math.max.apply(null, u.values.filter(function (v) { return v != null; }));
+        var st = niceStep(vmax, 2), top = Math.ceil(vmax / st - 1e-9) * st;
+        P.Y = function (v) { return py1 - v / top * (PH - 6); };
+        P.top = top; P.dec = decimalsOf(st);
+      } else throw new Error('charts: unknown panel kind ' + u.kind);
+      h = Math.round(py1 + 18);
+      return P;
+    });
+
+    return { w: w, h: h, xs: xs, X: X, Y: Y, pl: pl, pr: pr, pw: pw, ptop: ptop, pb: pb, under: under,
              yt: yt, ylab: ylab, xt: xt, legend: legend, anns: placed, laneTop: top, nowW: nowW, rowY: rowY, lo: lo, hi: hi };
   }
 
@@ -293,7 +321,29 @@
     spec.series.forEach(function (sr) {
       s.push('<path class="ch-line c-' + sr.color + '" d="' + pathOf(L, L.xs, sr.values, 0, L.xs.length - 1) + '"/>');
     });
+    L.under.forEach(function (P) {
+      if (P.bars) P.bars.forEach(function (b) {
+        s.push('<rect class="ch-bar f-' + P.u.color + '" x="' + r2(b.x) + '" y="' + r2(b.y) + '" width="' + r2(b.w) + '" height="' + r2(b.h) + '"/>');
+      });
+      else s.push('<path class="ch-line c-' + P.u.color + '" d="' + pathOf({ X: L.X, Y: P.Y }, L.xs, P.u.values, 0, L.xs.length - 1) + '"/>');
+    });
     s.push('</g>');
+    // panel frames and labels sit outside the reveal, so the reader sees
+    // what each panel will hold before the line reaches it
+    L.under.forEach(function (P) {
+      s.push('<text class="ch-leg" x="0" y="' + P.ly + '">' + esc(P.u.label) + '</text>');
+      s.push('<line class="ch-axis" x1="' + L.pl + '" x2="' + (L.w - L.pr) + '" y1="' + r2(P.py1) + '" y2="' + r2(P.py1) + '"/>');
+      // a bar's count sits outside the reveal: clipped mid-label, "17"
+      // read as "1" on the phone chart (R2 preview, 2026-10-23)
+      if (P.bars) P.bars.forEach(function (b) {
+        s.push('<text class="ch-tick" x="' + r2(b.tx) + '" y="' + r2(b.ty) + '" text-anchor="middle">' + esc(b.text) + '</text>');
+      });
+      if (P.Y) {
+        s.push('<line class="ch-grid" x1="' + L.pl + '" x2="' + (L.w - L.pr) + '" y1="' + r2(P.Y(P.top)) + '" y2="' + r2(P.Y(P.top)) + '"/>');
+        s.push('<text class="ch-tick" x="' + (L.pl - 8) + '" y="' + r2(P.Y(P.top) + 4) + '" text-anchor="end">' + esc(fmt(P.top, P.dec)) + '</text>');
+        s.push('<text class="ch-tick" x="' + (L.pl - 8) + '" y="' + r2(P.py1 + 4) + '" text-anchor="end">0</text>');
+      }
+    });
     spec.series.forEach(function (sr, j) { s.push('<circle class="ch-dot f-' + sr.color + '" r="3.5"' + A('dot' + j) + '/>'); });
     s.push('<text class="ch-now" x="' + L.w + '" y="' + L.rowY + '" text-anchor="end" data-k="now">' + esc(D.now._text) + '</text>');
     s.push('</svg>');

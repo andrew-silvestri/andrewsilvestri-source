@@ -20,6 +20,7 @@ import capacity   # noqa: E402
 import model as M   # noqa: E402
 import reconcile   # noqa: E402
 import sources     # noqa: E402
+import story as S  # noqa: E402
 
 OUT = os.path.join(HERE, "outputs", "payload.json")
 
@@ -172,6 +173,8 @@ def main():
         "csgd": {"year": cy, "share": cs / (cs + gw)},
         "region": {"TX": len(counties["TX"]), "NM": len(counties["NM"])},
         "window": WINDOW,
+        # R2: the reworked page's pattern, hero and readings (story.py)
+        "story": S.story(P, entries, k_def, k_band, ks, ky, T0, {key(t): v for t, v in share.items()}, vf),
     }
     os.makedirs(os.path.dirname(OUT), exist_ok=True)
     with open(OUT, "w", encoding="utf-8", newline="\n") as f:
@@ -182,6 +185,8 @@ def main():
     print(f"  H at {key(last)}: {H[key(last)]:+.3f} Bcf/d (band {Hb['k_lo'][key(last)]:+.3f}..{Hb['k_hi'][key(last)]:+.3f})")
     print(f"  pin: before {pin['before']:+.3f}, after {pin['after']:+.3f}")
     print(f"  flare check: before {flare_check['before']}, after {flare_check['after']}, missing {flare_check['missing']}")
+    for r in payload["story"]["readings"]:
+        print(f"  reading {r['name']:12} {r['H']:+.3f}  below {len(r['below'])}  ({r['why']})")
     for r in payload["flaring"]["clusters"]:
         print("  cluster", r)
 

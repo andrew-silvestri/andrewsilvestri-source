@@ -188,8 +188,8 @@ TARGETS = [
     target("meter", "meter-code.zip", keep={"outputs"},
            skip=("data/raw", "data/raw/*", "outputs/*.png", "_build", "_build/*")),
     # When the pipe is full: the fetchers, readers, capacity list, model,
-    # payload builder, figures, page and app builders, the JS engine and the
-    # checks, with the payload. Not data/raw: the fetchers re-download every
+    # story and payload builder, the page generator and the checks, with the
+    # payload (R2, 2026-10-23: no app, engine or figures any more). Not data/raw: the fetchers re-download every
     # file and the readers refuse one whose SHA-1 differs from
     # data/fetched.json, which is shipped.
     target("takeaway", "takeaway-code.zip", keep={"outputs"},

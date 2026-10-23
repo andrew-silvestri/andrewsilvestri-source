@@ -761,20 +761,19 @@ PAGES = {
          'FAQ).',
          "Statewide Rule 32, and that flaring may be needed where existing "
          "pipelines have reached capacity."),
-        ("can fall below zero",
+        ("of trading days in",
          'U.S. Energy Information Administration, <i>Today in Energy</i>, '
          '3 February 2025, "Natural gas spot prices fell across key regional '
          'trading hubs in 2024".',
          "Waha below zero on 42% of trading days in 2024 (Natural Gas "
          "Intelligence data), and Matterhorn Express entering service in "
          "October 2024."),
-        ("quoting PointLogic",
-         'U.S. Energy Information Administration, <i>Natural Gas Weekly '
-         'Update</i>, released 26 May 2022; and <i>Today in Energy</i>, 2 June '
-         '2022, "Natural gas production in the Permian Basin reached an annual '
-         'high in 2021".',
-         "PointLogic's estimate of Permian takeaway capacity: 17.5 Bcf/d in "
-         "the first, 18 Bcf/d as of May 2022 in the second."),
+        ("began taking gas",
+         'U.S. Energy Information Administration, <i>Today in Energy</i>, '
+         '6 September 2019, "Permian Basin natural gas prices up as a new '
+         'pipeline nears completion".',
+         "Limited takeaway kept Waha prices very low or negative in the months "
+         "before Gulf Coast Express; deliveries into it began on 8 August 2019."),
         ("EIA's project tracker",
          'U.S. Energy Information Administration, <i>Natural Gas Pipeline '
          'Projects</i> tracker, August 2026 edition.',
@@ -792,7 +791,8 @@ PAGES = {
         ("Table 5a, series NGMPPM",
          'U.S. Energy Information Administration, <i>Short-Term Energy '
          'Outlook</i>, October 2026, data tables (STEO_m.xlsx).',
-         "Marketed natural gas production, Permian region, monthly."),
+         "Marketed natural gas production, Permian region, monthly (Table 5a); "
+         "shale gas production by formation (Table 10b)."),
         ("drawn by county",
          'U.S. Energy Information Administration, <i>Drilling Productivity '
          'Report</i>, its methodology (August 2014) and data workbook (May '
