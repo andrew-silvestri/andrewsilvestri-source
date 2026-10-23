@@ -35,9 +35,12 @@ authors' own site no longer answers and the copy in the Internet Archive
 publishes the table as a JPEG. All 25 MORVEL plates are cross-checked against
 MintPy's independent transcription to 0.01 degrees and 0.001 deg/Myr. The
 paper also carries the 95 per cent uncertainties, which that transcription
-drops. **Not an open licence** — the MORVEL site's citation page: *"No
-restrictions are placed on non-commercial uses of graphics or results from
-this web site. The authors retain all commercial rights."*
+drops. **Licence.** The MORVEL site's citation page: *"No restrictions are
+placed on non-commercial uses of graphics or results from this web site.
+The authors retain all commercial rights to the graphics and results
+generated from this Web site."* The table used here is not from that site
+but from the Argus et al. 2011 paper, which states *"This paper is not
+subject to U.S. copyright."*
 
 **The four future scenarios.** OSF 8NEQ4, doi:10.17605/OSF.IO/8NEQ4,
 **CC0 1.0**, stated in the paper's data availability section. 4.5 MB archive
@@ -48,14 +51,17 @@ doi:10.5194/esd-11-291-2020. The geometries themselves are from Davies et al.
 (2018), *Global and Planetary Change* 169, 133-144,
 doi:10.1016/j.gloplacha.2018.07.015. **The grids are a digitisation of maps
 that were drawn**, not the output of a plate model; the deposit's read-me says
-so. They carry a 2-degree artificial land mask at both poles for numerical
+only that the grid files *"were made in MATLAB and based off the maps
+presented in"* Davies et al. 2018. They carry a 2-degree artificial land mask at both poles for numerical
 convergence, which this project excludes from every area statistic.
 
 **Reconstructions.** GPlates Web Service, `gws.gplates.org`, 8 models named
 explicitly in every request, 51 ages, 12 places, 335 responses cached in
 `data/gplates_cache.json` (90 KB, committed). The service's default model is
 documented as liable to change and named models' rotation files are updated in
-place, so nothing here relies on a default. Each model is cited on the page.
+place, so nothing here relies on a default. Each model is named in every
+request and in the cache; the page's Sources list does not cite the eight
+models individually.
 
 **Reconstructed coastlines.** Same service, `/reconstruct/coastlines/`, for
 three of the eight models at every age the viewer shows. These are each
@@ -67,6 +73,19 @@ with topology preserved, and delta-encoded on a quarter-degree grid. The
 result is `data/land.json`, and `site/assets/continents-land.js` is built from
 it.
 
+**Licence of the coastlines: not established.** The three models are
+MERDITH2021 (Merdith, A.S., et al. (2021), *Earth-Science Reviews* 214,
+103477, doi:10.1016/j.earscirev.2020.103477), MULLER2022 (Müller, R.D., et
+al. (2022), *Solid Earth* 13(7), 1127-1159, doi:10.5194/se-13-1127-2022) and
+PALEOMAP (C.R. Scotese; no citation was recorded for the version the service
+serves). This project's research notes list EarthByte's Zenodo releases of
+Merdith 2021, Müller 2022 and PALEOMAP 2016 as CC BY 4.0, but that was not
+checked record by record, and these coastlines came from the GPlates Web
+Service, not from those releases; no licence was recorded for the service's
+responses. Scotese's own PALEOMAP website material is under a non-commercial
+licence (below), and whether that reaches the PALEOMAP coastlines the service
+serves has not been established.
+
 ## Looked up, not recomputed
 
 - Earth's land fraction, 29.2 per cent of the surface. Used as the external
@@ -77,7 +96,8 @@ it.
 - MORVEL's averaging intervals: 0.78 Myr for ten spreading centres, 3.16 for
   seven, decades for the five or six plates carried on GPS (DeMets et al.
   2010).
-- That palaeomagnetism cannot determine palaeolongitude (Müller et al. 2022).
+- That palaeolongitude cannot be determined from palaeomagnetic data alone
+  unless further assumptions are made (Müller et al. 2022).
 - That uncertainty quantification for global plate models is an open problem
   (Seton et al. 2023).
 

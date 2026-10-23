@@ -119,7 +119,7 @@ doi:10.5194/se-13-1127-2022. CC BY 4.0. **Solid Earth, not Earth-Science
 Reviews**, which is how it is often miscited. States the central limitation
 plainly: *"since the Earth's magnetic dipole field is radially symmetric,
 paleo-longitudinal information cannot be determined from paleomagnetic data
-alone."*
+alone unless further assumptions are made."*
 
 **Muller, R.D., Zahirovic, S., Williams, S.E., Cannon, J., Seton, M., et al.
 (2019).** A Global Plate Model Including Lithospheric Deformation Along Major
@@ -183,7 +183,9 @@ The four scenarios, with what each actually rests on:
 Two of these need flagging on any page that uses them.
 
 **Novopangaea has no peer-reviewed primary source.** Roy Livermore devised it
-in the late 1990s for the BBC series *The Future Is Wild*. Its first print
+in the late 1990s for *The Future Is Wild*, a 2002 television series
+co-produced by Arte, ZDF, ORF, Mediaset, Animal Planet and Discovery, not
+the BBC. Its first print
 appearance is Nield, T. (2007), *Supercontinent*, Granta, whose opening chapter
 is titled "Novopangaea — a science fiction". Livermore's own 2018 book cites
 Nield rather than any work of his own. His remark on it, in *New Scientist*
@@ -226,7 +228,9 @@ downloaded today.
 
 - **NNR-MORVEL56 and MORVEL are not openly licensed.** The project's own
   citation page: *"No restrictions are placed on non-commercial uses... The
-  authors retain all commercial rights."*
+  authors retain all commercial rights to the graphics and results generated
+  from this Web site."* The NNR-MORVEL56 table used here is from Argus et
+  al. 2011, which states *"This paper is not subject to U.S. copyright."*
 - **GSRM, NGL MIDAS and the ITRF products state no licence at all.** They ask
   for a citation. This is the same position as Torsvik and Cocks' CEED6, which
   is downloadable and carries only a copyright line.

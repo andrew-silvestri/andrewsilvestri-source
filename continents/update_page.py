@@ -120,6 +120,76 @@ def values(P):
     oldest = max(m["oldest_ma"] for m in past["models"])
     last_age = max(a for a in past["ages"])
 
+    # D-34 item 1. band_far is the 1,000-2,000 km band, and the lede calls
+    # it the median for every station beyond interior_km. The median of
+    # two sets lies between their medians, so that holds while the band
+    # beyond 2,000 km gives the same two-decimal figure.
+    if not (bands[4]["hi_km"] == bands[5]["lo_km"]
+            and bands[5]["hi_km"] is None
+            and f"{bands[4]['median_mm_yr']:.2f}"
+            == f"{bands[5]['median_mm_yr']:.2f}"):
+        raise SystemExit("band_far no longer describes every station beyond "
+                         f"{bands[4]['lo_km']} km; reword the lede")
+
+    # D-34 item 3. The caption names the pair behind future_max at the
+    # common age and sets the mean pair beside what two unrelated maps
+    # with the same land fractions would give, p(1-q) + q(1-p).
+    scen = {"pun": "Pangaea Ultima", "novon": "Novopangaea",
+            "aurn": "Aurica", "amn": "Amasia"}
+    if sorted(scen.values()) != sorted(fut["scenarios"]):
+        raise SystemExit("scenario codes here do not match the payload")
+    at_c = next(d for d in fut["disagreement"]
+                if d["age"] == fut["common_age"])
+    if at_c["max"] != future_max:
+        raise SystemExit("the largest pairwise disagreement is not at the "
+                         "common age the caption names")
+    worst_pair = max(at_c["pairs"], key=at_c["pairs"].get)
+    land_c = {r["scenario"]: r["land_pct"] for r in fut["land_distribution"]
+              if r["age"] == fut["common_age"] and r["scenario"] != "today"}
+    chance = []
+    for pair in at_c["pairs"]:
+        a, b = (land_c[scen[c]] / 100 for c in pair.split("/"))
+        chance.append(100 * (a * (1 - b) + b * (1 - a)))
+    if not min(chance) - 1 <= at_c["mean"] <= max(chance) + 1:
+        raise SystemExit("the mean pair is no longer near the chance level "
+                         "the caption says it is")
+
+    # D-34 item 4. The widest latitude-only spread at the far age, over the
+    # same models and the same masking as past.spread, at the radius behind
+    # antipodal_km; and how many models each stretch of ages compares.
+    km_deg = P["antipodal_km"] / 180.0
+    oldest_of = {m["name"]: m["oldest_ma"] for m in past["models"]}
+    i_far = past["ages"].index(far["age"])
+    far_lat_km = 0.0
+    for tr in past["tracks"]:
+        lats = [m["lat"][i_far] for name, m in tr["models"].items()
+                if oldest_of[name] >= far["age"]
+                and m["lat"][i_far] is not None]
+        if len(lats) >= 2:
+            far_lat_km = max(far_lat_km, (max(lats) - min(lats)) * km_deg)
+    steps = []
+    for r in sorted(past["spread"], key=lambda r: r["age"]):
+        if steps and steps[-1][0] == r["n_models_in_range"]:
+            steps[-1][1] = r["age"]
+        else:
+            steps.append([r["n_models_in_range"], r["age"]])
+    parts = [f"{n} to {fmt(a)}" for n, a in steps]
+    parts[0] = parts[0].replace(" to ", " up to ", 1) + " million years"
+    model_steps = (", ".join(parts[:-1]) + " and " + parts[-1]
+                   if len(parts) > 1 else parts[0])
+
+    # D-34 item 5. The figure 4 caption names each boundary's kind in
+    # prose; stop if the payload's set of slowed boundaries changes.
+    slowed = sorted(r["boundary"] for r in P["geologic_vs_geodetic"]
+                    if (r.get("speed_change_mm_yr") or 0) <= -5)
+    rest = sorted(r["boundary"] for r in P["geologic_vs_geodetic"]
+                  if (r.get("speed_change_mm_yr") or 0) > -5)
+    if (slowed != ["Himalaya", "Peru-Chile trench", "Zagros"]
+            or rest != ["East African rift", "Mid-Atlantic",
+                        "SE Indian ridge", "San Andreas"]):
+        raise SystemExit(f"boundaries changed ({slowed} / {rest}); the "
+                         "figure 4 caption names them")
+
     return {
         "n_all": fmt(pres["n_all"]),
         "n_after_cuts": fmt(pres["n_after_cuts"]),
@@ -130,6 +200,7 @@ def values(P):
         "n_af": fmt(plates["AF"]["n_far"]),
         "denver_speed": f"{ex['Denver']['speed_mm_yr']:.0f}",
         "band_far": f"{bands[4]['median_mm_yr']:.2f}",
+        "interior_km": fmt(bands[4]["lo_km"]),
         "band_near": f"{bands[0]['median_mm_yr']:.1f}",
         "near_km": fmt(bands[0]["hi_km"]),
         "far_km": fmt(int(P["cuts"]["far_km"])),
@@ -145,6 +216,7 @@ def values(P):
         "pa_before_itrf": f"{pa['before']['itrf_diff_mm_yr']:.1f} mm/yr",
         "pa_after_rms": f"{pa['after']['rms_mm_yr']:.2f}",
         "pa_dropped": pa["before"]["n"] - pa["after"]["n"],
+        "big_island_plotted": pa["big_island_only"]["n"],
         "band_rows": band_rows(P),
         "anchor_rows": anchor_rows(P),
         "n_gates": len(P["anchors"]),
@@ -172,11 +244,20 @@ def values(P):
         "past_near_age": fmt(near["age"]),
         "past_far_age": fmt(far["age"]),
         "past_far_km": fmt(int(far["max_km"])),
+        "past_near_lo_km": fmt(int(near["min_of_max_km"])),
+        "past_near_hi_km": fmt(int(near["max_km"])),
+        "past_far_lat_km": fmt(int(round(far_lat_km))),
+        "model_count_steps": model_steps,
         "sydney_line": sydney_line(P),
         "common_age": fmt(fut["common_age"]),
         "agree_until": agree_until,
         "future_max": f"{future_max:.0f}",
-        "land_today": f"{[r for r in fut['land_distribution'] if r['scenario'] == 'today'][0]['land_pct']:.0f}",
+        "future_max_pair": " and ".join(scen[c] for c in worst_pair.split("/")),
+        "future_mean": f"{at_c['mean']:.0f}",
+        "land_lo": f"{min(land_c.values()):.1f}",
+        "land_hi": f"{max(land_c.values()):.1f}",
+        "chance_lo": f"{min(chance):.0f}",
+        "chance_hi": f"{max(chance):.0f}",
         "naive_pct": f"{fut['naive_max_disagreement_pct']:.0f}",
         "t0_pct": f"{fut['t0_agreement_pct']:.1f}",
         "antipodal": fmt(int(P["antipodal_km"])),
