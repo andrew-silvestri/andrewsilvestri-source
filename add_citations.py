@@ -57,10 +57,14 @@ SITE = os.path.join(HERE, "site")
 PAGES = {
     "heat.html": [
         ("Anchor phrase", "Source", "What it supports"),
+        # Title corrected 2026-10-22 (D-19 item 4; report opened by QA,
+        # OSTI 1867393). The 20-year life is this report's, not ATB's (item 5).
         ("resistive electric boiler",
-         'Zuberi, Hasanbeigi &amp; Morrow, <i>Electrification of industrial '
-         'process heat</i>, Lawrence Berkeley National Laboratory, 2021.',
-         "Electric boiler efficiency and capital cost ranges."),
+         'Zuberi, Hasanbeigi &amp; Morrow, <i>Electrification of Boilers in '
+         'U.S. Manufacturing</i>, Lawrence Berkeley National Laboratory, '
+         'LBNL-2001436, November 2021.',
+         "Electric boiler efficiency and capital cost ranges, and the "
+         "twenty-year economic life."),
         # The anchor carries "assumed" because the prose does: heat/model.py
         # sets P_e and P_g as placeholders and never reads data/, so the page
         # says assumed at first use and this phrase has to match it.
@@ -80,7 +84,9 @@ PAGES = {
          "against is also carbon dioxide only."),
         ("levelised cost",
          'NREL, <i>Annual Technology Baseline</i> 2024, financial assumptions.',
-         "Discount rate, economic life and the levelisation method."),
+         # ATB uses a 30-year recovery period and a fixed charge rate; only
+         # the 8% matches the model (D-19 item 5).
+         "The eight per cent discount rate."),
     ],
     # economy.html: RETIRED 2026-09-09 with the Running group.
     # Commented, not deleted - these tuples are the citation data and
