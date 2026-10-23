@@ -1,0 +1,177 @@
+{
+ "annual_gas_distribution_2010_present.zip": {
+  "bytes": 31870688,
+  "fetched": "2026-10-22",
+  "sha1": "afca09141f0464e79b5cb49a9aceec01f8ae82aa",
+  "url": "https://www.phmsa.dot.gov/sites/phmsa.dot.gov/files/data_statistics/pipeline/annual_gas_distribution_2010_present.zip",
+  "via": "chrome session (403 to scripted clients)"
+ },
+ "eia_N3010OK2a.xls": {
+  "bytes": 29696,
+  "fetched": "2026-10-23",
+  "sha1": "f3a5c40fa962a8efef28c1885f57b30a2a5781e3",
+  "url": "https://www.eia.gov/dnav/ng/hist_xls/N3010OK2a.xls",
+  "via": "urllib"
+ },
+ "eia_N3010OK3a.xls": {
+  "bytes": 30208,
+  "fetched": "2026-10-23",
+  "sha1": "6b8d4a4b192f7772382cc251bc5e10213ea57957",
+  "url": "https://www.eia.gov/dnav/ng/hist_xls/N3010OK3a.xls",
+  "via": "urllib"
+ },
+ "eia_N3010TX2a.xls": {
+  "bytes": 29696,
+  "fetched": "2026-10-23",
+  "sha1": "80de7f515e1b2ebfb790e3a7f2e72f27ad17f0d7",
+  "url": "https://www.eia.gov/dnav/ng/hist_xls/N3010TX2a.xls",
+  "via": "urllib"
+ },
+ "eia_N3010TX3a.xls": {
+  "bytes": 30208,
+  "fetched": "2026-10-23",
+  "sha1": "85abf3f2a6b9e419567af8c9b34e70341dc8daa7",
+  "url": "https://www.eia.gov/dnav/ng/hist_xls/N3010TX3a.xls",
+  "via": "urllib"
+ },
+ "eia_N3050OK3a.xls": {
+  "bytes": 29184,
+  "fetched": "2026-10-23",
+  "sha1": "77e10fed2d76aa8d80244572e3b87188d35199dd",
+  "url": "https://www.eia.gov/dnav/ng/hist_xls/N3050OK3a.xls",
+  "via": "urllib"
+ },
+ "eia_N3050TX3a.xls": {
+  "bytes": 29184,
+  "fetched": "2026-10-23",
+  "sha1": "e1f417e1e0d468421dd7126b85885a2626116e59",
+  "url": "https://www.eia.gov/dnav/ng/hist_xls/N3050TX3a.xls",
+  "via": "urllib"
+ },
+ "eia_NA1501_SOK_8a.xls": {
+  "bytes": 29184,
+  "fetched": "2026-10-23",
+  "sha1": "c12fba19f55c4aa24db849fbdf6c95a27da9238b",
+  "url": "https://www.eia.gov/dnav/ng/hist_xls/NA1501_SOK_8a.xls",
+  "via": "urllib"
+ },
+ "eia_NA1501_STX_8a.xls": {
+  "bytes": 29184,
+  "fetched": "2026-10-23",
+  "sha1": "ca841bd47b4c7a90576a0f4c5acfda90315f1ded",
+  "url": "https://www.eia.gov/dnav/ng/hist_xls/NA1501_STX_8a.xls",
+  "via": "urllib"
+ },
+ "eia_a1_2018.pdf": {
+  "bytes": 181644,
+  "fetched": "2026-10-22",
+  "sha1": "5e24465eaae2e37b43918077b96bcf41c40e8fa0",
+  "url": "https://www.eia.gov/naturalgas/annual/archive/2018/pdf/table_a01.pdf",
+  "via": "urllib"
+ },
+ "eia_a1_2019.pdf": {
+  "bytes": 230600,
+  "fetched": "2026-10-22",
+  "sha1": "71a30fa09da6107de7e49e5f5a127da43a43830c",
+  "url": "https://www.eia.gov/naturalgas/annual/archive/2019/pdf/table_a01.pdf",
+  "via": "urllib"
+ },
+ "eia_a1_2020.pdf": {
+  "bytes": 170794,
+  "fetched": "2026-10-22",
+  "sha1": "572c9d5497b2c786fa81c6e4984eb33da19e93ae",
+  "url": "https://www.eia.gov/naturalgas/annual/archive/2020/pdf/table_a01.pdf",
+  "via": "urllib"
+ },
+ "eia_a1_2021.pdf": {
+  "bytes": 173469,
+  "fetched": "2026-10-22",
+  "sha1": "71fc9c4ee92e1a40dbec1893d256ab6998911ad4",
+  "url": "https://www.eia.gov/naturalgas/annual/archive/2021/pdf/table_a01.pdf",
+  "via": "urllib"
+ },
+ "eia_a1_2022.pdf": {
+  "bytes": 239021,
+  "fetched": "2026-10-22",
+  "sha1": "4bf9cd1980ad803b863307e0ac9335f9559768d8",
+  "url": "https://www.eia.gov/naturalgas/annual/archive/2022/pdf/table_a01.pdf",
+  "via": "urllib"
+ },
+ "eia_a1_2023.pdf": {
+  "bytes": 243493,
+  "fetched": "2026-10-22",
+  "sha1": "a4d3768c814728c26d74c0bae177b47cf6d1a34c",
+  "url": "https://www.eia.gov/naturalgas/annual/archive/2023/pdf/table_a01.pdf",
+  "via": "urllib"
+ },
+ "eia_a1_2024.pdf": {
+  "bytes": 139635,
+  "fetched": "2026-10-22",
+  "sha1": "71ffd169062cc36c7d04b307a0a448b37d945d09",
+  "url": "https://www.eia.gov/naturalgas/annual/pdf/table_a01.pdf",
+  "via": "urllib"
+ },
+ "fr_2018-01324.pdf": {
+  "bytes": 198389,
+  "fetched": "2026-10-22",
+  "sha1": "8ccc9c7649b116a9f3eb0ada2f5ffdbe99fd39b8",
+  "url": "https://www.govinfo.gov/content/pkg/FR-2018-01-25/pdf/2018-01324.pdf",
+  "via": "urllib"
+ },
+ "gd_annual_form_cy2018_forward.pdf": {
+  "bytes": 267321,
+  "fetched": "2026-10-22",
+  "sha1": "5cd9946dd1384d8842513eafc19e723c10b7fb04",
+  "url": "https://www.phmsa.dot.gov/sites/phmsa.dot.gov/files/docs/subdoc/3476/current-gd-annual-form-phmsa-f-71001-1cy-2018-and-forward.pdf",
+  "via": "chrome session (403 to scripted clients)"
+ },
+ "ok_oac165_ch45_2024.pdf": {
+  "bytes": 716110,
+  "fetched": "2026-10-22",
+  "sha1": "e1c069737e37029fe2582f738d0da007b24b1a97",
+  "url": "https://oklahoma.gov/content/dam/ok/en/occ/documents/ajls/jls-courts/rules/2024/chapter-45-gas-service-utilities-effective-10-01-24.pdf",
+  "via": "urllib"
+ },
+ "ok_oac165_ch50_2019.pdf": {
+  "bytes": 81055,
+  "fetched": "2026-10-23",
+  "sha1": "55b0f85bf2efbf829b074afd0f849bac72fcdaf5",
+  "url": "https://oklahoma.gov/content/dam/ok/en/occ/documents/ajls/jls-courts/rules/archive-2019-only/ch50finalrules072519.pdf",
+  "via": "urllib"
+ },
+ "ok_tariff_1001.pdf": {
+  "bytes": 756627,
+  "fetched": "2026-10-23",
+  "sha1": "ef2b6948016e2fe62acf02dd2405355c85956239",
+  "url": "https://www.oklahomanaturalgas.com/media/ONG/Tariffs/1001.pdf",
+  "via": "urllib"
+ },
+ "ok_tariff_1071.pdf": {
+  "bytes": 673980,
+  "fetched": "2026-10-23",
+  "sha1": "2a74b0a50585f3bd837748b5f97a83067a3a169c",
+  "url": "https://www.oklahomanaturalgas.com/media/ONG/Tariffs/1071.pdf",
+  "via": "urllib"
+ },
+ "ok_tariff_1191.pdf": {
+  "bytes": 897916,
+  "fetched": "2026-10-23",
+  "sha1": "b37058cda98747f9ddc2b79a03651f71ba77ed12",
+  "url": "https://www.oklahomanaturalgas.com/media/ONG/Tariffs/1191.pdf",
+  "via": "urllib"
+ },
+ "report_congress_lauf_2017.pdf": {
+  "bytes": 5329068,
+  "fetched": "2026-10-22",
+  "sha1": "651369cc86907ec60d37b904b5460f85f6681089",
+  "url": "https://www.phmsa.dot.gov/sites/phmsa.dot.gov/files/docs/news/17986/report-congress-lost-and-unaccounted-natural-gas-metrics-may-2017.pdf",
+  "via": "chrome session (403 to scripted clients)"
+ },
+ "tx_16tac_ch7_2024.pdf": {
+  "bytes": 510255,
+  "fetched": "2026-10-22",
+  "sha1": "d9f855a0d93c1e45e9e83d77dc1b36732a0d2999",
+  "url": "https://www.rrc.state.tx.us/media/ykpcxhmr/chapter7-all-effective-april8-2024.pdf",
+  "via": "urllib"
+ }
+}

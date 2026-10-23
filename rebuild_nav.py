@@ -114,7 +114,11 @@ NAV = [
     # Power. A Tools group, for calculators, goes between Power and Climate
     # when its first page exists - never as an empty dropdown (packet QN).
     ("Gas", [
-        ("What a meter's error is worth", "meter.html"),
+        # R3, 2026-10-23: "Lost gas" replaces "What a meter's error is worth"
+        # (meter.html) in its place. meter.html and meter-app.html are now
+        # redirect stubs to lostgas.html (noindex); the meter model ships as
+        # meter-code.zip from lostgas.html's appendix and code.html.
+        ("Lost gas", "lostgas.html"),
         ("When the pipe is full", "takeaway.html"),
     ]),
     ("Power", [

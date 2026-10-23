@@ -601,110 +601,73 @@ PAGES = {
     # the page at all, and five others now match only inside the data-source
     # table. Removed 2026-09-05. Still open, and the longevity project's to
     # decide: the page lists ten references and carries one marker.
-    "meter.html": [
+    # lostgas/update_page.py applies this entry itself (takeaway's idiom). Every
+    # source was opened by Q6 on 2026-10-22 or R3 on 2026-10-23 (SOURCES_VERIFIED,
+    # Q6 lines and Part 6). The Oklahoma tariff names its utility: a citation for a
+    # public fact; the page's prose names no operator (R3 packet, plan review 10).
+    "lostgas.html": [
         ("Anchor phrase", "Source", "What it supports"),
-        ("written into ISO 5167-2",
-         'Emerson, <i>Conditioning Orifice Technology and Orifice Standards</i>, technical '
-         'note, Table 6, quoting ISO 5167-2:2003, section 5.3.3.1.',
-         "The discharge coefficient's stated uncertainty, 0.5% for beta 0.2 to 0.6 at Reynolds "
-         "numbers above 10,000. A manufacturer quoting the standard: the standard's text is not "
-         "openly published."),
-        ("fitted to laboratory data",
-         'Reader-Harris, <i>ISO 5167: Past and Present</i>, Global Flow Measurement Workshop, '
-         '2022.',
-         # D-23 item 7: the paper confirms the 2003 figure ("an insignificant
-         # difference"); it does not derive it. k = 2 is the 2022 revision's term.
-         "That the standard's uncertainties are expanded uncertainties at k = 2 (the 2022 "
-         "revision's terminology, applied to the unchanged 2003 figure), and that a later "
-         "calculation taking in the data behind the equation and the manufacturing variation "
-         "made an insignificant difference to the coefficient's."),
-        ("A handbook on metering-station uncertainty",
-         'NORCE, <i>Handbook for Uncertainty Calculations for Gas Flow Metering Stations</i>, '
-         '2020, section 4.4.1.',
-         "Which input uncertainties are correlated between two orifice runs in parallel at one "
-         "station, and why: the coefficient, pressures and temperature not; the diameters and the "
-         "gas analysis yes."),
-        ("published uncertainty handbook",
-         'NFOGM, <i>Handbook of Uncertainty Calculations - Fiscal Orifice Gas and Turbine Oil '
-         'Metering Stations</i>, revision 2, 2003.',
-         # D-23 item 6: the 1.0% is the Norwegian regulator's, not the handbook's.
-         "An example orifice station at 0.55% expanded uncertainty of mass flow, against the "
-         "Norwegian Petroleum Directorate's 1.0% requirement."),
-        ("open implementation used",
-         'Bell, <i>fluids</i>, Python library, MIT licence, version 1.3.1.',
-         # D-23 item 1: model.py runs its own transcription (rhg); fluids is the check.
-         "The check on the model's own Reader-Harris/Gallagher coefficient "
-         "(checks/check_rhg.py; they agree to 2e-16)."),
-        # D-04 (b): opened by Q2 on 2026-10-20 (03 RESEARCH/meter/refs/). Section
-        # 1.7.2 names the flange-tap equation as Reader-Harris/Gallagher's; its
-        # coefficients are the 1990 form, not ISO 5167-2's, hence "adoption" only.
+        ("as a share of that use",
+         'Pipeline and Hazardous Materials Safety Administration, <i>Gas Distribution '
+         'Annual Data, 2010 to present</i>, Form PHMSA F 7100.1-1, Part G; and the form '
+         'itself, rev. 10/11/2018 ("CY 2018 and forward").',
+         "Each operator's percent unaccounted for, by state of operation, its owner type, "
+         "and the Part G definition."),
+        ("says what it is",
+         'Pipeline and Hazardous Materials Safety Administration, <i>Report on lost '
+         'and unaccounted for natural gas metrics</i>, report to Congress under '
+         'section 29 of the PIPES Act of 2016, May 2017.',
+         "That LAUF combines measurement inaccuracy and unknown leaks in unknowable "
+         "shares, is not a proxy for leaks or emissions, and the instruction to report "
+         "a negative as zero."),
+        ("negatives are allowed",
+         'Federal Register 83 FR 3462, 25 January 2018, "Pipeline Safety: '
+         'Information Collection Activities".',
+         "PHMSA's change to a consumption denominator and its allowing negative "
+         "values, from calendar year 2018 reports."),
+        ("presumes that all lost and unaccounted-for gas",
+         'Railroad Commission of Texas, 16 Texas Administrative Code s.7.5525, Lost '
+         'and Unaccounted for Gas, and s.7.5519, Gas Cost Recovery (Chapter 7 '
+         'compilation effective 8 April 2024).',
+         "The presumption, meter errors named in (a); lost-gas expense above 5.0% of gas "
+         "metered in disallowed for ratemaking unless the Commission allows more (b), (c); "
+         "purchased gas adjustment clauses (7.5519)."),
+        ("Oklahoma's rule requires gas to be measured",
+         'Oklahoma Corporation Commission, Oklahoma Administrative Code 165:45-7-11, '
+         'Gas measurement requirements (Chapter 45 effective 1 October 2024); and 165:50, '
+         'Fuel, Purchased Gas, and Purchased Power Adjustment Clauses (effective 25 July 2019).',
+         "Measurement so that LAUF may be determined, no percentage; the purchased gas "
+         "adjustment rules, which do not mention lost gas."),
+        ("one large utility's tariff",
+         'Oklahoma Natural Gas Company, tariff schedules 1001 (Purchased Gas Adjustment '
+         'Clause), 1071 (Unrecovered Purchased Gas Cost) and 1191 (Lost, Used, and '
+         'Unaccounted for Gas Rider), as approved by the Oklahoma Corporation Commission.',
+         "\"LUFG shall be collected through the PGA\", the two per cent safe harbor and "
+         "the Commission's power to disallow the excess; LUFG includes gas used."),
+        ("at the city gate",
+         'U.S. Energy Information Administration, natural gas series for Texas and Oklahoma: '
+         'residential consumption, number of residential consumers, residential price and '
+         'citygate price, annual.',
+         "Gas per household and the price utilities pay for gas, by state."),
         ("Reader-Harris/Gallagher discharge coefficient",
-         'American Gas Association, American Petroleum Institute and Gas Processors '
-         'Association, <i>Orifice Metering of Natural Gas and Other Related Hydrocarbon '
-         'Fluids</i>, AGA Report No. 3, Part 1, third edition, October 1990, section 1.7.2, '
-         'as incorporated by reference and hosted by law.resource.org.',
-         "The gas industry's adoption of a Reader-Harris/Gallagher equation for flange-tapped "
-         "orifice meters. It is the 1990 form of the equation; its coefficients differ from "
-         "the ISO 5167-2:2003 form this page uses."),
+         'Reader-Harris, <i>ISO 5167: Past and Present</i>, Global Flow Measurement Workshop, '
+         '2022; and Emerson, <i>Conditioning Orifice Technology and Orifice Standards</i>, '
+         'technical note, Table 6, quoting ISO 5167-2:2003, section 5.3.3.1.',
+         "The orifice equation the meter model uses and its coefficient's stated uncertainty."),
         ("AGA Report No. 8",
          'National Institute of Standards and Technology, <i>AGA8</i> reference code '
          '(GERG-2008, DETAIL and GROSS), github.com/usnistgov/AGA8; not subject to '
          'copyright protection in the United States (17 U.S.C. 105), foreign copyright may '
          'apply.',
-         "Compressibility, the isentropic exponent and the ideal gross heating value, and the "
-         "test values the compiled code is checked against."),
-        ("how far the gas is from ideal",
-         'Ruhr-Universit&auml;t Bochum, Thermodynamics, <i>Reference Equation of State GERG-2008 '
-         'for Natural Gases and Similar Mixtures</i>.',
-         # D-23 item 5: the source gives a flat 0.1%; the scaling is the model's.
-         "A 0.1% uncertainty in density in the gas region, used for the compressibility "
-         "equation's error; its scaling with how far the gas is from ideal and its coverage "
-         "factor of 2 are assumptions."),
-        ("a fraction of span",
-         'Yokogawa, <i>EJX110A Differential Pressure Transmitter</i> and <i>EJX510A and EJX530A '
-         'Absolute and Gauge Pressure Transmitters</i>, general specifications.',
-         "Reference accuracy of 0.04% of span, the ambient-temperature and static-pressure "
-         "effects, for the differential and static pressure transmitters."),
-        ("temperature in kelvin",
-         'GHI GmbH, <i>Pt100 and Pt1000 tolerance classes to IEC 60751</i>.',
-         "The class A sensor tolerance, plus or minus (0.15 + 0.002 |t|) degrees Celsius."),
-        ("its transmitter",
-         'Emerson, <i>Rosemount 3144P Temperature Transmitter</i>, product data sheet.',
-         "The data sheet's reference accuracy example, plus or minus 0.12 degrees Celsius "
-         "over a 0 to 100 degree span: digital and D/A accuracy at one span, without ambient "
-         "effects or stability."),
-        ("its installation",
-         'Ingram &amp; Kimpton (DNV GL), <i>Experimental Research into the Measurement of Temperature in '
-         'Natural Gas Transmission Metering Systems</i>, North Sea Flow Measurement Workshop, 2014.',
-         "Plus or minus 0.5 degrees Celsius for the CT4 thermowells tested, at gas velocities "
-         "above 1 m/s and within 20 degrees of ambient (0.75 degrees reported outside it)."),
-        ("the standard's roundness limit",
-         'ISO 5167-2:2003, section 5.1.8.3, in the official preview published by the Swedish '
-         'Institute for Standards.',
-         "No diameter of the bore may differ from the mean by more than 0.05%."),
-        ("one published example budget for one chromatograph",
-         'Sutan, <i>Gas Chromatography Conditional Based Monitoring and Live Uncertainty '
-         'Calculation</i>, North Sea Flow Measurement Workshop, 2012, Table 9.',
-         "The relative uncertainty of each measured mole fraction."),
-        ("JCGM 101:2008",
-         'Joint Committee for Guides in Metrology, <i>JCGM 101:2008, Evaluation of measurement '
-         'data, Supplement 1 to the GUM: propagation of distributions using a Monte Carlo '
-         'method</i>.',
-         "The propagation, the treatment of a stated bound as a rectangular distribution, and the "
-         "adaptive stopping rule of its section 7.9.4."),
-        ("median Henry Hub spot price",
+         "Compressibility and heating value in the meter model."),
+        ("the median Henry Hub price",
          'U.S. Energy Information Administration, <i>Henry Hub Natural Gas Spot Price</i>, '
          'monthly, series RNGWHHD.',
-         "The price the imbalance is valued at."),
-        ("losses and unaccounted for",
-         'U.S. Energy Information Administration, <i>Natural Gas Annual</i>, Table A1, losses and '
-         'unaccounted for volumes by state.',
-         "The national figure and what it measures, from the table's own notes."),
-        ("Pipeline and Hazardous Materials Safety Administration",
-         'Pipeline and Hazardous Materials Safety Administration, gas distribution annual report '
-         'data, 2010 to present, Form PHMSA F 7100.1-1, Part G.',
-         "The distribution operators' reported unaccounted-for gas percentages."),
+         "The price the meter model's imbalance is valued at."),
     ],
+    # "meter.html" was here until 2026-10-23 (R3): the page is now a redirect stub to
+    # lostgas.html, whose own entry above cites what its appendix keeps of the meter
+    # work. The full list is in git history (git show 0dec34e:add_citations.py).
     "climate-cost.html": [
         ("Anchor phrase", "Source", "What it supports"),
         ("published literature",

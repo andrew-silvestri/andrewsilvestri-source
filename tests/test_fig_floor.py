@@ -289,7 +289,8 @@ BUILDERS = [
     ("longevity-quotient/build_lq.py", "longevity-quotient"),
     ("longevity-quotient/fig_lq_explained.py", "longevity-quotient"),
     ("build_skyline_figure.py", "."),
-    ("meter/fig_meter.py", "meter"),
+    # meter/fig_meter.py dropped 2026-10-23 (R3): meter.html is a redirect stub and its three
+    # figures are served on no page; lostgas.html draws only SVG (charts.js, tests/test_kit.js).
     # takeaway/fig_takeaway.py dropped 2026-10-23 (R2): the page has no PNG figures; its
     # charts are SVG from site/assets/charts.js, held by tests/test_kit.js.
 ]

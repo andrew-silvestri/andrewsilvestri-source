@@ -116,6 +116,18 @@ def stamp(through=None, source=None, live=True):
     return '<p class="stamp">This data does not update%s.</p>' % tail
 
 
+def stamp_annual(year, source, as_of, cadence):
+    """For data published once a year (R3, 2026-10-23): the newest year in the
+    payload, the source and its own as-of date, and when the next year comes.
+    All three are read from the payload by the caller, never typed."""
+    if not re.fullmatch(r"\d{4}", str(year)) or not re.fullmatch(r"\d{4}-\d{2}-\d{2}", as_of or ""):
+        raise KitError("stamp_annual: year YYYY and as_of YYYY-MM-DD, got %r, %r" % (year, as_of))
+    y, m, d = as_of.split("-")
+    return ('<p class="stamp">Reports through <time datetime="%s">%s</time> &middot; %s, data as of '
+            '<time datetime="%s">%d %s %s</time> &middot; %s</p>'
+            % (year, year, html.escape(source), as_of, int(d), MONTHS[int(m) - 1], y, html.escape(cadence)))
+
+
 def counter(value, decimals, ref, unit=None):
     """A number tied to its source: the text is the value, the link is the
     reference entry (ref is that entry's id, e.g. "ref3")."""

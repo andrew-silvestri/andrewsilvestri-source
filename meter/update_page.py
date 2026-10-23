@@ -249,6 +249,10 @@ def cite(text):
 
 
 def main(apply=False):
+    # RETIRED FROM site/ 2026-10-23 (R3): site/meter.html and site/meter-app.html are redirect
+    # stubs to lostgas.html, written by lostgas/redirects.py. Writing the old page or app back
+    # would undo that; this script stays for the archive, and values() still feeds lostgas.html.
+    raise SystemExit("meter: the page and the app were replaced by lostgas.html (R3); see lostgas/redirects.py")
     P = json.load(open(PAYLOAD, encoding="utf-8"))
     t = render(P)
     t, probs = cite(t)

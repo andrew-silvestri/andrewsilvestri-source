@@ -19,6 +19,8 @@ continents/data/raw/
 food/data/raw/
 beauty/data/raw/
 takeaway/data/raw/
+lostgas/data/raw/
+lostgas/data/_cache_*
 beauty/data/birds_joined.csv
 beauty/data/iucn_aves.csv
 neuron/data/_work/

@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Lost gas — Andrew Silvestri</title>
+<meta name="description" content="Gas utilities recover the cost of gas they report as lost and unaccounted for from customers. For a typical system the figure is smaller than the spread meter error alone produces, and part of it can be gas customers burned that their meters missed. From PHMSA's reports, state rules and EIA prices.">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="alternate icon" href="favicon.png">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<meta name="theme-color" content="#F2F0EF">
+<link rel="canonical" href="https://andrewsilvestri.com/lostgas.html">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Lost gas — Andrew Silvestri">
+<meta property="og:description" content="Gas utilities recover the cost of gas they report as lost and unaccounted for from customers. For a typical system the figure is smaller than the spread meter error alone produces.">
+<meta property="og:url" content="https://andrewsilvestri.com/lostgas.html">
+<script>try{document.documentElement.dataset.motion=matchMedia('(prefers-reduced-motion: reduce)').matches?'off':'on';}catch(e){document.documentElement.dataset.motion='on';}</script>
+<link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="assets/scrolly.css">
+</head><body>
+{{nav}}
+<main>
+<h1>Gas utilities report about {{h_median}} per cent of their gas as lost, but meter error alone can move that figure by more than that, so it cannot tell a leak from a meter's mistake</h1>
+<p class="dim">Each year every U.S. gas utility reports the share of its gas it cannot account for. On a system that loses nothing at all, ordinary meter error alone puts that figure anywhere from about {{band_lo_r}} to {{band_hi_r}} per cent. About a third of reports are zero or negative, and a negative means the meters counted more gas going out than coming in, which no leak can do. Customers pay for the gas all the same: in Texas and Oklahoma, the two states this page follows, about a dollar or two a year on a home's bill for all of it, and some of that gas was burned by customers whose meters missed it.</p>
+{{stamp}}
+{{takeaways}}
+
+<h2>What utilities report</h2>
+
+<p>The figure is lost and unaccounted-for gas: what a distribution system bought or produced, less what its customers and the company used and appropriate adjustments, as a share of that use, over the twelve months to June 30. Each operator files it with the Pipeline and Hazardous Materials Safety Administration (PHMSA), the federal pipeline safety regulator, once for each state it serves. PHMSA's own report to Congress says what it is: "{{q_mix}}"</p>
+
+{{hero}}
+
+<p class="dim">The chart counts reports, one for each operator in each state, not gas: a town of a few hundred customers counts as much as a utility of a million. Weighted by the number of customers' service lines, {{h_sw}} per cent of them are on systems inside the shaded range at this page's assumptions. Natural gas systems only; the figure is each operator's own, as filed.</p>
+
+<h2>Who pays for it</h2>
+
+<p>In Texas the Railroad Commission's rule presumes that all lost and unaccounted-for gas is gas actually lost unless a utility proves in a rate case that part of it is something else, and it names among those things "{{q_tx_meter}}". For ratemaking it disallows the expense of lost gas above {{tx_cap}} per cent of the gas metered into a distribution system, unless the Commission allows more on the facts of a case; the Commission may also allow less. On PHMSA's basis, gas consumed, {{tx_cap}} per cent of the gas metered in is {{tx_cap_c}} per cent, if what is consumed is what came in less what was lost. The rule binds the utilities the Commission regulates; {{tx_muni}} of the {{tx_n}} Texas reports for {{h_year}} come from systems owned by cities, whose rates the cities set.</p>
+
+<p>Oklahoma's rule requires gas to be measured "{{q_ok}}", and sets no percentage. Recovery is in each utility's tariff: one large utility's tariff, approved by the Oklahoma Corporation Commission, says "{{q_ok_pga}}", the purchased gas adjustment being the part of a bill that passes the cost of gas through to customers, and gives a two per cent safe harbor above which the Commission may disallow the excess. Its figure counts gas the company used as well as gas lost, so it is not on PHMSA's basis.</p>
+
+<div class="card pick" data-pick="state">
+<div class="tag">What it costs a household</div>
+<p class="pick-ctl" hidden>Your state: <button type="button" data-val="TX" aria-pressed="true">Texas</button> <button type="button" data-val="OK" aria-pressed="false">Oklahoma</button></p>
+<p data-when="TX">Texas, {{tx_year}}: a home used {{tx_mcf}} thousand cubic feet of gas, and gas cost the state's utilities ${{tx_cg}} per thousand at the city gate. Each point of lost and unaccounted-for gas is about ${{tx_pp}} a year on that home's bill. The median Texas customer's system reported {{tx_wmed}} per cent, about ${{tx_at}} a year, against a gas bill of about ${{tx_bill}}.</p>
+<p data-when="OK">Oklahoma, {{ok_year}}: a home used {{ok_mcf}} thousand cubic feet of gas, and gas cost the state's utilities ${{ok_cg}} per thousand at the city gate. Each point of lost and unaccounted-for gas is about ${{ok_pp}} a year on that home's bill. The median Oklahoma customer's system reported {{ok_wmed}} per cent, about ${{ok_at}} a year, against a gas bill of about ${{ok_bill}}.</p>
+<p class="dim">The gas is priced at what utilities pay for it, not at the retail price, which also pays for delivery. These are approximations: utilities recover the cost across all their customers and true it up once a year.</p>
+</div>
+
+<h2>How a meter can report gas as lost that was delivered</h2>
+
+{{clip}}
+
+<p>Gas enters a distribution system through a city-gate station, often an orifice meter: a plate with a hole in it, across the pipe. The flow is inferred from how far the pressure falls across the plate, through a coefficient that comes from an equation fitted to laboratory data, not from a test of that meter. It leaves through thousands of customer meters. Every one of them is a little wrong, and the reported figure is the difference between what the meters say came in and what they say went out.</p>
+
+<p>Each meter's own error averages away across thousands of them. An error they share does not. The plainest shared error is temperature. A customer meter that does not correct for it counts the volume of the gas as it is, and the bill treats that volume as if the gas were at 60 °F. Cold gas is denser, so the meter under-counts it: at {{m_temp}} °F, by about {{m_tbias}} per cent. If {{m_uncomp}} per cent of a system's meters do not correct for temperature, which is this page's assumption and not a measured figure, about {{m_shared}} per cent of the gas delivered is never billed by a meter. It still shows up as unaccounted for, and its cost goes back into the gas charge every customer pays. So that part of "lost" gas is not an extra charge for gas nobody got: it is gas customers burned, billed through the gas charge instead of through their meters. Warm gas does the opposite and pushes the figure down, which is one way a system can report a negative.</p>
+
+<h2>What the figure cannot tell you</h2>
+
+<p>A negative figure cannot be gas physically lost: the meters say more gas went out than came in. Exact zeros are a habit of the form as much as a measurement. Until the {{rule_prev}} reports PHMSA told companies: "{{q_zero}}" From the {{rule_year}} reports, negatives are allowed, and of the {{neg_rule}} negative reports that year, {{neg_rule_zero}} came from systems that had reported exactly zero the year before. In {{h_year}}, {{h_zero}} reports were exactly zero and {{h_neg}} were negative.</p>
+
+<p>Nor is the figure a measure of leaks. The same report to Congress: "{{q_proxy}}" A system with a real two-point loss and perfect meters reports the same figure as one that loses nothing and whose customer meters run cold, and nothing in the report tells the two apart. What the figure can show is a system whose figure is far outside what meters alone produce, year after year; it cannot show how much of a typical figure is loss.</p>
+
+<h2 id="method">Method</h2>
+
+<p><b>The reports.</b> PHMSA's gas distribution annual reports, Form PHMSA F 7100.1-1, Part G, field PERCENT_UNACC_GAS, from its bulk file of {{y0}} to {{y1}} reports. The form defines the figure as "{{q_partg}}" Each report covers one operator in one state, by the state of operation. From {{commodity_from}} the reports say which gas a system carries, and only natural gas systems are kept ({{n_excluded}} propane, landfill, synthetic and other reports left out). The chart bins the {{h_n}} reports for {{h_year}} in quarter points, right-inclusive, so the bin ending at zero holds the exact zeros.</p>
+
+<p><b>A system that loses nothing.</b> A model of one system with no loss at all: receipts measured at a city-gate station, deliveries through {{m_n}} customer meters, figure (in − out) / out. Each error is a relative error on a volume, normal, split into a part that stays with the system and a part redrawn each year. Every input is an assumption: city-gate standard uncertainty {{m_cg}} per cent, the customer meters' shared error {{m_fleet}} per cent between systems and its drift {{m_drift}} per cent a year, each meter's own error {{m_meter}} per cent, {{m_uncomp}} per cent of meters without temperature correction at a mean gas temperature of {{m_temp}} °F that varies by {{m_tempsd}} °F from year to year, and a billing-period mismatch of {{m_timing}} per cent. The shaded range is the middle 90 per cent of {{m_systems}} such systems. The year-to-year changes these errors produce match the middle of the reported changes at about {{m_scale}} times these uncertainties, so if anything the range is narrow.</p>
+
+<p>Where the range sits depends on two of those assumptions; its width does not much. The share of {{h_year}} reports inside it, as they move:</p>
+
+<table>
+<thead><tr><th>Gas temperature</th><th class="n">Meters not correcting</th><th class="n">Range, %</th><th class="n">Reports inside</th><th class="n">Inside, zeros left out</th></tr></thead>
+<tbody>
+{{grid_rows}}
+</tbody>
+</table>
+
+<p><b>Dollars.</b> Each state's residential consumption divided by its residential customers, EIA, {{tx_year}}, times the citygate price, EIA, the same year, times the figure. The figure is the services-weighted median of the state's reports for {{tx_year}}, the system the median customer is on. PHMSA's year ends June 30 and EIA's is the calendar year.</p>
+
+<h2 id="meter-model">The meter model</h2>
+
+<p>The city-gate side of the model draws on an earlier piece of this work: a Monte Carlo model of a pipeline system of orifice meters, built on ISO 5167-2's Reader-Harris/Gallagher discharge coefficient and NIST's reference implementation of AGA Report No. 8. On a {{one_beta}} meter its flow carries a standard uncertainty of {{one_u}} per cent over one calibration interval, {{one_top_u}} per cent of it from the discharge coefficient alone. For a system of {{n_r}} receipt and {{n_d}} delivery meters, {{mmcfd}} million cubic feet a day, the imbalance's standard uncertainty depends on whether the meters share that coefficient's error:</p>
+
+<table>
+<thead><tr><th>The discharge coefficient's error is</th><th class="n">Imbalance, standard uncertainty</th><th class="n">One standard uncertainty, a year</th></tr></thead>
+<tbody>
+<tr><td>independent at every meter</td><td class="n">{{imb0_u}}%</td><td class="n">${{usd0}}</td></tr>
+<tr><td>shared, receipts and deliveries alike</td><td class="n">{{imb1_u}}%</td><td class="n">${{usd1}}</td></tr>
+<tr><td>shared within each end, the ends apart</td><td class="n">{{imb2_u}}%</td><td class="n">${{usd2}}</td></tr>
+</tbody>
+</table>
+
+<p>Valued at ${{price_med}} per million British thermal units, the median Henry Hub price from {{price_first}} to {{price_last}}. The middle row is a limit, not a typical value: it holds only if every meter's error in the coefficient is exactly the same, and it rises toward the first row as that sharing weakens. An error shared by both sides of a balance cancels; one shared by one side only survives whole, which is why the customer meters' shared temperature error matters and their individual errors do not. The model, its tests and the full write-up are in the meter archive below.</p>
+
+<h2 id="limits">Limits</h2>
+
+<p>The reports are the operators' own figures; nothing here checks one. The no-loss model's inputs are assumptions, not measurements of any system, and its errors are drawn as normal: a station meter that fails for part of a year, a regulator off its set point or a wrong correction factor can move a figure much further, and the model has nothing for theft, unmetered use, estimated reads, accounting adjustments or leaks. The dollars are approximations. No operator is named on this page; the downloadable table carries PHMSA's operator names as PHMSA publishes them, and the Oklahoma tariff is named in the Sources.</p>
+
+<h2 id="code">The code</h2>
+
+<p>Python: the fetch scripts, each recording where and when its file came from (PHMSA's site refused this project's scripted downloads, so its files were fetched through a browser and recorded as such); the readers; the payload builder; the no-loss model; the page generator; and the tests, each shown failing before it is trusted. The archive carries the payload and the operator table, not the raw files. {{zip_kb}} KB. The meter model is a separate archive, {{meter_zip_kb}} KB.</p>
+<p><a class="btn" href="downloads/lostgas-code.zip">Download source</a>
+<a class="btn ghost" href="downloads/meter-code.zip">The meter model</a>
+<a class="btn ghost" href="code.html">All code</a></p>
+
+<footer>
+<p><a href="about.html">Andrew Silvestri</a></p>
+<p><a href="code.html">Built with Python, Julia, JavaScript and public data.</a></p>
+</footer>
+</main>
+<script src="assets/motion.js"></script>
+<script src="assets/lightbox.js"></script>
+<script src="assets/nav.js"></script>
+<script src="assets/charts.js"></script>
+<script src="assets/scrolly.js"></script>
+<script src="assets/pick.js"></script>
+</body></html>

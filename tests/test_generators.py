@@ -103,11 +103,15 @@ GENERATORS = [
     # but only for someone who runs that project's suite first (trap 19).
     ("beauty page: beauty/update_page.py --apply",
      ["update_page.py", "--apply"], "beauty", "site"),
-    # meter/update_page.py writes site/meter.html from meter/outputs/payload.json
-    # (built by meter/build_meter.py, about half an hour of Monte Carlo, so it is
-    # the page generator that is checked here, not the payload builder).
-    ("meter page: meter/update_page.py --apply",
-     ["update_page.py", "--apply"], "meter", "site"),
+    # lostgas/update_page.py writes site/lostgas.html from lostgas/outputs/payload.json and,
+    # for its appendix, meter/update_page.values() on meter/outputs/payload.json. The payload
+    # builder needs lostgas/data/raw (gitignored), so the page is the generator checked here.
+    # It replaced "meter page: meter/update_page.py --apply" on 2026-10-23 (R3).
+    ("lostgas page: lostgas/update_page.py --apply",
+     ["update_page.py", "--apply"], "lostgas", "site"),
+    # meter.html and meter-app.html are redirect stubs to lostgas.html since R3.
+    ("lostgas redirects: lostgas/redirects.py --apply",
+     ["redirects.py", "--apply"], "lostgas", "site"),
     # takeaway/update_page.py writes site/takeaway.html from
     # takeaway/outputs/payload.json; the payload builder needs the raw files
     # under takeaway/data/raw, which a clone does not have, so the page
@@ -161,10 +165,8 @@ GENERATORS = [
     # 2026-09-10. --apply because a bare run reports and writes nothing.
     ("continents app: continents/build_app.py",
      ["build_app.py", "--apply"], "continents", "site"),
-    # meter/build_app.py rebuilds the gas table from the compiled NIST code (meter/_build,
-    # made by build_aga8.py) and inlines it with engine.js into site/meter-app.html.
-    ("meter app: meter/build_app.py",
-     ["build_app.py"], "meter", "site"),
+    # "meter app: meter/build_app.py" stood here until 2026-10-23: the app is a redirect
+    # stub since R3 (lostgas/redirects.py above).
     # takeaway/build_app.py and site/takeaway-app.html dropped 2026-10-23 (R2).
     ("downloads: rezip_downloads.py", ["rezip_downloads.py"], ".", "zips"),
     ("sitemap: build_sitemap.py --apply",
