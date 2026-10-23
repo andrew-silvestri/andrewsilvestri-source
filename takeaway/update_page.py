@@ -153,6 +153,12 @@ def values(P):
         "n_conf": str(len(conf)), "conf_total": f2(sum(e["bcfd"] for e in conf)), "matterhorn": f"{mh['bcfd']:g}",
         "exp_total": f2(sum(e["bcfd"] for e in exp)), "exp_last": long(exp_last), "exp_last_year": str(ym(exp_last)[0]),
         "exp_by": f2(sum(e["bcfd"] for e in exp if ym(e["month"])[0] <= EXP_BY_YEAR)), "exp_by_year": str(EXP_BY_YEAR),
+        # D-25 item 5: the expected total mixes lines being built with lines
+        # not yet started; split it by the tracker's status.
+        "exp_built": f2(sum(e["bcfd"] for e in exp if e["stage"] in BUILDING)),
+        "exp_not": f2(sum(e["bcfd"] for e in exp if e["stage"] not in BUILDING)),
+        "exp_not_names": and_list([short_name(e["name"]) for e in exp if e["stage"] not in BUILDING]),
+        "event_min": f"{EVENT_MIN_BCFD:g}",
         "conf_lo_end": f2(cap[cap_keys[-1]]["lo_confirmed"]), "conf_hi_end": f2(cap[cap_keys[-1]]["hi_confirmed"]),
         "all_lo_end": f2(cap[cap_keys[-1]]["lo"]), "all_hi_end": f2(cap[cap_keys[-1]]["hi"]),
         "hb1": f"{hb1['bcfd']:g}",
@@ -203,6 +209,23 @@ def fall_years(fl, *groups):
     return sorted({ym(m)[0] for c in groups for m in c["placebo_below"]})
 
 
+# The tracker's statuses that mean a line is being built (D-25 item 5);
+# "Applied", "Pre-applied" and "Approved" are not.
+BUILDING = {"Construction", "Part Completed"}
+# build_takeaway.EVENT_MIN_BCFD: an addition this size or larger counts as a
+# start in the venting and flaring test (D-25 item 3). Imported so the page
+# cannot state a threshold the build does not use.
+from build_takeaway import EVENT_MIN_BCFD  # noqa: E402
+
+
+def short_name(n):
+    return n.replace(" Project", "").replace(" Pipeline", "").replace(" expansion project", "")
+
+
+def and_list(xs):
+    return xs[0] if len(xs) == 1 else ", ".join(xs[:-1]) + " and " + xs[-1]
+
+
 def annual(share, y):
     v = [s for k, s in share.items() if ym(k)[0] == y]
     return sum(v) / len(v)
@@ -251,6 +274,12 @@ def claims(P, H, lo, hi, mh, after_m, peak, c1, c2, chk, neg, conf):
         ("'years when the share was rising': it ends the placebo span higher than it began",
          P["flaring"]["share"][P["flaring"]["placebo_months"][1]] > P["flaring"]["share"][P["flaring"]["placebo_months"][0]]),
         ("most gas in the three districts comes from oil wells", P["csgd"]["share"] > 0.5),
+        ("the expected total splits into building and not yet building",
+         abs(sum(e["bcfd"] for e in P["entries"] if e["status"] == "expected")
+             - sum(e["bcfd"] for e in P["entries"] if e["status"] == "expected" and e["stage"] in BUILDING)
+             - sum(e["bcfd"] for e in P["entries"] if e["status"] == "expected" and e["stage"] not in BUILDING)) < 1e-9),
+        ("every expected line has a tracker status",
+         all(e["stage"] for e in P["entries"] if e["status"] == "expected")),
     ]
     bad = [name for name, ok in checks if not ok]
     if bad:

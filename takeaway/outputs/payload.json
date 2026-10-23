@@ -200,7 +200,7 @@
    }
   ]
  },
- "built": "2026-10-20",
+ "built": "2026-10-22",
  "capacity": {
   "2022-05": {
    "hi": 18.0,
@@ -839,6 +839,7 @@
    "month": "2022-12",
    "name": "Oasis Pipeline Modernization Project",
    "quote": "Status Completed, Completed Date 2022-12-01",
+   "stage": "Completed",
    "status": "confirmed",
    "url": null,
    "year_only": false
@@ -850,6 +851,7 @@
    "month": "2023-09",
    "name": "Whistler Pipeline Expansion",
    "quote": "Status Completed, Completed Date 2023-09-30",
+   "stage": "Completed",
    "status": "confirmed",
    "url": null,
    "year_only": false
@@ -861,6 +863,7 @@
    "month": "2023-12",
    "name": "Permian Highway Pipeline Expansion",
    "quote": "Status Completed, Completed Date 2023-12-01",
+   "stage": "Completed",
    "status": "confirmed",
    "url": null,
    "year_only": false
@@ -872,6 +875,7 @@
    "month": "2024-10",
    "name": "Matterhorn Express Pipeline",
    "quote": "entered service in October 2024",
+   "stage": "Completed",
    "status": "confirmed",
    "url": "https://www.eia.gov/todayinenergy/detail.php?id=64445",
    "year_only": false
@@ -883,6 +887,7 @@
    "month": "2025-11",
    "name": "Tarzan Compressor Station Project",
    "quote": "Status Completed, Completed Date 2025-11-05",
+   "stage": "Completed",
    "status": "confirmed",
    "url": null,
    "year_only": false
@@ -894,6 +899,7 @@
    "month": "2026-06",
    "name": "Gulf Coast Express Expansion",
    "quote": "In June, the company placed the Gulf Coast Express expansion into service, increasing transportation capacity by approximately 570 MMcf/d from the Permian Basin to South Texas",
+   "stage": "Completed",
    "status": "confirmed",
    "url": "https://pgjonline.com/news/2026/july/kinder-morgan-raises-2026-outlook-as-gas-project-backlog-tops-96-billion",
    "year_only": false
@@ -905,6 +911,7 @@
    "month": "2026-09",
    "name": "Hugh Brinson Pipeline (formerly Warrior Pipeline) Phase I & II Phase I",
    "quote": "has officially brought its Hugh Brinson Pipeline into commercial service ... on track to reach its full Phase I capacity of 1.5 Bcf/d by September 1, 2026",
+   "stage": "Part Completed",
    "status": "expected",
    "url": "https://www.bicmagazine.com/projects-expansions/midstream/energy-transfer-started-hugh-brinson-pipeline/",
    "year_only": false
@@ -916,6 +923,7 @@
    "month": "2026-11",
    "name": "Blackcomb Pipeline",
    "quote": "In-service pushed back from July to November 2026",
+   "stage": "Construction",
    "status": "expected",
    "url": null,
    "year_only": false
@@ -927,6 +935,7 @@
    "month": "2027-01",
    "name": "Hugh Brinson Pipeline (formerly Warrior Pipeline) Phase I & II Phase II",
    "quote": "phase 2 to begin operations in the first quarter of 2027",
+   "stage": "Part Completed",
    "status": "expected",
    "url": "https://www.eia.gov/todayinenergy/detail.php?id=67707",
    "year_only": false
@@ -938,6 +947,7 @@
    "month": "2027-01",
    "name": "Permian West Expansion",
    "quote": "Target in-service 2027",
+   "stage": "Applied",
    "status": "expected",
    "url": null,
    "year_only": false
@@ -949,6 +959,7 @@
    "month": "2027-01",
    "name": "Waha to Mexico (Wahalajara System Expansion) Phase 1",
    "quote": "Phase 1 (+150 MMcf/d) reached FID Sept 2025, fully sold, expected start Q1 2027",
+   "stage": "Construction",
    "status": "expected",
    "url": null,
    "year_only": false
@@ -960,6 +971,7 @@
    "month": "2028-07",
    "name": "Eiger Express Pipeline",
    "quote": "mid-2028 in-service retained",
+   "stage": "Construction",
    "status": "expected",
    "url": null,
    "year_only": false
@@ -971,6 +983,7 @@
    "month": "2028-07",
    "name": "DeLa Express Project",
    "quote": "in-service targeted July 2028",
+   "stage": "Pre-applied",
    "status": "expected",
    "url": null,
    "year_only": false
@@ -982,6 +995,7 @@
    "month": "2029-10",
    "name": "Desert Southwest expansion project",
    "quote": "target in-service Q4 2029",
+   "stage": "Pre-applied",
    "status": "expected",
    "url": null,
    "year_only": false
@@ -993,6 +1007,7 @@
    "month": "2030-02",
    "name": "Saguaro Connector Pipeline",
    "quote": "pushing completion date from 2/15/27 unitl 2/15/30",
+   "stage": "Approved",
    "status": "expected",
    "url": null,
    "year_only": false

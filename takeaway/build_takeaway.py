@@ -131,7 +131,10 @@ def main():
         src = e["source"]
         return {"name": e["name"], "month": key(e["month"]), "bcfd": e["bcfd"], "status": e["status"],
                 "cite": src[0], "url": src[1], "quote": src[2], "disagrees": e["disagrees"],
-                "year_only": bool(e.get("year_only"))}
+                "year_only": bool(e.get("year_only")),
+                # The tracker's own status column, so the page can say how much of
+                # the expected capacity is under construction (D-25 item 5).
+                "stage": str(e["record"].get("Status") or "").strip()}
 
     payload = {
         "built": dt.date.today().isoformat(),
