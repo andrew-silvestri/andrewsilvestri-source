@@ -614,6 +614,7 @@ node climate-cost/test_scene.js        # the climate-cost visualiser: JS engine 
 node tests/test_layout.js              # Playwright: marginalia, measure, hierarchy at 1440/1024/390
 node tests/test_chrome.js              # chrome <= 25% (gated) + D-01 rule 1 in WebKit at the matrix, reported (--enforce; --break d01 exits 1)
 node tests/test_nav_states.js          # every nav/dropdown state: AA, and rendered == declared; --break indent|on|hover|override
+node tests/test_kit.js                 # the insight kit (R1) on tests/fixtures/kit.html: static == live charts, no-JS, reduced motion, clip; --break parity|font|rail|motion
 node tests/probe_scene.js              # prints what is actually in the scene graph
 python3 build_atlas_figures.py         # must say "0 layout problem(s)"
 python3 neuron/test_neuron.py          # the measured neuron: z provenance, placeholder widths, the cascade, the parser

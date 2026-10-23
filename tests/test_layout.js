@@ -42,7 +42,12 @@ const http = require('http');
 const { chromium } = require('playwright');
 
 const SITE = path.join(__dirname, '..', 'site');
-const PAGES = ['index', 'about', 'code', 'heat', 'storage', 'climate-cost', 'longevity', 'skyline', 'continents', 'beauty', 'meter', 'takeaway'];
+const PAGES = ['index', 'about', 'code', 'heat', 'storage', 'climate-cost', 'longevity', 'skyline', 'continents', 'beauty', 'meter', 'takeaway',
+               '_fixture/kit'];
+/* The insight kit's fixture (R1, 2026-10-23): tests/fixtures/kit.html, served
+   from tests/ and never from site/, so the kit is measured by this gate as it
+   ships before any page uses it (packet R1: the kit passes the existing gates
+   on a fixture page). Built by tests/fixtures/build_kit_fixture.py. */
 /* The four full-screen apps. They carry no nav.top, no <main> and no
    .index, so most of the checks above them no-op; what they are here for is
    the fixed-block and sideways-scroll checks, at the two widths nothing has
@@ -155,8 +160,25 @@ function serve() {
         if (!main) return [];
         const text = new Map(), pics = [];
         const name = el => el.tagName.toLowerCase() + (typeof el.className === 'string' && el.className ? '.' + el.className.split(' ')[0] : '');
+        /* A section.scrolly (the insight kit, R1) is a picture and its text
+           in one box on the wide track: the stage is the picture and each
+           step is a text block. Measured as one box it is a text block at the
+           wide edge, which it is not; measured as its parts, its steps are
+           held to the one left edge like any paragraph and its stage to the
+           centred-picture rule. Proven 2026-10-23: with the steps put on the
+           wide track (`.scrolly > .scrolly-steps { grid-column: wide }` in
+           assets/scrolly.css) the fixture fails here at 6 of 7 widths, exit 1. */
+        const kids = [];
         for (const el of main.children) {
+          if (el.matches('section.scrolly')) kids.push(...el.querySelectorAll('.scrolly-stage, .step, .step-fig'));
+          else kids.push(el);
+        }
+        for (const el of kids) {
           if (/^(ASIDE|SCRIPT|STYLE|FOOTER)$/.test(el.tagName)) continue;
+          if (el.classList.contains('step-fig') || el.classList.contains('scrolly-stage')) {
+            const b = el.getBoundingClientRect(); if (b.width && b.height) pics.push({ n: name(el), l: b.left, r: b.right });
+            continue;
+          }
           const b = el.getBoundingClientRect(); if (!b.width || !b.height) continue;
           const pic = /^(IMG|PICTURE|VIDEO|FIGURE)$/.test(el.tagName) || el.classList.contains('mosaic');
           if (pic) pics.push({ n: name(el), l: b.left, r: b.right });

@@ -178,7 +178,13 @@ const pw = require('playwright');
 
 const SITE = path.join(__dirname, '..', 'site');
 const PAGES = ['index', 'about', 'code', 'heat', 'storage', 'climate-cost',
-               'longevity', 'skyline', 'continents', 'beauty', 'meter', 'takeaway'];
+               'longevity', 'skyline', 'continents', 'beauty', 'meter', 'takeaway',
+               '_fixture/kit'];
+/* The insight kit's fixture (R1, 2026-10-23): tests/fixtures/kit.html, served
+   from tests/ and never from site/, so the kit is measured by this gate as it
+   ships before any page uses it (packet R1: the kit passes the existing gates
+   on a fixture page). Built by tests/fixtures/build_kit_fixture.py. */
+const FIX = path.join(__dirname, 'fixtures');
 const LIMIT = 0.25;
 const bi = process.argv.indexOf('--break');
 const BREAK = bi >= 0;
@@ -220,7 +226,8 @@ function serve() {
   return new Promise(r => {
     const s = http.createServer((q, res) => {
       const u = decodeURIComponent(q.url.split('?')[0]);
-      fs.readFile(path.join(SITE, u), (e, d) => {
+      const f = u.startsWith('/_fixture/') ? path.join(FIX, u.slice('/_fixture/'.length)) : path.join(SITE, u);
+      fs.readFile(f, (e, d) => {
         if (e) { res.writeHead(404); res.end(); return; }
         res.writeHead(200, { 'Content-Type': MIME[path.extname(u)] || 'application/octet-stream' });
         res.end(d);

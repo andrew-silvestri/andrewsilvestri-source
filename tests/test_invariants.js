@@ -70,7 +70,12 @@ const ROOT = path.join(__dirname, '..');
 const SITE = path.join(ROOT, 'site');
 const FIX = path.join(__dirname, 'fixtures');
 const PAGES = ['index', 'about', 'code', 'heat', 'storage', 'climate-cost',
-               'longevity', 'skyline', 'continents', 'beauty', 'meter', 'takeaway'];
+               'longevity', 'skyline', 'continents', 'beauty', 'meter', 'takeaway',
+               '_fixture/kit'];
+/* The insight kit's fixture (R1, 2026-10-23): tests/fixtures/kit.html, served
+   from tests/ and never from site/, so the kit is measured by this gate as it
+   ships before any page uses it (packet R1: the kit passes the existing gates
+   on a fixture page). Built by tests/fixtures/build_kit_fixture.py. */
 const WORDS_EXEMPT = ['index'];
 const MIN_WORDS = 20;
 const CUE_PX = 16;
@@ -106,7 +111,8 @@ function serve() {
   return new Promise(r => {
     const s = http.createServer((q, res) => {
       const u = decodeURIComponent(q.url.split('?')[0]);
-      const file = u.startsWith('/__fixtures/') ? path.join(FIX, u.slice(12)) : path.join(SITE, u);
+      const file = u.startsWith('/__fixtures/') ? path.join(FIX, u.slice(12))
+        : u.startsWith('/_fixture/') ? path.join(FIX, u.slice(10)) : path.join(SITE, u);
       fs.readFile(file, (e, d) => {
         if (e) { res.writeHead(404); res.end(); return; }
         res.writeHead(200, { 'Content-Type': MIME[path.extname(u)] || 'application/octet-stream' });
