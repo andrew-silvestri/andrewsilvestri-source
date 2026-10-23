@@ -345,10 +345,10 @@ def main():
         "emissions_elec_kg/MMBtu": round(em["elec"], 2),
         "emissions_parity_gridCI_t/MWh": round(em["parity_grid_ci"], 4),
     }
-    with open(f"{OUT}/summary.json", "w") as f:
+    with open(f"{OUT}/summary.json", "w", newline="\n") as f:
         json.dump({"params": asdict(p), "results": summary}, f, indent=2)
     with open(f"{OUT}/summary.csv", "w", newline="") as f:
-        w = csv.writer(f)
+        w = csv.writer(f, lineterminator="\n")
         w.writerow(["metric", "value"])
         for k, v in summary.items():
             w.writerow([k, v])

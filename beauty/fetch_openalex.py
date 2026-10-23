@@ -91,7 +91,7 @@ def main():
     # no finally, and break_log.py in this folder proves it does not.
     try:
         with Lock("openalex", HERE) as lk, open(OUT, "a", encoding="utf-8", newline="") as fh:
-            w = csv.writer(fh)
+            w = csv.writer(fh, lineterminator="\n")
             if new:
                 w.writerow(COLS)
             try:

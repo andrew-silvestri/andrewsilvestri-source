@@ -67,7 +67,7 @@ MUTANTS = [
 def load(src, name):
     d = tempfile.mkdtemp()
     p = os.path.join(d, name + ".py")
-    open(p, "w", encoding="utf-8").write(src)
+    open(p, "w", encoding="utf-8", newline="\n").write(src)
     spec = importlib.util.spec_from_file_location(name, p)
     mod = importlib.util.module_from_spec(spec)
     spec.loader.exec_module(mod)

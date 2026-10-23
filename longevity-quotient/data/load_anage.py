@@ -189,7 +189,7 @@ def main():
             "order", "family", "genus", "mass_g", "wild_yr", "captive_yr",
             "colonial", "quality", "note"]
     with open(DST, "w", newline="", encoding="utf-8") as fh:
-        w = csv.DictWriter(fh, fieldnames=cols)
+        w = csv.DictWriter(fh, fieldnames=cols, lineterminator="\n")
         w.writeheader()
         w.writerows(kept)
 

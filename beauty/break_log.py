@@ -40,7 +40,7 @@ def sandbox(mod, tmp):
     data = os.path.join(tmp, "data")
     os.makedirs(data, exist_ok=True)
     with open(os.path.join(data, "avonet_slim.csv"), "w", encoding="utf-8", newline="") as fh:
-        w = csv.writer(fh)
+        w = csv.writer(fh, lineterminator="\n")
         w.writerow(["species"])
         for s in SPECIES:
             w.writerow([s])

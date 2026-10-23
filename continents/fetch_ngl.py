@@ -151,13 +151,13 @@ def main():
                        "url": BASE + FILES[n],
                        "pinned_on": datetime.now(timezone.utc).date().isoformat()}
                    for n in FILES},
-                  open(PIN, "w", encoding="utf-8"), indent=1, sort_keys=True)
+                  open(PIN, "w", encoding="utf-8", newline="\n"), indent=1, sort_keys=True)
         print(f"  re-pinned to this snapshot in {os.path.relpath(PIN, HERE)}")
 
     rows = parse_midas(paths["midasfile"], load_plates(paths["platevel.all"]))
     with open(OUT, "w", encoding="utf-8", newline="") as f:
         w = csv.DictWriter(f, fieldnames=["sta", "lat", "lon", "ve", "vn",
-                                          "sve", "svn", "dur_yr", "ngl_plate"])
+                                          "sve", "svn", "dur_yr", "ngl_plate"], lineterminator="\n")
         w.writeheader()
         w.writerows(rows)
 
@@ -174,7 +174,7 @@ def main():
         "fetched": datetime.now(timezone.utc).date().isoformat(),
         "stations": len(rows),
         "stations_with_plate": sum(1 for r in rows if r["ngl_plate"]),
-    }, open(PROV, "w", encoding="utf-8"), indent=1, sort_keys=True)
+    }, open(PROV, "w", encoding="utf-8", newline="\n"), indent=1, sort_keys=True)
 
     print(f"\n  wrote data/stations.csv  {len(rows):,} stations, "
           f"{os.path.getsize(OUT):,} bytes")

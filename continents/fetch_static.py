@@ -178,7 +178,7 @@ def main():
           f"{POLE_TOL_DEG} deg and {RATE_TOL_DEG_MYR} deg/Myr")
 
     with open(MORVEL_CSV, "w", encoding="utf-8", newline="") as f:
-        w = csv.DictWriter(f, fieldnames=list(rows[0]))
+        w = csv.DictWriter(f, fieldnames=list(rows[0]), lineterminator="\n")
         w.writeheader()
         w.writerows(rows)
 
@@ -216,7 +216,7 @@ def main():
                                  "why the paper is the source here")},
         "sha256": digests,
         "fetched": datetime.now(timezone.utc).date().isoformat(),
-    }, open(PROV, "w", encoding="utf-8"), indent=1, sort_keys=True)
+    }, open(PROV, "w", encoding="utf-8", newline="\n"), indent=1, sort_keys=True)
     print(f"  wrote data/nnr_morvel56.csv  {len(rows)} plates")
 
 

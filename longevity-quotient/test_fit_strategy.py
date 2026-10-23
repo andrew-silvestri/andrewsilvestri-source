@@ -79,7 +79,7 @@ def simulate(path, skew, n=3300, seed=5):
             "colonial": "no", "quality": "C" if low_effort else "A", "note": "",
         })
     with open(path, "w", newline="", encoding="utf-8") as fh:
-        w = csv.DictWriter(fh, fieldnames=COLS)
+        w = csv.DictWriter(fh, fieldnames=COLS, lineterminator="\n")
         w.writeheader()
         w.writerows(rows)
 

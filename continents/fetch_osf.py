@@ -223,7 +223,7 @@ def main():
                         for s, g in sorted(t0_norm.items())},
         "polar_cut_deg": og.POLAR_CUT,
     }
-    json.dump(prov, open(PROV, "w", encoding="utf-8"), indent=1, sort_keys=True)
+    json.dump(prov, open(PROV, "w", encoding="utf-8", newline="\n"), indent=1, sort_keys=True)
     print(f"\n  wrote {os.path.relpath(MASKS, HERE)}  "
           f"{os.path.getsize(MASKS):,} bytes  (50 masks, from ~400 MB unpacked)")
     print(f"  wrote {os.path.relpath(PROV, HERE)}  "

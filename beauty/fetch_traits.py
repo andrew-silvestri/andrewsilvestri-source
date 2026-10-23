@@ -72,7 +72,7 @@ def slim_avonet():
     cols = ["species", "family", "order", "mass_g", "range_km2", "centroid_lat", "migration"]
     n = 0
     with open(AVONET_OUT, "w", encoding="utf-8", newline="") as fh:
-        w = csv.writer(fh)
+        w = csv.writer(fh, lineterminator="\n")
         w.writerow(cols)
         for r in rows:
             if not r[ix["Species1"]]:
@@ -98,7 +98,7 @@ def slim_attractiveness():
             continue
         acc.setdefault(name, []).append(v)
     with open(ATTR_OUT, "w", encoding="utf-8", newline="") as fh:
-        w = csv.writer(fh)
+        w = csv.writer(fh, lineterminator="\n")
         w.writerow(["species", "attractiveness", "n_sex_rows"])
         for name in sorted(acc):
             vals = acc[name]

@@ -218,7 +218,7 @@ def write_manifest(rl, rl_meta, n):
         "inputs": inputs,
         "modelled_species": n["modelled"],
     }
-    json.dump(M, open(MANIFEST, "w", encoding="utf-8"), indent=1)
+    json.dump(M, open(MANIFEST, "w", encoding="utf-8", newline="\n"), indent=1)
     print(f"  categories sha256 {digest[:16]}... ({rows:,} species) -> manifest.json")
     return M
 
@@ -710,11 +710,11 @@ def main(n_boot):
         "assumed": assumed(),
     }
     os.makedirs(os.path.dirname(OUT), exist_ok=True)
-    json.dump(P, open(OUT, "w", encoding="utf-8"), indent=1)
+    json.dump(P, open(OUT, "w", encoding="utf-8", newline="\n"), indent=1)
     cols = ["species", "family", "order", "mass_g", "range_km2", "year", "attractiveness",
             "article", "views_mean_monthly", "works_2015_2024"]
-    m.sort_values("species")[cols + ["category"]].to_csv(JOINED, index=False)
-    m.sort_values("species")[cols].to_csv(OPEN, index=False)
+    m.sort_values("species")[cols + ["category"]].to_csv(JOINED, index=False, lineterminator="\n")
+    m.sort_values("species")[cols].to_csv(OPEN, index=False, lineterminator="\n")
     print(f"  -> {os.path.relpath(OUT, HERE)}; {os.path.relpath(JOINED, HERE)} (not shipped); "
           f"{os.path.relpath(OPEN, HERE)}")
 

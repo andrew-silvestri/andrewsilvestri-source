@@ -154,7 +154,7 @@ def main():
 
     errors = sorted(k for k, v in have.items() if isinstance(v, dict))
     if errors:
-        json.dump({"responses": have}, open(CACHE, "w", encoding="utf-8"))
+        json.dump({"responses": have}, open(CACHE, "w", encoding="utf-8", newline="\n"))
         sys.exit(f"fetch_gplates: {len(errors)} requests failed, e.g. "
                  f"{errors[:3]}. Rerun with --resume; nothing else was written.")
 
@@ -190,7 +190,7 @@ def main():
         "identity_worst_km": round(worst, 6),
         "responses": have,
     }
-    json.dump(payload, open(CACHE, "w", encoding="utf-8"), sort_keys=True)
+    json.dump(payload, open(CACHE, "w", encoding="utf-8", newline="\n"), sort_keys=True)
     print(f"  wrote {os.path.relpath(CACHE, HERE)}  "
           f"{os.path.getsize(CACHE):,} bytes  {len(have)} responses")
 

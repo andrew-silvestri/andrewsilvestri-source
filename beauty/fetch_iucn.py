@@ -74,7 +74,7 @@ def main():
                 if j is None:
                     complete = True
                     break
-                json.dump(j, open(cache, "w", encoding="utf-8"))
+                json.dump(j, open(cache, "w", encoding="utf-8", newline="\n"))
                 time.sleep(0.5)
             lk.beat()
             items = j.get("assessments") or j.get("result") or []
@@ -110,7 +110,7 @@ def main():
                  f"and the last page was not reached.\n  Nothing was written. Re-run to "
                  f"continue from the cache.")
     with open(OUT, "w", encoding="utf-8", newline="") as fh:
-        w = csv.writer(fh)
+        w = csv.writer(fh, lineterminator="\n")
         w.writerow(["species", "category", "year_published", "assessment_id", "red_list_version"])
         for name in sorted(best):
             cat, yr, aid = best[name]

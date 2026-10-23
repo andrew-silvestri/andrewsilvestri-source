@@ -66,7 +66,7 @@ def harmonise_conventions(d):
     p = os.path.join(d, "data", "osf_provenance.json")
     j = json.load(open(p, encoding="utf-8"))
     j["negative_control"]["naive_max_disagreement_pct"] = 0.8
-    json.dump(j, open(p, "w", encoding="utf-8"))
+    json.dump(j, open(p, "w", encoding="utf-8", newline="\n"))
     return "the naive read no longer disagrees, so the trap is gone"
 
 
@@ -83,7 +83,7 @@ def nudge_itrf(d):
             v[2] += 0.05
             line = f"   SOAM  {v[0]:8.4f},  {v[1]:9.4f},  {v[2]:9.4f},\n"
         out.append(line)
-    open(p, "w", encoding="utf-8").writelines(out)
+    open(p, "w", encoding="utf-8", newline="\n").writelines(out)
     return "one published rotation vector moved 0.05 deg/Myr"
 
 
@@ -97,7 +97,7 @@ def swap_coordinates(d):
     for k, v in j["responses"].items():
         if isinstance(v, list):
             j["responses"][k] = [None if q is None else [q[1], q[0]] for q in v]
-    json.dump(j, open(p, "w", encoding="utf-8"))
+    json.dump(j, open(p, "w", encoding="utf-8", newline="\n"))
     return "the service's coordinate order swapped"
 
 
@@ -115,7 +115,7 @@ def drop_contamination(d):
                               or lat > 50 or f[0] == "ILSG"):
             continue
         out.append(r)
-    open(p, "w", encoding="utf-8").write("\n".join(out) + "\n")
+    open(p, "w", encoding="utf-8", newline="\n").write("\n".join(out) + "\n")
     return "every contaminated Pacific station removed from the input"
 
 

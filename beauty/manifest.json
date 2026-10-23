@@ -1,5 +1,5 @@
 {
- "generated": "2026-10-22",
+ "generated": "2026-10-23",
  "red_list_version": "2026-1",
  "redlist_source": "api",
  "withheld": {
@@ -14,14 +14,14 @@
  "inputs": [
   {
    "file": "data/avonet_slim.csv",
-   "sha256": "8ef974c59dbcb8b5932f830d3f6493dd54b845420a8f2ee17ae4203a680aa096",
-   "bytes": 768524,
+   "sha256": "a3a75d6ea892b2532c6641484993069ce577b4e6366828781aa8bb080490914c",
+   "bytes": 757514,
    "ships": true
   },
   {
    "file": "data/attractiveness_slim.csv",
-   "sha256": "169c3cbdacf3bc05daed4e2edee2c5bda53558c37321203f1b722ed5150b4d65",
-   "bytes": 283239,
+   "sha256": "a32fdb385692407a98a6de2acae091131684ef47cc55826168295012f7c9a159",
+   "bytes": 273852,
    "ships": true
   },
   {
@@ -38,14 +38,14 @@
   },
   {
    "file": "data/openalex_counts.csv",
-   "sha256": "f856e22392739a56ce7a173c8b7d6530fb3cbeb1d4e485b845b839a119626781",
-   "bytes": 462242,
+   "sha256": "4ca29b0cfb67e2348c0fbf11361e6b0f6d95ebc5ec0838853c600acd9349f4a5",
+   "bytes": 451311,
    "ships": true
   },
   {
    "file": "data/iucn_table1a.csv",
-   "sha256": "1d4d7ad887b833e83b86156b32ab7cea5b5e2623885a5757870f03e62058b1ee",
-   "bytes": 4101,
+   "sha256": "a79b9b21e7abce8b593ad46b73ffc6989fb16939253dccec5e30f472248d90bc",
+   "bytes": 4079,
    "ships": true
   },
   {

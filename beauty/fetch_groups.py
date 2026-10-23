@@ -101,7 +101,7 @@ def parse_table():
     if len(rows) < 20 or not all(g in {r["group"] for r in rows} for g in CLASSES):
         sys.exit(f"  parsed {len(rows)} rows from {PDF}; expected 21 with the five vertebrate classes")
     with open(TABLE_OUT, "w", encoding="utf-8", newline="") as fh:
-        w = csv.DictWriter(fh, fieldnames=list(rows[0].keys()))
+        w = csv.DictWriter(fh, fieldnames=list(rows[0].keys()), lineterminator="\n")
         w.writeheader()
         w.writerows(rows)
     print(f"  {len(rows)} groups, Red List {version} -> {os.path.relpath(TABLE_OUT, HERE)}")
@@ -128,7 +128,7 @@ def fetch_counts():
         print(f"  stopped: {e}; group_counts.csv left as it was")
         return
     with open(COUNTS_OUT, "w", encoding="utf-8", newline="") as fh:
-        w = csv.DictWriter(fh, fieldnames=list(rows[0].keys()))
+        w = csv.DictWriter(fh, fieldnames=list(rows[0].keys()), lineterminator="\n")
         w.writeheader()
         w.writerows(rows)
     print(f"  -> {os.path.relpath(COUNTS_OUT, HERE)}")

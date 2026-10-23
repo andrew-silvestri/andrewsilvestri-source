@@ -432,7 +432,7 @@ def build(path=DATA):
              "lq_class_maximum", "quality", "note"])
     with open(os.path.join(OUT, "lq_table.csv"), "w", newline="",
               encoding="utf-8") as fh:
-        w = csv.writer(fh)
+        w = csv.writer(fh, lineterminator="\n")
         w.writerow(cols)
         for r in sorted(rows, key=lambda r: -(r["lq_class_maximum"] or 0)):
             # D-29 item 12: four decimals wrote the rotifer, nematode and
@@ -453,7 +453,7 @@ def build(path=DATA):
     groups = rank_summary(ranked_rows)
     with open(os.path.join(OUT, "group_summary.csv"), "w", newline="",
               encoding="utf-8") as fh:
-        w = csv.writer(fh)
+        w = csv.writer(fh, lineterminator="\n")
         w.writerow(["rank", "group", "n_species", "n_colonial",
                     "geomean_lq_class", "median_lifespan_yr",
                     "min_mass_g", "max_mass_g", "longest_lived_species",
@@ -481,7 +481,7 @@ def build(path=DATA):
             k: sum(1 for r in rows if r[k]) for k in
             ("wild", "captive", "unrecorded")},
     }
-    with open(os.path.join(OUT, "summary.json"), "w", encoding="utf-8") as fh:
+    with open(os.path.join(OUT, "summary.json"), "w", encoding="utf-8", newline="\n") as fh:
         json.dump(summary, fh, indent=2)
 
     report(rows, summary, fits, rejected, groups)

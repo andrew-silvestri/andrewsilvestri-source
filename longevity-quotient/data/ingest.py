@@ -556,7 +556,7 @@ def merge(apply=False):
         return final
 
     with open(OUT, "w", newline="", encoding="utf-8") as fh:
-        w = csv.DictWriter(fh, fieldnames=FIELDS)
+        w = csv.DictWriter(fh, fieldnames=FIELDS, lineterminator="\n")
         w.writeheader()
         for r in final:
             w.writerow({
@@ -580,7 +580,7 @@ def merge(apply=False):
 
     os.makedirs(os.path.dirname(PROV), exist_ok=True)
     with open(PROV, "w", newline="", encoding="utf-8") as fh:
-        w = csv.writer(fh)
+        w = csv.writer(fh, lineterminator="\n")
         w.writerow(["scientific_name", "taken_from", "grade",
                     "corroborating_sources", "mass_from", "origin"])
         for r in final:
@@ -593,7 +593,7 @@ def merge(apply=False):
     # The page is generated from this, so what a reader sees under "where the
     # data comes from" is the merge's own accounting rather than a number
     # somebody typed and forgot to update.
-    with open(REPORT, "w", encoding="utf-8") as fh:
+    with open(REPORT, "w", encoding="utf-8", newline="\n") as fh:
         json.dump({
             "pulled": pulled,
             "kept_by_source": srcs,

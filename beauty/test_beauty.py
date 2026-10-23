@@ -242,7 +242,7 @@ def settled_guard():
         data = os.path.join(tmp, "data")
         os.makedirs(data)
         with open(os.path.join(data, "avonet_slim.csv"), "w", encoding="utf-8", newline="") as fh:
-            w = csv.writer(fh)
+            w = csv.writer(fh, lineterminator="\n")
             w.writerow(["species", "family", "mass", "range"])
             for s in species:
                 w.writerow([s, "F", "10", "100"])
@@ -250,7 +250,7 @@ def settled_guard():
             st = stamps[name]
             hdr = cols + (["fetched"] if st is not None else [])
             with open(os.path.join(data, name), "w", encoding="utf-8", newline="") as fh:
-                w = csv.writer(fh)
+                w = csv.writer(fh, lineterminator="\n")
                 w.writerow(hdr)
                 for i, s in enumerate(species):
                     row = [s] + [filler.get(c, "") for c in cols[1:]]
