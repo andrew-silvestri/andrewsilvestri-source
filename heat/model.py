@@ -155,7 +155,7 @@ def fig_breakeven_line(p: Params, width=NOTES):
                 xytext=(-6, -30 if phone else -18),
                 textcoords="offset points", ha="right",
                 color=figstyle.COOL, fontsize=FS_1)
-    ax.annotate(f"Texas industrial retail, {retail:.1f} ¢/kWh",
+    ax.annotate(f"Assumed industrial retail, {retail:.1f} ¢/kWh",
                 xy=(Pg[0], retail), xytext=(5, -17),
                 textcoords="offset points", ha="left",
                 color=figstyle.WARM, fontsize=FS_1)
