@@ -1,18 +1,26 @@
 # Where to get more data — a source-by-source survey
 
-Written after the first AnAge merge took the table from 417 to 3,334 species,
-and after noticing what that merge did to the composition:
+The current build merges six sources that carry a lifespan (the hand-checked
+seed table, AnAge build 15, the Amniote life-history database, PanTHERIA,
+AmphiBIO and FishBase v25.04) and fills missing masses from AVONET, PanTHERIA
+and Amniote. README.md gives what each contributed. The merged table holds
+7,873 species, and this is what it is made of:
 
 ```
 merged table by class:
-    Aves            1384
-    Mammalia        1037
-    Reptilia         374
-    Actinopterygii   375
-    Insecta           19      <- every insect on Earth
-    Bivalvia           6
-    Cephalopoda        5
-    Arachnida          5
+    Mammalia         2609
+    Actinopterygii   1966
+    Aves             1929
+    Reptilia          928
+    Amphibia          207
+    Chondrichthyes    146
+    Insecta            19
+    Petromyzontida     19
+    Malacostraca        7
+    Bivalvia            6
+    Arachnida           5
+    Cephalopoda         5
+    20 other classes   27
 ```
 
 Nineteen insects. Six bivalves. Five cephalopods. Meanwhile the top of the
@@ -20,13 +28,14 @@ quotient ranking is almost entirely invertebrate — *Arctica islandica* (ocean
 quahog) at 47×, *Lamellibrachia luymesi* (cold-seep tubeworm) at 23×,
 *Lasius niger* (black garden ant) at 29×, *Mesocentrotus franciscanus* (red sea
 urchin) at 10×. **The most interesting animals in the model are the ones the
-pipeline covers worst**, because AnAge is a vertebrate database with an
-invertebrate appendix, and every merge so far has widened that bias rather than
-narrowed it.
+pipeline covers worst**, because the five databases merged are vertebrate
+databases, AnAge with an invertebrate appendix and the other four with none,
+so each merge widened that bias rather than narrowing it.
 
 This document is organised by taxon for that reason. The vertebrate sources are
-listed because they are easy and large; the invertebrate sources are listed
-because they are the ones that would actually change what the model says.
+listed because they are easy and large, and they are now merged; the
+invertebrate sources are listed because they are the ones that would actually
+change what the model says.
 
 ---
 
@@ -46,7 +55,7 @@ loader covers both.
 Coverage of longevity specifically is patchier than FishBase's, and much of
 SeaLifeBase's depth is in size and distribution rather than lifespan. Expect to
 harvest hundreds of usable longevity records rather than tens of thousands. That
-is still two orders of magnitude more invertebrates than you have now.
+is still an order of magnitude more invertebrates than the 66 in the table now.
 
 **Verdict: first invertebrate source to add.** Same tooling as FishBase, so the
 marginal cost after doing FishBase is nearly zero.
@@ -137,9 +146,9 @@ includes ~26 taxa alongside its species) including Formicidae, which is worth
 harvesting even though it breaks the one-row-per-species assumption.
 
 This is the group where the model has its sharpest result and its thinnest data.
-*Lasius niger* queens at 28.75 years against workers at two months — same
-genome, two orders of magnitude — is the single best illustration of what the
-quotient exposes, and it currently rests on two rows. Caste-resolved data would
+*Lasius niger* queens at 29 years, 28.7 times the lifespan their mass predicts,
+are one of the sharpest results in the table, and the result rests on one row:
+the table has the queen and no worker. Caste-resolved data would
 turn one anecdote into a pattern across dozens of species.
 
 **Verdict: hand-curated, slow, and the highest-payoff qualitative work
@@ -164,64 +173,68 @@ on arrival.
 
 ## Part 2 — Vertebrate volume and quality
 
-### AnAge — done
+### AnAge — merged
 
-Build 12: ~4,200 species, of which the loader kept 3,210 with usable mass.
-Manually curated, quality-graded, the benchmark. Its limitation is structural:
-one longevity figure per species, so a merge drops the wild-and-captive pairing
-from 74% of rows to 9%.
+Build 15: 4,141 records with a lifespan, 3,441 used as the record (it ranks
+second, after the seed table). Graded from its own *Data quality* field: high
+is A, acceptable B, questionable or low C. Its *Sample size* field is not used.
+Its limitation is structural: one longevity figure per species, so after the
+merge only 309 of the 7,873 species carry both a wild and a captive maximum.
 
-### Amniote Life History Database — the biggest easy win
+### Amniote Life History Database — merged
 
 Myhrvold et al. 2015, *Ecology* (Ecological Archives E096-269): up to 29
 life-history parameters for **21,322 species** of birds, mammals and reptiles.
-Five times AnAge's amniote coverage, plain CSV, free.
+5,500 carry a maximum longevity and 2,649 are used as the record, all graded B,
+since the compilation has no quality field and does not say whether an animal
+was wild or captive.
 
 It is a consolidation rather than fresh curation, so it inherits its sources'
-errors and overlaps AnAge heavily — which is precisely what your merge tool's
-conflict report is for. It also carries **age at first reproduction**, the
-classic second variable in life-history theory.
+errors: the outlier rule demotes 43 of its records, among them shrews and a
+hare at one month. It also carries **age at first reproduction**, the classic
+second variable in life-history theory, which the model does not yet use.
 
-### FishBase — closes your weakest fit
+### FishBase — merged, graded C
 
-~35,000 fish species via `rfishbase`, carrying a **`LongevityWild`** field: the
-wild-lifespan column AnAge does not have. Your fish fit is the weakest of the
-vertebrate groups (r² = 0.175 in your merged run), and fish hold a
+v25.04, read from rOpenSci's parquet snapshot: 2,088 species with a maximum
+age, 1,250 used as the record. FishBase does carry a **`LongevityWild`** field,
+but the age taken is the largest of that, the per-population maximum and the
+growth-curve tmax, and 641 masses are computed from maximum length, so every
+FishBase row is grade C: shown, and held out of the fits. The fish fit
+(r² = 0.56 over 868 species) comes from the seed table and AnAge. Fish hold a
 disproportionate share of the extremes — *Somniosus microcephalus* (Greenland
 shark) at 392 years, *Sebastes aleutianus* (rougheye rockfish) at 205,
-*Ictiobus cyprinellus* (bigmouth buffalo) at 112, *Hoplostethus atlanticus*
-(orange roughy) at 149.
+*Hoplostethus atlanticus* (orange roughy) at 149, *Ictiobus cyprinellus*
+(bigmouth buffalo) at 112.
 
 Fish ages come from otolith annuli and bomb-radiocarbon dating, both far more
 reliable than captive maxima. **Fish are the one vertebrate group where more
-data will also mean better data.**
+data will also mean better data.** FishBase is CC BY-NC 4.0, and the rows
+derived from it carry that term.
 
 ### ReptTraits and AmphiBIO — the clade-specific fillers
 
 **ReptTraits** (*Scientific Data*, 2024): 40 traits from **12,060 reptile
 species**, drawn from 1,288 sources published 1820–2023, including life-history
-traits and IUCN status.
+traits and IUCN status. Not merged.
 
 **AmphiBIO** (*Scientific Data*, 2017): 17 traits for **6,775 amphibian
-species** across all three orders, from 1,500+ sources.
+species** across all three orders, from 1,500+ sources. Merged: 359 carry a
+maximum longevity and 116 are used as the record, all graded C because
+AmphiBIO has no origin field.
 
-AmphiBIO addresses a specific failure you can see in every run: **the amphibian
-fit is rejected every time** — r² = 0.12 at both 24 and 29 species — so
-amphibians fall back to the global baseline. With 6,775 species available,
-either the relationship appears or its absence becomes a real finding about
-amphibians rather than an artefact of a small sample.
+It did not rescue the amphibian fit. On the 83 grade-A and B amphibians, all
+from the seed table and AnAge, r² is 0.043, so the fit is rejected and
+amphibian species are scored against the global baseline.
 
-### AVONET — fixes bird mass, not bird lifespan
+### AVONET — merged, for bird mass only
 
 Tobias et al. 2022, *Ecology Letters*: eleven morphological traits measured on
-**90,020 individuals across 11,009 bird species** — essentially every bird on
-Earth, measured consistently.
-
-No longevity. But look at your merge report: two-thirds of the flagged
-disagreements are **body mass**, not lifespan, and they run to 12×. Mass is half
-of this model and it is currently the sloppier half. AVONET would replace every
-bird mass in the table with a consistently measured value from a known sample
-size, which tightens the bird fit without adding a single species.
+**90,020 individuals across 11,009 bird species** (the BirdLife taxonomy sheet,
+which is the one `ingest.py` reads; the eBird and BirdTree sheets hold 10,661
+and 9,993). No longevity. It supplies a mass only where a bird has a lifespan
+and no mass of its own, which in this build is 15 species. It does not replace
+the bird masses that the lifespan sources already carry.
 
 ### USGS Bird Banding Laboratory longevity records — real wild data
 
@@ -231,9 +244,9 @@ biologists from a century of banding returns (individual encounter data from
 and excludes same-season recaptures.
 
 This is the wild counterpart AnAge lacks, for the group where AnAge is largest.
-It is also the honest way to fix the artefact at the bottom of your ranking: the
-Bassian thrush at 0.04× is a sampling problem, and banding records come with the
-effort behind them. **EURING** provides the European equivalent.
+It is also the honest way to deal with thinly observed records such as the
+Bassian thrush (0.6 years, 0.04×, demoted to grade C by the outlier rule):
+banding records come with the effort behind them. **EURING** provides the European equivalent.
 
 ---
 
@@ -269,7 +282,8 @@ whose record-holder is unrepresentative — which is a result, not a caveat.
 
 ## Part 4 — The second regressor
 
-Body mass explains about half the variance in log lifespan. The quotient is the
+Body mass explains a third to a half of the variance in log lifespan (r² 0.32
+across all animals, 0.36 to 0.56 within the fitted groups). The quotient is the
 other half, and the group view already suggests what is in it: bats, parrots,
 primates and albatrosses high; ground birds, shrews, opossums and bandicoots
 low. That is a predation-risk gradient — flight, burrowing, armour, venom and
@@ -284,25 +298,27 @@ being awkward to swallow all buy the same thing.
   birds and mammals, CC BY 4.0. Still the standard for **birds**, which COMBINE
   does not cover.
 - **PanTHERIA** (Jones et al. 2009): CC0, mammals, the original. Superseded by
-  COMBINE unless you need its geographic variables.
+  COMBINE unless you need its geographic variables. Merged here: 1,013
+  lifespans, none used as the record because AnAge or Amniote ranks higher,
+  and its masses are in the gap-filling index.
 - **Amniote** again, for age at first reproduction.
 
 ---
 
 ## Recommended order
 
+Amniote, FishBase, AmphiBIO, AVONET and PanTHERIA are merged (Part 2). What is
+left, in order:
+
 | # | Source | Buys | Effort |
 |---|---|---|---|
-| 1 | **Amniote Life History DB** | 21,322 amniotes | low — CSV |
-| 2 | **Quality filtering on what you have** | removes the thrush artefact | trivial — done |
-| 3 | **FishBase + SeaLifeBase** (`rfishbase`) | fish + marine invertebrates, wild longevity | medium — R |
-| 4 | **Moss et al. 2016 bivalves** | 1,084 populations, best-quality ages on the list | low — one paper |
-| 5 | **AVONET** | fixes bird mass, the sloppy half of the model | low — CSV |
-| 6 | **COMBINE + EltonTraits** | the second regressor | medium |
-| 7 | **USGS BBL + EURING** | genuine wild longevity for birds | medium — scrape |
-| 8 | **Add-my-Pet** | best per-species quality, all taxa | high — MATLAB structures |
-| 9 | **DATLife** | median lifespan; a second quotient | medium |
-| 10 | **ZIMS** | a captive side as good as the wild side | high — institutional |
+| 1 | **SeaLifeBase** (`rfishbase`) | marine invertebrates | medium — R |
+| 2 | **Moss et al. 2016 bivalves** | 1,084 populations, best-quality ages on the list | low — one paper |
+| 3 | **COMBINE + EltonTraits** | the second regressor | medium |
+| 4 | **USGS BBL + EURING** | genuine wild longevity for birds | medium — scrape |
+| 5 | **Add-my-Pet** | best per-species quality, all taxa | high — MATLAB structures |
+| 6 | **DATLife** | median lifespan; a second quotient | medium |
+| 7 | **ZIMS** | a captive side as good as the wild side | high — institutional |
 
 Social insects, spiders and corals sit outside this ranking because they are
 curation projects rather than downloads. They are also where the model says the
