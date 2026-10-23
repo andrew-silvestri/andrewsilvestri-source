@@ -110,6 +110,34 @@ class Run:
     def git(self, *a, check=True):
         return self.sh(["git"] + list(a), check=check)[1].strip()
 
+    def on(self, branch):
+        """Refuse to go on if the tree has left this run's branch. Found
+        2026-10-23: a dry run kept running after its launching shell died,
+        and its cleanup switched a terminal's branch to master. Every step
+        that writes to the tree or to git checks this first."""
+        cur = self.git("branch", "--show-current", check=False)
+        if cur != branch:
+            raise Red("the tree moved under the run: on %s, expected %s; touching nothing" % (cur or "(detached)", branch))
+
+
+LOCK = os.path.join(ROOT, "refresh", "RUNNING")
+STALE_S = 12 * 3600   # longer than the task's 8 h limit
+
+
+def lock():
+    """One run at a time. Returns None, or why the lock is held."""
+    try:
+        fd = os.open(LOCK, os.O_CREAT | os.O_EXCL | os.O_WRONLY)
+    except FileExistsError:
+        age = time.time() - os.path.getmtime(LOCK)
+        if age < STALE_S:
+            return "another refresh run holds refresh/RUNNING (%.0f min old)" % (age / 60)
+        os.remove(LOCK)   # older than any run can last: its run is gone
+        return lock()
+    os.write(fd, ("%d %s\n" % (os.getpid(), now().isoformat(timespec="seconds"))).encode())
+    os.close(fd)
+    return None
+
 
 def runlog(line):
     with open(RUNLOG, "a", encoding="utf-8", newline="\n") as fh:
@@ -189,6 +217,11 @@ def main():
     if not a.dry_run and done_this_month(month):
         print("refresh: %s already done" % month)
         return 0
+    held = lock()
+    if held:
+        runlog("%s BUSY %s: %s; nothing touched" % (tag, month, held))
+        print("refresh: " + held)
+        return 3
     run = Run(a.dry_run, month)
     run.log("refresh %s%s, log %s" % (month, " (dry run)" if a.dry_run else "", run.logpath))
     branch = None
@@ -220,10 +253,13 @@ def main():
         run.git("switch", "-q", "-c", branch)
         run.log("branch %s; pages: %s" % (branch, pages or "none"))
         for e in es:
+            run.on(branch)
             for cmd in e["fetch"] + e["build"]:
                 run.log("%s: %s" % (e["page"], " ".join(cmd)))
                 run.sh(cmd, cwd=os.path.join(ROOT, e["cwd"]), timeout=7200)
+        run.on(branch)
         ordering(run)
+        run.on(branch)
         cmds, red = suites.commands(ROOT), []
         for c in cmds:
             rc, _ = run.sh(c.split(), timeout=3600, check=False)
@@ -232,6 +268,7 @@ def main():
                 red.append(c)
         if red:
             raise Red("%d of %d suites red: %s" % (len(red), len(cmds), "; ".join(red[:4])))
+        run.on(branch)
         status = run.git("status", "--short", "--untracked-files=all")
         untracked = [ln[3:] for ln in status.splitlines() if ln.startswith("??")]
         if untracked:
@@ -249,6 +286,7 @@ def main():
         files = publish_files(out)
         run.log("publish.sh --dry-run: %d file(s)\n    %s" % (len(files), "\n    ".join(files)))
         if a.dry_run:
+            run.on(branch)
             run.git("switch", "-q", "master")
             run.git("branch", "-q", "-D", branch)
             runlog("%s %s: fetched %s, ordering and %d suites green, publish dry run %d file(s); nothing published, branch deleted; log %s"
@@ -260,6 +298,7 @@ def main():
         after = run.sh(["git", "-C", mirror, "rev-parse", "--short", "HEAD"])[1].strip()
         if before == after:
             raise Red("publish.sh ran but the mirror did not move (%s)" % before)
+        run.on(branch)
         run.git("switch", "-q", "master")
         run.git("merge", "-q", "--no-ff", branch, "-m", "Merge: refresh %s" % month)
         run.git("push", "-q", "origin", "master")
@@ -292,6 +331,10 @@ def main():
         return 1
     finally:
         run.fh.close()
+        try:
+            os.remove(LOCK)
+        except OSError:
+            pass
 
 
 if __name__ == "__main__":

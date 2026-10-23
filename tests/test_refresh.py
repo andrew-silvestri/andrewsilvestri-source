@@ -15,6 +15,11 @@
             set (D-08) each stop the run; clean master starts it.
             --break preflight: preflight() stops reading git status, so a run
             would start in a tree a terminal is working in.
+  lock      a second run is refused while one holds refresh/RUNNING.
+            --break lock: the lock opened without O_EXCL, so two runs start.
+  guard     a run whose tree has left its branch stops before any write.
+            --break guard: the check removed - what happened on 2026-10-23,
+            when a dry run's cleanup switched another branch to master.
   month     only a DONE or NOCHANGE line for this month stops a repeat run;
             a DRY, BUSY or RED line does not.
   publish   publish.sh's --dry-run file lines (letter, TAB, path) are what
@@ -32,7 +37,7 @@ import xml.etree.ElementTree as ET
 HERE = os.path.dirname(os.path.abspath(__file__))
 ROOT = os.path.dirname(HERE)
 RF = os.path.join(ROOT, "refresh")
-BREAKS = ["coverage", "stamp", "preflight"]
+BREAKS = ["coverage", "stamp", "preflight", "lock", "guard"]
 BREAK = sys.argv[sys.argv.index("--break") + 1] if "--break" in sys.argv else None
 if BREAK is not None and BREAK not in BREAKS:
     sys.exit("--break takes one of: " + " | ".join(BREAKS))
@@ -98,7 +103,10 @@ for e in entries:
 say(not nostamp, "stamp: %d enabled entr(y/ies), each page shows Data through <month>%s" % (sum(e["enabled"] for e in entries), (": no stamp on " + ", ".join(nostamp)) if nostamp else ""))
 
 # preflight
-monthly = load("monthly", mutate=('    if status.strip():\n        return "the tree has', '    if False:\n        return "the tree has') if BREAK == "preflight" else None)
+MUT = {"preflight": ('    if status.strip():\n        return "the tree has', '    if False:\n        return "the tree has'),
+       "lock": ("os.O_CREAT | os.O_EXCL | os.O_WRONLY", "os.O_CREAT | os.O_WRONLY"),
+       "guard": ('        if cur != branch:\n            raise Red("the tree moved', '        if False:\n            raise Red("the tree moved')}
+monthly = load("monthly", mutate=MUT.get(BREAK))
 cases = [(" M site/index.html", "master", {}, False), ("", "rework/takeaway", {}, False),
          ("", "master", {"REPO": "x"}, False), ("", "master", {"PUBLISH_MIRROR": "x"}, False),
          ("?? meter/new.csv", "master", {}, False), ("", "master", {}, True),
@@ -108,8 +116,44 @@ intr = monthly.preflight("", "data/refresh-2026-10", {}) or ""
 say("interrupted" in intr, "preflight: a tree left on a refresh branch is named as an interrupted run")
 say(not bad, "preflight: %d cases, a run starts only on clean master with neither variable set%s" % (len(cases), (": wrong on " + repr(bad[0][:2])) if bad else ""))
 
+# lock and guard: the two faults of 2026-10-23, when a dry run outlived its
+# shell and its cleanup switched another branch to master
+import tempfile  # noqa: E402
+import time as _t  # noqa: E402
+tmpd = tempfile.mkdtemp()
+monthly.LOCK = os.path.join(tmpd, "RUNNING")
+first, second = monthly.lock(), monthly.lock()
+os.utime(monthly.LOCK, (_t.time() - 13 * 3600,) * 2)
+stale = monthly.lock()
+os.remove(monthly.LOCK)
+say(first is None and second is not None and stale is None,
+    "lock: a second run is refused while the first holds it; a lock older than any run is cleared")
+
+
+class FakeRun:
+    def __init__(self, cur):
+        self.cur = cur
+
+    def git(self, *a, check=True):
+        return self.cur
+
+
+guard = monthly.Run.on
+moved = None
+try:
+    guard(FakeRun("kit/refresh-interrupted"), "data/refresh-2026-10")
+except monthly.Red as e:
+    moved = str(e)
+try:
+    guard(FakeRun("data/refresh-2026-10"), "data/refresh-2026-10")
+    stays = True
+except monthly.Red:
+    stays = False
+say(moved is not None and "moved" in moved and stays,
+    "guard: a run whose tree has left its branch stops before writing; on its branch it goes on")
+
 # month
-log = "\n".join(["2026-11-02 06:00 REFRESH DRY 2026-11: ...", "2026-11-02 06:00 REFRESH BUSY 2026-11: ...",
+log ="\n".join(["2026-11-02 06:00 REFRESH DRY 2026-11: ...", "2026-11-02 06:00 REFRESH BUSY 2026-11: ...",
                  "2026-11-03 06:30 REFRESH RED 2026-11: ...", "2026-12-02 06:00 REFRESH DRY NOCHANGE 2026-12: ..."])
 m_ok = (not monthly.done_this_month("2026-11", log) and not monthly.done_this_month("2026-12", log)
         and monthly.done_this_month("2026-11", log + "\n2026-11-04 06:30 REFRESH DONE 2026-11: ...")

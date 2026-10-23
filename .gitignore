@@ -39,3 +39,4 @@ meter/_build/
 
 # the monthly refresh writes a full log per run here (refresh/monthly.py)
 refresh/logs/
+refresh/RUNNING
