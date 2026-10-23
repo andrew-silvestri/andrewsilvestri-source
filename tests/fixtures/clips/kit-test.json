@@ -1,0 +1,29 @@
+{
+ "name": "kit-test",
+ "title": "A synthetic test clip: a line drawn on axes",
+ "duration_s": 8.0,
+ "width": 1280,
+ "height": 720,
+ "fps": 30,
+ "poster_t": 7.5,
+ "scene": "clips/scenes/kit_test.py",
+ "class": "KitTest",
+ "files": {
+  "webm": {
+   "bytes": 42537,
+   "sha1": "c4ec101161ac5494d1d8764b14b35a6f078d2f8c"
+  },
+  "mp4": {
+   "bytes": 39542,
+   "sha1": "9fc3616b24a98a2e5cecbc797b34d0512984f86a"
+  },
+  "png": {
+   "bytes": 57153,
+   "sha1": "1b8192cda3b1b9f0c1a37cdf19338fcfe8e770ee"
+  },
+  "vtt": {
+   "bytes": 214,
+   "sha1": "f4c47658346012eb7b910713324ce8e24133a88a"
+  }
+ }
+}

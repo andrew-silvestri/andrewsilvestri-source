@@ -35,7 +35,12 @@ const http = require('http'), fs = require('fs'), path = require('path');
 const HERE = __dirname;
 const SITE = path.join(HERE, '..', 'site');
 const FIXTURES = path.join(HERE, 'fixtures');
-const PAGES = ['about', 'beauty', 'climate-cost', 'code', 'continents', 'heat', 'index', 'longevity', 'meter', 'skyline', 'storage', 'takeaway'];
+const PAGES = ['about', 'beauty', 'climate-cost', 'code', 'continents', 'heat', 'index', 'longevity', 'meter', 'skyline', 'storage', 'takeaway',
+               '_fixture/kit'];
+/* The insight kit's fixture (R1, 2026-10-23): tests/fixtures/kit.html, served
+   from tests/ and never from site/, so the kit is measured by this gate as it
+   ships before any page uses it (packet R1: the kit passes the existing gates
+   on a fixture page). Built by tests/fixtures/build_kit_fixture.py. */
 const APPS = ['climate-cost-app', 'continents-app', 'longevity-app', 'meter-app', 'skyline-app', 'takeaway-app'];
 const MIME = { '.html': 'text/html', '.css': 'text/css', '.js': 'text/javascript', '.json': 'application/json', '.png': 'image/png', '.webp': 'image/webp', '.svg': 'image/svg+xml', '.woff2': 'font/woff2', '.mp4': 'video/mp4', '.ico': 'image/x-icon' };
 const BREAK = process.argv.includes('--break');
