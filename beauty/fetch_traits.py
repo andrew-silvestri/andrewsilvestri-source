@@ -13,9 +13,9 @@ which the code archive skips; the slim tables ship.
                                            -> data/attractiveness_slim.csv
 
 The Santangeli file also carries a Red List category column as the authors
-had it in 2021. It is not copied into the slim table: the page's threat
+had it (Red List version 2022-1). It is not copied into the slim table: the page's threat
 column comes from the reader's own Red List token (fetch_iucn.py), and
-build_beauty.py reads the 2021 column straight from the raw zip only as a
+build_beauty.py reads that column straight from the raw zip only as a
 labelled fallback when no token is set.
 
 Run:  python3 fetch_traits.py

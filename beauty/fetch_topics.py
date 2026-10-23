@@ -66,7 +66,8 @@ protections unless they are written in again, which is why each is named:
 break_topics.py proves the last of those over five exit paths, and was
 itself proven to fail under mutation before being believed.
 
-Writes data/topic_counts.csv: species, field_id, works, cost_usd, fetched.
+Writes data/topic_counts.csv: species, field_id, works, cost_usd, fetched,
+sorted by species name when the run ends (D-33; see sort_by_species).
 One row per species per field with a non-zero count, plus a field_id="_none"
 row for a species whose call returned no groups, so "asked and got nothing"
 is distinguishable from "never asked".
@@ -78,6 +79,7 @@ Run:  python3 fetch_topics.py            # non-LC first, then matched LC
 import argparse
 import csv
 import datetime as dt
+import io
 import os
 import sys
 import time
@@ -138,6 +140,37 @@ def targets(which):
     if which == "population":
         return non_lc + all_lc
     return non_lc + lc
+
+
+def sort_by_species(path):
+    """Rewrite the table sorted by species name, keeping each species' field
+    rows in the order they were written (a stable sort) and the file's own
+    line endings.
+
+    D-33, 2026-10-22. The fetch walks non-Least-Concern species first (see
+    targets()), and the table used to keep that order, so every NT/VU/EN/CR
+    species sat above every LC one and a reader could recover LC versus
+    non-LC for all 9,113 birds from row order alone. The IUCN Red List terms
+    (v3.1, section 4) bar redistributing Red List data in their original
+    format, and this archive ships no table that pairs a species with its
+    category in a column or by row order. The fetch order is unchanged;
+    only the finished file is sorted. Its readers (build_beauty.strata,
+    topic_test.py) pivot it by species, so the order reaches no figure."""
+    if not os.path.exists(path):
+        return
+    raw = open(path, encoding="utf-8", newline="").read()
+    eol = "\r\n" if "\r\n" in raw else "\n"
+    rows = list(csv.reader(io.StringIO(raw, newline="")))
+    if len(rows) < 2:
+        return
+    head, body = rows[0], rows[1:]
+    body.sort(key=lambda r: r[0])
+    tmp = path + ".sorting"
+    with open(tmp, "w", encoding="utf-8", newline="") as fh:
+        w = csv.writer(fh, lineterminator=eol)
+        w.writerow(head)
+        w.writerows(body)
+    os.replace(tmp, path)
 
 
 def main(which, limit):
@@ -207,6 +240,7 @@ def main(which, limit):
         with open(LOG, "a", encoding="utf-8") as lg:
             lg.write(f"{today}\t{'keyed' if key else 'keyless'}\twhich={which}"
                      f"\tspecies={n}\trows={rows}\tcost_usd={cost:.4f}\t{stopped}\n")
+    sort_by_species(OUT)     # D-33: row order must not carry the category
     print(f"  {n:,} species, {rows:,} rows, ${cost:.4f} -> {os.path.relpath(OUT, HERE)}"
           + (f"; {unanswered} unanswered, left for the next run" if unanswered else ""))
 

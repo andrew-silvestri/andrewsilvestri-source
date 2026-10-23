@@ -263,7 +263,7 @@ PAGES = {
          'Santangeli <i>et al.</i>, <i>npj Biodiversity</i> 2:20, 2023, '
          'doi:10.1038/s44185-023-00026-2.',
          "Rated attractiveness per species and sex from over 400,000 "
-         "photograph ratings by 6,212 raters; the deposit is CC BY 4.0."),
+         "photograph ratings by more than 6,000 people; the deposit is CC BY 4.0."),
         ("GBIF backbone gives the year",
          'GBIF Secretariat, <i>GBIF Backbone Taxonomy</i>, checklist dataset, '
          'doi:10.15468/39omei.',
@@ -292,17 +292,20 @@ PAGES = {
          'Ducatez &amp; Lefebvre, <i>PLoS ONE</i> 9(2):e89955, 2014, '
          'doi:10.1371/journal.pone.0089955.',
          "10,064 birds; phylogeny takes 74% of the variance in research effort; "
-         "Least Concern species have twice the papers of threatened ones."),
+         "Least Concern species have twice the papers of threatened ones in a "
+         "bivariate comparison, not a model term."),
         ("Brooke et al. 2014",
          'Brooke, Bielby, Nambiar &amp; Carbone, <i>PLoS ONE</i> 9(4):e93195, 2014, '
          'doi:10.1371/journal.pone.0093195.',
-         "286 carnivores; IUCN status estimate -0.047, z = -0.82, p = 0.41 "
-         "beside body mass, range and diet breadth."),
+         "286 carnivores; IUCN status dropped from the model beside body mass, "
+         "range and diet breadth at the second simplification step "
+         "(likelihood-ratio p = 0.848, Table S5)."),
         ("McKenzie &amp; Robertson 2015",
          'McKenzie &amp; Robertson, <i>PLoS ONE</i> 10(7):e0131004, 2015, '
          'doi:10.1371/journal.pone.0131004.',
-         "225 British breeding birds; Red List status null (p = 0.34), national "
-         "action-plan status positive (t = 3.14)."),
+         "225 British breeding birds; Red List status null (univariate p = 0.34; "
+         "multivariable t = 0.45, p = 0.65), national action-plan status "
+         "positive in the multivariable model (t = 3.14)."),
         ("Fleming &amp; Bateman 2016",
          'Fleming &amp; Bateman, <i>Mammal Review</i> 46(4):241-254, 2016, '
          'doi:10.1111/mam.12066.',
@@ -312,17 +315,19 @@ PAGES = {
          'dos Santos <i>et al.</i>, <i>Animal Conservation</i> 23(6):679-688, 2020, '
          'doi:10.1111/acv.12586.',
          "4,108 terrestrial mammals, hurdle model; the abstract reports threat "
-         "status as weakly associated with research presence and volume."),
+         "status as weakly associated with research presence and volume. Read "
+         "from the abstract; the full text is open access but was not reached."),
         ("Adamo et al. 2021",
          'Adamo <i>et al.</i>, <i>Nature Plants</i> 7:574-578, 2021, '
          'doi:10.1038/s41477-021-00912-2.',
          "113 Alpine plants; color, conspicuousness and range predict research "
-         "attention. Paywalled; not read for this page."),
+         "attention; the authors' published code has no threat-status term. "
+         "Paywalled; not read for this page."),
         ("Tam et al. 2022",
          'Tam, Lagisz, Cornwell &amp; Nakagawa, <i>GigaScience</i> 11:giac074, 2022, '
          'doi:10.1093/gigascience/giac074.',
          "5,497 mammals; IUCN status linear -16.4 [-19.3, -13.6] with a "
-         "quadratic term; Google Trends the strongest fixed effect."),
+         "quadratic term; Google Trends a strong positive predictor."),
         ("Mammola et al. 2023",
          'Mammola <i>et al.</i>, <i>eLife</i> 12:RP88251, 2023, '
          'doi:10.7554/eLife.88251.',
@@ -332,12 +337,14 @@ PAGES = {
          'Guedes, Moura &amp; Diniz-Filho, <i>Ecography</i> 2023:e06491, 2023, '
          'doi:10.1111/ecog.06491.',
          "10,531 reptiles; body size, description year and proximity to "
-         "institutions dominate. Full text not reached for this page."),
+         "institutions dominate. Full text open access (CC BY), not reached past "
+         "the publisher's bot wall."),
         ("Ducatez &amp; DeVore 2026",
          'Ducatez &amp; DeVore, <i>PLoS ONE</i> 21:e0347198, 2026, '
          'doi:10.1371/journal.pone.0347198.',
-         "370 turtles; extinction risk -0.10, t = -0.46, p = 0.64; phylogeny "
-         "66% of the variance; assessed species more studied than unassessed."),
+         "370 turtles; threatened vs non-threatened -0.10, t = -0.46, p = 0.64 "
+         "(the extinction-risk ordinal +0.10, p = 0.14); phylogeny 66% of the "
+         "variance; assessed species more studied than unassessed."),
         ("endangered-species spending",
          'Metrick &amp; Weitzman, <i>Land Economics</i> 72(1):1-16, 1996, '
          'doi:10.2307/3147153.',
@@ -352,7 +359,8 @@ PAGES = {
          'Gu&eacute;nard <i>et al.</i>, <i>PNAS</i> 122:e2412479122, 2025, '
          'doi:10.1073/pnas.2412479122.',
          "About 14,600 projects over 25 years: 6% of threatened species ever "
-         "funded, 29% of funds to Least Concern species."),
+         "funded, 29% of single-species project funding to Least Concern "
+         "species."),
         ("one estimate puts",
          'Cowie, Bouchet &amp; Fontaine, <i>Biological Reviews</i> 97(2):640-663, 2022, '
          'doi:10.1111/brv.12816.',
@@ -366,7 +374,7 @@ PAGES = {
          'Borgelt <i>et al.</i>, <i>Communications Biology</i> 5:679, 2022, '
          'doi:10.1038/s42003-022-03638-9.',
          "85% of Data Deficient amphibians predicted to be threatened."),
-        ("resurveyed in 2024",
+        ("re-examined in a study published in 2024",
          'White <i>et al.</i>, <i>Nature Plants</i> 10:1627-1634, 2024, '
          'doi:10.1038/s41477-024-01832-7.',
          "99% of Centinela's supposed microendemic plants have since been "
@@ -376,12 +384,12 @@ PAGES = {
          'doi:10.1111/j.1755-263X.2012.00239.x.',
          "The Christmas Island pipistrelle was monitored from 1994 and lost in "
          "2009 while a captive-breeding decision was delayed."),
-        ("zoo holdings favor large",
+        ("zoos favor large and attractive",
          'Frynta <i>et al.</i>, <i>PLoS ONE</i> 8(5):e63110, 2013, '
          'doi:10.1371/journal.pone.0063110.',
          "Rated beauty and body size predict which mammal families zoos hold "
-         "and in what numbers; Red List status does not."),
-        ("non-threatened species is cited",
+         "and in what numbers; Red List status is not tested."),
+        ("threatened species are under-represented",
          'Conde <i>et al.</i>, <i>PLoS ONE</i> 8(12):e80311, 2013, '
          'doi:10.1371/journal.pone.0080311.',
          "3,955 species in 837 zoos, 23% threatened; only 2 of 59 orders hold "

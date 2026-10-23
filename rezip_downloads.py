@@ -224,10 +224,12 @@ TARGETS = [
     # Not data/raw/ (re-downloaded and hash-checked by the fetch scripts),
     # not the figures, and NOT any file with a Red List category beside a
     # species name - data/iucn_aves.csv and data/birds_joined.csv - because
-    # the IUCN Red List terms of use (v3.1, 2024, section 4) prohibit
-    # redistributing Red List data in any form; the reader fetches that
-    # column with their own token. beauty/test_beauty.py opens the built zip
-    # and fails if a category column has crept in.
+    # the IUCN Red List terms of use (v3.1, 2024, section 4) bar
+    # redistributing Red List data "in their original format"; the reader
+    # fetches that column with their own token. beauty/test_beauty.py opens
+    # the built zip and fails if a category column has crept in.
+    # A column check cannot see row order, which is why fetch_topics.py
+    # sorts its table by species name (D-33, 2026-10-22).
     #
     # This rule stays HERE rather than inside beauty/, and the difference is
     # not cosmetic. On 2026-09-05 a session that knew nothing about the Red

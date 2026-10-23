@@ -1,17 +1,23 @@
-# Studied, not endangered
+# Endangered, and studied
 
 Source for `site/beauty.html`: does being endangered get a bird studied?
 The page fits research effort per species (papers naming the species,
 2015–2024) against Red List category, body mass, range size, years since
 description, rated attractiveness and public attention, with family fixed
 effects, for the world's birds; and sets that beside the published
-species-level models for other taxa.
+species-level models for birds and other taxa.
 
 ## What is in the archive, and what is not
 
 This archive is thinner than the site's others, for a reason the page
-states: the IUCN Red List's terms of use forbid redistributing Red List
-data, so no file here carries a Red List category beside a species name.
+states: the IUCN Red List's terms of use (v3.1) bar redistributing Red List
+data "in their original format" (section 4), while placing "no restrictions
+on use of the IUCN Red List Categories associated with each named taxonomic
+entity" (section 3). This archive takes the cautious reading: no file here
+carries a Red List category beside a species name, in a column or by the
+order of its rows (`data/topic_counts.csv` is sorted by species name for
+that reason), though `data/lc_matched.csv` lists the 1,000 Least Concern
+species the comparison is matched against.
 Everything else is here: every script, every join, and every input whose
 licence allows it (AVONET and the attractiveness scores, CC BY 4.0;
 Wikipedia pageviews and OpenAlex counts, CC0; the Red List summary table,
@@ -81,7 +87,7 @@ Two environment variables, read at run time and never from disk:
 - `IUCN_TOKEN`: register at https://api.iucnredlist.org/ and generate a
   token; it arrives by email, usually within a day or two. The token is
   personal to the account, and by using it you accept the Red List terms
-  (non-commercial, no redistribution). IUCN asks that a copy of any
+  (non-commercial; no redistribution of the data in their original format). IUCN asks that a copy of any
   publication using the data be sent to them.
 - `OPENALEX_KEY`: optional. Create a free account at https://openalex.org
   (no card) for $1.00 of usage a day; without a key the allowance is $0.10 a
@@ -89,18 +95,21 @@ Two environment variables, read at run time and never from disk:
 
 ## Cost of reproducing
 
-OpenAlex meters list-and-filter calls at 10 credits, $0.001, each, whatever
-the page size (measured from the response headers on 6 September 2026; the
-figure of $0.0001 that circulated before then was wrong by ten). The
-per-species fetch is one call per species, so the full run for 11,009
-birds is about $11: eleven days on a free key's $1.00 a day, or a hundred
-and ten without one. The class-level fetch is ten calls.
-`data/openalex_run_log.txt` records what each run actually cost, and the
-page quotes that log. Everything else is free.
+OpenAlex bills the per-species call, a filtered list carrying a `.search`
+phrase, as a search: 10 credits, $0.001, whatever the page size (measured
+from the response headers on 6 September 2026). A filtered list call with
+no search phrase is $0.0001, a tenth of that. The per-species fetch is one
+call per species, so the full run for 11,009 birds is about $11: twelve
+days on a free key's $1.00 a day, or about a hundred and ten without one.
+The class-level fetch is ten calls. `data/openalex_counts.csv` carries what
+each call cost in its `cost_usd` column, and the page quotes that column's
+sum; `data/openalex_run_log.txt` records each run's total and comes to less,
+because the first run, on 6 September, wrote rows and no log line.
+Everything else is free.
 
 Without `IUCN_TOKEN` the build still runs: it takes the Red List category
 from the Santangeli et al. 2023 deposit, which carries the categories as
-the authors had them in 2021, and stamps the payload
+the authors had them (Red List version 2022-1), and stamps the payload
 `redlist_source: santangeli_2021_fallback`. The shipped page is built from
 the API (`redlist_source: api`), and `test_beauty.py` fails otherwise.
 
@@ -135,12 +144,13 @@ the API (`redlist_source: api`), and `test_beauty.py` fails otherwise.
 to test.
 
 - **Threatened birds are studied MORE.** A Critically Endangered bird has 2.65x
-  the papers of a Least Concern one (+0.974, p 1.2e-58) with family, mass, range
-  and description year held fixed. Adjusting widens the gap rather than
+  the papers of a Least Concern one (+0.974, p 1.2e-58) with family, mass, range,
+  description year and rated attractiveness held fixed. Adjusting widens the gap rather than
   collapsing it.
-- **Rated attractiveness explains nothing.** Drop-one R-squared 0.0008, below
-  body mass. Wikipedia views: 0.1041, 135 times as much. The project's own
-  appeal proxy is the dead one.
+- **Rated attractiveness explains little.** Drop-one R-squared 0.0008 (95%
+  bootstrap interval 0.0002 to 0.0017), above body mass (0.0001) and far
+  below Wikipedia views (0.1041). The project's own appeal proxy is the weak
+  one.
 - **Attention carries a third of the threat effect** at Critically Endangered
   (34%), rising monotonically with severity. Direction assumed, not shown.
 - **The effect survives a pre-registered artefact test** (`topic_test.py`
