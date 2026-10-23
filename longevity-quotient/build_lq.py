@@ -435,7 +435,12 @@ def build(path=DATA):
         w = csv.writer(fh)
         w.writerow(cols)
         for r in sorted(rows, key=lambda r: -(r["lq_class_maximum"] or 0)):
-            w.writerow([round(r[c], 4) if isinstance(r.get(c), float)
+            # D-29 item 12: four decimals wrote the rotifer, nematode and
+            # tardigrade as 0.0 g, so the fits could not be recomputed from
+            # the download. Sub-gram masses keep six significant figures.
+            w.writerow([float(f"{r[c]:.6g}") if c == "mass_g"
+                        and isinstance(r.get(c), float) and abs(r[c]) < 1
+                        else round(r[c], 4) if isinstance(r.get(c), float)
                         else r.get(c) for c in cols])
 
     # ---- group table ----------------------------------------------------

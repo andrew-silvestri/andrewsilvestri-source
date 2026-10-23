@@ -18,6 +18,7 @@ Run:  python3 update_page.py            report only
 """
 
 import argparse
+import collections
 import csv
 import json
 import math
@@ -61,6 +62,16 @@ SOURCE_ROWS = [
 
 def fmt(n):
     return f"{n:,}"
+
+
+MASS_NAME = {"avonet": "AVONET", "pantheria": "PanTHERIA",
+             "amniote": "Amniote"}
+WORDS = ["no", "one", "two", "three", "four", "five", "six", "seven",
+         "eight", "nine", "ten"]
+
+
+def _n(k):
+    return WORDS[k] if 0 <= k < len(WORDS) else fmt(k)
 
 
 def sig(x, n=3):
@@ -129,6 +140,22 @@ def sources_section(report, rows):
     final_bits = " &middot; ".join(
         f"{k} {fmt(v)}" for k, v in sorted(gc.items()))
     o = SUMMARY["outlier_rule"]
+    # D-29 items 1 and 2. The mass index is AVONET (birds only), PanTHERIA
+    # and Amniote together, and mass_filled also counts masses copied from
+    # another lifespan record of the same species (509 of 524 in the
+    # 2026-10 build). Only the index fills set mass_src, so provenance.csv
+    # shows exactly those as mass_from != taken_from.
+    prov = list(csv.DictReader(open(os.path.join(OUT, "provenance.csv"),
+                                    encoding="utf-8")))
+    idx = collections.Counter(p["mass_from"] for p in prov
+                              if p["mass_from"] != p["taken_from"])
+    from_index = sum(idx.values())
+    idx_bits = " and ".join(f"{fmt(v)} from {MASS_NAME.get(k, k)}"
+                            for k, v in sorted(idx.items())) or "none from the index"
+    # D-29 item 5: the colonies leave the census here, so say so.
+    col = collections.Counter(r["quality"] for r in rows
+                              if r["colonial"].strip().lower() == "yes")
+    col_bits = ", ".join(f"{_n(v)} grade {k}" for k, v in sorted(col.items()))
 
     return f"""<h2>Where the data comes from</h2>
 
@@ -143,12 +170,14 @@ record against a careless one produces a number that belongs to neither.</p>
 {chr(10).join(tr)}
 </table>
 
-<p>Body-mass databases are a separate matter and they are much larger. AVONET
-alone has measured masses for {fmt(report['mass_index'])} species, mostly
-birds. None of them create a record: a species with a mass and no lifespan is
-not an observation of anything this model can use. They only rescue a species
-that has been aged and never weighed, which they did
-{fmt(report['mass_filled'])} times.</p>
+<p>Body-mass databases are a separate matter and they are much larger. AVONET,
+which covers birds only, PanTHERIA and Amniote between them hold a mass for
+{fmt(report['mass_index'])} species. None of them creates a record: a species
+with a mass and no lifespan is not an observation of anything this model can
+use. A record that has a lifespan and no mass takes one from elsewhere, which
+happened {fmt(report['mass_filled'])} times:
+{fmt(report['mass_filled'] - from_index)} from another lifespan record of the
+same species, and {idx_bits}.</p>
 
 <p>{fmt(report['species_with_a_lifespan'])} distinct species carried a lifespan
 after the merge. {fmt(report['dropped_no_mass'])} of them were dropped for
@@ -159,14 +188,18 @@ from maximum length through FishBase's own length&ndash;weight relationship;
 those are modeled, not measured, and are marked and graded accordingly. What
 survives is <strong>{fmt(n)} species</strong>, graded {grade_bits} as they
 arrive from their sources. The outlier rule described under the arithmetic
-then demotes {o["demoted"]} grade-B records to C, so the model runs on
-{final_bits} (the four colonies are counted separately).</p>
+then demotes {o["demoted"]} grade-B records to C, and the
+{_n(sum(col.values()))} colonies ({col_bits}) are set aside, so the model runs
+on {final_bits}.</p>
 
 <p class="small">This is the ceiling, and it is worth being clear about why.
-About 2.24 million species have been described. Fewer than nine thousand have
-ever been both aged and weighed, because a maximum lifespan requires somebody
-to have watched an animal until it died. The limit here is not access to data.
-It is that the observations were never made. Wikidata, which is the aggregate
+About 2.24 million species have been described. The six databases merged here
+hold fewer than nine thousand that have been both aged and weighed. Sources not
+merged add some more (<code>DATA_SOURCES.md</code>, in the download, lists
+Add-my-Pet, SeaLifeBase and a compilation of bivalve ages among them), but a
+maximum lifespan requires somebody to have watched an animal until it died, and
+for most species nobody has. The limit is less access to data than that the
+observations were never made. Wikidata, which is the aggregate
 of individual species pages rather than a compiled table, holds 1,147 taxa with
 a recorded maximum lifespan and 259 with a lifespan and a mass together
 &mdash; less than a twentieth of what the compiled databases give, which is the
@@ -195,6 +228,12 @@ def arithmetic_section(summary, rows):
     lo, hi = min(masses), max(masses)
     span = math.log10(hi / lo)
     o = summary["outlier_rule"]
+    # D-29 item 3: 61 of the 149 grade-A records are AnAge's own "high"
+    # grade, not rows of the hand-checked table.
+    ga = collections.Counter(
+        p["taken_from"] for p in csv.DictReader(
+            open(os.path.join(OUT, "provenance.csv"), encoding="utf-8"))
+        if p["grade"] == "A")
     pools = {"Pisces": "fish", "Aves": "birds", "Mammalia": "mammals",
              "Reptilia": "reptiles", "Amphibia": "amphibians",
              "Invertebrata": "invertebrates"}
@@ -230,13 +269,17 @@ LQ                  =  observed maximum lifespan / predicted</code></pre>
 <p>One rule runs before the final fit. A preliminary fit per group flags any
 grade-B record more than {o["sigma"]:g} residual standard deviations from it,
 in either direction, and demotes it to grade C: {o["demoted"]} records here
-({by_pool}). The Amniote compilation grades as B by construction and carried
-twenty-eight mammals, birds and reptiles with maximum lifespans of one to three
-months at body masses up to five kilograms &mdash; a 2.2&nbsp;kg hare at one
+({by_pool}). The Amniote compilation grades as B by construction, and among
+the records the rule demotes are twenty-seven of its mammals and reptiles
+(twenty-five and two) with maximum lifespans of one to three months at body
+masses up to five and a half kilograms &mdash; a 2.2&nbsp;kg hare at one
 month &mdash; which are unit or field errors, not observations, and which sat
 at the bottom of every ranking on this page. The rule is symmetric so that it
 cannot be accused of only removing what hurts, it never touches a grade-A
-record (each of those was checked by hand against a citation), and it deletes
+record ({fmt(ga.get("seed", 0))} of those are rows of the hand-checked table,
+each checked against a citation; the other
+{fmt(sum(ga.values()) - ga.get("seed", 0))} are AnAge records that AnAge itself
+grades high), and it deletes
 nothing: a demoted record keeps its row, its note says why, and the visualiser
 shows it under <b>Include C</b>.</p>
 
@@ -266,6 +309,12 @@ def data_section(summary, report, rows):
 {rk['class']} classes, {rk['order']} orders, {rk['family']} families and
 {fmt(rk['genus'])} genera. Every record carries full taxonomy, an adult body
 mass, at least one maximum lifespan, a quality grade and its provenance.
+Species are matched on the binomial alone, with no synonym resolution, so a
+species the sources name two ways is in the table twice: matching common names
+finds 62 such pairs, the African spurred tortoise as both <i>Centrochelys</i>
+and <i>Geochelone sulcata</i> among them, and in 48 both copies are grade A or
+B and enter the fits. The pink cockatoo and Major Mitchell&rsquo;s cockatoo,
+one bird under two common names, are a further pair that check misses.
 {fmt(wild)} have a maximum their source labeled wild, {fmt(cap)} one it
 labeled captive, and {fmt(both)} have both &mdash; the comparison this
 project was built around, and the reason the merge keeps the hand-checked table
@@ -317,7 +366,7 @@ def _named(rank, g):
     return f"{NICK.get(n, 'the')} {link(rank, n)}"
 
 
-def groups_paragraph(groups):
+def groups_paragraph(groups, table=None):
     """The group-comparison paragraph, written from group_summary.csv. Every
     value in it used to be typed, and after the outlier rule moved the bat
     fit none of them were right."""
@@ -331,7 +380,9 @@ def groups_paragraph(groups):
     n = lambda g: int(g["n_species"])
     top = o[:2]
     big = [g for g in o[:12] if n(g) >= 100][:2]
-    bottom = o[-3:][::-1]
+    # D-29 item 11: four, so the opossums (0.49, below the ground birds)
+    # are not skipped.
+    bottom = o[-4:][::-1]
     by = {g["group"]: g for g in o}
     parts = [f"<p>Of the {len(o)} orders holding four or more grade-A or B "
              f"species, {_named('order', top[0])} top the list at {v(top[0])} "
@@ -365,11 +416,49 @@ def groups_paragraph(groups):
                                  f"{n(g)} species" if i == 0 else
                                  f"{_named('family', g)} {v(g)}"
                                  for i, g in enumerate(f[:3])) + ". ")
+    # D-29 item 8: Sebastes is filed under two families, and the long-lived
+    # rockfishes carry the Scorpaenidae figure.
+    if table is not None and "Scorpaenidae" in [g["group"] for g in f[:3]]:
+        sc = [r for r in table if r["family"] == "Scorpaenidae"
+              and r["quality"] != "C" and r["colonial"] != "True"
+              and r["lq_class_maximum"]]
+        seb = [r for r in sc if r["genus"] == "Sebastes"]
+        rest = [float(r["lq_class_maximum"]) for r in sc
+                if r["genus"] != "Sebastes"]
+        if seb and rest:
+            gm = 10 ** (sum(math.log10(x) for x in rest) / len(rest))
+            parts.append(
+                f"The scorpionfish figure is mostly rockfishes: {len(seb)} of "
+                f"its {len(sc)} species are <i>Sebastes</i>, a genus the "
+                f"sources file partly under Sebastidae and partly under "
+                f"Scorpaenidae, and without them the family comes to "
+                f"{gm:.2f}. ")
     parts.append("Flight, burrowing, venom, armour and simply being difficult "
                  "to swallow all register as raised quotients. Being a ground "
                  "bird or a small terrestrial insectivore registers as the "
                  "reverse.</p>")
     return "".join(parts)
+
+
+def _caveat(r):
+    """D-29 items 7 and 9: two of the named extremes are not what they look
+    like. Said beside them for as long as they are named."""
+    n = r["name"].strip().lower()
+    if n == "olm":
+        return ("The olm&rsquo;s 100 years is a projection, not an observed "
+                "age: Voituron <i>et al.</i> (<i>Biology Letters</i> 7:105, "
+                "2011) estimated a maximum of about 102 years from a "
+                "laboratory population, and the 68 years the table carries as "
+                "its wild maximum is that population&rsquo;s mean adult "
+                "lifespan.")
+    if n == "toolache wallaby":
+        return (f"The toolache wallaby&rsquo;s figure is the Amniote "
+                f"compilation&rsquo;s {float(r['maximum']) * 12:.0f} months "
+                f"for a {float(r['mass_g']) / 1000:.0f}&nbsp;kg animal, very "
+                f"likely an error of the kind the outlier rule removes, which "
+                f"the rule&rsquo;s three-standard-deviation cut misses by a "
+                f"hair.")
+    return None
 
 
 def outcome_paragraph(table):
@@ -385,7 +474,9 @@ def outcome_paragraph(table):
     return ("<p>The highest quotients against their own group, among the grade-A "
             "and B records, belong to " + ", ".join(ts[:-1]) + " and " + ts[-1] +
             " its predicted lifespan. The lowest belong to " +
-            ", ".join(bs[:-1]) + " and " + bs[-1] + ".</p>")
+            ", ".join(bs[:-1]) + " and " + bs[-1] + "." +
+            "".join(" " + c for c in (_caveat(r) for r in top + bot) if c) +
+            "</p>")
 
 
 def margin_values(t, table):
@@ -457,10 +548,10 @@ def main(apply=False):
     sub(r"All \d+ orders holding four or more species",
         f"All {len(orders)} orders holding four or more species",
         "order count in caption")
-    sub(r"<p>Of the \d+ orders holding four or more (?:grade-A or B )?species.*?</p>",
-        lambda m: groups_paragraph(groups), "groups paragraph")
     table = list(csv.DictReader(open(os.path.join(OUT, "lq_table.csv"),
                                      encoding="utf-8")))
+    sub(r"<p>Of the \d+ orders holding four or more (?:grade-A or B )?species.*?</p>",
+        lambda m: groups_paragraph(groups, table), "groups paragraph")
     sub(r"<p>The highest quotients against their own group.*?</p>",
         lambda m: outcome_paragraph(table), "what-comes-out paragraph")
     t, k = margin_values(t, table)

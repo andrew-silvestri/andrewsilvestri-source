@@ -534,7 +534,7 @@ Laysan albatross,Phoebastria immutabilis,Animalia,Chordata,Aves,Procellariiforme
 "Southern talapoin monkey, or Talapoin",Miopithecus talapoin,Animalia,Chordata,Mammalia,Primates,Cercopithecidae,Miopithecus,1384.5,,27.7,,27.7,27.7,False,14.9318,10.7799,1.8551,2.5696,B,
 (Florida) Gopher Tortoise,Gopherus polyphemus,Animalia,Chordata,Reptilia,Testudines,Testudinidae,Gopherus,4142.0,,,60.0,60.0,60.0,False,18.3539,23.3616,3.2691,2.5683,B,
 Horsfield's Tarsier,Tarsius bancanus,Animalia,Chordata,Mammalia,Primates,Tarsiidae,Tarsius,118.445,,,16.3,16.3,16.3,False,9.3983,6.351,1.7344,2.5665,B,
-Spinyhead blenny,Acanthemblemaria spinosa,Animalia,Chordata,Actinopterygii,Blenniiformes,Chaenopsidae,Acanthemblemaria,0.1673,,,4.0,4.0,4.0,False,2.7315,1.5602,1.4644,2.5638,C,"mass estimated from maximum length by FishBase's length-weight relationship, not weighed"
+Spinyhead blenny,Acanthemblemaria spinosa,Animalia,Chordata,Actinopterygii,Blenniiformes,Chaenopsidae,Acanthemblemaria,0.167327,,,4.0,4.0,4.0,False,2.7315,1.5602,1.4644,2.5638,C,"mass estimated from maximum length by FishBase's length-weight relationship, not weighed"
 Coppery titi,Plecturocebus cupreus,Animalia,Chordata,Mammalia,Primates,Pitheciidae,Plecturocebus,1120.0,,26.4,,26.4,26.4,False,14.3474,10.2991,1.84,2.5633,B,
 Philippine Tarsier,Tarsius syrichta,Animalia,Chordata,Mammalia,Primates,Tarsiidae,Tarsius,114.455,,,16.1333,16.1333,16.1333,False,9.3378,6.3043,1.7277,2.5591,B,
 Eastern Long-beaked Echidna,Zaglossus bartoni,Animalia,Chordata,Mammalia,Monotremata,Tachyglossidae,Zaglossus,8951.71,,,41.2,41.2,41.2,False,21.2204,16.1082,1.9415,2.5577,B,
@@ -642,7 +642,7 @@ McKean's Leaf-nosed Bat,Hipposideros inornatus,Animalia,Chordata,Mammalia,Chirop
 Black Tamarin,Saguinus niger,Animalia,Chordata,Mammalia,Primates,Cebidae,Saguinus,547.18,,,21.0,21.0,21.0,False,12.5371,8.8279,1.675,2.3788,B,
 Northern fulmar,Fulmarus glacialis,Animalia,Chordata,Aves,Procellariiformes,Procellariidae,Fulmarus,800.0,51.0,,,51.0,51.0,False,13.4666,21.4903,3.7871,2.3732,A,
 Midas tamarin,Saguinus midas,Animalia,Chordata,Mammalia,Primates,Callitrichidae,Saguinus,553.8,,21.0,,21.0,21.0,False,12.5655,8.8508,1.6712,2.3727,A,
-Tardigrade,Ramazzottius varieornatus,Animalia,Tardigrada,Eutardigrada,Parachela,Ramazzottiidae,Ramazzottius,0.0,0.15,0.3,,0.225,0.3,False,0.3062,0.1265,0.9799,2.3708,C,Excludes cryptobiosis; desiccated animals persist far longer
+Tardigrade,Ramazzottius varieornatus,Animalia,Tardigrada,Eutardigrada,Parachela,Ramazzottiidae,Ramazzottius,1.5e-06,0.15,0.3,,0.225,0.3,False,0.3062,0.1265,0.9799,2.3708,C,Excludes cryptobiosis; desiccated animals persist far longer
 Geoffroy's tamarin,Saguinus geoffroyi,Animalia,Chordata,Mammalia,Primates,Callitrichidae,Saguinus,499.3,,20.5,,20.5,20.5,False,12.3227,8.6557,1.6636,2.3684,B,
 "Southern muriqui, or Woolly spider monkey, or Muriqui",Brachyteles arachnoides,Animalia,Chordata,Mammalia,Primates,Atelidae,Brachyteles,11170.0,40.0,,,40.0,40.0,False,22.1237,16.8942,1.808,2.3677,B,
 Garden warbler,Sylvia borin,Animalia,Chordata,Aves,Passeriformes,Sylviidae,Sylvia,24.6,,24.0,,24.0,24.0,False,6.9906,10.1377,3.4332,2.3674,B,
@@ -726,7 +726,7 @@ Mexican Long-nosed Bat,Leptonycteris nivalis,Animalia,Chordata,Mammalia,Chiropte
 Leschenault's rousette,Rousettus leschenaultii,Animalia,Chordata,Mammalia,Chiroptera,Pteropodidae,Rousettus,108.25,,14.0,,14.0,14.0,False,9.2403,6.2292,1.5151,2.2475,B,
 Little tern,Sternula albifrons,Animalia,Chordata,Aves,Charadriiformes,Laridae,Sternula,31.0,23.9,,,23.9,23.9,False,7.3017,10.6564,3.2732,2.2428,B,
 "Shingleback Lizard, Shingle-Back, Stumpy Tail Lizard, Pinecone lizard, Sleepy Lizard",Tiliqua rugosa,Animalia,Chordata,Reptilia,Squamata,Scincidae,Tiliqua,617.0,,,35.0,35.0,35.0,False,12.8238,15.626,2.7293,2.2399,B,
-Roughhead blenny,Acanthemblemaria aspera,Animalia,Chordata,Actinopterygii,Blenniiformes,Chaenopsidae,Acanthemblemaria,0.2941,,,4.0,4.0,4.0,False,3.0374,1.786,1.3169,2.2396,C,"mass estimated from maximum length by FishBase's length-weight relationship, not weighed"
+Roughhead blenny,Acanthemblemaria aspera,Animalia,Chordata,Actinopterygii,Blenniiformes,Chaenopsidae,Acanthemblemaria,0.294054,,,4.0,4.0,4.0,False,3.0374,1.786,1.3169,2.2396,C,"mass estimated from maximum length by FishBase's length-weight relationship, not weighed"
 Chilipepper,Sebastes goodei,Animalia,Chordata,Actinopterygii,Perciformes,Scorpaenidae,Sebastes,847.0,27.0,,,27.0,27.0,False,13.6122,12.0606,1.9835,2.2387,B,
 Pallas's squirrel,Callosciurus erythraeus,Animalia,Chordata,Mammalia,Rodentia,Sciuridae,Callosciurus,272.0,,17.0,,17.0,17.0,False,10.9909,7.5951,1.5467,2.2383,B,
 Lesser Long-nosed Bat,Leptonycteris yerbabuenae,Animalia,Chordata,Mammalia,Chiroptera,Phyllostomidae,Leptonycteris,24.26,,,10.1,10.1,10.1,False,6.9723,4.515,1.4486,2.237,B,
@@ -942,7 +942,7 @@ Minute Fruit Bat,Cynopterus minutus,Animalia,Chordata,Mammalia,Chiroptera,Pterop
 Little red flying fox,Pteropus scapulatus,Animalia,Chordata,Mammalia,Chiroptera,Pteropodidae,Pteropus,300.0,,15.8,,15.8,15.8,False,11.1956,7.757,1.4113,2.0369,B,
 Western Pipistrelle,Pipistrellus hesperus,Animalia,Chordata,Mammalia,Chiroptera,Vespertilionidae,Pipistrellus,3.56,,,6.0825,6.0825,6.0825,False,4.8578,2.9875,1.2521,2.036,B,
 Tope shark,Galeorhinus galeus,Animalia,Chordata,Chondrichthyes,Carcharhiniformes,Triakidae,Galeorhinus,24585.0,55.0,,,55.0,55.0,False,25.6669,27.046,2.1428,2.0336,B,
-New Zealand slender clingfish,Gastrocyathus gracilis,Animalia,Chordata,Actinopterygii,Perciformes,Gobiesocidae,Gastrocyathus,0.4411,4.0,,,4.0,4.0,False,3.2784,1.9684,1.2201,2.0321,B,
+New Zealand slender clingfish,Gastrocyathus gracilis,Animalia,Chordata,Actinopterygii,Perciformes,Gobiesocidae,Gastrocyathus,0.441118,4.0,,,4.0,4.0,False,3.2784,1.9684,1.2201,2.0321,B,
 Cunningham's skink,Egernia cunninghami,Animalia,Chordata,Reptilia,Squamata,Scincidae,Egernia,262.64,,26.5,,26.5,26.5,False,10.9187,13.0469,2.427,2.0311,B,
 Blackback butterflyfish,Chaetodon melannotus,Animalia,Chordata,Actinopterygii,Acanthuriformes,Chaetodontidae,Chaetodon,366.286,20.0,,,20.0,20.0,False,11.6245,9.8645,1.7205,2.0275,C,"mass estimated from maximum length by FishBase's length-weight relationship, not weighed"
 Nilgiri Langur,Trachypithecus johnii,Animalia,Chordata,Mammalia,Primates,Cercopithecidae,Trachypithecus,11725.2,,,34.6,34.6,34.6,False,22.3267,17.0715,1.5497,2.0268,B,
@@ -1200,7 +1200,7 @@ Pancake tortoise,Malacochersus tornieri,Animalia,Chordata,Reptilia,Testudines,Te
 Ord's kangaroo rat,Dipodomys ordii,Animalia,Chordata,Mammalia,Rodentia,Heteromyidae,Dipodomys,57.0,,9.9,,9.9,9.9,False,8.1891,5.4261,1.2089,1.8245,B,
 Thick-billed parrot,Rhynchopsitta pachyrhyncha,Animalia,Chordata,Aves,Psittaciformes,Psittacidae,Rhynchopsitta,360.0,,33.0,,33.0,33.0,False,11.5866,18.0888,2.8481,1.8243,B,
 Long-footed Treeshrew,Tupaia longipes,Animalia,Chordata,Mammalia,Scandentia,Tupaiidae,Tupaia,163.525,,,12.4167,12.4167,12.4167,False,9.9867,6.8074,1.2433,1.824,B,
-Striped clingfish,Trachelochismus melobesia,Animalia,Chordata,Actinopterygii,Perciformes,Gobiesocidae,Trachelochismus,0.6931,4.0,,,4.0,4.0,False,3.5696,2.1937,1.1206,1.8234,B,
+Striped clingfish,Trachelochismus melobesia,Animalia,Chordata,Actinopterygii,Perciformes,Gobiesocidae,Trachelochismus,0.693084,4.0,,,4.0,4.0,False,3.5696,2.1937,1.1206,1.8234,B,
 Yellow thornbill,Acanthiza nana,Animalia,Chordata,Aves,Passeriformes,Acanthizidae,Acanthiza,6.35,13.8,,,13.8,13.8,False,5.4171,7.5687,2.5475,1.8233,B,
 Hourglass Dolphin,Lagenorhynchus cruciger,Animalia,Chordata,Mammalia,Artiodactyla,Delphinidae,Lagenorhynchus,72400.0,,,46.0,46.0,46.0,False,31.4558,25.2582,1.4624,1.8212,B,
 Chameleon cichlid,Australoheros facetus,Animalia,Chordata,Actinopterygii,Cichliformes,Cichlidae,Australoheros,31.9,10.0,,,10.0,10.0,False,7.3412,5.4943,1.3622,1.8201,C,
@@ -1261,7 +1261,7 @@ Atlantic poacher,Leptagonus decagonus,Animalia,Chordata,Actinopterygii,Perciform
 Ukrainian brook lamprey,Eudontomyzon mariae,Animalia,Chordata,Petromyzontida,Petromyzontiformes,Petromyzontidae,Eudontomyzon,13.7615,8.0,,,8.0,8.0,False,6.2663,4.4912,1.2767,1.7812,B,
 Phayre's leaf monkey,Trachypithecus phayrei,Animalia,Chordata,Mammalia,Primates,Cercopithecidae,Trachypithecus,8400.0,,28.3,,28.3,28.3,False,20.9677,15.8892,1.3497,1.7811,B,
 Siskiyou Chipmunk,Tamias siskiyou,Animalia,Chordata,Mammalia,Rodentia,Sciuridae,Tamias,75.0,,,10.25,10.25,10.25,False,8.6234,5.7562,1.1886,1.7807,B,
-Sinarapan,Mistichthys luzonensis,Animalia,Chordata,Actinopterygii,Gobiiformes,Gobiidae,Mistichthys,0.0994,2.45,,,2.45,2.45,False,2.4765,1.3772,0.9893,1.779,C,"mass estimated from maximum length by FishBase's length-weight relationship, not weighed"
+Sinarapan,Mistichthys luzonensis,Animalia,Chordata,Actinopterygii,Gobiiformes,Gobiidae,Mistichthys,0.0994474,2.45,,,2.45,2.45,False,2.4765,1.3772,0.9893,1.779,C,"mass estimated from maximum length by FishBase's length-weight relationship, not weighed"
 Fourhorn sculpin,Myoxocephalus quadricornis,Animalia,Chordata,Actinopterygii,Perciformes,Cottidae,Myoxocephalus,143.0,14.0,,,14.0,14.0,False,9.7376,7.8729,1.4377,1.7783,B,
 Kakadu Pebble-mound Pseudomys,Pseudomys calabyi,Animalia,Chordata,Mammalia,Rodentia,Muridae,Pseudomys,12.0,,,6.9,6.9,6.9,False,6.1068,3.8804,1.1299,1.7782,B,
 Kimberly mouse,Pseudomys laborifex,Animalia,Chordata,Mammalia,Rodentia,Muridae,Pseudomys,12.0,,6.9,,6.9,6.9,False,6.1068,3.8804,1.1299,1.7782,B,
@@ -2221,7 +2221,7 @@ White-lipped Mud Turtle,Cryptochelys leucostomum,Animalia,Chordata,Reptilia,Test
 "European honey buzzard, or Western honey-buzzard",Pernis apivorus,Animalia,Chordata,Aves,Accipitriformes,Accipitridae,Pernis,758.0,29.0,,,29.0,29.0,False,13.3305,21.2417,2.1755,1.3652,B,
 Brown bear,Ursus arctos,Animalia,Chordata,Mammalia,Carnivora,Ursidae,Ursus,250000.0,33.0,45.0,,39.0,45.0,False,39.7233,32.9774,1.1328,1.3646,A,
 St. Vincent parrot,Amazona guildingii,Animalia,Chordata,Aves,Psittaciformes,Psittacidae,Amazona,646.0,,28.0,,28.0,28.0,False,12.9352,20.5213,2.1646,1.3644,B,
-Laimosemion xiphidius,Laimosemion xiphidius,Animalia,Chordata,Actinopterygii,Cyprinodontiformes,Rivulidae,Laimosemion,0.6998,3.0,,,3.0,3.0,False,3.5761,2.1987,0.8389,1.3644,C,"mass estimated from maximum length by FishBase's length-weight relationship, not weighed"
+Laimosemion xiphidius,Laimosemion xiphidius,Animalia,Chordata,Actinopterygii,Cyprinodontiformes,Rivulidae,Laimosemion,0.699775,3.0,,,3.0,3.0,False,3.5761,2.1987,0.8389,1.3644,C,"mass estimated from maximum length by FishBase's length-weight relationship, not weighed"
 Fourhorn poacher,Hypsagonus quadricornis,Animalia,Chordata,Actinopterygii,Perciformes/Cottoidei,Agonidae,Hypsagonus,24.0,7.0,,,7.0,7.0,False,6.9582,5.1319,1.006,1.364,C,
 Sedge warbler,Acrocephalus schoenobaenus,Animalia,Chordata,Aves,Passeriformes,Acrocephalidae,Acrocephalus,11.8,11.8,,,11.8,11.8,False,6.0875,8.6515,1.9384,1.3639,B,
 Northern Brushtail,Trichosurus arnhemensis,Animalia,Chordata,Mammalia,Diprotodontia,Phalangeridae,Trichosurus,1993.5,,,15.9,15.9,15.9,False,15.9928,11.6596,0.9942,1.3637,B,
@@ -2570,7 +2570,7 @@ White-chinned Petrel,Procellaria aequinoctialis,Animalia,Chordata,Aves,Procellar
 Spectacled Petrel,Procellaria conspicillata,Animalia,Chordata,Aves,Procellariiformes,Procellariidae,Procellaria,1300.0,,,30.0,30.0,30.0,False,14.7558,23.864,2.0331,1.2571,B,
 Gunther's dik-dik,Madoqua guentheri,Animalia,Chordata,Mammalia,Artiodactyla,Bovidae,Madoqua,4550.0,,17.5,,17.5,17.5,False,18.6815,13.9253,0.9368,1.2567,B,
 Cave swallow,Petrochelidon fulva,Animalia,Chordata,Aves,Passeriformes,Hirundinidae,Petrochelidon,20.15,12.2,,,12.2,12.2,False,6.7328,9.7104,1.812,1.2564,B,
-Bdelloid rotifer,Philodina roseola,Animalia,Rotifera,Bdelloidea,Philodinida,Philodinidae,Philodina,0.0,0.1,0.12,,0.11,0.12,False,0.2489,0.0955,0.482,1.2564,B,
+Bdelloid rotifer,Philodina roseola,Animalia,Rotifera,Bdelloidea,Philodinida,Philodinidae,Philodina,5e-07,0.1,0.12,,0.11,0.12,False,0.2489,0.0955,0.482,1.2564,B,
 White's seahorse,Hippocampus whitei,Animalia,Chordata,Actinopterygii,Gasterosteiformes,Syngnathidae,Hippocampus,8.3249,5.0,,,5.0,5.0,False,5.7004,3.9813,0.8771,1.2559,B,
 African golden cat,Profelis aurata,Animalia,Chordata,Mammalia,Carnivora,Felidae,Profelis,10650.0,,21.0,,21.0,21.0,False,21.926,16.7218,0.9578,1.2558,B,
 Canvasback,Aythya valisineria,Animalia,Chordata,Aves,Anseriformes,Anatidae,Aythya,1208.8,29.5,,,29.5,29.5,False,14.5551,23.4923,2.0268,1.2557,B,
@@ -2679,7 +2679,7 @@ Brown's hutia,Geocapromys brownii,Animalia,Chordata,Mammalia,Rodentia,Capromyida
 Swan Island Hutia,Geocapromys thoracatus,Animalia,Chordata,Mammalia,Rodentia,Capromyidae,Geocapromys,1500.0,,,13.5,13.5,13.5,False,15.1588,10.9674,0.8906,1.2309,B,
 Equatorial Saki,Pithecia aequatorialis,Animalia,Chordata,Mammalia,Primates,Pitheciidae,Pithecia,2375.91,,,14.9,14.9,14.9,False,16.5301,12.1083,0.9014,1.2306,B,
 Red-fronted parrot,Poicephalus gulielmi,Animalia,Chordata,Aves,Psittaciformes,Psittacidae,Poicephalus,275.0,,21.0,,21.0,21.0,False,11.0137,17.0675,1.9067,1.2304,B,
-Pygmy killifish,Leptolucania ommata,Animalia,Chordata,Actinopterygii,Cyprinodontiformes,Fundulidae,Leptolucania,0.1987,2.0,,,2.0,2.0,False,2.8212,1.6258,0.7089,1.2302,B,
+Pygmy killifish,Leptolucania ommata,Animalia,Chordata,Actinopterygii,Cyprinodontiformes,Fundulidae,Leptolucania,0.198683,2.0,,,2.0,2.0,False,2.8212,1.6258,0.7089,1.2302,B,
 Brown booby,Sula leucogaster,Animalia,Chordata,Aves,Suliformes,Sulidae,Sula,1134.0,28.5,,,28.5,28.5,False,14.381,23.1707,1.9818,1.23,B,
 Sloth bear,Melursus ursinus,Animalia,Chordata,Mammalia,Carnivora,Ursidae,Melursus,100000.0,,33.3,,33.3,33.3,False,33.4281,27.076,0.9962,1.2299,B,
 Smooth earth snake,Virginia valeriae,Animalia,Chordata,Reptilia,Squamata,Colubridae,Virginia,22.0,,9.5,,9.5,9.5,False,6.8451,7.7276,1.3879,1.2294,B,
@@ -3331,7 +3331,7 @@ Saltmarsh sharp-tailed sparrow,Ammodramus caudacutus,Animalia,Chordata,Aves,Pass
 Salt's Dikdik,Madoqua saltiana,Animalia,Chordata,Mammalia,Artiodactyla,Bovidae,Madoqua,3337.24,,,14.0,14.0,14.0,False,17.6223,13.0268,0.7944,1.0747,B,
 Fischer's lovebird,Agapornis fischeri,Animalia,Chordata,Aves,Psittaciformes,Psittacidae,Agapornis,48.3,,12.6,,12.6,12.6,False,7.9376,11.7265,1.5874,1.0745,C,
 Macquarie turtle,Emydura macquarii,Animalia,Chordata,Reptilia,Testudines,Chelidae,Emydura,1740.0,,20.9,,20.9,20.9,False,15.5884,19.4513,1.3407,1.0745,B,
-Acheron spring goby,Knipowitschia milleri,Animalia,Chordata,Actinopterygii,Gobiiformes,Gobiidae,Knipowitschia,0.3494,2.0,,,2.0,2.0,False,3.1376,1.8614,0.6374,1.0745,C,"mass estimated from maximum length by FishBase's length-weight relationship, not weighed"
+Acheron spring goby,Knipowitschia milleri,Animalia,Chordata,Actinopterygii,Gobiiformes,Gobiidae,Knipowitschia,0.349351,2.0,,,2.0,2.0,False,3.1376,1.8614,0.6374,1.0745,C,"mass estimated from maximum length by FishBase's length-weight relationship, not weighed"
 Caspian Shrew,Crocidura caspica,Animalia,Chordata,Mammalia,Eulipotyphla,Soricidae,Crocidura,9.9,,,4.0,4.0,4.0,False,5.8895,3.723,0.6792,1.0744,B,
 Eastern gray kangaroo,Macropus giganteus,Animalia,Chordata,Mammalia,Diprotodontia,Macropodidae,Macropus,49500.0,,25.0,,25.0,25.0,False,29.2823,23.2738,0.8538,1.0742,A,
 Caspian shad,Alosa caspia,Animalia,Chordata,Actinopterygii,Clupeiformes,Clupeidae,Alosa,65.0,7.0,,,7.0,7.0,False,8.3941,6.5167,0.8339,1.0742,B,
@@ -3604,7 +3604,7 @@ Soffie,Parachondrostoma toxostoma,Animalia,Chordata,Actinopterygii,Cypriniformes
 Common sawshark,Pristiophorus cirratus,Animalia,Chordata,Chondrichthyes,Pristiophoriformes,Pristiophoridae,Pristiophorus,1900.0,15.0,,,15.0,15.0,False,15.8488,14.6385,0.9464,1.0247,C,
 Desert monitor,Varanus griseus,Animalia,Chordata,Reptilia,Squamata,Varanidae,Varanus,821.1,,17.0,,17.0,17.0,False,13.5328,16.5983,1.2562,1.0242,B,
 Bloater,Coregonus hoyi,Animalia,Chordata,Actinopterygii,Salmoniformes,Salmonidae,Coregonus,351.0,10.0,,,10.0,10.0,False,11.5315,9.7642,0.8672,1.0241,B,
-Trichonis dwarf goby,Economidichthys trichonis,Animalia,Chordata,Actinopterygii,Gobiiformes,Gobiidae,Economidichthys,0.2757,,,1.8,1.8,1.8,False,3.0008,1.7587,0.5998,1.0235,C,"mass estimated from maximum length by FishBase's length-weight relationship, not weighed"
+Trichonis dwarf goby,Economidichthys trichonis,Animalia,Chordata,Actinopterygii,Gobiiformes,Gobiidae,Economidichthys,0.275707,,,1.8,1.8,1.8,False,3.0008,1.7587,0.5998,1.0235,C,"mass estimated from maximum length by FishBase's length-weight relationship, not weighed"
 Swallowtail shiner,Miniellus procne,Animalia,Chordata,Actinopterygii,Cypriniformes,Leuciscidae,Miniellus,2.3244,3.0,,,3.0,3.0,False,4.4831,2.9321,0.6692,1.0232,C,"mass estimated from maximum length by FishBase's length-weight relationship, not weighed"
 Japanese Scops Owl,Otus semitorques,Animalia,Chordata,Aves,Strigiformes,Strigidae,Otus,116.5,,,14.5,14.5,14.5,False,9.369,14.1801,1.5477,1.0226,B,
 Snowy grouper,Hyporthodus niveatus,Animalia,Chordata,Actinopterygii,Perciformes/Serranoidei,Epinephelidae,Hyporthodus,30000.0,,,29.0,29.0,29.0,False,26.6473,28.3682,1.0883,1.0223,C,
@@ -4186,7 +4186,7 @@ Four-horned antelope,Tetracerus quadricornis,Animalia,Chordata,Mammalia,Artiodac
 Northern hawk-owl,Surnia ulula,Animalia,Chordata,Aves,Strigiformes,Strigidae,Surnia,320.0,16.2,,,16.2,16.2,False,11.3325,17.6349,1.4295,0.9186,B,
 Barbel steed,Hemibarbus labeo,Animalia,Chordata,Actinopterygii,Cypriniformes,Gobionidae,Hemibarbus,3000.0,15.0,,,15.0,15.0,False,17.2723,16.3328,0.8684,0.9184,C,
 Common thornback ray,Raja clavata,Animalia,Chordata,Chondrichthyes,Rajiformes,Rajidae,Raja,3000.0,15.0,,,15.0,15.0,False,17.2723,16.3328,0.8684,0.9184,B,
-Pygmy sculpin,Cottus paulus,Animalia,Chordata,Actinopterygii,Perciformes,Cottidae,Cottus,0.6724,2.0,,,2.0,2.0,False,3.5493,2.1778,0.5635,0.9184,B,
+Pygmy sculpin,Cottus paulus,Animalia,Chordata,Actinopterygii,Perciformes,Cottidae,Cottus,0.672388,2.0,,,2.0,2.0,False,3.5493,2.1778,0.5635,0.9184,B,
 Laxmann's shrew,Sorex caecutiens,Animalia,Chordata,Mammalia,Eulipotyphla,Soricidae,Sorex,5.4,,3.0,,3.0,3.0,False,5.2542,3.2678,0.571,0.9181,B,
 Eumeces blythianus,Eumeces blythianus,Animalia,Chordata,Reptilia,Squamata,Scincidae,Eumeces,79.305,,,9.3,9.3,9.3,False,8.7145,10.1313,1.0672,0.9179,B,
 Schneider's Skink,Eumeces schneideri,Animalia,Chordata,Reptilia,Squamata,Scincidae,Eumeces,79.305,,,9.3,9.3,9.3,False,8.7145,10.1313,1.0672,0.9179,B,
@@ -4215,7 +4215,7 @@ Whitemargin unicornfish,Naso annulatus,Animalia,Chordata,Actinopterygii,Acanthur
 Longspine snipefish,Macroramphosus scolopax,Animalia,Chordata,Actinopterygii,Syngnathiformes,Centriscidae,Macroramphosus,67.05,,,6.0,6.0,6.0,False,8.4433,6.5654,0.7106,0.9139,C,
 Fourbeard rockling,Enchelyopus cimbrius,Animalia,Chordata,Actinopterygii,Gadiformes,Gadidae,Enchelyopus,364.121,9.0,,,9.0,9.0,False,11.6115,9.8505,0.7751,0.9137,B,
 Silver cyprinid,Rastrineobola argentea,Animalia,Chordata,Actinopterygii,Cypriniformes,Danionidae,Rastrineobola,3.7283,3.0,,,3.0,3.0,False,4.9002,3.2838,0.6122,0.9136,C,"mass estimated from maximum length by FishBase's length-weight relationship, not weighed"
-Least darter,Etheostoma microperca,Animalia,Chordata,Actinopterygii,Perciformes,Percidae,Etheostoma,0.688,2.0,,,2.0,2.0,False,3.5646,2.1898,0.5611,0.9133,B,
+Least darter,Etheostoma microperca,Animalia,Chordata,Actinopterygii,Perciformes,Percidae,Etheostoma,0.687974,2.0,,,2.0,2.0,False,3.5646,2.1898,0.5611,0.9133,B,
 Eastern diamondback rattlesnake,Crotalus adamanteus,Animalia,Chordata,Reptilia,Squamata,Viperidae,Crotalus,5675.0,,22.8,,22.8,22.8,False,19.4751,24.9682,1.1707,0.9132,B,
 Korean field mouse,Apodemus peninsulae,Animalia,Chordata,Mammalia,Rodentia,Muridae,Apodemus,32.9,,4.4,,4.4,4.4,False,7.384,4.8209,0.5959,0.9127,B,
 Stilt sandpiper,Calidris himantopus,Animalia,Chordata,Aves,Charadriiformes,Scolopacidae,Calidris,57.3,11.1,,,11.1,11.1,False,8.1972,12.1669,1.3541,0.9123,B,
@@ -4412,7 +4412,7 @@ Double-crested cormorant,Phalacrocorax auritus,Animalia,Chordata,Aves,Suliformes
 Red-breasted nuthatch,Sitta canadensis,Animalia,Chordata,Aves,Passeriformes,Sittidae,Sitta,11.2,7.5,,,7.5,7.5,False,6.0279,8.5546,1.2442,0.8767,B,
 Cape gurnard,Chelidonichthys capensis,Animalia,Chordata,Actinopterygii,Perciformes,Triglidae,Chelidonichthys,4774.6,16.0,,,16.0,16.0,False,18.8518,18.2579,0.8487,0.8763,B,
 Eurasian penduline-tit,Remiz pendulinus,Animalia,Chordata,Aves,Passeriformes,Remizidae,Remiz,9.3,7.2,,,7.2,7.2,False,5.8206,8.2182,1.237,0.8761,B,
-Apricaphanius baeticus,Apricaphanius baeticus,Animalia,Chordata,Actinopterygii,Cyprinodontiformes,Aphaniidae,Apricaphanius,0.8185,,,2.0,2.0,2.0,False,3.6832,2.2829,0.543,0.8761,C,"mass estimated from maximum length by FishBase's length-weight relationship, not weighed"
+Apricaphanius baeticus,Apricaphanius baeticus,Animalia,Chordata,Actinopterygii,Cyprinodontiformes,Aphaniidae,Apricaphanius,0.81852,,,2.0,2.0,2.0,False,3.6832,2.2829,0.543,0.8761,C,"mass estimated from maximum length by FishBase's length-weight relationship, not weighed"
 Northern flicker,Colaptes auratus,Animalia,Chordata,Aves,Piciformes,Picidae,Colaptes,120.0,12.5,,,12.5,12.5,False,9.4214,14.271,1.3268,0.8759,B,
 Beisa,Oryx beisa,Animalia,Chordata,Mammalia,Artiodactyla,Bovidae,Oryx,103750.0,,,23.9,23.9,23.9,False,33.6607,27.2914,0.71,0.8757,B,
 Romanogobio benacensis,Romanogobio benacensis,Animalia,Chordata,Actinopterygii,Cypriniformes,Gobionidae,Romanogobio,14.7721,4.0,,,4.0,4.0,False,6.3505,4.5682,0.6299,0.8756,C,"mass estimated from maximum length by FishBase's length-weight relationship, not weighed"
@@ -4525,7 +4525,7 @@ Checkered madtom,Noturus flavater,Animalia,Chordata,Actinopterygii,Siluriformes,
 White-throated Treecreeper,Cormobates leucophaea,Animalia,Chordata,Aves,Passeriformes,Climacteridae,Cormobates,22.3,,,8.5,8.5,8.5,False,6.8626,9.9252,1.2386,0.8564,B,
 Shannon galaxias,Paragalaxias dissimilis,Animalia,Chordata,Actinopterygii,Galaxiiformes,Galaxiidae,Paragalaxias,4.8937,3.0,,,3.0,3.0,False,5.1577,3.5051,0.5817,0.8559,C,"mass estimated from maximum length by FishBase's length-weight relationship, not weighed"
 Little friarbird,Philemon citreogularis,Animalia,Chordata,Aves,Passeriformes,Meliphagidae,Philemon,62.25,10.6,,,10.6,10.6,False,8.3261,12.3864,1.2731,0.8558,B,
-Cypress darter,Etheostoma proeliare,Animalia,Chordata,Actinopterygii,Perciformes,Percidae,Etheostoma,0.9026,2.0,,,2.0,2.0,False,3.7516,2.3371,0.5331,0.8558,B,
+Cypress darter,Etheostoma proeliare,Animalia,Chordata,Actinopterygii,Perciformes,Percidae,Etheostoma,0.902553,2.0,,,2.0,2.0,False,3.7516,2.3371,0.5331,0.8558,B,
 Winter wren,Troglodytes troglodytes,Animalia,Chordata,Aves,Passeriformes,Troglodytidae,Troglodytes,9.1,,,7.0,7.0,7.0,False,5.7968,8.1798,1.2076,0.8558,B,
 Striped sandgoby,Acentrogobius pflaumii,Animalia,Chordata,Actinopterygii,Gobiiformes,Gobiidae,Acentrogobius,14.6373,,,3.9,3.9,3.9,False,6.3395,4.5582,0.6152,0.8556,C,"mass estimated from maximum length by FishBase's length-weight relationship, not weighed"
 Mountain Pocket Gopher,Thomomys monticola,Animalia,Chordata,Mammalia,Rodentia,Geomyidae,Thomomys,80.495,,,5.0,5.0,5.0,False,8.739,5.8445,0.5722,0.8555,B,
@@ -4623,7 +4623,7 @@ Bengal Fox,Vulpes bengalensis,Animalia,Chordata,Mammalia,Carnivora,Canidae,Vulpe
 Swamp sparrow,Melospiza georgiana,Animalia,Chordata,Aves,Passeriformes,Passerellidae,Melospiza,16.1,7.8,,,7.8,7.8,False,6.4543,9.2515,1.2085,0.8431,B,
 Gray whale,Eschrichtius robustus,Animalia,Chordata,Mammalia,Artiodactyla,Eschrichtiidae,Eschrichtius,28500000.0,77.0,,,77.0,77.0,False,96.9094,91.377,0.7946,0.8427,B,
 Jabiru,Jabiru mycteria,Animalia,Chordata,Aves,Ciconiiformes,Ciconiidae,Jabiru,5470.0,,27.4,,27.4,27.4,False,19.3407,32.5389,1.4167,0.8421,B,
-Caucasian dwarf goby,Knipowitschia caucasica,Animalia,Chordata,Actinopterygii,Gobiiformes,Gobiidae,Knipowitschia,0.9658,2.0,,,2.0,2.0,False,3.7997,2.3753,0.5264,0.842,C,"mass estimated from maximum length by FishBase's length-weight relationship, not weighed"
+Caucasian dwarf goby,Knipowitschia caucasica,Animalia,Chordata,Actinopterygii,Gobiiformes,Gobiidae,Knipowitschia,0.965759,2.0,,,2.0,2.0,False,3.7997,2.3753,0.5264,0.842,C,"mass estimated from maximum length by FishBase's length-weight relationship, not weighed"
 Hottentot seabream,Pachymetopon blochii,Animalia,Chordata,Actinopterygii,Eupercaria/misc,Sparidae,Pachymetopon,1700.0,,,12.0,12.0,12.0,False,15.5203,14.2533,0.7732,0.8419,C,
 Mild meagre,Argyrosomus inodorus,Animalia,Chordata,Actinopterygii,Eupercaria/misc,Sciaenidae,Argyrosomus,36300.0,,,25.0,25.0,25.0,False,27.6211,29.6948,0.9051,0.8419,C,
 Black phoebe,Sayornis nigricans,Animalia,Chordata,Aves,Passeriformes,Tyrannidae,Sayornis,18.25,8.0,,,8.0,8.0,False,6.6084,9.5051,1.2106,0.8417,B,
@@ -5036,7 +5036,7 @@ Bocage's African Fat Mouse,Steatomys bocagei,Animalia,Chordata,Mammalia,Rodentia
 Northwestern African Fat Mouse,Steatomys caurinus,Animalia,Chordata,Mammalia,Rodentia,Nesomyidae,Steatomys,34.04,,,3.7417,3.7417,3.7417,False,7.4315,4.8564,0.5035,0.7705,B,
 Common African Fat Mouse,Steatomys pratensis,Animalia,Chordata,Mammalia,Rodentia,Nesomyidae,Steatomys,34.04,,,3.7417,3.7417,3.7417,False,7.4315,4.8564,0.5035,0.7705,B,
 Gallotia caesaris,Gallotia caesaris,Animalia,Chordata,Reptilia,Squamata,Lacertidae,Gallotia,16.48,,,5.6,5.6,5.6,False,6.4827,7.2702,0.8638,0.7703,B,
-Carolina pygmy sunfish,Elassoma boehlkei,Animalia,Chordata,Actinopterygii,Centrarchiformes,Elassomatidae,Elassoma,0.4229,1.5,,,1.5,1.5,False,3.2526,1.9487,0.4612,0.7698,C,"mass estimated from maximum length by FishBase's length-weight relationship, not weighed"
+Carolina pygmy sunfish,Elassoma boehlkei,Animalia,Chordata,Actinopterygii,Centrarchiformes,Elassomatidae,Elassoma,0.422944,1.5,,,1.5,1.5,False,3.2526,1.9487,0.4612,0.7698,C,"mass estimated from maximum length by FishBase's length-weight relationship, not weighed"
 Dead Sea Sparrow,Passer moabiticus,Animalia,Chordata,Aves,Passeriformes,Passeridae,Passer,17.5,,,7.25,7.25,7.25,False,6.5564,9.4194,1.1058,0.7697,B,
 West Caucasian tur,Capra caucasica,Animalia,Chordata,Mammalia,Artiodactyla,Bovidae,Capra,70000.0,,19.3,,19.3,19.3,False,31.2567,25.0756,0.6175,0.7697,B,
 Cleaner fish,Labroides dimidiatus,Animalia,Chordata,Actinopterygii,Perciformes,Labridae,Labroides,25.3062,4.0,,,4.0,4.0,False,7.028,5.1976,0.5692,0.7696,B,
@@ -5407,7 +5407,7 @@ Noisy friarbird,Philemon corniculatus,Animalia,Chordata,Aves,Passeriformes,Melip
 Tumbala Climbing Rat,Tylomys tumbalensis,Animalia,Chordata,Mammalia,Rodentia,Cricetidae,Tylomys,280.0,,,5.4167,5.4167,5.4167,False,11.0511,7.6427,0.4901,0.7087,B,
 Burmese python,Python bivittatus,Animalia,Chordata,Reptilia,Squamata,Pythonidae,Python,50000.0,20.0,28.0,,24.0,28.0,False,29.3378,39.5349,0.9544,0.7082,B,
 Mud flathead,Ambiserrula jugosa,Animalia,Chordata,Actinopterygii,Perciformes/Scorpaenoidei,Platycephalidae,Ambiserrula,35.8115,,,4.0,4.0,4.0,False,7.5028,5.6488,0.5331,0.7081,C,"mass estimated from maximum length by FishBase's length-weight relationship, not weighed"
-Emerald clingfish,Acyrtops beryllinus,Animalia,Chordata,Actinopterygii,Gobiesociformes,Gobiesocidae,Acyrtops,0.1105,1.0,,,1.0,1.0,False,2.5263,1.4126,0.3958,0.7079,C,"mass estimated from maximum length by FishBase's length-weight relationship, not weighed"
+Emerald clingfish,Acyrtops beryllinus,Animalia,Chordata,Actinopterygii,Gobiesociformes,Gobiesocidae,Acyrtops,0.110538,1.0,,,1.0,1.0,False,2.5263,1.4126,0.3958,0.7079,C,"mass estimated from maximum length by FishBase's length-weight relationship, not weighed"
 Sacramento sucker,Catostomus occidentalis,Animalia,Chordata,Actinopterygii,Cypriniformes,Catostomidae,Catostomus,1638.65,10.0,,,10.0,10.0,False,15.4133,14.1282,0.6488,0.7078,B,
 Knysna Turaco,Tauraco corythaix,Animalia,Chordata,Aves,Musophagiformes,Musophagidae,Tauraco,310.5,,,12.4,12.4,12.4,False,11.2684,17.5206,1.1004,0.7077,B,
 Hoary redpoll,Acanthis hornemanni,Animalia,Chordata,Aves,Passeriformes,Fringillidae,Acanthis,19.25,6.8,,,6.8,6.8,False,6.6751,9.6152,1.0187,0.7072,B,
@@ -5700,7 +5700,7 @@ Amazonian Red-sided Opossum,Monodelphis glirina,Animalia,Chordata,Mammalia,Didel
 California quail,Callipepla californica,Animalia,Chordata,Aves,Galliformes,Odontophoridae,Callipepla,138.0,,,9.6,9.6,9.6,False,9.6726,14.7079,0.9925,0.6527,B,
 North Atlantic right whale,Eubalaena glacialis,Animalia,Chordata,Mammalia,Artiodactyla,Balaenidae,Eubalaena,60000000.0,70.0,,,70.0,70.0,False,111.4924,107.2528,0.6278,0.6527,B,
 Japanese four-lined ratsnake,Elaphe quadrivirgata,Animalia,Chordata,Reptilia,Squamata,Colubridae,Elaphe,6561.0,,16.8,,16.8,16.8,False,20.0145,25.7451,0.8394,0.6526,B,
-Pungitius hellenicus,Pungitius hellenicus,Animalia,Chordata,Actinopterygii,Perciformes/Gasterosteoidei,Gasterosteidae,Pungitius,0.8427,1.5,,,1.5,1.5,False,3.7035,2.299,0.405,0.6525,C,"mass estimated from maximum length by FishBase's length-weight relationship, not weighed"
+Pungitius hellenicus,Pungitius hellenicus,Animalia,Chordata,Actinopterygii,Perciformes/Gasterosteoidei,Gasterosteidae,Pungitius,0.842744,1.5,,,1.5,1.5,False,3.7035,2.299,0.405,0.6525,C,"mass estimated from maximum length by FishBase's length-weight relationship, not weighed"
 Red bass,Lutjanus bohar,Animalia,Chordata,Actinopterygii,Perciformes,Lutjanidae,Lutjanus,6875.0,13.0,,,13.0,13.0,False,20.1914,19.9257,0.6438,0.6524,B,
 Cactus wren,Campylorhynchus brunneicapillus,Animalia,Chordata,Aves,Passeriformes,Troglodytidae,Campylorhynchus,38.9,7.3,,,7.3,7.3,False,7.6206,11.1914,0.9579,0.6523,B,
 Eastern Red Bat,Lasiurus borealis,Animalia,Chordata,Mammalia,Chiroptera,Vespertilionidae,Lasiurus,13.0,,,2.575,2.575,2.575,False,6.1995,3.9478,0.4154,0.6523,B,
@@ -6189,7 +6189,7 @@ Parrotfish,Sparisoma cretense,Animalia,Chordata,Actinopterygii,Eupercaria/misc,S
 Mergus cucullatus,Mergus cucullatus,Animalia,Chordata,Aves,Anseriformes,Anatidae,Mergus,613.5,,,11.25,11.25,11.25,False,12.8101,20.294,0.8782,0.5544,B,
 Watases lanternfish,Diaphus watasei,Animalia,Chordata,Actinopterygii,Myctophiformes,Myctophidae,Diaphus,71.9056,,,3.7,3.7,3.7,False,8.5552,6.6764,0.4325,0.5542,C,"mass estimated from maximum length by FishBase's length-weight relationship, not weighed"
 Sulphur goatfish,Upeneus sulphureus,Animalia,Chordata,Actinopterygii,Mulliformes,Mullidae,Upeneus,178.384,,,4.6,4.6,4.6,False,10.1516,8.3015,0.4531,0.5541,C,"mass estimated from maximum length by FishBase's length-weight relationship, not weighed"
-Oryzias sinensis,Oryzias sinensis,Animalia,Chordata,Actinopterygii,Beloniformes,Adrianichthyidae,Oryzias,0.3073,1.0,,,1.0,1.0,False,3.0627,1.805,0.3265,0.554,C,"mass estimated from maximum length by FishBase's length-weight relationship, not weighed"
+Oryzias sinensis,Oryzias sinensis,Animalia,Chordata,Actinopterygii,Beloniformes,Adrianichthyidae,Oryzias,0.307291,1.0,,,1.0,1.0,False,3.0627,1.805,0.3265,0.554,C,"mass estimated from maximum length by FishBase's length-weight relationship, not weighed"
 Podarcis bocagei,Podarcis bocagei,Animalia,Chordata,Reptilia,Squamata,Lacertidae,Podarcis,4.11,,,3.0,3.0,3.0,False,4.991,5.4221,0.6011,0.5533,B,
 Southern Naked-tailed Armadillo,Cabassous unicinctus,Animalia,Chordata,Mammalia,Cingulata,Dasypodidae,Cabassous,3987.97,,,7.4833,7.4833,7.4833,False,18.2234,13.5358,0.4106,0.5529,B,
 Great hammerhead,Sphyrna mokarran,Animalia,Chordata,Chondrichthyes,Carcharhiniformes,Sphyrnidae,Sphyrna,449500.0,30.0,,,30.0,30.0,False,44.3632,54.2886,0.6762,0.5526,C,
@@ -6485,7 +6485,7 @@ Long-billed Curlew,Numenius americanus,Animalia,Chordata,Aves,Charadriiformes,Sc
 "Kawakawa, or Little tunny",Euthynnus affinis,Animalia,Chordata,Actinopterygii,Perciformes,Scombridae,Euthynnus,7700.0,10.0,,,10.0,10.0,False,20.627,20.4746,0.4848,0.4884,B,
 Visagie's Golden Mole,Chrysochloris visagiei,Animalia,Chordata,Mammalia,Afrosoricida,Chrysochloridae,Chrysochloris,36.72,,,2.4083,2.4083,2.4083,False,7.5383,4.9362,0.3195,0.4879,B,
 Luciobarbus steindachneri,Luciobarbus steindachneri,Animalia,Chordata,Actinopterygii,Cypriniformes,Cyprinidae,Luciobarbus,919.283,6.0,,,6.0,6.0,False,13.8237,12.2998,0.434,0.4878,C,"mass estimated from maximum length by FishBase's length-weight relationship, not weighed"
-Spring pygmy sunfish,Elassoma alabamae,Animalia,Chordata,Actinopterygii,Centrarchiformes,Elassomatidae,Elassoma,0.5236,,,1.0,1.0,1.0,False,3.3859,2.051,0.2953,0.4876,C,"mass estimated from maximum length by FishBase's length-weight relationship, not weighed"
+Spring pygmy sunfish,Elassoma alabamae,Animalia,Chordata,Actinopterygii,Centrarchiformes,Elassomatidae,Elassoma,0.523565,,,1.0,1.0,1.0,False,3.3859,2.051,0.2953,0.4876,C,"mass estimated from maximum length by FishBase's length-weight relationship, not weighed"
 Wattled ibis,Bostrychia carunculata,Animalia,Chordata,Aves,Pelecaniformes,Threskiornithidae,Bostrychia,1500.0,,12.0,,12.0,12.0,False,15.1588,24.6124,0.7916,0.4876,B,
 Common lancehead,Bothrops atrox,Animalia,Chordata,Reptilia,Squamata,Viperidae,Bothrops,1037.0,,8.5,,8.5,8.5,False,14.1409,17.4371,0.6011,0.4875,B,
 Cape Golden Mole,Chrysochloris asiatica,Animalia,Chordata,Mammalia,Afrosoricida,Chrysochloridae,Chrysochloris,36.93,,,2.4083,2.4083,2.4083,False,7.5464,4.9423,0.3191,0.4873,B,
@@ -6517,9 +6517,9 @@ Bergama barb,Capoeta bergamae,Animalia,Chordata,Actinopterygii,Cypriniformes,Cyp
 Checkered garter snake,Thamnophis marcianus,Animalia,Chordata,Reptilia,Squamata,Colubridae,Thamnophis,434.0,,,7.0,7.0,7.0,False,12.0018,14.507,0.5832,0.4825,B,
 Sooty Dunnart,Sminthopsis fuliginosus,Animalia,Chordata,Mammalia,Dasyuromorphia,Dasyuridae,Sminthopsis,16.35,,,2.0,2.0,2.0,False,6.473,4.1474,0.309,0.4822,B,
 Slender-tailed Dunnart,Sminthopsis murina,Animalia,Chordata,Mammalia,Dasyuromorphia,Dasyuridae,Sminthopsis,16.35,,,2.0,2.0,2.0,False,6.473,4.1474,0.309,0.4822,B,
-Nematode,Caenorhabditis elegans,Animalia,Nematoda,Chromadorea,Rhabditida,Rhabditidae,Caenorhabditis,0.0,0.055,0.055,,0.055,0.055,False,0.2836,0.1141,0.1939,0.4822,A,
+Nematode,Caenorhabditis elegans,Animalia,Nematoda,Chromadorea,Rhabditida,Rhabditidae,Caenorhabditis,1e-06,0.055,0.055,,0.055,0.055,False,0.2836,0.1141,0.1939,0.4822,A,
 Townsend's Ground Squirrel,Spermophilus townsendii,Animalia,Chordata,Mammalia,Rodentia,Sciuridae,Spermophilus,218.26,,,3.4917,3.4917,3.4917,False,10.5447,7.2438,0.3311,0.482,B,
-Dwarf seahorse,Hippocampus zosterae,Animalia,Chordata,Actinopterygii,Gasterosteiformes,Syngnathidae,Hippocampus,0.5494,1.0,,,1.0,1.0,False,3.4168,2.0749,0.2927,0.482,B,
+Dwarf seahorse,Hippocampus zosterae,Animalia,Chordata,Actinopterygii,Gasterosteiformes,Syngnathidae,Hippocampus,0.549441,1.0,,,1.0,1.0,False,3.4168,2.0749,0.2927,0.482,B,
 Pacific sierra,Scomberomorus sierra,Animalia,Chordata,Actinopterygii,Scombriformes,Scombridae,Scomberomorus,8160.0,,,10.0,10.0,10.0,False,20.8536,20.7614,0.4795,0.4817,C,
 Darevskia bithynica,Darevskia bithynica,Animalia,Chordata,Reptilia,Squamata,Lacertidae,Darevskia,7.93,,,3.0,3.0,3.0,False,5.6485,6.2295,0.5311,0.4816,B,
 Darevskia rudis,Darevskia rudis,Animalia,Chordata,Reptilia,Squamata,Lacertidae,Darevskia,7.93,,,3.0,3.0,3.0,False,5.6485,6.2295,0.5311,0.4816,B,
@@ -6590,7 +6590,7 @@ Australian sharpnose shark,Rhizoprionodon taylori,Animalia,Chordata,Chondrichthy
 Bluestriped snapper,Lutjanus notatus,Animalia,Chordata,Actinopterygii,Eupercaria/misc,Lutjanidae,Lutjanus,209.837,,,4.0,4.0,4.0,False,10.4668,8.6311,0.3822,0.4634,C,"mass estimated from maximum length by FishBase's length-weight relationship, not weighed"
 Rough greensnake,Opheodrys aestivus,Animalia,Chordata,Reptilia,Squamata,Colubridae,Opheodrys,601.0,,7.2,,7.2,7.2,False,12.7605,15.5396,0.5642,0.4633,B,
 Los Talas Tuco-tuco,Ctenomys talarum,Animalia,Chordata,Mammalia,Rodentia,Ctenomyidae,Ctenomys,130.92,,,3.0,3.0,3.0,False,9.5772,6.4893,0.3132,0.4623,B,
-Black-stripe minnow,Galaxiella nigrostriata,Animalia,Chordata,Actinopterygii,Osmeriformes,Galaxiidae,Galaxiella,0.6538,1.0,,,1.0,1.0,False,3.5306,2.1632,0.2832,0.4623,B,
+Black-stripe minnow,Galaxiella nigrostriata,Animalia,Chordata,Actinopterygii,Osmeriformes,Galaxiidae,Galaxiella,0.653842,1.0,,,1.0,1.0,False,3.5306,2.1632,0.2832,0.4623,B,
 Striped grunter,Pomadasys striatus,Animalia,Chordata,Actinopterygii,Eupercaria/misc,Haemulidae,Pomadasys,212.455,4.0,,,4.0,4.0,False,10.4913,8.6568,0.3813,0.4621,C,"mass estimated from maximum length by FishBase's length-weight relationship, not weighed"
 Lesser Sand Rat,Psammomys vexillaris,Animalia,Chordata,Mammalia,Rodentia,Muridae,Psammomys,177.33,,,3.2,3.2,3.2,False,10.1403,6.9272,0.3156,0.4619,B,
 Brazilian bocachico,Prochilodus brevis,Animalia,Chordata,Actinopterygii,Characiformes,Prochilodontidae,Prochilodus,540.0,,,5.0,5.0,5.0,False,12.5059,10.8267,0.3998,0.4618,C,
@@ -6606,8 +6606,8 @@ Pygmy sperm whale,Kogia breviceps,Animalia,Chordata,Mammalia,Artiodactyla,Kogiid
 Green kingfisher,Chloroceryle americana,Animalia,Chordata,Aves,Coraciiformes,Alcedinidae,Chloroceryle,34.0,5.0,,,5.0,5.0,False,7.4299,10.8709,0.673,0.4599,B,
 Red-throated pipit,Anthus cervinus,Animalia,Chordata,Aves,Passeriformes,Motacillidae,Anthus,20.9,4.5,,,4.5,4.5,False,6.7793,9.7873,0.6638,0.4598,B,
 Paradise Shelduck,Tadorna variegata,Animalia,Chordata,Aves,Anseriformes,Anatidae,Tadorna,1415.0,,,11.1667,11.1667,11.1667,False,14.9932,24.3045,0.7448,0.4595,B,
-Neosalanx pseudotaihuensis,Neosalanx pseudotaihuensis,Animalia,Chordata,Actinopterygii,Osmeriformes,Salangidae,Neosalanx,0.6746,1.0,,,1.0,1.0,False,3.5515,2.1795,0.2816,0.4588,C,"mass estimated from maximum length by FishBase's length-weight relationship, not weighed"
-Brauer's bristlemouth,Cyclothone braueri,Animalia,Chordata,Actinopterygii,Stomiiformes,Gonostomatidae,Cyclothone,0.6751,1.0,,,1.0,1.0,False,3.552,2.1799,0.2815,0.4587,B,
+Neosalanx pseudotaihuensis,Neosalanx pseudotaihuensis,Animalia,Chordata,Actinopterygii,Osmeriformes,Salangidae,Neosalanx,0.674605,1.0,,,1.0,1.0,False,3.5515,2.1795,0.2816,0.4588,C,"mass estimated from maximum length by FishBase's length-weight relationship, not weighed"
+Brauer's bristlemouth,Cyclothone braueri,Animalia,Chordata,Actinopterygii,Stomiiformes,Gonostomatidae,Cyclothone,0.675148,1.0,,,1.0,1.0,False,3.552,2.1799,0.2815,0.4587,B,
 Ningbing False Antechinus,Pseudantechinus ningbing,Animalia,Chordata,Mammalia,Dasyuromorphia,Dasyuridae,Pseudantechinus,20.74,,,2.0,2.0,2.0,False,6.7695,4.3652,0.2954,0.4582,B,
 Long-tailed Spiny-rat,Proechimys longicaudatus,Animalia,Chordata,Mammalia,Rodentia,Echimyidae,Proechimys,280.75,,,3.5,3.5,3.5,False,11.0567,7.6471,0.3166,0.4577,B,
 Alaska snailfish,Careproctus colletti,Animalia,Chordata,Actinopterygii,Perciformes/Cottoidei,Liparidae,Careproctus,1200.0,6.0,,,6.0,6.0,False,14.5351,13.1113,0.4128,0.4576,C,
@@ -6680,7 +6680,7 @@ Spot,Leiostomus xanthurus,Animalia,Chordata,Actinopterygii,Perciformes,Sciaenida
 Spotted bass,Micropterus punctulatus,Animalia,Chordata,Actinopterygii,Perciformes,Centrarchidae,Micropterus,2557.0,7.0,,,7.0,7.0,False,16.7604,15.7189,0.4177,0.4453,B,
 Nile distichodus,Distichodus niloticus,Animalia,Chordata,Actinopterygii,Characiformes,Citharinidae,Distichodus,3410.0,,7.5,,7.5,7.5,False,17.694,16.8422,0.4239,0.4453,B,
 Greater lizardfish,Saurida tumbil,Animalia,Chordata,Actinopterygii,Aulopiformes,Synodontidae,Saurida,2565.9,7.0,,,7.0,7.0,False,16.7713,15.732,0.4174,0.445,C,"mass estimated from maximum length by FishBase's length-weight relationship, not weighed"
-Caspian naked goby,Caspiosoma caspium,Animalia,Chordata,Actinopterygii,Gobiiformes,Gobiidae,Caspiosoma,0.7673,,,1.0,1.0,1.0,False,3.6386,2.2478,0.2748,0.4449,C,"mass estimated from maximum length by FishBase's length-weight relationship, not weighed"
+Caspian naked goby,Caspiosoma caspium,Animalia,Chordata,Actinopterygii,Gobiiformes,Gobiidae,Caspiosoma,0.767289,,,1.0,1.0,1.0,False,3.6386,2.2478,0.2748,0.4449,C,"mass estimated from maximum length by FishBase's length-weight relationship, not weighed"
 Boyaca Spiny Rat,Proechimys chrysaeolus,Animalia,Chordata,Mammalia,Rodentia,Echimyidae,Proechimys,320.745,,,3.5,3.5,3.5,False,11.3374,7.8694,0.3087,0.4448,B,
 Pacific Spiny-rat,Proechimys decumanus,Animalia,Chordata,Mammalia,Rodentia,Echimyidae,Proechimys,320.745,,,3.5,3.5,3.5,False,11.3374,7.8694,0.3087,0.4448,B,
 Goeldi's Spiny-rat,Proechimys goeldii,Animalia,Chordata,Mammalia,Rodentia,Echimyidae,Proechimys,320.745,,,3.5,3.5,3.5,False,11.3374,7.8694,0.3087,0.4448,B,
@@ -6783,8 +6783,8 @@ Eastern bristlebird,Dasyornis brachypterus,Animalia,Chordata,Aves,Passeriformes,
 Chubbyhead barb,Enteromius anoplus,Animalia,Chordata,Actinopterygii,Cypriniformes,Cyprinidae,Enteromius,17.0959,2.0,,,2.0,2.0,False,6.5276,4.7311,0.3064,0.4227,C,"mass estimated from maximum length by FishBase's length-weight relationship, not weighed"
 Daggernose shark,Isogomphodon oxyrhynchus,Animalia,Chordata,Chondrichthyes,Carcharhiniformes,Carcharhinidae,Isogomphodon,30108.5,12.0,,,12.0,12.0,False,26.6654,28.3927,0.45,0.4226,C,"mass estimated from maximum length by FishBase's length-weight relationship, not weighed"
 Goldtail croaker,Bairdiella chrysoura,Animalia,Chordata,Actinopterygii,Eupercaria/misc,Sciaenidae,Bairdiella,308.698,,,4.0,4.0,4.0,False,11.256,9.4681,0.3554,0.4225,C,"mass estimated from maximum length by FishBase's length-weight relationship, not weighed"
-Volga dwarf goby,Hyrcanogobius bergi,Animalia,Chordata,Actinopterygii,Gobiiformes,Gobiidae,Hyrcanogobius,0.9523,1.0,,,1.0,1.0,False,3.7897,2.3673,0.2639,0.4224,C,"mass estimated from maximum length by FishBase's length-weight relationship, not weighed"
-Slender lightfish,Vinciguerria attenuata,Animalia,Chordata,Actinopterygii,Stomiiformes,Phosichthyidae,Vinciguerria,0.9524,,,1.0,1.0,1.0,False,3.7898,2.3674,0.2639,0.4224,C,"mass estimated from maximum length by FishBase's length-weight relationship, not weighed"
+Volga dwarf goby,Hyrcanogobius bergi,Animalia,Chordata,Actinopterygii,Gobiiformes,Gobiidae,Hyrcanogobius,0.952337,1.0,,,1.0,1.0,False,3.7897,2.3673,0.2639,0.4224,C,"mass estimated from maximum length by FishBase's length-weight relationship, not weighed"
+Slender lightfish,Vinciguerria attenuata,Animalia,Chordata,Actinopterygii,Stomiiformes,Phosichthyidae,Vinciguerria,0.952424,,,1.0,1.0,1.0,False,3.7898,2.3674,0.2639,0.4224,C,"mass estimated from maximum length by FishBase's length-weight relationship, not weighed"
 "White's Rock-skink, White's Skink",Liopholis whitii,Animalia,Chordata,Reptilia,Squamata,Scincidae,Liopholis,20.035,,,3.2,3.2,3.2,False,6.7256,7.5764,0.4758,0.4224,B,
 Threadfin shad,Dorosoma petenense,Animalia,Chordata,Actinopterygii,Clupeiformes,Clupeidae,Dorosoma,309.283,4.0,,,4.0,4.0,False,11.26,9.4724,0.3552,0.4223,B,
 Maned duck,Chenonetta jubata,Animalia,Chordata,Aves,Anseriformes,Anatidae,Chenonetta,812.5,9.1,,,9.1,9.1,False,13.506,21.5623,0.6738,0.422,B,
@@ -6867,7 +6867,7 @@ Large-eared Gray Shrew,Notiosorex evotis,Animalia,Chordata,Mammalia,Eulipotyphla
 Smoky Shrew,Sorex fumeus,Animalia,Chordata,Mammalia,Eulipotyphla,Soricidae,Sorex,8.015,,,1.4167,1.4167,1.4167,False,5.6599,3.5576,0.2503,0.3982,B,
 Eastern dwarf galaxias,Galaxiella pusilla,Animalia,Chordata,Actinopterygii,Galaxiiformes,Galaxiidae,Galaxiella,1.2185,1.0,,,1.0,1.0,False,3.9697,2.5115,0.2519,0.3982,C,"mass estimated from maximum length by FishBase's length-weight relationship, not weighed"
 Red-breasted sapsucker,Sphyrapicus ruber,Animalia,Chordata,Aves,Piciformes,Picidae,Sphyrapicus,55.0,4.8,,,4.8,4.8,False,8.1342,12.0598,0.5901,0.398,B,
-Schindler's fish,Schindleria praematura,Animalia,Chordata,Actinopterygii,Gobiiformes,Schindleriidae,Schindleria,0.0679,0.5,,,0.5,0.5,False,2.3045,1.2566,0.217,0.3979,C,"mass estimated from maximum length by FishBase's length-weight relationship, not weighed"
+Schindler's fish,Schindleria praematura,Animalia,Chordata,Actinopterygii,Gobiiformes,Schindleriidae,Schindleria,0.0678536,0.5,,,0.5,0.5,False,2.3045,1.2566,0.217,0.3979,C,"mass estimated from maximum length by FishBase's length-weight relationship, not weighed"
 Smooth hammerhead,Sphyrna zygaena,Animalia,Chordata,Chondrichthyes,Carcharhiniformes,Sphyrnidae,Sphyrna,400000.0,21.0,,,21.0,21.0,False,43.3992,52.7909,0.4839,0.3978,C,
 American bittern,Botaurus lentiginosus,Animalia,Chordata,Aves,Pelecaniformes,Ardeidae,Botaurus,706.0,8.3,,,8.3,8.3,False,13.1533,20.9184,0.631,0.3968,B,
 Totoaba,Totoaba macdonaldi,Animalia,Chordata,Actinopterygii,Perciformes,Sciaenidae,Totoaba,100000.0,15.0,,,15.0,15.0,False,33.4281,37.8619,0.4487,0.3962,B,
@@ -7416,13 +7416,13 @@ Atlantic saury,Scomberesox saurus,Animalia,Chordata,Actinopterygii,Beloniformes,
 Malleefowl,Leipoa ocellata,Animalia,Chordata,Aves,Galliformes,Megapodiidae,Leipoa,1867.5,5.1,,,5.1,5.1,False,15.7974,25.8042,0.3228,0.1976,C,"demoted to C: 5x below its group's fit, past 3 sd"
 Stripefoot Anole,Anolis lineatopus,Animalia,Chordata,Reptilia,Squamata,Dactyloidae,Anolis,3.1,,,1.0,1.0,1.0,False,4.7329,5.1085,0.2113,0.1958,B,
 Mekong giant catfish,Pangasianodon gigas,Animalia,Chordata,Actinopterygii,Siluriformes,Pangasiidae,Pangasianodon,350000.0,10.0,,,10.0,10.0,False,42.3215,51.1275,0.2363,0.1956,C,
-Hawaiian blackhead triplefin,Enneapterygius atriceps,Animalia,Chordata,Actinopterygii,Blenniiformes,Tripterygiidae,Enneapterygius,0.2057,,,0.32,0.32,0.32,False,2.8397,1.6394,0.1127,0.1952,C,"mass estimated from maximum length by FishBase's length-weight relationship, not weighed"
+Hawaiian blackhead triplefin,Enneapterygius atriceps,Animalia,Chordata,Actinopterygii,Blenniiformes,Tripterygiidae,Enneapterygius,0.205693,,,0.32,0.32,0.32,False,2.8397,1.6394,0.1127,0.1952,C,"mass estimated from maximum length by FishBase's length-weight relationship, not weighed"
 Yellow-sided Opossum,Monodelphis dimidiata,Animalia,Chordata,Mammalia,Didelphimorphia,Didelphidae,Monodelphis,44.56,,,1.0,1.0,1.0,False,7.8181,5.1461,0.1279,0.1943,B,
 Ground Pangolin,Manis temminckii,Animalia,Chordata,Mammalia,Pholidota,Manidae,Manis,9586.87,,,3.1583,3.1583,3.1583,False,21.4961,16.3476,0.1469,0.1932,B,
 Spinetail devil ray,Mobula mobular,Animalia,Chordata,Chondrichthyes,Myliobatiformes,Mobulidae,Mobula,1500000.0,,,14.0,14.0,14.0,False,55.6638,72.4762,0.2515,0.1932,C,
 Oceanic lightfish,Vinciguerria nimbaria,Animalia,Chordata,Actinopterygii,Stomiiformes,Phosichthyidae,Vinciguerria,2.1,,,0.55,0.55,0.55,False,4.3982,2.8616,0.1251,0.1922,C,
 American Pygmy Shrew,Sorex hoyi,Animalia,Chordata,Mammalia,Eulipotyphla,Soricidae,Sorex,3.87,,,0.5833,0.5833,0.5833,False,4.9348,3.0417,0.1182,0.1918,B,
-Ring-eye pygmygoby,Trimma benjamini,Animalia,Chordata,Actinopterygii,Gobiiformes,Gobiidae,Trimma,0.5082,0.39,,,0.39,0.39,False,3.3671,2.0364,0.1158,0.1915,C,"mass estimated from maximum length by FishBase's length-weight relationship, not weighed"
+Ring-eye pygmygoby,Trimma benjamini,Animalia,Chordata,Actinopterygii,Gobiiformes,Gobiidae,Trimma,0.508249,0.39,,,0.39,0.39,False,3.3671,2.0364,0.1158,0.1915,C,"mass estimated from maximum length by FishBase's length-weight relationship, not weighed"
 Iranian Vole,Microtus irani,Animalia,Chordata,Mammalia,Rodentia,Cricetidae,Microtus,48.0,,,1.0,1.0,1.0,False,7.9283,5.2291,0.1261,0.1912,B,
 Paradox Vole,Microtus paradoxus,Animalia,Chordata,Mammalia,Rodentia,Cricetidae,Microtus,48.0,,,1.0,1.0,1.0,False,7.9283,5.2291,0.1261,0.1912,B,
 Schidlovsky's Vole,Microtus schidlovskii,Animalia,Chordata,Mammalia,Rodentia,Cricetidae,Microtus,48.0,,,1.0,1.0,1.0,False,7.9283,5.2291,0.1261,0.1912,B,
@@ -7485,10 +7485,10 @@ Cape Dune Mole-rat,Bathyergus suillus,Animalia,Chordata,Mammalia,Rodentia,Bathye
 Shoemaker spinefoot,Siganus sutor,Animalia,Chordata,Actinopterygii,Acanthuriformes,Siganidae,Siganus,2353.63,2.5,,,2.5,2.5,False,16.5008,15.4096,0.1515,0.1622,C,"mass estimated from maximum length by FishBase's length-weight relationship, not weighed"
 Malay Peninsula Pithecheir,Pithecheir parvus,Animalia,Chordata,Mammalia,Rodentia,Muridae,Pithecheir,104.0,,,1.0,1.0,1.0,False,9.1709,6.1757,0.109,0.1619,B,
 Malayan (Green) Whipsnake,Ahaetulla mycterizans,Animalia,Chordata,Reptilia,Squamata,Colubridae,Ahaetulla,484.0,,,2.4,2.4,2.4,False,12.2507,14.845,0.1959,0.1617,B,
-Least killifish,Heterandria formosa,Animalia,Chordata,Actinopterygii,Cyprinodontiformes,Poeciliidae,Heterandria,0.5236,,,0.33,0.33,0.33,False,3.386,2.051,0.0975,0.1609,C,"mass estimated from maximum length by FishBase's length-weight relationship, not weighed"
+Least killifish,Heterandria formosa,Animalia,Chordata,Actinopterygii,Cyprinodontiformes,Poeciliidae,Heterandria,0.52357,,,0.33,0.33,0.33,False,3.386,2.051,0.0975,0.1609,C,"mass estimated from maximum length by FishBase's length-weight relationship, not weighed"
 Mural goby,Valenciennea muralis,Animalia,Chordata,Actinopterygii,Gobiiformes,Gobiidae,Valenciennea,54.9736,,,1.0,1.0,1.0,False,8.1334,6.2602,0.1229,0.1597,C,"mass estimated from maximum length by FishBase's length-weight relationship, not weighed"
 Semutundu,Bagrus docmak,Animalia,Chordata,Actinopterygii,Siluriformes,Bagridae,Bagrus,46000.0,5.0,,,5.0,5.0,False,28.8807,31.4298,0.1731,0.1591,C,
-Divine dwarfgoby,Eviota epiphanes,Animalia,Chordata,Actinopterygii,Gobiiformes,Gobiidae,Eviota,0.0271,,,0.16,0.16,0.16,False,1.9393,1.0087,0.0825,0.1586,C,"mass estimated from maximum length by FishBase's length-weight relationship, not weighed"
+Divine dwarfgoby,Eviota epiphanes,Animalia,Chordata,Actinopterygii,Gobiiformes,Gobiidae,Eviota,0.0271426,,,0.16,0.16,0.16,False,1.9393,1.0087,0.0825,0.1586,C,"mass estimated from maximum length by FishBase's length-weight relationship, not weighed"
 Glover Allen's Dasymys,Dasymys alleni,Animalia,Chordata,Mammalia,Rodentia,Muridae,Dasymys,116.965,,,1.0,1.0,1.0,False,9.376,6.3338,0.1067,0.1579,B,
 Fox's Dasymys,Dasymys foxi,Animalia,Chordata,Mammalia,Rodentia,Muridae,Dasymys,116.965,,,1.0,1.0,1.0,False,9.376,6.3338,0.1067,0.1579,B,
 Common Dasymys,Dasymys incomtus,Animalia,Chordata,Mammalia,Rodentia,Muridae,Dasymys,116.965,,,1.0,1.0,1.0,False,9.376,6.3338,0.1067,0.1579,B,
@@ -7511,7 +7511,7 @@ Indochinese Arboreal Niviventer,Niviventer langbianis,Animalia,Chordata,Mammalia
 Indochinese Mountain Niviventer,Niviventer tenaster,Animalia,Chordata,Mammalia,Rodentia,Muridae,Niviventer,71.54,,,0.8333,0.8333,0.8333,False,8.547,5.698,0.0975,0.1462,B,
 Dibatag,Ammodorcas clarkei,Animalia,Chordata,Mammalia,Artiodactyla,Bovidae,Ammodorcas,28274.9,,,3.0,3.0,3.0,False,26.3517,20.6316,0.1138,0.1454,B,
 Desmarest's Spiny Pocket Mouse,Heteromys desmarestianus,Animalia,Chordata,Mammalia,Rodentia,Heteromyidae,Heteromys,76.4,,,0.8333,0.8333,0.8333,False,8.6535,5.7792,0.0963,0.1442,B,
-Nasal-bar pygmygoby,Trimma nasa,Animalia,Chordata,Actinopterygii,Gobiiformes,Gobiidae,Trimma,0.2126,,,0.238,0.238,0.238,False,2.8575,1.6525,0.0833,0.144,C,"mass estimated from maximum length by FishBase's length-weight relationship, not weighed"
+Nasal-bar pygmygoby,Trimma nasa,Animalia,Chordata,Actinopterygii,Gobiiformes,Gobiidae,Trimma,0.212632,,,0.238,0.238,0.238,False,2.8575,1.6525,0.0833,0.144,C,"mass estimated from maximum length by FishBase's length-weight relationship, not weighed"
 Zanzibar Red Colobus,Piliocolobus kirkii,Animalia,Chordata,Mammalia,Primates,Cercopithecidae,Piliocolobus,7158.29,,,2.1667,2.1667,2.1667,False,20.3456,15.3516,0.1065,0.1411,B,
 Mountain Short-horned Lizard,Phrynosoma hernandesi,Animalia,Chordata,Reptilia,Squamata,Phrynosomatidae,Phrynosoma,22.945,,,1.1,1.1,1.1,False,6.8995,7.7966,0.1594,0.1411,B,
 Bahia Porcupine,Sphiggurus insidiosus,Animalia,Chordata,Mammalia,Rodentia,Erethizontidae,Sphiggurus,998.32,,,1.4167,1.4167,1.4167,False,14.0401,10.0474,0.1009,0.141,B,
@@ -7597,7 +7597,7 @@ Common cuttlefish,Sepia officinalis,Animalia,Mollusca,Cephalopoda,Sepiida,Sepiid
 Fawn Hopping Mouse,Notomys cervinus,Animalia,Chordata,Mammalia,Rodentia,Muridae,Notomys,34.2,,,0.4167,0.4167,0.4167,False,7.4381,4.8613,0.056,0.0857,B,
 Bumpnose trevally,Atropus hedlandensis,Animalia,Chordata,Actinopterygii,Carangiformes,Carangidae,Atropus,741.288,,,1.0,1.0,1.0,False,13.2747,11.6812,0.0753,0.0856,C,"mass estimated from maximum length by FishBase's length-weight relationship, not weighed"
 Rufous-naped Tit,Periparus rufonuchalis,Animalia,Chordata,Aves,Passeriformes,Paridae,Periparus,12.6,,,0.75,0.75,0.75,False,6.1631,8.7748,0.1217,0.0855,C,"demoted to C: 12x below its group's fit, past 3 sd"
-Pygmy goby,Eviota sigillata,Animalia,Chordata,Actinopterygii,Perciformes,Gobiidae,Eviota,0.3862,0.16,,,0.16,0.16,False,3.1973,1.9067,0.05,0.0839,C,"demoted to C: 12x below its group's fit, past 3 sd"
+Pygmy goby,Eviota sigillata,Animalia,Chordata,Actinopterygii,Perciformes,Gobiidae,Eviota,0.386181,0.16,,,0.16,0.16,False,3.1973,1.9067,0.05,0.0839,C,"demoted to C: 12x below its group's fit, past 3 sd"
 Guiara,Euryzygomatomys spinosus,Animalia,Chordata,Mammalia,Rodentia,Echimyidae,Euryzygomatomys,187.49,,,0.5833,0.5833,0.5833,False,10.2472,7.0107,0.0569,0.0832,B,
 Lesser Red Musk Shrew,Crocidura hirta,Animalia,Chordata,Mammalia,Eulipotyphla,Soricidae,Crocidura,14.735,,,0.3333,0.3333,0.3333,False,6.3475,4.0557,0.0525,0.0822,B,
 Eastern Montpellier Snake,Malpolon insignitus,Animalia,Chordata,Reptilia,Squamata,Lamprophiidae,Malpolon,3113.0,,,1.8,1.8,1.8,False,17.393,21.9941,0.1035,0.0818,C,"demoted to C: 12x below its group's fit, past 3 sd"
