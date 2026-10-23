@@ -38,6 +38,7 @@ import cited   # noqa: E402
 MONTHS = ["January", "February", "March", "April", "May", "June", "July", "August", "September",
           "October", "November", "December"]
 WORDS = {12: "twelve", 6: "six", 3: "three"}
+WORDS_N = {6: "six"}
 # "within NEAR Bcf/d of t0 on most readings": the band the page says the
 # readings mostly fall in. Set after the readings were computed (they gave
 # 4 of 9 within 0.5, 7 of 9 within 0.7); claims() holds the "most".
@@ -97,7 +98,7 @@ def cap_rows(P):
         when = str(ym(e["month"])[0]) if e["year_only"] else short(e["month"])
         status = "In service" if e["status"] == "confirmed" else "Expected"
         if e["status"] == "confirmed" and e["disagrees"]:
-            status += f" ({html.escape(e['disagrees'])})"
+            status += f" (a source disagrees: {html.escape(e['disagrees'])})"
         name = html.escape(e["name"].replace(" (formerly Warrior Pipeline) Phase I & II", ""))
         rows.append(f'<tr><td>{name}</td><td class="n">{e["bcfd"]:.2f}</td><td>{when}</td>'
                     f'<td>{status}, per {html.escape(e["cite"])}</td></tr>')
@@ -193,7 +194,8 @@ def hero(P, S):
          f"The share vented or flared is {100 * Y[2020]['vf_share']:.1f} per cent in 2020, half 2019's; "
          f"2020's price collapse stalls production too.</p>", {"t": t_of(S, "2020-12")}),
         (f"<p><b>Permian Highway and Whistler, 2021.</b> {php['bcfd']:.1f} and {wh['bcfd']:.1f} Bcf/d, six months "
-         f"apart: the widest room on the chart. Reuters lists no below-zero day at Waha in 2021 or 2022.</p>",
+         f"apart, while 2020's slump still held production back. Reuters lists no below-zero day at Waha in 2021 "
+         f"or 2022.</p>",
          {"t": t_of(S, "2022-06")}),
         (f"<p><b>2023 to {short(P['t0'])}.</b> About two Bcf/d of new gas a year uses the room up. By "
          f"{long(P['t0'])} Waha is below zero every day; the chart is lined up so the two lines meet here.</p>",
@@ -245,14 +247,16 @@ def values(P):
     return {
         "stamp": insight.stamp(last, "EIA's Short-Term Energy Outlook"),
         "takeaways": insight.takeaways([
-            f"Oil wells in the Permian add {S['pace']['k_fit']:.1f} to {S['pace']['default']:.1f} Bcf/d of gas that "
-            f"needs a pipe out every year, and each big pipeline built since 2019 holds only {min(months):.0f} to "
+            f"Since {S['pace_from'][:4]} the Permian has added, on average, {S['pace']['k_fit']:.1f} to "
+            f"{S['pace']['default']:.1f} billion cubic feet a day of gas that needs a pipe out each year, close to what "
+            f"one big new pipeline carries, so each one built since 2019 holds only {min(months):.0f} to "
             f"{max(months):.0f} months of that growth.",
-            f"When the pipes fill, Waha's price goes below zero and sellers pay buyers to take their gas: Reuters "
-            f"counts {rc[2019]} such days in 2019, {rc[2024]} in 2024 and {rc[2026]} in 2026 before the end of "
-            f"{cited.REUTERS['date'].split()[0]}.",
-            f"Flaring has not come back with the full pipes: the three Texas districts vented or flared "
-            f"{100 * Y[2019]['vf_share']:.1f} per cent of their gas in 2019 and no more than "
+            f"When the pipes have been full, Waha's price has gone below zero and sellers have paid buyers to take "
+            f"their gas: Reuters "
+            f"counts {rc[2019]} such days in 2019, {rc[2024]} in 2024 and {rc[2026]} in 2026 by late "
+            f"{cited.REUTERS['date'].split()[0]}, more than in any full year.",
+            f"Burning the gas off has not come back with the full pipes: operators in the Texas "
+            f"Permian vented or flared {100 * Y[2019]['vf_share']:.1f} per cent of their gas in 2019 and no more than "
             f"{100 * max(r['vf_share'] for r in since21):.1f} per cent in any year since 2021."]),
         "hero": hero(P, S),
         "t0_long": long(t0), "t0_short": short(t0), "last_long": long(last), "last_year": str(ym(last)[0]),
@@ -266,12 +270,12 @@ def values(P):
         "neg_last_year": str(max(rc)), "r_date": cited.REUTERS["date"],
         "eia_pct": str(eia_pct), "eia_year": str(eia_year),
         "csgd_year": str(P["csgd"]["year"]), "csgd_pct": f"{100 * P['csgd']['share']:.0f}",
-        "q_losses": cited.REUTERS_MORE["losses"], "q_pay": cited.REUTERS_MORE["pay"],
+        "q_losses": cited.REUTERS_MORE["losses"], "q_pay": cited.REUTERS_MORE["pay"][len("negative prices, "):],
         "q_flare": cited.REUTERS_MORE["flare"], "q_mechanism": cited.EIA_T0["mechanism"],
         "q_eia2019": "kept prices very low, or even negative, in recent months",
         "pace_from_year": S["pace_from"][:4], "pace_def": f"{S['pace']['default']:.2f}",
         "pace_low": f"{S['pace']['k_fit']:.2f}",
-        "yr_min": f"{min(x for y, x in yr.items() if y != 2020):.1f}", "yr_2020": f"{yr[2020]:.2f}",
+        "yr_min": f"{__import__('math').floor(10 * min(x for y, x in yr.items() if y != 2020)) / 10:.1f}", "yr_2020": f"{yr[2020]:.2f}",
         "big_lo": f"{min(l['bcfd'] for l in big):g}", "big_hi": f"{max(l['bcfd'] for l in big):g}",
         "months_lo": f"{min(months):.0f}", "months_hi": f"{max(months):.0f}",
         "rec_gcx": str(big[0]["recovery_months"]), "rec_php": str(big[1]["recovery_months"]),
@@ -284,7 +288,10 @@ def values(P):
         "vf_min_since": f"{100 * min(r['vf_share'] for r in since21):.1f}",
         "vf_max_since": f"{100 * max(r['vf_share'] for r in since21):.1f}",
         "gross2021": f"{Y[2021]['gross_bcfd']:.1f}", "gross_last": f"{vfy[-1]['gross_bcfd']:.1f}",
-        "vf2022": f"{100 * Y[2022]['vf_share']:.1f}", "vf2024": f"{100 * Y[2024]['vf_share']:.1f}",
+        "vf2022": f"{100 * Y[2022]['vf_share']:.1f}", "vf2023": f"{100 * Y[2023]['vf_share']:.1f}",
+        "n2020": WORDS_N.get(rc[2020], str(rc[2020])),
+        "room2122": f"{__import__('math').floor(10 * min(v for k, v in S['H_hero'].items() if k[:4] in ('2021', '2022'))) / 10:.1f}",
+        "swing": f"{max(abs(S['H_hero'][b] - S['H_hero'][a]) for a, b in zip(sorted(S['H_hero']), sorted(S['H_hero'])[1:]) if a >= '2025-01'):.1f}", "vf2024": f"{100 * Y[2024]['vf_share']:.1f}",
         "window_word": WORDS[P["window"]],
         "c1_before": f2(100 * c1["before"]), "c1_after": f2(100 * c1["after"]),
         "c2_before": f2(100 * c2["before"]), "c2_after": f2(100 * c2["after"]),
@@ -341,7 +348,6 @@ def claims(P, S, months, within, yr):
     vfy = [r for r in S["years"] if "vf_share" in r]
     since21 = [r for r in vfy if r["year"] >= 2021]
     Hh = S["H_hero"]
-    widest = max(Hh, key=Hh.get)
     fl = P["flaring"]
     c1, c2, c3 = [c for c in fl["clusters"] if "diff" in c][:3]
     L = {l["name"]: l for l in S["lines"]}
@@ -350,12 +356,16 @@ def claims(P, S, months, within, yr):
          12 <= min(months) and max(months) < 19.5),
         ("'every calendar year ... except 2020': 2020 is the smallest year and the only one under 1",
          min(yr, key=yr.get) == 2020 and all(x >= 1 for y, x in yr.items() if y != 2020)),
-        ("'the widest room on the chart' lies in 2021-2022", widest[:4] in ("2021", "2022")),
+        ("'at least X of room every month' in 2021-2022 is positive", min(v for k, v in Hh.items() if k[:4] in ("2021", "2022")) > 0),
+        ("Gulf Coast Express opened in Reuters's first below-zero year", int(L["Gulf Coast Express"]["month"][:4]) == cited.reuters_first_year()),
         ("Reuters lists no 2021 or 2022, and does list 2019, 2023-2026",
          2021 not in rc and 2022 not in rc and all(y in rc for y in (2019, 2023, 2024, 2025, 2026))),
         ("Reuters's first below-zero year is the year of Gulf Coast Express",
          cited.reuters_first_year() == int(L["Gulf Coast Express"]["month"][:4])),
-        ("2026's count is a record", rc[2026] == max(rc.values())),
+        ("2026's count is a record, more than any full year", rc[2026] > max(v for y, v in rc.items() if y != 2026)),
+        ("takeaway 1: the yearly pace is 'close to what one big new pipeline carries' (within its 1.98-2.5 range +-25%)",
+         0.75 * min(l["bcfd"] for l in S["lines"]) <= S["pace"]["k_fit"]
+         and S["pace"]["default"] <= 1.25 * max(l["bcfd"] for l in S["lines"])),
         ("'as the room ran out': 2024 has more days than 2023", rc[2024] > rc[2023]),
         ("flaring 2019 above every year since 2021", all(Y[2019]["vf_share"] > r["vf_share"] for r in since21)),
         ("'half 2019's' in 2020: between 0.4 and 0.6 of it", 0.4 <= Y[2020]["vf_share"] / Y[2019]["vf_share"] <= 0.6),

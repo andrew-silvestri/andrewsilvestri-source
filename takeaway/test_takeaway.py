@@ -296,7 +296,7 @@ def page_numbers():
     big = S["lines"]
     months = [l["months_default"] for l in big] + [l["months_low"] for l in big]
     derived = {
-        "pace range (takeaway 1)": f"add {S['pace']['k_fit']:.1f} to {S['pace']['default']:.1f} Bcf/d",
+        "pace range (takeaway 1)": f"on average, {S['pace']['k_fit']:.1f} to {S['pace']['default']:.1f} billion cubic feet",
         "months range (takeaway 1)": f"holds only {min(months):.0f} to {max(months):.0f} months",
         "flaring 2019 share": f"{100 * Y[2019]['vf_share']:.1f} per cent of their gas in 2019",
         "flaring max since 2021": f"no more than {100 * max(r['vf_share'] for r in since21):.1f} per cent",

@@ -761,13 +761,19 @@ PAGES = {
          'FAQ).',
          "Statewide Rule 32, and that flaring may be needed where existing "
          "pipelines have reached capacity."),
-        ("of trading days in",
+        ("Natural Gas Intelligence data",
          'U.S. Energy Information Administration, <i>Today in Energy</i>, '
          '3 February 2025, "Natural gas spot prices fell across key regional '
          'trading hubs in 2024".',
          "Waha below zero on 42% of trading days in 2024 (Natural Gas "
          "Intelligence data), and Matterhorn Express entering service in "
          "October 2024."),
+        ("which EIA counted as takeaway in 2021",
+         'U.S. Energy Information Administration, <i>Today in Energy</i>, 2 June '
+         '2022, "Natural gas production in the Permian Basin reached an annual '
+         'high in 2021".',
+         "Three pipelines, Double E among them, as 5.5 Bcf/d of takeaway "
+         "capacity that came online in 2021."),
         ("began taking gas",
          'U.S. Energy Information Administration, <i>Today in Energy</i>, '
          '6 September 2019, "Permian Basin natural gas prices up as a new '
