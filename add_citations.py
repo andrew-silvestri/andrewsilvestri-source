@@ -547,26 +547,33 @@ PAGES = {
          'Mongird <i>et al.</i>, <i>Grid Energy Storage Technology Cost and '
          'Performance Assessment</i>, Pacific Northwest National Laboratory, '
          '2020.',
-         "Degradation cost per megawatt hour of throughput, and round-trip "
-         "efficiency."),
+         # D-21 item 3: the report gives RTE 86% and no degradation cost;
+         # its only per-MWh figure is variable O&M, $0.5125/MWh.
+         "Round-trip efficiency (86%). It gives no degradation cost; the "
+         "model's $2/MWh of throughput is an assumption."),
         ("linear programming",
-         'Sioshansi, Denholm, Jenkin &amp; Weiss, <i>Energy Economics</i>, '
-         '2009 - estimating the value of electricity storage under '
-         'perfect foresight.',
+         'Sioshansi, Denholm, Jenkin &amp; Weiss, &ldquo;Estimating the value '
+         'of electricity storage in PJM: Arbitrage and some welfare '
+         'effects&rdquo;, <i>Energy Economics</i> 31(2):269&ndash;277, 2009.',
          "The perfect-foresight dispatch formulation and its upper-bound "
          "character."),
         ("four hours",
-         'Denholm <i>et al.</i>, <i>The Four-Hour Challenge</i>, National '
-         'Renewable Energy Laboratory, 2019.',
+         # D-21 item 2: "The Four-Hour Challenge" is no NREL title; the
+         # 2019 report is about capacity value.
+         'Denholm <i>et al.</i>, <i>Moving Beyond 4-Hour Li-Ion Batteries</i>, '
+         'National Renewable Energy Laboratory, NREL/TP-6A40-85878, 2023.',
          "Why duration value flattens past four hours."),
         ("annualised capital cost",
-         'NREL, <i>Annual Technology Baseline</i> 2024, utility-scale battery '
-         'storage, 4-hour duration, Moderate scenario, Market case.',
+         'NREL, <i>Annual Technology Baseline</i> 2024 (2022 dollars), '
+         'utility-scale battery storage, 4-hour duration, Moderate scenario, '
+         'Market case.',
          "The capital cost the right-hand panel compares against: $1,938/kW "
          "capex (overnight cost, grid connection and construction finance) "
-         "plus $44/kW-yr fixed operations, annualised over the dataset's own "
-         "twenty-year capital recovery period at an eight per cent real "
-         "discount rate, for about $242/kW-yr. A representative figure for "
+         # D-21 item 4: ATB gives batteries no discount rate and a 15-year
+         # life; the twenty years and the 8% are the model's.
+         "plus $44/kW-yr fixed operations, annualised over twenty years at "
+         "an assumed eight per cent, for about $242/kW-yr. A representative "
+         "figure for "
          "scale, not a quote for any particular project."),
     ],
     # longevity.html is not here on purpose. Its page generator
