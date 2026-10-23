@@ -36,3 +36,6 @@ meter/_build/
 # a .env copied in here for convenience would be tracked by default. Added
 # 2026-09-08, the day beauty/fetch_openalex.py first ran with a key.
 .env
+
+# the monthly refresh writes a full log per run here (refresh/monthly.py)
+refresh/logs/
