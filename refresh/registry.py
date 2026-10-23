@@ -22,16 +22,21 @@ does.
 
 ENTRIES = [
     {
-        "page": "meter",
-        "cwd": "meter",
-        "fetch": [["python", "fetch_henry_hub.py"]],
-        "build": [],
+        # R3, 2026-10-23: meter.html became a redirect stub; its entry is the
+        # lost-gas page's now. Still disabled, and not by oversight: the page's
+        # data is annual (PHMSA reports, EIA annual series) and PHMSA's file
+        # needs a visible browser window, so nothing here runs unattended. The
+        # page carries insight.stamp_annual(), which names the year and PHMSA's
+        # as-of date rather than a month.
+        "page": "lostgas",
+        "cwd": "lostgas",
+        "fetch": [["python", "fetch_public.py"]],
+        "build": [["python", "build_lostgas.py"]],
         "keys": [],
         "enabled": False,
-        "why": "R3 reworks the page. Henry Hub is monthly and fetches unattended; "
-               "PHMSA (annual) needs a visible Chrome window and stays out of the "
-               "monthly run. Enable once the reworked page shows its stamp, and add "
-               "the payload builder here.",
+        "why": "Annual data. PHMSA's distribution file needs a visible Chrome window "
+               "(fetch_phmsa.py), so a new year is fetched and built by hand; the page's "
+               "stamp says which year and the file's as-of date.",
     },
     {
         "page": "takeaway",

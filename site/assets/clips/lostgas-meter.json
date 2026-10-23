@@ -11,7 +11,7 @@
  "files": {
   "webm": {
    "bytes": 428421,
-   "sha1": "0004fbffd651064f7d6a3069d935d3c7623d9a3a"
+   "sha1": "ae6fb28c4a30d77f68835b1cbf274d772f4bd6d0"
   },
   "mp4": {
    "bytes": 367464,
@@ -22,8 +22,8 @@
    "sha1": "65c9cc2f006ceb92856a7e967f67b320aeab547a"
   },
   "vtt": {
-   "bytes": 853,
-   "sha1": "27c9c1666c617e31ab9480e28ed2726ae4ee36e5"
+   "bytes": 856,
+   "sha1": "f7b51d1a3a28fba652042f78bdc4c5f4801913c7"
   }
  }
 }

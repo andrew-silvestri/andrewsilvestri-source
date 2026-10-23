@@ -88,8 +88,11 @@ def hero_spec(P):
             "bins": [{k: x[k] for k in ("a", "b", "n", "le0", "inside")} for x in h["bins"]],
             "lights": [{"key": "le0", "color": "acc", "state": "neg"},
                        {"key": "inside", "color": "moss", "state": "inside"}],
-            "range": {"lo": b["lo"], "hi": b["hi"], "label": "a system that loses nothing", "state": "band"},
-            "marks": [{"at": h["median"], "label": f"median {h['median']:g}%", "state": "med"}],
+            # the label says it is a model, so the chart alone does not read as an observation
+            # (skeptical-reader review, 2026-10-23)
+            "range": {"lo": b["lo"], "hi": b["hi"], "label": "modelled: no loss, meter error only", "state": "band"},
+            "marks": [{"at": h["median"], "label": f"median {h['median']:g}%", "state": "med"},
+                      {"at": 0, "label": "zero or less", "state": "neg"}],
             "y": {"label": "reports"},
             "x": {"label": "% reported lost and unaccounted for"}}
 
@@ -99,7 +102,7 @@ def hero(P, I):
     h, b = P["hero"], P["model"]["band"]
     d = I["defaults"]
     steps = [
-        (f"<p><b>{h['n']:,} reports for {h['year']}.</b> Each bar counts the systems that reported a share of "
+        (f"<p><b>{h['n']:,} reports for {h['year']}.</b> Each bar counts the reports that put a share of "
          f"their gas, in quarter-point steps, as lost and unaccounted for. The median report is {h['median']:g} per "
          f"cent. The two end bars gather the {h['tail_lo']} reports at −{abs(h['lo']):g} or below and the "
          f"{h['tail_hi']} above {h['hi']:g}.</p>", {"t": 1, "med": 1}),
@@ -112,11 +115,15 @@ def hero(P, I):
          f"temperature and how many customer meters correct for it; its width, about {I['width_min']:.0f} points, "
          f"hardly does.</p>", {"t": 1, "band": 1}),
         (f"<p><b>Inside it: {pct(d['all'])} per cent of reports</b> at this page's assumptions, "
-         f"{pct(d['no_zero'])} per cent of those that are not exactly zero. Move the two assumptions and the share "
-         f"runs from {pct(I['min_all'])} to {pct(I['max_all'])} per cent; it is not a figure to lean on. The width "
-         f"is: the typical report, {h['median']:g} per cent, is smaller than the spread meter error alone "
-         f"produces, and a real two-point loss read by perfect meters lands inside the range too.</p>",
-         {"t": 1, "band": 1, "inside": 1}),
+         f"{pct(d['no_zero'])} per cent of those that are not exactly zero, and {pct(I['services_weighted'])} per "
+         f"cent of customers, counted by their service lines. That share moves with the two assumptions (the "
+         f"table in the appendix); the width does not. The typical report, {h['median']:g} per cent, is smaller "
+         f"than the spread meter error alone produces, and at these assumptions a real two-point loss read by perfect "
+         f"meters would land inside the range too.</p>", {"t": 1, "band": 1, "inside": 1}),
+        (f"<p><b>Far outside it.</b> {h['tail_hi']} reports for {h['year']} are above {h['hi']:g} per cent, and "
+         f"{h['tail_lo']} are at −{abs(h['lo']):g} or below. Meter errors of the ordinary kind modelled here do not "
+         f"produce figures like those. That is where the number can say something: not what is happening, but "
+         f"that something other than ordinary meter error is.</p>", {"t": 1, "band": 1}),
     ]
     return insight.scrolly(hero_spec(P), steps, from_state={"t": 0})
 
@@ -153,6 +160,10 @@ def claims(P, I, D, mk, chi, m):
         ("'cold gas ... under-counts': the shared temperature error raises reported LAUF at the default temperature",
          P["clip"]["shared_temp_pct"] > 0 and P["model"]["defaults"]["gas_temp_f"] < 60),
         ("'a negative cannot be a physical loss' sits beside a year with negatives", h["neg"] > 0),
+        ("'beyond anything ordinary meter error produces': the tail cut-offs are over six model standard "
+         "deviations from the model's median on both sides",
+         h["hi"] > P["model"]["band"]["median"] + 6 * P["model"]["at_defaults"]["level_sd"]
+         and h["lo"] < P["model"]["band"]["median"] - 6 * P["model"]["at_defaults"]["level_sd"]),
     ]
     bad = [name for name, ok in c if not ok]
     if bad:
@@ -173,28 +184,29 @@ def values(P):
     ok_q = re.search(r"shall be measured (in order that.*?distribution may be accurately determined)", q["ok_measure"])
     tb = -float(M.temp_bias_pct(d["gas_temp_f"]))
     mv = meter_values()
-    sw = I["services_weighted"]
     v = {
         "stamp": insight.stamp_annual(h["year"], "PHMSA's gas distribution annual reports", P["data_as_of"],
-                                      "a new year's reports appear each spring"),
+                                      "PHMSA adds each year's reports to the file"),
         "takeaways": insight.takeaways([
-            f"Texas and Oklahoma both pass the cost of lost gas on to customers: Texas under a state rule that "
-            f"lets rates recover it up to {tx_cap:g} per cent of the gas a utility takes in, or more if the state's "
-            f"regulator agrees, and Oklahoma through utility tariffs that its Corporation Commission approves.",
-            "PHMSA, the federal regulator that collects the figure, says it cannot be split between meter error "
-            "and leaks, and is no measure of either leaks or methane emissions.",
-            "Some gas reported as lost was in fact delivered: cold gas is denser, a meter that does not correct "
-            "for temperature counts too little of it, and that gas is then charged to every customer through the "
-            "gas charge instead."]),
+            f"Customers carry the cost of lost gas: Texas's rule, for the utilities its Railroad Commission "
+            f"regulates, disallows lost-gas costs above {tx_cap:g} per cent of the gas a utility takes in unless the "
+            f"Commission allows more, and in Oklahoma at least one large utility's approved tariff collects it "
+            f"through the gas charge.",
+            f"The figure says most where it is far from the rest: {h['tail_hi']} reports for {h['year']} are above "
+            f"{h['hi']:g} per cent, beyond anything ordinary meter error produces, though a report cannot say why.",
+            "Where gas runs colder than 60 °F, some gas reported as lost was in fact delivered: cold gas is denser, "
+            "a meter that does not correct for temperature counts too little of it, and that gas is then charged "
+            "to every customer through the gas charge instead."]),
         "hero": hero(P, I),
         "clip": insight.clip(CLIP, "How an orifice meter infers flow, why an error every meter shares does "
                                    "not average away, and where it lands. Captions on; about "
                                    f"{round(json.load(open(CLIP, encoding='utf-8'))['duration_s'])} seconds."),
         "h_median": f"{h['median']:g}", "h_year": str(h["year"]), "h_n": f"{h['n']:,}",
-        "h_zero": str(h["zero"]), "h_neg": str(h["neg"]), "h_sw": pct(sw),
-        "band_lo_r": f"{P['model']['band']['lo']:.0f}".replace("-", "−"), "band_hi_r": f"{P['model']['band']['hi']:.0f}",
+        "h_zero": str(h["zero"]), "h_neg": str(h["neg"]),
+        "band_lo_r": num(P["model"]["band"]["lo"]), "band_hi_r": num(P["model"]["band"]["hi"]),
+        "ok_muni": str(P["owners"]["OK"].get("Municipal Owned", 0)), "ok_n": str(sum(P["owners"]["OK"].values())),
         "q_mix": html.escape(q["report_mix"]), "q_proxy": html.escape(q["report_proxy"]),
-        "q_zero": html.escape(q["report_zero"]), "q_partg": html.escape(q["partg"].rstrip(" .") + "."),
+        "q_zero": html.escape(q["report_zero"]), "q_partg": html.escape(re.match(r"Unaccounted for gas as a percent of total consumption", q["partg"]).group(0)),
         "q_tx_meter": html.escape(q["tx_meter"]), "q_ok": html.escape(ok_q.group(1)),
         "q_ok_pga": html.escape(q["ok_pga"]),
         "tx_cap": f"{tx_cap:.1f}", "tx_cap_c": f"{100 * tx_cap / (100 - tx_cap):.2f}",

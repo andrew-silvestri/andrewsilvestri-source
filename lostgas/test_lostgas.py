@@ -30,8 +30,8 @@ the page was built, or is the most likely way the page goes wrong without anyone
 11. hero     The hero's bins hold every report once, and its lit "zero or less" count equals the
              reports at or below zero. --break hero lights only the negatives (zeros left unlit).
 12. scope    The Texas rule is stated with its scope: more may be allowed, less may be, and city-owned
-             systems' rates are set by their cities; the inside share is stated without zeros too
-             (plan review 1, 5). --break scope removes "may also allow less".
+             systems' rates are set by their cities, (d) review for reasonableness; the inside share is stated without zeros too
+             (plan review 1, 5; 7.5525(d)). --break scope removes the reasonableness clause.
 
 Run:  python test_lostgas.py [--break state|eia|model|names|quotes|page|filter|band|temp|dollars|hero|scope]
 """
@@ -215,8 +215,8 @@ def main():
     # 12 scope -----------------------------------------------------------------
     t12 = page_text()
     if BREAK == "scope":
-        t12 = t12.replace("may also allow less", "")
-    need = ["unless the Commission allows more", "may also allow less", "owned by cities",
+        t12 = t12.replace("can still judge whether the cost is reasonable", "")
+    need = ["unless the Commission allows more", "can still judge whether the cost is reasonable", "owned by cities",
             "safe harbor", f"{100 * d['no_zero']:.0f} per cent of those that are not exactly zero"]
     gone = [n for n in need if n not in t12]
     check("12 scope", not gone, "the Texas rule's scope, the Oklahoma safe harbor and the share without zeros are on "

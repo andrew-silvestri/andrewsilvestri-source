@@ -607,7 +607,7 @@ PAGES = {
     # public fact; the page's prose names no operator (R3 packet, plan review 10).
     "lostgas.html": [
         ("Anchor phrase", "Source", "What it supports"),
-        ("as a share of that use",
+        ("as a percentage of the gas used",
          'Pipeline and Hazardous Materials Safety Administration, <i>Gas Distribution '
          'Annual Data, 2010 to present</i>, Form PHMSA F 7100.1-1, Part G; and the form '
          'itself, rev. 10/11/2018 ("CY 2018 and forward").',
@@ -631,14 +631,15 @@ PAGES = {
          'compilation effective 8 April 2024).',
          "The presumption, meter errors named in (a); lost-gas expense above 5.0% of gas "
          "metered in disallowed for ratemaking unless the Commission allows more (b), (c); "
-         "purchased gas adjustment clauses (7.5519)."),
+         "the Commission's review of the reasonableness of gas expense (d); purchased gas "
+         "adjustment clauses (7.5519)."),
         ("Oklahoma's rule requires gas to be measured",
          'Oklahoma Corporation Commission, Oklahoma Administrative Code 165:45-7-11, '
          'Gas measurement requirements (Chapter 45 effective 1 October 2024); and 165:50, '
          'Fuel, Purchased Gas, and Purchased Power Adjustment Clauses (effective 25 July 2019).',
          "Measurement so that LAUF may be determined, no percentage; the purchased gas "
          "adjustment rules, which do not mention lost gas."),
-        ("one large utility's tariff",
+        ("large utility's tariff",
          'Oklahoma Natural Gas Company, tariff schedules 1001 (Purchased Gas Adjustment '
          'Clause), 1071 (Unrecovered Purchased Gas Cost) and 1191 (Lost, Used, and '
          'Unaccounted for Gas Rider), as approved by the Oklahoma Corporation Commission.',

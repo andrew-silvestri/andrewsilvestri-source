@@ -42,7 +42,7 @@ class LostGas(HouseScene):
         (12.0, 16.5, "A utility has thousands of customer meters. Each meter's own error averages away."),
         (16.5, 21.0, "An error they all share does not: it stays the same size however many meters there are."),
         (21.0, 26.0, "One such error: a meter that does not correct for temperature reads cold gas as less gas."),
-        (26.0, 31.5, "In minus billed is reported as unaccounted for, though customers got the gas; its cost returns through the gas charge."),
+        (26.0, 31.5, "Gas in minus gas billed is reported as unaccounted for, though customers got it; its cost returns through the gas charge."),
     ]
     POSTER_T = 30.5
 

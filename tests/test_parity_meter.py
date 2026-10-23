@@ -16,6 +16,11 @@ On the tests/test_parity.py pattern: the same inputs through both, compared.
      this is a statistical agreement, and the tolerance is the one each side
      reports for itself.
 
+  RETIRED 2026-10-23 (R3), parts 4 and 5 below and their --break opening|stale:
+  site/meter-app.html is a redirect stub to lostgas.html, so there is no shipped
+  app to open. engine.js still ships in meter-code.zip, so parts 1-3 stay. The
+  opening() code is kept beneath, uncalled, to restore with the app.
+
   4. The app's opening state against the page's table (Q2). site/meter-app.html
      is loaded in Chromium untouched: the system it builds before anyone moves
      a control must be model.default_meters() field for field, its sharing
@@ -36,7 +41,7 @@ On the tests/test_parity.py pattern: the same inputs through both, compared.
 --break stale    serves the app with the shipped error path (figures left showing);
                  part 5 must fail, exit 1.
 
-Run:  python tests/test_parity_meter.py [--break port|opening|stale]
+Run:  python tests/test_parity_meter.py [--break port]
 """
 import json
 import math
@@ -56,7 +61,7 @@ import build_app as B                    # noqa: E402
 from aga8lib import AGA8                 # noqa: E402
 
 BREAK_MODE = sys.argv[sys.argv.index("--break") + 1] if "--break" in sys.argv else None
-if BREAK_MODE not in (None, "port", "opening", "stale"):
+if BREAK_MODE not in (None, "port"):
     sys.exit(f"unknown --break {BREAK_MODE}")
 BREAK = BREAK_MODE == "port"
 fails = []
@@ -170,7 +175,7 @@ def main():
         check(f"Monte Carlo {k} of the energy imbalance, JS vs Python", abs(js[k] - py[k]) <= tol,
               f"JS {js[k]:.5e} ({js['batches']} batches, {js['seconds']:.0f} s) vs Python {py[k]:.5e}; "
               f"tolerance {tol:.1e}")
-    opening()
+    # opening() retired with the app (R3, 2026-10-23; docstring)
     print(f"{len(fails)} failure(s)")
     return 1 if fails else 0
 
