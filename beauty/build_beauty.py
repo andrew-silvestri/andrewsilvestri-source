@@ -13,7 +13,7 @@ Reads, from data/:
 
 If iucn_aves.csv is absent, the category column is taken from the
 Santangeli deposit in data/raw/, which carries the Red List as the authors
-had it in 2021, and the payload says so in redlist_source. The page that
+had it (version 2022-1), and the payload says so in redlist_source. The page that
 ships is built from the API column; test_beauty.py checks that.
 
 The response is log(1 + works). Two ordinary-least-squares fits with
@@ -204,8 +204,10 @@ def write_manifest(rl, rl_meta, n):
         "withheld": {
             "file": "data/iucn_aves.csv",
             "ships": False,
-            "why": "The IUCN Red List terms of use (v3.1, June 2024, section 4) prohibit "
-                   "redistributing Red List data in any form, so this table is not in the "
+            # D-33: section 4 bars redistribution "in their original format",
+            # not "in any form"; section 3 leaves the categories' use free.
+            "why": "The IUCN Red List terms of use (v3.1, June 2024, section 4) bar "
+                   "redistributing Red List data in their original format, so this table is not in the "
                    "archive and not in git. Fetch it with your own free token: "
                    "python3 fetch_iucn.py, with IUCN_TOKEN set.",
             "canonical_form": "sorted 'species,category' lines, LF endings, UTF-8, no header",
@@ -273,9 +275,9 @@ def redlist():
         if n and n != "NA" and c in FROM_NAME and n not in seen:
             seen[n] = FROM_NAME[c]
     r = pd.DataFrame({"species": list(seen), "category": list(seen.values())})
-    print("  NOTE: Red List category taken from the Santangeli 2023 deposit (2021 categories); "
+    print("  NOTE: Red List category taken from the Santangeli 2023 deposit (Red List 2022-1 categories); "
           "set IUCN_TOKEN and run fetch_iucn.py for the current Red List")
-    return r, {"redlist_source": "santangeli_2021_fallback", "red_list_version": "2021 (via Santangeli et al. 2023)",
+    return r, {"redlist_source": "santangeli_2021_fallback", "red_list_version": "2022-1 (via Santangeli et al. 2023)",
                "citation": "Red List categories as carried in Santangeli et al. 2023, npj Biodiversity 2:20, "
                            "data deposit 10.6084/m9.figshare.22231504 (CC BY 4.0)"}
 

@@ -5,7 +5,7 @@
  "withheld": {
   "file": "data/iucn_aves.csv",
   "ships": false,
-  "why": "The IUCN Red List terms of use (v3.1, June 2024, section 4) prohibit redistributing Red List data in any form, so this table is not in the archive and not in git. Fetch it with your own free token: python3 fetch_iucn.py, with IUCN_TOKEN set.",
+  "why": "The IUCN Red List terms of use (v3.1, June 2024, section 4) bar redistributing Red List data in their original format, so this table is not in the archive and not in git. Fetch it with your own free token: python3 fetch_iucn.py, with IUCN_TOKEN set.",
   "canonical_form": "sorted 'species,category' lines, LF endings, UTF-8, no header",
   "verify": "python3 build_beauty.py --verify-categories",
   "sha256": "1f1d4b6f1ff2c81d4249015b96445793af433f1928134ca35cc96befc9de9f63",

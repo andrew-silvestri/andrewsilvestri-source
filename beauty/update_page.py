@@ -89,7 +89,10 @@ def values(P):
     zip_kb = round(os.path.getsize(ZIP) / 1024) if os.path.exists(ZIP) else 0
     cr, lc = raw["CR"]["typical"], raw["LC"]["typical"]
     acr, alc = conf["adjusted"]["CR"], conf["adjusted"]["LC"]
-    p_cr = conf["robust"]["cat_CR"]["p"]
+    # D-33 item 4: the p-value printed beside cr_tot_coef is from the same
+    # fit, model_noviews. It read model_confounders until 2026-10-22; both
+    # print "under 0.01" (1.2e-58 and 3.7e-55), so no figure moves.
+    p_cr = nov["robust"]["cat_CR"]["p"]
     p_en = conf["robust"]["cat_EN"]["p"]
     drop = full["drop_r2"]
     rank = sorted(drop, key=lambda t: -drop[t])
@@ -106,8 +109,12 @@ def values(P):
         "n_modelled_shared": fmt(n["modelled_shared_article"]),
         "sens_shared_cat_drop": f"{P['sensitivity']['unshared_article']['drop_r2']['category']:.3f}",
         "sens_article_cat_drop": f"{P['sensitivity']['has_article']['drop_r2']['category']:.3f}",
+        # D-33 item 5: what the has-article refit does to the top category
+        "sens_article_cr": f"{P['sensitivity']['has_article']['cat_beta']['CR']:+.2f}",
+        "sens_article_en": f"{P['sensitivity']['has_article']['cat_beta']['EN']:+.2f}",
+        "sens_article_dropped": fmt(P['sensitivity']['has_article']['dropped']),
         "red_list_version": P["red_list_version"], "redlist_source_word":
-            "the Red List API" if P["redlist_source"] == "api" else "the 2021 categories in the Santangeli deposit",
+            "the Red List API" if P["redlist_source"] == "api" else "the 2022-1 categories in the Santangeli deposit",
         "n_boot": fmt(P["n_boot"]), "seed": P["seed"], "ref_year": P["reference_year"],
         # r2_noviews, not r2_conf: the page's "adjusted" is model_noviews
         # throughout - the total effect, with attractiveness held and views
@@ -159,13 +166,17 @@ def values(P):
         "n_null_or_neg": str(n_null_or_neg), "n_null_or_neg_adj": str(n_null_or_neg_adj),
         "n_null": str(len(verdicts.get("null", []))), "n_negative": str(len(verdicts.get("negative", []))),
         "n_unread": str(sum(1 for m in M if m["read"] != "full text")),
+        # D-33 item 7: Adamo et al. 2021 has no threat-status term
+        "n_threat": str(sum(1 for m in M if m["verdict"] != "no threat term")),
+        "n_threat_word": WORDS.get(sum(1 for m in M if m["verdict"] != "no threat term"), "some"),
         "n_models_word": WORDS.get(len(M), str(len(M))).capitalize(),
         "n_abstract_word": (lambda k: f"{WORDS.get(k, str(k)).capitalize()} {'is' if k == 1 else 'are'}")(
             sum(1 for m in M if m["read"] == "abstract")),
         "n_none_word": WORDS.get(sum(1 for m in M if m["read"] == "none"), "some"),
         "models_rows": "".join(
             f"<tr><td>{m['label']}</td><td>{m['taxon']}, {fmt(m['n'])}</td>"
-            f"<td>{m['verdict'].replace('-', ', ')}</td><td>{m['read']}</td></tr>"
+            f"<td>{m['verdict'].replace('-', ', ')}{'' if m['adjusted'] else ', unadjusted'}</td>"
+            f"<td>{m['read']}</td></tr>"
             for m in M),
         # looked up
         "esa_top10": lu["esa_top10_share"]["value"], "life_pct": lu["life_birds_mammals_budget"]["value"],
@@ -211,6 +222,10 @@ def values(P):
         "ew_n": fmt(dcat["EW"]["n"]), "ew_median": f"{dcat['EW']['median']:.0f}",
         "dd_median": f"{P['data_deficient']['by_category']['DD']['median']:.0f}",
         "lc_median": f"{P['data_deficient']['by_category']['LC']['median']:.0f}",
+        # D-33 item 11: the same medians on the modelled sample, which the
+        # wider-frame ones above were being read as
+        "lc_raw_median": f"{raw['LC']['median']:.0f}", "nt_raw_median": f"{raw['NT']['median']:.0f}",
+        "en_raw_median": f"{raw['EN']['median']:.0f}", "cr_raw_median": f"{raw['CR']['median']:.0f}",
         # the pre-registered stratum test
         "strat_primary_cr": f"{st['fields']['13']['category']['CR']['coef']:+.3f}",
         "strat_primary_x": f"{math.exp(st['fields']['13']['category']['CR']['coef']):.2f}",
