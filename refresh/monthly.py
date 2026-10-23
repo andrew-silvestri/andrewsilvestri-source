@@ -129,6 +129,12 @@ def preflight(status, branch, env):
     """Pure, so tests/test_refresh.py can drive it. Returns None or why not."""
     if env.get("REPO") or env.get("PUBLISH_MIRROR"):
         return "REPO or PUBLISH_MIRROR is set (D-08)"
+    if branch.startswith("data/refresh-"):
+        # a run that was killed (shutdown, closed session) stops here, on its
+        # own branch, possibly with fetched files modified: found 2026-10-23
+        # when a dry run was killed mid-suite. Nothing repairs it unattended.
+        return ("a refresh run was interrupted and left the tree on %s; read its log in "
+                "refresh/logs, then restore the tree to clean master and delete that branch" % branch)
     if branch != "master":
         return "the tree is on %s, not master" % branch
     if status.strip():

@@ -101,8 +101,11 @@ say(not nostamp, "stamp: %d enabled entr(y/ies), each page shows Data through <m
 monthly = load("monthly", mutate=('    if status.strip():\n        return "the tree has', '    if False:\n        return "the tree has') if BREAK == "preflight" else None)
 cases = [(" M site/index.html", "master", {}, False), ("", "rework/takeaway", {}, False),
          ("", "master", {"REPO": "x"}, False), ("", "master", {"PUBLISH_MIRROR": "x"}, False),
-         ("?? meter/new.csv", "master", {}, False), ("", "master", {}, True)]
+         ("?? meter/new.csv", "master", {}, False), ("", "master", {}, True),
+         (" M meter/data/fetched.json", "data/refresh-2026-10", {}, False)]
 bad = [c for c in cases if (monthly.preflight(c[0], c[1], c[2]) is None) != c[3]]
+intr = monthly.preflight("", "data/refresh-2026-10", {}) or ""
+say("interrupted" in intr, "preflight: a tree left on a refresh branch is named as an interrupted run")
 say(not bad, "preflight: %d cases, a run starts only on clean master with neither variable set%s" % (len(cases), (": wrong on " + repr(bad[0][:2])) if bad else ""))
 
 # month
