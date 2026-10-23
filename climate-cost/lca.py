@@ -18,9 +18,12 @@ dropped.
 
 **Allocation.** Every branch carries a multiplier saying how much of that
 process belongs to our product. A slaughterhouse also makes leather; a dairy
-cow also becomes beef; a coffee mill also sells pulp. Those multipliers compound
-down the path, so a process four levels deep might contribute only a third of
-its emissions to our tomato. Allocation is where most of the disagreement
+cow also becomes beef; a coffee mill also sells pulp. The engine multiplies
+those factors down the path, so they can compound; in data/processes.py every
+edge below a stage carries 1.0, so a process reaches us at its stage's share
+and no less. (Corrected 2026-10-22, D-27: this said a process four levels deep
+might contribute only a third of its emissions to our tomato, which no path in
+the data does.) Allocation is where most of the disagreement
 between published footprints actually lives, and it is usually invisible. Here
 it is a number on every edge.
 

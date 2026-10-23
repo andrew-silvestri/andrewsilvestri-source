@@ -5,7 +5,7 @@ Two kinds of test. The first compares totals to the ranges in Poore & Nemecek
 (Science, 2018) and related syntheses - not to a single number, because these
 are distributions across thousands of farms and a point estimate would be false
 precision. The second checks internal consistency: that the tree sums, that
-allocation compounds the way it claims to, and that the levers move the answer
+a stage's allocation reaches the processes beneath it, and that the levers move the answer
 in the direction physics says they should.
 """
 import sys, math
@@ -96,6 +96,8 @@ print(f"  allocation x overproduction at stage   {'ok' if ok else 'FAIL'}"
 fails += 0 if ok else 1
 
 # 3. allocation compounds down a chain: feed stage inherits 0.85 onto ammonia
+# One level, in one product. No edge below a stage in the data carries a
+# share other than 1.0, so nothing compounds further than this (D-27).
 feed = [s for s in r["spine"] if s["id"]=="feed"][0]
 am = [c for c in feed["children"] if c["id"]=="ammonia"][0]
 ok = abs(am["alloc"] - 0.85) < 1e-9

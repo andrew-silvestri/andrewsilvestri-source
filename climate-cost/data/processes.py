@@ -62,18 +62,28 @@ REGIONS = {
 }
 
 # ------------------------------------------------------------- transport ----
-# kg CO2e per tonne-kilometre, well-to-wheel. Air freight is two orders of
+# kg CO2e per tonne-kilometre. Air freight is two orders of
 # magnitude worse than sea and that single fact decides more food footprints
 # than any farming practice.
+# D-27 (2026-10-22): these were labelled well-to-wheel, but each is at or below
+# the DESNZ 2023 tank-to-wheel (direct) figure, and the well-to-wheel figures
+# run 12-25% higher. Relabelled; the values are unchanged, because moving them
+# moves the page's totals.
 TRANSPORT = {
     "sea":   dict(name="container ship", ef=0.012, speed_kmh=37,
-                  note="DEFRA 2023 bulk container, well-to-wheel"),
+                  note="DESNZ 2023 container ship, tank-to-wheel: close to the "
+                       "largest class (8,000+ TEU, 0.0127); the fleet "
+                       "average is 0.0161, or 0.0198 well-to-wheel"),
     "road":  dict(name="refrigerated truck", ef=0.115, speed_kmh=65,
-                  note="DEFRA 2023 articulated HGV, refrigerated uplift"),
+                  note="DESNZ 2023 refrigerated HGV, all HGVs, tank-to-wheel "
+                       "(0.1135; 0.141 well-to-wheel)"),
     "rail":  dict(name="freight rail", ef=0.028, speed_kmh=45,
-                  note="DEFRA 2023 freight rail"),
+                  note="DESNZ 2023 freight train, tank-to-wheel (0.0278; "
+                       "0.0347 well-to-wheel)"),
     "air":   dict(name="air freight", ef=1.05, speed_kmh=800,
-                  note="DEFRA 2023 long-haul belly freight, with RFI ~1.9"),
+                  note="DESNZ 2023 long-haul air freight, with RFI ~1.9: a "
+                       "little under the tank-to-wheel figure with "
+                       "radiative forcing (1.099; 1.234 well-to-wheel)"),
 }
 
 # --------------------------------------------------------------- processes --
@@ -135,9 +145,15 @@ PROCESSES = {
     # ---- shared farm operations -----------------------------------------
     "field_n2o": dict(
         name="Soil nitrous oxide", unit="kg N applied", direct=4.4,
+        # D-27 (2026-10-22): the note now says what 4.4 is and is not. The
+        # value is unchanged; D-26 (R5) owns the GWP rework that would move it.
         note="IPCC 2019 refinement: about 1% of applied nitrogen leaves as "
              "N2O-N, and nitrous oxide is 273 times carbon dioxide over a "
-             "century. This is why nitrogen dominates crop footprints.",
+             "century. This is why nitrogen dominates crop footprints. The "
+             "4.4 is direct emission only and sits about 3% above IPCC's own "
+             "arithmetic (EF1 0.010 x 44/28 x 273 = 4.29); the chapter's "
+             "indirect N2O, from nitrogen that volatilises or leaches, is "
+             "not included.",
         quality="A", inputs=[]),
     "tillage": dict(
         name="Tillage and field passes", unit="hectare-season", direct=0.0,
@@ -294,14 +310,17 @@ PROCESSES = {
         name="Cutting and sewing", unit="garment", direct=0.0,
         note="Surprisingly small. Assembly is labour, not energy.",
         quality="B", inputs=[("process_kwh", 1.1, 1.0)]),
+    # D-27 (2026-10-22): the note's last clause, that published footprints
+    # for a leather shoe "differ threefold on exactly this point", is dropped;
+    # the hide stage's own note in PRODUCTS retracts it. The judgement the
+    # note records stands.
     "leather": dict(
         name="Leather, tanned", unit="kg", direct=6.8,
         note="Tanning only. The hide itself arrives from a cow whose burden "
              "is charged at the allocation on the edge above, and that "
              "allocation is the most consequential judgement in this file: by "
              "economic value a hide is worth about 2% of the animal, by mass "
-             "about 7%, and published footprints for a leather shoe differ "
-             "threefold on exactly this point.",
+             "about 7%.",
         quality="C", inputs=[("process_kwh", 3.2, 1.0)]),
     "rubber_sole": dict(
         name="Sole compound, rubber and foam", unit="kg", direct=3.4,
