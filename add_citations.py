@@ -596,9 +596,12 @@ PAGES = {
         ("fitted to laboratory data",
          'Reader-Harris, <i>ISO 5167: Past and Present</i>, Global Flow Measurement Workshop, '
          '2022.',
-         "That the standard's uncertainties are expanded uncertainties at k = 2, and that the "
-         "coefficient's was derived from the data behind the equation and the manufacturing "
-         "variation the standard permits."),
+         # D-23 item 7: the paper confirms the 2003 figure ("an insignificant
+         # difference"); it does not derive it. k = 2 is the 2022 revision's term.
+         "That the standard's uncertainties are expanded uncertainties at k = 2 (the 2022 "
+         "revision's terminology, applied to the unchanged 2003 figure), and that a later "
+         "calculation taking in the data behind the equation and the manufacturing variation "
+         "made an insignificant difference to the coefficient's."),
         ("A handbook on metering-station uncertainty",
          'NORCE, <i>Handbook for Uncertainty Calculations for Gas Flow Metering Stations</i>, '
          '2020, section 4.4.1.',
@@ -606,11 +609,16 @@ PAGES = {
          "station, and why: the coefficient, pressures and temperature not; the diameters and the "
          "gas analysis yes."),
         ("published uncertainty handbook",
-         'NFOGM, <i>Handbook of Uncertainty Calculations: Fiscal Metering Stations</i>, 2003.',
-         "An example orifice station at 0.55% expanded uncertainty against a 1.0% requirement."),
+         'NFOGM, <i>Handbook of Uncertainty Calculations - Fiscal Orifice Gas and Turbine Oil '
+         'Metering Stations</i>, revision 2, 2003.',
+         # D-23 item 6: the 1.0% is the Norwegian regulator's, not the handbook's.
+         "An example orifice station at 0.55% expanded uncertainty of mass flow, against the "
+         "Norwegian Petroleum Directorate's 1.0% requirement."),
         ("open implementation used",
          'Bell, <i>fluids</i>, Python library, MIT licence, version 1.3.1.',
-         "The Reader-Harris/Gallagher coefficient and the expansibility factor."),
+         # D-23 item 1: model.py runs its own transcription (rhg); fluids is the check.
+         "The check on the model's own Reader-Harris/Gallagher coefficient "
+         "(checks/check_rhg.py; they agree to 2e-16)."),
         # D-04 (b): opened by Q2 on 2026-10-20 (03 RESEARCH/meter/refs/). Section
         # 1.7.2 names the flange-tap equation as Reader-Harris/Gallagher's; its
         # coefficients are the 1990 form, not ISO 5167-2's, hence "adoption" only.
@@ -624,14 +632,18 @@ PAGES = {
          "the ISO 5167-2:2003 form this page uses."),
         ("AGA Report No. 8",
          'National Institute of Standards and Technology, <i>AGA8</i> reference code '
-         '(GERG-2008, DETAIL and GROSS), github.com/usnistgov/AGA8, public domain.',
+         '(GERG-2008, DETAIL and GROSS), github.com/usnistgov/AGA8; not subject to '
+         'copyright protection in the United States (17 U.S.C. 105), foreign copyright may '
+         'apply.',
          "Compressibility, the isentropic exponent and the ideal gross heating value, and the "
          "test values the compiled code is checked against."),
         ("how far the gas is from ideal",
-         'Ruhr-Universit&auml;t Bochum, Thermodynamics, <i>The GERG-2008 Wide-Range Equation of '
-         'State for Natural Gases</i>.',
+         'Ruhr-Universit&auml;t Bochum, Thermodynamics, <i>Reference Equation of State GERG-2008 '
+         'for Natural Gases and Similar Mixtures</i>.',
+         # D-23 item 5: the source gives a flat 0.1%; the scaling is the model's.
          "A 0.1% uncertainty in density in the gas region, used for the compressibility "
-         "equation's error (its coverage factor taken as 2: an assumption)."),
+         "equation's error; its scaling with how far the gas is from ideal and its coverage "
+         "factor of 2 are assumptions."),
         ("a fraction of span",
          'Yokogawa, <i>EJX110A Differential Pressure Transmitter</i> and <i>EJX510A and EJX530A '
          'Absolute and Gauge Pressure Transmitters</i>, general specifications.',
@@ -642,12 +654,14 @@ PAGES = {
          "The class A sensor tolerance, plus or minus (0.15 + 0.002 |t|) degrees Celsius."),
         ("its transmitter",
          'Emerson, <i>Rosemount 3144P Temperature Transmitter</i>, product data sheet.',
-         "A temperature transmitter's total error of plus or minus 0.12 degrees Celsius."),
+         "The data sheet's reference accuracy example, plus or minus 0.12 degrees Celsius "
+         "over a 0 to 100 degree span: digital and D/A accuracy at one span, without ambient "
+         "effects or stability."),
         ("its installation",
-         'Ingram (DNV GL), <i>Experimental Research into the Measurement of Temperature in '
+         'Ingram &amp; Kimpton (DNV GL), <i>Experimental Research into the Measurement of Temperature in '
          'Natural Gas Transmission Metering Systems</i>, North Sea Flow Measurement Workshop, 2014.',
-         "Thermowell installations measuring gas temperature to within plus or minus 0.5 degrees "
-         "Celsius above 1 m/s."),
+         "Plus or minus 0.5 degrees Celsius for the CT4 thermowells tested, at gas velocities "
+         "above 1 m/s and within 20 degrees of ambient (0.75 degrees reported outside it)."),
         ("the standard's roundness limit",
          'ISO 5167-2:2003, section 5.1.8.3, in the official preview published by the Swedish '
          'Institute for Standards.',
@@ -666,7 +680,7 @@ PAGES = {
          'U.S. Energy Information Administration, <i>Henry Hub Natural Gas Spot Price</i>, '
          'monthly, series RNGWHHD.',
          "The price the imbalance is valued at."),
-        ("lost and unaccounted for",
+        ("losses and unaccounted for",
          'U.S. Energy Information Administration, <i>Natural Gas Annual</i>, Table A1, losses and '
          'unaccounted for volumes by state.',
          "The national figure and what it measures, from the table's own notes."),
