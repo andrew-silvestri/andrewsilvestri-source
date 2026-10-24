@@ -16,7 +16,7 @@
  * skyline.html say so. Position across the view picks a note of the city's
  * chord; a tower's height as a share of the city's tallest, to the power
  * 1.6, sets how loud that note is; the seven loudest sound at once over a
- * drone an octave below the root. The notes come from the city's key, an
+ * root an octave down as the lowest note. The notes come from the city's key, an
  * editorial choice with a source (keys.py), voiced per mode (VOICING below)
  * so that no two sounding notes are closer than a minor third and each mode
  * keeps the tone that makes it itself.
@@ -97,7 +97,7 @@
 
   /* --------------------------------------------------------------- audio -- */
   var actx = null, master = null, parts = [], rootHz = 110;
-  var tilt = null, lpf = null;
+  var tilt = null, lpf = null, levelNode = null;
 
   function rootFreq(pc) {
     /* A4 is 440 Hz and MIDI note 69. The root is placed in the octave below
@@ -116,6 +116,7 @@
        built again rather than trusted because the variable is not null. */
     if (actx && actx.state === 'closed') {
       actx = null; master = null; parts = []; tilt = null; lpf = null;
+      levelNode = null;
     }
     if (actx) return true;
     var AC = window.AudioContext || window.webkitAudioContext;
@@ -139,11 +140,15 @@
     // 1. a shelf that pulls down the band the ear is sharpest in
     tilt = actx.createBiquadFilter();
     tilt.type = 'highshelf'; tilt.frequency.value = 1800;
-    tilt.gain.value = -9;
+    tilt.gain.value = -12;
 
     // 2. a lowpass above which nothing useful lives here
     lpf = actx.createBiquadFilter();
-    lpf.type = 'lowpass'; lpf.frequency.value = 3200; lpf.Q.value = 0.5;
+    /* 2.4 kHz and -12 dB above are the values that sound. Until 2026-10-24
+       this built 3.2 kHz and -9 dB, which skyline.html described, and then
+       setKey() retargeted both to 2.4 kHz and -12 dB on every Play, so the
+       described values never played (QA, D-31). One value, set once. */
+    lpf.type = 'lowpass'; lpf.frequency.value = 2400; lpf.Q.value = 0.5;
 
     // 3. a limiter. Fast enough to catch a spin, slow enough not to pump.
     var comp = actx.createDynamicsCompressor();
@@ -155,7 +160,13 @@
     var ceiling = actx.createGain();
     ceiling.gain.value = 0.62;
 
-    master.connect(tilt).connect(lpf).connect(comp).connect(ceiling)
+    // 5. how tall the towers in view are, as a level (pushAudio); after the
+    // limiter, so it cannot be squashed, and never above 1
+    levelNode = actx.createGain();
+    levelNode.gain.value = 0;
+
+    master.connect(tilt).connect(lpf).connect(comp).connect(levelNode)
+          .connect(ceiling)
           .connect(actx.destination);
     // enough oscillators for the widest scale in the set, seven notes over
     // four octaves; the unused ones sit silent rather than being rebuilt
@@ -193,7 +204,9 @@
      lowest octave, `upper` in the two above it. The tone that makes a mode
      itself - hijaz's flattened second, insen's, the blues' flattened fifth -
      sits an octave up, where it colours the chord instead of clashing with
-     the root beside it. A root an octave down is always added as a drone.
+     the root beside it. A root an octave down is always added as the lowest
+     note (it sounds when the left of the view is among the seven loudest;
+     it is not a held drone).
      `says` is what the sidebar tells the reader. All of this is invented. */
   var VOICING = {
     major:      { ground: [0, 4, 7],     upper: [0, 4, 7],
@@ -228,7 +241,7 @@
     pitch = [];
 
     var vo = VOICING[C[S.i].key.mode] || VOICING.major;
-    pitch.push(rootHz / 2);                      // the drone
+    pitch.push(rootHz / 2);                      // the root, an octave down
     var gi, oc;
     for (gi = 0; gi < vo.ground.length; gi++) {
       pitch.push(rootHz * Math.pow(2, vo.ground[gi] / 12));
@@ -260,11 +273,6 @@
     for (var k = 0; k < BARS; k++) {
       barTo[k] = Math.min(pitch.length - 1,
                           Math.floor(k / BARS * pitch.length));
-    }
-    if (lpf) {
-      var tc = actx.currentTime;
-      lpf.frequency.setTargetAtTime(2400, tc, .1);
-      tilt.gain.setTargetAtTime(-12, tc, 0.1);
     }
     if (!actx) return;
     var t = actx.currentTime;
@@ -351,6 +359,22 @@
       sum += want[j4] * want[j4];
     }
     var norm = sum > 0 ? 0.46 / Math.sqrt(sum) : 0;
+
+    /* ...and the level follows height, AFTER the limiter. Until 2026-10-24
+       every bearing came out at the same power (0.46 rms at all 180
+       bearings in all 27 cities, QA sk_audio.py) and the meter held
+       elevation angle, not height, so turning towards the tallest towers
+       never got louder. The first repair scaled the gains above by the
+       loudest note, ahead of the limiter, and the limiter (-24 dB, 20:1)
+       flattened it: halving the height share moved the output 2.7 dB
+       instead of 9.6 (claims check, 2026-10-24). So the partials reach the
+       limiter at constant power, as before, and the height-driven level is
+       a gain after it: a bearing whose tallest tower is the city's tallest
+       plays at full level, one whose tallest is half as tall at 0.5^1.6. */
+    var top = 0;
+    for (var j5 = 0; j5 < pitch.length; j5++)
+      if (keep[j5] && acc[j5] > top) top = acc[j5];
+    levelNode.gain.setTargetAtTime(top, t, 0.22);
 
     var slew = 0.22;                 // a pad, not a plucked thing
     for (var j2 = 0; j2 < parts.length; j2++) {
@@ -650,20 +674,16 @@
       '<dt>On the wheel</dt><dd>' + c.ring.length + ' at or above ' +
         D.ringFloor.toFixed(0) + ' m</dd>' +
       '<dt>Standing</dt><dd>at the height-weighted centre of them</dd>' +
-      '<dt>Heights</dt><dd>' + (c.hand
-        ? c.hand + ' of ' + c.ring.length + ' from the city&rsquo;s published ' +
-          'tallest-buildings list (Wikipedia); above ' + c.listFloor +
-          ' m the list overrules Wikidata' + (c.ring.length > c.hand
-            ? ', the other ' + (c.ring.length - c.hand) + ' from Wikidata'
-            : '')
-        : 'Wikidata, each tower linked below') + '</dd>';
+      '<dt>Heights</dt><dd>Wikidata, each tower linked below; every one ' +
+        'also mapped as a standing building in OpenStreetMap</dd>';
 
     document.getElementById('why').innerHTML =
       '<b>' + esc(c.key.label) + '</b>, from ' + esc(c.key.why) + '. ' +
       '<span class="tier">' + c.key.tier.toLowerCase() + '</span>';
     var vo = VOICING[c.key.mode] || VOICING.major;
     document.getElementById('voice').textContent =
-      'Voiced as ' + vo.says + ', over a drone an octave below the root. ' +
+      'Voiced as ' + vo.says + ', with the root an octave down as the ' +
+      'lowest note. ' +
       'A choice, like the key.';
 
     /* The list is the wheel, in the order it is drawn, with whatever is
@@ -688,9 +708,10 @@
       : 'All ' + onWheel.length + ' named towers on the wheel.';
     document.getElementById('towers').innerHTML = named.map(function (r) {
       var front = Math.cos((r[0] - S.az) * Math.PI / 180) > 0;
-      /* A building links to the record it came from where there is one.
-         The hand-entered supplements have no entity, so they are plain text
-         rather than a link that goes nowhere. */
+      /* A building links to the Wikidata record it came from. Every tower
+         has one since the hand-entered supplements were retired
+         (2026-10-24); a row without one stays plain text rather than a
+         link that goes nowhere. */
       var label = r[7]
         ? '<a href="https://www.wikidata.org/wiki/' + esc(r[7]) +
           '" target="_blank" rel="noopener">' + esc(r[4]) + '</a>'
@@ -922,6 +943,12 @@
     notes: function () { return notesLast; },
     barOf: function (k) { return barTo[k]; },
     levels: function () { return lvl; }, BARS: BARS,
+    // what each oscillator is sent, after pushAudio(): the loudness test
+    push: pushAudio,
+    sent: function () {
+      return parts.map(function (p) { return p.g.gain.value; });
+    },
+    level: function () { return levelNode ? levelNode.gain.value : 0; },
     step: function (dt) {                      // for the test harness
       var b = bars();
       for (var k = 0; k < BARS; k++) {

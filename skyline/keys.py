@@ -52,27 +52,35 @@ NOTE = {"C": 0, "C#": 1, "Db": 1, "D": 2, "D#": 3, "Eb": 3, "E": 4, "F": 5,
 KEYS = {
     "New York": ("Bb", "blues", "PIECE",
                  "Gershwin, Rhapsody in Blue - the opening clarinet glissando "
-                 "arrives on B flat, and the piece was written as a portrait "
-                 "of the city"),
-    "Chicago": ("E", "blues", "PIECE",
-                "the Chicago blues, which is a named genre of the city; E is "
-                "the guitar's home key and the one most of it is played in"),
-    "Nashville": ("G", "major", "PIECE",
-                  "the Nashville Number System, the chord notation this city "
-                  "invented and still runs sessions on; G is the key its "
-                  "session players default to and the one most country "
-                  "records are cut in"),
-    "Austin": ("E", "blues", "PIECE",
+                 "arrives on B flat, and Gershwin called it a musical "
+                 "kaleidoscope of America's metropolitan madness"),
+    # QA 2026-10-22 (D-31) found no source for "the one most of it is played
+    # in"; the clause is gone and the root is stated as a choice.
+    "Chicago": ("E", "blues", "MODE",
+                "the Chicago blues, which is a named genre of the city; E, "
+                "an open key on the guitar, is our choice of root"),
+    # D-31: no source says session players default to G; the Number
+    # System is key-independent by design, so the root is a choice.
+    "Nashville": ("G", "major", "MODE",
+                  "the Nashville Number System, the chord notation developed "
+                  "here, which writes chords as numbers in any key; the root, "
+                  "G, is our choice"),
+    # D-31: E shapes on a guitar tuned down a half step sound in E flat,
+    # so the sounding key of the source is E flat (was E until 2026-10-24).
+    "Austin": ("Eb", "blues", "PIECE",
                "Stevie Ray Vaughan, whose Texas blues is the city's own "
-               "sound, played in E on a guitar tuned down a half step"),
+               "sound, played in E shapes on a guitar tuned down a half "
+               "step, which sounds in E flat"),
     "New Orleans": ("Bb", "mixolydian", "MODE",
                     "brass-band repertoire, written for B flat instruments"),
     "Vienna": ("D", "major", "PIECE",
                "Johann Strauss II, The Blue Danube, op. 314, in D major"),
     "Moscow": ("Eb", "major", "PIECE",
                "Tchaikovsky, 1812 Overture, op. 49, in E flat major"),
-    "Paris": ("C", "major", "PIECE",
-              "Edith Piaf, La Vie en rose, recorded in C major"),
+    # D-31: Hooktheory and SingingCarrots both give the original key as G
+    # major; C was an easy-piano arrangement (was C until 2026-10-24).
+    "Paris": ("G", "major", "PIECE",
+              "Edith Piaf, La Vie en rose, in its original key of G major"),
     "London": ("Eb", "major", "PIECE",
                "Elgar, Nimrod from the Enigma Variations, in E flat major"),
     "Rio de Janeiro": ("F", "major", "PIECE",
@@ -84,24 +92,30 @@ KEYS = {
               "the in-sen scale, the darker of the two Japanese pentatonics"),
     "Kyoto": ("E", "insen", "MODE", "the in-sen scale"),
     "Seoul": ("G", "pent_major", "MODE",
-              "the pyeongjo mode of Korean court music, a major pentatonic"),
+              "a major pentatonic, the scale family of much traditional "
+              "Korean music"),
     "Busan": ("D", "pent_major", "MODE", "the pyeongjo mode"),
     "Beijing": ("C", "pent_major", "MODE",
                 "gong mode, the first of the five Chinese pentatonic modes"),
     "Shanghai": ("G", "pent_major", "MODE", "gong mode"),
-    "Shenzhen": ("D", "pent_major", "MODE", "gong mode"),
+    "Shenzhen": ("D", "pent_major", "MODE",
+                 "gong mode, the major pentatonic of Chinese music"),
     "Guangzhou": ("A", "pent_minor", "MODE",
                   "yu mode, the minor pentatonic of Cantonese music"),
-    "Hong Kong": ("E", "pent_minor", "MODE", "yu mode, as in Cantonese opera"),
+    "Hong Kong": ("E", "pent_minor", "MODE",
+                  "yu mode, the minor pentatonic of Chinese music"),
     "Chongqing": ("F", "pent_major", "MODE", "gong mode"),
     "Wuhan": ("Bb", "pent_major", "MODE", "gong mode"),
     "Tianjin": ("Eb", "pent_major", "MODE", "gong mode"),
     "Suzhou": ("A", "pent_minor", "MODE",
                "yu mode, as used in Kunqu opera, which originated here"),
     "Nanjing": ("D", "pent_minor", "MODE", "yu mode"),
-    "Taipei": ("G", "pent_minor", "MODE", "yu mode"),
+    "Taipei": ("G", "pent_minor", "MODE",
+               "yu mode, the minor pentatonic of Chinese music"),
+    # D-31: no source found for "most characteristic of Gulf music".
     "Dubai": ("D", "hijaz", "MODE",
-              "maqam Hijaz, the mode most characteristic of Gulf music"),
+              "maqam Hijaz, one of the maqamat of Arabic music, chosen to "
+              "stand for the region rather than the city"),
     "Abu Dhabi": ("G", "hijaz", "MODE", "maqam Hijaz"),
     "Doha": ("A", "hijaz", "MODE", "maqam Hijaz"),
     "Riyadh": ("E", "hijaz", "MODE", "maqam Hijaz"),
@@ -157,7 +171,9 @@ KEYS = {
     "Toronto": ("G", "major", "ANTHEM",
                 "O Canada, published in G major"),
     "Vancouver": ("F", "major", "ANTHEM", "O Canada"),
-    "Calgary": ("C", "major", "ANTHEM", "O Canada"),
+    "Calgary": ("C", "major", "ANTHEM",
+                "O Canada, as for Toronto, with the root moved to C to keep "
+                "the two apart"),
     "Montreal": ("Eb", "major", "ANTHEM", "O Canada"),
     "Mexico City": ("Bb", "major", "ANTHEM",
                     "Himno Nacional Mexicano, published in B flat"),
@@ -173,9 +189,11 @@ KEYS = {
                "intervals with Hijaz and is the sound of Spanish guitar"),
     "Lisbon": ("B", "minor", "MODE",
                "fado, this city's own form, usually in a minor key"),
+    # R5 claims check: "the minor-key techno the scene was built on" had no
+    # source; the choice is stated as a choice
     "Frankfurt": ("C", "minor", "MODE",
-                  "the minor-key techno the Frankfurt and Rhein-Main scene "
-                  "was built on"),
+                  "no piece or anthem convention; a minor key, chosen for "
+                  "the city's electronic music scene"),
     "Warsaw": ("F", "minor", "PIECE",
                "Chopin, Nocturne op. 55 no. 1 in F minor - the composer's "
                "own city"),
@@ -188,8 +206,11 @@ KEYS = {
     "Melbourne": ("A", "major", "ANTHEM",
                   "Advance Australia Fair, published in A major"),
     "Sydney": ("G", "major", "ANTHEM", "Advance Australia Fair"),
-    "Auckland": ("E", "major", "ANTHEM",
-                 "God Defend New Zealand, published in E major"),
+    # D-31: the original score is in A flat; Fernie's official arrangement
+    # moved it to G major (was E until 2026-10-24).
+    "Auckland": ("G", "major", "ANTHEM",
+                 "God Defend New Zealand, whose official arrangement is in "
+                 "G major"),
     "Johannesburg": ("Db", "major", "ANTHEM",
                      "Nkosi Sikelel iAfrika, whose first section is in "
                      "D flat major"),
@@ -216,7 +237,10 @@ KEYS = {
     "Las Vegas": ("Ab", "major", "MODE",
                   "the big-band flat keys of the Rat Pack residencies"),
     "Stockholm": ("A", "minor", "MODE", "the Nordic minor"),
-    "Brussels": ("Bb", "major", "ANTHEM", "La Brabanconne"),
+    # R5 claims check: the anthem's published key was never sourced
+    "Brussels": ("Bb", "major", "ANTHEM",
+                 "La Brabanconne, Belgium's anthem, in a major key; the "
+                 "root, B flat, is our choice"),
     "Vienna_alt": ("D", "major", "PIECE", "The Blue Danube"),
     "Benidorm": ("E", "hijaz", "MODE", "the Phrygian dominant of flamenco"),
 }
