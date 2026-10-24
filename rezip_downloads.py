@@ -181,12 +181,19 @@ TARGETS = [
     # to about 400 MB.
     target("continents", "continents-code.zip", keep={"outputs"},
            skip=("data/raw", "data/raw/*", "outputs/*.png")),
-    # What a meter's error is worth: the model, NIST's AGA8 C++ it compiles (public
+    # The meter model (its page, "What a meter's error is worth", became a redirect to
+    # lostgas.html in R3, 2026-10-23; the archive is linked from that page's appendix): the model, NIST's AGA8 C++ it compiles (public
     # domain, LICENSE inside aga8/), the checks, the fetchers and the payload. Not
     # data/raw (the fetchers re-download and hash-check it; PHMSA's zip is 32 MB), not
     # _build (a compiled library for one machine), not the figures (the site's assets).
     target("meter", "meter-code.zip", keep={"outputs"},
            skip=("data/raw", "data/raw/*", "outputs/*.png", "_build", "_build/*")),
+    # Lost gas (R3, 2026-10-23; the data layer came from Q6's lauf): fetchers (PHMSA
+    # through a browser session), readers, payload builder, the no-loss model, the page
+    # generator and redirects, and the checks, with the payload and the operator table
+    # (PHMSA's names as published). Not data/raw, not the parsed-reports cache.
+    target("lostgas", "lostgas-code.zip", keep={"outputs"},
+           skip=("data/raw", "data/raw/*", "data/_cache_*", "outputs/*.png")),
     # When the pipe is full: the fetchers, readers, capacity list, model,
     # story and payload builder, the page generator and the checks, with the
     # payload (R2, 2026-10-23: no app, engine or figures any more). Not data/raw: the fetchers re-download every

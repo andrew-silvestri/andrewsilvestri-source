@@ -1,0 +1,229 @@
+"""The lost-gas page (lostgas.html; checks 1-7 from Q6's lauf, 8-12 R3)'s own failure modes. Each check exists because the fault it names happened while
+the page was built, or is the most likely way the page goes wrong without anyone seeing it; each has a
+--break that reproduces that fault, and the run must exit 1 under it (HANDOFF traps 17, 26, 38).
+
+ 1. state    Reports are counted by STOP, the state of operation. The first Stage 1 run used
+             OFFICE_ADDRESS_STATE and got Texas wrong by 5 to 14 reports a year (all gases). --break state
+             counts by the office address again.
+ 2. eia      EIA Table A1 parses: the recomputed percentage rounds to the printed one in every row,
+             2018-2024. The 2022 and 2023 editions print a minus apart from its number, and the
+             first parser lost Texas in both. --break eia parses without joining the minus.
+ 3. model    Known answers: no uncertainty gives exactly zero; a meter's own error averages as
+             1/sqrt(N); the temperature bias equals its closed form and has the sign the physics
+             gives (cold gas under-registers, raising reported LAUF). --break model inverts the sign.
+ 4. names    No operator's name appears on the page or in a figure's alt text (packet rule); the
+             downloadable table carries them. --break names writes one name into the page text read.
+ 5. quotes   Every quotation on the page is in its source file. --break quotes alters one.
+ 6. page     The page equals what update_page.py renders from the payload (no hand edit, no stale
+             figure). --break page moves one payload figure.
+ 7. filter   Only natural gas systems are counted from 2015; propane and the rest are left out and
+             counted. --break filter keeps them.
+
+ 8. band     The shaded range on the page is the 5-95% of the no-loss model at its defaults, recomputed
+             here with the model's own seed. --break band takes the middle half (p25-p75), the likeliest
+             slip, which narrows the range and inflates nothing else.
+ 9. inside   The share of reports inside the range, at the defaults, recomputed from the reports and the
+             model, with and without exact zeros. --break temp recomputes at 60 F, the assumption the
+             plan review named as most likely wrong: the share must move, so the check must fail.
+10. dollars  A point of LAUF on a household's bill is consumption per household times the CITYGATE
+             price. --break dollars uses the residential price, which also pays for delivery.
+11. hero     The hero's bins hold every report once, and its lit "zero or less" count equals the
+             reports at or below zero. --break hero lights only the negatives (zeros left unlit).
+12. scope    The Texas rule is stated with its scope: more may be allowed, less may be, and city-owned
+             systems' rates are set by their cities, (d) review for reasonableness; the inside share is stated without zeros too
+             (plan review 1, 5; 7.5525(d)). --break scope removes the reasonableness clause.
+
+Run:  python test_lostgas.py [--break state|eia|model|names|quotes|page|filter|band|temp|dollars|hero|scope]
+"""
+import csv
+import html
+import json
+import os
+import re
+import sys
+
+import numpy as np
+
+HERE = os.path.dirname(os.path.abspath(__file__))
+ROOT = os.path.dirname(HERE)
+sys.path.insert(0, HERE)
+import model as M          # noqa: E402
+import sources as S        # noqa: E402
+
+BREAK = sys.argv[sys.argv.index("--break") + 1] if "--break" in sys.argv else None
+PAYLOAD = os.path.join(HERE, "outputs", "payload.json")
+PAGE = os.path.join(ROOT, "site", "lostgas.html")
+CSV = os.path.join(HERE, "outputs", "operator_lauf.csv")
+fails = []
+
+
+def check(name, ok, detail):
+    print(f"  {'OK  ' if ok else 'FAIL'} {name}: {detail}")
+    if not ok:
+        fails.append(name)
+
+
+def page_text(sources=True):
+    t = open(PAGE, encoding="utf-8").read()
+    if not sources:
+        # the Sources list cites the Oklahoma tariff by its utility's name: a citation for a
+        # public fact, and the one place a name may stand (plan review 10). Only that list.
+        t = re.sub(r"<h2>Sources</h2>\s*<ol class=\"refs\">.*?</ol>", " ", t, flags=re.S)
+    t = re.sub(r"(?is)<(script|style|head|nav)\b.*?</\1>", " ", t)
+    return re.sub(r"\s+", " ", re.sub(r"<[^>]+>", " ", t))
+
+
+def main():
+    P = json.load(open(PAYLOAD, encoding="utf-8"))
+    R = S.phmsa_reports()
+    # 1 state ------------------------------------------------------------------
+    import openpyxl, io, zipfile     # noqa: E401  only for the office-address replay
+    y = 2024
+    ng = [r for r in R if r["year"] == y and S.natural_gas(r)]
+    tx = len({r["operator_id"] for r in ng if r["state"] == "TX"})
+    if BREAK == "state":
+        path, _ = S.verified(S.ZIP)
+        ws = openpyxl.load_workbook(io.BytesIO(zipfile.ZipFile(path).read(f"annual_gas_distribution_{y}.xlsx")),
+                                    read_only=True).worksheets[0]
+        it = ws.iter_rows(values_only=True)
+        for row in it:
+            if row and row[0] == "DATAFILE_AS_OF":
+                hdr = list(row); break
+        rows = [dict(zip(hdr, row)) for row in it if row]
+        tx = len({d.get("OPERATOR_ID") for d in rows if d.get("OFFICE_ADDRESS_STATE") == "TX"
+                  and isinstance(d.get("PERCENT_UNACC_GAS"), (int, float))
+                  and (d.get("COMMODITY") or "").replace("OTHER GAS: ", "") == "Natural Gas"})
+    want = P["distribution"][str(y)]["TX"]["all"]["n"]
+    check("1 state", tx == want, f"{y} Texas natural gas reports by state of operation {tx}, payload {want}")
+    # 2 eia --------------------------------------------------------------------
+    bad, n = [], 0
+    if BREAK == "eia":
+        orig = S._text
+        S._text = lambda name: re.sub(r"(?m)^", "", orig(name).replace("-", "- ") if name.endswith(("2022.pdf", "2023.pdf")) else orig(name))
+    for yy in range(2018, 2025):
+        try:
+            rows = S.eia_a1(yy)
+        except RuntimeError as e:
+            bad.append(str(e)); continue
+        for st, v in rows.items():
+            n += 1
+            if v["printed_pct"] != "<" and f"{round(v['pct'], 1):.1f}" != f"{float(v['printed_pct']):.1f}":
+                bad.append(f"{yy} {st} {v['pct']:.2f} vs {v['printed_pct']}")
+    if BREAK == "eia":
+        S._text = orig
+    check("2 eia", not bad and n == 21, f"{n} of 21 rows parsed and round to the printed %" + (f"; {bad[:2]}" if bad else ""))
+    # 3 model ------------------------------------------------------------------
+    z = {k: 0 for k in M.DEFAULTS}
+    z.update(n_meters=100, gas_temp_f=M.T_BASE_F)
+    y1, y2 = M.simulate(z, 1000, np.random.default_rng(1))
+    zero = float(max(np.abs(y1).max(), np.abs(y2).max()))
+    p = dict(z, meter_sd=2.0, n_meters=10000)
+    a, _ = M.simulate(p, 200000, np.random.default_rng(2))
+    sd, exp = float(a.std()), 2.0 / np.sqrt(10000)
+    tb = float(M.temp_bias_pct(50.0))
+    closed = 100 * (((50 - 32) / 1.8 + 273.15) / ((60 - 32) / 1.8 + 273.15) - 1)
+    if BREAK == "model":
+        tb = -tb
+    cold = dict(z, uncomp_share=1.0, gas_temp_f=50.0)
+    lauf_cold = float(M.simulate(cold, 10, np.random.default_rng(3))[0][0])
+    ok3 = zero == 0.0 and abs(sd - exp) / exp < 0.02 and abs(tb - closed) < 1e-12 and tb < 0 and lauf_cold > 0
+    check("3 model", ok3, f"no uncertainty -> max |LAUF| {zero}; meter scatter sd {sd:.4f} vs 1/sqrt(N) {exp:.4f}; "
+                          f"bias at 50 F {tb:.4f}% (closed form {closed:.4f}); all-cold system reports {lauf_cold:+.3f}%")
+    # 4 names ------------------------------------------------------------------
+    text = page_text(sources=False).lower()
+    names = {row["operator_name"].strip() for row in csv.DictReader(open(CSV, encoding="utf-8")) if row["operator_name"]}
+    if BREAK == "names":
+        text += " " + sorted(names, key=len)[-1].lower()
+    # names short or generic enough to be ordinary words are not names on a page (a "City of X" is)
+    hits = sorted(nm for nm in names if len(nm) > 12 and nm.lower() in text)
+    check("4 names", not hits and len(names) > 1000, f"{len(names):,} operator names in the table, {len(hits)} on the page"
+                                                     + (f": {hits[:2]}" if hits else ""))
+    # 5 quotes -----------------------------------------------------------------
+    files = {"report_mix": "report_congress_lauf_2017.pdf", "report_proxy": "report_congress_lauf_2017.pdf",
+             "report_zero": "report_congress_lauf_2017.pdf", "partg": "gd_annual_form_cy2018_forward.pdf",
+             "tx_meter": "tx_16tac_ch7_2024.pdf", "ok_pga": "ok_tariff_1001.pdf"}
+    missing = []
+    for k, f in files.items():
+        q = P["quotes"][k][:60]
+        if BREAK == "quotes" and k == "report_proxy":
+            q = q.replace("not a valid", "a valid")
+        src = re.sub(r"\s+", " ", S._text(f))
+        if q not in src:
+            missing.append(k)
+        if html.unescape(q) not in html.unescape(page_text()) and k != "partg":
+            missing.append(k + " (page)")
+    check("5 quotes", not missing, f"{len(files)} quotations found in their source files and on the page"
+                                   + (f"; missing {missing}" if missing else ""))
+    # 6 page -------------------------------------------------------------------
+    import update_page as U
+    PP = json.loads(json.dumps(P))
+    if BREAK == "page":
+        PP["hero"]["neg"] += 1
+    t, _ = U.cite(U.render(PP))
+    same = t == open(PAGE, "rb").read().decode("utf-8")
+    check("6 page", same, "site/lostgas.html equals what update_page.py renders from the payload")
+    # 7 filter -----------------------------------------------------------------
+    keep = S.natural_gas
+    if BREAK == "filter":
+        S.natural_gas = lambda r: True
+    kept = [r for r in R if S.natural_gas(r)]
+    S.natural_gas = keep
+    other = sum(1 for r in kept if r["year"] >= 2015 and (r["commodity"] or "").replace("OTHER GAS: ", "") != "Natural Gas")
+    ok7 = other == 0 and P["excluded_non_natural_gas"] > 0
+    check("7 filter", ok7, f"{other} non-natural-gas reports kept from 2015; {P['excluded_non_natural_gas']} left out")
+    # 8 band -------------------------------------------------------------------
+    y1m, _ = M.simulate({}, 200000, np.random.default_rng(M.SEED))
+    q = (25, 75) if BREAK == "band" else tuple(P["model"]["band"]["q"])
+    lo, hi = (round(float(np.percentile(y1m, k)), 2) for k in q)
+    ok8 = (lo, hi) == (P["model"]["band"]["lo"], P["model"]["band"]["hi"]) and q == (5, 95)
+    check("8 band", ok8, f"model {q[0]}-{q[1]}% at the defaults {lo} to {hi}; payload {P['model']['band']['lo']} to "
+                         f"{P['model']['band']['hi']}")
+    # 9 inside -----------------------------------------------------------------
+    yr = P["hero"]["year"]
+    v = np.array([r["lauf"] for r in R if r["year"] == yr and S.natural_gas(r)])
+    T = 60.0 if BREAK == "temp" else M.DEFAULTS["gas_temp_f"]
+    a, _ = M.simulate({"gas_temp_f": T}, 200000, np.random.default_rng(M.SEED))
+    blo, bhi = (float(np.percentile(a, k)) for k in (5, 95))
+    ins = round(float(((v >= blo) & (v <= bhi)).mean()), 3)
+    nz = v[v != 0]
+    insz = round(float(((nz >= blo) & (nz <= bhi)).mean()), 3)
+    d = P["inside"]["defaults"]
+    check("9 inside", (ins, insz) == (d["all"], d["no_zero"]),
+          f"{yr} inside at {T:g} F: {ins} ({insz} without zeros); payload {d['all']} ({d['no_zero']})")
+    # 10 dollars ---------------------------------------------------------------
+    import xlrd
+    bad10 = []
+    for st in ("TX", "OK"):
+        x = P["dollars"][st]
+        def ser(code):
+            p_, _ = S.verified(f"eia_{code}a.xls")
+            sh = xlrd.open_workbook(p_).sheet_by_index(1)
+            return {xlrd.xldate_as_tuple(sh.cell_value(r, 0), 0)[0]: sh.cell_value(r, 1) for r in range(3, sh.nrows)}
+        cons, num, price = ser(f"N3010{st}2"), ser(f"NA1501_S{st}_8"), ser(f"N3{'010' if BREAK == 'dollars' else '050'}{st}3")
+        pp = round(cons[x["year"]] * 1000 / num[x["year"]] * price[x["year"]] / 100, 3)
+        if pp != x["per_point"]:
+            bad10.append(f"{st} {pp} vs {x['per_point']}")
+    check("10 dollars", not bad10, "a point of LAUF per household, recomputed at the citygate price, equals the payload"
+                                   + (f": {bad10}" if bad10 else ""))
+    # 11 hero ------------------------------------------------------------------
+    h = P["hero"]
+    lit = sum(b["le0"] for b in h["bins"])
+    want_lit = int((v < 0).sum()) if BREAK == "hero" else int((v <= 0).sum())
+    ok11 = sum(b["n"] for b in h["bins"]) == len(v) == h["n"] and lit == want_lit == h["le0"]
+    check("11 hero", ok11, f"bins hold {sum(b['n'] for b in h['bins'])} of {len(v)} reports; lit {lit}, "
+                           f"reports at or below zero {want_lit}")
+    # 12 scope -----------------------------------------------------------------
+    t12 = page_text()
+    if BREAK == "scope":
+        t12 = t12.replace("can still judge whether the cost is reasonable", "")
+    need = ["unless the Commission allows more", "can still judge whether the cost is reasonable", "owned by cities",
+            "safe harbor", f"{100 * d['no_zero']:.0f} per cent of those that are not exactly zero"]
+    gone = [n for n in need if n not in t12]
+    check("12 scope", not gone, "the Texas rule's scope, the Oklahoma safe harbor and the share without zeros are on "
+                                "the page" + (f"; missing {gone}" if gone else ""))
+    print(f"{len(fails)} failure(s)" + (f" (--break {BREAK})" if BREAK else ""))
+    return 1 if fails else 0
+
+
+if __name__ == "__main__":
+    sys.exit(main())
