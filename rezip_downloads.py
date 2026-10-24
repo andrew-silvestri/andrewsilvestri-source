@@ -135,7 +135,18 @@ TARGETS = [
     # site/downloads/ on the next run. ATLAS_FILES above is kept - it is
     # the list of what the archive held, and it is what to restore from.
     target("heat", "heat-code.zip"),
-    target("storage", "storage-code.zip"),
+    # storage/data/raw holds ERCOT's yearly price archives (about 230 MB,
+    # 2026-10-23). It is gitignored, and on its first day it was swept into
+    # this archive anyway: the rezip walked storage/ while the raw files sat
+    # there untracked, and storage-code.zip came out at 230.1 MB (R4, caught in
+    # code.html's row before anything shipped). fetch_ercot.py re-downloads
+    # them; data/fetched.json, which records what was fetched, still ships.
+    # The page says the archive carries the payload, so outputs/ is kept for
+    # outputs/payload.json alone; the rest of outputs/ is model.py's synthetic
+    # year (figures, dispatch_4h.csv, summary.*), which the page no longer uses.
+    target("storage", "storage-code.zip", keep={"outputs"},
+           skip=("data/raw", "data/raw/*", "data/cache", "data/cache/*",
+                 "outputs/*.png", "outputs/*.csv", "outputs/summary.json")),
     # climate-cost-code.zip had no target at all until 2026-09-11: the archive
     # was assembled once by hand, which is why code.html could say every
     # archive carries a README.md while this one carried none. It is a

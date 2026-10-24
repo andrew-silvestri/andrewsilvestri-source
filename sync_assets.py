@@ -41,7 +41,10 @@ ASSETS = os.path.join(SITE, "assets")
 PREFIX_SOURCE = {
     "heat_": os.path.join(HERE, "heat"),
     "dac_": os.path.join(PARENT, "02 DAC Adsorption TEA"),
-    "storage_": os.path.join(HERE, "storage"),
+    # "storage_" removed 2026-10-23 (R4): storage.html has no PNG figures since
+    # its rework on ERCOT's real prices, and storage/model.py still writes the
+    # synthetic year's figures into storage/outputs/ for its own test; a prefix
+    # left here would copy them back onto the site.
     "web_": os.path.join(PARENT, "10 World Energy Web"),
     "web5_": os.path.join(PARENT, "14 World Energy Web v5"),
 }

@@ -21,6 +21,8 @@ beauty/data/raw/
 takeaway/data/raw/
 lostgas/data/raw/
 lostgas/data/_cache_*
+storage/data/raw/
+storage/data/cache/
 beauty/data/birds_joined.csv
 beauty/data/iucn_aves.csv
 neuron/data/_work/

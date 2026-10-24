@@ -129,6 +129,9 @@ NAV = [
         # serving, with <meta name="robots" content="noindex">. Each comes back
         # as the tuple it was, in the place it was, when its packet relists it:
         # ("Battery revenue simulator", "storage.html"),
+        # Storage relisted 2026-10-23 by R4 (D-20 rework on ERCOT's real prices),
+        # under the reworked page's own title.
+        ("Battery revenue", "storage.html"),
     ]),
     # CLIMATE IS ONE PAGE AND RENDERS AS A DROPDOWN. That is the point of the
     # 2026-09-09 change, not an oversight - do not "simplify" it back to a bare

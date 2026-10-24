@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Battery revenue — Andrew Silvestri</title>
+<meta name="description" content="What a big battery in Texas could earn buying power cheap and selling it dear, from ERCOT's own prices since 2011: a handful of scarcity days decide the year.">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="alternate icon" href="favicon.png">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<meta name="theme-color" content="#F2F0EF">
+<link rel="canonical" href="https://andrewsilvestri.com/storage.html">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Battery revenue — Andrew Silvestri">
+<meta property="og:description" content="What a big battery in Texas could earn from ERCOT's prices since 2011: a handful of scarcity days decide the year.">
+<meta property="og:url" content="https://andrewsilvestri.com/storage.html">
+<script>try{document.documentElement.dataset.motion=matchMedia('(prefers-reduced-motion: reduce)').matches?'off':'on';}catch(e){document.documentElement.dataset.motion='on';}</script>
+<link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="assets/scrolly.css">
+</head><body>
+{{nav}}
+<main>
+<h1>Big batteries in Texas earn most of their money in rare years, when a handful of days of extreme prices pay for half the year, and {{last_year}} was not one of them</h1>
+<p class="dim">A grid battery makes money by charging when power is cheap and selling it back when it is dear. This page runs one with four hours of storage on ERCOT's real prices (ERCOT's grid serves about 90 per cent of Texas's electricity demand) for every year from 2011 to {{last_year}}, and lets it know the coming month's prices in advance. That gives a ceiling on what it could earn trading energy. The ceiling was ${{top_val}} a year for each kilowatt of the battery's power in {{top_year}}, and ${{med_val}} in the median year. The big years were the ones with a few days of extreme prices: half of {{fast_year}}'s money came in {{fast_days}} days of {{fast_month}}{{fast_event}}. {{last_year}} earned {{last_earned}}, but no day stood out: its best earned ${{last_best}} per kilowatt, and it took {{last_days}} days, more than any year since 2011, to earn half its money. Read from the market monitor's chart, real batteries earned about ${{f_energy_last}} per kilowatt from energy in {{fleet_last}}.</p>
+{{stamp}}
+{{takeaways}}
+
+<h2>What a battery is paid for</h2>
+
+<p>A battery on the grid fills up when electricity is cheap, often in the middle of a sunny or windy day, and empties when it is dear, usually in the evening as the sun sets. Its profit on a day is what it sold the power for, less what it paid, less a little for the wear of cycling. This page puts a battery of {{mw}} megawatt with four hours of storage on ERCOT's real-time prices, every hour since 2011, at the average of ERCOT's four trading hubs, and lets it see the coming month's prices before it acts. No real battery knows the future, so every dollar figure here is a ceiling for trading energy at the hub. For scale, owning a battery like this costs about ${{atb}} per kilowatt a year (NREL's Annual Technology Baseline), more than the ceiling in any year since 2011; real batteries also earn from being paid to stand ready as reserves, which this page does not model.</p>
+
+{{hero}}
+
+<p class="dim">Each bar is one day's profit for the battery, per kilowatt of its power: above the line when it sold for more than it paid that day. The two years share one scale, and the counter adds up the days drawn so far.</p>
+
+<h2>Every year since 2011</h2>
+
+<p>The ceiling, year by year, and how few days it took to earn half of it. The {{n_scar}} best years are exactly the years when half the money came in {{scar_days_hi}} days or fewer, with ceilings of ${{scar_lo}} to ${{scar_hi}} per kilowatt. In the other {{n_ord}} full years half took {{ord_days_lo}} days or more, and the ceiling was ${{ord_lo}} to ${{ord_hi}}.</p>
+
+<table>
+<thead><tr><th>Year</th><th class="n">Ceiling, $ per kW</th><th class="n">Days for half</th><th class="n">Share from best 10 days</th><th>Its best day</th></tr></thead>
+<tbody>
+{{year_rows}}
+</tbody>
+</table>
+
+<p class="dim">{{part_year_note}} The market monitor names the causes of two of the big years: "{{q_spikes}}" ECRS is the ERCOT Contingency Reserve Service, a reserve product. This page names no other event.</p>
+
+<h2>What real batteries earned</h2>
+
+<p>ERCOT's independent market monitor reports what the whole battery fleet earned, calling batteries ESRs, energy storage resources. Its chart for 2021 to 2025 has no table; read by eye, it puts the fleet's income from selling energy at about ${{f_energy_last}} per kilowatt in {{fleet_last}}. This page's ceiling for a two-hour battery that year, about the fleet's average size ({{fleet_hours}} hours), is ${{ceil2_last}}, so real batteries took in roughly a {{fleet_frac}} of what perfect foresight at the hub allows. Some of the gap is that they cannot see the future; some, that they sit at their own points on the grid and joined the fleet through the year; some, that they hold charge back to be paid as reserves. The monitor on {{fleet_last}}: "{{q_fleet}}"</p>
+
+<p>Batteries also move the prices they trade on. In the monitor's words: "{{q_ramp}}" That is the market monitor's finding; this page does not test it.</p>
+
+<h2 id="method">Method</h2>
+
+<p><b>Prices.</b> ERCOT's historical settlement point prices for its hubs and load zones, real-time (15-minute, averaged to the hour) and day-ahead (hourly), one file a year from 2011, the first full year of its current market, to {{through_long}}. The battery trades at HB_HUBAVG, the average of the four trading hubs. The daylight-saving days have 23 and 25 hours, as ERCOT settled them; one 15-minute price ERCOT's 2013 file leaves out (3 November 2013, the first 02:00 hour) is filled from the other three in that hour. Checked against an independent record of the same market: ERCOT's day-ahead North hub price in 2015 agrees with the on-peak trades EIA publishes for that hub to {{ice_pct}} per cent over the year.</p>
+
+<p><b>The battery.</b> An optimisation, a linear program with one yes-or-no choice per hour, that maximises profit over 30 days at a time with every price in that window known in advance: {{mw}} megawatt, four hours of storage, {{rte}} per cent round-trip efficiency (the share of the energy put in that comes back out), a cycling cost of ${{cdeg_leg}} per megawatt hour charged and the same discharged, and no charging and discharging in the same hour. Each year starts half full, and each 30-day window carries its charge into the next, so the battery places no value on charge left at a window's end. Checked against a price pattern whose best answer is known in closed form; it is reproduced exactly.</p>
+
+<p><b>Days.</b> A day's profit is the cash of its hours: sales less purchases less the cycling cost. "Days for half" sorts the days that made money from best to worst and counts how many it takes to reach half of their total; "share from best 10 days" is the same total's share in its ten best days. On day-ahead prices the ceilings run ${{dam_lo}} to ${{dam_hi}} per kilowatt, and the five best years are the same five{{dam_note}}.</p>
+
+<p><b>Duration.</b> The same years with one, two and eight hours of storage, real-time, at the hub average. Each extra hour of storage adds less than the one before:</p>
+
+<table>
+<thead><tr><th>Year</th><th class="n">1 hour</th><th class="n">2 hours</th><th class="n">4 hours</th><th class="n">8 hours</th></tr></thead>
+<tbody>
+{{dur_rows}}
+</tbody>
+</table>
+
+<p><b>Location.</b> The same four-hour battery at each hub and load zone: in {{z_hi_year}}, from ${{z1_lo}} ({{z1_lo_name}}) to ${{z1_hi}} ({{z1_hi_name}}); in {{z_lo_year}}, from ${{z2_lo}} ({{z2_lo_name}}) to ${{z2_hi}} ({{z2_hi_name}}). The hub average sits inside both ranges, so a battery at a well-placed zone could earn more than this page's ceiling. Real batteries settle at their own grid nodes, which can be further apart still.</p>
+
+<h2 id="limits">Limits</h2>
+
+<p>Perfect foresight is a ceiling, not a forecast: a real operator bids without knowing tomorrow's prices. The model trades energy only, at hourly average prices, so it misses the reserve markets, where batteries earned most of their money until 2024 (the monitor: "{{q_as}}"), and the extra spread inside each hour. Its four hours of storage give about {{ac_hours}} usable hours at full power, because its losses come out of the stored energy. The ownership cost above is NREL's capital and fixed operations cost for a four-hour battery, with the capital spread over twenty years at an assumed eight per cent; NREL gives these batteries a 15-year life, and over 15 years the same arithmetic gives about ${{atb15}}. Either is a cost reference, not a verdict, since a real battery has other income. This is an explainer, not investment advice.</p>
+
+<h2 id="code">The code</h2>
+
+<p>Python: the fetch script, which records where and when each ERCOT file came from; the price reader; the dispatch model; the payload builder; the page generator; and the tests. The archive carries the payload, not ERCOT's price files, which the fetch script downloads again. Also the Julia and Octave ports of the dispatch and a workbook of the same arithmetic. {{zip_kb}} KB.</p>
+<p><a class="btn" href="downloads/storage-code.zip">Download source</a>
+<a class="btn ghost" href="code.html">All code</a></p>
+
+<footer>
+<p><a href="about.html">Andrew Silvestri</a></p>
+<p><a href="code.html">Built with Python, Julia, JavaScript and public data.</a></p>
+</footer>
+</main>
+<script src="assets/motion.js"></script>
+<script src="assets/lightbox.js"></script>
+<script src="assets/nav.js"></script>
+<script src="assets/charts.js"></script>
+<script src="assets/scrolly.js"></script>
+</body></html>

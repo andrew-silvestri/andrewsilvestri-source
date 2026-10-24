@@ -1,0 +1,68 @@
+{
+ "document": "Potomac Economics, 2025 State of the Market Report for the ERCOT Electricity Markets (Independent Market Monitor), June 2026",
+ "url": "https://www.potomaceconomics.com/wp-content/uploads/2026/06/2025-State-of-the-Market-Report-for-ERCOT.pdf",
+ "opened": "2026-10-23",
+ "quotes": {
+  "capacity": {
+   "pdf_page": 12,
+   "report_page": "ii",
+   "text": "The installed capacity of ESRs increased to more than 17,000 MW and 31,500 MWh by the end of 2025, up almost 80% from the end of 2024."
+  },
+  "spikes": {
+   "pdf_page": 44,
+   "report_page": "22",
+   "text": "Events such as Winter Storm Uri in 2021 and the artificial scarcity caused by the implementation of ECRS in 2023 created revenue spikes that obscure year-over-year trends in revenue per kilowatt (kW) and total revenue growth."
+  },
+  "fleet": {
+   "pdf_page": 44,
+   "report_page": "22",
+   "text": "Annual revenue per unit of ESR capacity declined significantly in 2025, falling by almost 37% from 2024 after normalization for the larger volume of ESR capacity in the market."
+  },
+  "ramp": {
+   "pdf_page": 29,
+   "report_page": "7",
+   "text": "The increase in solar capacity primarily drove the reduction in daytime price spikes from 2024 to 2025, while growth in energy storage capacity largely drove the decline in price spikes during solar ramp periods."
+  },
+  "as_before": {
+   "pdf_page": 45,
+   "report_page": "23",
+   "text": "Prior to 2024, ESRs participated in the wholesale market primarily through ancillary services because they can respond quickly to fluctuations in supply and demand."
+  },
+  "share": {
+   "pdf_page": 11,
+   "report_page": "i",
+   "text": "ERCOT manages the production and flow of electricity for more than 27 million Texas customers—about 90% of the state's total electric demand."
+  }
+ },
+ "capacity_mw": 17000,
+ "capacity_mwh": 31500,
+ "figure17_read_by_eye": {
+  "note": "Figure 17, 'Total and Normalized ESR Revenue 2021-2025' (PDF page 45) is an image with no data table. These values were read off the chart by eye on 2026-10-23 and carry its resolution: about $5M on the bars and $2/kW-yr on the line. Energy-only $/kW-yr = energy bar / (total bar / normalized total).",
+  "total_musd": {
+   "2021": 232,
+   "2022": 187,
+   "2023": 557,
+   "2024": 324,
+   "2025": 350
+  },
+  "energy_musd": {
+   "2021": 0,
+   "2022": 23,
+   "2023": 106,
+   "2024": 156,
+   "2025": 245
+  },
+  "normalized_total_usd_kw_yr": {
+   "2021": 194,
+   "2022": 66,
+   "2023": 114,
+   "2024": 32,
+   "2025": 20
+  }
+ },
+ "ecrs_name": {
+  "pdf_page": 7,
+  "text": "ERCOT Contingency Reserve Service",
+  "where": "list of figures, Figure A8: ERCOT Contingency Reserve Service Providers"
+ }
+}

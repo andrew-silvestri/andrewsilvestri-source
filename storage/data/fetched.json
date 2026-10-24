@@ -1,0 +1,274 @@
+{
+ "DAM_2010.zip": {
+  "bytes": 241081,
+  "ercot_name": "rpt.00013060.0000000000000000.20130301.131718000.DAMLZHBSPP_2010.zip",
+  "fetched": "2026-10-23",
+  "sha1": "b1f0d4128fb79df3ba0ff079ba30ec72d7c39b74",
+  "url": "https://www.ercot.com/misdownload/servlets/mirDownload?doclookupId=283205860",
+  "via": "urllib"
+ },
+ "DAM_2011.zip": {
+  "bytes": 1869131,
+  "ercot_name": "rpt.00013060.0000000000000000.20130301.132053000.DAMLZHBSPP_2011.zip",
+  "fetched": "2026-10-23",
+  "sha1": "ef44a70313474c12df05c7741f7a3f318bfc1d8a",
+  "url": "https://www.ercot.com/misdownload/servlets/mirDownload?doclookupId=283206764",
+  "via": "urllib"
+ },
+ "DAM_2012.zip": {
+  "bytes": 1810760,
+  "ercot_name": "rpt.00013060.0000000000000000.20130301.132227000.DAMLZHBSPP_2012.zip",
+  "fetched": "2026-10-23",
+  "sha1": "7895963c5754dd295db6fcb94583d9f131558eef",
+  "url": "https://www.ercot.com/misdownload/servlets/mirDownload?doclookupId=283206776",
+  "via": "urllib"
+ },
+ "DAM_2013.zip": {
+  "bytes": 1759810,
+  "ercot_name": "rpt.00013060.0000000000000000.20140101.080309000.DAMLZHBSPP_2013.zip",
+  "fetched": "2026-10-23",
+  "sha1": "c46ed34574331012baaad37b9676278aab5baa94",
+  "url": "https://www.ercot.com/misdownload/servlets/mirDownload?doclookupId=387408239",
+  "via": "urllib"
+ },
+ "DAM_2014.zip": {
+  "bytes": 1752978,
+  "ercot_name": "rpt.00013060.0000000000000000.20150101.080339110.DAMLZHBSPP_2014.zip",
+  "fetched": "2026-10-23",
+  "sha1": "43bb1b8637afd7596f739fc5d91f3d2859ea6d8f",
+  "url": "https://www.ercot.com/misdownload/servlets/mirDownload?doclookupId=468450666",
+  "via": "urllib"
+ },
+ "DAM_2015.zip": {
+  "bytes": 1765691,
+  "ercot_name": "rpt.00013060.0000000000000000.20160101.080309215.DAMLZHBSPP_2015.zip",
+  "fetched": "2026-10-23",
+  "sha1": "9ad15d74028569ef49e29a3d459c5961ccb0e2ae",
+  "url": "https://www.ercot.com/misdownload/servlets/mirDownload?doclookupId=505281022",
+  "via": "urllib"
+ },
+ "DAM_2016.zip": {
+  "bytes": 1779055,
+  "ercot_name": "rpt.00013060.0000000000000000.20170101.080337663.DAMLZHBSPP_2016.zip",
+  "fetched": "2026-10-23",
+  "sha1": "998635a429cbc62a3f01ec465c466c10cec467e9",
+  "url": "https://www.ercot.com/misdownload/servlets/mirDownload?doclookupId=547013266",
+  "via": "urllib"
+ },
+ "DAM_2017.zip": {
+  "bytes": 1773462,
+  "ercot_name": "rpt.00013060.0000000000000000.20180101.080254200.DAMLZHBSPP_2017.zip",
+  "fetched": "2026-10-23",
+  "sha1": "8eebdc631124f74ce4c332cabc9201845a982887",
+  "url": "https://www.ercot.com/misdownload/servlets/mirDownload?doclookupId=592990685",
+  "via": "urllib"
+ },
+ "DAM_2018.zip": {
+  "bytes": 1765054,
+  "ercot_name": "rpt.00013060.0000000000000000.20190101.080239873.DAMLZHBSPP_2018.zip",
+  "fetched": "2026-10-23",
+  "sha1": "198f2e7f728e901c511cfe93a00452a573132aca",
+  "url": "https://www.ercot.com/misdownload/servlets/mirDownload?doclookupId=642564845",
+  "via": "urllib"
+ },
+ "DAM_2019.zip": {
+  "bytes": 2013424,
+  "ercot_name": "rpt.00013060.0000000000000000.20200101.080319632.DAMLZHBSPP_2019.zip",
+  "fetched": "2026-10-23",
+  "sha1": "274a3c46fb606c5468c233856a51d0f1de7b553b",
+  "url": "https://www.ercot.com/misdownload/servlets/mirDownload?doclookupId=694281912",
+  "via": "urllib"
+ },
+ "DAM_2020.zip": {
+  "bytes": 2021142,
+  "ercot_name": "rpt.00013060.0000000000000000.20210101.080809625.DAMLZHBSPP_2020.zip",
+  "fetched": "2026-10-23",
+  "sha1": "89033dda6e6cbdd8d93d1705facd112579c7150c",
+  "url": "https://www.ercot.com/misdownload/servlets/mirDownload?doclookupId=751351545",
+  "via": "urllib"
+ },
+ "DAM_2021.zip": {
+  "bytes": 1997884,
+  "ercot_name": "rpt.00013060.0000000000000000.20220101.081333707.DAMLZHBSPP_2021.zip",
+  "fetched": "2026-10-23",
+  "sha1": "fce5c2d37ac3d0f8b1422275cea094933450a576",
+  "url": "https://www.ercot.com/misdownload/servlets/mirDownload?doclookupId=814918746",
+  "via": "urllib"
+ },
+ "DAM_2022.zip": {
+  "bytes": 2106454,
+  "ercot_name": "rpt.00013060.0000000000000000.20230101.081114733.DAMLZHBSPP_2022.zip",
+  "fetched": "2026-10-23",
+  "sha1": "d31df8a528bf3557069e720a564720c05bff01e1",
+  "url": "https://www.ercot.com/misdownload/servlets/mirDownload?doclookupId=886627599",
+  "via": "urllib"
+ },
+ "DAM_2023.zip": {
+  "bytes": 2081453,
+  "ercot_name": "rpt.00013060.0000000000000000.20240101.081011828.DAMLZHBSPP_2023.zip",
+  "fetched": "2026-10-23",
+  "sha1": "ea403afa770591e106a1c14b056ab2cd3ca3da47",
+  "url": "https://www.ercot.com/misdownload/servlets/mirDownload?doclookupId=969803138",
+  "via": "urllib"
+ },
+ "DAM_2024.zip": {
+  "bytes": 2110124,
+  "ercot_name": "rpt.00013060.0000000000000000.20250101.080733817.DAMLZHBSPP_2024.zip",
+  "fetched": "2026-10-23",
+  "sha1": "44242a3aa827ea604affdb0764b67db221d9358b",
+  "url": "https://www.ercot.com/misdownload/servlets/mirDownload?doclookupId=1065468714",
+  "via": "urllib"
+ },
+ "DAM_2025.zip": {
+  "bytes": 2050483,
+  "ercot_name": "rpt.00013060.0000000000000000.20260101.084409719.DAMLZHBSPP_2025.zip",
+  "fetched": "2026-10-23",
+  "sha1": "719dad47e61302936777994b5b166590b4c27f30",
+  "url": "https://www.ercot.com/misdownload/servlets/mirDownload?doclookupId=1177667469",
+  "via": "urllib"
+ },
+ "DAM_2026.zip": {
+  "bytes": 1631391,
+  "ercot_name": "rpt.00013060.0000000000000000.20261018.080232491.DAMLZHBSPP_2026.zip",
+  "fetched": "2026-10-23",
+  "sha1": "e01b364019b9fa9c8a96bf39c93b64f58f8d4a06",
+  "url": "https://www.ercot.com/misdownload/servlets/mirDownload?doclookupId=1287898588",
+  "via": "urllib"
+ },
+ "RTM_2010.zip": {
+  "bytes": 1292145,
+  "ercot_name": "rpt.00013061.0000000000000000.20130614.140718000.RTMLZHBSPP_2010.zip",
+  "fetched": "2026-10-23",
+  "sha1": "df42fde43bea59e412d7d01e696e4151e1b6d8aa",
+  "url": "https://www.ercot.com/misdownload/servlets/mirDownload?doclookupId=318479603",
+  "via": "urllib"
+ },
+ "RTM_2011.zip": {
+  "bytes": 8846689,
+  "ercot_name": "rpt.00013061.0000000000000000.20130614.140746000.RTMLZHBSPP_2011.zip",
+  "fetched": "2026-10-23",
+  "sha1": "491b834d06c2e4743b1bdffd843407a96d211b50",
+  "url": "https://www.ercot.com/misdownload/servlets/mirDownload?doclookupId=318479607",
+  "via": "urllib"
+ },
+ "RTM_2012.zip": {
+  "bytes": 12748750,
+  "ercot_name": "rpt.00013061.0000000000000000.20130614.140823000.RTMLZHBSPP_2012.zip",
+  "fetched": "2026-10-23",
+  "sha1": "fc3e2f2afe6dad4a95facf52625a8ed8ae1e661f",
+  "url": "https://www.ercot.com/misdownload/servlets/mirDownload?doclookupId=318479612",
+  "via": "urllib"
+ },
+ "RTM_2013.zip": {
+  "bytes": 13101983,
+  "ercot_name": "rpt.00013061.0000000000000000.20140101.083315000.RTMLZHBSPP_2013.zip",
+  "fetched": "2026-10-23",
+  "sha1": "e5e496467cbf540c648fd7ddbe412332a41f53e9",
+  "url": "https://www.ercot.com/misdownload/servlets/mirDownload?doclookupId=387418681",
+  "via": "urllib"
+ },
+ "RTM_2014.zip": {
+  "bytes": 12945045,
+  "ercot_name": "rpt.00013061.0000000000000000.20150101.082248710.RTMLZHBSPP_2014.zip",
+  "fetched": "2026-10-23",
+  "sha1": "bfd143d2a6d3fd89df862b9680f22f0863b4ceea",
+  "url": "https://www.ercot.com/misdownload/servlets/mirDownload?doclookupId=468452453",
+  "via": "urllib"
+ },
+ "RTM_2015.zip": {
+  "bytes": 12880727,
+  "ercot_name": "rpt.00013061.0000000000000000.20160101.082141964.RTMLZHBSPP_2015.zip",
+  "fetched": "2026-10-23",
+  "sha1": "25ea38bbab416a32d8340c8a6aa2e859764b9889",
+  "url": "https://www.ercot.com/misdownload/servlets/mirDownload?doclookupId=505283161",
+  "via": "urllib"
+ },
+ "RTM_2016.zip": {
+  "bytes": 13258115,
+  "ercot_name": "rpt.00013061.0000000000000000.20170101.083302375.RTMLZHBSPP_2016.zip",
+  "fetched": "2026-10-23",
+  "sha1": "b1bb1d833690170effc5cb8aae91e71dc747a24f",
+  "url": "https://www.ercot.com/misdownload/servlets/mirDownload?doclookupId=547016749",
+  "via": "urllib"
+ },
+ "RTM_2017.zip": {
+  "bytes": 13593253,
+  "ercot_name": "rpt.00013061.0000000000000000.20180101.082427782.RTMLZHBSPP_2017.zip",
+  "fetched": "2026-10-23",
+  "sha1": "95f8c2d344c61611c157a155634f36794e88e215",
+  "url": "https://www.ercot.com/misdownload/servlets/mirDownload?doclookupId=592992943",
+  "via": "urllib"
+ },
+ "RTM_2018.zip": {
+  "bytes": 13792963,
+  "ercot_name": "rpt.00013061.0000000000000000.20190101.082527062.RTMLZHBSPP_2018.zip",
+  "fetched": "2026-10-23",
+  "sha1": "fa6ce0e787c27bc7f544c9fac95dca610d7a0bbd",
+  "url": "https://www.ercot.com/misdownload/servlets/mirDownload?doclookupId=642564849",
+  "via": "urllib"
+ },
+ "RTM_2019.zip": {
+  "bytes": 14299439,
+  "ercot_name": "rpt.00013061.0000000000000000.20200101.082516926.RTMLZHBSPP_2019.zip",
+  "fetched": "2026-10-23",
+  "sha1": "f99dea1247c99ffb2d036c21cb081016e7274600",
+  "url": "https://www.ercot.com/misdownload/servlets/mirDownload?doclookupId=694284436",
+  "via": "urllib"
+ },
+ "RTM_2020.zip": {
+  "bytes": 13523263,
+  "ercot_name": "rpt.00013061.0000000000000000.20210101.084127415.RTMLZHBSPP_2020.zip",
+  "fetched": "2026-10-23",
+  "sha1": "b694934ca6a47636b477023c7edb93201e95d293",
+  "url": "https://www.ercot.com/misdownload/servlets/mirDownload?doclookupId=751356439",
+  "via": "urllib"
+ },
+ "RTM_2021.zip": {
+  "bytes": 13278381,
+  "ercot_name": "rpt.00013061.0000000000000000.20220101.083820464.RTMLZHBSPP_2021.zip",
+  "fetched": "2026-10-23",
+  "sha1": "5d0d4aa8b7c7de470a8042151ab715e0e4de364a",
+  "url": "https://www.ercot.com/misdownload/servlets/mirDownload?doclookupId=814922832",
+  "via": "urllib"
+ },
+ "RTM_2022.zip": {
+  "bytes": 13773266,
+  "ercot_name": "rpt.00013061.0000000000000000.20230101.083407763.RTMLZHBSPP_2022.zip",
+  "fetched": "2026-10-23",
+  "sha1": "7d5d6aa92fbdb51097261d7032f85972cbc1d6a4",
+  "url": "https://www.ercot.com/misdownload/servlets/mirDownload?doclookupId=886632075",
+  "via": "urllib"
+ },
+ "RTM_2023.zip": {
+  "bytes": 14000500,
+  "ercot_name": "rpt.00013061.0000000000000000.20240101.081911295.RTMLZHBSPP_2023.zip",
+  "fetched": "2026-10-23",
+  "sha1": "e31a66a30bf39a8f528c3e82db22f674b0c5710e",
+  "url": "https://www.ercot.com/misdownload/servlets/mirDownload?doclookupId=969805139",
+  "via": "urllib"
+ },
+ "RTM_2024.zip": {
+  "bytes": 14288420,
+  "ercot_name": "rpt.00013061.0000000000000000.20250101.081829672.RTMLZHBSPP_2024.zip",
+  "fetched": "2026-10-23",
+  "sha1": "e196d6dd36c40c11221169bfccf926c87a027911",
+  "url": "https://www.ercot.com/misdownload/servlets/mirDownload?doclookupId=1065471230",
+  "via": "urllib"
+ },
+ "RTM_2025.zip": {
+  "bytes": 13969454,
+  "ercot_name": "rpt.00013061.0000000000000000.20260101.132601474.RTMLZHBSPP_2025.zip",
+  "fetched": "2026-10-23",
+  "sha1": "48b03af5b44c6c3755f54d78ce4e42954d2c1929",
+  "url": "https://www.ercot.com/misdownload/servlets/mirDownload?doclookupId=1177737535",
+  "via": "urllib"
+ },
+ "RTM_2026.zip": {
+  "bytes": 10869647,
+  "ercot_name": "rpt.00013061.0000000000000000.20261018.080805777.RTMLZHBSPP_2026.zip",
+  "fetched": "2026-10-23",
+  "sha1": "600f06cd88fe64547d54ca7b6e7d564a53bd96bd",
+  "url": "https://www.ercot.com/misdownload/servlets/mirDownload?doclookupId=1287900508",
+  "via": "urllib"
+ }
+}
