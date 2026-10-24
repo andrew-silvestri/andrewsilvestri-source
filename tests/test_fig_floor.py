@@ -284,10 +284,12 @@ BUILDERS = [
     ("build_allocation_chain.py", "."),
     ("climate-cost/build_allocation_figure.py", "climate-cost"),
     ("continents/fig_continents.py", "continents"),
-    ("heat/model.py", "heat"),
     ("longevity-quotient/build_lq.py", "longevity-quotient"),
     ("longevity-quotient/fig_lq_explained.py", "longevity-quotient"),
     ("build_skyline_figure.py", "."),
+    # heat/model.py dropped 2026-10-23 (R4): heat.html runs on EIA's monthly prices and draws only
+    # SVG (charts.js series); its five figures and phone renders left site/assets/ with their
+    # ASSET_OF rows below.
     # storage/model.py dropped 2026-10-23 (R4, D-20): storage.html runs on ERCOT's real prices and
     # draws only SVG (charts.js "days", tests/test_kit.js); its five synthetic-year figures and
     # their phone renders left site/assets/, and their ASSET_OF rows below went with them.
@@ -302,20 +304,10 @@ BUILDERS = [
 # the two must not be allowed to disagree silently, so ASSET_OF is asserted
 # against site/assets/ at the end of the run.
 ASSET_OF = {
-    "fig1_breakeven_price.png": "heat_fig1_breakeven_price.png",
-    "fig2_lcoh_stacked.png": "heat_fig2_lcoh_stacked.png",
-    "fig3_costgap_contour.png": "heat_fig3_costgap_contour.png",
-    "fig4_tornado.png": "heat_fig4_tornado.png",
-    "fig5_emissions_parity.png": "heat_fig5_emissions_parity.png",
     # A2.1's narrow renders. The builders name these without the site's prefix,
     # the same as their wide counterparts.
-    "fig2_lcoh_stacked-phone.png": "heat_fig2_lcoh_stacked-phone.png",
-    "fig3_costgap_contour-phone.png": "heat_fig3_costgap_contour-phone.png",
     "fig1_allometry-phone.png": "lq_allometry-phone.png",
     "fig2_lq_ranked-phone.png": "lq_ranked-phone.png",
-    "fig1_breakeven_price-phone.png": "heat_fig1_breakeven_price-phone.png",
-    "fig4_tornado-phone.png": "heat_fig4_tornado-phone.png",
-    "fig5_emissions_parity-phone.png": "heat_fig5_emissions_parity-phone.png",
     "fig0_lq_explained-phone.png": "lq_explained-phone.png",
     "fig0_lq_explained.png": "lq_explained.png",
     "fig1_allometry.png": "lq_allometry.png",

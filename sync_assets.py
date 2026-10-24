@@ -39,7 +39,9 @@ ASSETS = os.path.join(SITE, "assets")
 # longevity-quotient/ - see rezip_downloads.py, which rebuilds the zips from
 # these folders so the download always matches what ships.
 PREFIX_SOURCE = {
-    "heat_": os.path.join(HERE, "heat"),
+    # "heat_" removed 2026-10-23 (R4): heat.html has no PNG figures since its
+    # rework on EIA's monthly prices, and heat/model.py still writes its old
+    # figures into heat/outputs/; a prefix left here would copy them back.
     "dac_": os.path.join(PARENT, "02 DAC Adsorption TEA"),
     # "storage_" removed 2026-10-23 (R4): storage.html has no PNG figures since
     # its rework on ERCOT's real prices, and storage/model.py still writes the

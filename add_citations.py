@@ -55,34 +55,55 @@ SITE = os.path.join(HERE, "site")
 # For each page: the reference list, and for each reference the phrase in the
 # prose it supports. The phrase must be unique on the page.
 PAGES = {
+    # R4 (2026-10-23): heat.html runs on EIA's monthly Texas prices and ERCOT's
+    # hourly prices. Every source opened by R4 that day (SOURCES Part 7);
+    # heat/update_page.py applies this entry itself. D-19's corrections (the
+    # Zuberi title, ATB for the rate only) carry over.
     "heat.html": [
         ("Anchor phrase", "Source", "What it supports"),
-        # Title corrected 2026-10-22 (D-19 item 4; report opened by QA,
-        # OSTI 1867393). The 20-year life is this report's, not ATB's (item 5).
-        ("resistive electric boiler",
+        ("LBNL's study of boiler electrification",
          'Zuberi, Hasanbeigi &amp; Morrow, <i>Electrification of Boilers in '
          'U.S. Manufacturing</i>, Lawrence Berkeley National Laboratory, '
          'LBNL-2001436, November 2021.',
-         "Electric boiler efficiency and capital cost ranges, and the "
-         "twenty-year economic life."),
-        # The anchor carries "assumed" because the prose does: heat/model.py
-        # sets P_e and P_g as placeholders and never reads data/, so the page
-        # says assumed at first use and this phrase has to match it.
-        ("At an assumed gas price of $3.50",
-         'U.S. Energy Information Administration, <i>Electric Power Monthly</i> '
-         'Table 5.6.A and the Natural Gas Industrial Price series.',
-         "The series to use for Texas industrial electricity and gas prices. "
-         "The shipped run does not: its two prices are placeholders set in "
-         "<code>heat/model.py</code>."),
-        ("grid carbon intensity",
+         "Electric boilers 95-99% efficient, existing fossil boilers 70-80%; "
+         "electric capital nearly 40% below gas; fixed operations 1% of "
+         "investment; the twenty-year life."),
+        ("On EIA's Texas industrial prices",
+         'U.S. Energy Information Administration, API v2: electricity retail '
+         'sales (Texas, industrial, monthly price); natural gas Texas '
+         'industrial price N3035TX3; Texas heat content of deliveries to '
+         'consumers; percent of industrial deliveries included in prices, '
+         'N3035TX4.',
+         "Every monthly price and the gas conversion; EIA's coverage of "
+         "industrial gas deliveries."),
+        ("ERCOT's real-time market",
+         'ERCOT, <i>Historical RTM Load Zone and Hub Prices</i> (NP6-785-ER), '
+         'Market Information System report 13061, 2011 to date.',
+         "The hourly hub-average price the second boiler buys at."),
+        ("ERCOT's own charges",
+         'Oncor Electric Delivery, <i>Tariff for Retail Delivery Service</i>, '
+         's.6.1.1.1.7 Transmission Service (2026); CenterPoint Energy Houston '
+         'Electric, <i>Tariff for Retail Delivery Service</i>, s.6.1.1.1.5; ERCOT '
+         'Market Notice M-A111125-01 (administrative fee); Potomac Economics, '
+         '<i>2025 State of the Market Report for the ERCOT Electricity Markets</i>.',
+         "The low, central and high charges on top of the wholesale price: no "
+         "per-kWh delivery charge at transmission voltage, demand charges set "
+         "in four summer intervals, the $0.61/MWh fee, ancillary services and "
+         "uplift per MWh of load."),
+        ("EPA's eGRID",
          'U.S. EPA, <i>eGRID2023</i> (revised 12 June 2025), ERCT subregion '
-         'output emission rates; and EPA, <i>Emission Factors for Greenhouse '
-         'Gas Inventories</i>, stationary combustion.',
-         "Grid carbon intensity, 733.862 lb CO&#8322;/MWh or 0.333 t/MWh, and "
-         "the natural gas emission factor. The CO&#8322; rate is used rather "
-         "than the CO&#8322;e rate, because the gas factor it is compared "
-         "against is also carbon dioxide only."),
-        ("levelised cost",
+         'output emission rates; and EPA, <i>GHG Emission Factors Hub</i> 2025, '
+         'stationary combustion.',
+         "ERCOT's average rate, 733.862 lb CO&#8322;/MWh, and the natural gas "
+         "factor, 53.06 kg CO&#8322;/MMBtu. CO&#8322; rather than CO&#8322;e, "
+         "because the gas factor is carbon dioxide only."),
+        ("EPA's AVERT",
+         'U.S. EPA, <i>AVERT</i> v4.3, avoided emission rates, 2023 data, Texas '
+         'region (calculated April 2024).',
+         "The marginal rate: 1,293.7 lb CO&#8322;/MWh for a load that is the "
+         "same in every hour, adjusted for transmission and distribution "
+         "losses."),
+        ("capital recovered over",
          'NREL, <i>Annual Technology Baseline</i> 2024, financial assumptions.',
          # ATB uses a 30-year recovery period and a fixed charge rate; only
          # the 8% matches the model (D-19 item 5).
