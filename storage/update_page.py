@@ -124,6 +124,13 @@ def claims(F, P, I):
             bad.append(f"{y}: the hub average is outside the zone range")
     if F["fleet_energy"] >= P["rtm"][F["fleet_last"]]["dur"]["2"]["net_per_kw"]:
         bad.append("the fleet's energy income is not below the two-hour ceiling")
+    if dh[F["last"]] != max(dh.values()):
+        bad.append("the latest full year is not the most spread-out year, as the hero and standfirst say")
+    if max(c4.values()) >= min(M_atb(), atb_over(15)):
+        bad.append("a ceiling reaches the ownership cost; 'more than the ceiling in any year' fails")
+    dam5 = sorted(sorted(F["full"], key=lambda y: -P["dam"][y]["dur"]["4"]["net_per_kw"])[:len(F["scar"])])
+    if dam5 != F["scar"]:
+        bad.append(f"the day-ahead five best years {dam5} are not the real-time five {F['scar']}")
     ice = P["ice"]
     if not (ice["annual_pct"] < 3 and ice["month_pct_max"] < 8 and ice["r"] >= 0.95):
         bad.append(f"the ICE cross-check is outside its tolerance: {ice}")
@@ -131,8 +138,21 @@ def claims(F, P, I):
         raise SystemExit("storage/update_page.py: the payload contradicts the page's words:\n  " + "\n  ".join(bad))
 
 
+def atb_over(years):
+    """The same ATB capital and fixed O&M, the capital spread over `years` at model.py's rate."""
+    import model as M
+    r = M.ATB_DISCOUNT_RATE
+    crf = r * (1 + r) ** years / ((1 + r) ** years - 1)
+    return crf * M.ATB_CAPEX_USD_PER_KW_2024 + M.ATB_FOM_USD_PER_KW_YR_2024
+
+
+def M_atb():
+    import model as M
+    return M.annualized_storage_cost_per_kw_yr()
+
+
 def hero_spec(F):
-    A, B = F["top"], F["last"]
+    A, B = F["fast"], F["last"]
 
     def year(y):
         d = F["R"][y]["dur"]["4"]
@@ -142,32 +162,35 @@ def hero_spec(F):
             "title": f"A four-hour battery's profit each day of {A} and of {B}, per kilowatt, at ERCOT's hub average, "
                      f"with perfect hindsight",
             "a": year(A), "b": year(B), "y": {"label": "$ per kW each day"},
-            "counter": {"prefix": "$", "unit": " per kW so far", "decimals": 0}}
+            "counter": {"prefix": "$", "unit": " per kW so far", "unitDone": " per kW for the year", "decimals": 0}}
 
 
 def hero(F):
     import insight
-    A, B = F["top"], F["last"]
+    A, B = F["fast"], F["last"]
     ra, rb = F["R"][A]["dur"]["4"], F["R"][B]["dur"]["4"]
     (da, va), (db, vb) = best_day(A, F["R"][A]), best_day(B, F["R"][B])
     ma = half_months(A, F["R"][A])
     steps = [
-        (f"<p><b>{A}: ${usd(F['c4'][A])} per kilowatt.</b> The year this battery would have earned most, drawn one "
-         f"day at a time. Most days it made a little; a few it made a great deal. Its best day, "
+        (f"<p><b>{A}: ${usd(F['c4'][A])} per kilowatt.</b> The year in which half the money came fastest, drawn one "
+         f"day at a time. Most days the battery made a little; a few it made a great deal. Its best day, "
          f"{da.day} {MONTHS[da.month - 1]}, was worth ${usd2(va)} per kilowatt on its own.</p>", {"t": 1}),
         (f"<p><b>Half of it on {ra['days_for_half']} days.</b> Sort the days that made money from best to worst: "
-         f"the first {ra['days_for_half']} carry half the year's total, most of them in "
-         f"{' and '.join(ma[:2])}.</p>", {"t": 1, "lit": 1}),
+         f"the first {ra['days_for_half']} carry half the year's total, {'all' if len(ma) == 1 else 'most'} of them in "
+         f"{ma[0]}.</p>", {"t": 1, "lit": 1}),
         (f"<p><b>{B}: ${usd(F['c4'][B])}.</b> The same battery and the same scale, {B}. The tall days are gone: the best "
-         f"one, {db.day} {MONTHS[db.month - 1]}, made ${usd2(vb)}. A typical year since 2011 earns about "
-         f"${usd(F['med'])}, so {A} paid about {F['c4'][A] / F['med']:.0f} times a typical year.</p>", {"t": 1, "mix": 1}),
-        (f"<p><b>Half on {rb['days_for_half']} days.</b> Without scarcity the money spreads out: it took "
-         f"{rb['days_for_half']} days to reach half in {B}.</p>", {"t": 1, "mix": 1, "lit": 1}),
+         f"one, {db.day} {MONTHS[db.month - 1]}, made ${usd2(vb)}. The market monitor credits the growth of storage "
+         f"with much of the fall in price spikes during the evening ramp, as the sun sets.</p>", {"t": 1, "mix": 1}),
+        (f"<p><b>Half on {rb['days_for_half']} days.</b> No single day stands out: the money came in a little at a "
+         f"time, and it took {rb['days_for_half']} days to reach half, more than any year since 2011.</p>",
+         {"t": 1, "mix": 1, "lit": 1}),
     ]
     return insight.scrolly(hero_spec(F), steps, from_state={"t": 0})
 
 
 def fast_event(F, q):
+    """The event the market monitor names for the fastest year, if it names one and the
+    year's half-days all fall in that month."""
     y = F["fast"]
     if y not in EVENTS:
         return ""
@@ -175,7 +198,17 @@ def fast_event(F, q):
     days = [day_of(y, i) for i in F["R"][y]["dur"]["4"]["half_days"]]
     if name not in q["spikes"] or not all(d.month == month for d in days):
         raise SystemExit(f"storage/update_page.py: {name} is named for {y}, but the monitor's quote or the dates do not bear it out")
-    return f", during {name} in {MONTHS[month - 1]}"
+    return f", the month of {name}"
+
+
+FRACTIONS = {"quarter": 0.25, "third": 1 / 3, "half": 0.5}
+
+
+def fraction_word(x):
+    w = min(FRACTIONS, key=lambda k: abs(FRACTIONS[k] - x))
+    if abs(FRACTIONS[w] - x) > 0.05:
+        raise SystemExit(f"storage/update_page.py: the fleet's share of the ceiling, {x:.2f}, is no plain fraction")
+    return w
 
 
 def year_rows(F):
@@ -208,6 +241,10 @@ def values(P, I):
     q = {k: v["text"] for k, v in I["quotes"].items()}
     last_b = best_day(F["last"], F["R"][F["last"]])[1]
     fast_d = F["R"][F["fast"]]["dur"]["4"]
+    last_c = F["c4"][F["last"]]
+    last_earned = f"the median ${usd(last_c)}" if abs(last_c - F["med"]) < 1e-9 else f"${usd(last_c)}"
+    frac = fraction_word(F["fleet_energy"] / P["rtm"][F["fleet_last"]]["dur"]["2"]["net_per_kw"])
+    dam_loose = [y for y in F["scar"] if P["dam"][y]["dur"]["4"]["days_for_half"] > SCARCE_DAYS]
     fm = half_months(F["fast"], F["R"][F["fast"]])
     part_note = ""
     for y, r in sorted(F["part"].items()):
@@ -232,18 +269,21 @@ def values(P, I):
             f"The {len(F['scar'])} best years since 2011 were all years when half the money came in "
             f"{max(F['dh'][y] for y in F['scar'])} days or fewer, and in {F['fast']} it came in just "
             f"{fast_d['days_for_half']} days of {fm[0]}.",
-            f"In the other {len(F['ordy'])} full years the same battery could have earned ${usd(min(ord_c))} to ${usd(max(ord_c))} per "
-            f"kilowatt, spread over {min(F['dh'][y] for y in F['ordy'])} days or more ({F['dh'][F['last']]} in "
-            f"{F['last']}).",
-            f"Real batteries earn well under the ceiling: ERCOT's independent market monitor puts the fleet's income from "
-            f"energy at about ${usd(F['fleet_energy'])} per kilowatt in {fl}, against a ${usd(P['rtm'][fl]['dur']['2']['net_per_kw'])} "
-            f"ceiling for a two-hour battery, the fleet's typical size."]),
+            f"{F['last']} earned {last_earned} but was the most spread out: no day made more than "
+            f"${usd2(last_b)} per kilowatt, and half its money took {F['dh'][F['last']]} days to come in.",
+            f"Real batteries earned roughly a {frac} of the ceiling: read from the market monitor's chart, the fleet's "
+            f"income from energy was about ${usd(F['fleet_energy'])} per kilowatt in {fl}, against "
+            f"${usd(P['rtm'][fl]['dur']['2']['net_per_kw'])} for a two-hour battery with perfect foresight."]),
         "hero": hero(F),
         "fast_year": F["fast"], "fast_days": str(fast_d["days_for_half"]), "fast_event": fast_event(F, q),
         "top_year": F["top"], "top_val": usd(F["c4"][F["top"]]), "med_val": usd(F["med"]),
-        "fleet_mw": f"{I['capacity_mw']:,}", "last_year": F["last"], "last_days": str(F["dh"][F["last"]]),
+        "last_year": F["last"], "last_days": str(F["dh"][F["last"]]),
+        "last_earned": last_earned, "fast_month": fm[0], "fleet_frac": frac, "cdeg_leg": f"{P['c_deg'] / 2:.0f}",
+        "q_as": html.escape(q["as_before"]),
+        "dam_note": ("" if not dam_loose else ", though " + ", ".join(
+            f"{y}'s took {P['dam'][y]['dur']['4']['days_for_half']} days to reach half" for y in dam_loose)),
         "last_best": usd2(last_b), "mw": "one",
-        "n_full": str(len(F["full"])), "n_ord": str(len(F["ordy"])), "n_scar": str(len(F["scar"])),
+        "n_ord": str(len(F["ordy"])), "n_scar": str(len(F["scar"])),
         "ord_lo": usd(min(ord_c)), "ord_hi": usd(max(ord_c)),
         "ord_days_lo": str(min(F["dh"][y] for y in F["ordy"])),
         "scar_lo": usd(min(sc_c)), "scar_hi": usd(max(sc_c)),
@@ -254,13 +294,13 @@ def values(P, I):
         "ceil2_last": usd(P["rtm"][fl]["dur"]["2"]["net_per_kw"]), "fleet_hours": f"{F['fleet_hours']:.1f}",
         "through_long": f"{th.day} {MONTHS[th.month - 1]} {th.year}",
         "ice_pct": f"{P['ice']['annual_pct']:.1f}",
-        "rte": f"{100 * P['rte']:.0f}", "cdeg": f"{P['c_deg']:.0f}",
+        "rte": f"{100 * P['rte']:.0f}",
         "dam_lo": usd(min(dam)), "dam_hi": usd(max(dam)),
         "dur_rows": dur_rows(F),
         "z_hi_year": zy[0], "z_lo_year": zy[-1],
         "z1_lo": usd(z[zy[0]][zlo(zy[0])]), "z1_lo_name": zlo(zy[0]), "z1_hi": usd(z[zy[0]][zhi(zy[0])]), "z1_hi_name": zhi(zy[0]),
         "z2_lo": usd(z[zy[-1]][zlo(zy[-1])]), "z2_lo_name": zlo(zy[-1]), "z2_hi": usd(z[zy[-1]][zhi(zy[-1])]), "z2_hi_name": zhi(zy[-1]),
-        "ac_hours": f"{4 * eta:.2f}", "atb": usd(M.annualized_storage_cost_per_kw_yr()),
+        "ac_hours": f"{4 * eta:.2f}", "atb": usd(M.annualized_storage_cost_per_kw_yr()), "atb15": usd(atb_over(15)),
         "zip_kb": f"{round(os.path.getsize(ZIP) / 1024) if os.path.exists(ZIP) else 0:,}",
     }
     return v

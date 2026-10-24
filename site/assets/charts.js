@@ -568,7 +568,8 @@
     // the counter's widest text is the larger year's sum of its positive days
     function posSum(vs) { return vs.reduce(function (a, v) { return a + (v > 0 ? v : 0); }, 0); }
     var c = spec.counter || {}, cmax = Math.max(posSum(A.values), posSum(B.values));
-    var cntW = ((c.prefix || '') + fmt(cmax, c.decimals || 0) + (c.unit || '')).length * CW_BIG;
+    var cntW = ((c.prefix || '') + fmt(cmax, c.decimals || 0)).length * CW_BIG +
+      Math.max(String(c.unit || '').length, String(c.unitDone || '').length) * CW_BIG;
     var yrW = Math.max(String(A.label).length, String(B.label).length) * CW_BIG + 12;
     if (strict && yrW + cntW > w) throw new Error('charts: ' + spec.id + ' at ' + w + 'px: year and counter do not fit one row');
     var hw = Math.max(String(A.halfText || '').length, String(B.halfText || '').length) * CW;
@@ -608,7 +609,8 @@
     }
     var c = spec.counter || {};
     o.clip = { width: r2(t * L.pw + 1) };
-    o.cnt = { _text: (c.prefix || '') + fmt(sum, c.decimals || 0) + (c.unit || '') };
+    // the counter says "so far" while days remain to draw, and its unitDone once they are all drawn
+    o.cnt = { _text: (c.prefix || '') + fmt(sum, c.decimals || 0) + ((shown >= L.n && c.unitDone != null) ? c.unitDone : (c.unit || '')) };
     o.yr = { _text: String(cur.label) };
     o.hl = { opacity: r2(lit), _text: (cur.halfText || '') };
     return o;

@@ -569,26 +569,29 @@ PAGES = {
         ("independent market monitor",
          'Potomac Economics, <i>2025 State of the Market Report for the ERCOT '
          'Electricity Markets</i>, June 2026.',
-         "The fleet's size at the end of 2025, its revenue 2021-2025 (Figure 17, "
-         "read by eye), and the quoted passages on revenue spikes, the 2025 "
-         "decline and price spikes in the solar ramp."),
+         "ERCOT's share of Texas demand (about 90%), the fleet's size at the end "
+         "of 2025, its revenue 2021-2025 (Figure 17, read by eye), what ECRS "
+         "stands for, and the quoted passages on revenue spikes, the 2025 "
+         "decline, ancillary services before 2024 and price spikes in the "
+         "solar ramp."),
         ("on-peak trades EIA publishes",
          'U.S. Energy Information Administration, <i>Wholesale Electricity and '
          'Natural Gas Market Data</i>, ICE, 2015 (ice_electric-2015final.xls).',
          "The independent check on the price reader: ERCOT North 345 kV on-peak "
          "trades."),
-        ("A linear program",
+        ("a linear program",
          'Sioshansi, Denholm, Jenkin &amp; Weiss, &ldquo;Estimating the value '
          'of electricity storage in PJM: Arbitrage and some welfare '
          'effects&rdquo;, <i>Energy Economics</i> 31(2):269&ndash;277, 2009.',
          "The perfect-foresight dispatch formulation and its upper-bound "
          "character."),
-        ("round trip",
-         'Mongird <i>et al.</i>, <i>Grid Energy Storage Technology Cost and '
+        ("round-trip efficiency",
+         'Mongird <i>et al.</i>, <i>2020 Grid Energy Storage Technology Cost and '
          'Performance Assessment</i>, Pacific Northwest National Laboratory, '
-         '2020.',
-         # D-21 item 3: the report gives RTE 86% and no degradation cost;
-         # its only per-MWh figure is variable O&M, $0.5125/MWh.
+         'DOE/PA-0204, December 2020.',
+         # D-21 item 3: the report gives RTE 86% (p.13) and no degradation
+         # cost per MWh; its per-MWh figures are variable O&M, $0.5125/MWh,
+         # and RTE losses, $0.005/kWh (Figure 2). Re-opened by R4, 2026-10-23.
          "Round-trip efficiency (86%). It gives no degradation cost; the "
          "model's $2/MWh of throughput is an assumption."),
         ("Annual Technology Baseline",
@@ -600,8 +603,9 @@ PAGES = {
          # D-21 item 4: ATB gives batteries no discount rate and a 15-year
          # life; the twenty years and the 8% are the model's.
          "plus $44/kW-yr fixed operations, annualised over twenty years at "
-         "an assumed eight per cent. A representative figure for scale, not a "
-         "quote for any particular project."),
+         "an assumed eight per cent; ATB itself gives these batteries a 15-year "
+         "life and no financial assumptions. A representative figure for scale, "
+         "not a quote for any particular project."),
     ],
     # longevity.html is not here on purpose. Its page generator
     # (longevity-quotient/update_page.py) edits the shipped file in place and

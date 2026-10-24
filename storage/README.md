@@ -1,46 +1,37 @@
-# 03 — Storage Revenue Stack Simulator (ERCOT-style arbitrage)
+# Battery revenue on ERCOT's real prices
 
-This is **Model 1 from your two-year plan** (storage revenue stack simulator, baseline +
-sensitivity framework), and it covers poster options #1 (ERCOT battery arbitrage
-backtest) and #24 (2h vs 4h vs 8h duration value).
+The code behind andrewsilvestri.com/storage.html: a battery that trades energy on
+ERCOT's hub and load-zone prices, every year from 2011, with perfect foresight, and
+what that says about when a battery makes its money.
 
-Perfect-foresight LP dispatch of a 1 MW battery against hourly prices, solved in monthly
-chunks with SoC carry-over. Objective includes a cycling (degradation) cost per MWh of
-throughput; efficiency split symmetrically (η = √RTE per leg).
+Every figure the page prints is in `outputs/payload.json`, written by
+`build_storage.py`. This README carries no numbers of its own, so it cannot go
+stale against them.
 
-## Headline results (synthetic price year, seed 42)
+## Run it
 
-Net of the cycling cost, as `model.py` writes them to `outputs/summary.csv`;
-rerun it and that file, not this table, is the record.
+    python fetch_ercot.py        # ERCOT's yearly DAM and RTM files into data/raw/ (~230 MB), recorded in data/fetched.json
+    python build_storage.py      # every year, 1/2/4/8 h, hub average; zones; the EIA ICE check -> outputs/payload.json (~20 min)
+    python update_page.py        # what the page would say (--apply writes ../site/storage.html inside the site's repo)
+    python test_storage.py       # the checks; --break NAME puts each one's fault back and must exit 1
 
-| Duration | Net revenue $/kW-yr | Equivalent cycles |
-|---|---|---|
-| 2h | 98.1 | 1361 |
-| 4h | 107.1 | 786 |
-| 8h | 111.0 | 424 |
+Python 3.12 with numpy, pandas, openpyxl, xlrd and pulp (CBC).
 
-Duration value flattens hard past 4h on energy arbitrage alone — the classic result; the
-next revenue stack layers (AS, capacity-like payments) are the roadmap extension.
-
-## Prices — important caveat
-
-ercot.com is blocked from this sandbox, so the model generates a **documented synthetic
-ERCOT-like year** (diurnal solar-belly + evening peak, summer scarcity spikes, 152
-negative hours (1.7%); mean ≈ $40/MWh). The moment you drop a real ERCOT DAM CSV at
-`data/prices.csv` (columns `timestamp,price_usd_mwh`), `model.py` uses it automatically.
-Perfect foresight is an upper bound — real DAM bidding captures roughly 70–90%.
-
-## Contents
+## The pieces
 
 | File | What it is |
 |---|---|
-| `model.py` | Verified reference (PuLP/CBC LP). Writes all figures, `outputs/dispatch_4h.csv`, summaries. |
-| `storage_arbitrage.xlsx` | `Dispatch` (8760 hourly rows) + `Summary` (live SUMPRODUCT aggregation, 730-hour blocks as in fig5). `python sync_workbook.py` writes `outputs/dispatch_4h.csv` into it; `--check` exits 1 if it is behind. |
-| `julia/model.jl` + `Project.toml` | **JuMP + HiGHS** port — the industry-standard stack for this model class. Untested in sandbox (Julia blocked); run locally. |
-| `octave/model.m` | MATLAB/Octave port using built-in `glpk` (1-week demo window; set `ndays=365` for full year). |
-| `outputs/` | fig1 price duration + diurnal shape · fig2 summer dispatch week · fig3 duration value · fig4 RTE×degradation sensitivity · fig5 monthly revenue · summary.csv |
+| `fetch_ercot.py`, `netfetch.py` | Downloads ERCOT MIS reports 13060 (Historical DAM Load Zone and Hub Prices) and 13061 (Historical RTM Load Zone and Hub Prices), one zip a year, and records URL, date, bytes and SHA-1. ERCOT replaces the current year's file in place; the listing is read each run. |
+| `ercot_prices.py` | Reads a year: rows in delivery order, daylight-saving days of 23 and 25 hours checked against Central time, footer rows skipped, a missing 15-minute interval filled from its hour (at most four a year, listed). Caches each year by the zip's SHA-1 in `data/cache/`. |
+| `model.py` | `optimize()`: the dispatch. Perfect foresight over 30-day windows with the charge carried across, round trip split as the square root per leg, a cycling cost per MWh charged and discharged, and a binary per hour so the battery never charges and discharges at once. Also the NREL ATB 2024 cost reference. Its `main()` still runs the old synthetic price year, which only `test_storage.py` uses. |
+| `build_storage.py` | The payload: per year and market, the ceilings for 1, 2, 4 and 8 hours, the 4-hour battery's daily profit, days for half, share from the best ten days; the 4-hour battery at every hub and zone for two years; ERCOT's day-ahead North hub against EIA's ICE trades for 2015 (`data/ice_electric-2015final.xls`). |
+| `update_page.py`, `template.html` | The page. Every number comes from the payload or `data/imm.json` (the market monitor's quotes, and Figure 17's values read by eye, labelled so). `claims()` stops the build if the payload contradicts the page's words. |
+| `test_storage.py` | Eight checks, seven with a break that must fail. |
+| `julia/`, `octave/`, `storage_arbitrage.xlsx` | Ports of the dispatch (JuMP + HiGHS; Octave + glpk) and a workbook of the same arithmetic, from the synthetic-year version of this project; they do not read ERCOT's files. |
 
-## Next steps (per the two-year plan)
+## What it is not
 
-Add ancillary-service co-optimization (revenue stack layer 2), then a degradation model
-(cycle-depth counting) feeding a cash-flow sheet — that's Model 2 (Fall 2026) done.
+A ceiling, not a forecast: no real battery knows next month's prices. Energy only:
+no reserve services, which is where ERCOT's batteries earned most of their money
+before 2024. Hourly average prices at hubs and load zones, not 15-minute prices at a
+battery's own node. An explainer, not investment advice.

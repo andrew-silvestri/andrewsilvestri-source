@@ -87,8 +87,9 @@ const SPECS = SPECS_FIX.concat(fs.readdirSync(SITE).filter(f => f.endsWith('.htm
 
 /* ------------------------------------------------------------ parity --- */
 function canon(svgText) {
-  const d = new JSDOM('<body>' + svgText + '</body>').window.document;
-  return d.body.innerHTML;
+  const w = new JSDOM('<body>' + svgText + '</body>').window, out = w.document.body.innerHTML;
+  w.close();
+  return out;
 }
 {
   const grid = { series: [0, 0.07, 0.33, 0.5, 0.81, 1].map(t => ({ t })), split: [0, 0.2, 0.5, 0.75, 1].map(s => ({ s })),
@@ -107,6 +108,8 @@ function canon(svgText) {
       const dom = new JSDOM('<body>' + Charts.render(spec, a, { width: w }) + '</body>');
       Charts.update(dom.window.document.querySelector('svg'), spec, b);
       const got = dom.window.document.body.innerHTML, want = canon(Charts.render(spec, b, { width: w }));
+      // R4: a days chart is 365 keyed bars; unclosed windows over its 224 pairs ran node out of memory
+      dom.window.close();
       pairs++;
       if (got !== want && bad.length < 3) bad.push(spec.id + ' @' + w + ' ' + JSON.stringify(a) + '->' + JSON.stringify(b));
     }
