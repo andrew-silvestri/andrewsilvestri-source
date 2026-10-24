@@ -40,7 +40,18 @@ that resolves to a genus page or to nothing is recorded with no article).
 contains the scientific name as a phrase (`title_and_abstract.search`,
 `publication_year:2015-2024`), one metered filter call per species.
 **CC0.** `data/openalex_counts.csv` (ships) with the run log
-`data/openalex_run_log.txt` recording what each run cost.
+`data/openalex_run_log.txt` recording what each run cost. Fetched
+September 2026; kept as the count the page used before D-32.
+
+**Research effort by record type** (the page's response since 24 October
+2026, D-32). The same query with `group_by=type`, one call per species for
+the 9,113 modelled birds and the 1,556 others with a Red List row:
+`data/openalex_types.csv` (ships, CC0), run log `data/types_run_log.txt`.
+Research means the OpenAlex types listed in `record_types.py`; `dataset`
+(GBIF occurrence downloads, almost all) and `reference-entry` (Red List
+assessments and Birds of the World accounts) are not research.
+`data/type_sources.csv` (ships, CC0) is the spot check behind that sentence:
+the sources of each type for 40 sampled species (`fetch_type_sources.py`).
 
 **Red List category** (IUCN Red List of Threatened Species, API v4,
 `/taxa/class/Aves`, latest global assessment per species). Terms of use
@@ -68,7 +79,8 @@ that ships.
 names the class (search strings in `fetch_groups.py`), restricted to works
 whose primary topic is in Agricultural and Biological Sciences or
 Environmental Science. Five vertebrate classes only. `data/group_counts.csv`
-(ships) with the exact URLs.
+(ships) with the exact URLs, split by record type since 24 October 2026; the
+figure uses its `research` column.
 
 ## Looked up, not recomputed
 

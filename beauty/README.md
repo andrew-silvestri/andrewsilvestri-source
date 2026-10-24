@@ -1,8 +1,10 @@
 # Endangered, and studied
 
 Source for `site/beauty.html`: does being endangered get a bird studied?
-The page fits research effort per species (papers naming the species,
-2015–2024) against Red List category, body mass, range size, years since
+The page fits research effort per species (research works naming the
+species, 2015–2024: OpenAlex records of a research type, not the GBIF
+downloads and Red List and Birds of the World entries that make up most of
+what a search returns; `record_types.py`, D-32) against Red List category, body mass, range size, years since
 description, rated attractiveness and public attention, with family fixed
 effects, for the world's birds; and sets that beside the published
 species-level models for birds and other taxa.
@@ -45,8 +47,11 @@ as a changed hash rather than as a quietly different number on a rebuild.
 python3 fetch_traits.py      # AVONET + attractiveness deposit, hash-pinned  (network once)
 python3 fetch_years.py       # year of description, GBIF/Catalogue of Life   (~4 h, no key)
 python3 fetch_wikipedia.py   # English Wikipedia pageviews 2016-2025         (~3 h, no key)
-python3 fetch_openalex.py    # papers per species                             (OPENALEX_KEY; see cost)
+python3 fetch_openalex.py    # every work naming the species, September 2026  (OPENALEX_KEY; see cost)
 python3 fetch_iucn.py        # Red List category per species                 (IUCN_TOKEN)
+python3 fetch_types.py       # the same works by record type, the response   (OPENALEX_KEY; ~$10.70;
+                             #   species from the shipped data/birds_open.csv)
+python3 fetch_type_sources.py  # which sources the record types come from     (3 calls)
 python3 fetch_groups.py      # Red List Table 1a + class-level paper counts  (10 OpenAlex calls)
 python3 build_beauty.py      # join, models, bootstrap -> outputs/beauty_payload.json
 python3 fig_beauty.py        # three figures -> site/assets/, each must report 0 layout problems
@@ -101,6 +106,10 @@ from the response headers on 6 September 2026). A filtered list call with
 no search phrase is $0.0001, a tenth of that. The per-species fetch is one
 call per species, so the full run for 11,009 birds is about $11: twelve
 days on a free key's $1.00 a day, or about a hundred and ten without one.
+`fetch_types.py` is the same call with `group_by=type` and the same price
+(measured 24 October 2026); it fetches the 9,113 modelled birds and then
+the 1,556 others with a Red List row, 10,669 calls, and its `cost_usd`
+column is what the page sums.
 The class-level fetch is ten calls. `data/openalex_counts.csv` carries what
 each call cost in its `cost_usd` column, and the page quotes that column's
 sum; `data/openalex_run_log.txt` records each run's total and comes to less,
@@ -129,7 +138,8 @@ the API (`redlist_source: api`), and `test_beauty.py` fails otherwise.
 | `netutil.py` | the shared GET: descriptive User-Agent, backoff, clean stop on 429 |
 | `fetch_*.py` | one script per source; each says what it writes and under what licence |
 | `build_beauty.py` | join, two OLS fits with family fixed effects, g-computed category means, drop-one R², bootstrap |
-| `fig_beauty.py` | the three figures through `sitefig.py` |
+| `record_types.py` | which OpenAlex record types count as research, fixed before the refit |
+| `fig_beauty.py` | the figures through `sitefig.py`, the hero with a 350px phone render |
 | `update_page.py` | renders `template.html` from the payload into `site/beauty.html` |
 | `test_beauty.py` | the archive-contents check, the API-source check, the coefficient recomputation, the page drift check |
 | `models.json` | the published species-level models and what each reports for threat status, with the read status of each |
@@ -137,29 +147,23 @@ the API (`redlist_source: api`), and `test_beauty.py` fails otherwise.
 | `DATA_SOURCES.md` | every input, its licence, and whether it ships |
 | `RESEARCH.md` | the Stage 1 feasibility document, the provenance record |
 
-## What the fits found (2026-09-09)
+## What the fits found
 
-*Added 2026-09-09, after the fits.* The model was fitted for the first time on
-9 September 2026, and the result runs against the thesis this project was built
-to test.
+The page carries the current numbers; this section says what changed and
+why, so nobody re-derives it.
 
-- **Threatened birds are studied MORE.** A Critically Endangered bird has 2.65x
-  the papers of a Least Concern one (+0.974, p 1.2e-58) with family, mass, range,
-  description year and rated attractiveness held fixed. Adjusting widens the gap rather than
-  collapsing it.
-- **Rated attractiveness explains little.** Drop-one R-squared 0.0008 (95%
-  bootstrap interval 0.0002 to 0.0017), above body mass (0.0001) and far
-  below Wikipedia views (0.1041). The project's own appeal proxy is the weak
-  one.
-- **Attention carries a third of the threat effect** at Critically Endangered
-  (34%), rising monotonically with severity. Direction assumed, not shown.
-- **The effect survives a pre-registered artefact test** (`topic_test.py`
-  against `PRESPEC_topics_2026-09-09.md`): +0.721 in molecular biology, where a
-  status review cannot be published.
-- **Direction is not established.** A bird cannot be listed without evidence,
-  and the 34 Data Deficient birds are the least-studied group at every quartile.
-  The page reports an association.
-
-The page is `site/beauty.html`, titled "Endangered, and studied".
-`STEP0_2026-09-09.md` holds the tables; `RESEARCH.md` section 10 holds the
-argument.
+- **2026-09-09.** First fit, on every OpenAlex work naming the species:
+  Critically Endangered x2.65 against Least Concern. A topic-field test
+  (`topic_test.py`, `PRESPEC_topics_2026-09-09.md`) was read as showing the
+  effect was not assessment writing.
+- **2026-10-22, QA (D-32).** Most of those works are not research: GBIF
+  occurrence downloads (OpenAlex `dataset`) and Red List and Birds of the
+  World entries (`reference-entry`), filed under every topic field, so the
+  topic test could not see them.
+- **2026-10-24, R5.** Refetched by record type (`fetch_types.py`) and refit
+  on research works, with errors clustered by family and the bootstrap over
+  families. The direction holds and the gap is larger on research alone; the
+  topic test is retired from the page (`topic_test.py`, `fetch_topics.py` and
+  `data/topic_counts.csv` stay in the archive as the record of it). The plan
+  fixed before the refit is in `03 RESEARCH/beauty-r5/PLAN.md` in the source
+  repository.

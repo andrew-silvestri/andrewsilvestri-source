@@ -16,8 +16,15 @@ generated page has.
   7. The OpenAlex query is still the pinned one. See openalex_query() below:
      this is the check that catches an external API changing meaning under
      the code, which nothing else here does.
+  8. D-32 (R5, 2026-10-24): the response is research works, recomputed here
+     from data/openalex_types.csv through record_types.py, not every record
+     naming the species. --break research refits on every record (what the
+     page did until October 2026) and must fail.
+  9. The page's "times" is the ratio of the adjusted typical counts it prints
+     beside it. --break ratio expects exp(coef), the ratio of (1 + count),
+     which disagreed with the printed pair in the interim fit, and must fail.
 
-Run:  python3 test_beauty.py
+Run:  python test_beauty.py [--break research|ratio]
 """
 
 import csv
@@ -39,7 +46,9 @@ OPEN = os.path.join(HERE, "data", "birds_open.csv")
 IUCN = os.path.join(HERE, "data", "iucn_aves.csv")
 ZIP = os.path.join(ROOT, "site", "downloads", "beauty-code.zip")
 PAGE = os.path.join(ROOT, "site", "beauty.html")
-FIGS = ["beauty_fig1_gap.png", "beauty_fig2_category.png", "beauty_fig3_terms.png"]
+FIGS = ["beauty_fig0_records.png", "beauty_fig0_records-phone.png", "beauty_fig1_gap.png",
+        "beauty_fig2_category.png", "beauty_fig3_terms.png"]
+BREAK = sys.argv[sys.argv.index("--break") + 1] if "--break" in sys.argv else None
 CATCOL = re.compile(r"iucn|red_?list|categor", re.I)
 PINNED = "title_and_abstract.search"
 
@@ -255,6 +264,16 @@ def settled_guard():
                 for i, s in enumerate(species):
                     row = [s] + [filler.get(c, "") for c in cols[1:]]
                     w.writerow(row + ([st[i]] if st is not None else []))
+        # The typed table (fetch_types.py, R5) is not in RESUMABLE, because it
+        # covers the Red List species rather than all of AVONET; the guard
+        # still requires it and its stamps. Stamped with a date unless the
+        # case says otherwise.
+        ts = stamps.get(B.TYPED[0], [good, good])
+        with open(os.path.join(data, B.TYPED[0]), "w", encoding="utf-8", newline="") as fh:
+            w = csv.writer(fh, lineterminator="\n")
+            w.writerow(["species", "works_total", "by_type", "cost_usd", "fetched"])
+            for i, s in enumerate(species):
+                w.writerow([s, "3", "article:3", "0.0010", ts[i]])
         keep = B.HERE, B.DATA
         B.HERE, B.DATA = tmp, data
         try:
@@ -271,6 +290,9 @@ def settled_guard():
     msg = run(clean)
     if msg:
         fails.append(f"guard: three correctly stamped tables were refused: {msg.strip()}")
+    msg = run(dict(clean, **{B.TYPED[0]: [good, "PLACEHOLDER"]}))
+    if B.TYPED[0] not in msg:
+        fails.append(f"guard: a typed table with a non-date stamp was not refused for it: {msg.strip()!r}")
     for name in columns:
         script = B.RESUMABLE[name]
         s = dict(clean)
@@ -416,26 +438,19 @@ def main():
             fails.append("site/beauty.html differs from the template rendered from the payload")
         fails += [f"citations: {p}" for p in probs]
 
-        # 4b. "adjusted" is ONE quantity on this page, and it is model_noviews.
-        # It was two: the marginalia read model_confounders (17.6 and 47.7)
-        # while the prose read model_noviews (17.6 and 48.1), and nothing on
-        # the page said which fit "adjusted" meant. noviews is the total
-        # effect - attractiveness held, views left free - which is the
-        # estimand the mediated share is a share OF (build_beauty.py:89).
-        # Both are checked against the payload, not against each other: two
-        # numbers agreeing says nothing about which model produced them.
+        # 4b. "adjusted" is ONE quantity on this page, and it is model_noviews
+        # (the total effect: attractiveness held, views left free). The
+        # marginalia that once read a second fit are gone (R5, rule 4); the
+        # prose pair is checked against the payload, not against itself.
         page = open(PAGE, encoding="utf-8").read()
         want = (f"{P['model_noviews']['adjusted']['LC']:.1f}",
                 f"{P['model_noviews']['adjusted']['CR']:.1f}")
-        strip = re.search(r"the same, adjusted</b><span class=\"v\">"
-                          r"([0-9.]+) and ([0-9.]+)</span>", page)
-        prose = re.search(r"After adjustment the figures are\s+([0-9.]+)\s+and\s+([0-9.]+)", page)
-        for label, m in (("marginalia", strip), ("prose", prose)):
-            if not m:
-                fails.append(f"page: the adjusted pair could not be read from the {label}")
-            elif m.groups() != want:
-                fails.append(f"page: the {label} adjusted pair is {m.groups()}, "
-                             f"but model_noviews gives {want}")
+        prose = re.search(r"Adjusted, the figures are\s+([0-9.]+)\s+and\s+([0-9.]+)", page)
+        if not prose:
+            fails.append("page: the adjusted pair could not be read from the prose")
+        elif prose.groups() != want:
+            fails.append(f"page: the adjusted pair is {prose.groups()}, but model_noviews gives {want}")
+        fails += ratio_check(P, page)
     else:
         skips.append("no site/beauty.html yet")
 
@@ -481,6 +496,12 @@ def main():
             fails.append("the archive does not ship manifest.json, so a reader cannot "
                          "check their own Red List fetch against it")
 
+    # 8. the response is research works (D-32)
+    if os.path.exists(IUCN):
+        fails += research_response(P)
+    else:
+        skips.append("no data/iucn_aves.csv: research-response check skipped")
+
     # 7. the estimator recovers coefficients it was given, and the query
     #    still means what the page says it means
     fails += model_maths()
@@ -508,6 +529,53 @@ def main():
         print("  FAIL: " + f)
     print(f"  {len(fails)} failure(s), {len(skips)} skipped")
     return 1 if fails else 0
+
+
+def ratio_check(P, page):
+    """Check 9. The multiple in the h1 and the body is the ratio of the two
+    adjusted typical counts the page prints, CR over LC."""
+    import math
+    nov = P["model_noviews"]
+    want = nov["adjusted"]["CR"] / nov["adjusted"]["LC"]
+    if BREAK == "ratio":
+        want = math.exp(nov["beta"]["cat_CR"])
+    out = []
+    m = re.search(r"counting only research, ([0-9.]+) times", page)
+    if not m:
+        return ["page: 'counting only research, N times' not found"]
+    if m.group(1) != f"{want:.1f}":
+        out.append(f"page multiple {m.group(1)} != adjusted CR/LC {want:.1f}")
+    h = re.search(r"<h1>[^<]*?about ([0-9.]+) times", page)
+    if not h or abs(float(h.group(1)) - want) > 0.5:
+        out.append(f"h1 multiple {h.group(1) if h else None} does not round {want:.2f}")
+    return out
+
+
+def research_response(P):
+    """Check 8. Recompute research works per species from the typed table
+    and refit the total-effect model on them; the payload must match. The
+    historical fault is the response being every record naming the species,
+    so --break research refits on works_typed and must fail."""
+    import numpy as np
+    import build_beauty as B
+    import record_types as RT
+    out = []
+    by = {r["species"]: RT.total(RT.parse(r["by_type"]), RT.RESEARCH)
+          for r in csv.DictReader(open(os.path.join(HERE, "data", "openalex_types.csv"), encoding="utf-8"))}
+    _, m, _, _, _ = B.join()
+    mine = m["species"].map(by)
+    if mine.isna().any() or (mine.astype(int) != m["works"]).any():
+        out.append("the model's response is not research works recomputed from openalex_types.csv")
+    if "dataset" in RT.RESEARCH or "reference-entry" in RT.RESEARCH:
+        out.append("record_types.RESEARCH counts datasets or reference entries")
+    s = m.copy()
+    s["y"] = np.log1p((m["works_typed"] if BREAK == "research" else mine).astype(float))
+    f = B.fit_all(s, B.TERMS_NOVIEWS)
+    for c in ("LC", "CR"):
+        if abs(f["adjusted"][c] - P["model_noviews"]["adjusted"][c]) > 1e-6:
+            out.append(f"adjusted {c} refit {f['adjusted'][c]:.3f} != payload "
+                       f"{P['model_noviews']['adjusted'][c]:.3f}")
+    return out
 
 
 if __name__ == "__main__":

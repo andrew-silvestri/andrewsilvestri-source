@@ -1,12 +1,19 @@
 """
-The three figures for site/beauty.html, drawn from outputs/beauty_payload.json.
+The figures for site/beauty.html, drawn from outputs/beauty_payload.json.
 
+  beauty_fig0_records.png    the hero (R5, D-32): for the typical bird in each
+  (+ -phone.png at 350)      Red List category, everything a search for its
+                             name returns against research alone
   beauty_fig1_gap.png        five vertebrate classes: share of threatened
-                             species against share of papers, a slope chart
-  beauty_fig2_category.png   papers per bird species by Red List category,
-                             raw and adjusted, with bootstrap intervals
+                             species against share of research works
+  beauty_fig2_category.png   research works per bird species by Red List
+                             category, raw and adjusted, with bootstrap intervals
   beauty_fig3_terms.png      what the full model's fit depends on: drop-one
                              change in R-squared per term, ranked
+
+beauty_fig4_strata.png (the topic-field test) was retired with the test on
+2026-10-24: QA found the non-research records are filed under every topic
+field, so the field could not separate paperwork from research (D-32).
 
 Every colour, size and face comes from sitefig.py. No species is named in
 any figure and no species-level point is drawn: the Red List's terms leave
@@ -45,7 +52,7 @@ HERE = os.path.dirname(os.path.abspath(__file__))
 ROOT = os.path.abspath(os.path.join(HERE, ".."))
 sys.path.insert(0, ROOT)
 import sitefig                                              # noqa: E402
-from sitefig import (ACC, DIM, FAINT, FS_2, FS_1, INK, MOSS, NOTES, PLOT,  # noqa: E402
+from sitefig import (ACC, DIM, FAINT, FS_2, FS_1, INK, MOSS, NOTES, PHONE, PLOT,  # noqa: E402
                      RULE, fig_size, row_aspect)
 from fig_floor import floor_problems                        # noqa: E402
 
@@ -139,43 +146,52 @@ def hi_room(vals):
 
 
 def fig1(P):
+    """Five classes: share of threatened species against share of research.
+
+    Labels are one line each and joined to their dots by a leader whenever
+    spread() has had to move them. Until 2026-10-24 the labels were two lines,
+    spread() moved them up to clear each other and nothing tied them back, so
+    the amphibian label sat beside the reptile dot's height and two right-hand
+    values shared one dot (found by R5's skeptical-reader review). The audit
+    cannot see that: a label beside the wrong point is not text on text.
+    """
     rows = sorted(P["groups"]["rows"], key=lambda r: -r["share_threatened"])
     ver = re.search(r"\d{4}-\d", P["groups"]["source_table"])
     fig, ax = plt.subplots(figsize=fig_size(NOTES, PLOT))
-    ax.set_xlim(-1.5, 1.95)
-    top = max(max(r["share_threatened"], r["share_works"]) for r in rows) * 1.12
-    ax.set_ylim(-top * 0.02, top)
-    ly = spread([r["share_threatened"] for r in rows], top * 0.12)
-    ry = spread([r["share_works"] for r in rows], top * 0.12)
+    ax.set_xlim(-1.5, 2.4)
+    top = max(max(r["share_threatened"], r["share_works"]) for r in rows) * 1.08
+    ax.set_ylim(-top * 0.04, top)
+    gap = top * 0.075
+    ly = spread([r["share_threatened"] for r in rows], gap)
+    ry = spread([r["share_works"] for r in rows], gap)
     for r, yl, yr in zip(rows, ly, ry):
         up = r["share_works"] >= r["share_threatened"]
         col = ACC if up else MOSS
-        ax.plot([0, 1], [r["share_threatened"], r["share_works"]], color=col, lw=2.2, zorder=3)
-        ax.plot([0, 1], [r["share_threatened"], r["share_works"]], "o", color=col, ms=6, zorder=4)
-        ax.text(-0.06, yl, f"{r['group']}  {r['share_threatened']:.0%}", ha="right", va="center",
-                fontsize=FS_1, color=INK)
-        ax.text(-0.06, yl - top * 0.03, f"{r['pct_evaluated']:.0f}% of the class assessed",
-                ha="right", va="top", fontsize=FS_2, color=DIM)
-        ax.text(1.06, yr, f"{r['share_works']:.0%}", ha="left", va="center", fontsize=FS_1, color=INK)
-        ax.text(1.06, yr - top * 0.03, f"{r['works_per_threatened']:.0f} papers per threatened species",
-                ha="left", va="top", fontsize=FS_2, color=DIM)
+        y0, y1 = r["share_threatened"], r["share_works"]
+        ax.plot([0, 1], [y0, y1], color=col, lw=2.2, zorder=3)
+        ax.plot([0, 1], [y0, y1], "o", color=col, ms=6, zorder=4)
+        ax.plot([-0.02, -0.12], [y0, yl], color=col, lw=0.8, zorder=2)
+        ax.plot([1.02, 1.12], [y1, yr], color=col, lw=0.8, zorder=2)
+        ax.text(-0.15, yl, f"{r['group']} {r['share_threatened']:.0%}  ({r['pct_evaluated']:.0f}% assessed)",
+                ha="right", va="center", fontsize=FS_2, color=INK)
+        ax.text(1.15, yr, f"{r['share_works']:.0%}  ({r['works_per_threatened']:.0f} per threatened species)",
+                ha="left", va="center", fontsize=FS_2, color=INK)
     ax.set_xticks([0, 1])
-    ax.set_xticklabels(["share of threatened\nvertebrate species", "share of papers\nnaming the class"],
+    ax.set_xticklabels(["share of threatened\nvertebrate species", "share of research\nworks naming the class"],
                        fontsize=FS_1, color=INK)
     ax.set_yticks([])
-    ax.spines["left"].set_visible(False)
     bare(ax)
+    ax.spines["left"].set_visible(False)
     ax.spines["bottom"].set_visible(False)
     ax.tick_params(axis="x", length=0)
-    sitefig.panel(ax, "What the literature says")
-    fig.text(0.01, 0.01, f"Threatened species: IUCN Red List {ver.group(0) if ver else ''}, Table 1a. Papers: "
-             f"OpenAlex works {P['groups']['works_years']} whose title or abstract\nnames the class, "
-             "biology or environment topics. Rising: more of the papers than of the threatened species.\n"
-             "FIVE POINTS, NO MODEL, AND NOT WHAT THIS PAGE TESTS - it is the between-class "
-             "picture the literature describes.\nEverything below is within ONE class, birds, "
-             "where the pattern runs the other way.",
+    sitefig.panel(ax, "Five vertebrate classes")
+    fig.text(0.01, 0.01, f"Threatened species: IUCN Red List {ver.group(0) if ver else ''}, Table 1a. Research "
+             f"works: OpenAlex {P['groups']['works_years']}, title or abstract\nnames the class, "
+             "biology or environment topics, research record types only.\n"
+             "Blue: more of the research than of the threatened species. Five points, no model:\n"
+             "the between-class picture, not what this page tests within birds.",
              fontsize=FS_2, color=DIM, ha="left", va="bottom")
-    fig.subplots_adjust(left=0.02, right=0.98, top=0.9, bottom=0.28)
+    fig.subplots_adjust(left=0.02, right=0.98, top=0.9, bottom=0.27)
     return emit(fig, "beauty_fig1_gap.png")
 
 
@@ -213,7 +229,7 @@ def fig2(P):
     ax.plot(x - 0.26, raw, "o", mfc="white", mec=DIM, mew=1.6, ms=7, zorder=3,
             label="as counted")
     ax.plot(x, tot, "o", color=ACC, ms=7, zorder=3,
-            label="family, mass, range and years since description held fixed")
+            label="family, mass, range, age and rated attractiveness held fixed")
     ax.plot(x + 0.26, dirc, "s", color=MOSS, ms=6, zorder=3,
             label="the same, and Wikipedia views held fixed too")
     hi = max(max(c[1] for c in ci_raw + ci_tot), max(raw + tot + dirc))
@@ -231,26 +247,24 @@ def fig2(P):
     ax.set_xticklabels(names, fontsize=FS_2, color=INK)
     ax.set_xlim(-0.72, len(cats) - 0.28)
     ax.set_ylim(0, hi * 1.42)
-    ax.set_ylabel("papers per species, 2015-2024 (typical)", fontsize=FS_2, color=DIM)
+    ax.set_ylabel("research works per species,\n2015-2024 (typical)", fontsize=FS_2, color=DIM)
     ax.grid(axis="y", color=FAINT, lw=0.8)
     ax.set_axisbelow(True)
     bare(ax)
     ax.legend(loc="upper left", frameon=False, fontsize=FS_2, labelcolor=INK,
               handletextpad=0.6)
-    sitefig.panel(ax, "Papers per bird species by Red List category, n = %s"
+    sitefig.panel(ax, "Research works per bird species by Red List category, n = %s"
                   % format(P["n"]["modelled"], ","))
     ms = P["mediated_share"]
     fig.text(0.01, 0.01,
-             "Typical: back-transformed mean of log(1 + papers). Whiskers: 95%% "
-             "bootstrap intervals, %s resamples. Red List %s;%s"
+             "Typical: back-transformed mean of log(1 + research works). Whiskers: 95%% "
+             "bootstrap intervals,%s%s resamples of whole families. Red List %s; "
              "Data Deficient, Extinct and Extinct in the Wild species left out. The "
-             "dotted drop is the share of the advantage%s"
-             "that runs through public attention: %.0f%% at Near Threatened, %.0f%% at "
-             "Critically Endangered. Its direction is ASSUMED."
-             % (P["n_boot"], P["red_list_version"], NEWLINE, NEWLINE,
-                100 * ms["NT"], 100 * ms["CR"]),
+             "dotted%sline joins each category's adjusted value to the same with views "
+             "held fixed;%swhich way attention and research cause each other is not known."
+             % (NEWLINE, P["n_boot"], P["red_list_version"], NEWLINE, NEWLINE),
              fontsize=FS_2, color=DIM, ha="left", va="bottom")
-    fig.subplots_adjust(left=0.1, right=0.98, top=0.9, bottom=0.30)
+    fig.subplots_adjust(left=0.12, right=0.98, top=0.9, bottom=0.34)
     return emit(fig, "beauty_fig2_category.png")
 
 
@@ -279,7 +293,7 @@ def fig3(P, width=NOTES):
     bare(ax)
     ax.tick_params(axis="y", length=0)
     sitefig.panel(ax, f"What the fit depends on (R² = {M['r2']:.2f})")
-    fig.text(0.01, 0.01, f"Whiskers: 95% bootstrap intervals, {P['n_boot']} resamples. "
+    fig.text(0.01, 0.01, f"Whiskers: 95% bootstrap intervals, {P['n_boot']} resamples of families. "
              "Family enters as fixed effects.", fontsize=FS_2, color=DIM, ha="left", va="bottom")
     fig.subplots_adjust(left=0.3, right=0.97, top=0.86, bottom=0.2)
     name = ("beauty_fig3_terms.png" if width == NOTES
@@ -300,90 +314,58 @@ def fig3(P, width=NOTES):
     return emit(fig, name)
 
 
-def fig4(P, width=NOTES):
-    """The Red List coefficient inside OpenAlex topic fields.
+def fig0(P, width=NOTES):
+    """The hero: for the typical bird in each Red List category, everything
+    a search returns against research alone.
 
-    Tests whether the effect is made of papers ABOUT the listing. The rule
-    - minimum cell, primary stratum, failure threshold - was committed in
-    PRESPEC_topics_2026-09-09.md before any topic data existed, and the
-    strata that FAIL the cell floor are drawn as named gaps carrying their
-    Critically Endangered cell count, never as points. A reader must be able
-    to see what was excluded and why without being able to read a value off
-    it.
+    Both bars are the same model's adjusted typical counts (the total-effect
+    terms; record_types.fits works_typed and research), so they are
+    comparable with each other and with the page's headline. They are not
+    stacked: typical values do not add, so research is drawn beside the
+    total, not inside it. A first version stacked category AVERAGES by
+    record type (R5, 2026-10-24) and was replaced before it shipped: the
+    averages hardly differ between categories (11 research works for Least
+    Concern, 13 for Critically Endangered), because a few famous common
+    birds dominate them, so the figure argued against the headline it sat
+    under. The page states that averages point in its text.
     """
-    S = P.get("strata", {})
-    if not S.get("available"):
-        return 0
-    order = ["13", "19", "11", "23", "28", "24", "27"]
-    fields = S["fields"]
-    rows = [f for f in order if f in fields]
-    labels = {"11": "Agricultural and\nBiological Sciences",
-              "13": "Biochemistry, Genetics\nand Molecular Biology",
-              "19": "Earth and\nPlanetary Sciences",
-              "23": "Environmental Science",
-              "24": "Immunology and\nMicrobiology",
-              "27": "Medicine", "28": "Neuroscience"}
-    y = np.arange(len(rows))[::-1]
-    fig, ax = plt.subplots(figsize=fig_size(
-        width, row_aspect(len(rows), row_px=52, display_px=width)))
-    floor = S["rule"]["cr_floor"]
-    ax.axvline(floor, color=MOSS, lw=1.2, ls="--", zorder=2)
-    ticks = []
-    for yi, fid in zip(y, rows):
-        rec = fields[fid]
-        prone = rec["artefact_prone"]
-        ticks.append(labels[fid])
-        if not rec["reportable"]:
-            ax.text(0.02, yi, "below the cell floor - CR n = %d, not interpreted"
-                    % rec["cells"]["CR"], fontsize=FS_2, color=DIM,
-                    ha="left", va="center", style="italic")
-            continue
-        cr = rec["category"]["CR"]
-        col = MOSS if prone else ACC
-        ax.plot([cr["lo"], cr["hi"]], [yi, yi], color=col, lw=1.6, zorder=3)
-        ax.plot([cr["coef"]], [yi], "o", color=col, ms=7, zorder=4)
-        note = "  %+.3f" % cr["coef"]
-        if rec["role"] == "primary":
-            note += "   PRIMARY"
-        elif rec["role"] == "positive_control":
-            note += "   positive control"
-        ax.text(cr["hi"] + 0.03, yi, note, fontsize=FS_2, color=INK,
-                ha="left", va="center")
-    ax.set_yticks(y)
-    ax.set_yticklabels(ticks, fontsize=FS_2, color=INK)
-    ax.set_xlim(-0.05, 1.95)
-    ax.set_xlabel("Critically Endangered vs Least Concern, log(1 + papers in that field)",
-                  fontsize=FS_2, color=DIM)
+    F = P["record_types"]["fits"]
+    cats = P["categories"]
+    tot = [F["works_typed"]["adjusted"][c] for c in cats]
+    res = [F["research"]["adjusted"][c] for c in cats]
+    phone = width == PHONE
+    fig, ax = plt.subplots(figsize=fig_size(width, row_aspect(
+        len(cats), row_px=82 if phone else 64, display_px=width, header_px=150 if phone else 110)))
+    y = np.arange(len(cats))[::-1].astype(float)
+    xmax = max(tot) * 1.16
+    for yi, c, t, r in zip(y, cats, tot, res):
+        ax.barh(yi + 0.13, t, height=0.24, color=RULE, zorder=3)
+        ax.barh(yi - 0.13, r, height=0.24, color=ACC, zorder=3)
+        ax.text(t + xmax * 0.012, yi + 0.13, f"{t:.0f}", ha="left", va="center", fontsize=FS_2, color=DIM)
+        ax.text(r + xmax * 0.012, yi - 0.13, f"{r:.1f}", ha="left", va="center", fontsize=FS_2, color=ACC)
+        ax.text(0, yi + 0.3, P["category_names"][c], ha="left", va="bottom",
+                fontsize=FS_2 if phone else FS_1, color=INK)
+    ax.set_ylim(-0.5, len(cats) - 0.3)
+    ax.set_xlim(0, xmax)
+    ax.set_yticks([])
+    ax.set_xlabel("per species, 2015-2024, typical bird" + (NEWLINE if phone else " ")
+                  + "(family, size, range, age, rated attractiveness held equal)", fontsize=FS_2, color=DIM)
     ax.grid(axis="x", color=FAINT, lw=0.8)
     ax.set_axisbelow(True)
     bare(ax)
-    ax.tick_params(axis="y", length=0)
-    sitefig.panel(ax, "Does it survive where a status review cannot go?")
-    fig.text(0.01, 0.01,
-             "Brown: fields carrying conservation writing. Blue: fields that cannot.%s"
-             "Whiskers: HC1 95%% intervals. Rule fixed before the data existed (%s):%s"
-             "minimum %d species per category, primary field Biochemistry/Genetics,%s"
-             "dashed line the %+.2f floor. Three fields fail it, named without a value."
-             % (NEWLINE, S["rule"]["prespec"], NEWLINE,
-                S["rule"]["min_cell_per_category"], NEWLINE, floor),
+    ax.spines["left"].set_visible(False)
+    handles = [plt.Rectangle((0, 0), 1, 1, color=RULE), plt.Rectangle((0, 0), 1, 1, color=ACC)]
+    ax.legend(handles, ["everything a search for its name returns", "research only"],
+              loc="lower left", bbox_to_anchor=(0, 1.0), ncol=1 if phone else 2, frameon=False,
+              fontsize=FS_2, labelcolor=INK, handlelength=1.0, handletextpad=0.5,
+              columnspacing=1.4, borderaxespad=0.2)
+    fig.text(0.01, 0.01, "OpenAlex works whose title or abstract names the species;" + (NEWLINE if phone else " ")
+             + "research = research record types." + NEWLINE + "n = %s birds; Red List %s."
+             % (format(P["n"]["modelled"], ","), P["red_list_version"]),
              fontsize=FS_2, color=DIM, ha="left", va="bottom")
-    fig.subplots_adjust(left=0.28, right=0.97, top=0.88, bottom=0.30)
-    name = ("beauty_fig4_strata.png" if width == NOTES
-            else "beauty_fig4_strata-phone.png")
-    # THE SECOND RENDER IS A SECOND FIGURE, NOT A SCALED ONE. A 714px figure
-    # served into a 350px column shows its 12pt floor at 5.9px, and dpi cannot
-    # change that: what a reader sees is point size times served width over
-    # authored width (fig_floor.py). <picture> picks between them and
-    # tests/test_fig_floor.py measures the result at the served width.
-    #
-    # fit_ticks runs at BOTH widths and is a no-op at the one that already
-    # passes - it tries the unchanged figure first and returns there. What it
-    # applies at 350 is a margin, measured, judged by the same predicate
-    # audit() uses. No label's words change at either width.
-    did = sitefig.fit_ticks(ax, "y")
-    if did != "unchanged":
-        print(f"    fit_ticks {name}: {did}")
-    return emit(fig, name)
+    fig.subplots_adjust(left=0.03, right=0.97, top=0.8 if phone else 0.84,
+                        bottom=0.25 if phone else 0.22)
+    return emit(fig, "beauty_fig0_records.png" if not phone else "beauty_fig0_records-phone.png")
 
 
 def main():
@@ -398,7 +380,7 @@ def main():
     # the parameter carries is the width the lever and tests/test_fit_ticks.py
     # drive them at, and it changes nothing at NOTES (the shipped PNGs are
     # byte-identical with it in place).
-    bad = fig1(P) + fig2(P) + fig3(P) + fig4(P)
+    bad = fig0(P) + fig0(P, PHONE) + fig1(P) + fig2(P) + fig3(P)
     print(f"  {bad} layout problem(s) in total")
     return bad
 

@@ -299,7 +299,7 @@ PAGES = {
          'Priem, Piwowar &amp; Orr, <i>arXiv</i> 2205.01833, 2022.',
          "The open index of scholarly works whose title-and-abstract search "
          "gives the paper counts; data CC0."),
-        ("Until February 2026 the short one",
+        ("changed meaning in February 2026",
          'OpenAlex, &ldquo;New features and usage-based pricing&rdquo;, 24 February 2026, '
          'https://blog.openalex.org/openalex-api-new-features-and-usage-based-pricing/.',
          "The date the bare search parameter was redefined as full-text search "
@@ -366,55 +366,6 @@ PAGES = {
          "370 turtles; threatened vs non-threatened -0.10, t = -0.46, p = 0.64 "
          "(the extinction-risk ordinal +0.10, p = 0.14); phylogeny 66% of the "
          "variance; assessed species more studied than unassessed."),
-        ("endangered-species spending",
-         'Metrick &amp; Weitzman, <i>Land Economics</i> 72(1):1-16, 1996, '
-         'doi:10.2307/3147153.',
-         "Endangered Species Act spending FY1989-91: over half to ten species; "
-         "body length and taxon outweigh endangerment rank."),
-        ("LIFE species-project budget",
-         'Mammides, <i>Biodiversity and Conservation</i> 28(5):1291-1296, 2019, '
-         'doi:10.1007/s10531-019-01725-8.',
-         "Over 800 EU LIFE species projects since 1992; birds and mammals take "
-         "69% of projects and 75% of the species budget."),
-        ("global database of conservation projects",
-         'Gu&eacute;nard <i>et al.</i>, <i>PNAS</i> 122:e2412479122, 2025, '
-         'doi:10.1073/pnas.2412479122.',
-         "About 14,600 projects over 25 years: 6% of threatened species ever "
-         "funded, 29% of single-species project funding to Least Concern "
-         "species."),
-        ("one estimate puts",
-         'Cowie, Bouchet &amp; Fontaine, <i>Biological Reviews</i> 97(2):640-663, 2022, '
-         'doi:10.1111/brv.12816.',
-         "7.5-13% of the roughly two million known species estimated extinct "
-         "since 1500, against 0.04% recorded on the Red List."),
-        ("Data Deficient mammals",
-         'Bland <i>et al.</i>, <i>Conservation Biology</i> 29(1):250-259, 2015, '
-         'doi:10.1111/cobi.12372.',
-         "64% of Data Deficient mammals predicted to be threatened."),
-        ("Data Deficient amphibians",
-         'Borgelt <i>et al.</i>, <i>Communications Biology</i> 5:679, 2022, '
-         'doi:10.1038/s42003-022-03638-9.',
-         "85% of Data Deficient amphibians predicted to be threatened."),
-        ("re-examined in a study published in 2024",
-         'White <i>et al.</i>, <i>Nature Plants</i> 10:1627-1634, 2024, '
-         'doi:10.1038/s41477-024-01832-7.',
-         "99% of Centinela's supposed microendemic plants have since been "
-         "collected elsewhere."),
-        ("monitored for fifteen years",
-         'Martin <i>et al.</i>, <i>Conservation Letters</i> 5(4):274-280, 2012, '
-         'doi:10.1111/j.1755-263X.2012.00239.x.',
-         "The Christmas Island pipistrelle was monitored from 1994 and lost in "
-         "2009 while a captive-breeding decision was delayed."),
-        ("zoos favor large and attractive",
-         'Frynta <i>et al.</i>, <i>PLoS ONE</i> 8(5):e63110, 2013, '
-         'doi:10.1371/journal.pone.0063110.',
-         "Rated beauty and body size predict which mammal families zoos hold "
-         "and in what numbers; Red List status is not tested."),
-        ("threatened species are under-represented",
-         'Conde <i>et al.</i>, <i>PLoS ONE</i> 8(12):e80311, 2013, '
-         'doi:10.1371/journal.pone.0080311.',
-         "3,955 species in 837 zoos, 23% threatened; only 2 of 59 orders hold "
-         "more threatened species than random would."),
         ("h-index dataset of their own",
          'Tam <i>et al.</i>, GigaDB dataset 102237, 2022, doi:10.5524/102237.',
          "Per-species h-index, publication count, Red List category and Google "

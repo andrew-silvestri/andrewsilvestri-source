@@ -221,7 +221,10 @@ NAV = [
     # ("Skylines, played", "skyline.html"),
     # Skyline relisted 2026-10-24 by R5 (D-31 repair: standing towers only,
     # from archived Wikidata and OpenStreetMap pulls), in its old place.
+    # Beauty relisted 2026-10-24 by R5 (D-32: counted on research works, not
+    # on every record naming the species), in its old place before skyline.
     ("Other", [
+        ("Endangered, and studied", "beauty.html"),
         ("Skylines, played", "skyline.html"),
         ("Where the ground goes", "continents.html"),
     ]),
