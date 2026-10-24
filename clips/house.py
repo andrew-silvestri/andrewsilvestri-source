@@ -18,8 +18,7 @@ hex value.
 import os
 import re
 
-from manim import (Scene, Text, Axes, VGroup, config, UP, DOWN, LEFT, RIGHT)
-import manimpango
+from manim import (Scene, Tex, MathTex, TexTemplate, Axes, VGroup, config, UP, DOWN, LEFT, RIGHT)
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 PUB = os.path.dirname(HERE)
@@ -39,11 +38,28 @@ def _palette():
 PAL = _palette()
 BG, INK, DIM, RULE, FAINT, ACC, MOSS = (PAL[k] for k in ("BG", "INK", "DIM", "RULE", "FAINT", "ACC", "MOSS"))
 
-# IBM Plex, the site's faces (OFL, fonts/LICENSE-IBMPlex.txt), registered
-# from the repo so a render does not depend on what the machine has installed
-for f in ("IBMPlexSans-Regular.otf", "IBMPlexSans-SemiBold.otf", "IBMPlexMono-Regular.otf"):
-    manimpango.register_font(os.path.join(PUB, "fonts", f))
-SANS, MONO = "IBM Plex Sans", "IBM Plex Mono"
+# ALL CLIP TEXT IS SET BY LaTeX (Andrew, 2026-10-23: "latex should be used,
+# as the normal text always turns out weird"). Manim's Text goes through
+# Pango, whose spacing came out loose and uneven in lostgas-meter (R3's first
+# render, every label). label(), number() and equation() below are the only ways
+# a scene writes text, and render_clip.py refuses a scene that calls Text,
+# MarkupText or Paragraph itself.
+# The face is still IBM Plex Sans, the site's face, through the plex-sans
+# LaTeX package (MiKTeX, latex + dvisvgm), so the clips keep the house look;
+# equations go through MathTex.
+TEX = TexTemplate()
+TEX.add_to_preamble("\\usepackage[T1]{fontenc}\n\\usepackage[sfdefault]{plex-sans}")
+
+# Plain text in, LaTeX-safe text out, so a scene passes ordinary strings
+# ("0.7% reported", "55 °F") and never meets LaTeX's special characters.
+_ESC = {"\\": "\\textbackslash{}", "&": "\\&", "%": "\\%", "$": "\\$", "#": "\\#",
+        "_": "\\_", "{": "\\{", "}": "\\}", "~": "\\textasciitilde{}", "^": "\\textasciicircum{}",
+        "°": "\\textdegree{}", "×": "$\\times$", "√": "$\\surd$", "…": "\\ldots{}",
+        "–": "--", "—": "---"}
+
+
+def tex_escape(text):
+    return "".join(_ESC.get(ch, ch) for ch in text)
 
 # Timing, in seconds. One set for every clip, so they move alike.
 BEAT = 0.6      # a pause the eye needs between two things
@@ -54,16 +70,28 @@ HOLD = 1.5      # the last frame held before a loop restarts
 # Text sizes, in manim's font_size. At 1280x720 a font_size of 28 renders
 # glyphs about 20px tall in a frame that is shown at most 1140px wide.
 TITLE, LABEL, SMALL = 34, 28, 24
+# Tex and Text do not draw the same height at the same font_size; TEX_SCALE
+# maps the sizes above onto Tex, measured with Text at the same size.
+TEX_SCALE = 1.34   # cap height, Text over Tex: 0.355/0.264 at TITLE, 0.317/0.236 at SMALL
 
 config.background_color = BG
 
 
 def label(text, size=LABEL, color=None, weight="NORMAL"):
-    return Text(text, font=SANS, font_size=size, color=color or INK, weight=weight)
+    body = tex_escape(text)
+    if weight.upper() in ("BOLD", "SEMIBOLD"):
+        body = "\\textbf{%s}" % body
+    return Tex(body, tex_template=TEX, font_size=size * TEX_SCALE, color=color or INK)
 
 
 def number(text, size=LABEL, color=None):
-    return Text(text, font=MONO, font_size=size, color=color or INK)
+    """A figure, or a short phrase carrying one. Same face as label()."""
+    return label(text, size=size, color=color)
+
+
+def equation(tex, size=LABEL, color=None):
+    """An equation, written by the scene as LaTeX maths."""
+    return MathTex(tex, tex_template=TEX, font_size=size * TEX_SCALE, color=color or INK)
 
 
 def house_axes(x_range, y_range, x_length=10, y_length=5, **kw):

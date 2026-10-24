@@ -12,7 +12,9 @@ Writes, into --out:
 
 and refuses (exit 1, nothing written) when either video is 4 MB or more, when
 a caption overlaps another or runs past the measured duration, or when the
-scene has no TITLE. _INSIGHT rule 2 sets the 4 MB ceiling.
+scene has no TITLE, or when the scene or house.py calls Pango text (Text,
+MarkupText, Paragraph): clip text is LaTeX. _INSIGHT rule 2 sets the 4 MB
+ceiling.
 
 Manim runs under MANIM_WORKSPACE/.venv (the pinned manim==0.18.1), or under
 the interpreter named by MANIM_PYTHON. Only the interpreter is borrowed from
@@ -22,6 +24,7 @@ is the internship's (house.py's header says why).
 import argparse
 import hashlib
 import json
+import re
 import os
 import shutil
 import subprocess
@@ -66,6 +69,24 @@ def sha1(path):
     return hashlib.sha1(open(path, "rb").read()).hexdigest()
 
 
+# Every clip sets its text in LaTeX (house.py: label, number, equation). Manim's
+# Pango-backed classes drew loose, uneven text in the first clip, and Andrew
+# asked on 2026-10-23 that LaTeX be used for every clip, past and future. The
+# rule is enforced here, on the path every clip is rendered by, not in house.py
+# (HANDOFF trap 19: a constraint sits on the last code that can violate it).
+PANGO = re.compile(r"\b(Text|MarkupText|Paragraph)\s*\(")
+
+
+def pango_calls(*paths):
+    hits = []
+    for p in paths:
+        for i, line in enumerate(open(p, encoding="utf-8"), 1):
+            code = line.split("#", 1)[0]
+            if PANGO.search(code):
+                hits.append("%s:%d: %s" % (os.path.basename(p), i, line.strip()))
+    return hits
+
+
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("scene")
@@ -74,6 +95,10 @@ def main():
     ap.add_argument("--out", default=os.path.join(PUB, "site", "assets", "clips"))
     a = ap.parse_args()
     scene = os.path.abspath(a.scene)
+    hits = pango_calls(scene, os.path.join(HERE, "house.py"))
+    if hits:
+        sys.exit("render_clip: clip text must be LaTeX (house.label/number/equation), not Pango text:\n  "
+                 + "\n  ".join(hits))
     meta = scene_meta(scene, a.cls)
     if not meta["title"]:
         sys.exit("render_clip: %s has no TITLE" % a.cls)
