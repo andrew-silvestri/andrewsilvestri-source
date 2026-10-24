@@ -53,4 +53,20 @@ ENTRIES = [
         "enabled": True,
         "why": "",
     },
+    {
+        # R4 (2026-10-23): ERCOT replaces the current year's DAM and RTM files
+        # in place under a new name; fetch_ercot.py reads the listing and
+        # fetches only files whose ERCOT name it has not recorded. The build
+        # re-solves every year (about twenty minutes) because the cache is
+        # keyed by each file's SHA-1, so unchanged years are read from the
+        # cache and only the dispatch runs again. update_page.claims() stops
+        # the page if a new year contradicts its words.
+        "page": "storage",
+        "cwd": "storage",
+        "fetch": [["python", "fetch_ercot.py"]],
+        "build": [["python", "build_storage.py"]],
+        "keys": [],
+        "enabled": True,
+        "why": "",
+    },
 ]

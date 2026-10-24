@@ -94,7 +94,11 @@ function canon(svgText) {
   const grid = { series: [0, 0.07, 0.33, 0.5, 0.81, 1].map(t => ({ t })), split: [0, 0.2, 0.5, 0.75, 1].map(s => ({ s })),
                  // R3: strip states mix every key it reads (bars, lights, range, marks)
                  strip: [{ t: 0 }, { t: 0.4, med: 1 }, { t: 1, med: 1, neg: 1 }, { t: 1, band: 0.5 },
-                         { t: 1, band: 1, inside: 1 }, { t: 1, band: 1, neg: 0.3, inside: 0.6, med: 0 }] };
+                         { t: 1, band: 1, inside: 1 }, { t: 1, band: 1, neg: 0.3, inside: 0.6, med: 0 }],
+                 // R4: days states cross every key (reveal, lit, the blend between years, and the
+                 // blend's midpoint where the lit set and the labels switch year)
+                 days: [{ t: 0 }, { t: 0.37 }, { t: 1 }, { t: 1, lit: 1 }, { t: 1, lit: 0.5, mix: 0.49 },
+                        { t: 1, lit: 0.5, mix: 0.51 }, { t: 1, mix: 1 }, { t: 1, mix: 1, lit: 1 }] };
   let pairs = 0, bad = [];
   for (const spec of SPECS) for (const w of [320, 517, 720, 1140]) {
     const sts = grid[spec.type];

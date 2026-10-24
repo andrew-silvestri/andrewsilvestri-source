@@ -553,13 +553,37 @@ PAGES = {
     #      "The inverse fat-sugar relation in diets on a share-of-energy basis "
     #      "is partly arithmetic."),
     # ],
+    # R4 (2026-10-23, D-20): the page runs on ERCOT's real prices. Every source
+    # was opened by R4 that day (SOURCES_VERIFIED Part 7). storage/update_page.py
+    # applies this entry itself (lostgas's idiom). Denholm et al. 2023 left with
+    # the synthetic year's "flattens past four hours", which no longer appears.
     "storage.html": [
         ("Anchor phrase", "Source", "What it supports"),
-        ("hourly prices",
-         'ERCOT, <i>Day-Ahead Market Settlement Point Prices</i>, historical '
-         'archive.',
-         "The price shape the synthetic year is calibrated to reproduce."),
-        ("cycling cost",
+        ("historical settlement point prices",
+         'ERCOT, <i>Historical DAM Load Zone and Hub Prices</i> (NP4-180-ER) and '
+         '<i>Historical RTM Load Zone and Hub Prices</i> (NP6-785-ER), Market '
+         'Information System reports 13060 and 13061, 2011 to date.',
+         "Every price the battery trades on: real-time and day-ahead, hubs and "
+         "load zones. ERCOT's terms allow raw public data to be redistributed in "
+         "compilations, charts and analyses."),
+        ("independent market monitor",
+         'Potomac Economics, <i>2025 State of the Market Report for the ERCOT '
+         'Electricity Markets</i>, June 2026.',
+         "The fleet's size at the end of 2025, its revenue 2021-2025 (Figure 17, "
+         "read by eye), and the quoted passages on revenue spikes, the 2025 "
+         "decline and price spikes in the solar ramp."),
+        ("on-peak trades EIA publishes",
+         'U.S. Energy Information Administration, <i>Wholesale Electricity and '
+         'Natural Gas Market Data</i>, ICE, 2015 (ice_electric-2015final.xls).',
+         "The independent check on the price reader: ERCOT North 345 kV on-peak "
+         "trades."),
+        ("A linear program",
+         'Sioshansi, Denholm, Jenkin &amp; Weiss, &ldquo;Estimating the value '
+         'of electricity storage in PJM: Arbitrage and some welfare '
+         'effects&rdquo;, <i>Energy Economics</i> 31(2):269&ndash;277, 2009.',
+         "The perfect-foresight dispatch formulation and its upper-bound "
+         "character."),
+        ("round trip",
          'Mongird <i>et al.</i>, <i>Grid Energy Storage Technology Cost and '
          'Performance Assessment</i>, Pacific Northwest National Laboratory, '
          '2020.',
@@ -567,30 +591,17 @@ PAGES = {
          # its only per-MWh figure is variable O&M, $0.5125/MWh.
          "Round-trip efficiency (86%). It gives no degradation cost; the "
          "model's $2/MWh of throughput is an assumption."),
-        ("linear programming",
-         'Sioshansi, Denholm, Jenkin &amp; Weiss, &ldquo;Estimating the value '
-         'of electricity storage in PJM: Arbitrage and some welfare '
-         'effects&rdquo;, <i>Energy Economics</i> 31(2):269&ndash;277, 2009.',
-         "The perfect-foresight dispatch formulation and its upper-bound "
-         "character."),
-        ("four hours",
-         # D-21 item 2: "The Four-Hour Challenge" is no NREL title; the
-         # 2019 report is about capacity value.
-         'Denholm <i>et al.</i>, <i>Moving Beyond 4-Hour Li-Ion Batteries</i>, '
-         'National Renewable Energy Laboratory, NREL/TP-6A40-85878, 2023.',
-         "Why duration value flattens past four hours."),
-        ("annualised capital cost",
+        ("Annual Technology Baseline",
          'NREL, <i>Annual Technology Baseline</i> 2024 (2022 dollars), '
          'utility-scale battery storage, 4-hour duration, Moderate scenario, '
          'Market case.',
-         "The capital cost the right-hand panel compares against: $1,938/kW "
-         "capex (overnight cost, grid connection and construction finance) "
+         "The cost reference: $1,938/kW capex (overnight cost, grid connection "
+         "and construction finance) "
          # D-21 item 4: ATB gives batteries no discount rate and a 15-year
          # life; the twenty years and the 8% are the model's.
          "plus $44/kW-yr fixed operations, annualised over twenty years at "
-         "an assumed eight per cent, for about $242/kW-yr. A representative "
-         "figure for "
-         "scale, not a quote for any particular project."),
+         "an assumed eight per cent. A representative figure for scale, not a "
+         "quote for any particular project."),
     ],
     # longevity.html is not here on purpose. Its page generator
     # (longevity-quotient/update_page.py) edits the shipped file in place and

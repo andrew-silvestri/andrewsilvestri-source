@@ -49,6 +49,7 @@ def _rows(path):
 
 
 CT = ZoneInfo("America/Chicago")
+MAX_FILLED = 4
 
 
 def _hours_in(day):
@@ -80,6 +81,26 @@ def parse(path):
             k = (y, m, d, h, r[iR] == "Y", 1 if market == "DAM" else int(r[iI]))
             recs.setdefault(k, {})[r[iP]] = float(r[iV])
             points.add(r[iP])
+    # A 15-minute interval ERCOT's file leaves out is filled from the mean of
+    # the same hour's other intervals, and counted. RTM 2013 lacks one: 02:00
+    # (first pass) on 3 November 2013, the fall-back day, has 3 intervals of 4.
+    # More than MAX_FILLED in a year, or an hour short by more than one, is
+    # refused rather than filled.
+    filled = []
+    if market == "RTM":
+        hours_seen = {}
+        for k in recs:
+            hours_seen.setdefault(k[:5], set()).add(k[5])
+        for hk, ivs in hours_seen.items():
+            missing = {1, 2, 3, 4} - ivs
+            if len(missing) > 1:
+                raise RuntimeError("%s: hour %s has %d of 4 intervals" % (path, hk, len(ivs)))
+            for iv in missing:
+                pts_ = set.intersection(*(set(recs[hk + (j,)]) for j in ivs))
+                recs[hk + (iv,)] = {p: float(np.mean([recs[hk + (j,)][p] for j in ivs])) for p in pts_}
+                filled.append("%04d-%02d-%02d h%d%s i%d" % (hk[:4] + ("r" if hk[4] else "", iv)))
+        if len(filled) > MAX_FILLED:
+            raise RuntimeError("%s: %d missing intervals, more than %d" % (path, len(filled), MAX_FILLED))
     keys = sorted(recs)
     years = {k[0] for k in keys}
     if len(years) != 1:
@@ -105,7 +126,7 @@ def parse(path):
                 price[i, j] = row[p]
     return {"market": market, "year": year, "points": pts, "price": price, "steps_per_hour": spp,
             "start": first.isoformat(), "days": days, "complete": days == full,
-            "through": last.isoformat()}
+            "through": last.isoformat(), "filled": np.array(filled, dtype=str)}
 
 
 def year_prices(path, cache_dir):

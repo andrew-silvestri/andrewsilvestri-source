@@ -285,10 +285,12 @@ BUILDERS = [
     ("climate-cost/build_allocation_figure.py", "climate-cost"),
     ("continents/fig_continents.py", "continents"),
     ("heat/model.py", "heat"),
-    ("storage/model.py", "storage"),
     ("longevity-quotient/build_lq.py", "longevity-quotient"),
     ("longevity-quotient/fig_lq_explained.py", "longevity-quotient"),
     ("build_skyline_figure.py", "."),
+    # storage/model.py dropped 2026-10-23 (R4, D-20): storage.html runs on ERCOT's real prices and
+    # draws only SVG (charts.js "days", tests/test_kit.js); its five synthetic-year figures and
+    # their phone renders left site/assets/, and their ASSET_OF rows below went with them.
     # meter/fig_meter.py dropped 2026-10-23 (R3): meter.html is a redirect stub and its three
     # figures are served on no page; lostgas.html draws only SVG (charts.js, tests/test_kit.js).
     # takeaway/fig_takeaway.py dropped 2026-10-23 (R2): the page has no PNG figures; its
@@ -305,22 +307,12 @@ ASSET_OF = {
     "fig3_costgap_contour.png": "heat_fig3_costgap_contour.png",
     "fig4_tornado.png": "heat_fig4_tornado.png",
     "fig5_emissions_parity.png": "heat_fig5_emissions_parity.png",
-    "fig1_prices.png": "storage_fig1_prices.png",
-    "fig2_dispatch_week.png": "storage_fig2_dispatch_week.png",
-    "fig3_duration_value.png": "storage_fig3_duration_value.png",
-    "fig4_sensitivity.png": "storage_fig4_sensitivity.png",
-    "fig5_monthly.png": "storage_fig5_monthly.png",
     # A2.1's narrow renders. The builders name these without the site's prefix,
     # the same as their wide counterparts.
-    "fig2_dispatch_week-phone.png": "storage_fig2_dispatch_week-phone.png",
-    "fig4_sensitivity-phone.png": "storage_fig4_sensitivity-phone.png",
-    "fig5_monthly-phone.png": "storage_fig5_monthly-phone.png",
     "fig2_lcoh_stacked-phone.png": "heat_fig2_lcoh_stacked-phone.png",
     "fig3_costgap_contour-phone.png": "heat_fig3_costgap_contour-phone.png",
     "fig1_allometry-phone.png": "lq_allometry-phone.png",
-    "fig1_prices-phone.png": "storage_fig1_prices-phone.png",
     "fig2_lq_ranked-phone.png": "lq_ranked-phone.png",
-    "fig3_duration_value-phone.png": "storage_fig3_duration_value-phone.png",
     "fig1_breakeven_price-phone.png": "heat_fig1_breakeven_price-phone.png",
     "fig4_tornado-phone.png": "heat_fig4_tornado-phone.png",
     "fig5_emissions_parity-phone.png": "heat_fig5_emissions_parity-phone.png",

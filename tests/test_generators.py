@@ -112,6 +112,11 @@ GENERATORS = [
     # meter.html and meter-app.html are redirect stubs to lostgas.html since R3.
     ("lostgas redirects: lostgas/redirects.py --apply",
      ["redirects.py", "--apply"], "lostgas", "site"),
+    # storage/update_page.py writes site/storage.html from storage/outputs/payload.json
+    # (build_storage.py, which needs ERCOT's files under storage/data/raw, gitignored) and
+    # storage/data/imm.json. R4, 2026-10-23.
+    ("storage page: storage/update_page.py --apply",
+     ["update_page.py", "--apply"], "storage", "site"),
     # takeaway/update_page.py writes site/takeaway.html from
     # takeaway/outputs/payload.json; the payload builder needs the raw files
     # under takeaway/data/raw, which a clone does not have, so the page
