@@ -29,6 +29,7 @@ import urllib.request
 HERE = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, HERE)
 from netutil import get_json, Budget, UA, polite, scrub  # noqa: E402
+import record_types as RT  # noqa: E402
 
 RAW = os.path.join(HERE, "data", "raw")
 VERSION = "2026-1"
@@ -108,21 +109,30 @@ def parse_table():
 
 
 def fetch_counts():
-    key = os.environ.get("OPENALEX_KEY", "").strip()
+    sys.path.insert(0, os.path.dirname(HERE))
+    import envfile
+    key = envfile.get("OPENALEX_KEY")
     today = dt.date.today().isoformat()
     rows = []
     try:
         for g, q in CLASSES.items():
             flt = f"title_and_abstract.search:{q},{TOPIC},publication_year:{YEARS}"
-            params = polite({"filter": flt, "per-page": 1})
+            # group_by=type since R5 (D-32): the class counts carried GBIF
+            # downloads and Red List entries too; the figure uses `research`.
+            params = polite({"filter": flt, "group_by": "type"})
             if key:
                 params["api_key"] = key
             url = "https://api.openalex.org/works?" + urllib.parse.urlencode(params, quote_via=urllib.parse.quote)
             j = get_json(url)
+            by = {(x["key_display_name"] or x["key"]): int(x["count"]) for x in j["group_by"]}
+            if sum(by.values()) != int(j["meta"]["count"]):
+                sys.exit(f"  {g}: types sum {sum(by.values())} != count {j['meta']['count']}; nothing written")
             rows.append({"group": g, "search": q, "topic_filter": TOPIC, "years": YEARS,
-                         "works": j["meta"]["count"], "cost_usd": j["meta"].get("cost_usd", ""),
+                         "works": j["meta"]["count"], "research": RT.total(by, RT.RESEARCH),
+                         "by_type": ";".join(f"{t}:{c}" for t, c in sorted(by.items())),
+                         "cost_usd": j["meta"].get("cost_usd", ""),
                          "fetched": today, "url": scrub(url)})
-            print(f"  {g:12s} {j['meta']['count']:>9,}")
+            print(f"  {g:12s} {j['meta']['count']:>9,}  research {RT.total(by, RT.RESEARCH):>9,}")
             time.sleep(0.3)
     except Budget as e:
         print(f"  stopped: {e}; group_counts.csv left as it was")

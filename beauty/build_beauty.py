@@ -6,7 +6,9 @@ Reads, from data/:
   attractiveness_slim.csv  rated attractiveness (Santangeli et al. 2023, CC BY 4.0)
   description_years.csv            year of description (Catalogue of Life, CC BY)
   wikipedia_views.csv      monthly English Wikipedia views 2016-2025 (CC0)
-  openalex_counts.csv      works 2015-2024 naming the species (CC0)
+  openalex_counts.csv      works 2015-2024 naming the species (CC0), September 2026
+  openalex_types.csv       the same query split by OpenAlex record type (CC0),
+                           from which the response, research works, is taken
   iucn_aves.csv            Red List category, from the reader's own token
                            (fetch_iucn.py); not in git, not in the archive
   iucn_table1a.csv, group_counts.csv   the five-class inputs for figure 1
@@ -16,13 +18,16 @@ Santangeli deposit in data/raw/, which carries the Red List as the authors
 had it (version 2022-1), and the payload says so in redlist_source. The page that
 ships is built from the API column; test_beauty.py checks that.
 
-The response is log(1 + works). Two ordinary-least-squares fits with
-family fixed effects and heteroskedasticity-robust errors:
+The response is log(1 + research works): the works naming the species whose
+OpenAlex type is research (record_types.RESEARCH), not the GBIF downloads and
+Red List and Birds of the World entries that made up most of the old count
+(D-32, R5 2026-10-24). Ordinary-least-squares fits with family fixed effects
+and standard errors clustered by family:
   confounders   log mass, log range, years since description, category
   full          the same plus attractiveness and log views
 From each: category means adjusted by g-computation (every species
 predicted under each category, averaged, back-transformed), the drop-one
-change in R-squared per term, and bootstrap intervals over species.
+change in R-squared per term, and bootstrap intervals over families.
 
 Writes outputs/beauty_payload.json; manifest.json, which carries a SHA-256
 of the Red List table the build used so a reader can check their own fetch
@@ -54,8 +59,11 @@ MANIFEST = os.path.join(HERE, "manifest.json")
 JOINED = os.path.join(DATA, "birds_joined.csv")
 OPEN = os.path.join(DATA, "birds_open.csv")
 SHIPPED_INPUTS = ["avonet_slim.csv", "attractiveness_slim.csv", "description_years.csv",
-                  "wikipedia_views.csv", "openalex_counts.csv", "iucn_table1a.csv",
-                  "group_counts.csv"]
+                  "wikipedia_views.csv", "openalex_counts.csv", "openalex_types.csv",
+                  "iucn_table1a.csv", "group_counts.csv", "type_sources.csv"]
+# Fetched for the species the build needs, not for all of AVONET, so it is
+# checked against the join (join()) rather than in RESUMABLE.
+TYPED = ("openalex_types.csv", "fetch_types.py")
 # The per-species tables, which are appended to as their fetch runs and so
 # must cover every AVONET species before the build will touch them.
 RESUMABLE = {"description_years.csv": "fetch_years.py",
@@ -85,8 +93,10 @@ TERMS_CONF = ["family", "mass", "range", "described", "category"]
 # Views is not a competitor sitting beside threat, it is on the pathway -
 # dropping it raises every category coefficient, by 16% at Near Threatened
 # rising to 34% at Critically Endangered - so a specification that controls
-# for it answers a different question. The page quotes both and says which
-# is which: TERMS_NOVIEWS is the total, TERMS_FULL is the direct.
+# for it answers a different question (the shares quoted here were measured
+# on the September counts; on research works, R5 2026-10-24, the share of the
+# CR term moving with views is 34%). The page quotes both multiples:
+# TERMS_NOVIEWS is the total, TERMS_FULL is the direct.
 TERMS_NOVIEWS = TERMS_CONF + ["attractiveness"]
 TERMS_FULL = TERMS_NOVIEWS + ["views"]
 LABELS = {"family": "Family", "mass": "Body mass", "range": "Range size",
@@ -162,6 +172,16 @@ def check_settled():
                 problems.append(f"data/{name} has 'source' value(s) outside "
                                 f"{sorted(REGISTERS)}: {', '.join(odd[:3])}; {script} does not "
                                 f"write those.")
+    tp = os.path.join(DATA, TYPED[0])
+    if not os.path.exists(tp):
+        problems.append(f"data/{TYPED[0]} is missing; run {TYPED[1]}")
+    else:
+        rows = list(csv.DictReader(open(tp, encoding="utf-8")))
+        bad = sorted({r.get(STAMP) or "(blank)" for r in rows
+                      if not FETCH_STAMP.match(r.get(STAMP) or "")})
+        if bad:
+            problems.append(f"data/{TYPED[0]} has '{STAMP}' value(s) that are not dates: "
+                            f"{', '.join(bad[:3])}; delete it and run {TYPED[1]}.")
     if problems:
         sys.exit("  the inputs are not settled, so nothing was built:\n" +
                  "".join(f"    - {p}\n" for p in problems) +
@@ -282,6 +302,26 @@ def redlist():
                            "data deposit 10.6084/m9.figshare.22231504 (CC BY 4.0)"}
 
 
+def typed():
+    """data/openalex_types.csv -> one row per species with the record-type
+    totals. works_typed is the whole count on the fetch date; research,
+    journal, dataset and reference are its parts (record_types.py)."""
+    import record_types as RT
+    t = read(TYPED[0], dtype={"by_type": str})
+    rows = []
+    for sp, tot, by in zip(t["species"], t["works_total"], t["by_type"].fillna("")):
+        c = RT.parse(by)
+        if sum(c.values()) != int(tot):
+            sys.exit(f"  {TYPED[0]}: {sp} types sum to {sum(c.values())}, total {tot}")
+        rows.append({"species": sp, "works_typed": int(tot),
+                     "research": RT.total(c, RT.RESEARCH), "journal": RT.total(c, RT.JOURNAL),
+                     "dataset": RT.total(c, RT.DATASET), "reference": RT.total(c, RT.REFERENCE)})
+    out = pd.DataFrame(rows)
+    if out["species"].duplicated().any():
+        sys.exit(f"  {TYPED[0]} has a species twice")
+    return out
+
+
 def join():
     av = read("avonet_slim.csv")
     at = read("attractiveness_slim.csv")
@@ -289,13 +329,23 @@ def join():
         columns={"source": "year_source"})
     wk = read("wikipedia_views.csv")[["species", "article", "views_mean_monthly"]]
     oa = read("openalex_counts.csv")[["species", "works_2015_2024"]]
+    ty = typed()
     rl, rl_meta = redlist()
     n = {"avonet": len(av)}
     d = av.merge(at, on="species", how="left").merge(yr, on="species", how="left") \
           .merge(wk, on="species", how="left").merge(oa, on="species", how="left") \
-          .merge(rl, on="species", how="left")
+          .merge(ty, on="species", how="left").merge(rl, on="species", how="left")
+    # Every species with a Red List row must have its typed count: the model
+    # frame, the selection check and the Data Deficient comparison all read
+    # it, and a species missing here would drop out of all three silently.
+    short = d["category"].notna() & d["research"].isna()
+    if short.any():
+        sys.exit(f"  data/{TYPED[0]} lacks {int(short.sum()):,} species with a Red List category; "
+                 f"{TYPED[1]} has not finished. Nothing was built.")
+    n["with_typed"] = int(d["research"].notna().sum())
     n["with_attractiveness"] = int(d["attractiveness"].notna().sum())
     n["with_year"] = int(d["year"].notna().sum())
+    n["year_from_col"] = 0      # set on the model frame below
     n["with_article"] = int(d["article"].notna().sum() - (d["article"] == "").sum())
     n["with_works"] = int(d["works_2015_2024"].notna().sum())
     n["with_category"] = int(d["category"].notna().sum())
@@ -314,14 +364,14 @@ def join():
     d["article_shared_by"] = art.map(shares).fillna(0).astype(int)
     n["views_shared_article"] = int((d["article_shared_by"] > 1).sum())
     n["shared_articles"] = int((shares > 1).sum())
-    keep = d["works_2015_2024"].notna() & d["attractiveness"].notna() & d["year"].notna() \
+    keep = d["research"].notna() & d["attractiveness"].notna() & d["year"].notna() \
         & d["mass_g"].notna() & d["range_km2"].notna() & (d["range_km2"] > 0) \
         & d["category"].isin(CATS)
     m = d[keep].copy()
     n["modelled"] = int(len(m))
-    n["dropped_not_assessed_or_dd_ex"] = int((~d["category"].isin(CATS) & d["works_2015_2024"].notna()
+    n["dropped_not_assessed_or_dd_ex"] = int((~d["category"].isin(CATS) & d["research"].notna()
                                               & d["attractiveness"].notna() & d["year"].notna()).sum())
-    m["works"] = m["works_2015_2024"].astype(int)
+    m["works"] = m["research"].astype(int)
     m["y"] = np.log1p(m["works"])
     m["log_mass"] = np.log10(m["mass_g"])
     m["log_range"] = np.log10(m["range_km2"])
@@ -329,6 +379,7 @@ def join():
     m["log_views"] = np.log10(1 + m["views"])
     m["category"] = pd.Categorical(m["category"], CATS)
     n["modelled_shared_article"] = int((m["article_shared_by"] > 1).sum())
+    n["year_from_col"] = int((m["year_source"] == "col").sum())
     return d, m, n, rl_meta, rl
 
 
@@ -402,9 +453,21 @@ def bootstrap(m, n_boot, rng):
             "noviews_adj": {c: [] for c in CATS},
             "full_adj": {c: [] for c in CATS}, "conf_drop": {t: [] for t in TERMS_CONF},
             "full_drop": {t: [] for t in TERMS_FULL},
-            "conf_cat": {c: [] for c in CATS[1:]}, "full_cat": {c: [] for c in CATS[1:]}}
+            "conf_cat": {c: [] for c in CATS[1:]}, "full_cat": {c: [] for c in CATS[1:]},
+            # The multiple the page prints: adjusted typical count under a
+            # category over the same under Least Concern. Not exp(coef): on
+            # log(1 + x) that is the ratio of (1 + count), which put "x3.8"
+            # beside typical values of 1.9 and 10.1 in the R5 interim fit.
+            "noviews_ratio": {c: [] for c in CATS[1:]}, "full_ratio": {c: [] for c in CATS[1:]}}
+    # Families, not species, are resampled: species in one family are not
+    # independent draws (QA, D-32), and a species bootstrap gave intervals
+    # as narrow as the HC1 errors. A family drawn twice keeps one fixed
+    # effect, which is what its identical rows estimate anyway.
+    fams = m["family"].unique()
+    rows_of = {f: np.flatnonzero(m["family"].to_numpy() == f) for f in fams}
     for b in range(n_boot):
-        s = m.iloc[rng.integers(0, len(m), len(m))]
+        pick = rng.choice(fams, len(fams), replace=True)
+        s = m.iloc[np.concatenate([rows_of[f] for f in pick])]
         for c in CATS:
             sub = s[s["category"] == c]
             keys["raw"][c].append(float(np.expm1(sub["y"].mean())) if len(sub) else np.nan)
@@ -416,6 +479,9 @@ def bootstrap(m, n_boot, rng):
             if tag + "_drop" in keys:
                 for t in terms:
                     keys[tag + "_drop"][t].append(f["drop_r2"][t])
+            if tag + "_ratio" in keys:
+                for c in CATS[1:]:
+                    keys[tag + "_ratio"][c].append(f["adjusted"][c] / f["adjusted"]["LC"])
             if tag + "_cat" in keys:
                 for c in CATS[1:]:
                     keys[tag + "_cat"][c].append(f["beta"]["cat_" + c])
@@ -429,10 +495,19 @@ def bootstrap(m, n_boot, rng):
     return {k: {kk: ci(vv) for kk, vv in d.items()} for k, d in keys.items()}
 
 
-def robust_se(m, terms):
+def clustered(m, X, y=None):
+    """OLS with errors clustered by family. Species in one family share more
+    than the fixed effect takes out; QA found the HC1 errors this replaced
+    understated the Critically Endangered term's (0.060 against 0.084)."""
     import statsmodels.api as sm
+    y = m["y"].to_numpy(float) if y is None else y
+    return sm.OLS(y, X).fit(cov_type="cluster",
+                            cov_kwds={"groups": pd.factorize(m["family"])[0]})
+
+
+def robust_se(m, terms):
     X, names = design(m, terms)
-    res = sm.OLS(m["y"].to_numpy(float), X).fit(cov_type="HC1")
+    res = clustered(m, X)
     return {n: {"coef": float(res.params[i]), "se": float(res.bse[i]), "p": float(res.pvalues[i])}
             for i, n in enumerate(names) if not n.startswith("fam_")}
 
@@ -458,19 +533,19 @@ def selection(d):
     import statsmodels.api as sm
     out = {}
     for tag, need in (("A_no_rating_required", False), ("B_modelled", True)):
-        keep = (d["works_2015_2024"].notna() & d["year"].notna()
+        keep = (d["research"].notna() & d["year"].notna()
                 & d["mass_g"].notna() & d["range_km2"].notna() & (d["range_km2"] > 0)
                 & d["category"].isin(CATS))
         if need:
             keep = keep & d["attractiveness"].notna()
         s = d[keep].copy()
-        s["y"] = np.log1p(s["works_2015_2024"].astype(int))
+        s["y"] = np.log1p(s["research"].astype(int))
         s["log_mass"] = np.log10(s["mass_g"])
         s["log_range"] = np.log10(s["range_km2"])
         s["years_described"] = REF_YEAR - s["year"].astype(int)
         s["category"] = pd.Categorical(s["category"], CATS)
         X, names = design(s, TERMS_CONF)
-        res = sm.OLS(s["y"].to_numpy(float), X).fit(cov_type="HC1")
+        res = clustered(s, X)
         ci = res.conf_int()
         cats = {}
         for c in CATS[1:]:
@@ -501,99 +576,107 @@ def data_deficient(d):
     must not be given one, and nothing here appears as a point in a figure.
     """
     out = {}
-    sub = d[d["works_2015_2024"].notna() & d["category"].notna()]
+    sub = d[d["research"].notna() & d["category"].notna()]
     for c in ["DD"] + CATS + ["EW", "EX"]:
-        v = sub.loc[sub["category"] == c, "works_2015_2024"].to_numpy(float)
+        v = sub.loc[sub["category"] == c, "research"].to_numpy(float)
         if not len(v):
             continue
         out[c] = {"n": int(len(v)), "p25": float(np.percentile(v, 25)),
                   "median": float(np.median(v)), "p75": float(np.percentile(v, 75)),
                   "mean": float(v.mean())}
-    return {"by_category": out,
-            "note": "Descriptive only. Data Deficient is 34 species; no coefficient "
-                    "is fitted for it and it appears in no figure. It is the lowest "
-                    "category at every quartile, which is consistent with the Red "
-                    "List category being partly a record of how much evidence "
-                    "already existed."}
+    return {"by_category": out, "frame": int(len(sub)),
+            "note": "Descriptive only, on research works. Data Deficient is too few "
+                    "species for a coefficient; it appears in no figure."}
 
 
-def strata(m):
-    """The Red List coefficient within OpenAlex primary-topic fields.
+def record_types(m):
+    """What the old count was made of, and whether the effect is the paperwork.
 
-    Tests one rival explanation: that the effect is made of papers ABOUT
-    the listing - status reviews, Red List updates - rather than research
-    the listing may have prompted. The rule this is read against was
-    committed in PRESPEC_topics_2026-09-09.md before any topic data
-    existed: minimum cell, primary stratum, failure condition. topic_test.py
-    is the same computation standing alone and prints the verdict.
-
-    Returns every named field including the ones failing the cell floor,
-    with `reportable` false and no coefficients, so a figure cannot draw a
-    point the pre-spec forbids.
+    Replaces the topic-field strata test (D-32): QA found GBIF downloads and
+    Red List entries are filed under every topic field, molecular biology
+    included, so a field could not separate paperwork from research. The
+    record type can. For each category: the raw shares of the typed total;
+    and the total-effect model refitted on each part separately, so the page
+    can say how much of the old Critically Endangered gap was each kind of
+    record.
     """
-    import statsmodels.api as sm
-    p = os.path.join(DATA, "topic_counts.csv")
-    if not os.path.exists(p):
-        return {"available": False,
-                "why": "data/topic_counts.csv is absent; run fetch_topics.py"}
-    PRIMARY, CONTROL = "13", "23"
-    SECONDARY = ["28", "24", "27", "19", "11"]
-    PRONE = {"23", "11"}
-    MIN_CELL, FLOOR, ALPHA = 30, 0.20, 0.05
-    t = pd.read_csv(p, dtype={"field_id": str})
-    wide = (t[t["field_id"] != "_none"]
-            .pivot_table(index="species", columns="field_id", values="works",
-                         aggfunc="sum", fill_value=0))
-    out = {"rule": {"min_cell_per_category": MIN_CELL, "primary_field": PRIMARY,
-                    "cr_floor": FLOOR, "alpha": ALPHA,
-                    "prespec": "PRESPEC_topics_2026-09-09.md"},
-           "fields": {}, "available": True}
-    for fid in [PRIMARY] + SECONDARY + [CONTROL]:
-        w = (wide[fid].reindex(m["species"]).fillna(0) if fid in wide.columns
-             else pd.Series(0.0, index=m["species"]))
-        w.index = m.index
-        cell = {c: int(((m["category"] == c) & (w > 0)).sum()) for c in CATS}
-        rec = {"cells": cell, "works": int(w.sum()),
-               "artefact_prone": fid in PRONE,
-               "role": ("primary" if fid == PRIMARY else
-                        "positive_control" if fid == CONTROL else "secondary")}
-        if min(cell.values()) < MIN_CELL:
-            rec["reportable"] = False
-            out["fields"][fid] = rec
-            continue
-        s = m.copy()
-        s["y"] = np.log1p(w.to_numpy(float))
-        X, names = design(s, TERMS_CONF)
-        res = sm.OLS(s["y"].to_numpy(float), X).fit(cov_type="HC1")
+    out = {"shares": {}, "fits": {}, "zero_research": {}}
+    for c in CATS:
+        s = m[m["category"] == c]
+        tot = float(s["works_typed"].sum())
+        out["shares"][c] = {"n": int(len(s)), "works_typed": int(tot),
+                            "research": float(s["research"].sum() / tot),
+                            "dataset": float(s["dataset"].sum() / tot),
+                            "reference": float(s["reference"].sum() / tot),
+                            "other": float(1 - (s["research"].sum() + s["dataset"].sum()
+                                                + s["reference"].sum()) / tot),
+                            "mean_typed": float(s["works_typed"].mean()),
+                            "mean_research": float(s["research"].mean()),
+                            "mean_dataset": float(s["dataset"].mean()),
+                            "mean_reference": float(s["reference"].mean())}
+        out["zero_research"][c] = float((s["research"] == 0).mean())
+    out["zero_research"]["all"] = float((m["research"] == 0).mean())
+    # The page names the well-known common birds that pull the Least
+    # Concern average up; this is how many have 100 research works or more.
+    out["famous_lc"] = int(((m["category"] == "LC") & (m["research"] >= 100)).sum())
+    out["zero_typed_all"] = float((m["works_typed"] == 0).mean())
+    X, names = design(m, TERMS_NOVIEWS)
+    for col in ("works_typed", "works_2015_2024", "research", "journal", "dataset", "reference"):
+        y = np.log1p(m[col].to_numpy(float))
+        res = clustered(m, X, y)
         ci = res.conf_int()
-        rec["reportable"] = True
-        rec["category"] = {}
-        for c in CATS[1:]:
-            i = names.index("cat_" + c)
-            rec["category"][c] = {"coef": float(res.params[i]), "lo": float(ci[i][0]),
-                                  "hi": float(ci[i][1]), "p": float(res.pvalues[i])}
-        rec["cr_meets_threshold"] = bool(rec["category"]["CR"]["coef"] >= FLOOR
-                                         and rec["category"]["CR"]["p"] < ALPHA)
-        out["fields"][fid] = rec
-    # the crude contrast, predicted in advance to understate the effect
-    keep = [c for c in wide.columns if c not in PRONE]
-    w = wide[keep].sum(axis=1).reindex(m["species"]).fillna(0)
-    w.index = m.index
-    s = m.copy()
-    s["y"] = np.log1p(w.to_numpy(float))
-    X, names = design(s, TERMS_CONF)
-    res = sm.OLS(s["y"].to_numpy(float), X).fit(cov_type="HC1")
-    out["crude_exclusion"] = {
-        "why": "Total works minus fields 23 and 11. Predicted in the pre-spec to "
-               "understate the effect, because it deletes genuine conservation "
-               "biology, which is research effort on the species.",
-        "category": {c: float(res.params[names.index("cat_" + c)]) for c in CATS[1:]}}
+        beta = res.params
+        s = m.copy()
+        s["y"] = y
+        adj = category_means(s, X, names, beta)
+        out["fits"][col] = {c: {"coef": float(beta[names.index("cat_" + c)]),
+                                "lo": float(ci[names.index("cat_" + c)][0]),
+                                "hi": float(ci[names.index("cat_" + c)][1]),
+                                "p": float(res.pvalues[names.index("cat_" + c)])}
+                            for c in CATS[1:]}
+        out["fits"][col]["adjusted"] = adj
     return out
+
+
+def type_sources():
+    """fetch_type_sources.py's spot check: what share of the sampled
+    species' datasets are GBIF's, and of their reference entries the Red
+    List's or Birds of the World's."""
+    t = read("type_sources.csv")
+    def share(typ, names):
+        s = t[t["type"] == typ]
+        return float(s[s["source"].isin(names)]["works"].sum() / s["of_type"].iloc[0])
+    return {"species_sampled": int(t["species_sampled"].iloc[0]), "fetched": str(t["fetched"].iloc[0]),
+            "gbif_share_of_datasets": share("dataset", ["Global Biodiversity Information Facility"]),
+            "iucn_bow_share_of_reference": share("reference-entry", ["IUCN Red List of Threatened Species",
+                                                                      "Birds of the World"])}
+
+
+def count_model(m):
+    """Poisson (PPML) on research works, same design, family-clustered.
+
+    A check, not the headline. It estimates the ratio of MEAN counts, which
+    heavily studied birds dominate; the log(1 + x) fit estimates the ratio
+    of typical counts. QA's count model on its interim cleaned counts gave
+    x1.84 with an interval from about x0.76 to x4.4, so the page has to say
+    what this one gives whichever way it falls."""
+    import statsmodels.api as sm
+    X, names = design(m, TERMS_NOVIEWS)
+    res = sm.GLM(m["research"].to_numpy(float), X, family=sm.families.Poisson()).fit(
+        cov_type="cluster", cov_kwds={"groups": pd.factorize(m["family"])[0]}, maxiter=300)
+    ci = res.conf_int()
+    return {c: {"coef": float(res.params[names.index("cat_" + c)]),
+                "lo": float(ci[names.index("cat_" + c)][0]),
+                "hi": float(ci[names.index("cat_" + c)][1]),
+                "p": float(res.pvalues[names.index("cat_" + c)])} for c in CATS[1:]}
 
 
 def groups():
     t = read("iucn_table1a.csv")
     g = read("group_counts.csv")
+    # research, not works: the class counts carried GBIF downloads and
+    # reference entries too (8,042 of them for amphibians), D-32.
+    g = g.drop(columns=["works"]).rename(columns={"research": "works"})
     t = t[t["group"].isin(VERTEBRATES)].merge(g[["group", "works", "fetched", "years"]], on="group")
     tot_thr, tot_w = t["threatened"].sum(), t["works"].sum()
     rows = []
@@ -644,8 +727,9 @@ def looked_up():
 
 def assumed():
     return [
-        {"key": "paper_definition", "text": "A paper about a species is an OpenAlex work of 2015-2024 whose "
-                                            "title or abstract contains the scientific name as a phrase."},
+        {"key": "paper_definition", "text": "A research work about a species is an OpenAlex work of 2015-2024 "
+                                            "whose title or abstract contains the scientific name as a phrase "
+                                            "and whose OpenAlex type is a research type (record_types.py)."},
         {"key": "attention_proxy", "text": "Public attention is the mean monthly view count of the species' "
                                            "English Wikipedia article, 2016-2025; a species with no article "
                                            "is given zero, and a species sharing an article with another "
@@ -677,6 +761,11 @@ def main(n_boot):
     # is shared with another species, and the ones with no article at all?
     # Both are places where the attention term is measured badly.
     sens = {}
+    j = m.copy()
+    j["y"] = np.log1p(j["journal"].astype(float))
+    fj = fit_all(j, TERMS_NOVIEWS)
+    sens["journal_only"] = {"n": fj["n"], "adjusted": fj["adjusted"],
+                            "cat_beta": {c: fj["beta"]["cat_" + c] for c in CATS[1:]}}
     for key, sub in (("unshared_article", m[m["article_shared_by"] <= 1]),
                      ("has_article", m[m["has_article"] == 1])):
         f = fit_all(sub, TERMS_FULL)
@@ -690,7 +779,7 @@ def main(n_boot):
     P = {
         "categories_sha256": man["withheld"]["sha256"],
         "generated_from": ["fetch_traits.py", "fetch_years.py", "fetch_wikipedia.py", "fetch_openalex.py",
-                           "fetch_iucn.py", "fetch_groups.py", "build_beauty.py"],
+                           "fetch_types.py", "fetch_iucn.py", "fetch_groups.py", "build_beauty.py"],
         "seed": SEED, "n_boot": n_boot, "reference_year": REF_YEAR,
         "categories": CATS, "category_names": CAT_NAMES, "term_labels": LABELS,
         "n": n, **rl_meta,
@@ -702,7 +791,10 @@ def main(n_boot):
                               / noviews["beta"]["cat_" + c] for c in CATS[1:]},
         "selection": selection(d),
         "data_deficient": data_deficient(d),
-        "strata": strata(m),
+        "record_types": record_types(m),
+        "count_model": count_model(m),
+        "type_sources": type_sources(),
+        "types_fetched": sorted(set(read(TYPED[0])["fetched"].astype(str))),
         "sensitivity": sens,
         "bootstrap": boot,
         "groups": groups(),
@@ -712,7 +804,8 @@ def main(n_boot):
     os.makedirs(os.path.dirname(OUT), exist_ok=True)
     json.dump(P, open(OUT, "w", encoding="utf-8", newline="\n"), indent=1)
     cols = ["species", "family", "order", "mass_g", "range_km2", "year", "attractiveness",
-            "article", "views_mean_monthly", "works_2015_2024"]
+            "article", "views_mean_monthly", "works_2015_2024", "works_typed", "research",
+            "dataset", "reference"]
     m.sort_values("species")[cols + ["category"]].to_csv(JOINED, index=False, lineterminator="\n")
     m.sort_values("species")[cols].to_csv(OPEN, index=False, lineterminator="\n")
     print(f"  -> {os.path.relpath(OUT, HERE)}; {os.path.relpath(JOINED, HERE)} (not shipped); "

@@ -27,7 +27,8 @@ asks the only two questions worth asking about a lever:
 WHAT THE THREE FIGURES SAY AT 350, MEASURED 2026-09-13:
 
   beauty_fig3_terms      ticks clear with a 10% margin, no wrapping
-  beauty_fig4_strata     ticks clear with a 10% margin, no wrapping
+  beauty_fig4_strata     ticks clear with a 10% margin, no wrapping (figure retired
+                         2026-10-24 with the topic test, D-32; no longer driven)
   continents_fig3_rigidity   RAISES - 4 off canvas at every margin it has,
                              0 overlaps, which is the perpendicular constraint
                              with nothing on the other side of it
@@ -77,7 +78,6 @@ WORKERS = ("beauty", "continents")
 # because a gate that accepts whatever it is told is not a gate.
 AT_PHONE = {
     "beauty_fig3_terms": ("applied", "wrap none, margin +10%"),
-    "beauty_fig4_strata": ("applied", "wrap none, margin +10%"),
     "continents_fig3_rigidity": ("raises", None),
 }
 
@@ -121,7 +121,8 @@ def worker(which):
         import fig_beauty as M
         data = json.load(open(M.PAYLOAD, encoding="utf-8"))
         sitefig.style()
-        jobs = [("beauty_fig3_terms", M.fig3), ("beauty_fig4_strata", M.fig4)]
+        # beauty_fig4_strata retired 2026-10-24 (R5, D-32) with the topic test it drew.
+        jobs = [("beauty_fig3_terms", M.fig3)]
 
         def draw(fn, width):
             out = {}

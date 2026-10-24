@@ -30,7 +30,8 @@ TEMPLATE = os.path.join(HERE, "template.html")
 PAYLOAD = os.path.join(HERE, "outputs", "beauty_payload.json")
 MODELS = os.path.join(HERE, "models.json")
 MANIFEST = os.path.join(HERE, "manifest.json")
-COUNTS = os.path.join(HERE, "data", "openalex_counts.csv")
+COUNTS = os.path.join(HERE, "data", "openalex_types.csv")
+LC_MATCHED = os.path.join(HERE, "data", "lc_matched.csv")
 # A free OpenAlex key's daily allowance in dollars, measured from the
 # X-RateLimit-Limit-USD header on 6 September 2026.
 OPENALEX_DAILY_USD = 1.00
@@ -51,8 +52,9 @@ def pct(x, d=0):
 
 
 def openalex_cost():
-    """What the per-species fetch actually cost: the cost_usd column of
-    the table that ships, summed, and the rows it has. The run log is
+    """What the per-species record-type fetch (fetch_types.py) actually
+    cost: the cost_usd column of the table that ships, summed, and the rows
+    it has. The run log is
     provenance for the same figure, but it is written when a run ends, so
     a run that was killed leaves rows in the table and no line in the log;
     the table is the artefact the page describes, so the table is what is
@@ -64,120 +66,138 @@ def openalex_cost():
     return sum(float(r["cost_usd"] or 0) for r in rows), len(rows)
 
 
+ORDINAL = {1: "first", 2: "second", 3: "third", 4: "fourth", 5: "fifth", 6: "sixth",
+           7: "seventh"}
+
+
 def values(P):
+    """Every number on the page, from the payload.
+
+    One definition of "times" throughout (R5, 2026-10-24): the adjusted
+    typical count under a category over the same under Least Concern, from
+    the g-computed means. exp(coef) is not printed as a multiple, because on
+    log(1 + x) it is the ratio of (1 + count) and disagrees with the two
+    typical values printed beside it. The count model's exp(coef) is a ratio
+    of mean counts and is labelled as that.
+    """
     n = P["n"]
     raw = P["raw_by_category"]
-    conf = P["model_confounders"]
     full = P["model_full"]
+    nov = P["model_noviews"]
     B = P["bootstrap"]
     G = P["groups"]
     lu = P["looked_up"]
+    RT = P["record_types"]
     M = json.load(open(MODELS, encoding="utf-8"))["models"]
     MAN = json.load(open(MANIFEST, encoding="utf-8"))
     dr = lu["openalex_search_drift"]
-    nov = P["model_noviews"]
-    st = P["strata"]
     dcat = P["data_deficient"]["by_category"]
     g = {r["group"]: r for r in G["rows"]}
     read = [m for m in M if m["read"] == "full text"]
-    verdicts = {}
-    for m in M:
-        verdicts.setdefault(m["verdict"], []).append(m)
-    n_null_or_neg = sum(1 for m in read if m["verdict"] in ("null", "negative"))
-    n_null_or_neg_adj = sum(1 for m in read if m["verdict"] in ("null", "negative") and m["adjusted"])
     cost, cost_n = openalex_cost()
     zip_kb = round(os.path.getsize(ZIP) / 1024) if os.path.exists(ZIP) else 0
-    cr, lc = raw["CR"]["typical"], raw["LC"]["typical"]
-    acr, alc = conf["adjusted"]["CR"], conf["adjusted"]["LC"]
-    # D-33 item 4: the p-value printed beside cr_tot_coef is from the same
-    # fit, model_noviews. It read model_confounders until 2026-10-22; both
-    # print "under 0.01" (1.2e-58 and 3.7e-55), so no figure moves.
-    p_cr = nov["robust"]["cat_CR"]["p"]
-    p_en = conf["robust"]["cat_EN"]["p"]
     drop = full["drop_r2"]
     rank = sorted(drop, key=lambda t: -drop[t])
-    top = rank[0]
-    ratio_top_cat = drop[top] / drop["category"] if drop["category"] > 0 else float("inf")
+    adj, adjf = nov["adjusted"], full["adjusted"]
+    ratio = adj["CR"] / adj["LC"]
+    sh = RT["shares"]
+    allw = sum(sh[c]["works_typed"] for c in sh)
+    share = {k: sum(sh[c][k] * sh[c]["works_typed"] for c in sh) / allw
+             for k in ("research", "dataset", "reference")}
+    fits = RT["fits"]
+    x = lambda f: f["adjusted"]["CR"] / f["adjusted"]["LC"]          # noqa: E731
+    cm = P["count_model"]["CR"]
+    ts = P["type_sources"]
+    fetched = P["types_fetched"]
+    lc_matched_n = sum(1 for _ in open(LC_MATCHED, encoding="utf-8")) - 1
+    dmy = lambda d: f"{d.day} {d:%B %Y}"                              # noqa: E731
+    # The prose of "What else goes with being studied" names the order of
+    # the terms in words. It is checked here so a refit that reorders them
+    # stops the render instead of shipping a sentence the figure contradicts.
+    if rank[:2] != ["views", "family"] or rank.index("category") < rank.index("range"):
+        raise SystemExit(f"term order changed ({rank}); rewrite the template's terms paragraph")
+    if not (adj["LC"] < adj["NT"] < adj["VU"] < adj["EN"] < adj["CR"]):
+        raise SystemExit("adjusted means are not monotone; the template says the rise runs through every category")
+    cmod = P["count_model"]
+    if not (math.exp(cmod["CR"]["lo"]) < 1.2 and cmod["VU"]["coef"] < cmod["NT"]["coef"]):
+        raise SystemExit("count model no longer 'only just distinguishable' with VU below NT; "
+                         "rewrite that paragraph")
+    pv = full["robust"]["attractiveness"]["p"]
     v = {
+        "attr_p": f"{pv:.2f}" if pv >= 0.01 else "under 0.01",
         "n_avonet": fmt(n["avonet"]), "n_modelled": fmt(n["modelled"]),
         "n_attract": fmt(n["with_attractiveness"]), "n_article": fmt(n["with_article"]),
-        "n_year": fmt(n["with_year"]), "n_works": fmt(n["with_works"]), "n_category": fmt(n["with_category"]),
+        "n_category": fmt(n["with_category"]),
         "n_dropped_dd": fmt(n["dropped_not_assessed_or_dd_ex"]),
         "n_no_article": fmt(n["avonet"] - n["with_article"]),
         "n_shared_views": fmt(n["views_shared_article"]),
         "n_shared_articles": fmt(n["shared_articles"]),
-        "n_modelled_shared": fmt(n["modelled_shared_article"]),
-        "sens_shared_cat_drop": f"{P['sensitivity']['unshared_article']['drop_r2']['category']:.3f}",
-        "sens_article_cat_drop": f"{P['sensitivity']['has_article']['drop_r2']['category']:.3f}",
-        # D-33 item 5: what the has-article refit does to the top category
         "sens_article_cr": f"{P['sensitivity']['has_article']['cat_beta']['CR']:+.2f}",
-        "sens_article_en": f"{P['sensitivity']['has_article']['cat_beta']['EN']:+.2f}",
-        "sens_article_dropped": fmt(P['sensitivity']['has_article']['dropped']),
         "red_list_version": P["red_list_version"], "redlist_source_word":
             "the Red List API" if P["redlist_source"] == "api" else "the 2022-1 categories in the Santangeli deposit",
         "n_boot": fmt(P["n_boot"]), "seed": P["seed"], "ref_year": P["reference_year"],
-        # r2_noviews, not r2_conf: the page's "adjusted" is model_noviews
-        # throughout - the total effect, with attractiveness held and views
-        # left free, which is what makes the mediated share below mean
-        # anything (build_beauty.py:89). The strip used to read the
-        # confounders-only fit while the prose read this one, so one quantity
-        # had two values on the page, 47.7 and 48.1.
-        "r2_conf": f"{conf['r2']:.2f}", "r2_full": f"{full['r2']:.2f}",
-        "r2_noviews": f"{nov['r2']:.2f}",
-        # figure 1
-        "amph_share_thr": pct(g["Amphibians"]["share_threatened"]), "amph_share_works": pct(g["Amphibians"]["share_works"]),
-        "amph_per": f"{g['Amphibians']['works_per_threatened']:.0f}",
-        "rept_per": f"{g['Reptiles']['works_per_threatened']:.0f}",
-        "birds_share_thr": pct(g["Birds"]["share_threatened"]), "birds_share_works": pct(g["Birds"]["share_works"]),
-        "birds_per": f"{g['Birds']['works_per_threatened']:.0f}",
-        "mamm_per": f"{g['Mammals']['works_per_threatened']:.0f}", "fish_per": f"{g['Fishes']['works_per_threatened']:.0f}",
-        "birds_over_amph": f"{g['Birds']['works_per_threatened'] / g['Amphibians']['works_per_threatened']:.0f}",
-        "amph_pct_thr": g["Amphibians"]["pct_threatened_best"], "birds_pct_thr": g["Birds"]["pct_threatened_best"],
-        "amph_threatened": fmt(g["Amphibians"]["threatened"]), "birds_threatened": fmt(g["Birds"]["threatened"]),
-        "total_threatened": fmt(G["total_threatened"]), "total_works": fmt(G["total_works"]),
-        "works_years": G["works_years"],
-        # figure 2
-        "lc_raw": f"{lc:.1f}", "cr_raw": f"{cr:.1f}", "en_raw": f"{raw['EN']['typical']:.1f}",
-        "lc_adj": f"{alc:.1f}", "cr_adj": f"{acr:.1f}", "en_adj": f"{conf['adjusted']['EN']:.1f}",
-        "lc_n": fmt(raw["LC"]["n"]), "cr_n": fmt(raw["CR"]["n"]), "en_n": fmt(raw["EN"]["n"]),
-        "vu_n": fmt(raw["VU"]["n"]), "nt_n": fmt(raw["NT"]["n"]),
-        "lc_zero_pct": pct(raw["LC"]["share_zero"]), "cr_zero_pct": pct(raw["CR"]["share_zero"]),
-        "cr_raw_ci": f"{B['raw']['CR'][0]:.1f} to {B['raw']['CR'][1]:.1f}",
-        "cr_adj_ci": f"{B['conf_adj']['CR'][0]:.1f} to {B['conf_adj']['CR'][1]:.1f}",
-        "raw_cr_vs_lc": "more" if cr > lc else "fewer",
-        "raw_cr_vs_lc_pct": pct(abs(cr / lc - 1)),
-        "adj_cr_vs_lc": "more" if acr > alc else "fewer",
-        "adj_cr_vs_lc_pct": pct(abs(acr / alc - 1)),
-        "cr_coef": f"{conf['beta']['cat_CR']:+.2f}", "cr_p": f"{p_cr:.2f}" if p_cr >= 0.01 else "under 0.01",
-        "en_coef": f"{conf['beta']['cat_EN']:+.2f}", "en_p": f"{p_en:.2f}" if p_en >= 0.01 else "under 0.01",
-        # figure 3
-        "top_term": P["term_labels"][top].lower(), "top_drop": f"{drop[top]:.3f}",
-        "second_term": P["term_labels"][rank[1]].lower(), "second_drop": f"{drop[rank[1]]:.3f}",
-        "cat_drop": f"{drop['category']:.3f}", "cat_rank": str(rank.index("category") + 1),
+        "r2_full": f"{full['r2']:.2f}", "r2_noviews": f"{nov['r2']:.2f}",
+        "types_fetched": " and ".join(dmy(dt.date.fromisoformat(d)) for d in fetched),
+        # the hero: what the count was made of
+        "share_research_all": pct(share["research"]), "share_dataset_all": pct(share["dataset"]),
+        "share_reference_all": pct(share["reference"]),
+        "share_other_all": f"{100 * (1 - share['research'] - share['dataset'] - share['reference']):.1f}",
+        "n_famous_lc": str(int(round(RT["famous_lc"], -1))),
+        "n_year_col": fmt(n["year_from_col"]),
+        "n_read_word": WORDS[len(read)],
+        "n_null_word": WORDS[sum(1 for m in read if m["verdict"] == "null")],
+        "n_negative_word": WORDS[sum(1 for m in read if m["verdict"] == "negative")],
+        "cr_tot_coef": f"{nov['beta']['cat_CR']:+.2f}",
+        "types_cost_round": f"{cost:.0f}",
+        "cr_mean_research": f"{sh['CR']['mean_research']:.0f}", "lc_mean_research": f"{sh['LC']['mean_research']:.0f}",
+        "lc_typed_tot": f"{fits['works_typed']['adjusted']['LC']:.0f}",
+        "cr_typed_tot": f"{fits['works_typed']['adjusted']['CR']:.0f}",
+        "zero_all_pct": pct(RT["zero_research"]["all"]),
+        "ds_cr_x": f"{x(fits['dataset']):.1f}", "ref_cr_x": f"{x(fits['reference']):.1f}",
+        "old_cr_x": f"{x(fits['works_typed']):.1f}",
+        "probe_n": str(ts["species_sampled"]), "probe_gbif_pct": pct(ts["gbif_share_of_datasets"]),
+        "probe_ref_pct": pct(ts["iucn_bow_share_of_reference"]),
+        # threat and research
+        "lc_raw": f"{raw['LC']['typical']:.1f}", "cr_raw": f"{raw['CR']['typical']:.1f}",
+        "lc_tot": f"{adj['LC']:.1f}", "cr_tot": f"{adj['CR']:.1f}", "nt_tot": f"{adj['NT']:.1f}",
+        "vu_tot": f"{adj['VU']:.1f}", "en_tot": f"{adj['EN']:.1f}",
+        "cr_tot_ci": f"{B['noviews_adj']['CR'][0]:.1f} to {B['noviews_adj']['CR'][1]:.1f}",
+        "cr_tot_x": f"{ratio:.1f}", "cr_tot_x1": f"{ratio:.0f}" if ratio >= 3 else f"{ratio:.1f}",
+        "cr_x_lo": f"{B['noviews_ratio']['CR'][0]:.1f}", "cr_x_hi": f"{B['noviews_ratio']['CR'][1]:.1f}",
+        "ppml_x": f"{math.exp(cm['coef']):.1f}", "ppml_lo": f"{math.exp(cm['lo']):.1f}",
+        "ppml_hi": f"{math.exp(cm['hi']):.1f}",
+        "journal_cr_x": f"{P['sensitivity']['journal_only']['adjusted']['CR'] / P['sensitivity']['journal_only']['adjusted']['LC']:.1f}",
+        "cr_dir_x": f"{adjf['CR'] / adjf['LC']:.1f}", "cr_dir_coef": f"{full['beta']['cat_CR']:+.2f}",
+        "med_nt": pct(P["mediated_share"]["NT"]), "med_cr": pct(P["mediated_share"]["CR"]),
+        # the terms
+        "family_drop": f"{drop['family']:.3f}", "cat_drop": f"{drop['category']:.3f}",
+        "cat_rank_word": ORDINAL[rank.index("category") + 1],
+        "second_term_cap": P["term_labels"][rank[1]], "second_drop": f"{drop[rank[1]]:.3f}",
         "attr_drop": f"{drop['attractiveness']:.3f}", "views_drop": f"{drop['views']:.3f}",
-        "family_drop": f"{drop['family']:.3f}", "range_drop": f"{drop['range']:.3f}",
-        "mass_drop": f"{drop['mass']:.3f}", "described_drop": f"{drop['described']:.3f}",
-        "top_over_cat": f"{ratio_top_cat:.0f}" if ratio_top_cat != float("inf") else "many",
-        "attr_coef": f"{full['robust']['attractiveness']['coef']:+.2f}",
-        "attr_p": f"{full['robust']['attractiveness']['p']:.2f}" if full["robust"]["attractiveness"]["p"] >= 0.01 else "under 0.01",
-        "views_coef": f"{full['robust']['log_views']['coef']:+.2f}",
         # the literature
-        "n_models": str(len(M)), "n_read": str(len(read)),
-        "n_null_or_neg": str(n_null_or_neg), "n_null_or_neg_adj": str(n_null_or_neg_adj),
-        "n_null": str(len(verdicts.get("null", []))), "n_negative": str(len(verdicts.get("negative", []))),
-        "n_unread": str(sum(1 for m in M if m["read"] != "full text")),
-        # D-33 item 7: Adamo et al. 2021 has no threat-status term
-        "n_threat": str(sum(1 for m in M if m["verdict"] != "no threat term")),
-        "n_threat_word": WORDS.get(sum(1 for m in M if m["verdict"] != "no threat term"), "some"),
+        "n_read": str(len(read)),
+        "n_null": str(sum(1 for m in read if m["verdict"] == "null")),
+        "n_negative": str(sum(1 for m in read if m["verdict"] == "negative")),
+        "n_assessed_word": WORDS[sum(1 for m in read if m["verdict"] == "assessed-positive")],
+        # A threat term in a MODEL: not Adamo (no term) and not Ducatez &
+        # Lefebvre 2014, a bivariate comparison (models.json adjusted=false).
+        "n_threat_word": WORDS.get(sum(1 for m in M if m["verdict"] != "no threat term"
+                                       and m["adjusted"]), "some"),
         "n_models_word": WORDS.get(len(M), str(len(M))).capitalize(),
-        "n_abstract_word": (lambda k: f"{WORDS.get(k, str(k)).capitalize()} {'is' if k == 1 else 'are'}")(
-            sum(1 for m in M if m["read"] == "abstract")),
-        "n_none_word": WORDS.get(sum(1 for m in M if m["read"] == "none"), "some"),
         "models_rows": "".join(
             f"<tr><td>{m['label']}</td><td>{m['taxon']}, {fmt(m['n'])}</td>"
             f"<td>{m['verdict'].replace('-', ', ')}{'' if m['adjusted'] else ', unadjusted'}</td>"
             f"<td>{m['read']}</td></tr>"
             for m in M),
+        # the classes
+        "amph_share_thr": pct(g["Amphibians"]["share_threatened"]),
+        "amph_share_works": pct(g["Amphibians"]["share_works"]),
+        "amph_per": f"{g['Amphibians']['works_per_threatened']:.0f}",
+        "birds_per": f"{g['Birds']['works_per_threatened']:.0f}",
+        "amph_pct_thr": g["Amphibians"]["pct_threatened_best"],
+        "eval_lo": f"{min(r['pct_evaluated'] for r in G['rows']):.0f}",
+        "eval_hi": f"{max(r['pct_evaluated'] for r in G['rows']):.0f}",
+        "works_years": G["works_years"],
         # looked up
         "esa_top10": lu["esa_top10_share"]["value"], "life_pct": lu["life_birds_mammals_budget"]["value"],
         "global_funded_pct": lu["global_threatened_ever_funded"]["value"],
@@ -185,60 +205,29 @@ def values(P):
         "dd_mammals": lu["dd_mammals_predicted_threatened"]["value"],
         "dd_amph": lu["dd_amphibians_predicted_threatened"]["value"],
         "extinct_est": lu["extinct_since_1500_estimate"]["value"], "extinct_rl": lu["extinct_since_1500_red_list"]["value"],
-        # the code
-        "openalex_cost": f"{cost:.2f}", "openalex_cost_n": fmt(cost_n),
-        "openalex_days": fmt(max(1, int(-(-cost // OPENALEX_DAILY_USD)))), "zip_kb": fmt(zip_kb),
-        "cat_sha_short": P["categories_sha256"][:16], "cat_rows": fmt(MAN["withheld"]["rows"]),
-        "drift_date": (lambda d: f"{d.day} {d:%B %Y}")(dt.date.fromisoformat(dr["observed"])),
+        "drift_date": dmy(dt.date.fromisoformat(dr["observed"])),
         "drift_common": dr["common"], "drift_fulltext": fmt(dr["fulltext"]),
         "drift_filter": fmt(dr["title_abstract"]),
         "drift_ratio": f"{dr['fulltext'] / dr['title_abstract']:.1f}",
-        # the total effect, and the share of it running through attention
-        "cr_tot": f"{nov['adjusted']['CR']:.1f}", "lc_tot": f"{nov['adjusted']['LC']:.1f}",
-        "cr_tot_coef": f"{nov['beta']['cat_CR']:+.2f}",
-        "cr_tot_x": f"{math.exp(nov['beta']['cat_CR']):.2f}",
-        "cr_dir_coef": f"{full['beta']['cat_CR']:+.2f}",
-        "cr_dir_x": f"{math.exp(full['beta']['cat_CR']):.2f}",
-        "cr_tot_ci": f"{B['noviews_adj']['CR'][0]:.1f} to {B['noviews_adj']['CR'][1]:.1f}",
-        "med_nt": pct(P["mediated_share"]["NT"]), "med_cr": pct(P["mediated_share"]["CR"]),
-        "med_vu": pct(P["mediated_share"]["VU"]), "med_en": pct(P["mediated_share"]["EN"]),
-        "views_over_attr": f"{drop['views'] / drop['attractiveness']:.0f}",
-        # selection: what conditioning on a rated score does
+        # limits
+        "dd_frame": fmt(P["data_deficient"]["frame"]),
+        "dd_n": fmt(dcat["DD"]["n"]), "dd_median": f"{dcat['DD']['median']:.0f}",
+        "lc_median": f"{dcat['LC']['median']:.0f}",
         "sel_dropped": fmt(P["selection"]["dropped"]),
         "sel_n_a": fmt(P["selection"]["A_no_rating_required"]["n"]),
-        "sel_cr_a": f"{P['selection']['A_no_rating_required']['category']['CR']['coef']:+.3f}",
-        "sel_cr_b": f"{P['selection']['B_modelled']['category']['CR']['coef']:+.3f}",
-        # the assessment-evidence confound
-        # The DD table has its OWN frame: every bird with a Red List
-        # category and a works count. The fits need an attractiveness
-        # rating too, so they run on fewer. Two frames on one page, and
-        # the page names which is which rather than letting a reader
-        # assume one N covers both.
-        "dd_frame": fmt(sum(v["n"] for v in dcat.values())),
-        "dd_n": fmt(P["data_deficient"]["by_category"]["DD"]["n"]),
-        "nt_median": f"{dcat['NT']['median']:.0f}",
-        "en_median": f"{dcat['EN']['median']:.0f}",
-        "cr_median": f"{dcat['CR']['median']:.0f}",
-        "ew_n": fmt(dcat["EW"]["n"]), "ew_median": f"{dcat['EW']['median']:.0f}",
-        "dd_median": f"{P['data_deficient']['by_category']['DD']['median']:.0f}",
-        "lc_median": f"{P['data_deficient']['by_category']['LC']['median']:.0f}",
-        # D-33 item 11: the same medians on the modelled sample, which the
-        # wider-frame ones above were being read as
-        "lc_raw_median": f"{raw['LC']['median']:.0f}", "nt_raw_median": f"{raw['NT']['median']:.0f}",
-        "en_raw_median": f"{raw['EN']['median']:.0f}", "cr_raw_median": f"{raw['CR']['median']:.0f}",
-        # the pre-registered stratum test
-        "strat_primary_cr": f"{st['fields']['13']['category']['CR']['coef']:+.3f}",
-        "strat_primary_x": f"{math.exp(st['fields']['13']['category']['CR']['coef']):.2f}",
-        "strat_control_cr": f"{st['fields']['23']['category']['CR']['coef']:+.3f}",
-        "strat_earth_cr": f"{st['fields']['19']['category']['CR']['coef']:+.3f}",
-        "strat_floor": f"{st['rule']['cr_floor']:+.2f}",
-        "strat_min_cell": str(st["rule"]["min_cell_per_category"]),
-        "strat_failed": fmt(sum(1 for f in st["fields"].values() if not f["reportable"])),
-        "strat_crude_cr": f"{st['crude_exclusion']['category']['CR']:+.3f}",
-        "strat_inflation": pct(1 - st["crude_exclusion"]["category"]["CR"]
-                              / conf["beta"]["cat_CR"]),
-        "conf_cr_coef": f"{conf['beta']['cat_CR']:+.3f}",
+        "sel_cr_a": f"{P['selection']['A_no_rating_required']['category']['CR']['coef']:+.2f}",
+        "sel_cr_b": f"{P['selection']['B_modelled']['category']['CR']['coef']:+.2f}",
+        # the code
+        "types_cost": f"{cost:.2f}", "types_cost_n": fmt(cost_n),
+        "types_days": fmt(max(1, int(-(-cost // OPENALEX_DAILY_USD)))), "zip_kb": fmt(zip_kb),
+        "cat_sha_short": P["categories_sha256"][:16], "cat_rows": fmt(MAN["withheld"]["rows"]),
+        "lc_matched_n": fmt(lc_matched_n),
     }
+    v["meta_description"] = (
+        f"Across {v['n_modelled']} bird species, only {v['share_research_all']}% of what a search of "
+        f"OpenAlex returns for a bird's name is research. On research alone, a Critically Endangered "
+        f"bird has about {v['cr_tot_x']} times the work of a Least Concern one, with family, size, "
+        f"range, description date and rated attractiveness held equal.")
     return v
 
 
@@ -248,14 +237,14 @@ def keep_from_shipped(text, shipped):
         shipped = open(os.path.join(SITE, "food.html"), encoding="utf-8").read()
         stamps = {}
     else:
-        stamps = dict(re.findall(r'(?:href|src)="([^"?]+)\?v=([0-9a-f]+)"', shipped))
+        stamps = dict(re.findall(r'(?:href|src|srcset)="([^"?]+)\?v=([0-9a-f]+)"', shipped))
     nav = re.search(r'<nav class="top">.*?</nav>', shipped, flags=re.S).group(0)
     text = text.replace("{{nav}}", nav)
 
     def stamp(m):
         path = m.group(2)
         return f'{m.group(1)}="{path}?v={stamps[path]}"' if path in stamps else m.group(0)
-    text = re.sub(r'(href|src)="([^"?]+\.(?:css|js|png))"', stamp, text)
+    text = re.sub(r'(href|src|srcset)="([^"?]+\.(?:css|js|png))"', stamp, text)
     return text
 
 
@@ -266,7 +255,12 @@ def image_dims(text):
         src = m.group(1)
         w, h = Image.open(os.path.join(SITE, src)).size
         return f'src="assets/{src.split("/", 1)[1]}{m.group(2)}" loading="lazy" width="{w}" height="{h}"'
-    return re.sub(r'src="(assets/[^"?]+)([^"]*)" loading="lazy" width="[^"]*" height="[^"]*"', dims, text)
+    text = re.sub(r'src="(assets/[^"?]+)([^"]*)" loading="lazy" width="[^"]*" height="[^"]*"', dims, text)
+
+    def sdims(m):
+        w, h = Image.open(os.path.join(SITE, m.group(1))).size
+        return f'srcset="{m.group(1)}{m.group(2)}" width="{w}" height="{h}"'
+    return re.sub(r'srcset="(assets/[^"?]+)([^"]*)" width="[^"]*" height="[^"]*"', sdims, text)
 
 
 def span(text):

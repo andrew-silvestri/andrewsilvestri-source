@@ -1,5 +1,5 @@
 {
- "generated": "2026-10-23",
+ "generated": "2026-10-24",
  "red_list_version": "2026-1",
  "redlist_source": "api",
  "withheld": {
@@ -43,6 +43,12 @@
    "ships": true
   },
   {
+   "file": "data/openalex_types.csv",
+   "sha256": "cce8a26a2ef7f71b54666d8eb2ad4456563cc1b97244d00cab8a49dcc4b5a624",
+   "bytes": 920629,
+   "ships": true
+  },
+  {
    "file": "data/iucn_table1a.csv",
    "sha256": "a79b9b21e7abce8b593ad46b73ffc6989fb16939253dccec5e30f472248d90bc",
    "bytes": 4079,
@@ -50,8 +56,14 @@
   },
   {
    "file": "data/group_counts.csv",
-   "sha256": "adc3ee9440194e2a311a63fc6f48780f5cc0c025a2f32d76d60c3de28b709b08",
-   "bytes": 1776,
+   "sha256": "24760b647cf86626a1b6ea4768fac241ffd94eedc3d3587ad79cb0658b66e0d3",
+   "bytes": 3626,
+   "ships": true
+  },
+  {
+   "file": "data/type_sources.csv",
+   "sha256": "67326153ff8fe5390fb693b24fd9e9740ac51b4509ff560ceb0b314b3c561524",
+   "bytes": 11309,
    "ships": true
   }
  ],

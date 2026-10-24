@@ -274,7 +274,11 @@ CONVERTED = {
     #   rows, numbers and words; the 714 is byte-identical.
     "climate_allocation_bases.png",
 }
-EXEMPT = set(ORIGINAL) - CONVERTED
+# Retired with their page section, so neither converted nor still owed:
+#   beauty_fig4_strata.png, 2026-10-24 (R5, D-32), with the topic-field test it
+#   drew; the asset is deleted from site/assets.
+RETIRED = {"beauty_fig4_strata.png"}
+EXEMPT = set(ORIGINAL) - CONVERTED - RETIRED
 
 # Which builder draws which shipped asset. The builders write their own names
 # into their own outputs/; this maps those to the names site/assets/ uses,
