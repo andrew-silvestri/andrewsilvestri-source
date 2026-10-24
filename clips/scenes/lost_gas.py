@@ -88,7 +88,7 @@ class LostGas(HouseScene):
         p2 = number("after", size=SMALL, color=DIM).next_to(g2, RIGHT, buff=0.2)
         self.play(FadeIn(g1), FadeIn(g2), FadeIn(p1), FadeIn(p2), run_time=MOVE)
         self.wait(8.5 - (2 * MOVE + 3.0))
-        eq = number("flow = C × √(pressure drop) × …", size=LABEL).move_to([0, y0 - r - 0.75, 0])
+        eq = equation(r"\text{flow} = C \times \sqrt{\text{pressure drop}} \times \cdots", size=LABEL).move_to([0, y0 - r - 0.75, 0])
         note = label("C comes from an equation fitted to laboratory data", size=SMALL, color=DIM).next_to(eq, DOWN, buff=0.2)
         self.play(FadeIn(eq), run_time=MOVE)
         self.play(FadeIn(note), run_time=MOVE)
