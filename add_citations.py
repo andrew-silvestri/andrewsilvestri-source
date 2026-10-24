@@ -80,7 +80,7 @@ PAGES = {
          'ERCOT, <i>Historical RTM Load Zone and Hub Prices</i> (NP6-785-ER), '
          'Market Information System report 13061, 2011 to date.',
          "The hourly hub-average price the second boiler buys at."),
-        ("delivery and market charges",
+        ("ERCOT's own charges",
          'Oncor Electric Delivery, <i>Tariff for Retail Delivery Service</i>, '
          's.6.1.1.1.7 Transmission Service (2026); CenterPoint Energy Houston '
          'Electric, <i>Tariff for Retail Delivery Service</i>, s.6.1.1.1.5; ERCOT '

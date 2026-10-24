@@ -86,12 +86,37 @@ def gas_needed(elec_c):
     return (lo + hi) / 2
 
 
+FLAG_X = 2.0   # a month whose gas average is more than this times its neighbours' is set aside
+
+
+def flagged_months(months):
+    """Months whose average gas price is distorted by a few days inside them: more than FLAG_X
+    times the mean of the month before and after. February 2021 (Winter Storm Uri) is the case
+    that made this necessary: the boiler did not run during the storm week, yet the month's
+    average, inflated by it, made the ordinary days either side look like cheap-electricity days
+    (plan and claims reviews, 2026-10-23: $19.34 of 2021's $23.18 came from that February)."""
+    g = [m["gas_usd_mmbtu"] for m in months]
+    out = []
+    for k in range(1, len(months) - 1):
+        if g[k] > FLAG_X * (g[k - 1] + g[k + 1]) / 2:
+            out.append(months[k]["period"])
+    return out
+
+
 def flexible(months):
+    """A second, electric boiler beside the gas one, run hour by hour on fuel cost alone. Per kW
+    of the boiler's electric input: the energy saved in the hours electricity (plus the per-MWh
+    market charges) is cheaper than gas, less the per-kW delivery charges, against the boiler's
+    own annualised capital and fixed O&M at three sizes (LBNL Figure B-1, and the model's own)."""
     p0 = H.Params()
     gas = {m["period"]: m["gas_usd_mmbtu"] for m in months}
-    cap_per_kw_in = p0.capex_e / (H.KWH_PER_MMBTU / p0.eta_e)
-    ann = cap_per_kw_in * (H.crf(p0.r, p0.life) + p0.fom_e)
-    adders = SRC["delivery_adders_usd_mwh"]
+    flags = set(flagged_months(months))
+    ch = SRC["charges"]
+    cap = SRC["electric_boiler_capital_usd_kw"]
+    own = p0.capex_e / (H.KWH_PER_MMBTU / p0.eta_e)
+    factor = H.crf(p0.r, p0.life) + p0.fom_e
+    sizes = {"large": cap["large"], "model": own, "small": cap["small"]}
+    cost = {k: v * factor for k, v in sizes.items()}
     years = []
     for y in range(FLEX_FIRST, 2100):
         f = os.path.join(ERCOT_RAW, "RTM_%d.zip" % y)
@@ -103,22 +128,25 @@ def flexible(months):
         for k in range(d["days"]):
             dd = dt.date(y, 1, 1) + dt.timedelta(k)
             mon += ["%04d-%02d" % (dd.year, dd.month)] * E._hours_in(dd)
+        mon = np.array(mon)
         keep = np.array([m in gas for m in mon])
         if not keep.any():
             break
-        p = p[keep]
-        g = np.array([gas[m] for m, k in zip(mon, keep) if k])
-        # $ of gas displaced per MWh of electricity: heat out eta_e MWh = eta_e * 1000/KWH MMBtu, gas in = that / eta_g
-        gas_per_mwh = g * (p0.eta_e * 1000 / H.KWH_PER_MMBTU) / p0.eta_g
+        p, mon = p[keep], mon[keep]
+        g = np.array([gas[m] for m in mon]) * (p0.eta_e * 1000 / H.KWH_PER_MMBTU) / p0.eta_g   # $ of gas per MWh of electricity
+        clean = np.array([m not in flags for m in mon])
         row = {"year": y, "hours": int(len(p)), "complete": bool(keep.all() and d["complete"]),
-               "through": max(m for m, k in zip(mon, keep) if k), "by_adder": {}}
-        for name in ("low", "central", "high"):
-            a = adders[name]
-            win = (p + a) < gas_per_mwh
-            row["by_adder"][name] = {"adder": a, "hours": int(win.sum()),
-                                     "savings_kw_yr": float((gas_per_mwh - p - a)[win].sum() / 1000)}
+               "through": str(max(mon.tolist())), "flagged": sorted({str(m) for m in mon if m in flags}),
+               "neg_hours": int((p < 0).sum()), "cases": {}}
+        for c in ("low", "central", "high"):
+            win = (p + ch["energy_usd_mwh"][c]) < g
+            gain = (g - p - ch["energy_usd_mwh"][c]) * win / 1000
+            dem = ch["demand_usd_kw_yr"][c]
+            row["cases"][c] = {"hours": int(win.sum()), "hours_set_aside": int((win & ~clean).sum()),
+                               "energy_saving": float(gain.sum()), "energy_saving_clean": float(gain[clean].sum()),
+                               "demand": dem, "net": float(gain.sum() - dem), "net_clean": float(gain[clean].sum() - dem)}
         years.append(row)
-    return {"capital_per_kw_in": cap_per_kw_in, "annual_cost_kw_yr": ann, "years": years}
+    return {"sizes_usd_kw": sizes, "annual_cost_kw_yr": cost, "factor": factor, "flagged": sorted(flags), "years": years}
 
 
 def emissions():
@@ -153,8 +181,11 @@ def main():
         q = H.Params(**{**asdict(p0), "P_g": m["gas_usd_mmbtu"], "eta_g": 0.70})
         low.append(m["elec_c_kwh"] / (H.breakeven_Pe(q) * 100))
     low = np.array(low)
+    g70 = SRC["gas_co2_kg_per_mmbtu"]["value"] / 0.70
     robust = {"eta_g": 0.70, "below": int((low < 1).sum()), "ratio_min": float(low.min()),
-              "ratio_min_period": months[int(low.argmin())]["period"]}
+              "ratio_min_period": months[int(low.argmin())]["period"],
+              "emissions_ratio": {k: SRC["grid_co2"][k]["lb_per_mwh"] * 0.45359237 / 1000 * H.KWH_PER_MMBTU / p0.eta_e / g70
+                                  for k in ("average", "marginal")}}
     lo = months[int(ratios.argmin())]
     P = {"defaults": asdict(H.Params()), "months": months, "annual": annual,
          "summary": {"n_months": len(months), "first": months[0]["period"], "last": last["period"],

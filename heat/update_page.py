@@ -57,33 +57,47 @@ def facts(P):
     s, fl = P["summary"], P["flexible"]
     last = P["months"][-1]
     full = [y for y in fl["years"] if y["complete"]]
-    paid = [y["year"] for y in full if y["by_adder"]["central"]["savings_kw_yr"] > fl["annual_cost_kw_yr"]]
-    return dict(s=s, fl=fl, last=last, full=full, paid=paid, cost=fl["annual_cost_kw_yr"])
+    cost = fl["annual_cost_kw_yr"]
+
+    def paid(size, case):
+        return [y["year"] for y in full if y["cases"][case]["net_clean"] > cost[size]]
+    return dict(s=s, fl=fl, last=last, full=full, cost=cost, paid=paid)
+
+
+def years_txt(ys):
+    if not ys:
+        return "none of them"
+    if len(ys) == 1:
+        return f"one ({ys[0]})"
+    words = {2: "two", 3: "three", 4: "four", 5: "five", 6: "six"}
+    return f"{words.get(len(ys), len(ys))} ({', '.join(str(y) for y in ys[:-1])} and {ys[-1]})"
 
 
 def claims(F, P):
     bad = []
-    s, last = F["s"], F["last"]
+    s = F["s"]
     if s["below"] != 0:
         bad.append(f"{s['below']} month(s) below the break-even; 'not in any month' fails")
     if P["robust_eta_g"]["below"] != 0:
-        bad.append("at the LBNL low-end gas efficiency a month falls below; the page says none does")
-    mult = s["last_gas_needed_usd_mmbtu"] / last["gas_usd_mmbtu"]
-    if abs(mult - round(mult)) > 0.5:
-        bad.append("gas multiple")
+        bad.append("at a 70% gas boiler a month falls below; the page says none does")
     if not F["full"]:
         bad.append("no full year of the flexible case")
-    if not F["paid"] or len(F["paid"]) > len(F["full"]) / 2:
-        bad.append(f"years paid {F['paid']}: the standfirst's 'paid for itself in ... only' needs at least one and a minority")
-    if not all(y["by_adder"]["low"]["savings_kw_yr"] >= y["by_adder"]["central"]["savings_kw_yr"] >=
-               y["by_adder"]["high"]["savings_kw_yr"] for y in F["fl"]["years"]):
-        bad.append("savings do not fall as the adder rises")
+    lc = F["paid"]("large", "central")
+    if not lc or len(lc) > len(F["full"]) / 3:
+        bad.append(f"large boiler, central charges, paid back in {lc}: the standfirst's 'even then' needs few")
+    if F["paid"]("model", "central"):
+        bad.append("a mid-size boiler pays back at central charges; the page says it does not")
+    if not all(y["cases"]["low"]["net_clean"] >= y["cases"]["central"]["net_clean"] >= y["cases"]["high"]["net_clean"]
+               for y in F["fl"]["years"]):
+        bad.append("savings do not fall as the charges rise")
+    hrs = [y["cases"]["central"]["hours"] for y in F["full"]]
+    if len(hrs) < 10 or sum(hrs[-5:]) <= 2 * sum(hrs[-10:-5]):
+        bad.append("cheap hours: the last five full years are not more than double the five before")
+    if F["full"][-1]["neg_hours"] <= 0:
+        bad.append("no hours below zero in the latest full year")
     e = P["emissions"]
     if not (e["average"]["t_mwh"] > e["parity_t_mwh"] and e["marginal"]["t_mwh"] > e["average"]["t_mwh"]):
         bad.append("emissions: the average grid is not above parity, or the marginal not above the average")
-    lf = F["fl"]["years"][-1]
-    if not lf["complete"] and lf is F["full"][-1]:
-        bad.append("the latest flexible year is both partial and counted as full")
     if bad:
         raise SystemExit("heat/update_page.py: the payload contradicts the page's words:\n  " + "\n  ".join(bad))
 
@@ -102,9 +116,10 @@ def hero_spec(P, F):
                         "values": [round(m["breakeven_c_kwh"], 3) for m in M]}],
             "band": {"a": "paid", "b": "be", "pos": {"color": "acc", "label": "Electric costs more"},
                      "neg": {"color": "moss"}},
-            "annotations": [{"at": lo, "text": f"closest: {s['ratio_min']:.1f}x", "short": f"{s['ratio_min']:.1f}x"},
-                            {"at": s["ratio_max_period"], "text": f"widest: {s['ratio_max']:.1f}x",
-                             "short": f"{s['ratio_max']:.1f}x"}]}
+            "annotations": [{"at": lo, "text": f"closest {s['ratio_min']:.1f}x", "short": f"{s['ratio_min']:.1f}x"}] +
+                           [{"at": f, "text": "gas spike", "short": "spike"} for f in F["fl"]["flagged"]]}
+    # "widest" is not annotated: beside the spike label it found no lane between 640 and 670 px
+    # (Charts.check, 2026-10-23); step 3's text names the widest month instead.
 
 
 def hero(P, F):
@@ -131,10 +146,10 @@ def hero(P, F):
          f"and the break-even rose and fell with it. This is as close as the two lines came: in "
          f"{month(s['ratio_min_period'])} industry paid {s['ratio_min']:.2f} times the break-even, and in no month "
          f"less.</p>", {"t": t_at(e1)}),
-        (f"<p><b>{ms2[0]['period'][:4]} to {e2[:4]}.</b> Shale gas brought the gas price down to as little as "
-         f"${g2lo:.2f}, and the break-even fell with it, while the price of electricity did not. Industry paid "
-         f"{r2lo:.1f} to {r2hi:.1f} times the break-even.</p>", {"t": t_at(e2)}),
-        (f"<p><b>Since {ms3[0]['period'][:4]}.</b> In {month(last['period'])}, the last month with both prices, industry "
+        (f"<p><b>{ms2[0]['period'][:4]} to {e2[:4]}.</b> The gas price fell to as little as ${g2lo:.2f}, and the "
+         f"break-even fell with it; the price of electricity fell by less. Industry paid {r2lo:.1f} to {r2hi:.1f} "
+         f"times the break-even.</p>", {"t": t_at(e2)}),
+        (f"<p><b>Since {ms3[0]['period'][:4]}.</b> {flag_step(P, F)}In {month(last['period'])}, the last month with both prices, industry "
          f"paid {last['elec_c_kwh']:.2f} cents and the break-even was {last['breakeven_c_kwh']:.2f}: {last['ratio']:.1f} "
          f"times. For an electric boiler to have broken even that month, gas would have had to cost about "
          f"${s['last_gas_needed_usd_mmbtu']:.2f} per million Btu instead of ${last['gas_usd_mmbtu']:.2f}.</p>", {"t": 1}),
@@ -142,16 +157,29 @@ def hero(P, F):
     return insight.scrolly(hero_spec(P, F), steps, from_state={"t": 0})
 
 
+def flag_step(P, F):
+    out = ""
+    by = {m["period"]: m for m in P["months"]}
+    for f in F["fl"]["flagged"]:
+        m = by[f]
+        out += (f"In {month(f)} a week of extreme gas prices pushed the month's break-even to {m['breakeven_c_kwh']:.1f} "
+                f"cents, and electricity to {m['elec_c_kwh']:.1f}. ")
+    sm = F["s"]
+    out += f"The widest gap came in {month(sm['ratio_max_period'])}, {sm['ratio_max']:.1f} times, with gas cheap. "
+    return out
+
+
 def flex_rows(F):
     rows = []
     for y in F["fl"]["years"]:
-        b = y["by_adder"]
+        c = y["cases"]
         star = "" if y["complete"] else "*"
-        pays = "yes" if b["central"]["savings_kw_yr"] > F["cost"] else "no"
-        cls = ' class="lit"' if pays == "yes" else ""
-        rows.append(f'<tr{cls}><td>{y["year"]}{star}</td><td class="n">{b["central"]["hours"]:,}</td>'
-                    f'<td class="n">{b["low"]["savings_kw_yr"]:.2f} / {b["central"]["savings_kw_yr"]:.2f} / '
-                    f'{b["high"]["savings_kw_yr"]:.2f}</td><td>{pays}</td></tr>')
+        dag = "&dagger;" if y["flagged"] else ""
+        pays = "yes" if c["central"]["net_clean"] > F["cost"]["large"] else "no"
+        cls = ' class="lit"' if pays == "yes" and y["complete"] else ""
+        rows.append(f'<tr{cls}><td>{y["year"]}{star}{dag}</td><td class="n">{c["central"]["hours"]:,}</td>'
+                    f'<td class="n">{c["low"]["net_clean"]:.2f} / {c["central"]["net_clean"]:.2f} / '
+                    f'{c["high"]["net_clean"]:.2f}</td><td>{pays}</td></tr>')
     return "\n".join(rows)
 
 
@@ -163,52 +191,76 @@ def values(P, S):
     d = P["defaults"]
     e = P["emissions"]
     full = F["full"]
-    lastfull = full[-1]
-    lc = lastfull["by_adder"]["central"]
+    first, lastfull = full[0], full[-1]
+    lc, ll, ml = F["paid"]("large", "central"), F["paid"]("large", "low"), F["paid"]("model", "low")
+    hrs = [y["cases"]["central"]["hours"] for y in full]
+    recent, before = sum(hrs[-5:]) / 5, sum(hrs[-10:-5]) / 5
     part = [y for y in fl["years"] if not y["complete"]]
-    note = f"The electric boiler's own cost: ${F['cost']:.2f} per kilowatt a year. Highlighted: the years its savings at the central charges cover it."
+    by = {y["year"]: y for y in fl["years"]}
+    note = (f"Highlighted: the full years in which a large boiler's savings, at the central charges, pay back its "
+            f"${F['cost']['large']:.2f} a year.")
     if part:
         note = f"* {part[-1]['year']} to {month(part[-1]['through'])}, the last month of EIA's gas price; not a full year. " + note
-    sav_c = [y["by_adder"]["central"]["savings_kw_yr"] for y in full if y["year"] not in F["paid"]]
-    nonfuel = P["months"][-1]["breakeven_c_kwh"] - P["months"][-1]["fuel_only_c_kwh"]
-    cov = S["eia_coverage_pct"]
-    covs = [v for k, v in cov.items() if k.isdigit()]
-    paid_txt = " and ".join(str(y) for y in F["paid"]) if F["paid"] else "none"
-    by_year = {y["year"]: y for y in full}
-    paid_detail = "; ".join(f"{y}: ${by_year[y]['by_adder']['central']['savings_kw_yr']:.2f}" for y in F["paid"])
+    flag_text = ""
+    for f in fl["flagged"]:
+        y = int(f[:4])
+        c = by[y]["cases"]["central"]
+        gm = [m for m in P["months"] if m["period"] == f][0]["gas_usd_mmbtu"]
+        note = (f"&dagger; {month(f)} set aside: its average gas price was more than twice the months either side, "
+                f"from a few days of extreme prices; counted, it would add ${c['net'] - c['net_clean']:.2f} to {y}'s "
+                f"central figure, earned on ordinary days. ") + note
+        flag_text = (f"A month whose average gas price is more than twice the average of the months either side is set "
+                     f"aside: {month(f)}, when a week of extreme gas prices lifted the month's average to "
+                     f"${gm:.2f} per million Btu. The boiler would not have run in that week, when electricity was "
+                     f"dearer still, but the inflated average would have made the ordinary days either side look like "
+                     f"cheap-electricity days.")
+    nonfuel = last["breakeven_c_kwh"] - last["fuel_only_c_kwh"]
+    covs = [v for k, v in S["eia_coverage_pct"].items() if k.isdigit()]
+    ch, cap = S["charges"], S["electric_boiler_capital_usd_kw"]
+    mult = s["last_gas_needed_usd_mmbtu"] / last["gas_usd_mmbtu"]
+    words = {3: "three", 4: "four", 5: "five", 6: "six", 7: "seven", 8: "eight"}
+    mult_txt = (f"more than {words.get(int(mult), int(mult))}" if mult - int(mult) > 0.15
+                else f"about {words.get(round(mult), round(mult))}")
     v = {
         "stamp": insight.stamp(s["last"], "EIA's Texas industrial electricity and natural gas prices"),
         "takeaways": insight.takeaways([
-            f"In the {s['n_months']} months from {month(s['first'])} to {month(s['last'])}, Texas industrial "
-            f"electricity never cost less than the electric boiler's break-even: it ran {s['ratio_min']:.1f} to "
+            f"In the {s['n_months']} months from {month(s['first'])} to {month(s['last'])}, the average Texas industrial "
+            f"electricity price never fell below the electric boiler's break-even: it ran {s['ratio_min']:.1f} to "
             f"{s['ratio_max']:.1f} times it, and {last['ratio']:.1f} times in the last month.",
-            f"An electric boiler kept beside a gas one and run only in cheap wholesale hours, with typical delivery "
-            f"charges, saved ${min(sav_c):.2f} to ${max(sav_c):.2f} a year per kilowatt of its size in the full years "
-            f"other than {paid_txt} ({paid_detail}), against ${F['cost']:.2f} a year to build and run it.",
-            f"Per unit of heat the electric boiler emits about {e['average']['ratio_to_gas']:.1f} times the carbon "
-            f"dioxide of the gas boiler on the average Texas grid, and about {e['marginal']['ratio_to_gas']:.1f} times on "
-            f"the power plants that run when demand rises."]),
+            f"A large electric boiler kept beside a gas one, run only when wholesale power is cheaper than gas, would "
+            f"have saved enough to cover a year of its own cost in {years_txt(lc)} of the {len(full)} full years with "
+            f"typical delivery charges, and in {years_txt(ll)} with the lowest charges.",
+            f"Per unit of heat an electric boiler running all year emits about {e['average']['ratio_to_gas']:.1f} times "
+            f"the carbon dioxide of a gas boiler on the average Texas grid, and about {e['marginal']['ratio_to_gas']:.1f} "
+            f"times on the power plants that run when demand rises."]),
         "hero": hero(P, F),
-        "flex_paid_years": paid_txt, "flex_n": str(len(full)),
-        "frac_word": word(last["breakeven_c_kwh"] / last["elec_c_kwh"]),
-        "last_month": month(last["period"]), "last_be": f"{last['breakeven_c_kwh']:.2f}", "last_elec": f"{last['elec_c_kwh']:.2f}",
-        "gas_mult": {4: "four", 5: "five", 6: "six", 7: "seven"}.get(round(s["last_gas_needed_usd_mmbtu"] / last["gas_usd_mmbtu"]),
-                                                                       str(round(s["last_gas_needed_usd_mmbtu"] / last["gas_usd_mmbtu"]))),
-        "flex_last": str(lastfull["year"]), "flex_last_sav": f"{lc['savings_kw_yr']:.2f}",
-        "flex_cost": f"{F['cost']:.2f}", "flex_cap": f"{fl['capital_per_kw_in']:.0f}",
+        "frac_word": word(last["breakeven_c_kwh"] / last["elec_c_kwh"]), "gas_mult": mult_txt,
+        "last_month": month(last["period"]),
+        "lg_central_n": {1: "one", 2: "two", 3: "three"}.get(len(lc), str(len(lc))), "flex_n": str(len(full)),
+        "flex_first": str(first["year"]), "flex_last": str(lastfull["year"]),
+        "lg_central": years_txt(lc), "lg_low": years_txt(ll),
+        "md_low": "in no year, even at the lowest charges" if not ml else f"only at the lowest charges, in {years_txt(ml)}",
+        "hours_recent": f"{recent:,.0f}", "hours_before": f"{before:,.0f}",
+        "neg_last": f"{lastfull['neg_hours']:,}",
+        "e_low": f"{ch['energy_usd_mwh']['low']:.2f}", "e_high": f"{ch['energy_usd_mwh']['high']:.2f}",
+        "tcrf_kw": f"{ch['demand_usd_kw_yr']['high'] - ch['demand_usd_kw_yr']['central']:.2f}",
+        "d_central": f"{ch['demand_usd_kw_yr']['central']:.2f}", "d_high": f"{ch['demand_usd_kw_yr']['high']:.2f}",
+        "cap_small": f"{cap['small']}", "cap_large": f"{cap['large']}", "small_mw": f"{cap['small_mw']:g}",
+        "large_mw": f"{cap['large_mw']:g}", "cost_small": f"{F['cost']['small']:.2f}", "cost_large": f"{F['cost']['large']:.2f}",
+        "cap_model": f"{fl['sizes_usd_kw']['model']:.0f}", "cost_model": f"{F['cost']['model']:.2f}",
+        "flex_rows": flex_rows(F), "flex_note": note, "flag_text": flag_text,
         "marg_x": f"{e['marginal']['ratio_to_gas']:.1f}", "avg_x": f"{e['average']['ratio_to_gas']:.1f}",
         "marg_t": f"{e['marginal']['t_mwh']:.2f}", "avg_t": f"{e['average']['t_mwh']:.3f}", "parity": f"{e['parity_t_mwh']:.3f}",
+        "e70_avg": f"{P['robust_eta_g']['emissions_ratio']['average']:.1f}",
+        "e70_marg": f"{P['robust_eta_g']['emissions_ratio']['marginal']:.1f}",
         "eta_e": f"{100 * d['eta_e']:.0f}", "eta_g": f"{100 * d['eta_g']:.0f}",
         "robust_min": f"{P['robust_eta_g']['ratio_min']:.2f}", "robust_month": month(P["robust_eta_g"]["ratio_min_period"]),
         "first_year": s["first"][:4], "first_month": month(s["first"]),
-        "flex_rows": flex_rows(F), "flex_note": note,
-        "a_low": f"{S['delivery_adders_usd_mwh']['low']}", "a_central": f"{S['delivery_adders_usd_mwh']['central']}",
-        "a_high": f"{S['delivery_adders_usd_mwh']['high']}",
         "life": str(d["life"]), "r_pct": f"{100 * d['r']:.0f}", "hours": f"{d['hours']:,.0f}",
         "capex_e": f"{d['capex_e']:,.0f}", "capex_g": f"{d['capex_g']:,.0f}",
         "fom_e": f"{100 * d['fom_e']:.0f}", "fom_g": f"{100 * d['fom_g']:.0f}",
         "nonfuel": f"{nonfuel:.2f}", "hc_lo": str(s["heat_content_years"][0]), "hc_hi": str(s["heat_content_years"][1]),
-        "flex_first": str(fl["years"][0]["year"]), "gas_cov": f"{min(covs):.0f} to {max(covs):.0f}",
+        "gas_cov": f"{min(covs):.0f} to {max(covs):.0f}",
         "zip_kb": f"{round(os.path.getsize(ZIP) / 1024) if os.path.exists(ZIP) else 0:,}",
     }
     return v

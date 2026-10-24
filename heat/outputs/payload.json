@@ -218,374 +218,612 @@
   "parity_t_mwh": 0.20873872734680937
  },
  "flexible": {
-  "annual_cost_kw_yr": 11.22071498072347,
-  "capital_per_kw_in": 100.31733033063773,
+  "annual_cost_kw_yr": {
+   "large": 5.145201605864927,
+   "model": 11.22071498072347,
+   "small": 17.896353411704094
+  },
+  "factor": 0.11185220882315058,
+  "flagged": [
+   "2021-02"
+  ],
+  "sizes_usd_kw": {
+   "large": 46,
+   "model": 100.31733033063773,
+   "small": 160
+  },
   "years": [
    {
-    "by_adder": {
+    "cases": {
      "central": {
-      "adder": 5,
-      "hours": 275,
-      "savings_kw_yr": 1.5257092126535212
+      "demand": 4.16,
+      "energy_saving": 2.5027198245218996,
+      "energy_saving_clean": 2.5027198245218996,
+      "hours": 498,
+      "hours_set_aside": 0,
+      "net": -1.6572801754781006,
+      "net_clean": -1.6572801754781006
      },
      "high": {
-      "adder": 18,
-      "hours": 20,
-      "savings_kw_yr": 0.36424795725704223
+      "demand": 22.94,
+      "energy_saving": 2.396499971737501,
+      "energy_saving_clean": 2.396499971737501,
+      "hours": 471,
+      "hours_set_aside": 0,
+      "net": -20.5435000282625,
+      "net_clean": -20.5435000282625
      },
      "low": {
-      "adder": 2,
-      "hours": 545,
-      "savings_kw_yr": 2.6859069781186213
+      "demand": 0.0,
+      "energy_saving": 2.7799310883688446,
+      "energy_saving_clean": 2.7799310883688446,
+      "hours": 561,
+      "hours_set_aside": 0,
+      "net": 2.7799310883688446,
+      "net_clean": 2.7799310883688446
      }
     },
     "complete": true,
+    "flagged": [],
     "hours": 8760,
+    "neg_hours": 24,
     "through": "2011-12",
     "year": 2011
    },
    {
-    "by_adder": {
+    "cases": {
      "central": {
-      "adder": 5,
-      "hours": 65,
-      "savings_kw_yr": 0.19144493991607858
+      "demand": 4.16,
+      "energy_saving": 0.42488824635976163,
+      "energy_saving_clean": 0.42488824635976163,
+      "hours": 117,
+      "hours_set_aside": 0,
+      "net": -3.7351117536402385,
+      "net_clean": -3.7351117536402385
      },
      "high": {
-      "adder": 18,
-      "hours": 0,
-      "savings_kw_yr": 0.0
+      "demand": 22.94,
+      "energy_saving": 0.3992610545876401,
+      "energy_saving_clean": 0.3992610545876401,
+      "hours": 116,
+      "hours_set_aside": 0,
+      "net": -22.54073894541236,
+      "net_clean": -22.54073894541236
      },
      "low": {
-      "adder": 2,
-      "hours": 126,
-      "savings_kw_yr": 0.4673680926275672
+      "demand": 0.0,
+      "energy_saving": 0.48955171064814357,
+      "energy_saving_clean": 0.48955171064814357,
+      "hours": 134,
+      "hours_set_aside": 0,
+      "net": 0.48955171064814357,
+      "net_clean": 0.48955171064814357
      }
     },
     "complete": true,
+    "flagged": [],
     "hours": 8784,
+    "neg_hours": 4,
     "through": "2012-12",
     "year": 2012
    },
    {
-    "by_adder": {
+    "cases": {
      "central": {
-      "adder": 5,
-      "hours": 55,
-      "savings_kw_yr": 0.23951165654059764
+      "demand": 4.16,
+      "energy_saving": 0.4318810187437654,
+      "energy_saving_clean": 0.4318810187437654,
+      "hours": 100,
+      "hours_set_aside": 0,
+      "net": -3.7281189812562348,
+      "net_clean": -3.7281189812562348
      },
      "high": {
-      "adder": 18,
-      "hours": 0,
-      "savings_kw_yr": 0.0
+      "demand": 22.94,
+      "energy_saving": 0.4106430025149584,
+      "energy_saving_clean": 0.4106430025149584,
+      "hours": 94,
+      "hours_set_aside": 0,
+      "net": -22.529356997485042,
+      "net_clean": -22.529356997485042
      },
      "low": {
-      "adder": 2,
-      "hours": 107,
-      "savings_kw_yr": 0.4683738321250294
+      "demand": 0.0,
+      "energy_saving": 0.48696904835022364,
+      "energy_saving_clean": 0.48696904835022364,
+      "hours": 112,
+      "hours_set_aside": 0,
+      "net": 0.48696904835022364,
+      "net_clean": 0.48696904835022364
      }
     },
     "complete": true,
+    "flagged": [],
     "hours": 8760,
+    "neg_hours": 5,
     "through": "2013-12",
     "year": 2013
    },
    {
-    "by_adder": {
+    "cases": {
      "central": {
-      "adder": 5,
-      "hours": 141,
-      "savings_kw_yr": 1.1937933244949261
+      "demand": 4.16,
+      "energy_saving": 1.6139250708831947,
+      "energy_saving_clean": 1.6139250708831947,
+      "hours": 185,
+      "hours_set_aside": 0,
+      "net": -2.5460749291168057,
+      "net_clean": -2.5460749291168057
      },
      "high": {
-      "adder": 18,
-      "hours": 23,
-      "savings_kw_yr": 0.057935200861248676
+      "demand": 22.94,
+      "energy_saving": 1.5738527760635863,
+      "energy_saving_clean": 1.5738527760635863,
+      "hours": 178,
+      "hours_set_aside": 0,
+      "net": -21.366147223936416,
+      "net_clean": -21.366147223936416
      },
      "low": {
-      "adder": 2,
-      "hours": 195,
-      "savings_kw_yr": 1.6802562954731861
+      "demand": 0.0,
+      "energy_saving": 1.7138444199298821,
+      "energy_saving_clean": 1.7138444199298821,
+      "hours": 200,
+      "hours_set_aside": 0,
+      "net": 1.7138444199298821,
+      "net_clean": 1.7138444199298821
      }
     },
     "complete": true,
+    "flagged": [],
     "hours": 8760,
+    "neg_hours": 44,
     "through": "2014-12",
     "year": 2014
    },
    {
-    "by_adder": {
+    "cases": {
      "central": {
-      "adder": 5,
-      "hours": 154,
-      "savings_kw_yr": 0.61105852637335
+      "demand": 4.16,
+      "energy_saving": 1.0890128312397795,
+      "energy_saving_clean": 1.0890128312397795,
+      "hours": 212,
+      "hours_set_aside": 0,
+      "net": -3.0709871687602206,
+      "net_clean": -3.0709871687602206
      },
      "high": {
-      "adder": 18,
-      "hours": 0,
-      "savings_kw_yr": 0.0
+      "demand": 22.94,
+      "energy_saving": 1.0430119445324886,
+      "energy_saving_clean": 1.0430119445324886,
+      "hours": 204,
+      "hours_set_aside": 0,
+      "net": -21.896988055467514,
+      "net_clean": -21.896988055467514
      },
      "low": {
-      "adder": 2,
-      "hours": 225,
-      "savings_kw_yr": 1.165726284501992
+      "demand": 0.0,
+      "energy_saving": 1.2048247913732644,
+      "energy_saving_clean": 1.2048247913732644,
+      "hours": 233,
+      "hours_set_aside": 0,
+      "net": 1.2048247913732644,
+      "net_clean": 1.2048247913732644
      }
     },
     "complete": true,
+    "flagged": [],
     "hours": 8760,
+    "neg_hours": 55,
     "through": "2015-12",
     "year": 2015
    },
    {
-    "by_adder": {
+    "cases": {
      "central": {
-      "adder": 5,
-      "hours": 241,
-      "savings_kw_yr": 1.0225042465598875
+      "demand": 4.16,
+      "energy_saving": 1.7683876508537004,
+      "energy_saving_clean": 1.7683876508537004,
+      "hours": 324,
+      "hours_set_aside": 0,
+      "net": -2.3916123491462997,
+      "net_clean": -2.3916123491462997
      },
      "high": {
-      "adder": 18,
-      "hours": 6,
-      "savings_kw_yr": 0.06179285234222749
+      "demand": 22.94,
+      "energy_saving": 1.6980588554975058,
+      "energy_saving_clean": 1.6980588554975058,
+      "hours": 313,
+      "hours_set_aside": 0,
+      "net": -21.241941144502494,
+      "net_clean": -21.241941144502494
      },
      "low": {
-      "adder": 2,
-      "hours": 341,
-      "savings_kw_yr": 1.8849261819750014
+      "demand": 0.0,
+      "energy_saving": 1.9431691534819846,
+      "energy_saving_clean": 1.9431691534819846,
+      "hours": 344,
+      "hours_set_aside": 0,
+      "net": 1.9431691534819846,
+      "net_clean": 1.9431691534819846
      }
     },
     "complete": true,
+    "flagged": [],
     "hours": 8784,
+    "neg_hours": 129,
     "through": "2016-12",
     "year": 2016
    },
    {
-    "by_adder": {
+    "cases": {
      "central": {
-      "adder": 5,
-      "hours": 205,
-      "savings_kw_yr": 0.9982905996132035
+      "demand": 4.16,
+      "energy_saving": 1.7006432360843142,
+      "energy_saving_clean": 1.7006432360843142,
+      "hours": 337,
+      "hours_set_aside": 0,
+      "net": -2.459356763915686,
+      "net_clean": -2.459356763915686
      },
      "high": {
-      "adder": 18,
-      "hours": 3,
-      "savings_kw_yr": 0.021577594005562105
+      "demand": 22.94,
+      "energy_saving": 1.6280721130896834,
+      "energy_saving_clean": 1.6280721130896834,
+      "hours": 325,
+      "hours_set_aside": 0,
+      "net": -21.31192788691032,
+      "net_clean": -21.31192788691032
      },
      "low": {
-      "adder": 2,
-      "hours": 353,
-      "savings_kw_yr": 1.8212692554232948
+      "demand": 0.0,
+      "energy_saving": 1.8816553658534088,
+      "energy_saving_clean": 1.8816553658534088,
+      "hours": 359,
+      "hours_set_aside": 0,
+      "net": 1.8816553658534088,
+      "net_clean": 1.8816553658534088
      }
     },
     "complete": true,
+    "flagged": [],
     "hours": 8760,
+    "neg_hours": 51,
     "through": "2017-12",
     "year": 2017
    },
    {
-    "by_adder": {
+    "cases": {
      "central": {
-      "adder": 5,
-      "hours": 215,
-      "savings_kw_yr": 1.0835013985993986
+      "demand": 4.16,
+      "energy_saving": 1.8085315162565871,
+      "energy_saving_clean": 1.8085315162565871,
+      "hours": 352,
+      "hours_set_aside": 0,
+      "net": -2.351468483743413,
+      "net_clean": -2.351468483743413
      },
      "high": {
-      "adder": 18,
-      "hours": 6,
-      "savings_kw_yr": 0.0028437623957197075
+      "demand": 22.94,
+      "energy_saving": 1.7328657470974846,
+      "energy_saving_clean": 1.7328657470974846,
+      "hours": 336,
+      "hours_set_aside": 0,
+      "net": -21.207134252902517,
+      "net_clean": -21.207134252902517
      },
      "low": {
-      "adder": 2,
-      "hours": 379,
-      "savings_kw_yr": 1.9358232646804268
+      "demand": 0.0,
+      "energy_saving": 2.0019899480857823,
+      "energy_saving_clean": 2.0019899480857823,
+      "hours": 395,
+      "hours_set_aside": 0,
+      "net": 2.0019899480857823,
+      "net_clean": 2.0019899480857823
      }
     },
     "complete": true,
+    "flagged": [],
     "hours": 8760,
+    "neg_hours": 38,
     "through": "2018-12",
     "year": 2018
    },
    {
-    "by_adder": {
+    "cases": {
      "central": {
-      "adder": 5,
-      "hours": 218,
-      "savings_kw_yr": 0.9626611392066349
+      "demand": 4.16,
+      "energy_saving": 1.6723332685806116,
+      "energy_saving_clean": 1.6723332685806116,
+      "hours": 330,
+      "hours_set_aside": 0,
+      "net": -2.4876667314193885,
+      "net_clean": -2.4876667314193885
      },
      "high": {
-      "adder": 18,
-      "hours": 3,
-      "savings_kw_yr": 0.007092499601996955
+      "demand": 22.94,
+      "energy_saving": 1.6006802555704647,
+      "energy_saving_clean": 1.6006802555704647,
+      "hours": 322,
+      "hours_set_aside": 0,
+      "net": -21.339319744429538,
+      "net_clean": -21.339319744429538
      },
      "low": {
-      "adder": 2,
-      "hours": 347,
-      "savings_kw_yr": 1.7909513805783523
+      "demand": 0.0,
+      "energy_saving": 1.8506340922476845,
+      "energy_saving_clean": 1.8506340922476845,
+      "hours": 355,
+      "hours_set_aside": 0,
+      "net": 1.8506340922476845,
+      "net_clean": 1.8506340922476845
      }
     },
     "complete": true,
+    "flagged": [],
     "hours": 8760,
+    "neg_hours": 50,
     "through": "2019-12",
     "year": 2019
    },
    {
-    "by_adder": {
+    "cases": {
      "central": {
-      "adder": 5,
-      "hours": 224,
-      "savings_kw_yr": 0.9085228789897561
+      "demand": 4.16,
+      "energy_saving": 1.739461097318443,
+      "energy_saving_clean": 1.739461097318443,
+      "hours": 403,
+      "hours_set_aside": 0,
+      "net": -2.420538902681557,
+      "net_clean": -2.420538902681557
      },
      "high": {
-      "adder": 18,
-      "hours": 12,
-      "savings_kw_yr": 0.09526164740518053
+      "demand": 22.94,
+      "energy_saving": 1.652350795936496,
+      "energy_saving_clean": 1.652350795936496,
+      "hours": 387,
+      "hours_set_aside": 0,
+      "net": -21.287649204063506,
+      "net_clean": -21.287649204063506
      },
      "low": {
-      "adder": 2,
-      "hours": 427,
-      "savings_kw_yr": 1.8843085064878495
+      "demand": 0.0,
+      "energy_saving": 1.9577912514079263,
+      "energy_saving_clean": 1.9577912514079263,
+      "hours": 440,
+      "hours_set_aside": 0,
+      "net": 1.9577912514079263,
+      "net_clean": 1.9577912514079263
      }
     },
     "complete": true,
+    "flagged": [],
     "hours": 8784,
+    "neg_hours": 86,
     "through": "2020-12",
     "year": 2020
    },
    {
-    "by_adder": {
+    "cases": {
      "central": {
-      "adder": 5,
-      "hours": 975,
-      "savings_kw_yr": 23.176007070889597
+      "demand": 4.16,
+      "energy_saving": 26.002729326151538,
+      "energy_saving_clean": 5.4745824646613865,
+      "hours": 1151,
+      "hours_set_aside": 449,
+      "net": 21.842729326151538,
+      "net_clean": 1.3145824646613864
      },
      "high": {
-      "adder": 18,
-      "hours": 505,
-      "savings_kw_yr": 14.32411397135405
+      "demand": 22.94,
+      "energy_saving": 25.750622868337917,
+      "energy_saving_clean": 5.321256006847763,
+      "hours": 1139,
+      "hours_set_aside": 449,
+      "net": 2.8106228683379157,
+      "net_clean": -17.618743993152236
      },
      "low": {
-      "adder": 2,
-      "hours": 1183,
-      "savings_kw_yr": 26.41086951120969
+      "demand": 0.0,
+      "energy_saving": 26.613702032736164,
+      "energy_saving_clean": 5.852075171246009,
+      "hours": 1207,
+      "hours_set_aside": 449,
+      "net": 26.613702032736164,
+      "net_clean": 5.852075171246009
      }
     },
     "complete": true,
+    "flagged": [
+     "2021-02"
+    ],
     "hours": 8760,
+    "neg_hours": 199,
     "through": "2021-12",
     "year": 2021
    },
    {
-    "by_adder": {
+    "cases": {
      "central": {
-      "adder": 5,
-      "hours": 823,
-      "savings_kw_yr": 8.03286714517228
+      "demand": 4.16,
+      "energy_saving": 10.488570390960367,
+      "energy_saving_clean": 10.488570390960367,
+      "hours": 1047,
+      "hours_set_aside": 0,
+      "net": 6.328570390960367,
+      "net_clean": 6.328570390960367
      },
      "high": {
-      "adder": 18,
-      "hours": 237,
-      "savings_kw_yr": 1.9393797094621072
+      "demand": 22.94,
+      "energy_saving": 10.261123829304678,
+      "energy_saving_clean": 10.261123829304678,
+      "hours": 1022,
+      "hours_set_aside": 0,
+      "net": -12.678876170695323,
+      "net_clean": -12.678876170695323
      },
      "low": {
-      "adder": 2,
-      "hours": 1094,
-      "savings_kw_yr": 10.863424055835818
+      "demand": 0.0,
+      "energy_saving": 11.050326938841822,
+      "energy_saving_clean": 11.050326938841822,
+      "hours": 1105,
+      "hours_set_aside": 0,
+      "net": 11.050326938841822,
+      "net_clean": 11.050326938841822
      }
     },
     "complete": true,
+    "flagged": [],
     "hours": 8760,
+    "neg_hours": 130,
     "through": "2022-12",
     "year": 2022
    },
    {
-    "by_adder": {
+    "cases": {
      "central": {
-      "adder": 5,
-      "hours": 368,
-      "savings_kw_yr": 2.16645181213353
+      "demand": 4.16,
+      "energy_saving": 3.387705354553997,
+      "energy_saving_clean": 3.387705354553997,
+      "hours": 568,
+      "hours_set_aside": 0,
+      "net": -0.7722946454460033,
+      "net_clean": -0.7722946454460033
      },
      "high": {
-      "adder": 18,
-      "hours": 23,
-      "savings_kw_yr": 0.282630104065293
+      "demand": 22.94,
+      "energy_saving": 3.264581097394883,
+      "energy_saving_clean": 3.264581097394883,
+      "hours": 549,
+      "hours_set_aside": 0,
+      "net": -19.675418902605117,
+      "net_clean": -19.675418902605117
      },
      "low": {
-      "adder": 2,
-      "hours": 603,
-      "savings_kw_yr": 3.592887452000366
+      "demand": 0.0,
+      "energy_saving": 3.697429024892606,
+      "energy_saving_clean": 3.697429024892606,
+      "hours": 628,
+      "hours_set_aside": 0,
+      "net": 3.697429024892606,
+      "net_clean": 3.697429024892606
      }
     },
     "complete": true,
+    "flagged": [],
     "hours": 8760,
+    "neg_hours": 147,
     "through": "2023-12",
     "year": 2023
    },
    {
-    "by_adder": {
+    "cases": {
      "central": {
-      "adder": 5,
-      "hours": 540,
-      "savings_kw_yr": 2.9484007611081897
+      "demand": 4.16,
+      "energy_saving": 4.750027995463447,
+      "energy_saving_clean": 4.750027995463447,
+      "hours": 841,
+      "hours_set_aside": 0,
+      "net": 0.5900279954634469,
+      "net_clean": 0.5900279954634469
      },
      "high": {
-      "adder": 18,
-      "hours": 41,
-      "savings_kw_yr": 0.4808903556607438
+      "demand": 22.94,
+      "energy_saving": 4.5687079929869245,
+      "energy_saving_clean": 4.5687079929869245,
+      "hours": 809,
+      "hours_set_aside": 0,
+      "net": -18.371292007013075,
+      "net_clean": -18.371292007013075
      },
      "low": {
-      "adder": 2,
-      "hours": 882,
-      "savings_kw_yr": 5.0520644788404185
+      "demand": 0.0,
+      "energy_saving": 5.2042496190842495,
+      "energy_saving_clean": 5.2042496190842495,
+      "hours": 907,
+      "hours_set_aside": 0,
+      "net": 5.2042496190842495,
+      "net_clean": 5.2042496190842495
      }
     },
     "complete": true,
+    "flagged": [],
     "hours": 8784,
+    "neg_hours": 199,
     "through": "2024-12",
     "year": 2024
    },
    {
-    "by_adder": {
+    "cases": {
      "central": {
-      "adder": 5,
-      "hours": 596,
-      "savings_kw_yr": 5.073994675301377
+      "demand": 4.16,
+      "energy_saving": 6.911420258800233,
+      "energy_saving_clean": 6.911420258800233,
+      "hours": 808,
+      "hours_set_aside": 0,
+      "net": 2.751420258800233,
+      "net_clean": 2.751420258800233
      },
      "high": {
-      "adder": 18,
-      "hours": 125,
-      "savings_kw_yr": 0.6357159637918852
+      "demand": 22.94,
+      "energy_saving": 6.7369200055953655,
+      "energy_saving_clean": 6.7369200055953655,
+      "hours": 782,
+      "hours_set_aside": 0,
+      "net": -16.203079994404636,
+      "net_clean": -16.203079994404636
      },
      "low": {
-      "adder": 2,
-      "hours": 856,
-      "savings_kw_yr": 7.203798101292988
+      "demand": 0.0,
+      "energy_saving": 7.350254758553078,
+      "energy_saving_clean": 7.350254758553078,
+      "hours": 871,
+      "hours_set_aside": 0,
+      "net": 7.350254758553078,
+      "net_clean": 7.350254758553078
      }
     },
     "complete": true,
+    "flagged": [],
     "hours": 8760,
+    "neg_hours": 215,
     "through": "2025-12",
     "year": 2025
    },
    {
-    "by_adder": {
+    "cases": {
      "central": {
-      "adder": 5,
-      "hours": 749,
-      "savings_kw_yr": 6.41728307805889
+      "demand": 4.16,
+      "energy_saving": 8.599969950002937,
+      "energy_saving_clean": 8.599969950002937,
+      "hours": 917,
+      "hours_set_aside": 0,
+      "net": 4.439969950002936,
+      "net_clean": 4.439969950002936
      },
      "high": {
-      "adder": 18,
-      "hours": 204,
-      "savings_kw_yr": 1.251531611876228
+      "demand": 22.94,
+      "energy_saving": 8.401055643299426,
+      "energy_saving_clean": 8.401055643299426,
+      "hours": 896,
+      "hours_set_aside": 0,
+      "net": -14.538944356700576,
+      "net_clean": -14.538944356700576
      },
      "low": {
-      "adder": 2,
-      "hours": 945,
-      "savings_kw_yr": 8.925038464805853
+      "demand": 0.0,
+      "energy_saving": 9.086515035131955,
+      "energy_saving_clean": 9.086515035131955,
+      "hours": 955,
+      "hours_set_aside": 0,
+      "net": 9.086515035131955,
+      "net_clean": 9.086515035131955
      }
     },
     "complete": false,
+    "flagged": [],
     "hours": 5087,
+    "neg_hours": 138,
     "through": "2026-07",
     "year": 2026
    }
@@ -4586,6 +4824,10 @@
  ],
  "robust_eta_g": {
   "below": 0,
+  "emissions_ratio": {
+   "average": 1.3132766533482272,
+   "marginal": 2.315183065698602
+  },
   "eta_g": 0.7,
   "ratio_min": 1.136401348449864,
   "ratio_min_period": "2001-01"

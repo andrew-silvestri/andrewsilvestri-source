@@ -1,22 +1,64 @@
 {
  "opened": "2026-10-23",
  "grid_co2": {
-  "average": {"lb_per_mwh": 733.862, "what": "ERCT subregion total output CO2 rate (SRCO2RTA), generation basis",
-              "source": "EPA eGRID2023 rev2 (12 June 2025), egrid2023_data_rev2.xlsx, sheet SRL23"},
-  "marginal": {"lb_per_mwh": 1293.7295965994722, "what": "Texas region avoided CO2 rate for uniform energy efficiency (a flat load all year), adjusted for transmission and distribution losses",
-               "source": "EPA AVERT v4.3 avoided emission rates, 2023 data, avert_emission_rates_04-11-24.xlsx, sheet 2023, row 32 (Uniform EE)"},
-  "marginal_check": {"lb_per_mwh": 1242.733, "what": "ERCT non-baseload output CO2 rate (SRNBCO2), generation basis",
-                     "source": "EPA eGRID2023 rev2, sheet SRL23"}
+  "average": {
+   "lb_per_mwh": 733.862,
+   "what": "ERCT subregion total output CO2 rate (SRCO2RTA), generation basis",
+   "source": "EPA eGRID2023 rev2 (12 June 2025), egrid2023_data_rev2.xlsx, sheet SRL23"
+  },
+  "marginal": {
+   "lb_per_mwh": 1293.7295965994722,
+   "what": "Texas region avoided CO2 rate for uniform energy efficiency (a flat load all year), adjusted for transmission and distribution losses",
+   "source": "EPA AVERT v4.3 avoided emission rates, 2023 data, avert_emission_rates_04-11-24.xlsx, sheet 2023, row 32 (Uniform EE)"
+  },
+  "marginal_check": {
+   "lb_per_mwh": 1242.733,
+   "what": "ERCT non-baseload output CO2 rate (SRNBCO2), generation basis",
+   "source": "EPA eGRID2023 rev2, sheet SRL23"
+  }
  },
- "gas_co2_kg_per_mmbtu": {"value": 53.06, "source": "EPA GHG Emission Factors Hub 2025 (15 January 2025), Table 1, natural gas"},
- "delivery_adders_usd_mwh": {
-  "low": 2, "central": 5, "high": 18,
-  "basis": "A transmission-voltage customer that avoids the summer 4CP intervals: Oncor Tariff for Retail Delivery Service s.6.1.1.1.7 (no per-kWh charge for for-profit transmission service; NCP distribution charges about $2.77/MWh at 1,500 h; TCRF $6.260839 per 4CP kW) and CenterPoint s.6.1.1.1.5 (every demand charge on 4CP kVA); ERCOT administrative fee $0.61/MWh (Market Notice M-A111125-01), inside the market monitor's uplift of $1.38/MWh of load in 2025 ($1.24 in 2024); ancillary services $0.39/MWh of load in 2025 ($0.98 in 2024). Low: no NCP increment, 2025 ERCOT-side charges. Central: Oncor NCP and fixed charges plus 2024-25 ERCOT-side. High: one 4CP interval caught at full load (+$12.5/MWh). Excludes retail margin, gross receipts assessment and taxes."
+ "gas_co2_kg_per_mmbtu": {
+  "value": 53.06,
+  "source": "EPA GHG Emission Factors Hub 2025 (15 January 2025), Table 1, natural gas"
  },
- "eia_coverage_pct": {"2020": 31.2, "2021": 31.1, "2022": 29.0, "2023": 29.1, "2024": 29.7, "2025": 29.1,
-                      "what": "Percent of Texas industrial natural gas deliveries included in EIA's industrial price (N3035TX4)"},
- "zuberi": {"electric_efficiency": "95-99%", "fossil_efficiency": "70-80%",
-            "capital": "electric boiler capital cost nearly 40% less than an equivalent natural gas boiler (p.43)",
-            "fom": "1% of investment (p.43)", "life_years": 20,
-            "source": "Zuberi, Hasanbeigi & Morrow, Electrification of Boilers in U.S. Manufacturing, LBNL-2001436, November 2021"}
+ "eia_coverage_pct": {
+  "2020": 31.2,
+  "2021": 31.1,
+  "2022": 29.0,
+  "2023": 29.1,
+  "2024": 29.7,
+  "2025": 29.1,
+  "what": "Percent of Texas industrial natural gas deliveries included in EIA's industrial price (N3035TX4)"
+ },
+ "zuberi": {
+  "electric_efficiency": "95-99%",
+  "fossil_efficiency": "70-80%",
+  "capital": "electric boiler capital cost nearly 40% less than an equivalent natural gas boiler (p.43)",
+  "fom": "1% of investment (p.43)",
+  "life_years": 20,
+  "source": "Zuberi, Hasanbeigi & Morrow, Electrification of Boilers in U.S. Manufacturing, LBNL-2001436, November 2021"
+ },
+ "charges": {
+  "energy_usd_mwh": {
+   "low": 1.83,
+   "central": 2.35,
+   "high": 2.57,
+   "basis": "Charges per MWh of load on the ERCOT side, from the market monitor (Potomac Economics 2025 and 2024 State of the Market reports): ancillary services $0.39 (2025) and $0.98 (2024) per MWh of load; uplift $1.38 (2025) and $1.24 (2024) per MWh, which includes ERCOT's $0.61/MWh administrative fee (Market Notice M-A111125-01); Subchapter N securitization about $0.29/MWh (derived from ERCOT's Sept 2026 true-up filing and 2025 load; zero for a load that opted out) and Subchapter M about $0.06/MWh. Low: 2025 AS + uplift + M = 1.83. Central: the 2024-25 averages + N + M = 2.35. High: 2024 + N + M = 2.57."
+  },
+  "demand_usd_kw_yr": {
+   "low": 0.0,
+   "central": 4.16,
+   "high": 22.94,
+   "basis": "Delivery (TDSP) charges for a transmission-voltage customer, per kW of the boiler. No per-kWh delivery charge applies (Oncor and CenterPoint for-profit transmission service). Low: CenterPoint, whose every demand charge is on 4CP kVA, with the boiler never on in a 4CP interval; or a boiler behind a meter whose peak other load sets. Central: Oncor, the boiler setting the meter's NCP: Distribution System Charge $0.331004 + Rider RCE $0.005241 + DCRF $0.010072 per NCP kW-month = $0.346317 x 12 = $4.16 per kW-yr (Oncor Tariff for Retail Delivery Service s.6.1.1.1.7, interim rates eff. 4 Oct 2026, PUCT 59249). High: central plus being on at full load in one of the four summer 4CP intervals: TCRF $6.260839 per 4CP kW-month x 0.25 x 12 = $18.78 per kW-yr. Fixed customer and metering charges (a few hundred dollars a month per point of delivery) are left out."
+  }
+ },
+ "electric_boiler_capital_usd_kw": {
+  "small": 160,
+  "large": 46,
+  "small_mw": 2.9,
+  "large_mw": 73,
+  "dollar_year": 2018,
+  "basis": "LBNL-2001436 Appendix B, Figure B-1 (p.43): investment cost of an electric boiler, 2018 $/kW, from about 160 for boilers under 2.9 MW to about 46 for boilers over 73 MW (read from the chart; the text gives the range as 13 to 44 $/GJ); equipment and installation, grid connection excluded. The model's own default, $30,000 per MMBtu/h of heat output, is $100 per kW of electric input."
+ },
+ "discount_rate_note": "The model's 8 per cent real rate is an assumption (LBNL-2001436 uses 10 per cent, pp.20-21)."
 }
