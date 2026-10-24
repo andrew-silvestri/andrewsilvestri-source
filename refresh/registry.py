@@ -69,4 +69,17 @@ ENTRIES = [
         "enabled": True,
         "why": "",
     },
+    {
+        # R4 (2026-10-23): EIA's monthly Texas industrial prices. The build also
+        # reads ERCOT's files under storage/data/raw for the flexible case, so
+        # it runs after the storage entry's fetch; heat/update_page.claims()
+        # stops the page if a new month contradicts its words.
+        "page": "heat",
+        "cwd": "heat",
+        "fetch": [["python", "fetch_eia.py"]],
+        "build": [["python", "build_heat.py"]],
+        "keys": ["EIA_API_KEY"],
+        "enabled": True,
+        "why": "",
+    },
 ]

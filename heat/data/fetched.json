@@ -1,0 +1,23 @@
+{
+ "eia_tx_gas_heat_content.json": {
+  "bytes": 7270,
+  "fetched": "2026-10-23",
+  "rows": 19,
+  "sha1": "5d1080b820296b5c9916b95063ba38d586ab6ecc",
+  "url": "https://api.eia.gov/v2/natural-gas/cons/heat/data/?frequency=annual&data%5B0%5D=value&facets%5Bduoarea%5D%5B%5D=STX&sort%5B0%5D%5Bcolumn%5D=period&sort%5B0%5D%5Bdirection%5D=asc&length=5000"
+ },
+ "eia_tx_ind_elec_price.json": {
+  "bytes": 55082,
+  "fetched": "2026-10-23",
+  "rows": 308,
+  "sha1": "d3a94edd8bd1f4cbe15f68692d729bfc589a51bd",
+  "url": "https://api.eia.gov/v2/electricity/retail-sales/data/?frequency=monthly&data%5B0%5D=price&facets%5Bstateid%5D%5B%5D=TX&facets%5Bsectorid%5D%5B%5D=IND&sort%5B0%5D%5Bcolumn%5D=period&sort%5B0%5D%5Bdirection%5D=asc&length=5000"
+ },
+ "eia_tx_ind_gas_price.json": {
+  "bytes": 98594,
+  "fetched": "2026-10-23",
+  "rows": 307,
+  "sha1": "708095ef15362f6053f3e822f53b7e8dfef00e07",
+  "url": "https://api.eia.gov/v2/natural-gas/pri/sum/data/?frequency=monthly&data%5B0%5D=value&facets%5Bseries%5D%5B%5D=N3035TX3&sort%5B0%5D%5Bcolumn%5D=period&sort%5B0%5D%5Bdirection%5D=asc&length=5000"
+ }
+}

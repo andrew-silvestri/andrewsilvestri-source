@@ -134,7 +134,11 @@ TARGETS = [
     # and neuron's did: a target left here rebuilds the zip into
     # site/downloads/ on the next run. ATLAS_FILES above is kept - it is
     # the list of what the archive held, and it is what to restore from.
-    target("heat", "heat-code.zip"),
+    # heat/data/raw holds EIA's API responses (gitignored; fetch_eia.py, which
+    # needs EIA_API_KEY, rewrites them). Like storage, outputs/ ships only the
+    # payload the page is written from (R4, 2026-10-23).
+    target("heat", "heat-code.zip", keep={"outputs"},
+           skip=("data/raw", "data/raw/*", "outputs/*.png", "outputs/*.csv", "outputs/summary.json")),
     # storage/data/raw holds ERCOT's yearly price archives (about 230 MB,
     # 2026-10-23). It is gitignored, and on its first day it was swept into
     # this archive anyway: the rezip walked storage/ while the raw files sat

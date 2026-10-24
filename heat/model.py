@@ -12,8 +12,11 @@ Functional unit: 1 MMBtu of useful heat delivered to process.
 LCOH = fuel + levelized capex + fixed O&M, all per MMBtu delivered.
 
 All baseline numbers are placeholders traceable to the source doc's assumption
-table (LBNL/DOE IAC Tipsheet #3, NREL EFS, Zuberi et al., EPA). Update PRICES
-from EIA before poster use — see data/eia_price_template.csv.
+table (LBNL/DOE IAC Tipsheet #3, NREL EFS, Zuberi et al., EPA). The page no
+longer uses P_e and P_g below: build_heat.py (R4, 2026-10-23) replaces them with
+EIA's monthly Texas industrial prices; the other defaults are checked against
+public sources in data/sources.json. (data/eia_price_template.csv, the
+placeholder this line used to point at, went when real data arrived.)
 
 Run:  python3 model.py     (writes PNGs to outputs/ and results CSVs)
 """

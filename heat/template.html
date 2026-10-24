@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Industrial heat break-even — Andrew Silvestri</title>
+<meta name="description" content="Can an electric boiler beat a gas one for Texas industry? Month by month since 2001, on EIA's Texas industrial prices and ERCOT's hourly prices.">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="alternate icon" href="favicon.png">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<meta name="theme-color" content="#F2F0EF">
+<link rel="canonical" href="https://andrewsilvestri.com/heat.html">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Industrial heat break-even — Andrew Silvestri">
+<meta property="og:description" content="Can an electric boiler beat a gas one for Texas industry? Month by month since 2001.">
+<meta property="og:url" content="https://andrewsilvestri.com/heat.html">
+<script>try{document.documentElement.dataset.motion=matchMedia('(prefers-reduced-motion: reduce)').matches?'off':'on';}catch(e){document.documentElement.dataset.motion='on';}</script>
+<link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="assets/scrolly.css">
+</head><body>
+{{nav}}
+<main>
+<h1>At the price Texas industry pays for electricity, an electric boiler has not beaten a gas one in any month since 2001</h1>
+<p class="dim">Factories make steam by burning gas. Swapping the burner for an electric heater is the simplest way to electrify it: no new chemistry, just a price. On EIA's Texas industrial prices, electricity would have had to cost about {{frac_word}} of what industry paid in {{last_month}} ({{last_be}} cents a kilowatt hour against {{last_elec}}) for the electric boiler to break even, or gas about {{gas_mult}} times its price. A plant that keeps its gas boiler and adds an electric one, buying power by the hour on the wholesale market of ERCOT, the grid operator for most of Texas, does better, but not well enough: in {{flex_last}}, with typical delivery charges, the electric boiler would have saved ${{flex_last_sav}} a year for each kilowatt of its size, against ${{flex_cost}} a year to build and run it. It paid for itself in {{flex_paid_years}} only, of {{flex_n}} full years. It would also emit more carbon dioxide than the gas boiler: about {{avg_x}} times as much on the grid's average mix of power plants, and {{marg_x}} times on the power plants that run when demand rises.</p>
+{{stamp}}
+{{takeaways}}
+
+<h2>What the electricity would have to cost</h2>
+
+<p>An electric boiler turns about {{eta_e}} per cent of its electricity into heat, and this page assumes a gas boiler turns {{eta_g}} per cent of its gas into heat; LBNL's study of boiler electrification puts existing gas boilers at 70 to 80 per cent, and at 70 per cent, the figure most favourable to electricity, still no month falls below the break-even (the closest is {{robust_min}} times, {{robust_month}}). So for the two to cost the same, a kilowatt hour has to cost about what a kilowatt hour of gas costs, a little more for the gas boiler's losses and a little less for its higher capital cost. This page works that break-even out for every month since {{first_year}}, from that month's Texas industrial gas price, and sets it against what Texas industry paid for electricity the same month.</p>
+
+{{hero}}
+
+<p class="dim">Both lines are prices of electricity in cents per kilowatt hour. The upper line is EIA's average for Texas industrial customers; the lower is the price at which an electric boiler would match a gas boiler that month. The shaded gap is how much more the electric boiler would have cost.</p>
+
+<h2>A boiler that runs only when power is cheap</h2>
+
+<p>A large plant does not have to pay the average. It can buy on ERCOT's real-time market, where power is sometimes very cheap, at night or in the middle of a sunny, windy day, and sometimes free or below zero. The case for an electric boiler is strongest as a second boiler: keep the gas one, and switch to electricity in the hours when it is cheaper than gas. Each such hour saves the difference. The electric boiler still has to pay for itself: about ${{flex_cap}} per kilowatt to build and ${{flex_cost}} a year to own, over {{life}} years at {{r_pct}} per cent. On top of the wholesale price a plant connected at transmission voltage pays delivery and market charges; this page uses ${{a_low}}, ${{a_central}} and ${{a_high}} per megawatt hour for a low, central and high case, the high one being a plant that fails to stay off in one of the four summer intervals that set its transmission charge.</p>
+
+<table>
+<thead><tr><th>Year</th><th class="n">Hours electric is cheaper (central)</th><th class="n">Saving, $ per kW (low / central / high)</th><th>Pays for itself?</th></tr></thead>
+<tbody>
+{{flex_rows}}
+</tbody>
+</table>
+
+<p class="dim">{{flex_note}}</p>
+
+<h2>And the carbon</h2>
+
+<p>Electrifying heat only cuts emissions if the electricity is clean enough. The electric boiler emits less than the gas boiler when the grid emits less than {{parity}} tonnes of carbon dioxide per megawatt hour. ERCOT's average, from EPA's eGRID, is {{avg_t}}, so on the average grid the electric boiler emits about {{avg_x}} times as much per unit of heat. A new load is met at the margin, though, by whichever plants are next to run: EPA's AVERT puts the marginal rate in Texas at {{marg_t}} tonnes per megawatt hour, which makes the electric boiler's emissions about {{marg_x}} times the gas boiler's.</p>
+
+<h2 id="method">Method</h2>
+
+<p><b>Prices.</b> EIA's Texas industrial electricity price (retail sales, total revenue over total sales, all industrial customers) and Texas industrial natural gas price, monthly, {{first_month}} to {{last_month}}, the last month both series have. Gas is converted from dollars per thousand cubic feet with EIA's Texas heat content of gas delivered to consumers for the year ({{hc_lo}} to {{hc_hi}}; the nearest year outside them). Real-time electricity for the second case: ERCOT's hub average, every hour from {{flex_first}}, the same price files as the battery page.</p>
+
+<p><b>The break-even.</b> The cost of a unit of delivered heat from each boiler: fuel divided by efficiency, plus capital recovered over {{life}} years at {{r_pct}} per cent, plus fixed operations, at {{hours}} hours a year at full output. The electric boiler costs ${{capex_e}} and the gas boiler ${{capex_g}} per million Btu an hour of capacity, with fixed operations {{fom_e}} and {{fom_g}} per cent of capital a year. The break-even electricity price is the one that makes the two equal. Fuel decides it: leaving capital and operations out moves it by {{nonfuel}} cents. The capital costs are held at today's values back to 2001, which moves nothing that matters here.</p>
+
+<p><b>The second boiler.</b> Each hour the plant uses whichever fuel makes heat more cheaply, the gas price being that month's average; the saving in an hour when electricity wins is the gas it did not burn less what the electricity and its charges cost. The year's savings are set against the electric boiler's own annualised capital and fixed operations, since the gas boiler is there either way.</p>
+
+<h2 id="limits">Limits</h2>
+
+<p>EIA's electricity price is an average over every industrial customer, large and small; a big plant on a negotiated contract pays less, which is why the second case uses wholesale prices. EIA's gas price covers only part of the industrial gas sold in Texas, about {{gas_cov}} per cent of deliveries in recent years. Gas is a monthly average against hourly power, so a gas price spike inside a month is smoothed. The delivery charges are estimates from two utilities' published tariffs and the market monitor's figures, not a quote. The capital costs are representative ranges, not vendor prices. The emissions use annual rates, not the hour-by-hour rate of the hours a flexible boiler would run. This is an explainer and teaching tool, not a design study or an investment case.</p>
+
+<h2 id="code">The code</h2>
+
+<p>Python: the EIA fetch script (the key is read from the environment, never stored), the model, the payload builder, the page generator and the tests; Julia and Octave ports of the levelised-cost arithmetic and the formula workbook. {{zip_kb}} KB.</p>
+<p><a class="btn" href="downloads/heat-code.zip">Download source</a>
+<a class="btn ghost" href="code.html">All code</a></p>
+
+<footer>
+<p><a href="about.html">Andrew Silvestri</a></p>
+<p><a href="code.html">Built with Python, Julia, JavaScript and public data.</a></p>
+</footer>
+</main>
+<script src="assets/motion.js"></script>
+<script src="assets/lightbox.js"></script>
+<script src="assets/nav.js"></script>
+<script src="assets/charts.js"></script>
+<script src="assets/scrolly.js"></script>
+</body></html>

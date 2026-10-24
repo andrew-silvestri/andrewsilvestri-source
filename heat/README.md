@@ -1,35 +1,31 @@
-# 01 — Industrial Heat Electrification Break-Even (Texas)
+# Industrial heat break-even (Texas)
 
-LCOH ($/MMBtu delivered) comparison of a resistive electric boiler vs a conventional
-natural-gas boiler, per the locked scope in `industrialHeatingBEpointAbstractCreation.pdf`
-(UT Energy Week packet) and the inputs doc `Industrial Heat Electrification for Process
-Steam in Texas...`. This fills in the skeleton started in `industrialHeatingExcelMaster.xlsx`.
+The code behind andrewsilvestri.com/heat.html: a resistive electric boiler against a natural-gas
+boiler for process heat, on EIA's monthly Texas industrial prices since 2001, and a second,
+flexible electric boiler on ERCOT's hourly real-time prices since 2011.
 
-## Contents
+Every figure the page prints is in `outputs/payload.json`, written by `build_heat.py`. This README
+carries no numbers of its own.
+
+The model's scope was first set for a UT Energy Week poster; its inputs are now each taken from a
+public source, listed in `data/sources.json` and on the page.
+
+## Run it
+
+    python fetch_eia.py      # EIA API v2 (needs EIA_API_KEY in the environment; the key is never written) -> data/raw/
+    python build_heat.py     # -> outputs/payload.json; the flexible case also reads ERCOT's files in ../storage/data/raw
+    python update_page.py    # what the page would say (--apply writes ../site/heat.html inside the site's repo)
+    python test_heat.py      # the checks; --break NAME puts each one's fault back and must exit 1
+
+## The pieces
 
 | File | What it is |
 |---|---|
-| `model.py` | Reference implementation (verified, runnable). Writes all figures + `outputs/summary.csv/json`. |
-| `lcoh_model.xlsx` | Formula-driven workbook: `Inputs` (yellow cells) → `Model` → `Sensitivity` break-even grid. Recalculates on edit; verified error-free. |
-| `julia/model.jl` + `Project.toml` | Faithful Julia port. **Untested in this sandbox** (Julia's servers are off the network allowlist) — run locally: `julia --project=. model.jl`. Logic is line-for-line identical to `model.py`. |
-| `octave/model.m` | MATLAB/GNU Octave port (Julia-adjacent alternative). Untested in sandbox (no root to install Octave); ported line-for-line from the verified `model.py`. `octave model.m`. |
-| `outputs/` | fig1 break-even price curve · fig2 LCOH stacked bars · fig3 cost-gap contour (Pe×Pg) · fig4 tornado · fig5 emissions parity · summary.csv |
-| `data/eia_price_template.csv` | Drop-in template for real EIA monthly series (couldn't fetch here — eia.gov blocked in sandbox). |
+| `fetch_eia.py` | Texas industrial electricity price (retail sales), Texas industrial gas price (N3035TX3) and Texas heat content of deliveries, recorded in `data/fetched.json` without the key. |
+| `model.py` | `lcoh()` and `breakeven_Pe()`: levelised cost of heat for each boiler (fuel over efficiency, capital recovery, fixed operations) and the electricity price at which they are equal. Its `main()` still draws the old example figures into `outputs/`; the page does not use them. |
+| `build_heat.py` | The payload: the break-even every month against what industry paid; the same at a 70% gas efficiency; the flexible second boiler by year at low, central and high delivery charges; emissions at the average and marginal grid rates. |
+| `update_page.py`, `template.html` | The page; `claims()` stops the build if the payload contradicts its words. |
+| `test_heat.py` | The checks, each with a break that must fail. |
+| `lcoh_model.xlsx`, `julia/`, `octave/` | The same levelised-cost arithmetic as a formula workbook and as Julia and Octave ports, at the model's example prices. |
 
-## Headline result (placeholder prices: Pe=6.5¢/kWh, Pg=$3.50/MMBtu)
-
-- LCOH gas ≈ **$5.13/MMBtu**, LCOH electric ≈ **$20.00/MMBtu** → gap ≈ $14.86.
-- Break-even electricity price ≈ **1.53 ¢/kWh** (full LCOH; 1.38 ¢ fuel-only). The spark
-  gap dominates: capex/O&M shift the threshold by only ~0.15 ¢/kWh.
-- Emissions parity requires grid CI ≤ **0.209 tCO₂/MWh**; at the ERCOT average
-  of **0.333** (eGRID2023, 733.862 lb CO₂/MWh) the e-boiler emits 99.6 kg/MMBtu
-  against the gas boiler's 62.4, so it emits more than gas. Marginal-emissions (Cambium) framing is the
-  sensitivity to run next.
-
-## Before poster use
-
-1. Replace `P_e`, `P_g`, `grid_ci` with current EIA / eGRID values (links in the source
-   doc's download list; sandbox couldn't reach eia.gov).
-2. State boundary explicitly: retail all-in vs ERCOT wholesale energy-only.
-3. Capex numbers are scaling placeholders (±50% sensitivity already included) — cite the
-   LBNL IAC Tipsheet #3 range and dollar-year when finalizing.
+An explainer and teaching tool, not a design study or an investment case.

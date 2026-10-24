@@ -115,6 +115,11 @@ GENERATORS = [
     # storage/update_page.py writes site/storage.html from storage/outputs/payload.json
     # (build_storage.py, which needs ERCOT's files under storage/data/raw, gitignored) and
     # storage/data/imm.json. R4, 2026-10-23.
+    # heat/update_page.py writes site/heat.html from heat/outputs/payload.json (build_heat.py,
+    # which needs EIA's files under heat/data/raw and ERCOT's under storage/data/raw, both
+    # gitignored) and heat/data/sources.json. R4, 2026-10-23.
+    ("heat page: heat/update_page.py --apply",
+     ["update_page.py", "--apply"], "heat", "site"),
     ("storage page: storage/update_page.py --apply",
      ["update_page.py", "--apply"], "storage", "site"),
     # takeaway/update_page.py writes site/takeaway.html from

@@ -1,0 +1,22 @@
+{
+ "opened": "2026-10-23",
+ "grid_co2": {
+  "average": {"lb_per_mwh": 733.862, "what": "ERCT subregion total output CO2 rate (SRCO2RTA), generation basis",
+              "source": "EPA eGRID2023 rev2 (12 June 2025), egrid2023_data_rev2.xlsx, sheet SRL23"},
+  "marginal": {"lb_per_mwh": 1293.7295965994722, "what": "Texas region avoided CO2 rate for uniform energy efficiency (a flat load all year), adjusted for transmission and distribution losses",
+               "source": "EPA AVERT v4.3 avoided emission rates, 2023 data, avert_emission_rates_04-11-24.xlsx, sheet 2023, row 32 (Uniform EE)"},
+  "marginal_check": {"lb_per_mwh": 1242.733, "what": "ERCT non-baseload output CO2 rate (SRNBCO2), generation basis",
+                     "source": "EPA eGRID2023 rev2, sheet SRL23"}
+ },
+ "gas_co2_kg_per_mmbtu": {"value": 53.06, "source": "EPA GHG Emission Factors Hub 2025 (15 January 2025), Table 1, natural gas"},
+ "delivery_adders_usd_mwh": {
+  "low": 2, "central": 5, "high": 18,
+  "basis": "A transmission-voltage customer that avoids the summer 4CP intervals: Oncor Tariff for Retail Delivery Service s.6.1.1.1.7 (no per-kWh charge for for-profit transmission service; NCP distribution charges about $2.77/MWh at 1,500 h; TCRF $6.260839 per 4CP kW) and CenterPoint s.6.1.1.1.5 (every demand charge on 4CP kVA); ERCOT administrative fee $0.61/MWh (Market Notice M-A111125-01), inside the market monitor's uplift of $1.38/MWh of load in 2025 ($1.24 in 2024); ancillary services $0.39/MWh of load in 2025 ($0.98 in 2024). Low: no NCP increment, 2025 ERCOT-side charges. Central: Oncor NCP and fixed charges plus 2024-25 ERCOT-side. High: one 4CP interval caught at full load (+$12.5/MWh). Excludes retail margin, gross receipts assessment and taxes."
+ },
+ "eia_coverage_pct": {"2020": 31.2, "2021": 31.1, "2022": 29.0, "2023": 29.1, "2024": 29.7, "2025": 29.1,
+                      "what": "Percent of Texas industrial natural gas deliveries included in EIA's industrial price (N3035TX4)"},
+ "zuberi": {"electric_efficiency": "95-99%", "fossil_efficiency": "70-80%",
+            "capital": "electric boiler capital cost nearly 40% less than an equivalent natural gas boiler (p.43)",
+            "fom": "1% of investment (p.43)", "life_years": 20,
+            "source": "Zuberi, Hasanbeigi & Morrow, Electrification of Boilers in U.S. Manufacturing, LBNL-2001436, November 2021"}
+}
