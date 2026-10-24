@@ -16,7 +16,7 @@ FIXED = [
     "python beauty/break_topics.py", "python climate-cost/test_lca.py", "node climate-cost/test_scene.js",
     "python continents/test_continents.py", "python continents/break_b1.py", "python continents/break_gates.py",
     "node continents/test_app.js", "python longevity-quotient/test_fit_strategy.py",
-    "python longevity-quotient/test_merge.py", "node longevity-quotient/test_perf.js", "node skyline/test_app.js",
+    "python longevity-quotient/test_merge.py", "node longevity-quotient/test_perf.js", "node skyline/test_app.js", "python skyline/test_skylines.py",
     "python tests/test_units.py", "python tests/test_no_address.py", "python tests/test_lf.py",
     "python tests/test_markup.py", "python tests/test_retro.py",
     "node tests/verify_hero_systems.js", "python tests/test_fit_ticks.py", "node tests/fig_served_widths.js",

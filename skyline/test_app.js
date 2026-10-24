@@ -8,6 +8,9 @@
  * different claims, and only one of them was being tested.
  *
  * Run:  node test_app.js
+ *       node test_app.js --break flat   puts back the constant-power line
+ *         that made every bearing equally loud (to 2026-10-24); the
+ *         loudness check must fail, exit 1
  */
 'use strict';
 const fs = require('fs');
@@ -85,7 +88,16 @@ FakeCtx.prototype.close = function () { this.state = 'closed'; };
 const errs = [];
 const vc = new VirtualConsole();
 vc.on('jsdomError', e => errs.push(e.message));
-const dom = new JSDOM(fs.readFileSync(PAGE, 'utf8'), {
+let html = fs.readFileSync(PAGE, 'utf8');
+if (process.argv.includes('--break') &&
+    process.argv[process.argv.indexOf('--break') + 1] === 'flat') {
+  const was = 'levelNode.gain.setTargetAtTime(top, t, 0.22);';
+  const n = html.split(was).length - 1;
+  if (n !== 1) { console.log('  break flat: matched ' + n + ' times'); process.exit(2); }
+  html = html.replace(was, 'levelNode.gain.setTargetAtTime(1, t, 0.22);');
+  console.log('  BREAK flat: every bearing at constant power again');
+}
+const dom = new JSDOM(html, {
   runScripts: 'dangerously', pretendToBeVisual: true, virtualConsole: vc,
   beforeParse(w) {
     w.matchMedia = () => ({ matches: false, addEventListener() {} });
@@ -311,12 +323,10 @@ console.log('\n  Reduced motion');
 
 console.log('\n  The sidebar says where the numbers come from');
 {
-  const fw = K.cities.findIndex(c => c.city === 'Fort Worth');
-  K.S.i = fw; K.setKey(); K.panel();
+  K.S.i = 0; K.setKey(); K.panel();
   const stats = doc.getElementById('stats').textContent;
   ok(/at or above 55 m/.test(stats), 'the ring floor is on screen');
-  ok(/published tallest-buildings list/.test(stats) && /above 61 m/.test(stats),
-     'a supplemented city names its source and the override floor');
+  ok(/OpenStreetMap/.test(stats), 'the standing check is named');
   ok(/Voiced as/.test(doc.getElementById('voice').textContent), 'the voicing is stated');
   K.S.i = 0; K.setKey(); K.panel();
   ok(/Wikidata/.test(doc.getElementById('stats').textContent), 'a Wikidata city says so');
@@ -328,6 +338,37 @@ console.log('\n  The sound stops when the page does');
   play.dispatchEvent(new win.Event('click', { bubbles: true }));
   ok(K.S.playing === true && K.audio().gain > 0, 'pressing Play starts it',
      `gain ${K.audio().gain.toFixed(2)}`);
+
+  /* Loudness follows height (D-31). Facing the city's tallest tower the
+     chord must be louder than at the bearing whose tallest tower in view is
+     the shortest, in every city. To 2026-10-24 the output was 0.46 rms at
+     every bearing of every city, so this could not pass. */
+  // what leaves the limiter (constant power) times the level after it
+  const rms = () => Math.sqrt(K.sent().reduce((a, g) => a + g * g, 0)) * K.level();
+  const level = az => {
+    K.S.az = az;
+    const b = K.bars(), lv = K.levels();
+    for (let k = 0; k < K.BARS; k++) lv[k] = b[k];
+    K.push();
+    return { r: rms(), top: Math.max.apply(null, Array.from(b)) };
+  };
+  let louder = 0, worst = '';
+  for (let i = 0; i < K.cities.length; i++) {
+    K.S.i = i; K.setKey();
+    const hi = level(K.cities[i].look);
+    let lo = null;
+    for (let az = 0; az < 360; az += 5) {
+      const v = level(az);
+      if (!lo || v.top < lo.top) lo = v;
+    }
+    if (hi.r > lo.r * 1.5) louder++;
+    else if (!worst) worst = `${K.cities[i].city}: ${hi.r.toFixed(3)} facing the tallest, ` +
+                             `${lo.r.toFixed(3)} at the lowest bearing`;
+  }
+  ok(louder === K.cities.length,
+     'the chord is louder facing the tallest towers, every city',
+     louder === K.cities.length ? `${louder} cities` : worst);
+  K.S.i = 0; K.setKey(); K.S.az = K.cities[0].look;
 
   Object.defineProperty(doc, 'hidden', { value: true, configurable: true });
   doc.dispatchEvent(new win.Event('visibilitychange'));

@@ -1,5 +1,5 @@
 """
-Turn real buildings into a 360-degree skyline profile, one per city.
+Turn real, standing buildings into a 360-degree skyline wheel, one per city.
 
 The observation this project rests on is that a skyline and a spectrum
 analyser are the same picture. Both are a row of vertical bars of varying
@@ -7,156 +7,168 @@ height; both are read left to right; and in both the tall spikes are what the
 eye goes to. That is a coincidence of drawing conventions rather than of
 physics, but it is a usable one, because it means a city can be played.
 
-What is real here and what is not, stated plainly, because sonification
-projects usually blur this:
+WHERE THE TOWERS COME FROM (rebuilt 2026-10-24, DECISIONS D-31). The payload
+shipped until then came from a Wikidata dump nobody archived. When QA checked
+it, the wheels held the World Trade Center's destroyed North Tower, towers
+never built, towers still going up, the same building under two items, a
+radio mast as Warsaw's tallest, and towers from neighbouring cities. This
+file now reads two archived pulls and nothing else:
 
-  REAL. Every building is a Wikidata entity with a published structural
-  height and a published coordinate (or, for the three supplemented cities,
-  a row of the city's published tallest-buildings list - see supplement.py).
-  Compass order around the wheel is the true bearing order from the
-  height-weighted centroid of the city's towers; distance from that centroid
-  is measured, then clamped to 400 m so a tower the observer is standing
-  under does not dwarf the rest.
+  data/raw/wikidata_<date>.json   fetch_wikidata.py: heights, classes,
+                                  states, dates and the located-in test
+  data/raw/osm_<date>.json.gz     fetch_osm.py: what OpenStreetMap maps as a
+                                  building near each city
 
-  A warning worth recording, because the first version of this file shipped
-  with it. Wikidata's height property applies to anything with a height:
-  mountains, waterfalls, bridges, dams, radio masts, and - genuinely - nuclear
-  weapons tests. Asking for "things over 120 metres near a city" produced a
-  950-metre tower in Rotterdam, which is a suspension bridge. And the property
-  carries a unit, so a value of 950 may be feet. Both are fixed here: heights
-  come back normalised to metres, and the class of every entity is checked
-  against a list of things that are actually buildings, with everything
-  rejected being reported rather than silently dropped.
+and a tower is kept only if every one of these holds, each counted and
+reported per city so a filter that stops firing shows up as a zero:
+
+  building    one of its classes is a subclass of building (Q41176) or a
+              group of buildings (COMPLEX), and it
+              is not a tower-type structure (TOWER below) unless it is also a
+              high-rise (HIGHRISE). Wikidata files TV towers, masts and
+              observation towers under building, through "tower"; the first
+              version of this file let a 950 m bridge and then a radio mast
+              through, so the class test names what it excludes.
+  in city     inside the city's own Wikidata item through P131 followed
+              transitively (fetch_wikidata.CITIES says which item), or
+              within CORE_KM of the city's coordinate and located only in
+              places the city is itself in (its county or state). The old
+              35 km disc put Yokohama in Tokyo and The Hague in Rotterdam.
+  standing    no demolition date (P576), no past end date (P582), no class or
+              state of use that says demolished, proposed, unfinished, under
+              construction, on hold or cancelled (NOT_STANDING), AND present
+              in OpenStreetMap: an OSM building carrying the item's QID, or
+              failing that one within NEAR_KEEP_M of its coordinate that
+              agrees on height or name (osm_match()). Wikidata does not
+              mark every unbuilt tower; OSM does not map a tower that is not
+              there. A tower OSM tags as under construction does not count.
+  plausible   one usable height (HEIGHT below) between RING_FLOOR and the
+              tallest building there is.
+  once        two items for one building (same normalised name nearby, the
+              same OSM building, or the same spot and height) are one tower.
+
+The three hand-transcribed supplements (Austin, Nashville, Fort Worth) are
+retired with the old payload. They made those cities look denser than Hong
+Kong because the lists were complete and Wikidata is not (QA finding 5), and
+Austin's contradicted its own source. A city whose Wikidata record is too thin
+for a wheel is now dropped and named, not filled by hand.
 
   REARRANGED. The spacing around the wheel: equalised, so the ring is full.
   Order survives, angle does not. The app says so on screen.
 
   INVENTED. The sound. There is no sense in which a city has a pitch. The
-  mapping from geometry to audio is a choice, it is documented in the app, and
-  it is deterministic - the same skyline always produces the same sound.
+  mapping from geometry to audio is a choice, documented in the app, and
+  deterministic - the same skyline always produces the same sound.
 
-There used to be a second, "realistic" rendering: a true panorama from a
-chosen viewpoint outside the city, with occlusion and empty sky. It was
-retired before the page shipped, but its geometry (`prof`, `draw`, `view`,
-`dist`, and the viewpoint bearings inside `towers` and `look`) was still
-being emitted, and skyline.html described it as the instrument's measured
-behaviour, until 2026-09-04. None of it is emitted any more: the wheel is
-the only rendering and the output holds only what the app reads. viewpoint()
-and profile() below are kept for the record and are not called.
+The meter (`rprof`) holds HEIGHT in metres. Until 2026-10-24 it held each
+tower's elevation angle from the centre, so a 189 m tower 400 m away
+outsounded a 541 m one 3.4 km away, while the page said loudness follows
+height; in 17 of 27 cities the tallest tower was not the loudest (QA,
+sk_audio.py). The wheel was already drawn in metres; now the meter agrees
+with it and with the page.
 
-The raw pull this file reads, data/raw/wikidata_buildings.json, was never
-archived, so this script cannot currently be run. The shipped
-data/skylines.json was brought to this shape by prune_payload.py instead.
-
-WHAT A FRESH PULL WOULD TAKE (written 2026-09-05, so nobody has to rediscover
-it): one SPARQL query per city against query.wikidata.org, asking for every
-item within a radius of the city's centroid (wikibase:around, ~25 km) that
-has a height (P2048, read through psv: so the unit comes back and feet can
-be converted) and a coordinate (P625), and whose class (P31, followed up
-P279*) is on this file's list of things that are buildings - the class check
-and the unit check are the two fixes recorded above, and the pull must keep
-them. Twenty-seven cities, so twenty-seven queries, each under the service's
-sixty-second limit if the radius is kept small; the whole pull is minutes.
-Save the raw answers to data/raw/wikidata_buildings.json AND commit it,
-because a raw pull that is not archived is the reason this note exists.
-Then: run this script, run supplement.py's three cities (their published
-lists overrule Wikidata above each list's floor), run test_app.js (43
-checks: no empty bearing, no label collision at eight bearings), and
-regenerate skyline_towers.png. Expect a different dataset: heights get
-corrected on Wikidata, towers finish and get added, and every downstream
-number on skyline.html (the tallest, the twenty named per city, the notes
-line) moves with it. That is a new release of the project, not a rebuild
-of this one; the shipped data/skylines.json stays the dataset of record
-until someone does it.
-
-Run:  python3 build_skylines.py            report only
-      python3 build_skylines.py --apply    write data/skylines.json
+Run:  python build_skylines.py            report only
+      python build_skylines.py --apply    write data/skylines.json
 """
 
 import argparse
+import datetime
+import glob
+import gzip
 import json
 import math
 import os
 import re
 
 import keys as KEYS_MOD
-import supplement as SUPP
+from fetch_wikidata import CITIES
 
 HERE = os.path.dirname(os.path.abspath(__file__))
-RAW = os.path.join(HERE, "data", "raw", "wikidata_buildings.json")
+RAW_DIR = os.path.join(HERE, "data", "raw")
 OUT = os.path.join(HERE, "data", "skylines.json")
 
 BINS = 360                 # one sample per degree of azimuth
-# 120 m was the wrong floor. It is a defensible definition of "tall building"
-# and it left Chongqing with nine towers, because Wikidata's coverage thins
-# fast below the famous ones - so turning to a bearing with nothing in it gave
-# a blank screen, which is accurate and useless. 80 m is still a high-rise by
-# any definition and roughly triples the set.
-MIN_HEIGHT = 80.0
-# The headline count and the city ranking use MIN_HEIGHT. The wheel does not:
-# a ring of seven towers is a bad carousel however defensible its floor, so it
-# takes the tallest buildings the city has down to RING_FLOOR, which is still
-# a twelve-storey block. The two numbers are reported separately on screen so
+# The headline count uses MIN_HEIGHT; the wheel takes the tallest buildings
+# the city has down to RING_FLOOR, still a twelve-storey block, at most
+# RING_MAX of them. The two numbers are reported separately on screen so
 # nobody reads one as the other.
+MIN_HEIGHT = 80.0
 RING_FLOOR = 55.0
-RADIUS_KM = 35.0           # how far from a centre a building may be and count
-EYE_M = 1.7                # observer eye height
+RING_MAX = 120
+# A wheel needs enough towers to be worth turning: at least MIN_TALL at or
+# above MIN_HEIGHT and MIN_RING on the wheel. Beijing once had seven towers in
+# the database and a thousand in life; publishing it would say more about the
+# database's coverage than about Beijing.
+MIN_TALL, MIN_RING = 7, 16
+TALLEST_BUILDING_M = 830.0  # Burj Khalifa, 828 m; anything above is a typo
+EYE_M = 1.7
+CLAMP_M = 400.0            # a tower closer than this is held at it
+NEAR_KEEP_M = 120.0        # an unlinked OSM building this close may match
+OSM_TOL = 0.20             # ...if its mapped height is within 20%
 
-# Candidate cities. Assignment is by proximity, so this list only has to
-# contain the places that have skylines; the top fifty are then chosen by how
-# much skyline each one actually turns out to have, not by reputation.
-CITIES = [
-    ("Hong Kong", "China", 22.302, 114.177), ("Shenzhen", "China", 22.543, 114.058),
-    ("New York", "United States", 40.713, -74.006), ("Dubai", "UAE", 25.205, 55.271),
-    ("Shanghai", "China", 31.230, 121.474), ("Tokyo", "Japan", 35.690, 139.692),
-    ("Chicago", "United States", 41.878, -87.630), ("Guangzhou", "China", 23.129, 113.264),
-    ("Kuala Lumpur", "Malaysia", 3.139, 101.687), ("Chongqing", "China", 29.563, 106.551),
-    ("Singapore", "Singapore", 1.352, 103.820), ("Seoul", "South Korea", 37.567, 126.978),
-    ("Toronto", "Canada", 43.653, -79.383), ("Bangkok", "Thailand", 13.756, 100.502),
-    ("Wuhan", "China", 30.593, 114.306), ("Jakarta", "Indonesia", -6.208, 106.846),
-    ("Melbourne", "Australia", -37.814, 144.963), ("Sydney", "Australia", -33.869, 151.209),
-    ("Miami", "United States", 25.762, -80.192), ("Busan", "South Korea", 35.180, 129.075),
-    ("Panama City", "Panama", 8.983, -79.517), ("Istanbul", "Turkey", 41.008, 28.978),
-    ("Moscow", "Russia", 55.756, 37.617), ("Mumbai", "India", 19.076, 72.878),
-    ("Doha", "Qatar", 25.286, 51.531), ("Riyadh", "Saudi Arabia", 24.713, 46.675),
-    ("Nanjing", "China", 32.061, 118.796), ("Tianjin", "China", 39.343, 117.361),
-    ("Beijing", "China", 39.904, 116.407), ("Shenyang", "China", 41.805, 123.431),
-    ("Changsha", "China", 28.228, 112.939), ("Suzhou", "China", 31.299, 120.585),
-    ("Hangzhou", "China", 30.274, 120.155), ("Chengdu", "China", 30.573, 104.067),
-    ("Dalian", "China", 38.914, 121.615), ("Qingdao", "China", 36.067, 120.383),
-    ("Xiamen", "China", 24.480, 118.089), ("Wuxi", "China", 31.491, 120.312),
-    ("Taipei", "Taiwan", 25.033, 121.565), ("Manila", "Philippines", 14.599, 120.984),
-    ("Ho Chi Minh City", "Vietnam", 10.823, 106.630), ("Osaka", "Japan", 34.694, 135.502),
-    ("Los Angeles", "United States", 34.052, -118.244),
-    ("San Francisco", "United States", 37.775, -122.419),
-    ("Houston", "United States", 29.760, -95.370),
-    ("Austin", "United States", 30.267, -97.743),
-    ("Fort Worth", "United States", 32.7555, -97.3308),
-    ("Nashville", "United States", 36.163, -86.781), ("Boston", "United States", 42.360, -71.059),
-    ("Philadelphia", "United States", 39.953, -75.165),
-    ("Atlanta", "United States", 33.749, -84.388), ("Seattle", "United States", 47.606, -122.332),
-    ("Dallas", "United States", 32.777, -96.797), ("Las Vegas", "United States", 36.170, -115.140),
-    ("Vancouver", "Canada", 49.283, -123.121), ("Calgary", "Canada", 51.045, -114.057),
-    ("Montreal", "Canada", 45.502, -73.567), ("Mexico City", "Mexico", 19.433, -99.133),
-    ("Sao Paulo", "Brazil", -23.551, -46.633), ("Rio de Janeiro", "Brazil", -22.907, -43.173),
-    ("Buenos Aires", "Argentina", -34.604, -58.382), ("Santiago", "Chile", -33.449, -70.669),
-    ("London", "United Kingdom", 51.507, -0.128), ("Paris", "France", 48.857, 2.352),
-    ("Frankfurt", "Germany", 50.111, 8.682), ("Madrid", "Spain", 40.417, -3.704),
-    ("Milan", "Italy", 45.464, 9.190), ("Warsaw", "Poland", 52.230, 21.012),
-    ("Rotterdam", "Netherlands", 51.924, 4.478), ("Benidorm", "Spain", 38.538, -0.131),
-    ("Tel Aviv", "Israel", 32.085, 34.781), ("Abu Dhabi", "UAE", 24.453, 54.377),
-    ("Kuwait City", "Kuwait", 29.376, 47.977), ("Manama", "Bahrain", 26.229, 50.586),
-    ("Cairo", "Egypt", 30.044, 31.236), ("Johannesburg", "South Africa", -26.204, 28.047),
-    ("Lagos", "Nigeria", 6.524, 3.379), ("Nairobi", "Kenya", -1.286, 36.817),
-    ("Auckland", "New Zealand", -36.848, 174.763), ("Honolulu", "United States", 21.307, -157.858),
-    ("Gold Coast", "Australia", -28.017, 153.400), ("Brisbane", "Australia", -27.469, 153.025),
-    ("Perth", "Australia", -31.953, 115.857), ("Astana", "Kazakhstan", 51.169, 71.449),
-    ("Baku", "Azerbaijan", 40.409, 49.867), ("Delhi", "India", 28.614, 77.209),
-    ("Kolkata", "India", 22.573, 88.364), ("Colombo", "Sri Lanka", 6.927, 79.861),
-    ("Jeddah", "Saudi Arabia", 21.486, 39.192), ("Amman", "Jordan", 31.956, 35.945),
-    ("Vienna", "Austria", 48.208, 16.373), ("Brussels", "Belgium", 50.851, 4.352),
-    ("Lisbon", "Portugal", 38.722, -9.139), ("Stockholm", "Sweden", 59.329, 18.069),
-]
+# Classes that mean "not a standing building", whatever else the item is.
+NOT_STANDING = {
+    "Q19860854": "destroyed building or structure",
+    "Q56556915": "demolished or destroyed",
+    "Q57644089": "destroyed church",
+    "Q96084375": "former building or structure",
+    "Q811683": "proposed building or structure",
+    "Q124835105": "proposed tower",
+    "Q64728694": "proposed entity",
+    "Q25447168": "architectural project",
+    "Q12372814": "engineering project",
+    "Q21514702": "abandoned project",
+    "Q1570262": "unfinished building",
+    "Q12377751": "building or structure under construction",
+    "Q1441983": "redevelopment",
+}
+# States of use (P5817) that mean the same. "In use", "permanently closed",
+# "topped out" and "under reconstruction" all describe something standing.
+STATE_NOT_STANDING = {
+    "Q12377751": "under construction", "Q56556915": "demolished or destroyed",
+    "Q811683": "proposed", "Q97317113": "on hold", "Q30108381": "cancelled",
+}
+# Structures Wikidata files under building that a skyline is not made of.
+TOWER = {
+    "Q12518": "tower", "Q11166728": "television tower",
+    "Q1440300": "observation tower", "Q1068623": "transmitter mast",
+    "Q1798641": "communication tower", "Q1440476": "lattice tower",
+    "Q797765": "inclined tower", "Q853854": "clock tower",
+    "Q81917": "fortified tower", "Q274153": "water tower",
+    "Q5191724": "steeple", "Q815448": "belfry", "Q200334": "bell tower",
+    "Q685204": "gate tower", "Q72926449": "church tower", "Q213643": "silo",
+    "Q39715": "lighthouse", "Q1601458": "combined heat and power station",
+    "Q13416228": "incinerator",
+}
+# ...unless the item is also one of these (a skyscraper that is also filed as
+# a tower is a skyscraper).
+HIGHRISE = {
+    "Q11303": "skyscraper", "Q18142": "tower block",
+    "Q2304397": "residential tower", "Q104829543": "supertall building",
+    "Q1021645": "office building", "Q13402009": "apartment building",
+    "Q27686": "hotel", "Q15622489": "skyscraper in Japan",
+    "Q134570257": "office tower", "Q47012103": "mixed-use building",
+    "Q11755959": "multi-story urban building",
+}
+# Buildings Wikidata files as groups of buildings rather than under building
+# itself. Federation Tower (Moscow, 374 m), Emirates Towers and Franklin
+# Center were dropped as "not a building" until the claims check of
+# 2026-10-24 found them.
+COMPLEX = {
+    "Q1497364": "building complex", "Q118896406": "twin towers",
+    "Q27556845": "skyscraper complex", "Q4298922": "mixed-use development",
+}
+# A tower Wikidata places only in its county, state or province (downtown
+# Chicago and Calgary) is in the city if it stands within CORE_KM of the
+# city's coordinate. One placed in another municipality never is.
+CORE_KM = 3.0
+ARCH, PINNACLE, OCCUPIED = "Q24192182", "Q26970842", "Q31271474"
+ROOF = "Q83180"
+# "applies to part" values that are not parts: two items qualify a whole-
+# building height with the unit system it was given in (345 Park Avenue)
+NOT_A_PART = {"Q641227", "Q232405"}  # imperial system, metric system
+OSM_NOT_STANDING = ("construction", "proposed", "demolished", "abandoned",
+                    "disused", "razed", "planned")
 
 R_EARTH = 6371000.0
 
@@ -180,371 +192,387 @@ def bearing(lat1, lon1, lat2, lon2):
     return (math.degrees(math.atan2(y, x)) + 360.0) % 360.0
 
 
-def offset(lat, lon, brg, dist_m):
-    """A point dist_m away on bearing brg."""
-    p1 = math.radians(lat)
-    l1 = math.radians(lon)
-    b = math.radians(brg)
-    d = dist_m / R_EARTH
-    p2 = math.asin(math.sin(p1) * math.cos(d) +
-                   math.cos(p1) * math.sin(d) * math.cos(b))
-    l2 = l1 + math.atan2(math.sin(b) * math.sin(d) * math.cos(p1),
-                         math.cos(d) - math.sin(p1) * math.sin(p2))
-    return math.degrees(p2), (math.degrees(l2) + 540) % 360 - 180
+def qid(uri):
+    return uri.rsplit("/", 1)[-1]
 
 
-# What counts as skyline. Towers that dominate a horizon - television and
-# observation towers - are in, because they are what people photograph;
-# bridges, masts and mountains are out, because they are not what anybody
-# means by a skyline even when they are taller than one.
-KEEP = ("skyscraper", "tower block", "office building", "building complex",
-        "residential", "apartment", "condominium", "twin towers", "high-rise",
-        "hotel", "television tower", "observation tower", "clock tower",
-        "commercial building", "mixed-use", "administrative building",
-        "government building", "bell tower", "minaret", "cathedral",
-        "church building", "tower")
-DROP = ("waterfall", "mountain", "hill", "bridge", "mast", "transmitter",
-        "settlement", "village", "town", "city", "dam", "power station",
-        "weapon", "chimney", "volcano", "peak", "canyon", "lake", "river",
-        "island", "cave", "mine", "antenna", "pylon", "crane", "wind",
-        "lighthouse", "viaduct", "aqueduct", "stadium", "cooling")
+def latest(pattern):
+    hits = sorted(glob.glob(os.path.join(RAW_DIR, pattern)))
+    if not hits:
+        raise SystemExit(f"no {pattern} in {RAW_DIR}: run the fetch first")
+    return hits[-1]
 
 
-def is_building(cls_label):
-    c = (cls_label or "").lower()
-    if any(k in c for k in DROP):
-        return False
-    return any(k in c for k in KEEP)
+def load_raw():
+    wpath, opath = latest("wikidata_*.json"), latest("osm_*.json.gz")
+    wd = json.load(open(wpath, encoding="utf-8"))
+    with gzip.open(opath, "rb") as fh:
+        osm = json.loads(fh.read().decode("utf-8"))
+    return wd, osm, os.path.basename(wpath), os.path.basename(opath)
 
 
-def load_buildings():
-    d = json.load(open(RAW, encoding="utf-8"))
+def pick_height(stmts):
+    """One height per item, from its P2048 statements (metres, via psn:).
+    Deprecated statements are ignored; preferred ones win if any exist; then a
+    statement qualified as architectural height, then an unqualified one
+    (the most common case, and the tallest if there are several), then roof
+    or occupied-floor height (Azabudai Hills Mori JP Tower carries only a
+    roof and a spire height). Pinnacle and spire heights, and statements that
+    apply to any other part of the item, are never used: a mast is not the
+    building."""
+    s = [dict(x, part="" if x["part"] in NOT_A_PART else x["part"])
+         for x in stmts if not x["rank"].endswith("DeprecatedRank")]
+    pref = [x for x in s if x["rank"].endswith("PreferredRank")]
+    s = pref or s
+    for test in (lambda x: x["crit"] == ARCH or x["part"] == ARCH,
+                 lambda x: not x["crit"] and not x["part"],
+                 lambda x: x["crit"] == OCCUPIED or x["part"] == ROOF):
+        hit = [x["h"] for x in s if test(x)]
+        if hit:
+            return max(hit)
+    return None
+
+
+def items_for(city, wd=None):
+    """Every item the pull returned for one city, with its facts gathered.
+    With the whole pull, also whether an item outside the city by P131+ is
+    located only in places the city is itself in (wd["located"])."""
+    items = {}
+    for f in city["facts"]:
+        b = qid(f["b"]["value"])
+        it = items.setdefault(b, {"qid": b, "cls": set(), "state": set(),
+                                  "dem": False, "end": [], "open": [],
+                                  "incep": [], "label": "", "in": False,
+                                  "h": [], "coord": None})
+        if "cls" in f:
+            it["cls"].add(qid(f["cls"]["value"]))
+        if "state" in f:
+            it["state"].add(qid(f["state"]["value"]))
+        it["dem"] |= "dem" in f
+        for k in ("end", "open", "incep"):
+            if k in f:
+                it[k].append(f[k]["value"][:10])
+        lab = f.get("bLabel", {}).get("value", "")
+        if lab and not re.fullmatch(r"Q\d+", lab):
+            it["label"] = lab
+        it["in"] = f["inCity"]["value"] == "true"
     pt = re.compile(r"Point\(([-\d.eE]+) ([-\d.eE]+)\)")
-    # one entity may carry several class statements, so keep the entity if any
-    # of them is a building, and count it once
-    ok_ids, all_ids, rejected = set(), set(), {}
-    for b in d["results"]["bindings"]:
-        qid = b["b"]["value"]
-        all_ids.add(qid)
-        cl = b.get("clsLabel", {}).get("value", "")
-        if is_building(cl):
-            ok_ids.add(qid)
-        else:
-            rejected[cl] = rejected.get(cl, 0) + 1
-    for cl in list(rejected):
-        pass
-    print(f"  {len(all_ids):,} entities returned, {len(ok_ids):,} are "
-          f"buildings")
-    top = sorted(rejected.items(), key=lambda kv: -kv[1])[:6]
-    print("  largest rejected classes: " +
-          ", ".join(f"{k} ({n})" for k, n in top))
-
-    seen = set()
-    out = []
-    for b in d["results"]["bindings"]:
-        if b["b"]["value"] not in ok_ids or b["b"]["value"] in seen:
+    for h in city["heights"]:
+        b = qid(h["b"]["value"])
+        if b not in items:
             continue
-        seen.add(b["b"]["value"])
-        m = pt.match(b["coord"]["value"])
+        m = pt.match(h["coord"]["value"])
+        if m and items[b]["coord"] is None:
+            items[b]["coord"] = (float(m.group(2)), float(m.group(1)))
+        items[b]["h"].append({
+            "h": float(h["hm"]["value"]), "rank": h["rank"]["value"],
+            "part": qid(h["part"]["value"]) if "part" in h else "",
+            "crit": qid(h["crit"]["value"]) if "crit" in h else ""})
+    if wd is not None and "located" in wd:
+        name = next(k for k, v in wd["cities"].items() if v is city)
+        locs = {}
+        for r in wd["located"]["cities"][name]["rows"]:
+            locs.setdefault(qid(r["b"]["value"]), []).append(
+                r["ancestor"]["value"] == "true")
+        _, clat, clon = CITIES[name]
+        for it in items.values():
+            anc = locs.get(it["qid"])
+            it["core"] = bool(
+                not it["in"] and anc and all(anc) and it["coord"] and
+                haversine(clat, clon, *it["coord"]) <= CORE_KM * 1000)
+    return items
+
+
+CLS_OK = {}
+
+
+def set_classes(wd):
+    """Which P31 classes are subclasses of building, from the archived
+    class query."""
+    CLS_OK.clear()
+    CLS_OK.update({qid(r["cls"]["value"]): r["isBuilding"]["value"] == "true"
+                   for r in wd["classes"]})
+
+
+def wikidata_verdict(it, today):
+    """(height, None) if Wikidata alone would keep this item, else
+    (None, (the count it falls under, the reason to report))."""
+    cl = it["cls"]
+    if not any(CLS_OK.get(c) for c in cl) and not cl & set(COMPLEX):
+        return None, ("not building", "")
+    if cl & set(TOWER) and not cl & set(HIGHRISE):
+        return None, ("tower structure", "tower structure")
+    if not it["in"] and not it.get("core"):
+        return None, ("outside city", "outside city")
+    # Height before standing, so every item the standing tests reject is a
+    # building of RING_FLOOR or more in the city: the page's "one in ten"
+    # divides by exactly that set.
+    h = pick_height(it["h"])
+    if h is None or it["coord"] is None:
+        return None, ("no usable height", "")
+    if h < RING_FLOOR:
+        return None, ("below floor", "")
+    if h > TALLEST_BUILDING_M:
+        return None, ("implausible height", f"height {h:.0f} m")
+    why = ([NOT_STANDING[c] for c in sorted(cl) if c in NOT_STANDING] +
+           [STATE_NOT_STANDING[s] for s in sorted(it["state"])
+            if s in STATE_NOT_STANDING])
+    if it["dem"]:
+        why.append("demolition date")
+    if any(e <= today for e in it["end"]):
+        why.append("end date")
+    if why:
+        return None, ("not standing (Wikidata)", "; ".join(why))
+    return h, None
+
+
+def osm_rec(e):
+    t = e.get("tags", {})
+    c = e.get("center") or ({"lat": e["lat"], "lon": e["lon"]}
+                            if "lat" in e else None)
+    if not c:
+        return None
+    b = t.get("building") or t.get("building:part") or ""
+    dead = (b in OSM_NOT_STANDING or
+            any(k in t for k in ("construction", "proposed", "demolished",
+                                 "construction:building")) or
+            any(k.startswith(p + ":") for k in t
+                for p in ("demolished", "razed", "was", "proposed")))
+
+    def num(key):
+        m = re.match(r"\s*([\d.]+)", t.get(key, ""))
         if not m:
-            continue
+            return None
         try:
-            h = float(b["h"]["value"])
-        except (KeyError, ValueError):
+            v = float(m.group(1))
+        except ValueError:
+            return None
+        if "ft" in t.get(key, "") or "'" in t.get(key, ""):
+            v *= 0.3048
+        return v
+    return {"id": f"{e['type']}/{e['id']}", "lat": c["lat"], "lon": c["lon"],
+            "h": num("height"), "levels": num("building:levels"),
+            "standing": not dead,
+            "names": [t[k] for k in ("name", "name:en", "alt_name",
+                                     "official_name") if t.get(k)],
+            "qids": [q.strip() for q in t.get("wikidata", "")
+                     .replace(",", ";").split(";") if q.strip()]}
+
+
+def osm_index(city):
+    byq = {}
+    for e in city["linked"]:
+        r = osm_rec(e)
+        if r:
+            for q in r["qids"]:
+                byq.setdefault(q, []).append(r)
+    near = [r for r in map(osm_rec, city["near"]) if r]
+    return byq, near
+
+
+def osm_match(it, h, byq, near):
+    """The OSM building that confirms this tower stands, or None.
+
+    First OSM's own link: a building tagged with the item's QID. A link only
+    to something OSM tags as under construction, proposed or demolished is a
+    no, whatever else stands nearby. Failing a link, a standing building or
+    building part within NEAR_KEEP_M of the item's coordinate that agrees on
+    height (OSM_TOL, or its storeys at 3.5 m each within 30%) or carries the
+    same name. A building there that agrees on neither is the tower's site,
+    not the tower: 1 Park Lane's site holds a hotel a third of its height."""
+    linked = byq.get(it["qid"], [])
+    lat, lon = it["coord"]
+    if linked:
+        up = [r for r in linked if r["standing"]]
+        if not up:
+            return None
+        return min(up, key=lambda r: haversine(lat, lon, r["lat"], r["lon"]))
+    me = norm_name(it["label"])
+    best = None
+    for r in near:
+        # A building OSM links to a different item is that item, not this
+        # one: unfinished Marina 106 matched Marina 101 next door by height.
+        if not r["standing"] or (r["qids"] and it["qid"] not in r["qids"]):
             continue
-        if h < RING_FLOOR or h > 830.0:
+        d = haversine(lat, lon, r["lat"], r["lon"])
+        if d > NEAR_KEEP_M:
             continue
-        name = b.get("bLabel", {}).get("value", "")
-        if name.startswith("Q") and name[1:].isdigit():
-            name = ""
+        ok = ((r["h"] and abs(r["h"] - h) <= OSM_TOL * h) or
+              (r["levels"] and abs(3.5 * r["levels"] - h) <= 0.30 * h) or
+              (len(me) >= 4 and any(norm_name(n) == me for n in r["names"])))
+        if ok and (best is None or d < best[0]):
+            best = (d, r)
+    return best[1] if best else None
+
+
+def norm_name(s):
+    s = (s or "").lower()
+    s = re.sub(r"\b(the|tower|towers|building|torre|tour|turm|wieza)\b", " ", s)
+    return re.sub(r"[^\w]+", "", s)
+
+
+def filter_city(name, wd_city, osm_city, today, wd=None):
+    items = items_for(wd_city, wd)
+    byq, near = osm_index(osm_city)
+    count = {k: 0 for k in ("items", "not building", "tower structure",
+                            "outside city", "not standing (Wikidata)",
+                            "no usable height", "below floor",
+                            "implausible height", "not in OSM",
+                            "duplicate", "kept")}
+    dropped, kept = [], []
+    for it in sorted(items.values(), key=lambda x: x["qid"]):
+        count["items"] += 1
+        h, why = wikidata_verdict(it, today)
+        if h is None:
+            count[why[0]] += 1
+            if why[1]:
+                dropped.append((it, why[1]))
+            continue
+        om = osm_match(it, h, byq, near)
+        if om is None:
+            count["not in OSM"] += 1
+            dropped.append((it, "not in OSM"))
+            continue
         year = None
-        if "start" in b:
-            ym = re.match(r"(-?\d{4})", b["start"]["value"])
-            if ym:
-                year = int(ym.group(1))
-        out.append({"name": name, "h": h,
-                    "lon": float(m.group(1)), "lat": float(m.group(2)),
-                    "year": year,
-                    # the entity id, so the page can link to the record it
-                    # came from; hand-entered buildings have none and are
-                    # therefore not linked
-                    "qid": b["b"]["value"].rsplit("/", 1)[-1]})
-    return out
-
-
-def assign(buildings):
-    """Nearest city within RADIUS_KM. A building more than that from any of
-    the listed centres is not part of a skyline anybody looks at, and is
-    dropped rather than forced into the closest one."""
-    lim = RADIUS_KM * 1000.0
-    groups = {}
-    unplaced = 0
-    byname = {c[0]: c for c in CITIES}
-    for b in buildings:
-        best, bestd = None, lim
-        for name, country, lat, lon in CITIES:
-            # cheap rejection first; haversine on 6,623 x 90 is wasteful
-            if abs(lat - b["lat"]) > 0.45 or abs(lon - b["lon"]) > 0.55:
-                continue
-            d = haversine(lat, lon, b["lat"], b["lon"])
-            if d < bestd:
-                best, bestd = (name, country, lat, lon), d
-        if best is None:
-            unplaced += 1
+        for d in sorted(it["open"]) + sorted(it["incep"]):
+            if re.match(r"\d{4}", d):
+                year = int(d[:4])
+                break
+        kept.append({"qid": it["qid"], "name": it["label"], "h": h,
+                     "lat": it["coord"][0], "lon": it["coord"][1],
+                     "year": year, "osm": om["id"], "osm_h": om["h"],
+                     "osm_linked": bool(byq.get(it["qid"]))})
+    # once: a linked, named, taller item wins a duplicate pair. Two items
+    # OSM links to two different buildings are two buildings, even on one
+    # spot at one height: 10 and 15 Hudson Yards share a Wikidata coordinate.
+    kept.sort(key=lambda b: (not b["osm_linked"], not b["name"], -b["h"],
+                             b["qid"]))
+    out = []
+    for b in kept:
+        dup = None
+        for o in out:
+            d = haversine(b["lat"], b["lon"], o["lat"], o["lon"])
+            if (b["osm"] == o["osm"] or
+                    (norm_name(b["name"]) and
+                     norm_name(b["name"]) == norm_name(o["name"]) and
+                     d < 300) or
+                    (d < 30 and abs(b["h"] - o["h"]) <= 0.05 * o["h"] and
+                     not (b["osm_linked"] and o["osm_linked"]))):
+                dup = o
+                break
+        if dup:
+            count["duplicate"] += 1
+            dropped.append(({"qid": b["qid"], "label": b["name"]},
+                            f"duplicate of {dup['qid']} {dup['name']}"))
             continue
-        groups.setdefault(best, []).append(b)
-    # Cities the database barely covers get a supplement transcribed from
-    # published records, kept in its own file and marked in the output.
-    # A database row that is the same building under a different name -
-    # "505 Nashville" against "505", say - would be drawn twice, so any
-    # database row standing within 150 m and 15 m of height of a supplement
-    # row is taken to be that row and dropped in its favour. Nothing else is
-    # touched.
-    for name, rows in SUPP.SUPPLEMENT.items():
-        key = byname.get(name)
-        if not key:
-            continue
-        supp = SUPP.rows_for(name)
-        db = groups.get(key, [])
-        names = {b["name"] for b in supp}
-        # Above the published list's own floor, the published list is
-        # complete: it records every finished building that tall. A database
-        # row up there that the list does not have is a proposal, a
-        # demolition, or a misrecorded height - Wikidata carried the never
-        # built 228.6 m Paramount Tower for Nashville as if it stood - so it
-        # is dropped and named. Below the floor the database still fills the
-        # wheel.
-        floor = SUPP.LIST_FLOOR[name]
-        kept, dropped = [], 0
-        for b in db:
-            dup = b["name"] in names or any(
-                haversine(b["lat"], b["lon"], s["lat"], s["lon"]) < 150.0
-                and abs(b["h"] - s["h"]) < 15.0 for s in supp)
-            if dup:
-                dropped += 1
-            elif b["h"] >= floor:
-                print(f"  {name}: dropping {b['name'] or b.get('qid', '?')} "
-                      f"({b['h']:.0f} m) - absent from the published list "
-                      f"at a height it covers")
-            else:
-                kept.append(b)
-        groups[key] = kept + supp
-        print(f"  {name}: {len(supp)} published rows added, {dropped} "
-              f"database duplicates dropped ({len(groups[key])} total)")
-    return groups, unplaced
-
-
-def viewpoint(city, blds):
-    """Where to stand. Far enough out to see the cluster whole, on the bearing
-    that puts the most of it in front of you."""
-    name, country, clat, clon = city
-    # centroid weighted by height, so the viewpoint answers to the towers
-    # rather than to the outliers
-    wsum = sum(b["h"] for b in blds)
-    mlat = sum(b["lat"] * b["h"] for b in blds) / wsum
-    mlon = sum(b["lon"] * b["h"] for b in blds) / wsum
-
-    # Stand outside the whole cluster, not outside its middle. Placing the
-    # observer at a fixed distance from the centroid put them inside Dubai,
-    # 200 metres from the Burj Khalifa, which then filled 75 degrees of the
-    # sky. The 90th percentile is used rather than the maximum so that one
-    # outlying tower in a suburb does not push the viewer into the next
-    # county.
-    ds = sorted(haversine(mlat, mlon, b["lat"], b["lon"]) for b in blds)
-    spread = ds[int(0.90 * (len(ds) - 1))]
-    dist = max(2500.0, min(14000.0, spread + 2600.0))
-
-    best_brg, best_score = 0.0, -1.0
-    for brg in range(0, 360, 5):
-        vlat, vlon = offset(mlat, mlon, brg, dist)
-        # looking back towards the centroid
-        look = (brg + 180.0) % 360.0
-        score = 0.0
-        for b in blds:
-            a = bearing(vlat, vlon, b["lat"], b["lon"])
-            off = abs((a - look + 180.0) % 360.0 - 180.0)
-            if off <= 60.0:
-                d = max(300.0, haversine(vlat, vlon, b["lat"], b["lon"]))
-                score += math.atan2(b["h"], d)
-        if score > best_score:
-            best_brg, best_score = float(brg), score
-
-    vlat, vlon = offset(mlat, mlon, best_brg, dist)
-    return vlat, vlon, (best_brg + 180.0) % 360.0, dist
-
-
-def profile(vlat, vlon, blds, inside=False):
-    """Apparent elevation angle of the skyline at each degree of azimuth.
-
-    A building occupies a wedge of the horizon whose width falls off with
-    distance, and stands at an apparent height of arctan(h/d). Taking the
-    maximum over every building that covers a bin is what makes this a
-    silhouette rather than a sum: a tower behind a taller tower contributes
-    nothing, which is exactly what your eye does.
-    """
-    prof = [0.0] * BINS
-    owner = [None] * BINS
-    for b in blds:
-        d = haversine(vlat, vlon, b["lat"], b["lon"])
-        # A tower the observer is standing under is not part of a skyline.
-        # From the panorama viewpoint that means dropping it; from the centre
-        # of a downtown it means holding it at arm's length, because there the
-        # near towers are the point.
-        if d < 600.0:
-            if not inside:
-                continue
-            d = 220.0
-        a = bearing(vlat, vlon, b["lat"], b["lon"])
-        # Wikidata has no footprint, so width is inferred from height.
-        w = min(70.0, max(25.0, 0.18 * b["h"]))
-        half = math.degrees(math.atan2(w / 2.0, d))
-        elev = math.degrees(math.atan2(b["h"] - EYE_M, d))
-        lo = a - half
-        hi = a + half
-        i0 = int(math.floor(lo))
-        i1 = int(math.ceil(hi))
-        for i in range(i0, i1 + 1):
-            k = i % BINS
-            if elev > prof[k]:
-                prof[k] = elev
-                owner[k] = b
-    return prof, owner
+        out.append(b)
+    count["kept"] = len(out)
+    return out, count, dropped
 
 
 def build(apply=False):
-    blds = load_buildings()
-    groups, unplaced = assign(blds)
-    print(f"  {len(blds):,} buildings at or above {RING_FLOOR:.0f} m")
-    print(f"  {len(groups)} cities matched, {unplaced:,} buildings outside "
-          f"every listed centre")
-
-    ranked = []
-    for city, allmem in groups.items():
-        # Two floors, and both have to be cleared. A city needs a real skyline
-        # to be worth ranking, and enough buildings of any size to make a
-        # wheel worth turning. Beijing has seven towers in this database and a
-        # thousand in life; publishing it would say more about the database's
-        # coverage than about Beijing, and a reader would take it for the
-        # second thing.
-        mem = [b for b in allmem if b["h"] >= MIN_HEIGHT]
-        if len(mem) < 7 or len(allmem) < 16:
+    wd, osm, wname, oname = load_raw()
+    today = wd["fetched"]
+    set_classes(wd)
+    print(f"  sources: {wname} (fetched {wd['fetched']}), {oname} "
+          f"(fetched {osm['fetched']})")
+    out, gone, report = [], [], {}
+    for name in CITIES:
+        towers, count, dropped = filter_city(name, wd["cities"][name],
+                                             osm["cities"][name], today, wd)
+        report[name] = {"count": count,
+                        "dropped": [[d[0]["qid"], d[0].get("label", ""), why]
+                                    for d, why in
+                                    ((x, x[1]) for x in dropped)]}
+        mem = [b for b in towers if b["h"] >= MIN_HEIGHT]
+        if len(mem) < MIN_TALL or len(towers) < MIN_RING:
+            gone.append((name, len(mem), len(towers)))
             continue
-        # skyline mass: heights added in quadrature, so one very tall tower
-        # does not outrank a genuine forest of them, but is not ignored either
-        mass = math.sqrt(sum(b["h"] ** 2 for b in mem))
-        ranked.append((mass, city, mem, allmem))
-    ranked.sort(key=lambda r: -r[0])
-    ranked = ranked[:50]
-
-    out = []
-    for mass, city, mem, allmem in ranked:
-        name, country, clat, clon = city
         peak = max(mem, key=lambda b: b["h"])
-
-        # ---- the ring ----------------------------------------------------
-        # The panorama above is a true view: real bearings, real angles, and
-        # for most cities two thirds of a full turn is empty sky, because a
-        # downtown occupies perhaps forty degrees of anybody's horizon. That
-        # is honest and it is a bad carousel - turn ninety degrees and the
-        # screen is blank.
-        #
-        # So the wheel does one stated thing to the geography. Buildings keep
-        # their true compass ORDER, going clockwise from north exactly as they
-        # do on the ground, but their SPACING is equalised so the ring is full.
-        # Neighbours on the wheel are neighbours in the city; the angle between
-        # them is not the angle between them. It is the same liberty a transit
-        # map takes with distance, taken for the same reason, and the app says
-        # so on screen.
         rw = sum(b["h"] for b in mem)
         rlat = sum(b["lat"] * b["h"] for b in mem) / rw
         rlon = sum(b["lon"] * b["h"] for b in mem) / rw
 
-        picked = sorted(allmem, key=lambda x: -x["h"])[:120]
+        # The wheel keeps the towers' true compass ORDER, clockwise from
+        # north as on the ground, but equalises their SPACING so the ring is
+        # full. A downtown fills perhaps forty degrees of a real horizon, so
+        # a faithful wheel would be mostly empty sky: turn ninety degrees and
+        # the screen is blank. Neighbours on the wheel are neighbours in the
+        # city; the angle between them is not.
+        picked = sorted(towers, key=lambda x: (-x["h"], x["qid"]))[:RING_MAX]
         for b in picked:
             b["_az"] = bearing(rlat, rlon, b["lat"], b["lon"])
-            # 120 m was too close: a tower that near subtends eighty degrees
-            # and becomes the ceiling every other building is measured
-            # against. 400 m is about as close as anyone stands to a
-            # skyscraper and still calls it part of a skyline.
-            b["_d"] = max(400.0, haversine(rlat, rlon, b["lat"], b["lon"]))
-        picked.sort(key=lambda b: b["_az"])
-
-        ring = []
+            b["_d"] = max(CLAMP_M, haversine(rlat, rlon, b["lat"], b["lon"]))
+        picked.sort(key=lambda b: (b["_az"], b["qid"]))
         n = len(picked)
-        for idx, b in enumerate(picked):
-            slot = 360.0 * idx / n
-            ring.append([
-                round(slot, 2),                                   # equalised
-                round(math.degrees(math.atan2(b["h"] - EYE_M, b["_d"])), 3),
-                round(b["_d"] / 1000.0, 3),
-                round(b["h"], 1),
-                b["name"] or "",
-                b["year"] or 0,
-                round(b["_az"], 1),                               # where it is
-                b.get("qid", ""),                                 # or nothing
-            ])
+        ring = [[round(360.0 * i / n, 2),
+                 round(math.degrees(math.atan2(b["h"] - EYE_M, b["_d"])), 3),
+                 round(b["_d"] / 1000.0, 3), round(b["h"], 1), b["name"],
+                 b["year"] or 0, round(b["_az"], 1), b["qid"]]
+                for i, b in enumerate(picked)]
 
-        # The meter reads the wheel, not the panorama, so that what you hear
-        # and what is in front of you are the same thing.
+        # The meter: each slot carries its tower's HEIGHT, so what sounds
+        # loudest is what stands tallest (see the docstring).
         rprof = [0.0] * BINS
+        half = max(1.2, 0.5 * 360.0 / n)
         for r in ring:
-            half = max(1.2, 0.5 * 360.0 / max(1, n))
-            i0 = int(math.floor(r[0] - half))
-            i1 = int(math.ceil(r[0] + half))
-            for i in range(i0, i1 + 1):
-                k = i % BINS
-                if r[1] > rprof[k]:
-                    rprof[k] = r[1]
+            for i in range(int(math.floor(r[0] - half)),
+                           int(math.ceil(r[0] + half)) + 1):
+                rprof[i % BINS] = max(rprof[i % BINS], r[3])
 
-        # The starting bearing: the equalised slot of the tallest tower, so
-        # the wheel opens facing the building the city is known by.
         look = max(ring, key=lambda r: r[3])[0]
-        # The twenty tallest, named: what build_skyline_figure.py draws.
-        # Name, height, year only - the bearing and distance these used to
-        # carry were from the retired viewpoint.
-        named = []
-        for b in sorted(mem, key=lambda x: -x["h"])[:20]:
-            if not b["name"]:
-                continue
-            named.append({"n": b["name"], "h": round(b["h"], 1),
-                          "y": b["year"]})
-        named.sort(key=lambda x: -x["h"])
-        key = KEYS_MOD.key_for(name)
+        named = [{"n": b["name"], "h": round(b["h"], 1), "y": b["year"]}
+                 for b in sorted(mem, key=lambda x: -x["h"]) if b["name"]][:20]
+        withosm = [b for b in towers if b["osm_h"]]
         out.append({
-            "city": name, "country": country,
-            "n": len(mem), "mass": round(mass, 1),
+            "city": name,
+            "n": len(mem), "mass": round(math.sqrt(sum(b["h"] ** 2
+                                                       for b in mem)), 1),
             "tallest": round(peak["h"], 1), "tallestName": peak["name"],
             "median": round(sorted(b["h"] for b in mem)[len(mem) // 2], 1),
-            "look": round(look, 1),
-            "towers": named[:20],
-            "ring": ring,
-            "rprof": [round(v, 3) for v in rprof],
+            "look": round(look, 1), "towers": named, "ring": ring,
+            "rprof": [round(v, 1) for v in rprof],
             "centre": [round(rlat, 5), round(rlon, 5)],
-            "key": key,
-            "hand": sum(1 for b in allmem if b.get("hand")),
+            "key": KEYS_MOD.key_for(name),
+            "osmLinked": sum(b["osm_linked"] for b in towers),
+            "osmHeights": len(withosm),
+            "osmWithin10": sum(abs(b["osm_h"] - b["h"]) <= 0.10 * b["h"]
+                               for b in withosm),
         })
-        if out[-1]["hand"]:
-            # the height above which the published list overrules the
-            # database; the app shows it beside the hand-entered count
-            out[-1]["listFloor"] = SUPP.LIST_FLOOR[name]
 
-    print(f"\n  {'city':20s} {'towers':>7s} {'tallest':>8s} {'ring':>6s}  key")
-    for c in out[:14]:
-        print(f"  {c['city']:20s} {c['n']:7,d} {c['tallest']:8.0f} "
-              f"{len(c['ring']):6d}  {c['key']['label']} "
-              f"({c['key']['tier'].lower()})")
-    print(f"  ... {len(out)} cities in all")
-
+    print(f"\n  {'city':12s} {'items':>5s} {'notbld':>6s} {'tower':>5s} "
+          f"{'outside':>7s} {'unbuilt':>7s} {'noOSM':>5s} {'dup':>4s} "
+          f"{'kept':>4s} {'>=80':>4s}  tallest")
+    for name in CITIES:
+        c = report[name]["count"]
+        city = next((x for x in out if x["city"] == name), None)
+        print(f"  {name:12s} {c['items']:5d} {c['not building']:6d} "
+              f"{c['tower structure']:5d} {c['outside city']:7d} "
+              f"{c['not standing (Wikidata)']:7d} {c['not in OSM']:5d} "
+              f"{c['duplicate']:4d} {c['kept']:4d} "
+              f"{city['n'] if city else 0:4d}  "
+              + (f"{city['tallestName']} {city['tallest']:.0f} m" if city
+                 else "DROPPED: too thin for a wheel"))
+    print(f"  {len(out)} cities; dropped: " +
+          ", ".join(f"{g[0]} ({g[1]} at {MIN_HEIGHT:.0f} m, {g[2]} on the "
+                    f"wheel)" for g in gone))
     if not apply:
         print("\n  report only. Re-run with --apply.")
-        return out
-    os.makedirs(os.path.dirname(OUT), exist_ok=True)
+        return out, gone, report
+    payload = {"bins": BINS, "minHeight": MIN_HEIGHT, "ringFloor": RING_FLOOR,
+               "sources": {"wikidata": wname, "wikidataFetched": wd["fetched"],
+                           "osm": oname, "osmFetched": osm["fetched"]},
+               "dropped": [{"city": g[0], "tall": g[1], "ring": g[2]}
+                           for g in gone],
+               "cities": out}
     with open(OUT, "w", encoding="utf-8", newline="\n") as fh:
-        json.dump({"bins": BINS, "minHeight": MIN_HEIGHT,
-                   "ringFloor": RING_FLOOR, "cities": out}, fh,
-                  separators=(",", ":"))
-    print(f"\n  wrote {OUT} ({os.path.getsize(OUT)/1024:.0f} kB)")
-    return out
+        json.dump(payload, fh, ensure_ascii=False, separators=(",", ":"))
+    rep = os.path.join(HERE, "data", "filter_report.json")
+    with open(rep, "w", encoding="utf-8", newline="\n") as fh:
+        json.dump(report, fh, ensure_ascii=False, indent=1)
+    print(f"\n  wrote {OUT} ({os.path.getsize(OUT) / 1024:.0f} kB) and "
+          f"{os.path.basename(rep)}")
+    return out, gone, report
 
 
 if __name__ == "__main__":

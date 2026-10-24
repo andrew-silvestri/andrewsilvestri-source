@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Skylines, played — Andrew Silvestri</title>
+<meta name="description" content="{{meta}}">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="alternate icon" href="favicon.png">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<meta name="theme-color" content="#F2F0EF">
+<link rel="canonical" href="https://andrewsilvestri.com/skyline.html">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Skylines, played — Andrew Silvestri">
+<meta property="og:description" content="{{meta}}">
+<meta property="og:url" content="https://andrewsilvestri.com/skyline.html">
+<script>/* the motion contract — set before first paint, from the system preference alone */
+try{document.documentElement.dataset.motion=matchMedia('(prefers-reduced-motion: reduce)').matches?'off':'on';}catch(e){document.documentElement.dataset.motion='on';}</script>
+<link rel="stylesheet" href="style.css">
+</head><body>
+{{nav}}
+<main class="notes">
+
+<h1>{{h1}}</h1>
+<p class="dim">Wikidata is the free database kept alongside Wikipedia, and maps, apps and research draw on it. Ask it for every building of {{floor}} meters or more in {{n_all}} big cities and it returns {{cand}} records. By its own records, {{gone}} of those buildings have been demolished or destroyed, among them the old 270 Park Avenue in New York, whose demolition it dates to {{park_year}}, and {{unbuilt}} were never finished or are still going up: {{wd_out}} of the {{cand}}, about one in twenty, returned by any search that does not check. Of the rest, {{noosm}} could not be matched to a standing building in OpenStreetMap, the map drawn from the ground and from aerial imagery; many of those stand, but they are left out rather than risk drawing a tower that is not there. The towers that pass are below as an instrument, for the {{n_city}} cities with at least {{min_ring}} of them: turn a wheel of the city's towers, and the towers in front of you play a chord that grows louder the taller they are.</p>
+{{stamp}}
+
+<div class="card">
+<div class="tag">Interactive</div>
+<h3 style="margin-top:4px">{{n_city}} cities, played</h3>
+<p>Drag the wheel and the chord changes as the towers in front of you change: tall towers loud, short ones soft, every city's tallest equally loud. The top of the screen is the wheel, each tower at its height, the ones behind you drawn darker; the bottom shows the same towers as bars, which is what you hear. Each tower links to its Wikidata record.</p>
+<a class="btn" href="skyline-app.html" target="_blank" rel="noopener">Open it</a>
+</div>
+
+<picture>
+<source media="(max-width:760px)" srcset="assets/skyline_towers-phone.png" width="700" height="700">
+<img class="fig wide" src="assets/skyline_towers.png" loading="lazy" alt="{{fig_alt}}">
+</picture>
+<p class="small">New York's eight tallest towers on the wheel, by height. The 270 Park Avenue here is the new tower on the old one's site, dated {{park_new}} in Wikidata. The heights are Wikidata's; the Empire State Building's 453 meters is one it overstates (see Limits).</p>
+
+<h2>How the towers were checked</h2>
+
+<p>Three heights do three jobs. The search asked for everything of {{pull_floor}} meters or more within {{radius}} kilometers of each city's center, so nothing near the cut was missed; a building has to be {{floor}} meters or more to count or go on a wheel; and the table below counts the ones of {{min_h}} meters or more, the usual sense of a high-rise. From the {{items}} records the search returned:</p>
+
+<table>
+<tr><th>Step</th><th>Records</th></tr>
+{{funnel_rows}}
+</table>
+
+<p>Each step, in plain words:</p>
+<ul>
+<li><strong>Not a building.</strong> Bridges, statues, monuments and the like ({{n_notb}}), then television towers, radio masts, observation towers and clock and church towers ({{n_tower}}), which Wikidata files under "building" but no one would call one. So the Eiffel Tower, the CN Tower and Tokyo Skytree are not on the wheels.</li>
+<li><strong>Not in the city.</strong> Wikidata must place it inside the city, or, for a tower it places only in the city's county or state, within {{core_km}} kilometers of the city's center. So La Défense is not in Paris, Ramat Gan is not in Tel Aviv, and Yokohama is not in Tokyo ({{n_outside}}).</li>
+<li><strong>Gone or unbuilt, by Wikidata's own record.</strong> A demolition date, or a record of it as destroyed, proposed, unfinished, under construction, on hold or cancelled ({{wd_out}}).</li>
+<li><strong>Not matched in OpenStreetMap.</strong> A tower stays only if OpenStreetMap links one of its buildings to the Wikidata record and does not mark it as under construction, or maps a building within {{near_m}} meters of the record's position that matches its height (or its number of floors at 3.5 meters each) or its name ({{noosm}}).</li>
+<li><strong>The same building twice.</strong> Two records for one building are kept as one ({{n_dup}}).</li>
+</ul>
+
+<p>{{n_dropped_word}} of the {{n_all}} cities do not have enough towers left to fill a wheel ({{min_tall}} of at least {{min_h}} meters and {{min_ring}} in all): {{dropped}}. That is a gap in the database, not in the cities, and the table shows the same gap less starkly: {{thin}} have far fewer towers here than anyone who has seen them would expect.</p>
+
+<table>
+<tr><th>City</th><th>Towers of {{min_h}} m or more</th><th>On the wheel</th><th>Tallest on the wheel</th></tr>
+{{city_rows}}
+</table>
+<p class="small">Ordered by the number of towers of {{min_h}} meters or more. New York's wheel holds its tallest {{ring_max}}. A city's tallest tower is missing where Wikidata has no usable height for it or does not place it in the city.</p>
+
+<h2>What is measured and what is invented</h2>
+
+<p><strong>Measured.</strong> Each tower's height and position, from Wikidata; that it stands, from Wikidata and OpenStreetMap together; and the order of the towers around the wheel, which is their true compass order seen from the middle of the city's towers, a point pulled toward the tallest. Heights are Wikidata's. OpenStreetMap gives a height for {{osm_h}} of the towers on the wheels, and for {{osm_off}} of them it differs from Wikidata's by more than ten per cent; the wheels use Wikidata's.</p>
+
+<p><strong>Rearranged.</strong> The spacing around the wheel. Towers hold their true compass order, clockwise from north, but are spaced evenly. Seen from the middle, a city's towers bunch up: half of them fall within an arc of {{arc_lo}} degrees in {{arc_lo_city}} and {{arc_hi}} in {{arc_hi_city}}, so a wheel at true angles would be crowded on one side and empty on the other. A transit map takes the same liberty with distance, for the same reason. One consequence is worth stating plainly: there is no empty horizon on a wheel, so turning changes the chord and never silences it.</p>
+
+<p><strong>Invented.</strong> The sound, all of it. There is no sense in which a city has a pitch. The mapping is a choice, it is written out below, and it is deterministic: the same city at the same bearing always makes the same sound.</p>
+
+<h2>How the bars become sound</h2>
+
+<p>In short: the taller the towers in front of you, the louder the chord; at most seven notes sound at once; and the sound is filtered so it can never turn shrill. The details:</p>
+
+<table>
+<tr><th>Property of the bar</th><th>Property of the sound</th><th>Why</th></tr>
+<tr><td>Position across the view</td><td>Which note of the city's chord, lowest on the left; the lowest note is the root an octave down</td><td>The view is drawn as ninety-six bars, too many to play: neighboring bars on almost the same pitch would beat against each other. So the bars share out the chord's nine or ten notes, and a note takes the loudest bar that feeds it.</td></tr>
+<tr><td>Height, as a share of this city's tallest</td><td>Loudness of that note, as the share to the power 1.6; and the level of the whole chord, set by its loudest note</td><td>The exponent makes the peaks stand out in the ear the way they do in the picture, and turning toward the tallest towers makes the chord swell: facing a tower half the height of the city's tallest is about ten decibels quieter. Every city's tallest tower is equally loud: {{shortest_city}} is not quieter than {{tallest_city}} for being shorter.</td></tr>
+<tr><td>How many bars are lit</td><td>At most seven notes sound at once, the loudest seven</td><td>A bearing that lights every note is a chord nobody wrote, and density is most of what makes a tone like this harsh.</td></tr>
+<tr><td>Which note it is</td><td>Higher notes are made quieter; every fourth voice is a triangle wave, the rest are sine waves</td><td>A choice, so the chord sounds warm rather than buzzy.</td></tr>
+<tr><td>Everything</td><td>A filter that cuts 12 decibels above 1.8 kHz, another that removes everything above 2.4 kHz, and a limiter, all before the level is set</td><td>So that no city at any bearing can pile its notes into a shrill tone.</td></tr>
+</table>
+
+<h2>The keys</h2>
+
+<p>Each city's key is a choice with a reason, and the reasons are of three kinds, marked in the app: a piece of music tied to the city, in its usual key; a national anthem, which belongs to the country rather than the city; or the scale family of the city's musical tradition, with the root chosen.</p>
+
+<table>
+<tr><th>City</th><th>Key</th><th>From</th></tr>
+{{key_rows}}
+</table>
+<p class="small">{{n_keys}} distinct keys across {{n_modes}} modes.</p>
+
+<p>Which notes of each mode sound is also a choice. Each mode is voiced on its own terms, with the note that gives it its character placed an octave up, where it colors the chord instead of clashing with the root. No two sounding notes are ever closer than three semitones. The app names the notes sounding at any moment in a line under the bars, so the instrument can be read as well as heard.</p>
+
+<table>
+<tr><th>Mode</th><th>Lowest octave</th><th>Octaves above</th><th>Cities</th></tr>
+{{mode_rows}}
+</table>
+
+<h2>Limits</h2>
+
+<p>Standing is judged by two volunteer-edited databases agreeing, not by anyone looking. Many of the {{noosm}} towers OpenStreetMap could not confirm do stand, among them Meiji University's Liberty Tower in Tokyo: OpenStreetMap maps them, but without a link, a height or a name the match could use. A tower not yet built could still pass if Wikidata does not mark it and a building of similar height stands at its position. The located-in test misses towers Wikidata places nowhere useful; within {{core_km}} kilometers of the center it lets in towers placed only in the city's county or state, and beyond that it leaves them out. Heights are Wikidata's and some are wrong: it gives the Empire State Building an architectural height of 453 meters, where Wikipedia gives 443.2 meters to the tip and 381 to the roof. On the wheel that changes how loud one tower sounds next to New York's tallest, not which is tallest. Both databases change daily; the searches behind this page were run on {{fetched}} and their answers are kept, so the page can be rebuilt from exactly what it was built from.</p>
+
+<h2>The code</h2>
+
+<p>The searches and their answers, the filters, the tests that check every tower on every wheel against those answers, and the app: <a href="downloads/skyline-code.zip">skyline-code.zip</a> ({{zip_kb}} KB).</p>
+
+<h2>Sources</h2>
+<ol class="refs">
+<li id="ref1">Wikidata, query service (query.wikidata.org): building heights, classes, states of use and locations, queried {{fetched}}. CC0.</li>
+<li id="ref2">OpenStreetMap, through the Overpass API (overpass-api.de): buildings linked to Wikidata and buildings near each tower, queried {{osm_fetched}}. © OpenStreetMap contributors, <a href="https://www.openstreetmap.org/copyright">Open Database Licence</a>.</li>
+<li id="ref3">Wikipedia, Empire State Building, infobox heights, read 24 October 2026.</li>
+<li id="ref4">The keys' reasons are in the table above and in the app. The published keys of the anthems and pieces were checked in this site's October 2026 audit against Wikipedia and, for La Vie en rose, Hooktheory and SingingCarrots.</li>
+</ol>
+
+<footer>
+<p><a href="about.html">Andrew Silvestri</a></p>
+<p><a href="code.html">Built with Python, Julia, JavaScript and public data.</a></p>
+</footer>
+</main>
+<script src="assets/motion.js"></script>
+<script src="assets/lightbox.js"></script>
+<script src="assets/nav.js"></script>
+</body></html>

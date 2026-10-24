@@ -1,0 +1,2299 @@
+{
+ "New York": {
+  "count": {
+   "items": 258,
+   "not building": 15,
+   "tower structure": 0,
+   "outside city": 8,
+   "not standing (Wikidata)": 21,
+   "no usable height": 0,
+   "below floor": 0,
+   "implausible height": 1,
+   "not in OSM": 5,
+   "duplicate": 0,
+   "kept": 208
+  },
+  "dropped": [
+   [
+    "Q107354806",
+    "Hanover Bank Building",
+    "destroyed building or structure"
+   ],
+   [
+    "Q1093955",
+    "City Investing Building",
+    "destroyed building or structure; demolition date"
+   ],
+   [
+    "Q11235",
+    "World Trade Center",
+    "destroyed building or structure; demolition date"
+   ],
+   [
+    "Q1127212",
+    "2 World Trade Center",
+    "under construction"
+   ],
+   [
+    "Q113322716",
+    "VYV",
+    "outside city"
+   ],
+   [
+    "Q1139633",
+    "One Times Square",
+    "outside city"
+   ],
+   [
+    "Q124024890",
+    "W Hoboken",
+    "outside city"
+   ],
+   [
+    "Q1284184",
+    "Edgar Towers Skyvoid",
+    "not in OSM"
+   ],
+   [
+    "Q140738609",
+    "85 Broad Street",
+    "height 1313 m"
+   ],
+   [
+    "Q1422777",
+    "Manhattan Life Insurance Building",
+    "demolition date"
+   ],
+   [
+    "Q1631191",
+    "Marriott World Trade Center",
+    "destroyed building or structure; demolition date"
+   ],
+   [
+    "Q1676687",
+    "270 Park Avenue",
+    "demolition date"
+   ],
+   [
+    "Q17620786",
+    "60 Wall Street",
+    "destroyed building or structure; demolition date"
+   ],
+   [
+    "Q17631519",
+    "Knickerbocker Trust Building",
+    "destroyed building or structure; demolition date"
+   ],
+   [
+    "Q194347",
+    "15 Penn Plaza",
+    "not in OSM"
+   ],
+   [
+    "Q1967780",
+    "45 Broad Street",
+    "not in OSM"
+   ],
+   [
+    "Q20004122",
+    "1 Park Lane",
+    "not in OSM"
+   ],
+   [
+    "Q21558066",
+    "Trinity Court Building",
+    "demolition date"
+   ],
+   [
+    "Q2275601",
+    "30 Hudson Street",
+    "outside city"
+   ],
+   [
+    "Q23907605",
+    "Socony-Mobil Building",
+    "outside city"
+   ],
+   [
+    "Q24192486",
+    "99 Hudson Street",
+    "outside city"
+   ],
+   [
+    "Q25379780",
+    "161 Maiden Lane",
+    "building or structure under construction; on hold"
+   ],
+   [
+    "Q2818016",
+    "660 Fifth Avenue",
+    "not in OSM"
+   ],
+   [
+    "Q2948552",
+    "St. Paul Building",
+    "destroyed building or structure"
+   ],
+   [
+    "Q440082",
+    "Deutsche Bank Building",
+    "destroyed building or structure; demolition date"
+   ],
+   [
+    "Q47321192",
+    "50 West 66th Street",
+    "building or structure under construction"
+   ],
+   [
+    "Q4891660",
+    "Hotel Attraction",
+    "architectural project"
+   ],
+   [
+    "Q5562012",
+    "Gillender Building",
+    "demolition date"
+   ],
+   [
+    "Q651362",
+    "Singer Building",
+    "demolition date"
+   ],
+   [
+    "Q672984",
+    "80 South Street",
+    "unfinished building"
+   ],
+   [
+    "Q7014774",
+    "New York Tribune Building",
+    "destroyed building or structure; demolition date"
+   ],
+   [
+    "Q744279",
+    "Newport Tower",
+    "outside city"
+   ],
+   [
+    "Q7988406",
+    "Western Union Telegraph Building",
+    "destroyed building or structure; demolition date"
+   ],
+   [
+    "Q8021187",
+    "Williamsburgh Savings Bank Tower",
+    "outside city"
+   ],
+   [
+    "Q956198",
+    "New York World Building",
+    "destroyed building or structure; demolition date"
+   ]
+  ]
+ },
+ "Dubai": {
+  "count": {
+   "items": 58,
+   "not building": 6,
+   "tower structure": 0,
+   "outside city": 0,
+   "not standing (Wikidata)": 3,
+   "no usable height": 0,
+   "below floor": 0,
+   "implausible height": 2,
+   "not in OSM": 5,
+   "duplicate": 1,
+   "kept": 41
+  },
+  "dropped": [
+   [
+    "Q1262915",
+    "Dubai Pearl",
+    "not in OSM"
+   ],
+   [
+    "Q1630922",
+    "Acico Twin Towers",
+    "not in OSM"
+   ],
+   [
+    "Q1686861",
+    "Lighthouse Tower",
+    "abandoned project"
+   ],
+   [
+    "Q17175396",
+    "Burj 2020",
+    "proposed building or structure"
+   ],
+   [
+    "Q17627890",
+    "Burj Azizi",
+    "not in OSM"
+   ],
+   [
+    "Q1898210",
+    "Marina 106",
+    "not in OSM"
+   ],
+   [
+    "Q2472804",
+    "Ubora Towers",
+    "not in OSM"
+   ],
+   [
+    "Q317871",
+    "Nakheel Tower",
+    "height 1400 m"
+   ],
+   [
+    "Q374662",
+    "Six Senses Residences",
+    "under construction"
+   ],
+   [
+    "Q910485",
+    "Dubai City Tower",
+    "height 2400 m"
+   ],
+   [
+    "Q1332229",
+    "Emirates Towers",
+    "duplicate of Q845182 Emirates Office Tower"
+   ]
+  ]
+ },
+ "Shenzhen": {
+  "count": {
+   "items": 59,
+   "not building": 9,
+   "tower structure": 0,
+   "outside city": 7,
+   "not standing (Wikidata)": 0,
+   "no usable height": 0,
+   "below floor": 0,
+   "implausible height": 0,
+   "not in OSM": 2,
+   "duplicate": 1,
+   "kept": 40
+  },
+  "dropped": [
+   [
+    "Q115959184",
+    "AIRSIDE",
+    "outside city"
+   ],
+   [
+    "Q1431112",
+    "The Cullinan",
+    "outside city"
+   ],
+   [
+    "Q1664761",
+    "NEO Tower",
+    "outside city"
+   ],
+   [
+    "Q1983016",
+    "The Masterpiece",
+    "outside city"
+   ],
+   [
+    "Q241648",
+    "Victoria Towers",
+    "outside city"
+   ],
+   [
+    "Q2930980",
+    "CATIC Plaza",
+    "not in OSM"
+   ],
+   [
+    "Q29837565",
+    "OCT Tower",
+    "not in OSM"
+   ],
+   [
+    "Q317034",
+    "International Commerce Centre",
+    "outside city"
+   ],
+   [
+    "Q943856",
+    "Chungking Mansions",
+    "outside city"
+   ],
+   [
+    "Q113006416",
+    "Galaxy World Tower 2",
+    "duplicate of Q131920063 Shenzhen Galaxy Twin Towers"
+   ]
+  ]
+ },
+ "Tokyo": {
+  "count": {
+   "items": 115,
+   "not building": 12,
+   "tower structure": 4,
+   "outside city": 12,
+   "not standing (Wikidata)": 1,
+   "no usable height": 0,
+   "below floor": 1,
+   "implausible height": 0,
+   "not in OSM": 6,
+   "duplicate": 1,
+   "kept": 78
+  },
+  "dropped": [
+   [
+    "Q10854660",
+    "MM Park Building",
+    "outside city"
+   ],
+   [
+    "Q111406675",
+    "Hotel New Otani Tokyo The Main",
+    "not in OSM"
+   ],
+   [
+    "Q11311252",
+    "Skytower West Tokyo",
+    "tower structure"
+   ],
+   [
+    "Q114238074",
+    "Omiya Kadomachi",
+    "outside city"
+   ],
+   [
+    "Q1150357",
+    "Midtown Tower",
+    "not in OSM"
+   ],
+   [
+    "Q11543018",
+    "Yokohama City Hall",
+    "outside city"
+   ],
+   [
+    "Q117349444",
+    "",
+    "outside city"
+   ],
+   [
+    "Q1207989",
+    "Yokohama Marine Tower",
+    "tower structure"
+   ],
+   [
+    "Q137700958",
+    "",
+    "not in OSM"
+   ],
+   [
+    "Q183536",
+    "Tokyo Tower",
+    "tower structure"
+   ],
+   [
+    "Q19951615",
+    "Akasaka Park Building",
+    "not in OSM"
+   ],
+   [
+    "Q20043916",
+    "Kita-Toda First Gate Tower",
+    "outside city"
+   ],
+   [
+    "Q21654527",
+    "Proud Tower Musashi-Urawa Garden",
+    "outside city"
+   ],
+   [
+    "Q21654528",
+    "",
+    "outside city"
+   ],
+   [
+    "Q21654530",
+    "",
+    "outside city"
+   ],
+   [
+    "Q2888684",
+    "Queen’s Square Yokohama",
+    "outside city"
+   ],
+   [
+    "Q3304618",
+    "Meiji University Liberty Tower",
+    "not in OSM"
+   ],
+   [
+    "Q57965",
+    "Tokyo Skytree",
+    "tower structure"
+   ],
+   [
+    "Q587108",
+    "Yokohama Landmark Tower",
+    "outside city"
+   ],
+   [
+    "Q6884774",
+    "Mizuho Bank Uchisaiwaichō Head Office Building",
+    "demolition date"
+   ],
+   [
+    "Q85871121",
+    "Grand Terminal Tower Motoyawata",
+    "outside city"
+   ],
+   [
+    "Q97310199",
+    "Shibuya Parco・Hulic Building",
+    "not in OSM"
+   ],
+   [
+    "Q98463334",
+    "JR Yokohama Tower",
+    "outside city"
+   ],
+   [
+    "Q24191410",
+    "Tokyo Metropolitan Government Building I",
+    "duplicate of Q111973 Tokyo Metropolitan Government Building"
+   ]
+  ]
+ },
+ "Chicago": {
+  "count": {
+   "items": 78,
+   "not building": 7,
+   "tower structure": 1,
+   "outside city": 2,
+   "not standing (Wikidata)": 2,
+   "no usable height": 1,
+   "below floor": 3,
+   "implausible height": 0,
+   "not in OSM": 1,
+   "duplicate": 0,
+   "kept": 61
+  },
+  "dropped": [
+   [
+    "Q106316821",
+    "Orrington Plaza",
+    "outside city"
+   ],
+   [
+    "Q1907269",
+    "Masonic Temple",
+    "demolition date"
+   ],
+   [
+    "Q2363313",
+    "Park Tower Condominiums",
+    "outside city"
+   ],
+   [
+    "Q5123212",
+    "City Hall Square Building",
+    "not in OSM"
+   ],
+   [
+    "Q6914041",
+    "Morrison Hotel",
+    "demolition date"
+   ],
+   [
+    "Q862890",
+    "Chicago Water Tower",
+    "tower structure"
+   ]
+  ]
+ },
+ "Toronto": {
+  "count": {
+   "items": 52,
+   "not building": 4,
+   "tower structure": 1,
+   "outside city": 0,
+   "not standing (Wikidata)": 1,
+   "no usable height": 0,
+   "below floor": 0,
+   "implausible height": 0,
+   "not in OSM": 0,
+   "duplicate": 1,
+   "kept": 45
+  },
+  "dropped": [
+   [
+    "Q134883",
+    "CN Tower",
+    "tower structure"
+   ],
+   [
+    "Q28163699",
+    "One Bloor West",
+    "proposed entity"
+   ],
+   [
+    "Q1937575",
+    "Minto Midtown",
+    "duplicate of Q30744067 Harbour Plaza Residences"
+   ]
+  ]
+ },
+ "Paris": {
+  "count": {
+   "items": 125,
+   "not building": 11,
+   "tower structure": 7,
+   "outside city": 59,
+   "not standing (Wikidata)": 1,
+   "no usable height": 6,
+   "below floor": 2,
+   "implausible height": 1,
+   "not in OSM": 1,
+   "duplicate": 0,
+   "kept": 37
+  },
+  "dropped": [
+   [
+    "Q104327182",
+    "L'archipel",
+    "outside city"
+   ],
+   [
+    "Q105996005",
+    "Hôtel Meliá Paris La Défense",
+    "outside city"
+   ],
+   [
+    "Q106008631",
+    "Tour Skylight",
+    "outside city"
+   ],
+   [
+    "Q106868216",
+    "Résidence Campuséa",
+    "outside city"
+   ],
+   [
+    "Q110407965",
+    "Tours Odyssey",
+    "outside city"
+   ],
+   [
+    "Q1407092",
+    "",
+    "tower structure"
+   ],
+   [
+    "Q1407323",
+    "",
+    "tower structure"
+   ],
+   [
+    "Q1431547",
+    "Saint-Jacques Tower",
+    "tower structure"
+   ],
+   [
+    "Q1509747",
+    "Tour First",
+    "outside city"
+   ],
+   [
+    "Q16680551",
+    "Tour Alto",
+    "outside city"
+   ],
+   [
+    "Q17640070",
+    "Tour Hekla",
+    "outside city"
+   ],
+   [
+    "Q17640073",
+    "Tour Trinity",
+    "outside city"
+   ],
+   [
+    "Q18380158",
+    "Tour Saint-Gobain",
+    "outside city"
+   ],
+   [
+    "Q2016004",
+    "Tour Aurore",
+    "outside city"
+   ],
+   [
+    "Q2040985",
+    "Tour D2",
+    "outside city"
+   ],
+   [
+    "Q2041005",
+    "Tour Carpe Diem",
+    "outside city"
+   ],
+   [
+    "Q216357",
+    "Grande Arche",
+    "outside city"
+   ],
+   [
+    "Q2349903",
+    "Cœur Défense",
+    "tower structure"
+   ],
+   [
+    "Q2376935",
+    "Tour Sequana",
+    "outside city"
+   ],
+   [
+    "Q2412928",
+    "Tour Sequoia",
+    "outside city"
+   ],
+   [
+    "Q243",
+    "Eiffel Tower",
+    "tower structure"
+   ],
+   [
+    "Q27831939",
+    "Lavoisier Building",
+    "height 2946 m"
+   ],
+   [
+    "Q278518",
+    "Tour T1",
+    "outside city"
+   ],
+   [
+    "Q30303011",
+    "The Link",
+    "outside city"
+   ],
+   [
+    "Q3058350",
+    "Espaces d'Abraxas",
+    "outside city"
+   ],
+   [
+    "Q3090076",
+    "Tour Ariane",
+    "outside city"
+   ],
+   [
+    "Q3090088",
+    "Tour Égée",
+    "outside city"
+   ],
+   [
+    "Q3090101",
+    "Tour Initiale",
+    "outside city"
+   ],
+   [
+    "Q3090112",
+    "Tour Pleyel",
+    "outside city"
+   ],
+   [
+    "Q3090121",
+    "Tour France",
+    "outside city"
+   ],
+   [
+    "Q3090555",
+    "Tour Légende",
+    "outside city"
+   ],
+   [
+    "Q3142331",
+    "Tour Défense 2000",
+    "outside city"
+   ],
+   [
+    "Q3149038",
+    "Immeuble Basalte",
+    "outside city"
+   ],
+   [
+    "Q3246466",
+    "Église Notre-Dame du Raincy",
+    "outside city"
+   ],
+   [
+    "Q3490249",
+    "Tour Michelet",
+    "outside city"
+   ],
+   [
+    "Q3533001",
+    "Tour Blanche",
+    "outside city"
+   ],
+   [
+    "Q3533014",
+    "Tour Adria",
+    "outside city"
+   ],
+   [
+    "Q3533015",
+    "Tour Atlantique",
+    "outside city"
+   ],
+   [
+    "Q3533054",
+    "Tour Emblem",
+    "outside city"
+   ],
+   [
+    "Q3533074",
+    "Tour Europe",
+    "outside city"
+   ],
+   [
+    "Q3533077",
+    "Tour Eqho",
+    "outside city"
+   ],
+   [
+    "Q3533079",
+    "Tour Exaltis",
+    "outside city"
+   ],
+   [
+    "Q3533084",
+    "Tour Europlaza",
+    "outside city"
+   ],
+   [
+    "Q3533092",
+    "Tour Gambetta",
+    "outside city"
+   ],
+   [
+    "Q3533093",
+    "Tour Franklin",
+    "outside city"
+   ],
+   [
+    "Q3533107",
+    "Tour La Villette",
+    "outside city"
+   ],
+   [
+    "Q3533119",
+    "Tour Les Poissons",
+    "outside city"
+   ],
+   [
+    "Q3533120",
+    "Tour CGI",
+    "outside city"
+   ],
+   [
+    "Q3533125",
+    "Tour Manhattan",
+    "outside city"
+   ],
+   [
+    "Q3533127",
+    "Tour Majunga",
+    "outside city"
+   ],
+   [
+    "Q3533139",
+    "Tour Neptune",
+    "outside city"
+   ],
+   [
+    "Q3533147",
+    "Opus 12 Tower",
+    "outside city"
+   ],
+   [
+    "Q3533153",
+    "Tour Landscape",
+    "outside city"
+   ],
+   [
+    "Q3533204",
+    "Triangle",
+    "proposed tower"
+   ],
+   [
+    "Q3533217",
+    "Tour W",
+    "outside city"
+   ],
+   [
+    "Q3533833",
+    "Émetteur TDF de Chennevières-sur-Marne",
+    "tower structure"
+   ],
+   [
+    "Q3533874",
+    "Tour Ève",
+    "outside city"
+   ],
+   [
+    "Q3535524",
+    "Les Mercuriales",
+    "outside city"
+   ],
+   [
+    "Q3582379",
+    "Église Saint-Louis",
+    "outside city"
+   ],
+   [
+    "Q3585978",
+    "Église du Sacré-Coeur de Gentilly",
+    "outside city"
+   ],
+   [
+    "Q60847863",
+    "",
+    "outside city"
+   ],
+   [
+    "Q640094",
+    "Tour CBX",
+    "outside city"
+   ],
+   [
+    "Q666483",
+    "Tour Granite",
+    "outside city"
+   ],
+   [
+    "Q735913",
+    "Tour Areva",
+    "outside city"
+   ],
+   [
+    "Q743683",
+    "Tour Total",
+    "outside city"
+   ],
+   [
+    "Q87549325",
+    "Préfecture des Hauts-de-Seine",
+    "outside city"
+   ],
+   [
+    "Q88087546",
+    "Tour de la Redoute",
+    "tower structure"
+   ],
+   [
+    "Q912078",
+    "Tours de Levallois",
+    "outside city"
+   ],
+   [
+    "Q96576014",
+    "Tour Mykérinos",
+    "not in OSM"
+   ]
+  ]
+ },
+ "Moscow": {
+  "count": {
+   "items": 64,
+   "not building": 16,
+   "tower structure": 9,
+   "outside city": 1,
+   "not standing (Wikidata)": 7,
+   "no usable height": 0,
+   "below floor": 2,
+   "implausible height": 0,
+   "not in OSM": 1,
+   "duplicate": 0,
+   "kept": 28
+  },
+  "dropped": [
+   [
+    "Q113868959",
+    "Badaevsky",
+    "under construction"
+   ],
+   [
+    "Q134393559",
+    "Level Yuzhnoportovaya",
+    "redevelopment"
+   ],
+   [
+    "Q134589867",
+    "Medny 3.14",
+    "redevelopment"
+   ],
+   [
+    "Q134672288",
+    "Five Towers",
+    "building or structure under construction"
+   ],
+   [
+    "Q141201713",
+    "Dom Dau",
+    "not in OSM"
+   ],
+   [
+    "Q141255141",
+    "Badaevsky East Residential Building",
+    "under construction"
+   ],
+   [
+    "Q141458531",
+    "Masters",
+    "under construction"
+   ],
+   [
+    "Q181324",
+    "Ostankino Tower",
+    "tower structure"
+   ],
+   [
+    "Q2373544",
+    "Troitskaya Tower",
+    "tower structure"
+   ],
+   [
+    "Q2416732",
+    "Spasskaya Tower",
+    "tower structure"
+   ],
+   [
+    "Q3402977",
+    "Vodovzvodnaya Tower",
+    "tower structure"
+   ],
+   [
+    "Q4468959",
+    "Uglovaya Arsenalnaya Tower",
+    "tower structure"
+   ],
+   [
+    "Q56314927",
+    "Balashikha radio mast",
+    "tower structure"
+   ],
+   [
+    "Q65158083",
+    "One",
+    "under construction"
+   ],
+   [
+    "Q662367",
+    "Shukhov Tower",
+    "tower structure"
+   ],
+   [
+    "Q75024720",
+    "Two Captains",
+    "outside city"
+   ],
+   [
+    "Q913949",
+    "Sukharev Tower",
+    "tower structure"
+   ],
+   [
+    "Q957441",
+    "Ivan the Great Bell Tower",
+    "tower structure"
+   ]
+  ]
+ },
+ "Taipei": {
+  "count": {
+   "items": 52,
+   "not building": 3,
+   "tower structure": 1,
+   "outside city": 17,
+   "not standing (Wikidata)": 2,
+   "no usable height": 0,
+   "below floor": 1,
+   "implausible height": 0,
+   "not in OSM": 2,
+   "duplicate": 0,
+   "kept": 26
+  },
+  "dropped": [
+   [
+    "Q105100303",
+    "Caesar Park Hotel Banqiao",
+    "outside city"
+   ],
+   [
+    "Q105805918",
+    "International Star Diamond Tower",
+    "outside city"
+   ],
+   [
+    "Q11078418",
+    "Tuntex Highrise Building",
+    "outside city"
+   ],
+   [
+    "Q11103414",
+    "Glory Tower",
+    "outside city"
+   ],
+   [
+    "Q116938790",
+    "Eastern Media Group Headquarters",
+    "outside city"
+   ],
+   [
+    "Q124514502",
+    "Keelung Tower",
+    "tower structure"
+   ],
+   [
+    "Q1495752",
+    "Taipei Twins",
+    "proposed"
+   ],
+   [
+    "Q15971658",
+    "Bank of Pansin Headquarters",
+    "outside city"
+   ],
+   [
+    "Q17032785",
+    "Lih-Rong An Imperial Crown Building",
+    "outside city"
+   ],
+   [
+    "Q24036143",
+    "Far Eastern Mega Tower",
+    "outside city"
+   ],
+   [
+    "Q24836698",
+    "Neo Sky Dome",
+    "outside city"
+   ],
+   [
+    "Q24836810",
+    "Chicony Electronics Headquarters",
+    "outside city"
+   ],
+   [
+    "Q47528623",
+    "The Sky Taipei",
+    "not in OSM"
+   ],
+   [
+    "Q47539081",
+    "Fubon Xinyi A25",
+    "under construction"
+   ],
+   [
+    "Q48916211",
+    "ChungYuet World Center",
+    "outside city"
+   ],
+   [
+    "Q48916725",
+    "ChungYuet Global Business Building",
+    "outside city"
+   ],
+   [
+    "Q48928809",
+    "Farglory 95rich",
+    "outside city"
+   ],
+   [
+    "Q48934594",
+    "The Crystal Plaza",
+    "outside city"
+   ],
+   [
+    "Q67934747",
+    "HongWell i-Tower",
+    "outside city"
+   ],
+   [
+    "Q7012020",
+    "New Taipei City Hall",
+    "outside city"
+   ],
+   [
+    "Q85881509",
+    "Sunland 41",
+    "outside city"
+   ],
+   [
+    "Q85882694",
+    "55 Timeless",
+    "not in OSM"
+   ]
+  ]
+ },
+ "Hong Kong": {
+  "count": {
+   "items": 44,
+   "not building": 8,
+   "tower structure": 0,
+   "outside city": 17,
+   "not standing (Wikidata)": 0,
+   "no usable height": 0,
+   "below floor": 0,
+   "implausible height": 0,
+   "not in OSM": 1,
+   "duplicate": 0,
+   "kept": 18
+  },
+  "dropped": [
+   [
+    "Q1077308",
+    "Ping An Finance Centre",
+    "outside city"
+   ],
+   [
+    "Q130693037",
+    "Citymark Centre",
+    "outside city"
+   ],
+   [
+    "Q136326755",
+    "Noble Tower",
+    "outside city"
+   ],
+   [
+    "Q136327664",
+    "Anlian Tower",
+    "outside city"
+   ],
+   [
+    "Q136327683",
+    "China Mobile Building",
+    "outside city"
+   ],
+   [
+    "Q136327695",
+    "Southern Bosera Building",
+    "outside city"
+   ],
+   [
+    "Q1368798",
+    "SEG Plaza",
+    "outside city"
+   ],
+   [
+    "Q1470046",
+    "Kingkey 100",
+    "outside city"
+   ],
+   [
+    "Q15811586",
+    "Shenzhen Center",
+    "outside city"
+   ],
+   [
+    "Q1626452",
+    "Hon Kwok City Center",
+    "outside city"
+   ],
+   [
+    "Q20991730",
+    "Landmark",
+    "outside city"
+   ],
+   [
+    "Q2278111",
+    "Chang Fu Jin Mao Tower",
+    "outside city"
+   ],
+   [
+    "Q236201",
+    "Shun Hing Square",
+    "outside city"
+   ],
+   [
+    "Q28057931",
+    "Wongtee Plaza",
+    "outside city"
+   ],
+   [
+    "Q28873300",
+    "Taiping Finance Tower",
+    "outside city"
+   ],
+   [
+    "Q2930980",
+    "CATIC Plaza",
+    "outside city"
+   ],
+   [
+    "Q86661197",
+    "Ping An Finance Center South",
+    "outside city"
+   ],
+   [
+    "Q943856",
+    "Chungking Mansions",
+    "not in OSM"
+   ]
+  ]
+ },
+ "Tel Aviv": {
+  "count": {
+   "items": 70,
+   "not building": 4,
+   "tower structure": 2,
+   "outside city": 23,
+   "not standing (Wikidata)": 2,
+   "no usable height": 0,
+   "below floor": 3,
+   "implausible height": 0,
+   "not in OSM": 2,
+   "duplicate": 0,
+   "kept": 34
+  },
+  "dropped": [
+   [
+    "Q1093913",
+    "Moshe Aviv Tower",
+    "outside city"
+   ],
+   [
+    "Q111337545",
+    "Hi Tower building",
+    "outside city"
+   ],
+   [
+    "Q111621259",
+    "BBC Tower",
+    "outside city"
+   ],
+   [
+    "Q113612483",
+    "Seven stars tower",
+    "outside city"
+   ],
+   [
+    "Q117358723",
+    "Rom Tel Aviv",
+    "not in OSM"
+   ],
+   [
+    "Q118342719",
+    "Sarona Hotel",
+    "proposed building or structure"
+   ],
+   [
+    "Q124261920",
+    "Lighthouse Tower",
+    "outside city"
+   ],
+   [
+    "Q124261922",
+    "Eden Tower",
+    "outside city"
+   ],
+   [
+    "Q125132078",
+    "",
+    "outside city"
+   ],
+   [
+    "Q130320422",
+    "Briga Towers",
+    "outside city"
+   ],
+   [
+    "Q131153956",
+    "",
+    "outside city"
+   ],
+   [
+    "Q131338833",
+    "Spiral Tower",
+    "not in OSM"
+   ],
+   [
+    "Q131399689",
+    "Time Tower",
+    "outside city"
+   ],
+   [
+    "Q20501898",
+    "Bein Arim Tower",
+    "proposed entity"
+   ],
+   [
+    "Q20645725",
+    "HaShahar Tower",
+    "outside city"
+   ],
+   [
+    "Q20666670",
+    "Champion Motors Tower",
+    "outside city"
+   ],
+   [
+    "Q2897971",
+    "Rogovin-Tidhar Tower",
+    "outside city"
+   ],
+   [
+    "Q2908788",
+    "Leonardo City Tower Hotel",
+    "outside city"
+   ],
+   [
+    "Q5361960",
+    "Exchange Ramat Gan",
+    "outside city"
+   ],
+   [
+    "Q55651705",
+    "Sapir Tower",
+    "outside city"
+   ],
+   [
+    "Q5805111",
+    "Diamond Tower",
+    "outside city"
+   ],
+   [
+    "Q61125175",
+    "Uptown Towers",
+    "outside city"
+   ],
+   [
+    "Q65561141",
+    "Phoenix house",
+    "outside city"
+   ],
+   [
+    "Q6559721",
+    "Amot Atrium Tower",
+    "outside city"
+   ],
+   [
+    "Q6585397",
+    "Gibor Sport House",
+    "outside city"
+   ],
+   [
+    "Q6591671",
+    "Menora Mivtakhim Tower",
+    "outside city"
+   ],
+   [
+    "Q6608831",
+    "Neve Nof Tower",
+    "outside city"
+   ],
+   [
+    "Q6922223",
+    "HaGan tower",
+    "tower structure"
+   ],
+   [
+    "Q7215749",
+    "Arison Medical Tower",
+    "tower structure"
+   ]
+  ]
+ },
+ "Seoul": {
+  "count": {
+   "items": 24,
+   "not building": 0,
+   "tower structure": 1,
+   "outside city": 2,
+   "not standing (Wikidata)": 0,
+   "no usable height": 0,
+   "below floor": 0,
+   "implausible height": 0,
+   "not in OSM": 1,
+   "duplicate": 0,
+   "kept": 20
+  },
+  "dropped": [
+   [
+    "Q42156270",
+    "Two International Finance Center",
+    "outside city"
+   ],
+   [
+    "Q489221",
+    "Samsung Town",
+    "not in OSM"
+   ],
+   [
+    "Q69134",
+    "Namsan Seoul Tower",
+    "tower structure"
+   ],
+   [
+    "Q7451664",
+    "International Finance Centre Seoul",
+    "outside city"
+   ]
+  ]
+ },
+ "Austin": {
+  "count": {
+   "items": 6,
+   "not building": 1,
+   "tower structure": 0,
+   "outside city": 0,
+   "not standing (Wikidata)": 0,
+   "no usable height": 0,
+   "below floor": 0,
+   "implausible height": 0,
+   "not in OSM": 0,
+   "duplicate": 0,
+   "kept": 5
+  },
+  "dropped": []
+ },
+ "London": {
+  "count": {
+   "items": 69,
+   "not building": 9,
+   "tower structure": 4,
+   "outside city": 16,
+   "not standing (Wikidata)": 1,
+   "no usable height": 2,
+   "below floor": 2,
+   "implausible height": 0,
+   "not in OSM": 4,
+   "duplicate": 0,
+   "kept": 31
+  },
+  "dropped": [
+   [
+    "Q100390649",
+    "Drapers' Gardens",
+    "outside city"
+   ],
+   [
+    "Q131225851",
+    "One Bank Street",
+    "not in OSM"
+   ],
+   [
+    "Q1331574",
+    "Tower 42",
+    "outside city"
+   ],
+   [
+    "Q139473068",
+    "One Thames City No. 8",
+    "not in OSM"
+   ],
+   [
+    "Q15709545",
+    "Cromwell Tower",
+    "outside city"
+   ],
+   [
+    "Q15709552",
+    "Shakespeare Tower",
+    "outside city"
+   ],
+   [
+    "Q1613853",
+    "Heron Tower",
+    "outside city"
+   ],
+   [
+    "Q16868854",
+    "40 Leadenhall Street",
+    "outside city"
+   ],
+   [
+    "Q17527776",
+    "Metropolitan Water Board Pump House Tower, Kew Bridge",
+    "tower structure"
+   ],
+   [
+    "Q1814818",
+    "Lloyd's building",
+    "outside city"
+   ],
+   [
+    "Q1858077",
+    "Victoria Tower",
+    "tower structure"
+   ],
+   [
+    "Q18602",
+    "22 Bishopsgate",
+    "outside city"
+   ],
+   [
+    "Q191161",
+    "30 St Mary Axe",
+    "outside city"
+   ],
+   [
+    "Q20713758",
+    "One The Elephant",
+    "not in OSM"
+   ],
+   [
+    "Q212834",
+    "20 Fenchurch Street",
+    "outside city"
+   ],
+   [
+    "Q22915232",
+    "Pan Peninsula East Tower",
+    "outside city"
+   ],
+   [
+    "Q2576524",
+    "Old St Paul's Cathedral",
+    "outside city"
+   ],
+   [
+    "Q2742547",
+    "122 Leadenhall Street",
+    "outside city"
+   ],
+   [
+    "Q30644326",
+    "1 Leadenhall Street",
+    "under construction"
+   ],
+   [
+    "Q41225",
+    "Big Ben",
+    "tower structure"
+   ],
+   [
+    "Q4640138",
+    "The Scalpel",
+    "outside city"
+   ],
+   [
+    "Q47661781",
+    "33 Canada Square",
+    "not in OSM"
+   ],
+   [
+    "Q797085",
+    "BT Tower",
+    "tower structure"
+   ],
+   [
+    "Q80201655",
+    "70 St Mary Axe",
+    "outside city"
+   ],
+   [
+    "Q922589",
+    "Broadgate Tower",
+    "outside city"
+   ]
+  ]
+ },
+ "Frankfurt": {
+  "count": {
+   "items": 81,
+   "not building": 10,
+   "tower structure": 7,
+   "outside city": 5,
+   "not standing (Wikidata)": 3,
+   "no usable height": 0,
+   "below floor": 2,
+   "implausible height": 0,
+   "not in OSM": 4,
+   "duplicate": 1,
+   "kept": 49
+  },
+  "dropped": [
+   [
+    "Q110008707",
+    "Rathaus Offenbach am Main",
+    "outside city"
+   ],
+   [
+    "Q116898867",
+    "Sparda-Bank Tower",
+    "not in OSM"
+   ],
+   [
+    "Q1202179",
+    "Deutsche Bank IBCF",
+    "demolition date"
+   ],
+   [
+    "Q1407047",
+    "Feldberg/Taunus transmitter",
+    "tower structure"
+   ],
+   [
+    "Q1407085",
+    "",
+    "tower structure"
+   ],
+   [
+    "Q14913918",
+    "Main Triangel",
+    "not in OSM"
+   ],
+   [
+    "Q15131932",
+    "Technisches Zentrum Eschborn",
+    "outside city"
+   ],
+   [
+    "Q15814992",
+    "Heizkraftwerk Industriepark Höchst",
+    "tower structure"
+   ],
+   [
+    "Q1775321",
+    "Langer Franz",
+    "tower structure"
+   ],
+   [
+    "Q18624998",
+    "H da High-rise",
+    "outside city"
+   ],
+   [
+    "Q1885530",
+    "Main Plaza",
+    "not in OSM"
+   ],
+   [
+    "Q20962714",
+    "Nextower",
+    "outside city"
+   ],
+   [
+    "Q248571",
+    "Zurich building",
+    "demolition date"
+   ],
+   [
+    "Q281339",
+    "Henninger Turm",
+    "tower structure"
+   ],
+   [
+    "Q321040",
+    "Seat of the European Central Bank",
+    "not in OSM"
+   ],
+   [
+    "Q381996",
+    "AfE-Turm",
+    "demolition date"
+   ],
+   [
+    "Q61875559",
+    "Müllheizkraftwerk Frankfurt",
+    "tower structure"
+   ],
+   [
+    "Q701496",
+    "Europaturm",
+    "tower structure"
+   ],
+   [
+    "Q882847",
+    "City Tower",
+    "outside city"
+   ],
+   [
+    "Q124025973",
+    "Skyper tower",
+    "duplicate of Q166893 Skyper"
+   ]
+  ]
+ },
+ "Warsaw": {
+  "count": {
+   "items": 67,
+   "not building": 8,
+   "tower structure": 2,
+   "outside city": 0,
+   "not standing (Wikidata)": 3,
+   "no usable height": 0,
+   "below floor": 2,
+   "implausible height": 0,
+   "not in OSM": 0,
+   "duplicate": 2,
+   "kept": 50
+  },
+  "dropped": [
+   [
+    "Q11711711",
+    "Ilmet",
+    "demolition date"
+   ],
+   [
+    "Q11771220",
+    "",
+    "tower structure"
+   ],
+   [
+    "Q2091893",
+    "Alexander Nevsky Cathedral",
+    "destroyed building or structure; demolition date"
+   ],
+   [
+    "Q489426",
+    "Raszyn radio transmitter",
+    "tower structure"
+   ],
+   [
+    "Q497026",
+    "St. Florian's Cathedral",
+    "demolition date"
+   ],
+   [
+    "Q116847270",
+    "Varso Tower",
+    "duplicate of Q28320872 Varso"
+   ],
+   [
+    "Q9266567",
+    "",
+    "duplicate of Q16549075 Gdański Business Center"
+   ]
+  ]
+ },
+ "Osaka": {
+  "count": {
+   "items": 44,
+   "not building": 6,
+   "tower structure": 3,
+   "outside city": 3,
+   "not standing (Wikidata)": 0,
+   "no usable height": 0,
+   "below floor": 1,
+   "implausible height": 0,
+   "not in OSM": 4,
+   "duplicate": 0,
+   "kept": 27
+  },
+  "dropped": [
+   [
+    "Q11306834",
+    "",
+    "outside city"
+   ],
+   [
+    "Q1148463",
+    "Tsūtenkaku",
+    "tower structure"
+   ],
+   [
+    "Q124496615",
+    "One Dōjima Project",
+    "not in OSM"
+   ],
+   [
+    "Q131183715",
+    "",
+    "outside city"
+   ],
+   [
+    "Q132436269",
+    "",
+    "outside city"
+   ],
+   [
+    "Q137691165",
+    "",
+    "not in OSM"
+   ],
+   [
+    "Q137691490",
+    "",
+    "not in OSM"
+   ],
+   [
+    "Q139269511",
+    "",
+    "not in OSM"
+   ],
+   [
+    "Q3275446",
+    "Tower of the Sun",
+    "tower structure"
+   ],
+   [
+    "Q798766",
+    "Kobe Port Tower",
+    "tower structure"
+   ]
+  ]
+ },
+ "Los Angeles": {
+  "count": {
+   "items": 33,
+   "not building": 2,
+   "tower structure": 0,
+   "outside city": 3,
+   "not standing (Wikidata)": 0,
+   "no usable height": 0,
+   "below floor": 0,
+   "implausible height": 0,
+   "not in OSM": 1,
+   "duplicate": 0,
+   "kept": 27
+  },
+  "dropped": [
+   [
+    "Q139602948",
+    "Nestle Building, Glendale, California",
+    "outside city"
+   ],
+   [
+    "Q30752536",
+    "Oceanwide Plaza I",
+    "not in OSM"
+   ],
+   [
+    "Q60983924",
+    "Paul Hastings Tower",
+    "outside city"
+   ],
+   [
+    "Q96409663",
+    "The Tower Burbank",
+    "outside city"
+   ]
+  ]
+ },
+ "Miami": {
+  "count": {
+   "items": 18,
+   "not building": 0,
+   "tower structure": 0,
+   "outside city": 1,
+   "not standing (Wikidata)": 0,
+   "no usable height": 0,
+   "below floor": 0,
+   "implausible height": 0,
+   "not in OSM": 2,
+   "duplicate": 0,
+   "kept": 15
+  },
+  "dropped": [
+   [
+    "Q2023952",
+    "One Bayfront Plaza",
+    "not in OSM"
+   ],
+   [
+    "Q28457159",
+    "Brickell Bayview Center",
+    "not in OSM"
+   ],
+   [
+    "Q2907256",
+    "Blue and Green Diamond",
+    "outside city"
+   ]
+  ]
+ },
+ "Auckland": {
+  "count": {
+   "items": 85,
+   "not building": 3,
+   "tower structure": 3,
+   "outside city": 0,
+   "not standing (Wikidata)": 0,
+   "no usable height": 0,
+   "below floor": 10,
+   "implausible height": 0,
+   "not in OSM": 3,
+   "duplicate": 1,
+   "kept": 65
+  },
+  "dropped": [
+   [
+    "Q111598763",
+    "Kingsview Apartments",
+    "not in OSM"
+   ],
+   [
+    "Q111734288",
+    "Seascape",
+    "not in OSM"
+   ],
+   [
+    "Q119032744",
+    "Waiatarua TV Tower",
+    "tower structure"
+   ],
+   [
+    "Q123467225",
+    "Henderson Transmitter Site",
+    "tower structure"
+   ],
+   [
+    "Q28052081",
+    "Auckland Council Tower",
+    "not in OSM"
+   ],
+   [
+    "Q722125",
+    "Sky Tower",
+    "tower structure"
+   ],
+   [
+    "Q111700941",
+    "Altitude Apartments",
+    "duplicate of Q111700961 Telco Building"
+   ]
+  ]
+ },
+ "Nashville": {
+  "count": {
+   "items": 16,
+   "not building": 0,
+   "tower structure": 0,
+   "outside city": 0,
+   "not standing (Wikidata)": 1,
+   "no usable height": 0,
+   "below floor": 0,
+   "implausible height": 0,
+   "not in OSM": 1,
+   "duplicate": 0,
+   "kept": 14
+  },
+  "dropped": [
+   [
+    "Q130618769",
+    "Paramount Tower",
+    "proposed building or structure"
+   ],
+   [
+    "Q140291375",
+    "Prime",
+    "not in OSM"
+   ]
+  ]
+ },
+ "Calgary": {
+  "count": {
+   "items": 23,
+   "not building": 3,
+   "tower structure": 0,
+   "outside city": 0,
+   "not standing (Wikidata)": 0,
+   "no usable height": 0,
+   "below floor": 0,
+   "implausible height": 0,
+   "not in OSM": 0,
+   "duplicate": 1,
+   "kept": 19
+  },
+  "dropped": [
+   [
+    "Q122475410",
+    "Eighth Avenue Place West Tower",
+    "duplicate of Q122474969 Eighth Avenue Place East Tower"
+   ]
+  ]
+ },
+ "Madrid": {
+  "count": {
+   "items": 53,
+   "not building": 3,
+   "tower structure": 1,
+   "outside city": 0,
+   "not standing (Wikidata)": 0,
+   "no usable height": 0,
+   "below floor": 2,
+   "implausible height": 0,
+   "not in OSM": 7,
+   "duplicate": 0,
+   "kept": 40
+  },
+  "dropped": [
+   [
+    "Q28483671",
+    "Orense 16, Madrid",
+    "not in OSM"
+   ],
+   [
+    "Q29211448",
+    "Príncipe de Vergara 185, Madrid",
+    "not in OSM"
+   ],
+   [
+    "Q29353446",
+    "Caleruega 51, Madrid",
+    "not in OSM"
+   ],
+   [
+    "Q29364207",
+    "Arturo Soria 328, Madrid",
+    "not in OSM"
+   ],
+   [
+    "Q29364264",
+    "Hontoria del Pinar 5, Madrid",
+    "not in OSM"
+   ],
+   [
+    "Q29366343",
+    "Edificio Eurocentro (Venezuelan Embassy, Madrid)",
+    "not in OSM"
+   ],
+   [
+    "Q41323951",
+    "Círculo de Bellas Artes",
+    "not in OSM"
+   ],
+   [
+    "Q989733",
+    "Torrespaña",
+    "tower structure"
+   ]
+  ]
+ },
+ "Rotterdam": {
+  "count": {
+   "items": 39,
+   "not building": 6,
+   "tower structure": 3,
+   "outside city": 10,
+   "not standing (Wikidata)": 3,
+   "no usable height": 0,
+   "below floor": 2,
+   "implausible height": 0,
+   "not in OSM": 1,
+   "duplicate": 0,
+   "kept": 14
+  },
+  "dropped": [
+   [
+    "Q108914950",
+    "De Hoge Maas",
+    "not in OSM"
+   ],
+   [
+    "Q115124925",
+    "Laakhaventoren",
+    "outside city"
+   ],
+   [
+    "Q124477828",
+    "Blaak 333",
+    "demolished or destroyed"
+   ],
+   [
+    "Q139437908",
+    "Winston Churchill Tower",
+    "outside city"
+   ],
+   [
+    "Q139744708",
+    "",
+    "under construction"
+   ],
+   [
+    "Q1623326",
+    "Hoftoren",
+    "outside city"
+   ],
+   [
+    "Q1989889",
+    "Castalia",
+    "outside city"
+   ],
+   [
+    "Q22572444",
+    "",
+    "outside city"
+   ],
+   [
+    "Q456130",
+    "Grote of Sint-Jacobskerk",
+    "outside city"
+   ],
+   [
+    "Q612065",
+    "Oude Kerk",
+    "outside city"
+   ],
+   [
+    "Q63108848",
+    "",
+    "outside city"
+   ],
+   [
+    "Q678611",
+    "Nieuwe Kerk Delft",
+    "outside city"
+   ],
+   [
+    "Q834448",
+    "Peace Palace",
+    "outside city"
+   ],
+   [
+    "Q922407",
+    "Grote of Sint-Laurenskerk",
+    "demolition date"
+   ],
+   [
+    "Q95960956",
+    "Zendmast Bezuidenhout",
+    "tower structure"
+   ],
+   [
+    "Q96036860",
+    "Tower of Oude Kerk",
+    "tower structure"
+   ],
+   [
+    "Q969215",
+    "Euromast",
+    "tower structure"
+   ]
+  ]
+ },
+ "Vienna": {
+  "count": {
+   "items": 31,
+   "not building": 8,
+   "tower structure": 2,
+   "outside city": 1,
+   "not standing (Wikidata)": 0,
+   "no usable height": 0,
+   "below floor": 0,
+   "implausible height": 0,
+   "not in OSM": 0,
+   "duplicate": 0,
+   "kept": 20
+  },
+  "dropped": [
+   [
+    "Q17265601",
+    "Danube Flats",
+    "outside city"
+   ],
+   [
+    "Q2151345",
+    "Exelberg Telecommunication Tower",
+    "tower structure"
+   ],
+   [
+    "Q686544",
+    "Donauturm",
+    "tower structure"
+   ]
+  ]
+ },
+ "Brussels": {
+  "count": {
+   "items": 42,
+   "not building": 4,
+   "tower structure": 2,
+   "outside city": 3,
+   "not standing (Wikidata)": 3,
+   "no usable height": 0,
+   "below floor": 0,
+   "implausible height": 0,
+   "not in OSM": 4,
+   "duplicate": 0,
+   "kept": 26
+  },
+  "dropped": [
+   [
+    "Q124294517",
+    "Porta Agatha",
+    "proposed"
+   ],
+   [
+    "Q139854572",
+    "University Library, Leuven",
+    "outside city"
+   ],
+   [
+    "Q17748083",
+    "Sint-Maartensdal 5",
+    "outside city"
+   ],
+   [
+    "Q18023292",
+    "Les Mouettes",
+    "not in OSM"
+   ],
+   [
+    "Q18024544",
+    "Magnolias",
+    "not in OSM"
+   ],
+   [
+    "Q18026149",
+    "Mistral",
+    "not in OSM"
+   ],
+   [
+    "Q1950247",
+    "Toren van Braem",
+    "outside city"
+   ],
+   [
+    "Q23819517",
+    "Reyers Tower",
+    "tower structure"
+   ],
+   [
+    "Q2483229",
+    "",
+    "not in OSM"
+   ],
+   [
+    "Q2545996",
+    "Rogier International Centre",
+    "destroyed building or structure; demolition date"
+   ],
+   [
+    "Q2749371",
+    "Tour TBR",
+    "demolition date"
+   ],
+   [
+    "Q386393",
+    "Sint-Pieters-Leeuw Tower",
+    "tower structure"
+   ]
+  ]
+ },
+ "Fort Worth": {
+  "count": {
+   "items": 2,
+   "not building": 1,
+   "tower structure": 0,
+   "outside city": 0,
+   "not standing (Wikidata)": 0,
+   "no usable height": 0,
+   "below floor": 0,
+   "implausible height": 0,
+   "not in OSM": 0,
+   "duplicate": 0,
+   "kept": 1
+  },
+  "dropped": []
+ }
+}

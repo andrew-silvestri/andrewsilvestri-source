@@ -162,6 +162,11 @@ GENERATORS = [
     ("climate-cost app: climate-cost/lca.py --build",
      ["lca.py", "--build"], "climate-cost",
      [("climate-cost/climate-cost.html", "site/climate-cost-app.html")]),
+    # skyline/update_page.py writes site/skyline.html from skyline/data/skylines.json and
+    # filter_report.json, both built by build_skylines.py from the pulls archived (and tracked)
+    # in skyline/data/raw/. R5, 2026-10-24.
+    ("skyline page: skyline/update_page.py --apply",
+     ["update_page.py", "--apply"], "skyline", "site"),
     ("skyline app: skyline/build_app.py",
      ["build_app.py"], "skyline",
      [("skyline/skyline-app.html", "site/skyline-app.html")]),

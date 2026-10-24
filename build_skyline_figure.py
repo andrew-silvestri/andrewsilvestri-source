@@ -97,7 +97,7 @@ def draw(city, towers):
         ax.spines[s].set_visible(False)
     ax.tick_params(axis="x", length=0)
     key = city["key"]["label"]
-    ax.text(0.995, 0.97, f"{CITY} · {city['n']} towers over {int(D_MIN)} m · played in {key}",
+    ax.text(0.995, 0.97, f"{CITY} · {city['n']} towers of {int(D_MIN)} m or more · played in {key}",
             transform=ax.transAxes, ha="right", va="top", fontsize=FS_2, color=DIM,
             fontfamily=sitefig.MONO)
     fig.tight_layout()
@@ -128,7 +128,7 @@ def draw_phone(city, towers):
         ax.spines[s].set_visible(False)
     ax.tick_params(axis="y", length=0)
     key = city["key"]["label"]
-    fig.text(0.98, 0.985, f"{CITY} · {city['n']} towers over {int(D_MIN)} m\nplayed in {key}",
+    fig.text(0.98, 0.985, f"{CITY} · {city['n']} towers of {int(D_MIN)} m or more\nplayed in {key}",
              ha="right", va="top", fontsize=FS_2, color=DIM, fontfamily=sitefig.MONO)
     fig.tight_layout(rect=(0, 0, 1, 0.9))
     return fig
