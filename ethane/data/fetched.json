@@ -1,0 +1,100 @@
+{
+ "eia_copyright.html": {
+  "bytes": 52487,
+  "fetched": "2026-10-25",
+  "sha1": "bf7cf36ab9b22bdffed682622eda61620b5af8a5",
+  "url": "https://www.eia.gov/about/copyrights_reuse.php",
+  "via": "urllib"
+ },
+ "eia_mer_a1.pdf": {
+  "bytes": 243880,
+  "fetched": "2026-10-25",
+  "sha1": "7cb1116a8dc44a8f57377153ac7dc47b1f3741b9",
+  "url": "https://www.eia.gov/totalenergy/data/monthly/pdf/sec12_2.pdf",
+  "via": "urllib"
+ },
+ "eia_ngpl_by_product_m.xls": {
+  "bytes": 84992,
+  "fetched": "2026-10-25",
+  "sha1": "4e95f729a334a853bda87e61e1ec0eb42f710be9",
+  "url": "https://www.eia.gov/dnav/pet/xls/PET_PNP_GP_DC_NUS_MBBLPD_M.xls",
+  "via": "urllib"
+ },
+ "eia_ngwu_2019-02-14.html": {
+  "bytes": 106481,
+  "fetched": "2026-10-25",
+  "sha1": "38b35b6df6a8a7e5e509877f15aaebde967fe7ee",
+  "url": "https://www.eia.gov/naturalgas/weekly/archivenew_ngwu/2019/02_14/",
+  "via": "urllib"
+ },
+ "eia_tie_12291.html": {
+  "bytes": 54539,
+  "fetched": "2026-10-25",
+  "sha1": "e14bc1f398f0379ac77dbb49034ce81bb5431a57",
+  "url": "https://www.eia.gov/todayinenergy/detail.php?id=12291",
+  "via": "urllib"
+ },
+ "eia_tie_16191.html": {
+  "bytes": 54864,
+  "fetched": "2026-10-25",
+  "sha1": "55cd04c2edfcaf71127eebe9e54a60bb38effe8e",
+  "url": "https://www.eia.gov/todayinenergy/detail.php?id=16191",
+  "via": "urllib"
+ },
+ "eia_tie_18371.html": {
+  "bytes": 52490,
+  "fetched": "2026-10-25",
+  "sha1": "74498cb9fb4d2f65522d37d4d92f533368028b95",
+  "url": "https://www.eia.gov/todayinenergy/detail.php?id=18371",
+  "via": "urllib"
+ },
+ "eia_tie_25632.html": {
+  "bytes": 54506,
+  "fetched": "2026-10-25",
+  "sha1": "6ee08fdc5a7de95e6bfcb36de013aac905192c55",
+  "url": "https://www.eia.gov/todayinenergy/detail.php?id=25632",
+  "via": "urllib"
+ },
+ "eia_tie_28052.html": {
+  "bytes": 54196,
+  "fetched": "2026-10-25",
+  "sha1": "fdd393640af7456ed2798da4e9f3e0f5ea1022cc",
+  "url": "https://www.eia.gov/todayinenergy/detail.php?id=28052",
+  "via": "urllib"
+ },
+ "eia_tie_39712.html": {
+  "bytes": 54173,
+  "fetched": "2026-10-25",
+  "sha1": "d07ecce9c2521b58fdb2490e6d9347ae1ea8db34",
+  "url": "https://www.eia.gov/todayinenergy/detail.php?id=39712",
+  "via": "urllib"
+ },
+ "eia_tie_44456.html": {
+  "bytes": 52711,
+  "fetched": "2026-10-25",
+  "sha1": "4e7283ed7e3e713b90e4ac79b6ddf614ab06d2f6",
+  "url": "https://www.eia.gov/todayinenergy/detail.php?id=44456",
+  "via": "urllib"
+ },
+ "eia_tie_53659.html": {
+  "bytes": 53999,
+  "fetched": "2026-10-25",
+  "sha1": "042ad4ee9c64fba477351c9729a29d11904334e6",
+  "url": "https://www.eia.gov/todayinenergy/detail.php?id=53659",
+  "via": "urllib"
+ },
+ "eia_tie_64785.html": {
+  "bytes": 54819,
+  "fetched": "2026-10-25",
+  "sha1": "28f00d7983ed636252aa8d0e15ed3f4c7114d701",
+  "url": "https://www.eia.gov/todayinenergy/detail.php?id=64785",
+  "via": "urllib"
+ },
+ "eia_tie_9590.html": {
+  "bytes": 52815,
+  "fetched": "2026-10-25",
+  "sha1": "6665e3acbe4b4a6c28f3ff27d71cbad6feae19b0",
+  "url": "https://www.eia.gov/todayinenergy/detail.php?id=9590",
+  "via": "urllib"
+ }
+}

@@ -53,6 +53,19 @@ ENTRIES = [
                "added by hand. The page states which filings it shows.",
     },
     {
+        # Q11, 2026-10-25. Disabled: the page is archived (D-60, Andrew: "make a note on the
+        # top/near the top that its an (Archived) page"). It is a dated record of EIA's figures
+        # and articles and says it is not updated; a refresh would move its numbers under prose
+        # written against them.
+        "page": "ethane",
+        "cwd": "ethane",
+        "fetch": [["python", "fetch_public.py"]],
+        "build": [["python", "build_ethane.py"]],
+        "keys": [],
+        "enabled": False,
+        "why": "Archived page (D-60): a dated record of EIA's figures and articles, not updated.",
+    },
+    {
         "page": "takeaway",
         "cwd": "takeaway",
         # R2 (2026-10-23): production only. The pipeline tracker carries

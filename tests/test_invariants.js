@@ -70,7 +70,7 @@ const ROOT = path.join(__dirname, '..');
 const SITE = path.join(ROOT, 'site');
 const FIX = path.join(__dirname, 'fixtures');
 const PAGES = ['index', 'about', 'code', 'heat', 'storage', 'climate-cost',
-               'longevity', 'skyline', 'continents', 'beauty', 'lostgas', 'takeaway', 'uri',
+               'longevity', 'skyline', 'continents', 'beauty', 'lostgas', 'takeaway', 'uri', 'ethane',
                '_fixture/kit'];
 /* The insight kit's fixture (R1, 2026-10-23): tests/fixtures/kit.html, served
    from tests/ and never from site/, so the kit is measured by this gate as it

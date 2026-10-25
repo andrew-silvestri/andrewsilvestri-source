@@ -42,7 +42,7 @@ const http = require('http');
 const { chromium } = require('playwright');
 
 const SITE = path.join(__dirname, '..', 'site');
-const PAGES = ['index', 'about', 'code', 'heat', 'storage', 'climate-cost', 'longevity', 'skyline', 'continents', 'beauty', 'lostgas', 'takeaway', 'uri',
+const PAGES = ['index', 'about', 'code', 'heat', 'storage', 'climate-cost', 'longevity', 'skyline', 'continents', 'beauty', 'lostgas', 'takeaway', 'uri', 'ethane',
                '_fixture/kit'];
 /* The insight kit's fixture (R1, 2026-10-23): tests/fixtures/kit.html, served
    from tests/ and never from site/, so the kit is measured by this gate as it

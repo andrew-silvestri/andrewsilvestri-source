@@ -122,6 +122,8 @@ NAV = [
         ("When the pipe is full", "takeaway.html"),
         # Q12, 2026-10-24: the Winter Storm Uri bonds (D-18: new gas pages go in Gas).
         ("Uri's gas bill", "uri.html"),
+        # Q11, 2026-10-25: ethane rejection, an archived EIA record (D-60 C; D-18: gas pages in Gas).
+        ("Ethane left in the gas", "ethane.html"),
     ]),
     ("Power", [
         ("Industrial heat break-even", "heat.html"),
