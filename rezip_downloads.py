@@ -221,6 +221,13 @@ TARGETS = [
     # data/fetched.json, which is shipped.
     target("takeaway", "takeaway-code.zip", keep={"outputs"},
            skip=("data/raw", "data/raw/*", "outputs/*.png")),
+    # Uri's gas bill (Q12, 2026-10-24): the fetch script, the readers that read every
+    # figure out of the bond documents and commission filings, the bond arithmetic, the
+    # payload builder, the page generator and the checks, with the payload and
+    # data/fetched.json. Not data/raw: the fetch script re-downloads the filings and the
+    # readers refuse a file whose SHA-1 differs from the manifest.
+    target("uri", "uri-code.zip", keep={"outputs"},
+           skip=("data/raw", "data/raw/*", "outputs/*.png")),
     # food-code.zip retired with its page on 2026-09-09: food.html was
     # unpublished at Andrew's request, for now, and the last build is
     # unpublished/downloads/food-code.zip. The TARGET goes with the page,

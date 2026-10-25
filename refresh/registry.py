@@ -39,6 +39,20 @@ ENTRIES = [
                "stamp says which year and the file's as-of date.",
     },
     {
+        # Q12, 2026-10-24. Disabled: the bond schedules are fixed when the bonds are sold, and
+        # the charges move only when a utility files a true-up (Texas each autumn, Oklahoma
+        # twice a year), as PDFs at addresses that change with each filing. A new filing is
+        # added to uri/fetch_public.py by hand; the page says it does not update itself.
+        "page": "uri",
+        "cwd": "uri",
+        "fetch": [["python", "fetch_public.py"]],
+        "build": [["python", "build_uri.py"]],
+        "keys": [],
+        "enabled": False,
+        "why": "Fixed bond schedules; charges change only by new filings at new addresses, "
+               "added by hand. The page states which filings it shows.",
+    },
+    {
         "page": "takeaway",
         "cwd": "takeaway",
         # R2 (2026-10-23): production only. The pipeline tracker carries

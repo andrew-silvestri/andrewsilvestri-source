@@ -28,6 +28,7 @@ FIXED = [
 OPTIONAL = [
     "python meter/test_meter.py", "python tests/test_parity_meter.py",
     "python takeaway/test_takeaway.py", "python lostgas/test_lostgas.py", "python storage/test_storage.py", "python heat/test_heat.py",
+    "python uri/test_uri.py",
     "node tests/test_kit.js", "python tests/test_refresh.py",
 ]
 # test files in tests/ that are not suites in their own right

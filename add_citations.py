@@ -653,6 +653,75 @@ PAGES = {
          'monthly, series RNGWHHD.',
          "The price the meter model's imbalance is valued at."),
     ],
+    # uri/update_page.py applies this entry itself (lostgas's idiom). Every source was opened by Q12 on
+    # 2026-10-24 (SOURCES_VERIFIED Part 8; files and hashes in uri/data/fetched.json). Utilities are named
+    # as the filings name them, for the figures the filings give (Q12 packet).
+    "uri.html": [
+        ("Anchor phrase", "Source", "What it supports"),
+        ("order for one utility describes",
+         'Oklahoma Corporation Commission, Final Financing Order No. 723435, Cause No. PUD 202100087 '
+         '(CenterPoint Energy Resources Corp., now Summit Utilities Oklahoma), 10 February 2022.',
+         "The price rise from February 12, 2021; extreme purchase costs of $75,678,535 incurred February 7 "
+         "to 21, 2021; allocation by February 2021 usage; the fixed-price and LIHEAP exclusions."),
+        ("the Commission found for Oklahoma Natural Gas",
+         'Oklahoma Corporation Commission, Final Financing Order No. 723033, Cause No. PUD 202100079 '
+         '(Oklahoma Natural Gas Company), 25 January 2022.',
+         "Bills in excess of $1,000 without the order; extreme purchase costs of $1,284,101,405 incurred "
+         "February 11 to 19, 2021; allocation by February 2021 usage; the fixed-price and LIHEAP exclusions."),
+        ("under laws both states passed in 2021",
+         'Texas Utilities Code, Chapter 104, Subchapter I (House Bill 1520, 87th Legislature, 2021); '
+         'Oklahoma Senate Bill 1050 (2021), the February 2021 Regulated Utility Consumer Protection Act, '
+         '74 O.S. ss.9070-9081.',
+         "The securitization laws; s.104.373(a), the uniform monthly volumetric charge on all current and "
+         "future customers."),
+        ("the issuer's report",
+         'Texas Natural Gas Securitization Finance Corporation, <i>Report of Outstanding Bonds and Estimated '
+         'Administrative Expenses</i>, prepared 28 January 2026.',
+         "Balances at 31 December 2025 (A-1 $1,519,264,998; A-2 $1,707,285,000) and the 2026 administrative "
+         "expense estimate."),
+        ("its servicer's certificate",
+         "Summit Utilities Oklahoma, Servicer's Certificate, Oklahoma Development Finance Authority "
+         'Ratepayer-Backed Bonds (Summit Utilities Oklahoma) Series 2022, 24 September 2026, as posted by the '
+         'Oklahoma Corporation Commission.',
+         "The balance after the October 1, 2026 payment, $67,526,998.31, equal to the expected schedule."),
+        ("Three bond issues carry the costs",
+         'Texas Natural Gas Securitization Finance Corporation, <i>Customer Rate Relief Bonds (Winter Storm '
+         'Uri), Taxable Series 2023</i>, Official Statement, 9 March 2023.',
+         "Principal, tranches, coupons, the 30/360 basis and payment dates, the expected amortization "
+         "schedule, the uses of proceeds (including six months of capitalized interest and the reserve), the "
+         "regulatory asset amounts, the charge at $0.00 through September 2023, SB 30 and HB 500, and the "
+         "background quoted."),
+        ("Issuance Advice Letters",
+         'Oklahoma Natural Gas Company and Oklahoma Development Finance Authority, Issuance Advice Letter, '
+         '23 August 2022; Summit Utilities Oklahoma and ODFA, Issuance Advice Letter, October 2022; both filed '
+         'with the Oklahoma Corporation Commission.',
+         "Final terms, tranches and coupons, expected sinking fund schedules, issuance and ongoing costs, the "
+         "reserve subaccounts, the initial charges by class and their workpapers."),
+        ("in the 2026 true-up",
+         'Oklahoma Natural Gas Company, WESCR true-up letter and workpapers, 2 March 2026; Summit Utilities '
+         'Oklahoma, WESCRM true-up letter, 27 March 2026.',
+         "The charges by class from May 2026, Oklahoma Natural Gas's estimates from November 2026, and its "
+         "re-set allocation shares."),
+        ("it is reset at least once a year",
+         'Railroad Commission of Texas, announcement of 4 October 2023; RRC gas tariff reports GSD-1 for '
+         'Atmos Energy Mid-Tex (6776), CenterPoint Energy Entex (6263) and Atmos Energy West Texas (6931), '
+         '20 October 2026; Atmos Energy Mid-Tex tariffs effective 1 July 2025; Texas Gas Service rate '
+         'schedule CRR.',
+         "The charge's rates: $1.10 per Mcf from October 2023, $0.1180, $0.120 and $0.113 per Ccf since; "
+         "$0.11362 at 14.73 psia; sales customers; the West Texas division's filed $0.2140."),
+        ("Texas Gas Service says its average home",
+         'Texas Gas Service, <i>Securitization</i> (texasgasservice.com/Securitization), read 24 October 2026.',
+         "$1.13 per Mcf and about $3.96 a month for the average residential customer."),
+        ("EIA's residential consumption per residential consumer",
+         'U.S. Energy Information Administration, natural gas series for Texas and Oklahoma: residential '
+         'consumption (N3010TX2, N3010OK2) and number of residential consumers (NA1501_STX_8, NA1501_SOK_8), '
+         'annual; and <i>Glossary</i>, letter C.',
+         "Gas used per home in Texas and Oklahoma, 2015 to 2024; and EIA's glossary, \"Cubic foot (cf), natural "
+         "gas\": 60 degrees Fahrenheit and 14.73 pounds per square inch."),
+        ("which a separate law covers",
+         'Oklahoma Senate Bill 1049 (2021), the February 2021 Unregulated Utility Consumer Protection Act.',
+         "The separate provision for utilities whose rates the Commission does not set."),
+    ],
     # "meter.html" was here until 2026-10-23 (R3): the page is now a redirect stub to
     # lostgas.html, whose own entry above cites what its appendix keeps of the meter
     # work. The full list is in git history (git show 0dec34e:add_citations.py).

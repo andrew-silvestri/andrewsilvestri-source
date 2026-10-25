@@ -24,6 +24,7 @@ lostgas/data/_cache_*
 storage/data/raw/
 storage/data/cache/
 heat/data/raw/
+uri/data/raw/
 beauty/data/birds_joined.csv
 beauty/data/iucn_aves.csv
 neuron/data/_work/
