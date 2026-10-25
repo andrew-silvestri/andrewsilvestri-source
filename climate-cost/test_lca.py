@@ -10,7 +10,42 @@ in the direction physics says they should.
 """
 import sys, math
 from lca import Model, paths
-from data.processes import PRODUCTS, REGIONS
+# The module lca.py itself imported (it puts data/ on the path), not a second
+# copy as data.processes: a --break that mutates a copy the engine never reads
+# leaves every check green (found 2026-10-24, the tanning break exited 0).
+import processes as D  # noqa: E402
+PRODUCTS, REGIONS = D.PRODUCTS, D.REGIONS
+
+# The constants D-26 and D-27 corrected (R5, 2026-10-24), held a second time
+# here apart from data/processes.py, so an edit there fails whether or not it
+# moves a total (HANDOFF trap 16). Sources: IPCC AR6 WGI Table 7.15 errata,
+# 7 October 2025; IPCC 2019 Refinement Vol. 4 Ch. 11 Tables 11.1 and 11.3;
+# IDF Bulletin 479 (2015).
+GWP_HELD = {"ch4_bio": 25.3, "ch4_fossil": 28.1, "n2o": 267.0}
+SOIL_HELD = (0.010 + 0.11 * 0.010 + 0.24 * 0.011) * 44.0 / 28.0 * 267.0
+MILK_HELD = 0.88
+
+# --break replays a historical fault in memory and the run must exit 1:
+#   tanning  tanning back inside the hide stage, so the 2.2% share reaches it
+#            (D-26 item 2: the shoe at 3.66)
+#   gwp      the single-gas terms back at the values typed before the errata
+#            (D-26 item 3: 38.0 enteric, 4.4 soil N2O, 0.42 gas leak)
+#   milk     the herd stages back at Flysjo's Swedish 0.85 (D-27 item 5)
+BREAK = sys.argv[sys.argv.index("--break") + 1] if "--break" in sys.argv else None
+if BREAK == "tanning":
+    st = {x["id"]: x for x in PRODUCTS["leather_shoes"]["stages"]}
+    st["hide"]["inputs"] = st["tanning"]["inputs"]
+    PRODUCTS["leather_shoes"]["stages"].remove(st["tanning"])
+elif BREAK == "gwp":
+    PRODUCTS["beef"]["stages"][0]["direct"] = 38.0
+    D.PROCESSES["field_n2o"]["direct"] = 4.4
+    D.PROCESSES["natgas_extraction"]["direct"] = 0.42
+elif BREAK == "milk":
+    for x in PRODUCTS["cheese"]["stages"]:
+        if x.get("share") == D.MILK_SHARE:
+            x["share"] = 0.85
+elif BREAK:
+    raise SystemExit(f"unknown --break {BREAK}")
 
 # (low, high) kg CO2e per kg, from the literature, at a comparable boundary
 EXPECTED = {
@@ -46,8 +81,8 @@ EXPECTED = {
     "jeans":             (8, 35,   "Levi Strauss own LCA of a pair of 501s, "
                                    "33.4 kg over the garment's life"),
     "sneakers":          (7, 22,   "MIT running-shoe teardown, about 14 kg"),
-    "leather_shoes":     (2, 25,   "range is dominated by the hide "
-                                   "allocation, not by manufacture"),
+    "leather_shoes":     (2, 25,   "tanning is most of a pair; the hide's "
+                                   "share of the animal is a small part"),
 }
 
 fails = 0
@@ -84,23 +119,23 @@ for key in PRODUCTS:
 print(f"  tree sums correctly at every node      {'ok' if not bad else bad[:2]}")
 if bad: fails += 1
 
-# 2. allocation compounds: cheese carries 0.85 to milk on the herd stages.
+# 2. allocation compounds: cheese carries 0.88 to milk on the herd stages.
 # The stage is also scaled by the overproduction factor, because 8% of the
 # cheese made is never eaten and the cow still had to produce it.
 r = Model("cheese","FR","US-NY").run()
 ent = [s for s in r["spine"] if s["id"]=="enteric"][0]
-raw, op = 8.4, r["overproduce"]
-ok = abs(ent["direct"] - raw*0.85*op) < 1e-9
+raw, op = 8.4 * 25.3 / 27.0, r["overproduce"]
+ok = abs(ent["direct"] - raw*MILK_HELD*op) < 1e-9
 print(f"  allocation x overproduction at stage   {'ok' if ok else 'FAIL'}"
-      f"  ({raw} x 0.85 x {op:.3f} = {ent['direct']:.3f})")
+      f"  ({raw:.3f} x {MILK_HELD} x {op:.3f} = {ent['direct']:.3f})")
 fails += 0 if ok else 1
 
-# 3. allocation compounds down a chain: feed stage inherits 0.85 onto ammonia
+# 3. allocation compounds down a chain: feed stage inherits 0.88 onto ammonia
 # One level, in one product. No edge below a stage in the data carries a
 # share other than 1.0, so nothing compounds further than this (D-27).
 feed = [s for s in r["spine"] if s["id"]=="feed"][0]
 am = [c for c in feed["children"] if c["id"]=="ammonia"][0]
-ok = abs(am["alloc"] - 0.85) < 1e-9
+ok = abs(am["alloc"] - MILK_HELD) < 1e-9
 print(f"  allocation compounds into children     {'ok' if ok else 'FAIL'}"
       f"  (ammonia alloc {am['alloc']:.2f})")
 fails += 0 if ok else 1
@@ -134,7 +169,7 @@ fails += 0 if g>f else 1
 # India's grid intensity because someone in India ate the cheese. It is
 # invisible in any single run - the number simply looks a bit high - and only
 # shows up when the destination is changed and something moves that should not.
-from data.processes import PROCESSES as PR
+PR = D.PROCESSES
 PRODUCER_STAGES = {"cultivation","harvest","packing","wet_mill","drying",
                    "hulling","milling","housing","slaughter","dairy",
                    "cheesemaking","feed","ageing","paddy","enteric","manure",
@@ -194,6 +229,47 @@ for pk, pp in PRODUCTS.items():
 ok = not bad
 print(f"  share/amortise/freight_kg are what they claim {'ok' if ok else 'FAIL'}"
       f"  {bad[:3] if bad else ''}")
+fails += 0 if ok else 1
+
+# 11. the corrected warming potentials, pinned as parameters (D-26 item 3).
+# Each single-gas term is its pre-errata figure restated at the 2025 table.
+held = {
+    "beef enteric": (PRODUCTS["beef"]["stages"][0]["direct"], 38.0 * 25.3 / 27),
+    "cheese enteric": (PRODUCTS["cheese"]["stages"][0]["direct"], 8.4 * 25.3 / 27),
+    "soil N2O": (D.PROCESSES["field_n2o"]["direct"], SOIL_HELD),
+    "gas leak": (D.PROCESSES["natgas_extraction"]["direct"], 0.42 * 28.1 / 28),
+    "nitric acid": (D.PROCESSES["nitrate_fert"]["direct"], 1.4 * 267 / 273),
+    "landfill": (D.PROCESSES["landfill"]["direct"], 0.55 * 25.3 / 27),
+}
+bad = [k for k, (got, want) in held.items() if abs(got - want) > 1e-9]
+bad += [] if D.GWP == GWP_HELD else ["GWP table"]
+ok = not bad
+print(f"  warming potentials at the 2025 errata  {'ok' if ok else 'FAIL'}"
+      f"  {bad if bad else ''}")
+fails += 0 if ok else 1
+
+# 12. tanning is charged in full (D-26 item 2). It serves only the leather, so
+# no co-product share may reach it; at 2.2% the shoe was 3.66 kg, not 10.6.
+r = Model("leather_shoes", "IT", "US-NY").run()
+reach = []
+def walk(n):
+    if n["id"] == "leather":
+        reach.append(n["alloc"])
+    for c in n["children"]:
+        walk(c)
+for s in r["spine"]:
+    walk(s)
+ok = reach and all(abs(a - 1.0) < 1e-9 for a in reach)
+print(f"  tanning charged at 1.0, not the hide's share {'ok' if ok else 'FAIL'}"
+      f"  (alloc {reach}, pair {r['total']:.2f})")
+fails += 0 if ok else 1
+
+# 13. the dairy cow's milk share is IDF 2015's formula at BMR 0.02 (D-27 item 5)
+herd = [x.get("share") for x in PRODUCTS["cheese"]["stages"]
+        if x["id"] in ("enteric", "feed", "manure", "dairy")]
+ok = all(h == MILK_HELD for h in herd)
+print(f"  milk share is IDF's 0.88 on every herd stage {'ok' if ok else 'FAIL'}"
+      f"  ({herd})")
 fails += 0 if ok else 1
 
 # 9. what the cutoff discards is genuinely small

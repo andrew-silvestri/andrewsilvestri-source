@@ -86,6 +86,49 @@ TRANSPORT = {
                        "radiative forcing (1.099; 1.234 well-to-wheel)"),
 }
 
+# ------------------------------------------------- warming potentials ------
+# 100-year GWPs from IPCC AR6 WGI Table 7.15 as corrected by the errata of
+# 7 October 2025 ("following a calculation error"): methane of non-fossil
+# origin 27.0 -> 25.3, fossil methane 29.8 -> 28.1, nitrous oxide 273 -> 267.
+# D-26 item 3 (R5, 2026-10-24). Every value below that is a single gas was
+# written at the table the file used before, which WRITTEN_AT records: AR6
+# as first published for biogenic methane and nitrous oxide, AR5's 28 for the
+# fossil (fugitive) methane, as its note said. gas() restates such a value at
+# the corrected table, so the original figure stays readable beside its
+# source and the correction is one multiplication anyone can check.
+# Terms that mix gases and record no split between them (beef and dairy
+# manure, chicken housing, the hide's share of the animal) are left as
+# written: restating them would need a split this file does not have. The
+# whole correction moves no total by more than about 6%.
+GWP = {"ch4_bio": 25.3, "ch4_fossil": 28.1, "n2o": 267.0}
+WRITTEN_AT = {"ch4_bio": 27.0, "ch4_fossil": 28.0, "n2o": 273.0}
+
+
+def gas(co2e, kind):
+    """A single-gas figure written at WRITTEN_AT[kind], restated at GWP[kind]."""
+    return co2e * GWP[kind] / WRITTEN_AT[kind]
+
+
+# Soil N2O per kg of nitrogen applied, IPCC 2019 Refinement Vol. 4 Ch. 11,
+# Tables 11.1 and 11.3 (aggregated defaults): direct EF1 0.010 kg N2O-N per
+# kg N; indirect from the fraction that volatilises (Frac_GASF 0.11, EF4
+# 0.010) and the fraction that leaches (Frac_LEACH 0.24, EF5 0.011). The
+# page cites the chapter for "direct and indirect" N2O; until 2026-10-24 the
+# value was 4.4, the direct term alone at a GWP of 273, about 3% above that
+# arithmetic (D-27 item 8). One factor serves every field, so two of IPCC's
+# distinctions are not made: Frac_LEACH is its wet-climate default (dry
+# climates take 0), and EF1 is the aggregated figure for all nitrogen inputs
+# (the disaggregated synthetic-fertiliser factor is 0.016 wet, 0.005 dry).
+N2O_N_PER_KG_N = 0.010 + 0.11 * 0.010 + 0.24 * 0.011
+SOIL_N2O = N2O_N_PER_KG_N * 44.0 / 28.0 * GWP["n2o"]
+
+# Dairy cow milk share, IDF Bulletin 479 (2015) physical allocation:
+# AF = 1 - 6.04 x BMR, at the typical beef-to-milk ratio of 0.02 the bulletin
+# uses (0.879). Until 2026-10-24 the default was 0.85, the figure Flysjo et al.
+# 2011 computed for Swedish milk, while the page cited IDF (D-27 item 5).
+MILK_SHARE = round(1.0 - 6.04 * 0.02, 2)
+MILK_BASIS = "physical, IDF 2015 formula, typical herd (BMR 0.02)"
+
 # --------------------------------------------------------------- processes --
 # direct: kg CO2e per unit of this process's own output
 # unit:   what one unit of output is
@@ -97,9 +140,11 @@ PROCESSES = {
 
     # ---- energy and materials, the deep background ----------------------
     "natgas_extraction": dict(
-        name="Natural gas extraction", unit="kg gas", direct=0.42,
-        note="Includes about 1.5% fugitive methane at 28 kg CO2e per kg "
-             "(the AR5 100-year value; AR6 gives 29.8 for fossil methane). "
+        name="Natural gas extraction", unit="kg gas",
+        direct=gas(0.42, "ch4_fossil"),
+        note="About 1.5% fugitive methane at 28.1 kg CO2e per kg, AR6's "
+             "fossil methane as corrected in 2025 (written at AR5's 28 until "
+             "2026-10-24). "
              "The leak rate is the single most disputed number in the gas "
              "chain and ranges 0.5-3.5%. Until 2026-09-04 this note said "
              "82x, the 20-year value, which the figure does not use.",
@@ -110,7 +155,8 @@ PROCESSES = {
              "total is process CO2 from reforming and 0.7 kg is combustion.",
         quality="A", inputs=[("natgas_extraction", 0.62, 1.0)]),
     "nitrate_fert": dict(
-        name="Nitric acid and nitrate finishing", unit="kg N", direct=1.4,
+        name="Nitric acid and nitrate finishing", unit="kg N",
+        direct=gas(1.4, "n2o"),
         note="Nitrous oxide from nitric acid production. Abated plants emit a "
              "fifth of this; unabated ones several times more.",
         quality="B", inputs=[("ammonia", 1.0, 1.0)]),
@@ -144,16 +190,13 @@ PROCESSES = {
 
     # ---- shared farm operations -----------------------------------------
     "field_n2o": dict(
-        name="Soil nitrous oxide", unit="kg N applied", direct=4.4,
-        # D-27 (2026-10-22): the note now says what 4.4 is and is not. The
-        # value is unchanged; D-26 (R5) owns the GWP rework that would move it.
-        note="IPCC 2019 refinement: about 1% of applied nitrogen leaves as "
-             "N2O-N, and nitrous oxide is 273 times carbon dioxide over a "
-             "century. This is why nitrogen dominates crop footprints. The "
-             "4.4 is direct emission only and sits about 3% above IPCC's own "
-             "arithmetic (EF1 0.010 x 44/28 x 273 = 4.29); the chapter's "
-             "indirect N2O, from nitrogen that volatilises or leaches, is "
-             "not included.",
+        name="Soil nitrous oxide", unit="kg N applied", direct=SOIL_N2O,
+        # D-27 item 8 / D-26 item 3 (R5, 2026-10-24): was 4.4, direct only.
+        note="IPCC 2019 refinement: about 1% of applied nitrogen leaves the "
+             "field directly as N2O-N, and more leaves later from the "
+             "nitrogen that volatilises (11%) or leaches (24%); nitrous oxide "
+             "is 267 times carbon dioxide over a century. This is why "
+             "nitrogen dominates crop footprints.",
         quality="A", inputs=[]),
     "tillage": dict(
         name="Tillage and field passes", unit="hectare-season", direct=0.0,
@@ -334,7 +377,8 @@ PROCESSES = {
              "single item in the whole chain.",
         quality="B", inputs=[], grid_scaled=True, consumer_grid=True),
     "landfill": dict(
-        name="Food waste to landfill", unit="kg waste", direct=0.55,
+        name="Food waste to landfill", unit="kg waste",
+        direct=gas(0.55, "ch4_bio"),
         note="Anaerobic decay to methane, partially captured. Composting or "
              "digestion is roughly a fifth of this.",
         quality="B", inputs=[]),
@@ -473,8 +517,8 @@ PRODUCTS = {
         waste_frac=0.12, transport_mode="sea",
         stages=[
             dict(id="enteric", name="Enteric fermentation", inputs=[],
-                 direct=38.0,
-                 note="Methane from rumen microbes, at 27 times carbon dioxide "
+                 direct=gas(38.0, "ch4_bio"),
+                 note="Methane from rumen microbes, at 25.3 times carbon dioxide "
                       "over a century. No feed change removes this; it is what "
                       "a ruminant is."),
             dict(id="feed", name="Feed production", inputs=[
@@ -580,7 +624,7 @@ PRODUCTS = {
                     "lower; full-sun intensive systems higher. The direct term "
                     "here is an average land-use figure."),
             dict(id="wet_mill", name="Wet milling", inputs=[
-                ("process_kwh", 0.35, 1.0)], direct=0.62,
+                ("process_kwh", 0.35, 1.0)], direct=gas(0.62, "ch4_bio"),
                 share=0.55, basis="unstated (assumed)",
                 note="Allocation: pulp and mucilage are separated here and are "
                      "increasingly sold rather than dumped. The direct term is "
@@ -700,31 +744,32 @@ PRODUCTS = {
         waste_frac=0.08, transport_mode="sea",
         stages=[
             dict(id="enteric", name="Enteric fermentation", inputs=[],
-                 direct=8.4, share=0.85, basis="physical, IDF feed-energy (Flysjo et al. 2011, Sweden)",
+                 direct=gas(8.4, "ch4_bio"), share=MILK_SHARE, basis=MILK_BASIS,
                  note="Allocation: a dairy cow yields milk and, at the end, "
-                      "meat. 0.85 to milk is the International Dairy "
-                      "Federation's physical (feed-energy) split as computed "
-                      "for Swedish milk by Flysjo et al. 2011, Int J LCA "
-                      "16:420. It is not an economic split: the same paper "
+                      "meat. 0.88 to milk is the International Dairy "
+                      "Federation's 2015 physical formula (1 - 6.04 x the "
+                      "beef-to-milk ratio) at a typical herd's ratio of 0.02. "
+                      "Flysjo et al. 2011 (Int J LCA 16:420) computed the "
+                      "same physical basis as 0.85 for Swedish milk, and "
                       "gives 0.88 (Sweden) and 0.92 (New Zealand) by economic "
                       "value, 0.93-0.94 by protein, 0.98 by mass, and "
                       "0.63-0.76 by system expansion. Charging her whole "
                       "methane output to milk would raise this figure by "
-                      "nearly a fifth."),
+                      "about an eighth."),
             dict(id="feed", name="Feed production", inputs=[
                 ("field_n2o", 0.20, 1.0),
                 ("ammonia", 0.20, 1.0),
                 ("nitrate_fert", 0.07, 1.0),
                 ("tillage", 0.0009, 1.0),
                 ("diesel", 0.30, 1.0),
-            ], direct=0.0, share=0.85, basis="physical, IDF feed-energy (Flysjo et al. 2011, Sweden)",
+            ], direct=0.0, share=MILK_SHARE, basis=MILK_BASIS,
                note="Concentrate and forage, carried at the same milk split."),
             dict(id="manure", name="Manure management", inputs=[], direct=2.1,
-                 share=0.85, basis="physical, IDF feed-energy (Flysjo et al. 2011, Sweden)", note="Slurry storage."),
+                 share=MILK_SHARE, basis=MILK_BASIS, note="Slurry storage."),
             dict(id="dairy", name="Milking and cooling", inputs=[
                 ("process_kwh", 0.65, 1.0),
-                ("cold_store_origin", 0.40, 1.0)], direct=0.0, share=0.85,
-                basis="physical, IDF feed-energy (Flysjo et al. 2011, Sweden)",
+                ("cold_store_origin", 0.40, 1.0)], direct=0.0, share=MILK_SHARE,
+                basis=MILK_BASIS,
                 note="On-farm chilling is continuous."),
             dict(id="cheesemaking", name="Cheesemaking", inputs=[
                 ("gas_boiler", 0.12, 1.0),
@@ -758,7 +803,8 @@ PRODUCTS = {
         default_origin="IN", default_dest="US-CA",
         waste_frac=0.10, transport_mode="sea",
         stages=[
-            dict(id="paddy", name="Paddy methane", inputs=[], direct=1.85,
+            dict(id="paddy", name="Paddy methane", inputs=[],
+                 direct=gas(1.85, "ch4_bio"),
                  note="Continuous flooding. Alternate wetting and drying cuts "
                       "this by roughly half and is the single largest "
                       "mitigation available in rice."),
@@ -1171,8 +1217,13 @@ PRODUCTS = {
         default_origin="IT", default_dest="US-NY", waste_frac=0.0,
         transport_mode="sea",
         stages=[
+            # D-26 item 2 (R5, 2026-10-24): tanning was an input of this
+            # stage, so the 2.2% share multiplied it too and the shoe was
+            # charged 0.16 kg for tanning that is about 7.1 kg. A stage's
+            # share reaches every node in it (lca.py run()), so tanning,
+            # which serves only the leather, is now its own stage at 1.0.
             dict(id="hide", name="The hide, from a beef animal",
-                 inputs=[("leather", 0.9, 1.0)], direct=8.4, share=0.022,
+                 inputs=[], direct=8.4, share=0.022,
                  basis="economic (assumed; cf. Lunesu et al. 2025, 2.7%)",
                  note="The direct figure is the animal: enteric methane, "
                       "feed and land, for the share of a carcass that becomes "
@@ -1180,12 +1231,16 @@ PRODUCTS = {
                       "value, following ISO 14044's preference order; Lunesu "
                       "et al. 2025 (Animals 15:3546) put the economic mean at "
                       "2.7% and the physical, live-weight mean at 5.9% (range "
-                      "4.2-6.9%). The hide stage is about 9% of this shoe, so "
-                      "moving from the economic to the physical mean raises "
-                      "the pair by about a sixth, from 3.7 to 4.2 kg. Until "
-                      "2026-09-04 this note said the shoe would triple at 7%; "
-                      "that scaled the whole shoe by the ratio of the two "
-                      "factors, as if every gram of it were hide."),
+                      "4.2-6.9%). The 8.4 itself has no source; the hide's "
+                      "share of the animal is a small part of this shoe "
+                      "either way, and the tanning below it is most of it. "
+                      "Until 2026-09-04 this note said the shoe would triple "
+                      "at 7%; that scaled the whole shoe by the ratio of the "
+                      "two factors, as if every gram of it were hide."),
+            dict(id="tanning", name="Tanning", inputs=[("leather", 0.9, 1.0)],
+                 direct=0.0,
+                 note="0.9 kg of finished leather a pair. Tanning serves only "
+                      "the leather, so none of it is shared with the meat."),
             dict(id="make", name="Lasting and assembly",
                  inputs=[("cut_sew", 4.0, 1.0), ("rubber_sole", 0.25, 1.0)],
                  direct=0.0, note=""),

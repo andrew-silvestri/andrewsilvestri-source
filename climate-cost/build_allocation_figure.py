@@ -81,12 +81,14 @@ CHEESE = dict(
     bases=[
         ("system expansion, low",   0.63, "Flysjö 2011: 63–76%", False),
         ("system expansion, high",  0.76, "Flysjö 2011",             False),
-        ("physical, IDF feed energy", 0.85, "Flysjö 2011, Sweden; IDF 2010 method", True),
-        ("physical, IDF typical herd", 0.88, "IDF Bulletin 479 (2015) p. 35, BMR 0.02", False),
+        ("physical, Swedish milk",  0.85, "Flysjö 2011, Sweden; IDF 2010 method", False),
+        ("physical, IDF typical herd", 0.88, "IDF Bulletin 479 (2015) p. 35, BMR 0.02", True),
         ("economic",                0.92, "Flysjö 2011, New Zealand", False),
         ("protein",                 0.93, "Flysjö 2011, Sweden",      False),
         ("mass",                    0.98, "Flysjö 2011",              False),
-        ("none: milk carries the cow", 1.00, "Flysjö 2011 reference case", False),
+        # Not an allocation basis: drawn grey for scale and left out of the
+        # spread (D-27 item 5; until 2026-10-24 it set the spread, x1.54).
+        ("none: milk carries the cow", 1.00, "reference", False),
     ])
 
 # Shoes: Lunesu, Correddu, Carta, Sechi, Farina & Pulina 2025, Animals
@@ -107,7 +109,10 @@ SHOES = dict(
 
 # The numbers the page's table publishes for the two defaults. If the model
 # no longer reproduces them the data has moved and the figure would be stale.
-PUBLISHED = {"cheese": 13.18, "leather_shoes": 3.66}
+# 2026-10-24 (R5, D-26/D-27): 13.18 -> 13.37 (milk share 0.85 -> IDF's 0.88,
+# corrected GWPs) and 3.66 -> 10.56 (tanning no longer carries the hide's
+# 2.2%, so the contested stage fell from 9% of the pair to under 2%).
+PUBLISHED = {"cheese": 13.37, "leather_shoes": 10.56}
 
 
 def total_at(item, stages, share):
@@ -141,7 +146,7 @@ def compute(panel):
                                  f"table says {PUBLISHED[panel['item']]}; "
                                  "regenerate the table before this figure")
         rows.append((label, share, source, default, t))
-    published = [r[4] for r in rows if r[2] != "assumed"]
+    published = [r[4] for r in rows if r[2] not in ("assumed", "reference")]
     spread = max(published) / min(published)
     return rows, spread
 
@@ -149,8 +154,8 @@ def compute(panel):
 # The source note under the figure. Both renders print it; the 714 keeps its
 # hand-set breaks, the 350 breaks it by measured width (_fill).
 FOOT = ("Spread = highest ÷ lowest total across the published bases shown; the model’s assumed\n"
-        "2.2% is drawn but not counted. Bars: the shipped default in dark blue, published alternatives\n"
-        "in light blue; the shoe’s shipped 2.2% is an assumption and is grey. Milk–meat factors: Flysjö,\n"
+        "2.2% and the 100% no-allocation case are drawn grey and not counted. Bars: the shipped\n"
+        "default in dark blue, published alternatives in light blue. Milk–meat factors: Flysjö,\n"
         "Cederberg, Henriksson & Ledgard 2011, Int J LCA 16:420, Table 1; IDF Bulletin 479 (2015)\n"
         "pp. 35–36. Hide factors: Lunesu et al. 2025, Animals 15:3546. Every bar is one run of\n"
         "climate-cost/lca.py with that factor on the contested edge; drawn by build_allocation_figure.py.")
@@ -174,7 +179,7 @@ def draw(cheese, shoes, out):
         n = len(rows)
         ys = list(range(n))[::-1]
         for y, (label, share, source, default, t) in zip(ys, rows):
-            col = SLATE if source == "assumed" else (ACC if default else COOL)
+            col = SLATE if source in ("assumed", "reference") else (ACC if default else COOL)
             ax.barh(y, t, height=0.62, color=col, edgecolor="none")
             texts.append(ax.text(t + 0.18, y, f"{t:.1f} kg", va="center",
                                  ha="left", fontsize=FS_2, color=INK))
@@ -291,7 +296,7 @@ def draw_phone(cheese, shoes, out):
         fig.canvas.draw()
         r = fig.canvas.get_renderer()
         for y, (label, share, source, default, t) in zip(ys, rows):
-            col = SLATE if source == "assumed" else (ACC if default else COOL)
+            col = SLATE if source in ("assumed", "reference") else (ACC if default else COOL)
             ax.barh(y - 0.18, t, height=0.40, color=col, edgecolor="none")
             texts.append(ax.text(0, y + 0.10, label, va="bottom", ha="left",
                                  fontsize=FS_2, color=INK))
