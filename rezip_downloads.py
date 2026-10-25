@@ -168,6 +168,11 @@ TARGETS = [
         "test_lca.py": "climate-cost/test_lca.py",
         "test_scene.js": "climate-cost/test_scene.js",
         "build_allocation_figure.py": "climate-cost/build_allocation_figure.py",
+        # R5 (2026-10-24): the page generator and its template. It imports
+        # insight.py and add_citations.py from the site repository, which the
+        # archive does not carry; the README says so.
+        "update_page.py": "climate-cost/update_page.py",
+        "page.html": "climate-cost/page.html",
     }),
     # bookshelf-code.zip retired with its app on 2026-09-05 (PHASE5): the last
     # build is unpublished/downloads/bookshelf-code.zip, its sources bookshelf/

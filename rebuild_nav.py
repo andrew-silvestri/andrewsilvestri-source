@@ -157,6 +157,11 @@ NAV = [
     # ("Climate", [
     #     ("The true climate cost", "climate-cost.html"),
     # ]),
+    # Climate relisted 2026-10-24 by R5 (D-26, D-27), under the reworked
+    # page's own title.
+    ("Climate", [
+        ("What a footprint is made of", "climate-cost.html"),
+    ]),
     # RUNNING WAS RETIRED 2026-09-09, at Andrew's request - "hide the two
     # running pages... I'll republish later, but retire for now". It held
     # shoes.html and economy.html; both pages, their eight figures and two

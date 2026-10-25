@@ -159,6 +159,10 @@ GENERATORS = [
     ("longevity app: longevity-quotient/build_lq.py",
      ["build_lq.py"], "longevity-quotient",
      [("longevity-quotient/longevity.html", "site/longevity-app.html")]),
+    # climate-cost/update_page.py writes site/climate-cost.html from page.html and
+    # lca.py; it applies add_citations.PAGES["climate-cost.html"] itself. R5, 2026-10-24.
+    ("climate-cost page: climate-cost/update_page.py --apply",
+     ["update_page.py", "--apply"], "climate-cost", "site"),
     ("climate-cost app: climate-cost/lca.py --build",
      ["lca.py", "--build"], "climate-cost",
      [("climate-cost/climate-cost.html", "site/climate-cost-app.html")]),

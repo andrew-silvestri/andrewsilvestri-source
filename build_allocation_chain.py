@@ -12,11 +12,12 @@ claim. Every number is pulled from the model of record rather than typed in -
 climate-cost/lca.py's Model class, walking the same process graph
 (climate-cost/data/processes.py) the interactive calculator runs.
 
-The chain drawn here is:
-    Tomato, field grown (the cultivation stage)          59.8 g CO2e
-      -> Fertiliser (nitric acid and nitrate finishing)    5.27 g
-        -> Ammonia synthesis (Haber-Bosch)                 3.20 g
-          -> Natural gas extraction (where the methane leaks)  0.386 g
+The chain drawn here is (its grams are the model's, printed on the figure
+and in the page's alt text, which climate-cost/update_page.py writes):
+    Tomato, field grown (the cultivation stage)
+      -> Fertiliser (nitric acid and nitrate finishing)
+        -> Ammonia synthesis (Haber-Bosch)
+          -> Natural gas extraction (where the methane leaks)
 
 Four real levels, each smaller than the one above it, each with the physical
 amount that flows down the edge (grams of nitrogen, then grams of gas). That
@@ -31,9 +32,11 @@ shared away) but a label with no variation across three edges tells a reader
 nothing, and the closing caption then had to spend three lines explaining why
 the figure wasn't demonstrating what it looked like it was building up to.
 That is a tell that the figure had the wrong job. The chain that actually
-shows allocation shrinking a number - the leather shoe, 2.2% by economic
-share against 7% by mass - is drawn elsewhere on this page, and this figure
-now just points there in one line instead of impersonating it.
+shows allocation shrinking a number - the cheese, whose herd stages carry
+the milk share - is drawn elsewhere on this page, and this figure now just
+points there in one line instead of impersonating it. (It pointed at the
+leather shoe until 2026-10-24; once tanning stopped carrying the hide's share
+(D-26), the shoe became the example where allocation barely matters.)
 
 One honesty note that is still live here: lca.py's CUTOFF exists to keep the
 calculator's printed "largest sources" table short, and at its shipped value
@@ -84,6 +87,7 @@ OUT = os.path.join(HERE, "site", "assets", "climate_chain_tomato.png")
 sys.path.insert(0, CC)
 sys.path.insert(0, os.path.join(CC, "data"))
 import lca  # noqa: E402  the model of record; not edited, only imported
+from processes import GWP  # noqa: E402  the same module lca imported
 
 def style():
     sitefig.style(); plt.rcParams.update({
@@ -192,8 +196,12 @@ def main():
          f"full farm-to-bin total"),
         ("Fertiliser", fert, BLUE, "nitric acid and nitrate finishing"),
         ("Ammonia synthesis", amm, VIOLET, "Haber-Bosch"),
+        # Until 2026-10-24 this said "at 82x CO2 over 20 years", the 20-year
+        # value the model has never used (processes.py's own note retracted it
+        # on 2026-09-04). The multiplier is now read from the model.
         ("Natural gas extraction", gas, ROSE,
-         "~1.5% of this is fugitive methane, at 82x CO2 over 20 years"),
+         f"~1.5% of the gas leaks as methane, at {GWP['ch4_fossil']:g}x CO2 "
+         "over a century"),
     ]
     xs = [12, 38, 64, 90]
     y = 24
@@ -234,13 +242,17 @@ def main():
             linewidth=1.8, color=ARROW, zorder=1))
         amt = child["amount"] * 1000.0
         ax.text((x0 + x1) / 2, y - 2.4,
-                f"{amt:.3g} g {unit}", ha="center", va="top",
+                # two figures: "0.919 g gas" ran into the last box's border
+                f"{amt:.2g} g {unit}", ha="center", va="top",
                 color=DIM, fontsize=FS_2, zorder=3)
 
+    if any(abs(n["alloc"] - 1.0) > 1e-9 for n in (cult, fert, amm, gas)):
+        raise SystemExit("an edge on the tomato chain is no longer x1.00; "
+                         "the closing line below would be false")
     fig.text(0.02, 0.15,
               textwrap.fill("Allocation is x1.00 on every edge here - none of these three "
               "processes make a second product. The chain where it actually "
-              "shrinks a number is the leather shoe, further down this page.", 92),
+              "shrinks a number is the cheese, further down this page.", 92),
               color=DIM, fontsize=FS_2, va="top", fontfamily=MONO)
 
     problems = audit(fig)

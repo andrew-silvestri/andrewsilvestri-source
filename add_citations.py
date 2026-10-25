@@ -662,20 +662,29 @@ PAGES = {
          'Poore &amp; Nemecek, <i>Science</i> 360:987, 2018 - reducing food’s '
          'environmental impacts through producers and consumers.',
          "Per-kilogram footprints and the spread within each food."),
+        # R5 (2026-10-24): climate-cost/update_page.py applies this entry
+        # itself. The GWP entry cites the corrected table (errata of 7 October
+        # 2025, opened that day; SOURCES); "methane" anchored it until the
+        # rework, and the word now first appears in the standfirst's prose.
         ("fertiliser",
          'IPCC, <i>2019 Refinement to the 2006 Guidelines for National '
          'Greenhouse Gas Inventories</i>, Volume 4 Chapter 11 - direct and '
-         'indirect nitrous oxide from managed soils.',
-         "The emission factor for nitrogen applied to soils."),
-        ("methane",
+         'indirect nitrous oxide from managed soils, Tables 11.1 and 11.3.',
+         "How much nitrous oxide nitrogen on a field gives off: 1% of it "
+         "directly, plus 1% of the 11% that drifts off as gas and 1.1% of the "
+         "24% that washes away (the wet-climate default)."),
+        ("over a century",
          'IPCC, <i>Sixth Assessment Report</i>, Working Group I Chapter 7, '
-         'Table 7.15 - global warming potentials.',
-         "Methane at 27 and nitrous oxide at 273 over a century."),
+         'Table 7.15 - global warming potentials, as corrected by the '
+         '<a href="https://www.ipcc.ch/report/ar6/wg1/about/errata/">Working '
+         'Group I errata</a> of 7 October 2025.',
+         "Methane at 25.3 (non-fossil) and 28.1 (fossil) and nitrous oxide at "
+         "267 over a century; the table first read 27.0, 29.8 and 273."),
         ("tonne-kilometer",
          'UK Department for Energy Security and Net Zero, <i>Greenhouse gas '
          'reporting: conversion factors</i>, 2023.',
          "Freight emission factors by mode."),
-        ("allocation",
+        ("allocation standard",
          'ISO 14044:2006, <i>Environmental management - Life cycle assessment '
          '- Requirements and guidelines</i>, clause 4.3.4.',
          "The allocation hierarchy: avoid, then physical, then economic."),
@@ -689,8 +698,9 @@ PAGES = {
         ("International Dairy Federation",
          'International Dairy Federation, <i>A common carbon footprint '
          'approach for the dairy sector</i>, Bulletin 479, 2015, pp. 34-36.',
-         "The physical allocation formula AF = 1 - 6.04 x BMR and the 88% "
-         "milk share at a typical beef-to-milk ratio of 0.02."),
+         "The physical formula for a dairy cow's milk share (1 minus 6.04 "
+         "times the ratio of beef to milk the farm sells) and its 88% default "
+         "(read through secondary sources; the bulletin is not open access)."),
         ("Lunesu",
          'Lunesu, Correddu, Carta, Sechi, Farina &amp; Pulina, <i>Animals</i> '
          '15:3546, 2025 - attributing farm-to-slaughter emissions to hides.',
