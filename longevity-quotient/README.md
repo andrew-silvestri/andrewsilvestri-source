@@ -19,14 +19,17 @@ Every number below is from the current build: `outputs/summary.json`,
 | `data/animals.csv` | the hand-checked seed table, 417 rows |
 | `data/ingest.py` | merges the seed with five databases; writes `data/animals_merged.csv`, `outputs/provenance.csv`, `outputs/ingest_report.json` |
 | `data/animals_merged.csv` | the merged table, 7,873 species |
+| `data/anage_sample.py`, `data/anage_sample.csv` | AnAge's own sample-size band per species, from the raw zip; `build_lq.py`'s study-effort check reads the CSV |
 | `build_lq.py` | the fits, the quotients, the group summaries, the figures and the visualiser |
 | `fig_lq_explained.py` | the explainer figure |
 | `template.html` | the visualiser, before `build_lq.py` puts the data in it |
 | `update_page.py` | writes the page's data-dependent numbers from `outputs/` |
 | `test_merge.py`, `test_fit_strategy.py`, `test_perf.js` | checks on the merge, the fit strategy, and the visualiser's speed |
+| `test_lq.py` | the amphibian fallback in the group tables, the study-effort check against the audit's figures, and the page against `summary.json`; `--break fallback\|effort\|page\|rail` each must fail |
 | `outputs/lq_table.csv` | every species: taxonomy, mass, lifespans, both predictions, both quotients, grade, note |
 | `outputs/provenance.csv` | which source each record and each mass came from |
-| `outputs/group_summary.csv` | every group at every rank: count, geometric-mean quotient, median lifespan, mass range, longest-lived member |
+| `outputs/group_summary.csv` | every group at every rank: count, geometric-mean quotient, which baseline scored it (`own`, `global` for amphibians, `mixed`), median lifespan, mass range, longest-lived member |
+| `outputs/summary.json` | the fits, the census, the figures the page names (`headline`) and the study-effort check (`effort_check`) |
 | `data/load_anage.py`, `data/merge_anage.py` | the retired seed-plus-AnAge path; `ingest.py` replaced it and the build does not use them |
 
 Not included: the raw source files (`data/raw/`, 39 MB; `DATA_SOURCES.md` says
@@ -40,6 +43,7 @@ python data/ingest.py --apply
 python build_lq.py
 python test_merge.py
 python test_fit_strategy.py
+python test_lq.py
 ```
 
 `ingest.py` needs the raw files in `data/raw/` and pandas (with openpyxl and
@@ -112,7 +116,11 @@ every fit and scored against the result (`FIT_STRATEGY = "filter"`;
 Fish classes are pooled, and the invertebrate classes are pooled into one
 baseline. A group fit with a non-positive slope or an r² below 0.15 is
 rejected. The amphibian fit is the only one: r² 0.043 over 83 species, so
-amphibian species are scored against the global fit. Every fish in the fish fit
+amphibian species are scored against the global fit, and so are their groups
+in `group_summary.csv` (until October 2026 the groups were left blank, so
+Anura and Urodela dropped out of the rankings). On that line Urodela ranks
+first of the 83 orders at 3.01, which is not the scale the other orders are
+on. Every fish in the fish fit
 is from the seed table or AnAge, because the FishBase rows are grade C.
 
 `test_fit_strategy.py` simulates a table with a known slope (0.160), lowers
@@ -136,9 +144,10 @@ used, Baseline, Filter to, Names, Search.
 Found by the site's QA audit of October 2026 and not yet fixed in the data:
 
 - Species are matched on the binomial alone, with no synonym resolution.
-  Matching common names finds 62 likely pairs, for example *Centrochelys* and
-  *Geochelone sulcata*, and in 48 of them both copies are grade A or B and
-  enter the fits. The pink cockatoo (*Cacatua leadbeateri*, AnAge, 83 years in
+  Matching common names finds 103 names carried by two or more binomials
+  (some distinct species that share a name), for example *Centrochelys* and
+  *Geochelone sulcata*, and for 80 of them at least two copies are grade A or
+  B and enter the fits (`update_page.py` counts them). The pink cockatoo (*Cacatua leadbeateri*, AnAge, 83 years in
   captivity, demoted to C) and Major Mitchell's cockatoo (*Lophochroa
   leadbeateri*, Amniote, 63.6 years, B) are one bird under two names.
 - Genus *Sebastes* is filed under Sebastidae (3 grade-A or B species) and
@@ -149,11 +158,24 @@ Found by the site's QA audit of October 2026 and not yet fixed in the data:
 - The olm's 100 years in the seed table is Voituron et al.'s projection
   (*Biology Letters* 7:105, 2011, about 102 years), and its "wild" 68 is their
   mean adult lifespan in a laboratory population.
-- Labord's chameleon has 25 g in the seed table and 8.73 g in Amniote (AnAge
-  gives no mass). The reptile fit predicts 7.9 years at the first and 6.4 at
+- Labord's chameleon has 25 g in the seed table and 8.73 g in AnAge (Amniote
+  has no row for it). The reptile fit predicts 7.9 years at the first and 6.4 at
   the second.
 - A maximum lifespan is an extreme value: it rises with the number of animals
-  anyone watched, so a thinly studied species looks short-lived.
+  anyone watched, so a thinly studied species looks short-lived. Amniote
+  supplies a record only where AnAge has none, the less-studied species, and
+  is 60% of the mammal fit, 60% of reptiles and 28% of birds. At equal mass
+  within family its records sit x0.60 (mammals), x0.75 (reptiles) and x0.82
+  (birds) below AnAge's medium-sample records. `build_lq.py`'s
+  `effort_check()` rescales every non-seed record to that level and re-runs
+  the same fits: birds against mammals 2.24 -> 1.79, mammal at 1 kg 10.1 ->
+  13.6 years, human 5.0 -> 4.1, Brandt's bat 11.9 -> 7.8, order ranking
+  Spearman 0.994. The page keeps the pooled figures and prints both.
+- AnAge's sample-size field is not used for grading (the retired
+  `load_anage.py` demoted tiny and small samples; `ingest.py` does not), so
+  178 tiny and 836 small AnAge samples are grade B in the fits.
+- Species are plain OLS points; related species are not independent, and
+  within mammal families the slope is lower than across them.
 
 `outputs/lq_table.csv` rounds to four decimals, except masses under a gram,
 which keep six significant figures.
