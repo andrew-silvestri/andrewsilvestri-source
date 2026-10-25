@@ -385,15 +385,10 @@ def demote_outliers(rows):
             "residual_sd_log10": {k: round(v, 4) for k, v in sd.items()}}
 
 
-def build(path=DATA):
-    rows = load(path)
-    outliers = demote_outliers(rows)
-    fit_rows = [r for r in rows if in_fit(r)]
-    grade_census = {}
-    for r in rows:
-        if not r["colonial"]:
-            grade_census[r["quality"]] = grade_census.get(r["quality"], 0) + 1
-
+def score(rows, fit_rows):
+    """Fit the global and per-pool baselines on fit_rows and score every row
+    against them. Shared by build() and effort_check(), so the sensitivity
+    run is the page's own arithmetic and not a copy of it."""
     ga, gb, gr2, gn = ols_loglog(fit_rows)
 
     pools = {}
@@ -422,6 +417,160 @@ def build(path=DATA):
             r["lq_global_" + metric] = (v / r["pred_global"]) if v else None
             r["lq_class_" + metric] = (
                 (v / r["pred_class"]) if (v and r["pred_class"]) else None)
+    return (ga, gb, gr2, gn), fits, rejected
+
+
+# D-28 item 1 (QA 2026-10-22, qa-audit/lq_rev_rerun.py, ported here). Amniote
+# supplies a lifespan only for species AnAge lacks, the less-studied ones, and
+# at equal mass within family those records sit x0.60 (mammals), x0.75
+# (reptiles), x0.82 (birds) below AnAge's medium-sample records. On species
+# both carry they agree, so the gap is study effort, not units. The page's
+# figures keep the pooled baseline (D-28 option B); this run rescales every
+# non-seed record to AnAge's medium-sample level and re-runs the page's own
+# outlier rule, fits and ranking, so Limits can print both side by side.
+# Seed rows are not adjusted: they were picked for being exceptional, so their
+# offset is selection, not effort.
+EFFORT_FE = "family"
+EFFORT_REF = "anage_medium"
+
+
+def effort_levels(rows):
+    """Label each row by where its lifespan came from and, for AnAge, the
+    sample size AnAge itself records."""
+    # AnAge's sample-size band, derived from the raw zip by
+    # data/anage_sample.py (the raw files are not in the archive, nor in the
+    # tree copies tests/test_generators.py builds from).
+    with open(os.path.join(HERE, "data", "anage_sample.csv"),
+              encoding="utf-8") as fh:
+        samp = {r["scientific_name"]: r["sample_size"]
+                for r in csv.DictReader(fh)}
+    with open(os.path.join(OUT, "provenance.csv"), encoding="utf-8") as fh:
+        prov = {r["scientific_name"]: r["taken_from"]
+                for r in csv.DictReader(fh)}
+    for r in rows:
+        src = prov.get(r["sci"], "seed")
+        r["effort"] = ("anage_" + (samp.get(r["sci"]) or "medium")
+                       if src == "anage" else src)
+
+
+def effort_offsets(rows, fe=EFFORT_FE):
+    """log10 offset of each effort level from the reference, within pool, with
+    log mass and taxon (fe) fixed effects so composition is not read as
+    effort."""
+    import numpy as np
+    pre = [r for r in rows if in_fit(r)]
+    levels = sorted({r["effort"] for r in pre} - {EFFORT_REF})
+    pools = {}
+    for r in pre:
+        pools.setdefault(r["pool"], []).append(r)
+    off = {}
+    for p, m in sorted(pools.items()):
+        if len(m) < 50:
+            continue
+        taxa = sorted({r[fe] for r in m})
+        lv = [l for l in levels if sum(r["effort"] == l for r in m) >= 10]
+        X = np.array([[math.log10(r["mass_g"])] + [r["effort"] == l for l in lv]
+                      + [r[fe] == t for t in taxa] for r in m], float)
+        y = np.array([math.log10(r["maximum"]) for r in m])
+        beta, *_ = np.linalg.lstsq(X, y, rcond=None)
+        off[p] = {l: float(v) for l, v in zip(lv, beta[1:1 + len(lv)])}
+    return off
+
+
+def headline_figures(fits, rows, groups):
+    """The figures the page names, from one scored run, so the pooled and the
+    effort-corrected runs are read by the same code."""
+    av, mm = fits["Aves"], fits["Mammalia"]
+    by = {r["name"]: r for r in rows}
+    orders = sorted((g for g in groups["order"]
+                     if g["n"] >= 4 and g["geo_lq"]), key=lambda g: -g["geo_lq"])
+    fams = sorted((g for g in groups["family"]
+                   if g["n"] >= 10 and g["geo_lq"]), key=lambda g: -g["geo_lq"])
+    return {
+        "bird_mammal_1kg": 10 ** (av[0] + 3 * av[1]) / 10 ** (mm[0] + 3 * mm[1]),
+        "mammal_1kg_yr": 10 ** (mm[0] + 3 * mm[1]),
+        "mammal_b": mm[1],
+        "species": {s: own_lq(by[s]) for s in
+                    ("Human", "Brandt's bat", "Naked mole-rat",
+                     "African bush elephant", "Giraffe") if s in by},
+        "orders": [[g["group"], g["geo_lq"], g["n"], g["baseline"]]
+                   for g in orders],
+        "families": [[g["group"], g["geo_lq"], g["n"]] for g in fams],
+    }
+
+
+def effort_check(path=DATA):
+    rows = load(path)
+    effort_levels(rows)
+    off = effort_offsets(rows)
+    for r in rows:
+        d = 0.0 if r["effort"] == "seed" else \
+            off.get(r["pool"], {}).get(r["effort"], 0.0)
+        k = 10 ** (-d)
+        for f in ("wild", "captive", "unrecorded", "average", "maximum"):
+            if r[f]:
+                r[f] *= k
+    demote_outliers(rows)
+    fit_rows = [r for r in rows if in_fit(r)]
+    _, fits, _ = score(rows, fit_rows)
+    groups = rank_summary([r for r in rows if r["quality"] != "C"])
+    share = {}
+    for p in ("Mammalia", "Reptilia", "Aves"):
+        m = [r for r in fit_rows if r["pool"] == p]
+        share[p] = sum(r["effort"] == "amniote" for r in m) / len(m)
+    # The cruder bound QA ran beside it (V2): drop every grade-B record of
+    # unknown or thin effort (Amniote, PanTHERIA, AmphiBIO, AnAge tiny and
+    # small) instead of correcting it. It shrinks the mammal fit to a quarter
+    # and skews it, so it is a bound, not a better estimate.
+    rows2 = load(path)
+    effort_levels(rows2)
+    for r in rows2:
+        if r["quality"] == "B" and r["effort"] in THIN_EFFORT:
+            r["quality"] = "C"
+    demote_outliers(rows2)
+    fit2 = [r for r in rows2 if in_fit(r)]
+    _, fits2, _ = score(rows2, fit2)
+    groups2 = rank_summary([r for r in rows2 if r["quality"] != "C"])
+    dropped = headline_figures(fits2, rows2, groups2)
+    dropped["n_mammals"] = sum(1 for r in fit2 if r["pool"] == "Mammalia")
+    return {"fixed_effects": EFFORT_FE, "reference": EFFORT_REF,
+            "offsets_log10": off, "amniote_share_of_fit": share,
+            "corrected": headline_figures(fits, rows, groups),
+            "dropped": dropped}
+
+
+THIN_EFFORT = ("anage_tiny", "anage_small", "amniote", "pantheria", "amphibio")
+
+
+def spearman(a, b):
+    """Rank correlation of two {name: value} maps over their common names."""
+    common = sorted(set(a) & set(b))
+    def ranks(v):
+        order = sorted(range(len(v)), key=lambda i: v[i])
+        out = [0] * len(v)
+        for k, i in enumerate(order):
+            out[i] = k
+        return out
+    x = ranks([a[k] for k in common])
+    y = ranks([b[k] for k in common])
+    n = len(common)
+    mx, my = sum(x) / n, sum(y) / n
+    sxy = sum((p - mx) * (q - my) for p, q in zip(x, y))
+    sxx = sum((p - mx) ** 2 for p in x)
+    syy = sum((q - my) ** 2 for q in y)
+    return sxy / math.sqrt(sxx * syy), n
+
+
+def build(path=DATA):
+    rows = load(path)
+    outliers = demote_outliers(rows)
+    fit_rows = [r for r in rows if in_fit(r)]
+    grade_census = {}
+    for r in rows:
+        if not r["colonial"]:
+            grade_census[r["quality"]] = grade_census.get(r["quality"], 0) + 1
+
+    (ga, gb, gr2, gn), fits, rejected = score(rows, fit_rows)
 
     os.makedirs(OUT, exist_ok=True)
 
@@ -455,14 +604,14 @@ def build(path=DATA):
               encoding="utf-8") as fh:
         w = csv.writer(fh, lineterminator="\n")
         w.writerow(["rank", "group", "n_species", "n_colonial",
-                    "geomean_lq_class", "median_lifespan_yr",
+                    "geomean_lq_class", "scored_against", "median_lifespan_yr",
                     "min_mass_g", "max_mass_g", "longest_lived_species",
                     "longest_lived_yr"])
         for rk in RANKS:
             for g in groups[rk]:
                 w.writerow([rk, g["group"], g["n"], g["n_colonial"],
                             None if g["geo_lq"] is None
-                            else round(g["geo_lq"], 4),
+                            else round(g["geo_lq"], 4), g["baseline"],
                             round(g["med_life"], 3), g["min_mass"],
                             g["max_mass"], g["top_name"], g["top_life"]])
 
@@ -480,7 +629,17 @@ def build(path=DATA):
         "origin_census": {
             k: sum(1 for r in rows if r[k]) for k in
             ("wild", "captive", "unrecorded")},
+        "headline": headline_figures(fits, rows, groups),
     }
+    ec = effort_check(path)
+    po = {o[0]: o[1] for o in summary["headline"]["orders"]}
+    co = {o[0]: o[1] for o in ec["corrected"]["orders"]}
+    rho, n_common = spearman(po, co)
+    top = lambda d: set(sorted(d, key=lambda k: -d[k])[:10])
+    ec["order_rank_spearman"] = rho
+    ec["orders_compared"] = n_common
+    ec["top10_shared"] = len(top(po) & top(co))
+    summary["effort_check"] = ec
     with open(os.path.join(OUT, "summary.json"), "w", encoding="utf-8", newline="\n") as fh:
         json.dump(summary, fh, indent=2)
 
@@ -512,6 +671,14 @@ def build(path=DATA):
     return rows, summary
 
 
+def own_lq(r, metric="maximum"):
+    """The quotient against the species' own group, or against the global fit
+    where its group's fit was rejected."""
+    if r["pred_class"] is not None:
+        return r["lq_class_" + metric]
+    return r["lq_global_" + metric]
+
+
 def rank_summary(rows):
     """Aggregate every taxonomic rank. Colonial organisms are counted but
     kept out of the quotient statistics."""
@@ -526,11 +693,20 @@ def rank_summary(rows):
         for key, members in buckets.items():
             solo = [m for m in members if not m["colonial"]]
             top = max(members, key=lambda m: m["maximum"])
+            # D-28 item 2: a pool whose own fit is rejected (amphibians) falls
+            # back to the global baseline, as the page says. Until 2026-10-24
+            # its members carried no own-group quotient here, so Anura and
+            # Urodela dropped out of every group ranking while the page and
+            # the app (predOf = pc || pg) both applied the fallback.
+            own = [own_lq(m) for m in solo]
+            fell = sum(1 for m in solo if m["pred_class"] is None)
             groups.append({
                 "group": key,
                 "n": len(members),
                 "n_colonial": len(members) - len(solo),
-                "geo_lq": geomean([m["lq_class_maximum"] for m in solo]),
+                "geo_lq": geomean(own),
+                "baseline": ("global" if solo and fell == len(solo) else
+                             "mixed" if fell else "own"),
                 "med_life": median([m["maximum"] for m in members]),
                 "min_mass": min(m["mass_g"] for m in members),
                 "max_mass": max(m["mass_g"] for m in members),
@@ -752,9 +928,12 @@ def figures(rows, summary, fit_rows, width=NOTES, only=None):
                else "fig1_allometry-phone.png",
           want=only in (None, "allometry"))
 
-    ranked = sorted([r for r in rows if r["lq_class_maximum"]
+    # Own-group quotient, with the global fallback for amphibians (D-28
+    # item 2): on the class quotient alone the olm, fifth in the page's own
+    # list, was missing from the figure beside it (claims check, R5).
+    ranked = sorted([r for r in rows if own_lq(r)
                      and not r["colonial"] and r["quality"] != "C"],
-                    key=lambda r: r["lq_class_maximum"])
+                    key=lambda r: own_lq(r))
     sel = ranked[:12] + ranked[-18:]
     # Bars from zero on a linear axis, with the ocean quahog out at 48, drew
     # the twelve species below parity as nothing at all - the entire "and who
@@ -764,9 +943,9 @@ def figures(rows, summary, fit_rows, width=NOTES, only=None):
     # the right is twice.
     fig, ax = plt.subplots(figsize=fig_size(width, row_aspect(30, display_px=width)))
     ys = range(len(sel))
-    ax.hlines(list(ys), 1, [r["lq_class_maximum"] for r in sel],
+    ax.hlines(list(ys), 1, [own_lq(r) for r in sel],
               color=[colors.get(r["pool"], "#888") for r in sel], lw=3.4)
-    ax.scatter([r["lq_class_maximum"] for r in sel], list(ys), s=26, zorder=3,
+    ax.scatter([own_lq(r) for r in sel], list(ys), s=26, zorder=3,
                color=[colors.get(r["pool"], "#888") for r in sel])
     ax.set_yticks(list(ys))
     ax.set_yticklabels([r["name"] for r in sel])
@@ -824,10 +1003,16 @@ def figures(rows, summary, fit_rows, width=NOTES, only=None):
     fig, axes = plt.subplots(1, 2, figsize=(width / 72, max(4.5, 0.235 * half + 1.6)))
     for ax, part in zip(axes, cols):
         ys = range(len(part))
-        ax.barh(list(ys), [g["geo_lq"] for g in part], color=ACC,
-                height=.72)
+        # D-28 item 2: an order scored against the global fit (amphibians,
+        # whose own fit is rejected) is drawn apart, because the all-animal
+        # line is not the scale the other bars are on.
+        ax.barh(list(ys), [g["geo_lq"] for g in part],
+                color=[SLATE if g["baseline"] == "global" else ACC
+                       for g in part], height=.72)
         ax.set_yticks(list(ys))
-        ax.set_yticklabels([g["group"] for g in part], fontsize=FS_2)
+        ax.set_yticklabels([g["group"] + (" *" if g["baseline"] == "global"
+                                          else "") for g in part],
+                           fontsize=FS_2)
         ax.invert_yaxis()
         ax.set_xlim(0, hi)
         ax.axvline(1, color=DIM, lw=1.2, ls="--")

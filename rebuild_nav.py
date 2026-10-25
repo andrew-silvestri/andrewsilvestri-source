@@ -223,7 +223,11 @@ NAV = [
     # from archived Wikidata and OpenStreetMap pulls), in its old place.
     # Beauty relisted 2026-10-24 by R5 (D-32: counted on research works, not
     # on every record naming the species), in its old place before skyline.
+    # Longevity relisted 2026-10-24 by R5 (D-28: amphibians scored on the
+    # global fit as the page says; the study-effort correction printed beside
+    # the pooled figures), first, in its old place, under its takeaway's name.
     ("Other", [
+        ("Outliving their size", "longevity.html"),
         ("Endangered, and studied", "beauty.html"),
         ("Skylines, played", "skyline.html"),
         ("Where the ground goes", "continents.html"),

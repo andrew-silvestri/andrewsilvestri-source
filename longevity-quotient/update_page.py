@@ -37,7 +37,8 @@ POOLS = [("All animals", None), ("Mammals", "Mammalia"), ("Birds", "Aves"),
 
 SOURCE_ROWS = [
     ("seed", "Hand-checked seed table",
-     "Records verified one at a time, each with its own citation."),
+     "Entered by hand, one species at a time; 88 of its rows are graded A, "
+     "and it includes projections as well as observed ages."),
     ("anage", "AnAge build 15",
      "The curated standard. Carries its own quality grade and a wild versus "
      "captive distinction, both of which are honoured rather than "
@@ -253,10 +254,13 @@ def arithmetic_section(summary, rows):
 <p>One ordinary least squares regression per baseline, unweighted, of
 log&#8321;&#8320; maximum lifespan in years on log&#8321;&#8320; adult body mass in grams,
 over the grade-A and grade-B records. Grade C is held out of every fit and
-scored against the result. Nothing is weighted. The simulation in
-<code>test_fit_strategy.py</code> is why
-&mdash; a thin record is biased short, not merely noisy, and down-weighting a
-bias still lets it through where dropping it does not. The count beside each
+scored against the result. Nothing is weighted. That rests on an
+assumption: that an uncertain record is biased short, not merely noisy, in
+which case down-weighting still lets the bias through and dropping does not.
+The simulation in <code>test_fit_strategy.py</code> shows that, but it marks
+exactly the records it shortened, so it illustrates the choice rather than
+proving it; in the real table grade C does not single out the briefly watched
+records (see Limits). The count beside each
 baseline above is the number of records in that fit. The sample spans
 {span:.1f} orders of magnitude of body mass, from {mass_str(lo)} to
 {mass_str(hi)}.</p>
@@ -277,7 +281,7 @@ month &mdash; which are unit or field errors, not observations, and which sat
 at the bottom of every ranking on this page. The rule is symmetric so that it
 cannot be accused of only removing what hurts, it never touches a grade-A
 record ({fmt(ga.get("seed", 0))} of those are rows of the hand-checked table,
-each checked against a citation; the other
+entered and checked by hand; the other
 {fmt(sum(ga.values()) - ga.get("seed", 0))} are AnAge records that AnAge itself
 grades high), and it deletes
 nothing: a demoted record keeps its row, its note says why, and the visualiser
@@ -303,6 +307,17 @@ def data_section(summary, report, rows):
         open(os.path.join(OUT, "provenance.csv"), encoding="utf-8"))}
     anage_unrec = sum(1 for r in rows if r.get("unknown_yr", "").strip()
                       and prov.get(r["scientific_name"]) == "anage")
+    # D-29 item 4, counted rather than typed (claims check, R5): the 62 / 48
+    # this paragraph carried came from a heuristic that did not ship.
+    tab = list(csv.DictReader(open(os.path.join(OUT, "lq_table.csv"),
+                                   encoding="utf-8")))
+    by_name = collections.defaultdict(list)
+    for r in tab:
+        if r["name"].strip():
+            by_name[r["name"].strip().lower()].append(r)
+    multi = [v for v in by_name.values() if len({r["sci"] for r in v}) > 1]
+    in_fits = sum(1 for v in multi if sum(
+        1 for r in v if r["quality"] != "C" and r["colonial"] != "True") > 1)
     return f"""<h2>Data</h2>
 
 <p>{fmt(report['final'])} species spanning {rk['phylum']} phyla,
@@ -311,15 +326,15 @@ def data_section(summary, report, rows):
 mass, at least one maximum lifespan, a quality grade and its provenance.
 Species are matched on the binomial alone, with no synonym resolution, so a
 species the sources name two ways is in the table twice: matching common names
-finds 62 such pairs, the African spurred tortoise as both <i>Centrochelys</i>
-and <i>Geochelone sulcata</i> among them, and in 48 both copies are grade A or
-B and enter the fits. The pink cockatoo and Major Mitchell&rsquo;s cockatoo,
+finds {fmt(len(multi))} common names carried by two or more binomials, the African
+spurred tortoise as both <i>Centrochelys</i> and <i>Geochelone sulcata</i> among
+them (some are distinct species that share a name), and for {fmt(in_fits)} of
+those names at least two copies are grade A or B and enter the fits. The pink cockatoo and Major Mitchell&rsquo;s cockatoo,
 one bird under two common names, are a further pair that check misses.
 {fmt(wild)} have a maximum their source labeled wild, {fmt(cap)} one it
-labeled captive, and {fmt(both)} have both &mdash; the comparison this
-project was built around, and the reason the merge keeps the hand-checked table
-at the top of the precedence order rather than letting a bulk source overwrite
-it. The largest set, {fmt(unrec)} species, carries a maximum whose source did
+labeled captive, and {fmt(both)} have both &mdash; the comparison the
+hand-checked table was built for, which is why no bulk source is allowed to
+overwrite it. The largest set, {fmt(unrec)} species, carries a maximum whose source did
 not say where the animal lived: the Amniote and AmphiBIO compilations report
 one figure per species with no origin, FishBase population maxima do the same,
 and {fmt(anage_unrec)} AnAge rows list the
@@ -351,6 +366,8 @@ NICK = {
     "Scorpaenidae": "the scorpionfishes of", "Hylobatidae": "the gibbons of",
     "Phyllostomidae": "the leaf-nosed bats of",
     "Natalidae": "the funnel-eared bats of",
+    "Urodela": "the salamanders and newts of", "Anura": "the frogs and toads of",
+    "Salamandridae": "the true salamanders and newts of",
 }
 
 
@@ -378,27 +395,45 @@ def groups_paragraph(groups, table=None):
     f.sort(key=lambda g: -float(g["geomean_lq_class"]))
     v = lambda g: f"{float(g['geomean_lq_class']):.2f}"
     n = lambda g: int(g["n_species"])
+    # D-28 item 2: amphibians have no fit of their own, so their orders are
+    # scored against the all-animal line, as the page says. The ranking
+    # includes them; the narrative keeps them apart, because that line is not
+    # the scale the other orders are on.
+    glob = lambda g: g.get("scored_against") == "global"
+    n_all = len(o)
+    lead = o[0]
+    amph = [g for g in o if glob(g)]
+    o = [g for g in o if not glob(g)]
+    f_glob = [g for g in f if glob(g)]
+    f = [g for g in f if not glob(g)]
     top = o[:2]
     big = [g for g in o[:12] if n(g) >= 100][:2]
     # D-29 item 11: four, so the opossums (0.49, below the ground birds)
     # are not skipped.
     bottom = o[-4:][::-1]
     by = {g["group"]: g for g in o}
-    parts = [f"<p>Of the {len(o)} orders holding four or more grade-A or B "
-             f"species, {_named('order', top[0])} top the list at {v(top[0])} "
-             f"and {_named('order', top[1])} follow at {v(top[1])}"]
+    parts = [f"<p>Of the {n_all} orders holding four or more grade-A or B "
+             f"species, "]
+    if glob(lead):
+        fits = (SUMMARY or {}).get("rejected_fits", {}).get("Amphibia", "")
+        mr = re.search(r"r2=([\d.]+)", fits)
+        parts.append(
+            f"{_named('order', lead)} top the list at {v(lead)}, but on a "
+            f"different footing: body mass explains "
+            + (f"only {float(mr.group(1)):.0%} of" if mr else "almost none of")
+            + " the spread in amphibian lifespans, so amphibians are scored "
+            "against the line for all animals "
+            "rather than a fit of their own, "
+            + " and ".join(f"{_named('order', g)} coming out at {v(g)} the "
+                           f"same way" for g in amph if g is not lead) +
+            ". Among orders scored against their own class, ")
     small = [g for g in top if n(g) < 10]
-    if small:
-        parts.append(" &mdash; but " + ("both rest" if len(small) == 2 else
-                     "one rests") + " on a handful of species, " +
-                     " and ".join(str(n(g)) for g in small) +
-                     (" respectively" if len(small) == 2 else "") +
-                     ", and a geometric mean over four animals is a claim "
-                     "about four animals")
-    parts.append(". ")
+    parts.append(f"{_named('order', top[0])} lead at {v(top[0])}" +
+                 (f", but on only {_n(n(top[0]))} species" if top[0] in small
+                  else "") + ". ")
     if big:
-        parts.append("The large groups near the top are the ones worth the "
-                     "weight: " + " and ".join(
+        parts.append("The large groups near the top carry more weight: "
+                     + " and ".join(
                          f"{_named('order', g)} at {v(g)} across {n(g):,} "
                          f"species" for g in big) + ". ")
     parts.append("At the bottom sit " + ", ".join(
@@ -415,7 +450,12 @@ def groups_paragraph(groups, table=None):
                      + ", ".join(f"{_named('family', g)} reach {v(g)} over "
                                  f"{n(g)} species" if i == 0 else
                                  f"{_named('family', g)} {v(g)}"
-                                 for i, g in enumerate(f[:3])) + ". ")
+                                 for i, g in enumerate(f[:3]))
+                     + "".join(f" (on the all-animal line, {_named('family', g)} "
+                               f"would reach {v(g)} over {n(g)} species)"
+                               for g in f_glob if float(g["geomean_lq_class"])
+                               > float(f[2]["geomean_lq_class"]))
+                     + ". ")
     # D-29 item 8: Sebastes is filed under two families, and the long-lived
     # rockfishes carry the Scorpaenidae figure.
     if table is not None and "Scorpaenidae" in [g["group"] for g in f[:3]]:
@@ -433,10 +473,7 @@ def groups_paragraph(groups, table=None):
                 f"sources file partly under Sebastidae and partly under "
                 f"Scorpaenidae, and without them the family comes to "
                 f"{gm:.2f}. ")
-    parts.append("Flight, burrowing, venom, armour and simply being difficult "
-                 "to swallow all register as raised quotients. Being a ground "
-                 "bird or a small terrestrial insectivore registers as the "
-                 "reverse.</p>")
+    parts.append("</p>")
     return "".join(parts)
 
 
@@ -471,32 +508,221 @@ def outcome_paragraph(table):
     art = lambda s: ("an " if s[0].lower() in "aeiou" else "a ") + s
     ts = [f"{art(r['name'].lower())} at {lq(r):.0f}&times;" for r in top]
     bs = [f"{art(r['name'].lower())} at {lq(r):.2f}&times;" for r in bot]
+    inv = [r for r in top if r["phylum"] != "Chordata"]
+    n_inv = sum(1 for r in table if r["phylum"] != "Chordata"
+                and r["quality"] != "C" and r["colonial"] != "True")
+    note = (f" {_n(len(inv)).capitalize()} of those six are invertebrates, "
+            f"scored against one line pooled from {n_inv} species of every "
+            f"invertebrate phylum here, a coarse yardstick." if inv else "")
     return ("<p>The highest quotients against their own group, among the grade-A "
             "and B records, belong to " + ", ".join(ts[:-1]) + " and " + ts[-1] +
-            " its predicted lifespan. The lowest belong to " +
+            " its predicted lifespan." + note + " The lowest belong to " +
             ", ".join(bs[:-1]) + " and " + bs[-1] + "." +
             "".join(" " + c for c in (_caveat(r) for r in top + bot) if c) +
             "</p>")
 
 
-def margin_values(t, table):
-    """The quotient beside each creature in the margin is that species' own
-    lq_class_maximum from the table; rewrite each one from the table."""
-    by = {}
-    for r in table:
-        by.setdefault(r["name"].strip().lower(), r)
-    k = 0
+WORD_N = {2: "two", 3: "three", 4: "four", 5: "five", 6: "six"}
+ZIP = os.path.join(SITE, "downloads", "longevity-code.zip")
 
-    def repl(m):
-        nonlocal k
-        r = by.get(m.group(1).strip().lower())
-        if not r:
-            return m.group(0)
-        v = float(r["lq_class_maximum"] or r["lq_global_maximum"])
-        k += 1
-        return f"<b>{m.group(1)}</b>{v:.2f}&times; prediction"
-    t = re.sub(r"<b>([^<]+)</b>([\d.]+)(?:&times;|\u00d7) prediction", repl, t)
-    return t, k
+
+def _order(lst, name):
+    for i, o in enumerate(lst):
+        if o[0] == name:
+            return i, o
+    return None, None
+
+
+HALVES = {1.0: "", 1.5: "one and a half", 2.0: "two", 2.5: "two and a half",
+          3.0: "three"}
+
+
+def _half(x):
+    return round(x * 2) / 2
+
+
+def headline(summary, table):
+    """h1 and standfirst (_INSIGHT rule 1). Led by the group finding, which
+    the study-effort checks move least (D-28); every figure in it is read
+    from the pooled run and both checks in summary.json, and the wording
+    stops the build if a check stops agreeing with it."""
+    h = summary["headline"]
+    ec = summary["effort_check"]
+    c, d = ec["corrected"], ec["dropped"]
+    by = {r["name"]: r for r in table}
+    hu = by["Human"]
+    runs = [{o[0]: o for o in x["orders"]} for x in (h, c, d)]
+    oo, co, do = runs
+
+    def every(k):
+        return [r[k][1] for r in runs if k in r]
+    bats, prim, gall = every("Chiroptera"), every("Primates"), every("Galliformes")
+    lo = min(bats + prim)
+    hi = max(bats + prim)
+    # the h1 says "one and a half to two and a half"; hold it to that
+    if not (_half(lo) == 1.5 and _half(hi) == 2.5 and min(bats + prim) > 1.25):
+        raise SystemExit(f"h1: bats/primates span {lo:.2f}-{hi:.2f} no longer "
+                         f"reads 'one and a half to two and a half'")
+    if not all(.45 <= v < .55 for v in gall):
+        raise SystemExit(f"h1: Galliformes {gall} is no longer 'half'")
+    # tenrecs and opossums are named on the pooled and corrected runs only
+    # (too few species survive the dropped run to rank them)
+    for k in ("Afrosoricida", "Didelphimorphia"):
+        if not all(.4 <= r[k][1] < .6 for r in (oo, co)):
+            raise SystemExit(f"standfirst: {k} is no longer about half")
+    hs = sorted((h["species"]["Human"], c["species"]["Human"],
+                 d["species"]["Human"]))
+    g = summary["global_fit"]
+    qu = float(by["Ocean quahog"]["maximum"])
+    return (
+        f"<h1>Bats and primates live one and a half to two and a half times "
+        f"as long as their size predicts; pheasants and their kin, half as "
+        f"long</h1>\n"
+        f'<p class="dim">Bigger animals live longer, by a predictable amount. '
+        f"Draw a line through the record lifespans of the {fmt(round(g['n']))} "
+        f"species whose records are sound enough to fit, against their body "
+        f"weight, and each tenfold gain in weight "
+        f"adds about {(10 ** g['b'] - 1):.0%} to the years; mammals, birds, "
+        f"reptiles, fish and invertebrates each get a line of their own. "
+        f"Against the mammal line, bats as a group live {oo['Chiroptera'][1]:.1f} "
+        f"times as long as their size predicts, across "
+        f"{oo['Chiroptera'][2]} species, and primates {oo['Primates'][1]:.1f} "
+        f"times across {oo['Primates'][2]}, while tenrecs and golden moles, and opossums, reach "
+        f"about half of what their size predicts. Against the bird line, the "
+        f"{oo['Galliformes'][2]} pheasants, grouse, quail and chickens reach "
+        f"about half too. Those "
+        f"figures depend on a gap in the data: many mammals have been watched "
+        f"only briefly, which makes their records short and pulls the mammal "
+        f"line down. Corrected for that, bats come to "
+        f"{co['Chiroptera'][1]:.1f} and primates to {co['Primates'][1]:.1f}; "
+        f"leave the briefly watched mammals out altogether and they come to "
+        f"{do['Chiroptera'][1]:.1f} and {do['Primates'][1]:.1f}, still above "
+        f"their size (the Limits section at the foot of the page shows each "
+        f"figure all three ways). People sit "
+        f"higher still: the longest verified human life, "
+        f"{float(hu['maximum']):g} years, is {hs[0]:.1f} to {hs[-1]:.1f} times "
+        f"the line for a {float(hu['mass_g']) / 1000:.0f}-kilogram mammal, "
+        f"depending on the same correction, though a record set among "
+        f"billions of people is an upper bound "
+        f"against species watched a few dozen times. The animals far above "
+        f"their line, bats, the naked mole-rat and the ocean quahog, a clam "
+        f"recorded at {qu:.0f} years, are where biologists look for clues to "
+        f"slowing ageing, the case Steven Austad makes in "
+        f"<i>Methuselah&rsquo;s Zoo</i> (2022).</p>")
+
+
+def limits_section(summary, table=()):
+    """D-28 item 1, disclosed (option B): the page's pooled baseline beside
+    the effort-corrected one, every figure from summary.json."""
+    h, e = summary["headline"], summary["effort_check"]
+    c = e["corrected"]
+    sh = e["amniote_share_of_fit"]
+    off = e["offsets_log10"]
+
+    def x(p):
+        return f"&times;{10 ** off[p]['amniote']:.2f}"
+    dr = e["dropped"]
+    runs = (h, c, dr)
+    gs = {(g["rank"], g["group"]): g for g in csv.DictReader(open(
+        os.path.join(OUT, "group_summary.csv"), encoding="utf-8"))}
+    amph = float(gs[("class", "Amphibia")]["geomean_lq_class"])
+    uro = float(gs[("order", "Urodela")]["geomean_lq_class"])
+    rows = [
+        ("Birds against mammals of equal mass",
+         *[f"{x['bird_mammal_1kg']:.1f}&times;" for x in runs]),
+        ("Mammal record lifespan predicted at 1 kg",
+         *[f"{x['mammal_1kg_yr']:.1f} yr" for x in runs]),
+    ]
+    by = {r["name"]: r for r in table}
+
+    def label(sp):
+        r = by.get(sp)
+        if not r or sp == "Human":
+            return sp
+        return (f"{sp} ({float(r['maximum']):g} years at "
+                f"{float(r['mass_g']):g} grams)")
+    for sp in ("Human", "Brandt's bat", "Naked mole-rat"):
+        rows.append((label(sp),
+                     *[f"{x['species'][sp]:.1f}&times;" for x in runs]))
+
+    def rk(x, k):
+        i, o = _order(x["orders"], k)
+        return "too few to rank" if o is None else f"{o[1]:.2f} (#{i + 1})"
+    for k, nm in (("Chiroptera", "Bats"), ("Primates", "Primates"),
+                  ("Monotremata", "Monotremes"), ("Galliformes", "Galliformes")):
+        rows.append((f"{nm}, and rank among orders", *[rk(x, k) for x in runs]))
+    tbl = ["<table>", "<tr><th>Figure</th><th>As shown on this page</th>"
+           "<th>Corrected for study effort</th>"
+           "<th>Briefly watched records left out</th></tr>"]
+    tbl += [f"<tr><td>{a}</td><td>{b}</td><td>{d}</td><td>{f}</td></tr>"
+            for a, b, d, f in rows]
+    tbl.append("</table>")
+    return (
+        "<h2>Limits</h2>\n\n"
+        "<p>The biggest one is who has been watched. A maximum lifespan is a "
+        "record, and records grow with the number of animals anyone followed. "
+        "The Amniote compilation supplies a lifespan only for species AnAge "
+        f"lacks, which are the less-studied ones, and it is "
+        f"{sh['Mammalia']:.0%} of the mammal baseline, {sh['Reptilia']:.0%} of "
+        f"the reptile one and {sh['Aves']:.0%} of the bird one. Where both "
+        "databases carry a species the audit found they agree (median "
+        "difference zero), but at equal mass within a "
+        f"family an Amniote-only record sits at {x('Mammalia')} the lifespan "
+        f"of an AnAge record resting on a medium number of animals (AnAge "
+        f"sorts its records from tiny to huge by how many animals stand "
+        f"behind them) in mammals, "
+        f"{x('Reptilia')} in reptiles and {x('Aves')} in birds. That pulls "
+        "each baseline down, so every well-studied species above it reads "
+        "high. The figures on this page keep the pooled baseline. The "
+        "site&rsquo;s October 2026 quality audit measured the gap and ran two "
+        "checks, both rebuilt in <code>build_lq.py</code> and run on every "
+        "build. The first rescales every record whose source&rsquo;s offset "
+        "can be measured (Amniote, and AnAge by sample size; not the "
+        "hand-checked rows, FishBase or AmphiBIO) to the medium level and "
+        "re-runs the same fits. The second, cruder, "
+        "leaves out every record resting on few or an unknown number of "
+        f"animals, which cuts the mammal line to {dr['n_mammals']} species "
+        "and skews it towards the well-kept ones, so it is a bound rather "
+        "than a better estimate. The fish and invertebrate lines do not move "
+        "in either: they are built from hand-checked and AnAge records "
+        "only.</p>\n\n" + "\n".join(tbl) + "\n\n"
+        "<p>Relative to other amphibians, the salamanders&rsquo; standing "
+        "is smaller than their rank suggests: amphibians as a whole sit "
+        f"{amph:.1f} times above the all-animal line, so Urodela&rsquo;s "
+        f"{uro:.2f} is about {uro / amph:.1f} times the amphibian "
+        "average.</p>\n\n"
+        "<p>Under the correction the ranking of orders barely moves: across the "
+        f"{e['orders_compared']} orders the two runs share, the rank "
+        f"correlation is {e['order_rank_spearman']:.3f}, and "
+        + ("all ten" if e['top10_shared'] == 10 else _n(e['top10_shared']))
+        + f" of the top ten are the same. The figures "
+        "for single well-documented mammals, the human&rsquo;s included, are "
+        "where the correction bites. The human figure has a further problem "
+        "no correction here reaches: it is the best of billions of "
+        "documented lives, set against species watched a few dozen times, "
+        "so it is an upper bound.</p>\n\n"
+        "<p>Three more. Species are treated as independent points, but "
+        "related species share their lifespans by descent, and inside mammal "
+        "families lifespan rises more slowly with mass than it does across "
+        "them, so &ldquo;each tenfold gain in weight&rdquo; is a statement "
+        "across groups. The maximum mixes record types: a zoo record for one "
+        "species, a banding recapture for another, a compilation figure of "
+        "unknown origin for a third, and part of any order&rsquo;s position "
+        "is which kind its members have. And some species are in the table "
+        "twice under two names (see Data), which counts them twice in their "
+        "groups.</p>\n")
+
+
+def code_section():
+    kb = os.path.getsize(ZIP) / 1024 if os.path.exists(ZIP) else None
+    size = ("" if kb is None else f" ({kb:,.0f} KB)" if kb < 1024
+            else f" ({kb / 1024:.1f} MB)")
+    return ("<h2>The code</h2>\n\n"
+            "<p>The merge of the six lifespan databases, the fits, the "
+            "study-effort check behind Limits, the species and group tables, "
+            "and the visualiser: "
+            f'<a href="downloads/longevity-code.zip">longevity-code.zip</a>'
+            f"{size}.</p>\n")
 
 
 def main(apply=False):
@@ -504,6 +730,8 @@ def main(apply=False):
     global SUMMARY
     SUMMARY = summary
     t = open(PAGE, encoding="utf-8").read()
+    table0 = list(csv.DictReader(open(os.path.join(OUT, "lq_table.csv"),
+                                      encoding="utf-8")))
     n = report["final"]
     changes = []
 
@@ -515,6 +743,17 @@ def main(apply=False):
             t = new
         else:
             changes.append(f"MISSED {label}")
+
+    sub(r'<h1>.*?</h1>\s*<p class="dim">.*?</p>',
+        lambda m: headline(summary, table0), "headline and standfirst")
+
+    def desc(m):
+        h1 = re.search(r"<h1>(.*?)</h1>", headline(summary, table0)).group(1)
+        return (f'{m.group(1)}"{h1}. Lifespan against body mass for '
+                f'{fmt(n)} species, and how much the answer depends on which '
+                f'animals were watched.">')
+    sub(r'(<meta (?:name|property)="(?:og:)?description" content=)"[^"]*">',
+        desc, "meta descriptions", count=2)
 
     # the headline count, wherever it appears as "N species in this model"
     sub(r"(?i)the [\d,]+ species in this model",
@@ -529,15 +768,18 @@ def main(apply=False):
     if "Aves" in fits and "Mammalia" in fits:
         b, mm = fits["Aves"], fits["Mammalia"]
         ratio = 10 ** (b["a"] + 3 * b["b"]) / 10 ** (mm["a"] + 3 * mm["b"])
-        sub(r"Birds come out\s+about [\d.]+ times longer-lived than mammals of equal mass",
-            f"Birds come out\nabout {ratio:.1f} times longer-lived than mammals of equal mass",
-            "bird/mammal ratio")
+        ec = summary["effort_check"]["corrected"]["bird_mammal_1kg"]
+        sub(r"Birds come out\s+about [\d.]+ times longer-lived than mammals"
+            r" of equal mass(?: \([\d.]+ once[^)]*\))?",
+            f"Birds come out\nabout {ratio:.1f} times longer-lived than "
+            f"mammals of equal mass ({ec:.1f} once the mammal baseline is "
+            f"corrected for study effort; see Limits)", "bird/mammal ratio")
     rej = (summary.get("rejected_fits") or {}).get("Amphibia", "")
     mr = re.search(r"r2=([\d.]+), n_eff=(\d+)", rej)
     if mr:
-        sub(r"The amphibian regression returns an r\u00b2 of [\d.]+ across [\w\-]+ species",
+        sub(r"The amphibian regression returns an r\u00b2 of [\d.]+ across [\w\-]+ (?:amphibian )?species",
             f"The amphibian regression returns an r\u00b2 of {float(mr.group(1)):.2f} "
-            f"across {mr.group(2)} species", "amphibian rejection")
+            f"across {mr.group(2)} amphibian species", "amphibian rejection")
     groups = list(csv.DictReader(open(os.path.join(OUT, "group_summary.csv"),
                                       encoding="utf-8")))
     orders = [g for g in groups if g["rank"] == "order"
@@ -545,8 +787,8 @@ def main(apply=False):
     sub(r"Of the \d+ orders holding four or more (?:grade-A or B )?species",
         f"Of the {len(orders)} orders holding four or more species",
         "order count in prose")
-    sub(r"All \d+ orders holding four or more species",
-        f"All {len(orders)} orders holding four or more species",
+    sub(r"All \d+ orders holding four or more (?:grade-A or B )?species",
+        f"All {len(orders)} orders holding four or more grade-A or B species",
         "order count in caption")
     table = list(csv.DictReader(open(os.path.join(OUT, "lq_table.csv"),
                                      encoding="utf-8")))
@@ -554,13 +796,17 @@ def main(apply=False):
         lambda m: groups_paragraph(groups, table), "groups paragraph")
     sub(r"<p>The highest quotients against their own group.*?</p>",
         lambda m: outcome_paragraph(table), "what-comes-out paragraph")
-    t, k = margin_values(t, table)
-    changes.append(f"margin quotients ({k})")
+    # _INSIGHT rule 4: the margin rail is gone (R5, 2026-10-24). A rail put
+    # back by hand would carry typed quotients nothing rewrites.
+    if "marginalia" in t:
+        changes.append("MISSED: a margin rail is back on the page")
     lo = min(float(r["mass_g"]) for r in rows if r["mass_g"])
     hi = max(float(r["mass_g"]) for r in rows if r["mass_g"])
-    sub(r"run from a\s+\w+ at .+? to a blue whale at [\d,]+ tonnes, [\d.]+ orders of\s+magnitude",
-        f"run from a\nrotifer at {mass_str(lo).replace('&micro;', '&micro;')} to a blue whale at "
-        f"{mass_str(hi)}, {math.log10(hi / lo):.1f} orders of\nmagnitude", "mass range in intro")
+    r = float(f"{hi / lo / 1e12:.1g}")
+    sub(r"run from a\s+(?:microscopic )?rotifer.+? to a blue whale (?:at|of) [\d,]+ tonnes, .+?(?:orders of\s+magnitude|to one)",
+        f"run from a\nmicroscopic rotifer of {mass_str(lo)} to a blue whale of "
+        f"{mass_str(hi)}, a range in body mass of about {r:g} trillion to one",
+        "mass range in intro")
 
     # the explainer figure, once, after the quotient definition
     if 'lq_explained.png' not in t:
@@ -571,9 +817,9 @@ def main(apply=False):
                'allometry predicts beside the lifespan actually observed, and '
                'the quotient that falls out.">\n'
                '<p class="small">Mass rises left to right and so does the '
-               'prediction, because the fit can only go up. What the animals '
-               'do is not monotonic, and the quotient is what is left once '
-               'size has been divided out.</p>\n\n')
+               'prediction, because the line only rises with size. The '
+               'animals scatter above and below it, and the quotient '
+               'measures by how much.</p>\n\n')
         if anchor in t:
             t = t.replace(anchor, fig + anchor, 1)
             changes.append("explainer figure inserted")
@@ -598,7 +844,10 @@ def main(apply=False):
             ("<h2>Where the data comes from</h2>",
              lambda: sources_section(report, rows), "sources section"),
             ("<h2>The arithmetic, written out</h2>",
-             lambda: arithmetic_section(summary, rows), "arithmetic section")):
+             lambda: arithmetic_section(summary, rows), "arithmetic section"),
+            ("<h2>Limits</h2>", lambda: limits_section(summary, table0),
+             "limits section"),
+            ("<h2>The code</h2>", code_section, "code section")):
         block = builder()
         if marker in t:
             t = re.sub(re.escape(marker) + r".*?(?=<h2>)", block + "\n", t,
