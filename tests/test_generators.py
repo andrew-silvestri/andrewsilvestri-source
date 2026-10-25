@@ -117,6 +117,10 @@ GENERATORS = [
     # builder needs the same files, so the page is the generator checked here.
     ("uri page: uri/update_page.py --apply",
      ["update_page.py", "--apply"], "uri", "site"),
+    # ethane/update_page.py writes site/ethane.html from ethane/outputs/payload.json, reading its
+    # quotations from ethane/data/raw (gitignored) at render time (Q11, 2026-10-25).
+    ("ethane page: ethane/update_page.py --apply",
+     ["update_page.py", "--apply"], "ethane", "site"),
     # storage/update_page.py writes site/storage.html from storage/outputs/payload.json
     # (build_storage.py, which needs ERCOT's files under storage/data/raw, gitignored) and
     # storage/data/imm.json. R4, 2026-10-23.

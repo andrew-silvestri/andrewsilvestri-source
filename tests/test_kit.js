@@ -101,19 +101,25 @@ function canon(svgText) {
                  days: [{ t: 0 }, { t: 0.37 }, { t: 1 }, { t: 1, lit: 1 }, { t: 1, lit: 0.5, mix: 0.49 },
                         { t: 1, lit: 0.5, mix: 0.51 }, { t: 1, mix: 1 }, { t: 1, mix: 1, lit: 1 }] };
   let pairs = 0, bad = [];
+  // One document for the whole sweep, re-filled per pair. R4 found unclosed windows ran node out of memory
+  // and closed them; closed windows are still retained: with ethane.html's spec (Q11, 2026-10-25) the heap
+  // stood at 3.87 GB after this loop and the next section aborted (rc=134). Parsing into one body serializes
+  // exactly as a fresh window's body does, which is what canon() is.
+  const one = new JSDOM('<body></body>').window, body = one.document.body;
   for (const spec of SPECS) for (const w of [320, 517, 720, 1140]) {
     const sts = grid[spec.type];
     for (const a of sts) for (const b of sts) {
       if (a === b) continue;
-      const dom = new JSDOM('<body>' + Charts.render(spec, a, { width: w }) + '</body>');
-      Charts.update(dom.window.document.querySelector('svg'), spec, b);
-      const got = dom.window.document.body.innerHTML, want = canon(Charts.render(spec, b, { width: w }));
-      // R4: a days chart is 365 keyed bars; unclosed windows over its 224 pairs ran node out of memory
-      dom.window.close();
+      body.innerHTML = Charts.render(spec, a, { width: w });
+      Charts.update(body.querySelector('svg'), spec, b);
+      const got = body.innerHTML;
+      body.innerHTML = Charts.render(spec, b, { width: w });
+      const want = body.innerHTML;
       pairs++;
       if (got !== want && bad.length < 3) bad.push(spec.id + ' @' + w + ' ' + JSON.stringify(a) + '->' + JSON.stringify(b));
     }
   }
+  one.close();
   say(bad.length === 0 && pairs > 0, 'parity (node): update() == render() over ' + pairs + ' state pairs' + (bad.length ? ': ' + bad.join('; ') : ''));
 }
 
@@ -133,9 +139,12 @@ function canon(svgText) {
   const bad = [];
   let n = 0;
   for (const spec of withBars) for (let w = 320; w <= 1140; w += 10) for (const t of [0.1, 0.5, 1]) {
-    const d = new JSDOM('<body>' + Charts.render(spec, { t }, { width: w }) + '</body>').window.document;
+    // Q11, 2026-10-25: these windows were never closed; with ethane.html's spec added the run
+    // reached node's 4 GB heap and aborted (rc=134), as the parity loop's did in R4. Close each one.
+    const win = new JSDOM('<body>' + Charts.render(spec, { t }, { width: w }) + '</body>').window, d = win.document;
     const clipped = new Set([...d.querySelectorAll('g[clip-path] text')].map(e => e.textContent));
     const outside = [...d.querySelectorAll('svg > text')].map(e => e.textContent);
+    win.close();
     for (const u of spec.under.filter(u => u.kind === 'bars')) for (const b of u.bars) {
       n++;
       if ((clipped.has(b.text) || !outside.includes(b.text)) && bad.length < 3) bad.push(spec.id + ' @' + w + ' t=' + t + ' "' + b.text + '"');

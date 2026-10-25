@@ -228,6 +228,13 @@ TARGETS = [
     # readers refuse a file whose SHA-1 differs from the manifest.
     target("uri", "uri-code.zip", keep={"outputs"},
            skip=("data/raw", "data/raw/*", "outputs/*.png")),
+    # Ethane left in the gas (Q11, 2026-10-25): the fetch script, the readers that take every
+    # figure and quotation out of EIA's files, the payload builder and its checks against EIA's
+    # printed figures, the page generator and the tests, with the payload and data/fetched.json.
+    # Not data/raw: the fetch script re-downloads EIA's files and the readers refuse one whose
+    # SHA-1 differs from the manifest.
+    target("ethane", "ethane-code.zip", keep={"outputs"},
+           skip=("data/raw", "data/raw/*", "outputs/*.png")),
     # food-code.zip retired with its page on 2026-09-09: food.html was
     # unpublished at Andrew's request, for now, and the last build is
     # unpublished/downloads/food-code.zip. The TARGET goes with the page,

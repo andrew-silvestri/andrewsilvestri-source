@@ -40,7 +40,7 @@ const pw = require('playwright');
 
 const SITE = path.join(__dirname, '..', 'site');
 const PAGES = ['index', 'about', 'code', 'heat', 'storage', 'climate-cost',
-               'longevity', 'skyline', 'continents', 'beauty', 'lostgas', 'takeaway', 'uri'];
+               'longevity', 'skyline', 'continents', 'beauty', 'lostgas', 'takeaway', 'uri', 'ethane'];
 const MATRIX = process.argv.includes('--matrix');
 const VIEWPORTS = MATRIX
   ? [[360, 780], [390, 844], [768, 1024], [1024, 768], [1440, 900],
