@@ -1,0 +1,177 @@
+{
+ "eia_N3010OK2a.xls": {
+  "bytes": 29696,
+  "fetched": "2026-10-24",
+  "sha1": "f3a5c40fa962a8efef28c1885f57b30a2a5781e3",
+  "url": "https://www.eia.gov/dnav/ng/hist_xls/N3010OK2a.xls",
+  "via": "urllib"
+ },
+ "eia_N3010TX2a.xls": {
+  "bytes": 29696,
+  "fetched": "2026-10-24",
+  "sha1": "80de7f515e1b2ebfb790e3a7f2e72f27ad17f0d7",
+  "url": "https://www.eia.gov/dnav/ng/hist_xls/N3010TX2a.xls",
+  "via": "urllib"
+ },
+ "eia_NA1501_SOK_8a.xls": {
+  "bytes": 29184,
+  "fetched": "2026-10-24",
+  "sha1": "c12fba19f55c4aa24db849fbdf6c95a27da9238b",
+  "url": "https://www.eia.gov/dnav/ng/hist_xls/NA1501_SOK_8a.xls",
+  "via": "urllib"
+ },
+ "eia_NA1501_STX_8a.xls": {
+  "bytes": 29184,
+  "fetched": "2026-10-24",
+  "sha1": "ca841bd47b4c7a90576a0f4c5acfda90315f1ded",
+  "url": "https://www.eia.gov/dnav/ng/hist_xls/NA1501_STX_8a.xls",
+  "via": "urllib"
+ },
+ "eia_glossary_c.html": {
+  "bytes": 168659,
+  "fetched": "2026-10-24",
+  "sha1": "a7ddf175f022c10b91e17dd33b27ade1acb2f113",
+  "url": "https://www.eia.gov/tools/glossary/index.php?id=C",
+  "via": "urllib"
+ },
+ "ok_74os_9073.html": {
+  "bytes": 21083,
+  "fetched": "2026-10-24",
+  "sha1": "2a75b02f2811b15c949192b7392670929f0c8513",
+  "url": "https://www.oscn.net/applications/oscn/DeliverDocument.asp?CiteID=488457",
+  "via": "urllib"
+ },
+ "ok_ong_ial.pdf": {
+  "bytes": 986504,
+  "fetched": "2026-10-24",
+  "sha1": "d0031282d26831ee5763d3609539c6c7ea7fdc4b",
+  "url": "https://oklahoma.gov/content/dam/ok/en/occ/documents/pu/pud-reports-page/securitization-reports/securitization-costs/ong/ong-issuance-advice-letter.pdf",
+  "via": "urllib"
+ },
+ "ok_ong_order.pdf": {
+  "bytes": 1385076,
+  "fetched": "2026-10-24",
+  "sha1": "e6d0fca4709f5eae4cc9845fe96a8c11bb6bafbb",
+  "url": "https://oklahoma.gov/content/dam/ok/en/occ/documents/pu/pud-reports-page/securitization-reports/securitization-costs/ong/ong-financing-order-723033.pdf",
+  "via": "urllib"
+ },
+ "ok_ong_trueup_2026-03.pdf": {
+  "bytes": 1512101,
+  "fetched": "2026-10-24",
+  "sha1": "5593abfbad353bdf2496c0891824e620763346f2",
+  "url": "https://oklahoma.gov/content/dam/ok/en/occ/documents/pu/pud-reports-page/securitization-reports/ong/2026-03-02-ong-trueup-letter-and-workpapers.pdf",
+  "via": "urllib"
+ },
+ "ok_sb1049.pdf": {
+  "bytes": 111973,
+  "fetched": "2026-10-24",
+  "sha1": "6a3dc36d079baaa24e16fa2c1a41ba1fb272eb57",
+  "url": "https://oklegislature.gov/cf_pdf/2021-22%20enr/sb/sb1049%20enr.pdf",
+  "via": "urllib"
+ },
+ "ok_sb1050.pdf": {
+  "bytes": 128819,
+  "fetched": "2026-10-24",
+  "sha1": "d44813b70a7c12f1025b45e01df01c826b441107",
+  "url": "https://oklegislature.gov/cf_pdf/2021-22%20enr/sb/sb1050%20enr.pdf",
+  "via": "urllib"
+ },
+ "ok_suo_ial.pdf": {
+  "bytes": 399265,
+  "fetched": "2026-10-24",
+  "sha1": "0187b54686ec90e74b2af633374c078e9e4a705a",
+  "url": "https://oklahoma.gov/content/dam/ok/en/occ/documents/pu/pud-reports-page/securitization-reports/securitization-costs/summit/suo-issuance-advice-letter.pdf",
+  "via": "urllib"
+ },
+ "ok_suo_order.pdf": {
+  "bytes": 1030949,
+  "fetched": "2026-10-24",
+  "sha1": "a0469413152477e9e09e2c18e4117bb1eb13eb6e",
+  "url": "https://oklahoma.gov/content/dam/ok/en/occ/documents/pu/pud-reports-page/securitization-reports/securitization-costs/summit/suo-financing-order-723435.pdf",
+  "via": "urllib"
+ },
+ "ok_suo_servicer_2026-09.pdf": {
+  "bytes": 319430,
+  "fetched": "2026-10-24",
+  "sha1": "90b6b3c50d0dfa5be53a00ad3b2748cce5842603",
+  "url": "https://oklahoma.gov/content/dam/ok/en/occ/documents/pu/pud-reports-page/securitization-reports/summit/2026-09-24-suo-servicers-certificate.pdf",
+  "via": "urllib"
+ },
+ "ok_suo_trueup_2026-03.pdf": {
+  "bytes": 389352,
+  "fetched": "2026-10-24",
+  "sha1": "d0f2c6035c5ac847329d9f8326ce69827d0f29cc",
+  "url": "https://oklahoma.gov/content/dam/ok/en/occ/documents/pu/pud-reports-page/securitization-reports/summit/2026-03-27-suo-trueup-letter.pdf",
+  "via": "urllib"
+ },
+ "tx_atmos_midtex_2025-07.pdf": {
+  "bytes": 2056968,
+  "fetched": "2026-10-24",
+  "sha1": "c8781df18d81957e831cbf564c06f7b313485af0",
+  "url": "https://www.atmosenergy.com/static/372582059e73b4772075f6dd74107497/Mid-Tex%20Tariffs%20-%20July%201,%202025.pdf",
+  "via": "urllib"
+ },
+ "tx_os_2023.pdf": {
+  "bytes": 3472901,
+  "fetched": "2026-10-24",
+  "sha1": "584041e6b53e841c530493964af1108fc8398c2d",
+  "url": "https://tngsfc.com/bonddocs/TNGSFC%20CRR%20Bonds,%20Taxable%20Series%202023.pdf",
+  "via": "urllib"
+ },
+ "tx_outstanding_2026.pdf": {
+  "bytes": 194475,
+  "fetched": "2026-10-24",
+  "sha1": "535557e2bcd25fb49e6c800057416c3bd515c28a",
+  "url": "https://tngsfc.com/pdf/Report%20of%20Oustanding%20Bonds%20and%20Estimated%20Administrative%20Expenses.pdf",
+  "via": "urllib"
+ },
+ "tx_rrc_2023-10-04.html": {
+  "bytes": 43424,
+  "fetched": "2026-10-24",
+  "sha1": "289892e0de7f27289588a0dda73262a5b5e47c80",
+  "url": "https://www.rrc.texas.gov/announcements/100423-customer-rate-relief-charges-included-natural-gas-bills-starting-october-2023",
+  "via": "urllib"
+ },
+ "tx_tariff_6263.pdf": {
+  "bytes": 1908758,
+  "fetched": "2026-10-24",
+  "sha1": "a185833888ab89c2759162606180ec39d6875bc4",
+  "url": "https://rrc.texas.gov/media/gastariffs/gftr0048b_6263.pdf",
+  "via": "urllib"
+ },
+ "tx_tariff_6776.pdf": {
+  "bytes": 3272770,
+  "fetched": "2026-10-24",
+  "sha1": "7dc68bf51fc70598fb738bf5fa6a1236fdf710a8",
+  "url": "https://www.rrc.texas.gov/media/gastariffs/gftr0048b_6776.pdf",
+  "via": "urllib"
+ },
+ "tx_tariff_6931.pdf": {
+  "bytes": 1689284,
+  "fetched": "2026-10-24",
+  "sha1": "d0007407b488501549e6c289a98590adcaf3b411",
+  "url": "https://www.rrc.texas.gov/media/gastariffs/gftr0048b_6931.pdf",
+  "via": "urllib"
+ },
+ "tx_tgs_crr.pdf": {
+  "bytes": 202716,
+  "fetched": "2026-10-24",
+  "sha1": "8a1cb7df6d80c5a18dfd3a24f71569e01121b82c",
+  "url": "https://www.texasgasservice.com/media/TGS/Tariffs/All/CRR.pdf",
+  "via": "urllib"
+ },
+ "tx_tgs_securitization.html": {
+  "bytes": 185635,
+  "fetched": "2026-10-24",
+  "sha1": "51241198ade5efea8937a5e90840bae5e3bc506e",
+  "url": "https://www.texasgasservice.com/Securitization",
+  "via": "urllib"
+ },
+ "tx_utilcode_104.pdf": {
+  "bytes": 242862,
+  "fetched": "2026-10-24",
+  "sha1": "7436ad58d82654a1dd4d2a6c04f5dce92637c731",
+  "url": "https://tcss.legis.texas.gov/resources/UT/pdf/UT.104.pdf",
+  "via": "urllib"
+ }
+}

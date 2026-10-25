@@ -112,6 +112,11 @@ GENERATORS = [
     # meter.html and meter-app.html are redirect stubs to lostgas.html since R3.
     ("lostgas redirects: lostgas/redirects.py --apply",
      ["redirects.py", "--apply"], "lostgas", "site"),
+    # uri/update_page.py writes site/uri.html from uri/outputs/payload.json, reading its
+    # quotations from uri/data/raw (gitignored) at render time (Q12, 2026-10-24); the payload
+    # builder needs the same files, so the page is the generator checked here.
+    ("uri page: uri/update_page.py --apply",
+     ["update_page.py", "--apply"], "uri", "site"),
     # storage/update_page.py writes site/storage.html from storage/outputs/payload.json
     # (build_storage.py, which needs ERCOT's files under storage/data/raw, gitignored) and
     # storage/data/imm.json. R4, 2026-10-23.

@@ -120,6 +120,8 @@ NAV = [
         # meter-code.zip from lostgas.html's appendix and code.html.
         ("Lost gas", "lostgas.html"),
         ("When the pipe is full", "takeaway.html"),
+        # Q12, 2026-10-24: the Winter Storm Uri bonds (D-18: new gas pages go in Gas).
+        ("Uri's gas bill", "uri.html"),
     ]),
     ("Power", [
         ("Industrial heat break-even", "heat.html"),

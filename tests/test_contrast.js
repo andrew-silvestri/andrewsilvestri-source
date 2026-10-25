@@ -35,7 +35,7 @@ const http = require('http'), fs = require('fs'), path = require('path');
 const HERE = __dirname;
 const SITE = path.join(HERE, '..', 'site');
 const FIXTURES = path.join(HERE, 'fixtures');
-const PAGES = ['about', 'beauty', 'climate-cost', 'code', 'continents', 'heat', 'index', 'longevity', 'lostgas', 'skyline', 'storage', 'takeaway',
+const PAGES = ['about', 'beauty', 'climate-cost', 'code', 'continents', 'heat', 'index', 'longevity', 'lostgas', 'skyline', 'storage', 'takeaway', 'uri',
                '_fixture/kit'];
 /* The insight kit's fixture (R1, 2026-10-23): tests/fixtures/kit.html, served
    from tests/ and never from site/, so the kit is measured by this gate as it
