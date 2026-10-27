@@ -125,12 +125,13 @@ def main(brk=None):
     lo, hi = min(allv), max(allv)
     halves = {1.5: "one and a half", 2.0: "two", 2.5: "two and a half"}
     span = f"{halves[round(lo * 2) / 2]} to {halves[round(hi * 2) / 2]}"
-    check(f"<h1>Bats and primates live {span} times" in t,
-          f"page: h1 span '{span}' matches {lo:.2f} to {hi:.2f}")
+    # the claim the h1 once carried now leads the standfirst
+    check(sf.startswith(f"Bats and primates live {span} times"),
+          f"page: standfirst span '{span}' matches {lo:.2f} to {hi:.2f}")
     gall = [x["Galliformes"] for x in o]
-    check("their kin, half as long</h1>" in t
+    check("their kin, half as long." in sf
           and all(.45 <= v < .55 for v in gall),
-          f"page: h1 'half' for Galliformes {[round(v, 2) for v in gall]}")
+          f"page: standfirst 'half' for Galliformes {[round(v, 2) for v in gall]}")
 
     # 4
     if brk == "rail":

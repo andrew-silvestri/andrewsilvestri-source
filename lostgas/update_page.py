@@ -102,28 +102,28 @@ def hero(P, I):
     h, b = P["hero"], P["model"]["band"]
     d = I["defaults"]
     steps = [
-        (f"<p><b>{h['n']:,} reports for {h['year']}.</b> Each bar counts the reports that put a share of "
-         f"their gas, in quarter-point steps, as lost and unaccounted for. The median report is {h['median']:g} per "
-         f"cent. The two end bars gather the {h['tail_lo']} reports at −{abs(h['lo']):g} or below and the "
-         f"{h['tail_hi']} above {h['hi']:g}.</p>", {"t": 1, "med": 1}),
-        (f"<p><b>Zero or less: {pct(h['le0'] / h['n'])} per cent.</b> {h['zero']} reports say exactly zero and "
-         f"{h['neg']} are negative: the meters say more gas went out than came in. A negative cannot be a "
-         f"physical loss.</p>", {"t": 1, "med": 1, "neg": 1}),
-        (f"<p><b>A system that loses nothing.</b> The shaded range is what this page's model of ordinary meter "
-         f"error reports for systems with no loss at all: the middle 90 per cent of them land between "
-         f"{num(b['lo'])} and {num(b['hi'])} per cent. Where the range sits depends on two assumptions, the gas's "
-         f"temperature and how many customer meters correct for it; its width, about {I['width_min']:.0f} points, "
-         f"hardly does.</p>", {"t": 1, "band": 1}),
-        (f"<p><b>Inside it: {pct(d['all'])} per cent of reports</b> at this page's assumptions, "
-         f"{pct(d['no_zero'])} per cent of those that are not exactly zero, and {pct(I['services_weighted'])} per "
-         f"cent of customers, counted by their service lines. That share moves with the two assumptions (the "
-         f"table in the appendix); the width does not. The typical report, {h['median']:g} per cent, is smaller "
-         f"than the spread meter error alone produces, and at these assumptions a real two-point loss read by perfect "
-         f"meters would land inside the range too.</p>", {"t": 1, "band": 1, "inside": 1}),
-        (f"<p><b>Far outside it.</b> {h['tail_hi']} reports for {h['year']} are above {h['hi']:g} per cent, and "
-         f"{h['tail_lo']} are at −{abs(h['lo']):g} or below. Meter errors of the ordinary kind modelled here do not "
-         f"produce figures like those. That is where the number can say something: not what is happening, but "
-         f"that something other than ordinary meter error is.</p>", {"t": 1, "band": 1}),
+        (f"<p><b>{h['n']:,} reports for {h['year']}.</b> Each bar counts the reports in one quarter-point step of "
+         f"the share reported as lost and unaccounted for. The median report is {h['median']:g} per "
+         f"cent. The two end bars hold the {h['tail_lo']} reports at −{abs(h['lo']):g} or below and the "
+         f"{h['tail_hi']} reports above {h['hi']:g}.</p>", {"t": 1, "med": 1}),
+        (f"<p><b>Zero or less: {pct(h['le0'] / h['n'])} per cent.</b> {h['zero']} reports give exactly zero and "
+         f"{h['neg']} are negative. In a negative report, the meters show more gas went out than came in. A negative "
+         f"figure cannot be a physical loss.</p>", {"t": 1, "med": 1, "neg": 1}),
+        (f"<p><b>A system that loses nothing.</b> The shaded range shows what this page's model of ordinary meter "
+         f"error reports for systems with no loss at all. The middle 90 per cent of these systems are between "
+         f"{num(b['lo'])} and {num(b['hi'])} per cent. The position of the range depends on two assumptions: the "
+         f"gas temperature and how many customer meters correct for it. Its width, about {I['width_min']:.0f} points, "
+         f"almost does not change.</p>", {"t": 1, "band": 1}),
+        (f"<p><b>Inside it: {pct(d['all'])} per cent of reports</b> at this page's assumptions. The range also "
+         f"holds {pct(d['no_zero'])} per cent of those that are not exactly zero, and {pct(I['services_weighted'])} per "
+         f"cent of customers, counted by their service lines. That share changes with the two assumptions (see the "
+         f"table in the appendix), but the width does not. The typical report, {h['median']:g} per cent, is smaller "
+         f"than the spread that meter error alone produces. At these assumptions, a real two-point loss read by "
+         f"perfect meters is also inside the range.</p>", {"t": 1, "band": 1, "inside": 1}),
+        (f"<p><b>Far outside it.</b> For {h['year']}, {h['tail_hi']} reports are above {h['hi']:g} per cent, and "
+         f"{h['tail_lo']} are at −{abs(h['lo']):g} or below. The ordinary meter errors in this model do not "
+         f"produce figures like those. Here the figure can give information. It cannot show what occurs, but it "
+         f"can show that something other than ordinary meter error occurs.</p>", {"t": 1, "band": 1}),
     ]
     return insight.scrolly(hero_spec(P), steps, from_state={"t": 0})
 
@@ -188,18 +188,19 @@ def values(P):
         "stamp": insight.stamp_annual(h["year"], "PHMSA's gas distribution annual reports", P["data_as_of"],
                                       "PHMSA adds each year's reports to the file"),
         "takeaways": insight.takeaways([
-            f"Customers carry the cost of lost gas: Texas's rule, for the utilities its Railroad Commission "
-            f"regulates, disallows lost-gas costs above {tx_cap:g} per cent of the gas a utility takes in unless the "
-            f"Commission allows more, and in Oklahoma at least one large utility's approved tariff collects it "
-            f"through the gas charge.",
-            f"The figure says most where it is far from the rest: {h['tail_hi']} reports for {h['year']} are above "
-            f"{h['hi']:g} per cent, beyond anything ordinary meter error produces, though a report cannot say why.",
-            "Where gas runs colder than 60 °F, some gas reported as lost was in fact delivered: cold gas is denser, "
-            "a meter that does not correct for temperature counts too little of it, and that gas is then charged "
-            "to every customer through the gas charge instead."]),
+            f"Customers pay the cost of lost gas. In Texas, the rule disallows lost-gas costs above {tx_cap:g} per "
+            f"cent of the gas a utility takes in unless the Commission allows more. The rule binds the utilities that "
+            f"the Railroad Commission regulates. In Oklahoma, the approved tariff of at least one large utility "
+            f"collects the cost through the gas charge.",
+            f"The figure gives the most information where it is far from the other reports. For {h['year']}, "
+            f"{h['tail_hi']} reports are above {h['hi']:g} per cent, beyond anything ordinary meter error produces. "
+            f"But a report cannot show why.",
+            "Where the gas is colder than 60 °F, some gas reported as lost was in fact delivered. Cold gas is "
+            "denser, and a meter that does not correct for temperature counts too little of it. The utility then "
+            "charges that gas to every customer through the gas charge instead."]),
         "hero": hero(P, I),
-        "clip": insight.clip(CLIP, "How an orifice meter infers flow, why an error every meter shares does "
-                                   "not average away, and where it lands. Captions on; about "
+        "clip": insight.clip(CLIP, "How an orifice meter infers flow, why an error that every meter shares "
+                                   "does not average away, and where that error lands. Captions on; about "
                                    f"{round(json.load(open(CLIP, encoding='utf-8'))['duration_s'])} seconds."),
         "h_median": f"{h['median']:g}", "h_year": str(h["year"]), "h_n": f"{h['n']:,}",
         "h_zero": str(h["zero"]), "h_neg": str(h["neg"]),

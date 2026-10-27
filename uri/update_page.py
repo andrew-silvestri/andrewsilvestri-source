@@ -105,18 +105,20 @@ def hero(P):
     band0 = P["hero"]["total"][i0] - P["hero"]["principal"][i0]
     steps = [
         (f"<p><b>${bn(peak)} billion to repay.</b> Oklahoma's two gas bond issues were sold in "
-         f"{mon(ok['ong']['closing'])} and {mon(ok['suo']['closing'])}, Texas's in {mon(tx['closing'])}. From then on "
-         f"customers' charges have to cover ${bn(peak, 2)} billion. The shaded gap between the lines is the interest "
-         f"still to pay, ${bn(band0)} billion; with the ${m1(tx['prepaid_interest'])} million Texas paid at the start, "
-         f"${bn(b['interest'])} billion in all.</p>", {"t": t_at(P, tx["closing"][:7])}),
+         f"{mon(ok['ong']['closing'])} and {mon(ok['suo']['closing'])}, and Texas's issue in {mon(tx['closing'])}. "
+         f"From then on, customers' charges must cover ${bn(peak, 2)} billion. The shaded gap between the lines is the "
+         f"interest still to pay, ${bn(band0)} billion. With the ${m1(tx['prepaid_interest'])} million that Texas paid "
+         f"at the start, the interest is ${bn(b['interest'])} billion in total.</p>", {"t": t_at(P, tx["closing"][:7])}),
         (f"<p><b>{mon(P['today'])}: ${bn(left_t, 2)} billion to go.</b> ${bn(b['paid'], 2)} billion has been paid. "
-         f"${bn(left_t - left_p)} billion of the interest is still to be paid, most of it: the principal is paid down "
-         f"slowly at first, so interest keeps running on a large balance for years.</p>", {"t": t_at(P, today)}),
-        (f"<p><b>{mon(tx['last_payment'])}: Texas's last payment.</b> Summit's ends in {mon(ok['suo']['last_payment'])}. "
-         f"What is left after Texas, ${bn(after_tx, 2)} billion, is Oklahoma Natural Gas's.</p>",
+         f"${bn(left_t - left_p)} billion of the interest, which is most of it, is still to be paid. The principal "
+         f"decreases slowly at first, so interest continues to accumulate on a large balance for years.</p>",
+         {"t": t_at(P, today)}),
+        (f"<p><b>{mon(tx['last_payment'])}: Texas's last payment.</b> Summit's schedule ends earlier, in "
+         f"{mon(ok['suo']['last_payment'])}. The amount left after Texas, ${bn(after_tx, 2)} billion, is for the "
+         f"Oklahoma Natural Gas bonds.</p>",
          {"t": t_at(P, tx["last_payment"][:7])}),
-        (f"<p><b>{mon(ok['ong']['last_payment'])}: the last of it.</b> Oklahoma Natural Gas's bonds run longest, "
-         f"about twenty-five years from their sale.</p>", {"t": 1}),
+        (f"<p><b>{mon(ok['ong']['last_payment'])}: the final payment.</b> The Oklahoma Natural Gas bonds have the "
+         f"longest term, about twenty-five years from their sale.</p>", {"t": 1}),
     ]
     return insight.scrolly(hero_spec(P), steps, from_state={"t": 0})
 
@@ -132,11 +134,11 @@ def split(P):
                       {"label": "Interest", "value": round(b["interest"] / 1e9, 6), "color": "moss"},
                       {"label": "Issuing the bonds", "value": round(b["repay"] / 1e9, 6) - round(b["to_utilities"] / 1e9, 6)
                        - round(b["interest"] / 1e9, 6), "color": "ink"}]}
-    steps = [(f"<p><b>${bn(b['repay'], 2)} billion.</b> What the charges repay across the three issues, as "
-              f"scheduled.</p>", {"s": 0}),
-             (f"<p><b>Where it goes.</b> ${bn(b['to_utilities'], 2)} billion repays the costs the commissions "
-              f"approved, ${bn(b['interest'], 2)} billion is interest, and the rest, ${m1(b['costs'])} million, paid "
-              f"for selling the bonds and for the reserves the proceeds funded.</p>", {"s": 1})]
+    steps = [(f"<p><b>${bn(b['repay'], 2)} billion.</b> This is the amount that the charges repay across the three "
+              f"issues, as scheduled.</p>", {"s": 0}),
+             (f"<p><b>Where the money goes.</b> ${bn(b['to_utilities'], 2)} billion repays the costs that the "
+              f"commissions approved. ${bn(b['interest'], 2)} billion is interest. The remainder, ${m1(b['costs'])} "
+              f"million, paid for the sale of the bonds and for the reserves that the proceeds funded.</p>", {"s": 1})]
     return insight.scrolly(spec, steps, from_state={"s": 0})
 
 
@@ -239,21 +241,22 @@ def values(P):
         # _INSIGHT rule 5: the page says its data does not update itself, and what it is as of. The kit's
         # stamp(live=False) printed a bare "This data does not update.", which the cold reader took for a
         # broken page (attempt 1, 2026-10-24), so the sentence says what is fixed and what moves.
-        "charges_asof": (f"The bond schedules are fixed. The charges are reset by filings at least once a year; "
-                         f"this page shows those filed through October 2026 and does not update itself. "
+        "charges_asof": (f"The bond schedules are fixed. Filings reset the charges at least once a year. "
+                         f"This page shows the charges filed through October 2026 and does not update itself. "
                          f"What is still to come is counted from {long(P['today'])}."),
         "takeaways": insight.takeaways([
-            f"In Texas the law sets one charge on each unit of gas for everyone who buys gas from the utilities in the "
-            f"program, now ${T['per_mcf']:.2f} per thousand cubic feet on most of their tariffs, about ${T['month']:.0f} "
-            f"a month for an average home; it has been billed since October 2023 and runs until the bonds are repaid, "
-            f"in {mon(tx['last_payment'])}.",
-            f"In Oklahoma it is a flat amount on each monthly bill, billed since late 2022: now "
-            f"${usd(H['ONG-A']['month'])} or ${usd(H['ONG-B']['month'])} for an Oklahoma Natural Gas home, depending "
-            f"on whether it uses less or more than 50 dekatherms of gas a year, until {d(ok['ong']['last_payment']).year}, "
-            f"and ${usd(H['SUO']['month'])} for a Summit home, until {d(ok['suo']['last_payment']).year}.",
+            f"In Texas, the law sets one charge on each unit of gas for all customers who buy gas from the utilities "
+            f"in the program. The charge is now ${T['per_mcf']:.2f} per thousand cubic feet on most of their tariffs, "
+            f"about ${T['month']:.0f} a month for an average home. It has been billed since October 2023, and it "
+            f"continues until the bonds are repaid, in {mon(tx['last_payment'])}.",
+            f"In Oklahoma, the charge is a flat amount on each monthly bill, billed since late 2022. An Oklahoma "
+            f"Natural Gas home now pays ${usd(H['ONG-A']['month'])} or ${usd(H['ONG-B']['month'])}, until "
+            f"{d(ok['ong']['last_payment']).year}. The amount depends on whether the home uses less or more than 50 "
+            f"dekatherms of gas a year. A Summit home now pays ${usd(H['SUO']['month'])}, until "
+            f"{d(ok['suo']['last_payment']).year}.",
             f"A home on the system for the whole term pays about ${r10(T['term'])} in Texas and "
-            f"${r10(min(ok_terms))} to ${r10(max(ok_terms))} in Oklahoma, and about a third of that, more for an "
-            f"Oklahoma Natural Gas home, is interest."]),
+            f"${r10(min(ok_terms))} to ${r10(max(ok_terms))} in Oklahoma. Interest is about a third of that, and "
+            f"more for an Oklahoma Natural Gas home."]),
         "hero": hero(P), "split": split(P),
         "ok_last_year": str(d(ok["ong"]["last_payment"]).year),
         "lo_month": f"{round(min(months.values()))}", "hi_month": f"{round(max(months.values()))}",

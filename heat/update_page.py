@@ -143,16 +143,17 @@ def hero(P, F):
     ms3, r3lo, r3hi, g3lo, g3hi = span(M[idx[e2] + 1]["period"], last["period"])
     steps = [
         (f"<p><b>{ms1[0]['period'][:4]} to {e1[:4]}.</b> Gas cost ${g1lo:.2f} to ${g1hi:.2f} per million Btu, "
-         f"and the break-even rose and fell with it. This is as close as the two lines came: in "
-         f"{month(s['ratio_min_period'])} industry paid {s['ratio_min']:.2f} times the break-even, and in no month "
-         f"less.</p>", {"t": t_at(e1)}),
-        (f"<p><b>{ms2[0]['period'][:4]} to {e2[:4]}.</b> The gas price fell to as little as ${g2lo:.2f}, and the "
-         f"break-even fell with it; the price of electricity fell by less. Industry paid {r2lo:.1f} to {r2hi:.1f} "
-         f"times the break-even.</p>", {"t": t_at(e2)}),
-        (f"<p><b>Since {ms3[0]['period'][:4]}.</b> {flag_step(P, F)}In {month(last['period'])}, the last month with both prices, industry "
-         f"paid {last['elec_c_kwh']:.2f} cents and the break-even was {last['breakeven_c_kwh']:.2f}: {last['ratio']:.1f} "
-         f"times. For an electric boiler to have broken even that month, gas would have had to cost about "
-         f"${s['last_gas_needed_usd_mmbtu']:.2f} per million Btu instead of ${last['gas_usd_mmbtu']:.2f}.</p>", {"t": 1}),
+         f"and the break-even increased and decreased with it. In this period the two lines came closest: in "
+         f"{month(s['ratio_min_period'])}, industry paid {s['ratio_min']:.2f} times the break-even. No month was "
+         f"closer.</p>", {"t": t_at(e1)}),
+        (f"<p><b>{ms2[0]['period'][:4]} to {e2[:4]}.</b> The gas price decreased to as little as ${g2lo:.2f}, and "
+         f"the break-even decreased with it. The price of electricity decreased by less. Industry paid {r2lo:.1f} to "
+         f"{r2hi:.1f} times the break-even.</p>", {"t": t_at(e2)}),
+        (f"<p><b>Since {ms3[0]['period'][:4]}.</b> {flag_step(P, F)}In {month(last['period'])}, the last month with "
+         f"both prices, industry paid {last['elec_c_kwh']:.2f} cents and the break-even was "
+         f"{last['breakeven_c_kwh']:.2f}: {last['ratio']:.1f} times. For an electric boiler to break even in that "
+         f"month, gas would have had to cost about ${s['last_gas_needed_usd_mmbtu']:.2f} per million Btu instead of "
+         f"${last['gas_usd_mmbtu']:.2f}.</p>", {"t": 1}),
     ]
     return insight.scrolly(hero_spec(P, F), steps, from_state={"t": 0})
 
@@ -162,10 +163,10 @@ def flag_step(P, F):
     by = {m["period"]: m for m in P["months"]}
     for f in F["fl"]["flagged"]:
         m = by[f]
-        out += (f"In {month(f)} a week of extreme gas prices pushed the month's break-even to {m['breakeven_c_kwh']:.1f} "
-                f"cents, and electricity to {m['elec_c_kwh']:.1f}. ")
+        out += (f"In {month(f)}, a week of extreme gas prices increased the month's break-even to "
+                f"{m['breakeven_c_kwh']:.1f} cents, and electricity to {m['elec_c_kwh']:.1f}. ")
     sm = F["s"]
-    out += f"The widest gap came in {month(sm['ratio_max_period'])}, {sm['ratio_max']:.1f} times, with gas cheap. "
+    out += f"The widest gap was in {month(sm['ratio_max_period'])}, {sm['ratio_max']:.1f} times, when gas was cheap. "
     return out
 
 
@@ -197,23 +198,24 @@ def values(P, S):
     recent, before = sum(hrs[-5:]) / 5, sum(hrs[-10:-5]) / 5
     part = [y for y in fl["years"] if not y["complete"]]
     by = {y["year"]: y for y in fl["years"]}
-    note = (f"Highlighted: the full years in which a large boiler's savings, at the central charges, pay back its "
+    note = (f"Highlighted rows: the full years in which a large boiler's savings at the central charges pay back its "
             f"${F['cost']['large']:.2f} a year.")
     if part:
-        note = f"* {part[-1]['year']} to {month(part[-1]['through'])}, the last month of EIA's gas price; not a full year. " + note
+        note = (f"* {part[-1]['year']} to {month(part[-1]['through'])}, the last month of EIA's gas price. This is "
+                f"not a full year. ") + note
     flag_text = ""
     for f in fl["flagged"]:
         y = int(f[:4])
         c = by[y]["cases"]["central"]
         gm = [m for m in P["months"] if m["period"] == f][0]["gas_usd_mmbtu"]
-        note = (f"&dagger; {month(f)} set aside: its average gas price was more than twice the months either side, "
-                f"from a few days of extreme prices; counted, it would add ${c['net'] - c['net_clean']:.2f} to {y}'s "
-                f"central figure, earned on ordinary days. ") + note
-        flag_text = (f"A month whose average gas price is more than twice the average of the months either side is set "
-                     f"aside: {month(f)}, when a week of extreme gas prices lifted the month's average to "
-                     f"${gm:.2f} per million Btu. The boiler would not have run in that week, when electricity was "
-                     f"dearer still, but the inflated average would have made the ordinary days either side look like "
-                     f"cheap-electricity days.")
+        note = (f"&dagger; {month(f)} is set aside. Its average gas price was more than twice that of the months on "
+                f"each side, because of a few days of extreme prices. If counted, it would add "
+                f"${c['net'] - c['net_clean']:.2f} to the {y} central figure, earned on ordinary days. ") + note
+        flag_text = (f"The model sets aside a month whose average gas price is more than twice the average of the "
+                     f"months on each side. This applies to {month(f)}, when a week of extreme gas prices increased "
+                     f"the month's average to ${gm:.2f} per million Btu. The boiler would not have run in that week, "
+                     f"because electricity was even more expensive. But the inflated average would have made the "
+                     f"ordinary days on each side look like days of cheap electricity.")
     nonfuel = last["breakeven_c_kwh"] - last["fuel_only_c_kwh"]
     covs = [v for k, v in S["eia_coverage_pct"].items() if k.isdigit()]
     ch, cap = S["charges"], S["electric_boiler_capital_usd_kw"]
@@ -225,14 +227,15 @@ def values(P, S):
         "stamp": insight.stamp(s["last"], "EIA's Texas industrial electricity and natural gas prices"),
         "takeaways": insight.takeaways([
             f"In the {s['n_months']} months from {month(s['first'])} to {month(s['last'])}, the average Texas industrial "
-            f"electricity price never fell below the electric boiler's break-even: it ran {s['ratio_min']:.1f} to "
-            f"{s['ratio_max']:.1f} times it, and {last['ratio']:.1f} times in the last month.",
-            f"A large electric boiler kept beside a gas one, run only when wholesale power is cheaper than gas, would "
-            f"have saved enough to cover a year of its own cost in {years_txt(lc)} of the {len(full)} full years with "
-            f"typical delivery charges, and in {years_txt(ll)} with the lowest charges.",
-            f"Per unit of heat an electric boiler running all year emits about {e['average']['ratio_to_gas']:.1f} times "
-            f"the carbon dioxide of a gas boiler on the average Texas grid, and about {e['marginal']['ratio_to_gas']:.1f} "
-            f"times on the power plants that run when demand rises."]),
+            f"electricity price never fell below the electric boiler's break-even. The price was {s['ratio_min']:.1f} "
+            f"to {s['ratio_max']:.1f} times the break-even, and {last['ratio']:.1f} times in the last month.",
+            f"A large electric boiler can operate beside a gas boiler and run only when wholesale power is cheaper "
+            f"than gas. With typical delivery charges, it would have saved enough to cover a year of its own cost in "
+            f"{years_txt(lc)} of the {len(full)} full years. With the lowest charges, it would have done so in "
+            f"{years_txt(ll)}.",
+            f"On the average Texas grid, an all-year electric boiler emits about {e['average']['ratio_to_gas']:.1f} times "
+            f"the carbon dioxide of a gas boiler, per unit of heat. On the power plants that run when demand increases, "
+            f"it emits about {e['marginal']['ratio_to_gas']:.1f} times as much."]),
         "hero": hero(P, F),
         "frac_word": word(last["breakeven_c_kwh"] / last["elec_c_kwh"]), "gas_mult": mult_txt,
         "last_month": month(last["period"]),
