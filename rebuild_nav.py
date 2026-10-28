@@ -121,12 +121,12 @@ NAV = [
         ("Lost gas", "lostgas.html"),
         ("When the pipe is full", "takeaway.html"),
         # Q12, 2026-10-24: the Winter Storm Uri bonds (D-18: new gas pages go in Gas).
-        ("Uri's gas bill", "uri.html"),
+        ("Uri's long gas bill", "uri.html"),
         # Q11, 2026-10-25: ethane rejection, an archived EIA record (D-60 C; D-18: gas pages in Gas).
         ("Ethane left in the gas", "ethane.html"),
     ]),
     ("Power", [
-        ("Industrial heat break-even", "heat.html"),
+        ("The electric boiler's break-even", "heat.html"),
         # UNLISTED 2026-10-22 (D-39, packet R0 section 2): storage, climate-cost,
         # longevity, beauty and skyline left the bar and the home index while
         # their rework or repair runs (R4, R5). Their URLs and apps keep
@@ -135,7 +135,7 @@ NAV = [
         # ("Battery revenue simulator", "storage.html"),
         # Storage relisted 2026-10-23 by R4 (D-20 rework on ERCOT's real prices),
         # under the reworked page's own title.
-        ("Battery revenue", "storage.html"),
+        ("Batteries and scarcity", "storage.html"),
     ]),
     # CLIMATE IS ONE PAGE AND RENDERS AS A DROPDOWN. That is the point of the
     # 2026-09-09 change, not an oversight - do not "simplify" it back to a bare
@@ -164,7 +164,7 @@ NAV = [
     # Climate relisted 2026-10-24 by R5 (D-26, D-27), under the reworked
     # page's own title.
     ("Climate", [
-        ("What a footprint is made of", "climate-cost.html"),
+        ("Inside a footprint", "climate-cost.html"),
     ]),
     # RUNNING WAS RETIRED 2026-09-09, at Andrew's request - "hide the two
     # running pages... I'll republish later, but retire for now". It held

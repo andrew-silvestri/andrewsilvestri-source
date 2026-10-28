@@ -302,26 +302,25 @@ def values():
     L = legacy()
     steps = [
         (f"<p>A kilogram of beef from a Brazilian herd, eaten in Texas, comes to "
-         f"{b:.1f} kg of CO<sub>2</sub>e, the warming effect of every gas counted as "
-         f"carbon dioxide. A petrol car with one person in it puts out {car_km:.2f} kg "
-         f"a kilometer, its share of the factory and the road included, so the "
-         f"kilogram of beef is {km_word(b / car_km)} km of driving.</p>", {"s": 0}),
-        (f"<p>Split by where it comes from, {100 * (enteric + land) / b:.0f}% is two "
+         f"{b:.1f} kg of CO<sub>2</sub>e. This unit counts the warming effect of "
+         f"every gas as carbon dioxide. A petrol car with one person in it "
+         f"emits {car_km:.2f} kg a kilometer, including its share of the factory and "
+         f"the road. So the kilogram of beef is {km_word(b / car_km)} km of driving.</p>", {"s": 0}),
+        (f"<p>Split by source, {100 * (enteric + land) / b:.0f}% is two "
          f"things that happen on the ranch: methane from the cow's gut, and the "
          f"forest cleared for its pasture. Everything after the animal leaves the "
-         f"farm is {100 * after / b:.1f}%, and the {beef['km']:,.0f} km ocean "
-         f"crossing is {100 * fr['beef']:.1f}% of it all.</p>", {"s": 1}),
+         f"farm is {100 * after / b:.1f}%. The {beef['km']:,.0f} km ocean "
+         f"crossing is {100 * fr['beef']:.1f}% of the total.</p>", {"s": 1}),
     ]
     zip_kb = round(os.path.getsize(ZIP) / 1024) if os.path.exists(ZIP) else 0
     v = {
-        "h1": ("A kilogram of beef from cleared Brazilian pasture puts as much "
-               "greenhouse gas into the air as driving a petrol car "
-               f"{km_word(b / car_km)} kilometers"),
-        "meta": (f"A kilogram of Brazilian beef is {b:.0f} kg CO2e, {km_word(b / car_km)} km "
-                 "of driving; how food is grown decides most footprints, and "
-                 "shipping matters little unless it flies or goes a long way "
-                 "by truck. A life-cycle model of twenty everyday things that "
-                 "shows its working."),
+        "h1": ("A kilogram of Brazilian beef carries the emissions of a "
+               f"{km_word(b / car_km)}-kilometer drive"),
+        "meta": (f"A kilogram of Brazilian beef comes to {b:.0f} kg CO2e, or {km_word(b / car_km)} km "
+                 "of driving. How food is grown decides most footprints; "
+                 "shipping matters little unless the food flies or goes a long way "
+                 "by truck. A life-cycle model of twenty everyday things, with "
+                 "its working shown."),
         "iso_km": km_word(UPSTREAM["beef"] / car_km),
         "farm_min": f"{100 * farm_min:.0f}",
         "hi_foods": and_list([NAMED[k] for k in sorted(farm, key=lambda k: -total(k))
@@ -346,15 +345,15 @@ def values():
         "stamp": insight.stamp(live=False),
         "takeaways": insight.takeaways([
             f"A kilogram of beef is {b / total('cheese'):.1f} times a kilogram of "
-            f"hard cheese and {b / total('chicken'):.0f} times a kilogram of chicken, "
-            "because a cow's gut makes methane and this herd's pasture was cut "
+            f"hard cheese and {b / total('chicken'):.0f} times a kilogram of chicken. "
+            "This is because a cow's gut makes methane and this herd's pasture was cut "
             "from forest.",
-            f"Heating a greenhouse adds about {sum(adders) / len(adders):.1f} kg to "
-            "every kilogram of tomatoes on every sea route the model runs, more than "
-            "twice a field tomato's whole footprint on the "
+            f"Heat for a greenhouse adds about {sum(adders) / len(adders):.1f} kg to "
+            "every kilogram of tomatoes on every sea route the model runs. That is more "
+            "than twice the whole footprint of a field tomato on the "
             "same route.",
-            f"A pair of leather shoes is mostly the tanning, {100 * tan:.0f}% of it; "
-            f"the shoe's share of the cow, the part footprints argue over, is "
+            f"Most of the footprint of a pair of leather shoes is the tanning, {100 * tan:.0f}% of it. "
+            f"The shoe's share of the cow, the part that footprints argue over, is "
             f"{100 * hide:.0f}% of the pair.",
         ]),
         "hero": insight.scrolly(spec, steps, from_state={"s": 0}),

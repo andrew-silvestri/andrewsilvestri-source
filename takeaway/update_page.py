@@ -186,26 +186,26 @@ def hero(P, S):
     gcx, php, wh, mh = L["Gulf Coast Express"], L["Permian Highway"], L["Whistler"], L["Matterhorn Express"]
     ly = ym(S["last"])[0]
     steps = [
-        (f"<p><b>2018 to mid-2019.</b> Production rises fast and no large line leaves the basin. EIA wrote in "
-         f"September 2019 that limited takeaway had kept Waha's prices \"very low, or even negative, in recent "
-         f"months\". In 2019 the three Texas districts vented or flared {Y[2019]['vf_bcfd']:.2f} Bcf/d, "
+        (f"<p><b>2018 to mid-2019.</b> Production increases quickly, and no large line leaves the basin. In "
+         f"September 2019, EIA wrote that limited takeaway kept Waha's prices \"very low, or even negative, in recent "
+         f"months\". In 2019, the three Texas districts vented or flared {Y[2019]['vf_bcfd']:.2f} Bcf/d, "
          f"{100 * Y[2019]['vf_share']:.1f} per cent of their gas.</p>", {"t": t_of(S, S["ref_2019"])}),
-        (f"<p><b>Gulf Coast Express, {long(gcx['month'])}.</b> {gcx['bcfd']:.2f} Bcf/d to the Texas coast. "
-         f"The share vented or flared is {100 * Y[2020]['vf_share']:.1f} per cent in 2020, half 2019's; "
-         f"2020's price collapse stalls production too.</p>", {"t": t_of(S, "2020-12")}),
-        (f"<p><b>Permian Highway and Whistler, 2021.</b> {php['bcfd']:.1f} and {wh['bcfd']:.1f} Bcf/d, six months "
-         f"apart, while 2020's slump still held production back. Reuters lists no below-zero day at Waha in 2021 "
+        (f"<p><b>Gulf Coast Express, {long(gcx['month'])}.</b> The line carries {gcx['bcfd']:.2f} Bcf/d to the Texas "
+         f"coast. The share vented or flared is {100 * Y[2020]['vf_share']:.1f} per cent in 2020, half the 2019 "
+         f"share. The 2020 price collapse also stops the growth of production.</p>", {"t": t_of(S, "2020-12")}),
+        (f"<p><b>Permian Highway and Whistler, 2021.</b> The two lines add {php['bcfd']:.1f} and {wh['bcfd']:.1f} Bcf/d, "
+         f"six months apart. At that time, the 2020 slump still limited production. Reuters lists no below-zero day at Waha in 2021 "
          f"or 2022.</p>",
          {"t": t_of(S, "2022-06")}),
-        (f"<p><b>2023 to {short(P['t0'])}.</b> About two Bcf/d of new gas a year uses the room up. By "
-         f"{long(P['t0'])} Waha is below zero every day; the chart is lined up so the two lines meet here.</p>",
+        (f"<p><b>2023 to {short(P['t0'])}.</b> About two Bcf/d of new gas a year fills the room. By "
+         f"{long(P['t0'])}, Waha is below zero every day. The chart aligns the two lines so that they meet here.</p>",
          {"t": t_of(S, P["t0"])}),
-        (f"<p><b>Matterhorn Express, {long(mh['month'])}.</b> {mh['bcfd']:g} Bcf/d, the largest line yet, about "
-         f"{mh['months_default']:.0f} months of growth. The room it opened was gone by {long(mh['recovered'])}. "
+        (f"<p><b>Matterhorn Express, {long(mh['month'])}.</b> This line carries {mh['bcfd']:g} Bcf/d, the largest line yet, "
+         f"about {mh['months_default']:.0f} months of growth. The room that it opened was gone by {long(mh['recovered'])}. "
          f"Waha went below zero {Y[2025]['neg']} times in 2025.</p>", {"t": t_of(S, mh["recovered"])}),
-        (f"<p><b>{ly}.</b> {Y[ly]['neg']} below-zero days by {cited.REUTERS['date']}, a record. In "
-         f"{long(S['last'])}, on the default reading, the gap sits at {signed(S['H_hero'][S['last']])} Bcf/d: "
-         f"within {NEAR:g} Bcf/d of {long(P['t0'])} on most of the readings below.</p>", {"t": 1}),
+        (f"<p><b>{ly}.</b> Reuters counts {Y[ly]['neg']} below-zero days by {cited.REUTERS['date']}, a record. "
+         f"In {long(S['last'])}, on the default reading, the gap is {signed(S['H_hero'][S['last']])} Bcf/d. On most "
+         f"of the readings below, it is within {NEAR:g} Bcf/d of {long(P['t0'])}.</p>", {"t": 1}),
     ]
     return insight.scrolly(hero_spec(P, S), steps, from_state={"t": 0})
 
@@ -248,16 +248,16 @@ def values(P):
         "stamp": insight.stamp(last, "EIA's Short-Term Energy Outlook"),
         "takeaways": insight.takeaways([
             f"Since {S['pace_from'][:4]} the Permian has added, on average, {S['pace']['k_fit']:.1f} to "
-            f"{S['pace']['default']:.1f} billion cubic feet a day of gas that needs a pipe out each year, close to what "
-            f"one big new pipeline carries, so each one built since 2019 holds only {min(months):.0f} to "
+            f"{S['pace']['default']:.1f} billion cubic feet a day of gas that needs a pipe out each year. This is close to "
+            f"what one big new pipeline carries. Thus each big line built since 2019 holds only {min(months):.0f} to "
             f"{max(months):.0f} months of that growth.",
-            f"When the pipes have been full, Waha's price has gone below zero and sellers have paid buyers to take "
-            f"their gas: Reuters "
+            f"When the pipes have been full, Waha's price has been below zero, and sellers have paid buyers to take "
+            f"their gas. Reuters "
             f"counts {rc[2019]} such days in 2019, {rc[2024]} in 2024 and {rc[2026]} in 2026 by late "
             f"{cited.REUTERS['date'].split()[0]}, more than in any full year.",
-            f"Burning the gas off has not come back with the full pipes: operators in the Texas "
-            f"Permian vented or flared {100 * Y[2019]['vf_share']:.1f} per cent of their gas in 2019 and no more than "
-            f"{100 * max(r['vf_share'] for r in since21):.1f} per cent in any year since 2021."]),
+            f"Flaring has not returned with the full pipes. Operators in the Texas "
+            f"Permian vented or flared {100 * Y[2019]['vf_share']:.1f} per cent of their gas in 2019. In any year since "
+            f"2021, they vented or flared no more than {100 * max(r['vf_share'] for r in since21):.1f} per cent."]),
         "hero": hero(P, S),
         "t0_long": long(t0), "t0_short": short(t0), "last_long": long(last), "last_year": str(ym(last)[0]),
         "k_def": f"{k['default']:.3f}", "k_year": str(k["year"]),

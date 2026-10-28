@@ -244,13 +244,12 @@ def values(P, R):
     n_all = len(fetch_wikidata.CITIES)
     import insight
     v = {
-        "h1": ("By its own records, one in twenty of the tall buildings an "
-               f"open database lists for {n_all} big cities has been "
-               "demolished or was never finished"),
-        "meta": (f"Of {T['cand']:,} buildings of {B.RING_FLOOR:.0f} m or more "
-                 f"Wikidata lists for {n_all} cities, "
-                 f"{T['not standing (Wikidata)']} are demolished or unbuilt "
-                 "by its own records. The towers that stand, played as "
+        "h1": ("One in twenty of an open database's tall buildings in "
+               f"{n_all} cities is not there"),
+        "meta": (f"Wikidata lists {T['cand']:,} buildings of "
+                 f"{B.RING_FLOOR:.0f} m or more for {n_all} cities. By its own records, "
+                 f"{T['not standing (Wikidata)']} of them are demolished or unbuilt. "
+                 "The towers that stand are played as "
                  "sound."),
         "stamp": insight.stamp(live=False),
         "floor": f"{B.RING_FLOOR:.0f}", "n_all": str(n_all),

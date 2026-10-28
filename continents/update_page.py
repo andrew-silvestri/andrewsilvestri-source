@@ -85,7 +85,7 @@ def sydney_line(P):
                 "this set.")
     age, pl, in_range = best
     return (f"At {fmt(age)} million years, {in_range} of the "
-            f"{len(models)} models still reach that far back, and "
+            f"{len(models)} models still reach that far back. "
             f"{pl['no_crust']} of those {in_range} place no crust under "
             f"Sydney at all. The disagreement there is not about where the "
             f"ground was. It is about whether it existed.")

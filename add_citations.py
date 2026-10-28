@@ -858,7 +858,7 @@ PAGES = {
          'Projects</i> tracker, August 2026 edition.',
          "Each line's capacity, status and, where it gives one, completion "
          "date or expected year."),
-        ("where a newer report gives a date",
+        ("Where a newer report gives a date",
          'Pipeline &amp; Gas Journal, 23 July 2026 (Kinder Morgan second-quarter '
          'results); BIC Magazine, 5 August 2026 (Hugh Brinson Pipeline); '
          'Enbridge, 6 August 2026 (Blackcomb Pipeline commissioning); '
