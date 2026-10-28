@@ -100,6 +100,10 @@ RING_MAX = 120
 # the database and a thousand in life; publishing it would say more about the
 # database's coverage than about Beijing.
 MIN_TALL, MIN_RING = 7, 16
+# Cities kept on the list although they fall short of that bar, at Andrew's
+# request (2026-10-27): each is marked thin, in the payload and on screen,
+# rather than filled by hand. Only the towers the filters confirm are drawn.
+KEEP_THIN = ("Austin", "Nashville")
 TALLEST_BUILDING_M = 830.0  # Burj Khalifa, 828 m; anything above is a typo
 EYE_M = 1.7
 CLAMP_M = 400.0            # a tower closer than this is held at it
@@ -485,7 +489,8 @@ def build(apply=False):
                                     for d, why in
                                     ((x, x[1]) for x in dropped)]}
         mem = [b for b in towers if b["h"] >= MIN_HEIGHT]
-        if len(mem) < MIN_TALL or len(towers) < MIN_RING:
+        short = len(mem) < MIN_TALL or len(towers) < MIN_RING
+        if short and not (name in KEEP_THIN and mem):
             gone.append((name, len(mem), len(towers)))
             continue
         peak = max(mem, key=lambda b: b["h"])
@@ -538,6 +543,7 @@ def build(apply=False):
             "osmHeights": len(withosm),
             "osmWithin10": sum(abs(b["osm_h"] - b["h"]) <= 0.10 * b["h"]
                                for b in withosm),
+            "thin": short,
         })
 
     print(f"\n  {'city':12s} {'items':>5s} {'notbld':>6s} {'tower':>5s} "

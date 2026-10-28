@@ -675,7 +675,12 @@
         D.ringFloor.toFixed(0) + ' m</dd>' +
       '<dt>Standing</dt><dd>at the height-weighted centre of them</dd>' +
       '<dt>Heights</dt><dd>Wikidata, each tower linked below; every one ' +
-        'also mapped as a standing building in OpenStreetMap</dd>';
+        'also mapped as a standing building in OpenStreetMap</dd>' +
+      /* A thin city is kept on the list by choice, not because it clears the
+         bar the other wheels clear; the panel says so beside its numbers. */
+      (c.thin ? '<dt>Thin data</dt><dd>The database confirms only ' +
+        c.ring.length + ' towers here, fewer than the other wheels need. ' +
+        'The wheel shows those towers, not the whole skyline.</dd>' : '');
 
     document.getElementById('why').innerHTML =
       '<b>' + esc(c.key.label) + '</b>, from ' + esc(c.key.why) + '. ' +
@@ -919,7 +924,8 @@
   /* --------------------------------------------------------------- boot -- */
   document.getElementById('city').innerHTML = C.map(function (c, i) {
     return '<option value="' + i + '">' + esc(c.city) + ' &middot; ' +
-           esc(c.key.label) + '</option>';
+           esc(c.key.label) + (c.thin ? ' &middot; thin data' : '') +
+           '</option>';
   }).join('');
   S.az = C[0].look;
   setKey();

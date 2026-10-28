@@ -277,6 +277,15 @@ def values(P, R):
         "n_dropped_word": WORDS.get(len(P["dropped"]),
                                     str(len(P["dropped"]))).capitalize(),
         "dropped": and_list([d["city"] for d in P["dropped"]]),
+        "n_full": str(sum(not c.get("thin") for c in P["cities"])),
+        "kept_thin": and_list([c["city"] for c in P["cities"] if c.get("thin")]),
+        "kept_thin_cap": and_list([c["city"] for c in P["cities"]
+                                   if c.get("thin")]),
+        "kept_thin_detail": "; ".join(
+            (f"{c['city']} has {c['n']} towers of at least "
+             f"{B.MIN_HEIGHT:.0f} meters and {len(c['ring'])} in all") if i == 0
+            else f"{c['city']} has {c['n']} and {len(c['ring'])}"
+            for i, c in enumerate(c for c in P["cities"] if c.get("thin"))),
         "thin": and_list(list(THIN)),
         "city_rows": rows,
         "osm_h": str(sum(c["osmHeights"] for c in P["cities"])),
