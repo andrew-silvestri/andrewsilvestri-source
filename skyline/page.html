@@ -20,7 +20,7 @@ try{document.documentElement.dataset.motion=matchMedia('(prefers-reduced-motion:
 <main class="notes">
 
 <h1>{{h1}}</h1>
-<p class="dim">Wikidata, the free database kept alongside Wikipedia, is a source for maps, apps and research. Ask it for every building of {{floor}} meters or more in {{n_all}} big cities and it returns {{cand}} records. By its own records, {{gone}} of those buildings have been demolished or destroyed. Among them is the old 270 Park Avenue in New York, whose demolition it dates to {{park_year}}. Another {{unbuilt}} were never finished or are still going up. That is {{wd_out}} of the {{cand}}, about one in twenty, returned by any search that does not check. Of the rest, {{noosm}} could not be matched to a standing building in OpenStreetMap, the map drawn from the ground and from aerial imagery. Many of those stand, but they are left out rather than risk drawing a tower that is not there. The towers that pass are below as an instrument, for the {{n_city}} cities with at least {{min_ring}} of them. Turn a wheel of the city's towers, and the towers in front of you play a chord that grows louder the taller they are.</p>
+<p class="dim">Wikidata, the free database kept alongside Wikipedia, is a source for maps, apps and research. Ask it for every building of {{floor}} meters or more in {{n_all}} big cities and it returns {{cand}} records. By its own records, {{gone}} of those buildings have been demolished or destroyed. Among them is the old 270 Park Avenue in New York, whose demolition it dates to {{park_year}}. Another {{unbuilt}} were never finished or are still going up. That is {{wd_out}} of the {{cand}}, about one in twenty, returned by any search that does not check. Of the rest, {{noosm}} could not be matched to a standing building in OpenStreetMap, the map drawn from the ground and from aerial imagery. Many of those stand, but they are left out rather than risk drawing a tower that is not there. The towers that pass are below as an instrument, for the {{n_full}} cities with at least {{min_ring}} of them, and for {{kept_thin}}, which fall short but stay in the list, marked as thin. Turn a wheel of the city's towers, and the towers in front of you play a chord that grows louder the taller they are.</p>
 {{stamp}}
 
 <div class="card">
@@ -54,7 +54,7 @@ try{document.documentElement.dataset.motion=matchMedia('(prefers-reduced-motion:
 <li><strong>The same building twice.</strong> Two records for one building count as one ({{n_dup}}).</li>
 </ul>
 
-<p>{{n_dropped_word}} of the {{n_all}} cities do not have enough towers left to fill a wheel ({{min_tall}} of at least {{min_h}} meters and {{min_ring}} in all): {{dropped}}. That is a gap in the database, not in the cities. The table shows the same gap less starkly: {{thin}} have far fewer towers here than anyone who has seen them would expect.</p>
+<p>{{n_dropped_word}} of the {{n_all}} cities do not have enough towers left to fill a wheel ({{min_tall}} of at least {{min_h}} meters and {{min_ring}} in all): {{dropped}}. {{kept_thin_cap}} fall short too: {{kept_thin_detail}}. They stay in the app's list, marked as thin, and their wheels show only the towers the filters confirm. That is a gap in the database, not in the cities. The table shows the same gap less starkly: {{thin}} have far fewer towers here than anyone who has seen them would expect.</p>
 
 <table>
 <tr><th>City</th><th>Towers of {{min_h}} m or more</th><th>On the wheel</th><th>Tallest on the wheel</th></tr>

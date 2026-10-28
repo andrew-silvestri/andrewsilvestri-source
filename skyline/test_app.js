@@ -125,7 +125,11 @@ ok(K.cities.length >= 20, 'enough cities to be worth browsing',
    K.cities.length + ' published');
 
 console.log('\n  Data');
-ok(K.cities.every(c => c.ring && c.ring.length >= 7),
+/* Cities marked thin (Austin, Nashville; kept on the list by Andrew's choice,
+   2026-10-27) fall short of the bar by definition, so the size checks below
+   hold them to "has a ring" and "louder facing the tallest" at all, not to
+   the full-wheel thresholds. The app labels them thin on screen. */
+ok(K.cities.every(c => c.ring && c.ring.length >= (c.thin ? 1 : 7)),
    'every city has a ring');
 ok(K.cities.every(c => c.rprof.length === 360 &&
                        c.rprof.every(v => v > 0.001)),
@@ -166,7 +170,7 @@ for (let i = 0; i < K.cities.length; i++) {
   if (frac < worstTall) { worstTall = frac; worstCity = K.cities[i].city; }
   // and the wheel must be populated, not one lonely spike
   const solid = top.filter(r => r.h > tallest * 0.08).length;
-  if (solid < worstFill) { worstFill = solid; fillCity = K.cities[i].city; }
+  if (!K.cities[i].thin && solid < worstFill) { worstFill = solid; fillCity = K.cities[i].city; }
 }
 ok(worstTall > 0.35,
    'in every city the tallest tower fills a good part of the panel',
@@ -361,7 +365,7 @@ console.log('\n  The sound stops when the page does');
       const v = level(az);
       if (!lo || v.top < lo.top) lo = v;
     }
-    if (hi.r > lo.r * 1.5) louder++;
+    if (hi.r > lo.r * (K.cities[i].thin ? 1.0 : 1.5)) louder++;
     else if (!worst) worst = `${K.cities[i].city}: ${hi.r.toFixed(3)} facing the tallest, ` +
                              `${lo.r.toFixed(3)} at the lowest bearing`;
   }
