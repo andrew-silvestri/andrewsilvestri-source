@@ -144,13 +144,17 @@ function serve(sheet) {
 const STATES = [
   { name: 'top bar, current page',   page: 'code.html', vp: 1728, sel: 'nav.top > a.on', hover: false,
     rule: 'nav.top a.on', props: ['color'] },
-  { name: 'menu item',               page: 'lostgas.html', vp: 1728, sel: 'DD .ddmenu a:not(.on)', hover: false,
+  /* 2026-10-28: Gas is ON HOLD (rebuild_nav.HOLD) - its items are struck
+     <span class="off">, not links - so the menu-item states are measured in
+     Other from longevity.html, whose menu holds the current item and live
+     ones (skyline.html). Move them back when Gas is relisted. */
+  { name: 'menu item',               page: 'longevity.html', vp: 1728, sel: 'DD .ddmenu a:not(.on)', hover: false,
     rule: 'nav.top .ddmenu a', props: ['color', 'padding-left'] },
-  { name: 'menu item, hovered',      page: 'lostgas.html', vp: 1728, sel: 'DD .ddmenu a:not(.on)', hover: true,
+  { name: 'menu item, hovered',      page: 'longevity.html', vp: 1728, sel: 'DD .ddmenu a:not(.on)', hover: true,
     rule: 'nav.top .ddmenu a:hover', props: ['color'] },
-  { name: 'menu item, current',      page: 'lostgas.html', vp: 1728, sel: 'DD .ddmenu a.on', hover: false,
+  { name: 'menu item, current',      page: 'longevity.html', vp: 1728, sel: 'DD .ddmenu a.on', hover: false,
     rule: 'nav.top .ddmenu a.on', props: ['color'] },
-  { name: 'menu item, current+hover', page: 'lostgas.html', vp: 1728, sel: 'DD .ddmenu a.on', hover: true,
+  { name: 'menu item, current+hover', page: 'longevity.html', vp: 1728, sel: 'DD .ddmenu a.on', hover: true,
     rule: 'nav.top .ddmenu a.on', props: ['color'] },
   /* TWO ENTRIES, NOT ONE, AND THE FIRST DRAFT HAD IT WRONG. At 390 the colour
      and the indent come from DIFFERENT rules: the 620px block's
@@ -158,11 +162,11 @@ const STATES = [
      still falls through to the base rule outside the media query. Asking one
      entry for both made the check report the base rule as declaring nothing,
      which was the check being right about a mistake in this table. */
-  { name: 'phone menu item',         page: 'lostgas.html', vp: 390, sel: 'DD .ddmenu a:not(.on)', hover: false,
+  { name: 'phone menu item',         page: 'longevity.html', vp: 390, sel: 'DD .ddmenu a:not(.on)', hover: false,
     rule: 'nav.top .ddmenu a', props: ['color'] },
-  { name: 'phone menu item, indent', page: 'lostgas.html', vp: 390, sel: 'DD .ddmenu a:not(.on)', hover: false,
+  { name: 'phone menu item, indent', page: 'longevity.html', vp: 390, sel: 'DD .ddmenu a:not(.on)', hover: false,
     rule: 'nav.top .ddmenu a', props: ['padding-left'], media: 620 },
-  { name: 'phone menu item, current', page: 'lostgas.html', vp: 390, sel: 'DD .ddmenu a.on', hover: false,
+  { name: 'phone menu item, current', page: 'longevity.html', vp: 390, sel: 'DD .ddmenu a.on', hover: false,
     rule: 'nav.top .ddmenu a.on', props: ['color'] },
   { name: 'phone top bar, current',  page: 'code.html', vp: 390, sel: 'nav.top > a.on', hover: false,
     rule: 'nav.top a.on', props: ['color'] },

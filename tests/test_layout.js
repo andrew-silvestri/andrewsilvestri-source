@@ -282,7 +282,10 @@ function serve() {
         for (const e of es) {
           const h3 = e.querySelector('h3'), name = h3 ? h3.textContent.trim() : '(untitled)';
           const ps = e.querySelectorAll(':scope > p'), tags = e.querySelectorAll('.tag');
-          if (!h3 || !h3.querySelector('a')) out.push(`entry "${name}": no linked title`);
+          // an entry ON HOLD (class "off", rebuild_nav.HOLD, 2026-10-28) keeps its
+          // title as struck text, deliberately unlinked
+          if (!h3 || !(h3.querySelector('a') || (e.classList.contains('off') && h3.querySelector('span.off'))))
+            out.push(`entry "${name}": no linked title`);
           if (tags.length !== 1) out.push(`entry "${name}": ${tags.length} kickers`);
           if (e.querySelector('img, picture, video, canvas')) out.push(`entry "${name}": carries a figure; the index spec has none`);
           if (ps.length !== 1) out.push(`entry "${name}": ${ps.length} paragraphs, wants one sentence`);

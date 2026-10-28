@@ -253,6 +253,17 @@ NAV = [
 BACK = '<a href="#" class="back" id="backlink">&larr; back</a>'
 
 
+# ON HOLD, 2026-10-28, Andrew's decision: every article except longevity and
+# skylines is being rewritten, so its menu item and its home-page entry stay
+# visible, struck through, and do not link. The pages themselves stay in
+# site/ and still serve at their URLs. To relist one, take it out of this set
+# and restore its index.html entry (class "entry off" -> "entry", the <span
+# class="off"> h3 back to <a href>).
+HOLD = {"lostgas.html", "takeaway.html", "uri.html", "ethane.html",
+        "heat.html", "storage.html", "climate-cost.html", "beauty.html",
+        "continents.html"}
+
+
 def nav_for(page):
     """The bar as seen from `page`, with the current location marked. A page
     inside a group marks the group heading too, so you can see where you are
@@ -337,10 +348,12 @@ def nav_for(page):
         cls = "ddbtn on" if here else "ddbtn"
         # full-screen apps open in their own tab, per the house convention
         items = "".join(
-            f'<a href="{h}"' + (' class="on"' if h == page else "")
-            + (' target="_blank" rel="noopener"' if h.endswith("-app.html")
-               else "")
-            + f'>{l}</a>'
+            # ON HOLD (HOLD below): the title stays, struck through, as text.
+            (f'<span class="off" aria-disabled="true">{l}</span>' if h in HOLD
+             else f'<a href="{h}"' + (' class="on"' if h == page else "")
+             + (' target="_blank" rel="noopener"' if h.endswith("-app.html")
+                else "")
+             + f'>{l}</a>')
             for l, h in target)
         out.append(
             f'<span class="dd"><a href="#" class="{cls}" aria-haspopup="true">'
