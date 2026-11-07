@@ -26,6 +26,7 @@ storage/data/cache/
 heat/data/raw/
 uri/data/raw/
 ethane/data/raw/
+safetynet/data/raw/
 beauty/data/birds_joined.csv
 beauty/data/iucn_aves.csv
 neuron/data/_work/

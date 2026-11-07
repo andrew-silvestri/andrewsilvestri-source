@@ -66,6 +66,19 @@ ENTRIES = [
         "why": "Archived page (D-60): a dated record of EIA's figures and articles, not updated.",
     },
     {
+        # safety-nets lane, 2026-11-07. Disabled: the data is annual, and the year the page reports is
+        # LAST in fetch_public.py. Moving it is a change with its own review (the prose names years and
+        # the build's method check must hold for the new year), not a monthly refresh. The BLS API is
+        # also keyless here, with a daily quota a monthly run could exhaust.
+        "page": "safetynet",
+        "cwd": "safetynet",
+        "fetch": [["python", "fetch_public.py"]],
+        "build": [["python", "build_safetynet.py"]],
+        "keys": [],
+        "enabled": False,
+        "why": "Annual data; the reported year moves by a reviewed change to LAST in fetch_public.py.",
+    },
+    {
         "page": "takeaway",
         "cwd": "takeaway",
         # R2 (2026-10-23): production only. The pipeline tracker carries

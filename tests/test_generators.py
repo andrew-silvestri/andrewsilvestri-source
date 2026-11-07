@@ -121,6 +121,11 @@ GENERATORS = [
     # quotations from ethane/data/raw (gitignored) at render time (Q11, 2026-10-25).
     ("ethane page: ethane/update_page.py --apply",
      ["update_page.py", "--apply"], "ethane", "site"),
+    # safetynet/update_page.py writes site/safetynet.html from safetynet/outputs/payload.json, reading the
+    # figures it takes from reports and papers out of safetynet/data/raw (gitignored) at render time
+    # (safety-nets lane, 2026-11-07).
+    ("safetynet page: safetynet/update_page.py --apply",
+     ["update_page.py", "--apply"], "safetynet", "site"),
     # storage/update_page.py writes site/storage.html from storage/outputs/payload.json
     # (build_storage.py, which needs ERCOT's files under storage/data/raw, gitignored) and
     # storage/data/imm.json. R4, 2026-10-23.

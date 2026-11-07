@@ -240,6 +240,8 @@ NAV = [
         ("Endangered, and studied", "beauty.html"),
         ("Skylines, played", "skyline.html"),
         ("Where the ground goes", "continents.html"),
+        # safety-nets lane, 2026-11-07: unemployment insurance's reach (non-energy pages go in Other).
+        ("Who gets an unemployment check", "safetynet.html"),
     ]),
     ("Code", "code.html"),
     # LAST, AND IT HAS TO STAY LAST. style.css pins this one right with
