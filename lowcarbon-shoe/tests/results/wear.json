@@ -27,9 +27,9 @@
  "p_lc1_at_least_baseline": 0.936,
  "p_printed_at_least_baseline": 0.096,
  "particle_loss_g_per_100km_pair": {
-  "baseline": 3.3,
-  "lc1": 0.86,
-  "note": "baseline: Manabe et al. 2025 whole-shoe mass loss 33 mg/km per pair (22-60); LC-1 scaled by r = 0.25 and density 1.20/1.15"
+  "baseline": 3.5,
+  "lc1": 0.91,
+  "note": "baseline: Manabe et al. 2025, running shoes, 35 mg/km per pair (measured); LC-1 scaled by r = 0.25 and density 1.20/1.15 (calculated)"
  },
  "target": "LC-1 wear-through distance >= baseline (median, same runner)",
  "passed": true,

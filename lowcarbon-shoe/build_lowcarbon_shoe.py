@@ -76,10 +76,19 @@ def build():
         cheah=R["cheah_check"],
         inputs={k: lca.central()[v] for k, v in (("tpu", "F.TPU"), ("t1_kwh", "P.t1_kwh"), ("grid", "E.GRID"))},
     )
+    x, vol = lca.central(), lca.load_volumes()
+    rb = lca.evaluate(x, vol, upper_lives=1, clean_lc1=True, clean_base=True)
+    P["pair"]["baseline_clean"] = round(rb["baseline"]["total"], 3)
+    P["groups"]["baseline_clean"] = groups(dict(parts_materials=rb["baseline"]["parts_materials"], stages=rb["baseline"]["stages"]), "baseline")
+    rbox = lca.evaluate(x, vol, upper_lives=1, clean_lc1=False, lc1_pack=lca.PR.BASE_PACK)
+    P["per100"]["design_box"] = round(rbox["lc1_per100"], 3)
+    P["scenarios"]["design_with_box"] = round(rbox["reduction_pct"], 1)
     b100, d100, l100, r100 = P["base_per100"], P["per100"]["design_only"], P["per100"]["lc1"], P["per100"]["lc1_resole"]
+    db = P["per100"]["design_box"]
     P["per100_steps"] = [
         ("Typical trainer", b100, "level"),
-        ("Design: materials, no glue, no box", round(b100 - d100, 3), "step"),
+        ("Materials, no glue", round(b100 - db, 3), "step"),
+        ("No shoebox", round(db - d100, 3), "step"),
         ("Renewable power, two factories", round(d100 - l100, 3), "step"),
         ("LC-1 as specified", l100, "level"),
         ("Upper kept for a second sole", round(l100 - r100, 3), "step"),
@@ -104,7 +113,7 @@ def known_answers(P, R, fea):
         f"{r['reduction_pct']:.2f} % from the shipped code vs {R['scenarios']['lc1']['reduction_pct']} stored")
     chk("lca pair totals", abs(r["baseline"]["total"] - P["pair"]["baseline"]) < 1e-3 and abs(r["lc1"]["total"] - P["pair"]["lc1"]) < 1e-3,
         f"{r['baseline']['total']:.3f} / {r['lc1']['total']:.3f} kg")
-    for k in ("baseline", "lc1_design_only", "lc1"):
+    for k in ("baseline", "baseline_clean", "lc1_design_only", "lc1"):
         s = sum(P["groups"][k].values())
         chk(f"groups sum {k}", abs(s - P["pair"][k]) < 0.01, f"{s:.3f} vs {P['pair'][k]:.3f}")
     worst = max(abs(c["err_pct"]) for c in fea["self_check_1d"])

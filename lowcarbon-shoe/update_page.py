@@ -58,7 +58,7 @@ def pc(x):
 
 def hero_steps(P):
     g = P["groups"]
-    b, d, l = g["baseline"], g["lc1_design_only"], g["lc1"]
+    b, bc, d, l = g["baseline"], g["baseline_clean"], g["lc1_design_only"], g["lc1"]
     return [
         f"<p><b>A typical daily trainer.</b> About {round(P['mass_g']['baseline']['product_g'])} g a pair: a foam midsole of EVA, "
         f"a rubber outsole, a polyester mesh upper, foam padding and plastic stiffeners, held together with glue. Making, shipping "
@@ -66,13 +66,16 @@ def hero_steps(P):
         f"<p><b>Taken apart.</b> Of the materials, the upper ({b['upper']:.2f} kg) and the midsole foam ({b['mid']:.2f} kg) are the "
         f"largest. The largest single item is not a part at all: the electricity and fuel of the factories, {b['factory']:.2f} kg. "
         f"The box, the freight and the bin add {b['rest']:.2f} kg.</p>",
-        f"<p><b>LC-1, made on grid power.</b> Recycled polyester, a sole of one plastic, no glue and no shoebox cut the upper to "
-        f"{d['upper']:.2f} kg and the outsole to {d['out']:.2f} kg. The expanded-TPU midsole emits more than the EVA one, "
-        f"{d['mid']:.2f} kg against {b['mid']:.2f} kg. Factory energy does not fall: {d['factory']:.2f} kg. The pair: "
-        f"{P['pair']['lc1_design_only']:.1f} kg.</p>",
+        f"<p><b>The same shoe, renewable power.</b> With renewable electricity at final assembly and at the sole maker, factory "
+        f"energy falls to {bc['factory']:.2f} kg and the pair to {P['pair']['baseline_clean']:.1f} kg. Nothing about the shoe "
+        f"has changed.</p>",
+        f"<p><b>LC-1, made on grid power.</b> Recycled polyester, a sole of one plastic and no glue cut the upper to "
+        f"{d['upper']:.2f} kg and the outsole to {d['out']:.2f} kg; without a shoebox, the box, freight and bin fall to "
+        f"{d['rest']:.2f} kg. The expanded-TPU midsole emits more than the EVA one, {d['mid']:.2f} kg against {b['mid']:.2f} kg, "
+        f"and foaming and moulding it takes more energy, so factory energy rises slightly, to {d['factory']:.2f} kg. "
+        f"The pair: {P['pair']['lc1_design_only']:.1f} kg.</p>",
         f"<p><b>LC-1 as specified.</b> With renewable electricity at final assembly and at the sole moulder, factory energy "
-        f"falls to {l['factory']:.2f} kg and the pair to {P['pair']['lc1']:.1f} kg. Most of the saving on this step is "
-        f"available to any shoe made in the same factory.</p>",
+        f"falls to {l['factory']:.2f} kg and the pair to {P['pair']['lc1']:.1f} kg.</p>",
     ]
 
 
@@ -85,8 +88,8 @@ def tornado_rows(P):
             rng = f"{round(100 * lo)}-{round(100 * hi)} per cent"
         else:
             rng = fmt.format(lo=lo, hi=hi)
-        rows.append(f'<tr><td>{name}</td><td>{rng}</td><td class="n">{pc(t["red_at_low"])} %</td>'
-                    f'<td class="n">{pc(t["red_at_high"])} %</td></tr>')
+        rows.append(f'<tr><td>{name}</td><td>{rng}</td><td class="n">{pc(t["red_at_low"])}</td>'
+                    f'<td class="n">{pc(t["red_at_high"])}</td></tr>')
     return "\n".join(rows)
 
 
@@ -97,6 +100,15 @@ def claims(P, v):
         ("factory energy is slightly more than materials",
          st["part_making"] + st["assembly"] > st["materials"] and (st["part_making"] + st["assembly"]) / st["materials"] < 1.25),
         ("the redesign delivers less than half of the cut", s["design_only"] < s["lc1"] / 2 + 1e-9),
+        ("just under half: central between 45 and 50", 45 <= s["lc1"] < 50),
+        ("renewable power alone is about a third", 28 <= s["baseline_clean_power"] <= 38),
+        ("the redesign is about a fifth", 15 <= s["design_only"] <= 25),
+        ("materials-and-construction step is most of the design step", s["design_with_box"] > s["design_only"] / 2),
+        ("electricity is the largest step", P["per100_steps"][3][1] > max(P["per100_steps"][1][1], P["per100_steps"][2][1])),
+        ("fossil plastic less than half", P["mass_g"]["lc1"]["fossil_virgin_g"] < P["mass_g"]["baseline"]["fossil_virgin_g"] / 2),
+        ("factory energy rises slightly on grid power", 1.0 <= g["lc1_design_only"]["factory"] / g["baseline"]["factory"] < 1.1),
+        ("LC-1 drop peak is lower", P["fea"]["diff_pct"] < 0),
+        ("life is inside 300-500 miles, low end", 483 <= P["life_km"] < 644),
         ("LC-1 does not halve emissions as a single-life shoe (MC median)", P["mc"]["reduction_pct"]["lc1"]["50"] < 50),
         ("a second sole takes the central case past half", s["lc1_resole"] > 50),
         ("clean power alone cuts the trainer by more than the design", s["baseline_clean_power"] > s["design_only"]),
@@ -104,7 +116,6 @@ def claims(P, v):
         ("upper and midsole are the largest material items",
          sorted(["upper", "sock", "mid", "out"], key=lambda k: -g["baseline"][k])[:2] == ["upper", "mid"]),
         ("LC-1 midsole emits more than the EVA one", g["lc1_design_only"]["mid"] > g["baseline"]["mid"]),
-        ("factory energy does not fall on grid power", g["lc1_design_only"]["factory"] >= g["baseline"]["factory"] * 0.98),
         ("LC-1 is lighter", P["shoe_g"]["lc1"] < P["shoe_g"]["base"]),
         ("LC-1 outsole lasts longer", P["wear_km"]["lc1"] > P["wear_km"]["base"]),
         ("baseline drop peak inside the published range", P["fea"]["published"][0] <= P["fea"]["base_N"] <= P["fea"]["published"][1]),
@@ -125,24 +136,25 @@ def values(P):
     mc = P["mc"]
     fac = st["part_making"] + st["assembly"]
     m = P["mass_g"]
-    fossil_cut = 100 * (1 - m["lc1"]["fossil_virgin_g"] / m["baseline"]["fossil_virgin_g"])
     v = {
         "base_pair": f"{P['pair']['baseline']:.1f}",
         "factory_pct": pc(100 * fac / P["pair"]["baseline"]),
         "red_design": pc(s["design_only"]),
         "red_lc1": pc(s["lc1"]),
         "red_resole": pc(s["lc1_resole"]),
+        "red_designbox": pc(s["design_with_box"]),
+        "life_mi": f"{round(P['life_km'] / 1.609344, -1):.0f}",
         "red_baseclean": pc(s["baseline_clean_power"]),
         "takeaways": insight.takeaways([
             f"In this model a typical trainer emits {P['pair']['baseline']:.1f} kg of greenhouse gas per pair, and "
             f"{pc(100 * fac / P['pair']['baseline'])} per cent of it is factory energy rather than material.",
-            f"The LC-1 redesign alone cuts emissions per 100 km by {pc(s['design_only'])} per cent; renewable electricity at "
-            f"two factories takes the cut to {pc(s['lc1'])} per cent.",
-            f"LC-1 needs {pc(fossil_cut)} per cent less new fossil plastic, but no recycling route for its sole is open to a "
-            f"runner today.",
+            f"Renewable electricity at final assembly and at the sole maker cuts that by {pc(s['baseline_clean_power'])} per cent; "
+            f"the LC-1 redesign alone cuts {pc(s['design_only'])} per cent, and the two together just under half.",
+            "LC-1 needs less than half as much new fossil plastic, but no scheme open to a runner recycles its sole back "
+            "into plastic today.",
         ]),
         "hero": H.hero_section(P, hero_steps(P)),
-        "waterfall": H.figure(P, "<p>Kg CO2e per 100 km, central case: the typical trainer, the two changes, LC-1, "
+        "waterfall": H.figure(P, "<p>Kg CO2e per 100 km, central case: the typical trainer, the three changes, LC-1, "
                                  "and LC-1 with a second sole unit on the same upper.</p>", H.waterfall_svg),
         "life": f"{round(P['life_km']):,}",
         "b100": f"{P['base_per100']:.2f}",
@@ -157,7 +169,6 @@ def values(P):
         "poly_base": f"{round(m['baseline']['polymer_g'])}",
         "fossil_lc1": f"{round(m['lc1']['fossil_virgin_g'])}",
         "fossil_base": f"{round(m['baseline']['fossil_virgin_g'])}",
-        "fossil_cut": pc(fossil_cut),
         "part_lc1": f"{P['particles']['lc1']:.1f}",
         "part_base": f"{P['particles']['baseline']:.1f}",
         "drop_base": f"{round(P['fea']['base_N']):,}",

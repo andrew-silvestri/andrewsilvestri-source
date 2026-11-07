@@ -142,7 +142,7 @@ def grids(x, clean_t1=False, clean_sole=False, country="E.GRID"):
     return {"t1": c if clean_t1 else gr, "sole": c if clean_sole else gr, "t2": gr}
 
 
-def shoe_pair(x, shoe, vol, g, tpu_override=None, cff=False):
+def shoe_pair(x, shoe, vol, g, tpu_override=None, cff=False, pack=None):
     """Stage totals (kg CO2e per pair), part breakdown, masses (g per pair)."""
     xx = dict(x)
     if tpu_override is not None:
@@ -176,7 +176,8 @@ def shoe_pair(x, shoe, vol, g, tpu_override=None, cff=False):
         eol_parts[name] = e
     f_asm = 1.0 if shoe == "baseline" else xx["P.noglue_factor"]
     st["assembly"] = f_asm * (xx["P.t1_kwh"] * g["t1"] + xx["P.t1_gas_mj"] * xx["E.GAS"] + xx["P.t1_liq_mj"] * xx["E.LIQ_FUEL"])
-    pack = PR.BASE_PACK if shoe == "baseline" else PR.LC1_PACK
+    if pack is None:
+        pack = PR.BASE_PACK if shoe == "baseline" else PR.LC1_PACK
     pack_kg = sum(p[2] for p in pack) / 1000.0
     st["packaging"] = sum(p[2] / 1000.0 * xx["F." + p[1]] for p in pack)
     t = (mass["product_g"] / 1000.0 + pack_kg) / 1000.0
@@ -209,11 +210,11 @@ def extra_sole(x, vol, g, tpu_override=None, cff=False):
 
 
 def evaluate(x, vol, upper_lives=None, clean_lc1=True, clean_base=False, life_mult=None,
-             tpu_override=None, country="E.GRID", cff=False):
+             tpu_override=None, country="E.GRID", cff=False, lc1_pack=None):
     gb = grids(x, clean_base, clean_base, country)
     gl = grids(x, clean_lc1, clean_lc1, country)
     b = shoe_pair(x, "baseline", vol, gb, tpu_override, cff)
-    l = shoe_pair(x, "lc1", vol, gl, tpu_override, cff)
+    l = shoe_pair(x, "lc1", vol, gl, tpu_override, cff, lc1_pack)
     U = x["P.upper_lives"] if upper_lives is None else upper_lives
     m = x["P.life_mult_lc1"] if life_mult is None else life_mult
     L = x["P.life_km"]

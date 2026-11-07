@@ -2,7 +2,8 @@
  "pair": {
   "baseline": 4.361,
   "lc1_design_only": 3.508,
-  "lc1": 2.188
+  "lc1": 2.188,
+  "baseline_clean": 2.924
  },
  "stages": {
   "baseline": {
@@ -54,6 +55,14 @@
    "out": 0.142,
    "factory": 0.591,
    "rest": 0.561
+  },
+  "baseline_clean": {
+   "upper": 0.8277,
+   "sock": 0.1789,
+   "mid": 0.3636,
+   "out": 0.3395,
+   "factory": 0.401,
+   "rest": 0.8136
   }
  },
  "mass_g": {
@@ -78,7 +87,8 @@
  "per100": {
   "design_only": 0.638,
   "lc1": 0.398,
-  "lc1_resole": 0.326
+  "lc1_resole": 0.326,
+  "design_box": 0.674
  },
  "base_per100": 0.793,
  "base_clean_per100": 0.532,
@@ -92,7 +102,8 @@
   "lc1_cff_5050": 43.2,
   "lc1_sole_making_in_t1": 48.0,
   "lc1_made_in_china": 51.7,
-  "lc1_made_in_indonesia": 55.6
+  "lc1_made_in_indonesia": 55.6,
+  "design_with_box": 15.0
  },
  "mc": {
   "n": 10000,
@@ -421,9 +432,9 @@
   "lc1": 3329
  },
  "particles": {
-  "baseline": 3.3,
-  "lc1": 0.86,
-  "note": "baseline: Manabe et al. 2025 whole-shoe mass loss 33 mg/km per pair (22-60); LC-1 scaled by r = 0.25 and density 1.20/1.15"
+  "baseline": 3.5,
+  "lc1": 0.91,
+  "note": "baseline: Manabe et al. 2025, running shoes, 35 mg/km per pair (measured); LC-1 scaled by r = 0.25 and density 1.20/1.15 (calculated)"
  },
  "shoe_g": {
   "lc1": 229.9,
@@ -469,8 +480,13 @@
    "level"
   ],
   [
-   "Design: materials, no glue, no box",
-   0.155,
+   "Materials, no glue",
+   0.119,
+   "step"
+  ],
+  [
+   "No shoebox",
+   0.036,
    "step"
   ],
   [
@@ -509,6 +525,11 @@
    "check": "groups sum baseline",
    "ok": true,
    "detail": "4.361 vs 4.361"
+  },
+  {
+   "check": "groups sum baseline_clean",
+   "ok": true,
+   "detail": "2.924 vs 2.924"
   },
   {
    "check": "groups sum lc1_design_only",

@@ -62,7 +62,7 @@ def wear():
     r_print = RNG.triangular(0.41, 0.52, 1.2, N)
     life_p = 100 * t_lc1 / (rate * r_print)
     pct = lambda v: {p: round(float(np.percentile(v, p))) for p in (5, 50, 95)}  # noqa: E731
-    gpkm = 33.0  # mg per km per pair, Manabe et al. 2025 (92 km, 23 pairs); 22-60 range
+    gpkm = 35.0  # mg per km per pair: Manabe et al. 2025's own rate for running shoes (walked and jogged, 92.4 km)
     d = dict(
         method=wear.__doc__.strip(),
         assumptions=dict(baseline_tread_mm=t_base, lc1_skin_mm=t_lc1, rate_mm_per_100km="lognormal, median 0.14, clipped 0.07-0.56",
@@ -72,7 +72,7 @@ def wear():
         p_printed_at_least_baseline=round(float(np.mean(life_p >= life_b)), 3),
         particle_loss_g_per_100km_pair=dict(baseline=round(gpkm * 100 / 1000, 1),
                                             lc1=round(gpkm * 100 / 1000 * 0.25 * 1.2 / 1.15, 2),
-                                            note="baseline: Manabe et al. 2025 whole-shoe mass loss 33 mg/km per pair (22-60); LC-1 scaled by r = 0.25 and density 1.20/1.15"),
+                                            note="baseline: Manabe et al. 2025, running shoes, 35 mg/km per pair (measured); LC-1 scaled by r = 0.25 and density 1.20/1.15 (calculated)"),
         target="LC-1 wear-through distance >= baseline (median, same runner)",
         passed=bool(np.median(life_l / life_b) >= 1.0),
         caveat="Wet grip of a TPU outsole is untested; BASF rates standard TPU wet grip 'average' against rubber. A physical slip test is required (BUILD.md).")

@@ -1,10 +1,11 @@
 """The page's figures, drawn as SVG strings (no browser, no node).
 
-hero_section(P)  the scroll-driven exploded shoe. Four states:
+hero_section(P)  the scroll-driven exploded shoe. Five states:
                  0 the baseline shoe assembled, with its total;
                  1 exploded: each layer apart, each group with its kg CO2e;
-                 2 the same groups for LC-1 made on grid power;
-                 3 LC-1 as specified (renewable electricity at two sites).
+                 2 the baseline made with renewable electricity at two sites;
+                 3 the same groups for LC-1 made on grid power;
+                 4 LC-1 as specified (renewable electricity at two sites).
                  Every animated element carries data-k; the page's inline script
                  interpolates the numbers between states as the reader scrolls.
                  Without JS, or with reduced motion, each step shows its own
@@ -43,7 +44,7 @@ LAYER_MID_Y = {"upper": -60, "sock": -35, "mid": -20, "out": -3}
 FORMS = {
     # W, H, drawing origin (x, ground y), rows x, first row y, row step, bar scale px/kg, total y
     "wide": dict(W=720, H=380, ox=40, gy=262, rx=380, ry=58, step=50, scale=150.0, ty=362),
-    "phone": dict(W=340, H=600, ox=29, gy=205, rx=20, ry=262, step=50, scale=150.0, ty=578),
+    "phone": dict(W=340, H=476, ox=29, gy=190, rx=20, ry=222, step=40, scale=150.0, ty=466),
 }
 
 
@@ -52,13 +53,17 @@ def _fits(text, x, W):
         raise ValueError(f"label runs off the figure at {W}px: {text!r}")
 
 
+NSTATES = 5
+
+
 def state_values(P, s):
     """Numbers for state s: per group kg, explode factor, total line."""
-    key = {0: "baseline", 1: "baseline", 2: "lc1_design_only", 3: "lc1"}[s]
+    key = {0: "baseline", 1: "baseline", 2: "baseline_clean", 3: "lc1_design_only", 4: "lc1"}[s]
     tot = {0: f"Typical trainer: {P['pair']['baseline']:.2f} kg per pair",
            1: f"Typical trainer: {P['pair']['baseline']:.2f} kg per pair",
-           2: f"LC-1, grid power: {P['pair']['lc1_design_only']:.2f} kg per pair",
-           3: f"LC-1, renewable power: {P['pair']['lc1']:.2f} kg per pair"}[s]
+           2: f"Typical, renewable power: {P['pair']['baseline_clean']:.2f} kg",
+           3: f"LC-1, grid power: {P['pair']['lc1_design_only']:.2f} kg per pair",
+           4: f"LC-1, renewable power: {P['pair']['lc1']:.2f} kg per pair"}[s]
     return dict(kg=P["groups"][key], explode=0.0 if s == 0 else 1.0, show=1.0, total=tot)
 
 
@@ -115,7 +120,7 @@ def svg(P, s, form, title):
 def states_json(P, form):
     """Per state: {k: {attr: number, 'text': str}} for the page's script."""
     st = []
-    for s in range(4):
+    for s in range(NSTATES):
         d = {}
         f = FORMS[form]
         for tag, k, a, text in elements(P, s, form):
@@ -132,13 +137,15 @@ def states_json(P, form):
 TITLES = [
     "A typical running shoe, assembled, with the greenhouse gas from each part of one pair.",
     "The typical shoe taken apart: greenhouse gas from each part, from factory energy, and from the box, freight and disposal.",
+    "The typical trainer made with renewable electricity at final assembly and at the sole maker.",
     "The same parts for the LC-1 design, made on grid power.",
     "LC-1 with renewable electricity at final assembly and at the sole moulder.",
 ]
 
 
 def hero_section(P, steps_html):
-    """steps_html: four HTML paragraphs, one per state."""
+    """steps_html: one HTML paragraph per state (NSTATES)."""
+    assert len(steps_html) == NSTATES
     spec = {form: dict(svg=svg(P, 0, form, TITLES[0]), **states_json(P, form)) for form in ("wide", "phone")}
     js = json.dumps(spec, separators=(",", ":")).replace("</", "<\\/")
     parts = ['<section class="scrolly wide" id="shoe-hero">',

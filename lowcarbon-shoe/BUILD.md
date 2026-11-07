@@ -33,7 +33,7 @@ pages showed on 2026-11-07 (research/w2-07-build-sourcing.md); check them.
 - **Midsole as infill.** Print the midsole envelope with 3 perimeters, a solid
   2 mm skin at the bottom (this is the outsole skin and tread), 3 solid layers on
   top, and gyroid infill inside. The infill percentage is the lattice relative
-  density: the model (RESULTS.md) puts the match to an EVA trainer at 28-45 %;
+  density: the model (RESULTS.md) puts the match to an EVA trainer at 25-35 %;
   find it with test 2 before printing a full sole.
 - **Bed size.** The sole is 283 mm long (US 9). It does not fit 250 x 210 or
   250 x 220 mm beds at any angle (research/w2-07); use a 300 x 300 mm printer

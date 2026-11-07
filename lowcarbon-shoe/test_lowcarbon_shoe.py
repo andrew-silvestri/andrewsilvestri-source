@@ -88,14 +88,17 @@ def main():
                       .group(1).replace("<\\/", "</"))
     want = {f: H.states_json(fresh, f)["states"] for f in ("wide", "phone")}
     if BREAK == "hero":
-        want["wide"][3]["bmid"]["width"] += 5
+        want["wide"][4]["bmid"]["width"] += 5
     check("3 hero", all(spec[f]["states"] == want[f] for f in want), "the page's state table equals hero.py on a fresh build")
     # 4 numbers ---------------------------------------------------------------------
     st = r["baseline"]["stages"]
     fac = round(100 * (st["part_making"] + st["assembly"]) / r["baseline"]["total"])
     red = round(rd["reduction_pct"]) if BREAK != "numbers" else round(rd["reduction_pct"]) + 1
-    phrases = [f"{fac} per cent of it is factory energy", f"cuts emissions per 100 km by {red} per cent",
-               f"takes the cut to {round(r['reduction_pct'])} per cent", f"responsible for {r['baseline']['total']:.1f} kg"]
+    rb = lca.evaluate(x, vol, upper_lives=1, clean_lc1=True, clean_base=True)
+    bc = round(100 * (1 - rb["baseline"]["total"] / r["baseline"]["total"]))
+    phrases = [f"{fac} per cent of it is factory energy", f"the LC-1 redesign alone cuts {red} per cent",
+               f"cuts that by {bc} per cent", f"emits {r['baseline']['total']:.1f} kg of greenhouse gas per pair",
+               f"a cut of just under half ({round(r['reduction_pct'])} per cent in the central case)"]
     miss = [p for p in phrases if p not in T]
     check("4 numbers", not miss, "takeaways and standfirst carry the re-run numbers" + (f"; missing {miss}" if miss else ""))
     # 5 page ------------------------------------------------------------------------
