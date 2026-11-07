@@ -31,12 +31,19 @@ FIRST, LAST = 1940, 2015
 MID = {"0-4.9": 2.5, "5-9.9": 7.5, "10-14.9": 12.5, "15-19.9": 17.5, "20-24.9": 22.5, "25-29.9": 27.5, "30+": 32.5}
 LANPHEAR_BETA = 2.70     # IQ points per ln(ug/dL), Lanphear et al. 2005 (read from the article by test_lead.py)
 LANPHEAR_FLOOR = 2.4     # ug/dL, the 5th percentile of the pooled concurrent blood lead (same article)
+LANPHEAR_EARLY_BETA = 2.04   # the same table's fit on early-childhood blood lead (mean of ages 6-24 months)
+LANPHEAR_EARLY_FLOOR = 4.1   # ug/dL, its 5th percentile
 CRUMP_BETA = 3.246       # Crump et al. 2013 as used by Larsen and Sanchez-Triana 2023 (read from the PDF)
 
 
 def lanphear(band):
     b = MID[band]
     return LANPHEAR_BETA * math.log(b / LANPHEAR_FLOOR) if b > LANPHEAR_FLOOR else 0.0
+
+
+def lanphear_early(band):
+    b = MID[band]
+    return LANPHEAR_EARLY_BETA * math.log(b / LANPHEAR_EARLY_FLOOR) if b > LANPHEAR_EARLY_FLOOR else 0.0
 
 
 def crump(band):
@@ -99,12 +106,16 @@ def build():
     curves = {
         "paper": {"label": "McFarland et al. (as published)", "points": total},
         "lanphear": {"label": "Lanphear et al. 2005, from 2.4 ug/dL", "points": points(lanphear)},
+        "lanphear_early": {"label": "Lanphear et al. 2005, early childhood, from 4.1 ug/dL",
+                           "points": points(lanphear_early)},
         "crump": {"label": "Crump et al. 2013, no threshold", "points": points(crump)},
     }
     for k in curves:
         curves[k]["per_person"] = curves[k]["points"] / alive
     curves["lanphear"]["peak5_mean"] = sum(n * lanphear(b) for c in range(1966, 1971) for b, n in pop[c].items()) \
         / by[(1966, 1970)]["pop"]
+    curves["lanphear_early"]["peak5_mean"] = sum(n * lanphear_early(b) for c in range(1966, 1971)
+                                                 for b, n in pop[c].items()) / by[(1966, 1970)]["pop"]
     curves["crump"]["peak5_mean"] = sum(n * crump(b) for c in range(1966, 1971) for b, n in pop[c].items()) \
         / by[(1966, 1970)]["pop"]
     curves["paper"]["peak5_mean"] = by[(1966, 1970)]["mean"]
@@ -144,7 +155,8 @@ def build():
     return {
         "source_note": "McFarland, Hauer and Reuben 2022 (PNAS), SI Datasets S01 and S03; Bureau of Mines; EPA; "
                        "Larsen and Sanchez-Triana 2023",
-        "us": {"total": total, "alive_2015": alive, "per_person": total / alive, "n_ge5": n_ge5,
+        "us": {"total": total, "alive_2015": alive,
+               "born_before": round(sum(sum(pop[c].values()) for c in pop if c < FIRST)), "per_person": total / alive, "n_ge5": n_ge5,
                "share_ge5": n_ge5 / alive, "band_loss": loss, "per_year": per_year, "fives": fives,
                "peak5": peak5, "peak1": peak1, "mid_century": mid_century,
                "mid_century_share": mid_century["points"] / total},

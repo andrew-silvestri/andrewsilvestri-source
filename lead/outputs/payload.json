@@ -122,6 +122,12 @@
    "per_person": 2.355659017239671,
    "points": 750228875.1263982
   },
+  "lanphear_early": {
+   "label": "Lanphear et al. 2005, early childhood, from 4.1 ug/dL",
+   "peak5_mean": 3.0951441310058136,
+   "per_person": 1.1608979145152856,
+   "points": 369722073.5978753
+  },
   "paper": {
    "label": "McFarland et al. (as published)",
    "peak5_mean": 5.875416651726659,
@@ -384,6 +390,7 @@
    "30+": 7.3975,
    "5-9.9": 3.8475
   },
+  "born_before": 17189002,
   "fives": [
    {
     "from": 1940,

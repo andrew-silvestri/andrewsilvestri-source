@@ -931,10 +931,10 @@ PAGES = {
         ("recorded each year how much lead American factories used",
          'U.S. Bureau of Mines, <i>Minerals Yearbook</i>, chapter &ldquo;Lead&rdquo;, editions of 1945 to 1991, table '
          'of lead consumption by product (row &ldquo;tetraethyl lead&rdquo;, later &ldquo;gasoline antiknock '
-         'additives&rdquo;), read from the Internet Archive&rsquo;s copies.',
+         'additives&rdquo; and &ldquo;gasoline additives&rdquo;), read from the Internet Archive&rsquo;s copies.',
          'Lead used to make the gasoline additive, 1941 to 1991; Department of Commerce estimates for 1987 to '
          '1991.'),
-        ("issued its first limits in 1973",
+        ("issued its first limits on lead in gasoline in 1973",
          'U.S. Environmental Protection Agency, &ldquo;EPA takes final step in phaseout of leaded gasoline&rdquo;, '
          'press release, 29 January 1996.',
          'First standards in 1973; catalytic converters needing lead-free fuel from 1975; 0.1 gram a gallon by '
@@ -951,17 +951,17 @@ PAGES = {
          'Ruckart PZ, Jones RL, Courtney JG, et al. &ldquo;Update of the blood lead reference value &mdash; United '
          'States, 2021&rdquo;. <i>MMWR</i> 70(43):1509&ndash;1512, 2021.',
          'The reference value of 5 &micro;g/dL adopted in 2012 and lowered to 3.5 &micro;g/dL in 2021.'),
-        ("A commentary published with the paper",
+        ("A commentary on the paper in the same journal",
          'Sampson RJ. &ldquo;Legacies of inequality, legacy lead exposures, and improving population '
          'well-being&rdquo;. <i>Proceedings of the National Academy of Sciences</i> 119(14):e2202401119, 2022.',
-         'Estimates built on gasoline alone are likely to understate exposure from paint, pipes and industry.'),
-        ("Lanphear and colleagues' fit",
+         'Estimates built on gasoline alone are likely to understate exposure from paint, plumbing and industry.'),
+        ("Lanphear and colleagues give",
          'Lanphear BP, Hornung R, Khoury J, et al. &ldquo;Low-level environmental lead exposure and children&rsquo;s '
          'intellectual function: an international pooled analysis&rdquo;. <i>Environmental Health Perspectives</i> '
          '113(7):894&ndash;899, 2005.',
-         'The log-linear slope, 2.70 IQ points per natural-log unit of concurrent blood lead, and its data range from '
-         '2.4 &micro;g/dL.'),
-        ("The curve of Crump and colleagues",
+         'The log-linear slopes, 2.70 IQ points per natural-log unit of blood lead at the IQ test and 2.04 for '
+         'early-childhood blood lead, and the 5th percentiles of their data, 2.4 and 4.1 &micro;g/dL.'),
+        ("the curve of Crump and colleagues",
          'Crump KS, Van Landingham C, Bowers TS, et al. &ldquo;A statistical reevaluation of the data used in the '
          'Lanphear et al. (2005) pooled-analysis that related low levels of blood lead to intellectual deficits in '
          'children&rdquo;. <i>Critical Reviews in Toxicology</i> 43(9):785&ndash;799, 2013.',
@@ -976,20 +976,22 @@ PAGES = {
          'U.S. Environmental Protection Agency, <i>Integrated Science Assessment for Lead</i>, final report, '
          'EPA/600/R-23/375, January 2024.',
          'The causal relationship between lead exposure and cognitive effects in children.'),
-        ("Some researchers argue",
+        ("In 2001, one review argued",
          'Kaufman AS. &ldquo;Do low levels of lead produce IQ loss in children? A careful examination of the '
          'literature&rdquo;. <i>Archives of Clinical Neuropsychology</i> 16(4):303&ndash;341, 2001.',
-         'The argument that residual confounding by parental IQ and home environment explains low-level '
+         'The argument that confounding by parental IQ and home environment may account for low-level '
          'associations.'),
         ("In Dunedin, New Zealand",
          'Reuben A, Caspi A, Belsky DW, et al. &ldquo;Association of childhood blood lead levels with cognitive '
-         'function and socioeconomic status at age 38 years&rdquo;. <i>JAMA</i> 317(12):1244&ndash;1251, 2017.',
+         'function and socioeconomic status at age 38 years and with IQ change and socioeconomic mobility between '
+         'childhood and adulthood&rdquo;. <i>JAMA</i> 317(12):1244&ndash;1251, 2017.',
          'Adult IQ 1.61 points lower for each 5 &micro;g/dL of blood lead at age 11, adjusted for maternal IQ, '
          'childhood IQ and childhood socioeconomic status.'),
         ("In Sweden, a study of the gasoline phase-out",
          'Gr&ouml;nqvist H, Nilsson JP, Robling P-O. &ldquo;Understanding how low levels of early lead exposure affect '
          'children&rsquo;s life trajectories&rdquo;. <i>Journal of Political Economy</i> 128(9):3376&ndash;3433, 2020.',
-         'Effects of the phase-out on schooling and earnings; no consistent effect on cognitive test scores.'),
+         'Effects of the phase-out on school grades, high-school completion and convictions; no consistent effect on '
+         'the enlistment cognitive test; no significant effect on earnings measured at ages 29 to 40.'),
         ("according to a meta-analysis",
          'Trahan LH, Stuebing KK, Fletcher JM, Hiscock M. &ldquo;The Flynn effect: a meta-analysis&rdquo;. '
          '<i>Psychological Bulletin</i> 140(5):1332&ndash;1360, 2014.',
