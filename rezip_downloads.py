@@ -235,6 +235,12 @@ TARGETS = [
     # SHA-1 differs from the manifest.
     target("ethane", "ethane-code.zip", keep={"outputs"},
            skip=("data/raw", "data/raw/*", "outputs/*.png")),
+    # From smog rule to corn ethanol (chain-reactions lane, 2026-11-07): the fetch script, readers, payload
+    # builder and checks, the page generator with the causal tree, and the tests, with the payload and
+    # data/fetched.json. Not data/raw: the fetch script re-downloads the files and the readers refuse one
+    # whose SHA-1 differs from the manifest.
+    target("oxygen", "oxygen-code.zip", keep={"outputs"},
+           skip=("data/raw", "data/raw/*", "outputs/*.png")),
     # food-code.zip retired with its page on 2026-09-09: food.html was
     # unpublished at Andrew's request, for now, and the last build is
     # unpublished/downloads/food-code.zip. The TARGET goes with the page,
