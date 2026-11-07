@@ -1,0 +1,580 @@
+{
+ "blank_card_w2871.htm": {
+  "bytes": 88676,
+  "fetched": "2026-11-07",
+  "sha1": "dff1572ecfa7fa17f2d16a440d979f69bacd8e44",
+  "url": "https://www.nber.org/papers/w2871",
+  "via": "urllib"
+ },
+ "bls_cps_1967.json": {
+  "bytes": 30744,
+  "fetched": "2026-11-07",
+  "post": "{\"seriesid\": [\"LNU03000000\", \"LNU03023621\", \"LNU03023653\"], \"startyear\": \"1967\", \"endyear\": \"1976\"}",
+  "sha1": "0e65318afd7a98146b73f04591c2758910046d0b",
+  "url": "https://api.bls.gov/publicAPI/v1/timeseries/data/",
+  "via": "urllib POST"
+ },
+ "bls_cps_1977.json": {
+  "bytes": 30833,
+  "fetched": "2026-11-07",
+  "post": "{\"seriesid\": [\"LNU03000000\", \"LNU03023621\", \"LNU03023653\"], \"startyear\": \"1977\", \"endyear\": \"1986\"}",
+  "sha1": "176c5a29c8e94df1e1c4e55e6a642994c9eb65f0",
+  "url": "https://api.bls.gov/publicAPI/v1/timeseries/data/",
+  "via": "urllib POST"
+ },
+ "bls_cps_1987.json": {
+  "bytes": 30800,
+  "fetched": "2026-11-07",
+  "post": "{\"seriesid\": [\"LNU03000000\", \"LNU03023621\", \"LNU03023653\"], \"startyear\": \"1987\", \"endyear\": \"1996\"}",
+  "sha1": "72d3dda78cb94f2c33dd0386bed77c3f1b00dfef",
+  "url": "https://api.bls.gov/publicAPI/v1/timeseries/data/",
+  "via": "urllib POST"
+ },
+ "bls_cps_1997.json": {
+  "bytes": 30788,
+  "fetched": "2026-11-07",
+  "post": "{\"seriesid\": [\"LNU03000000\", \"LNU03023621\", \"LNU03023653\"], \"startyear\": \"1997\", \"endyear\": \"2006\"}",
+  "sha1": "3348b0adf1ef21679b041acccf41aa1949e5f33d",
+  "url": "https://api.bls.gov/publicAPI/v1/timeseries/data/",
+  "via": "urllib POST"
+ },
+ "bls_cps_2007.json": {
+  "bytes": 30885,
+  "fetched": "2026-11-07",
+  "post": "{\"seriesid\": [\"LNU03000000\", \"LNU03023621\", \"LNU03023653\"], \"startyear\": \"2007\", \"endyear\": \"2016\"}",
+  "sha1": "2991be032ae4fe3e97a9b73bf665f41cb1706644",
+  "url": "https://api.bls.gov/publicAPI/v1/timeseries/data/",
+  "via": "urllib POST"
+ },
+ "bls_cps_2017.json": {
+  "bytes": 27971,
+  "fetched": "2026-11-07",
+  "post": "{\"seriesid\": [\"LNU03000000\", \"LNU03023621\", \"LNU03023653\"], \"startyear\": \"2017\", \"endyear\": \"2025\"}",
+  "sha1": "45aff00dd5240091317c3209827cef2c50e32331",
+  "url": "https://api.bls.gov/publicAPI/v1/timeseries/data/",
+  "via": "urllib POST"
+ },
+ "bls_cpsaat01.htm": {
+  "bytes": 155850,
+  "fetched": "2026-11-07",
+  "sha1": "16adfa10458b03a32666b4e4f0d8902daf3442b1",
+  "url": "https://www.bls.gov/cps/cpsaat01.htm",
+  "via": "urllib"
+ },
+ "bls_laus_0.json": {
+  "bytes": 293063,
+  "fetched": "2026-11-07",
+  "post": "{\"seriesid\": [\"LAUST010000000000004\", \"LAUST020000000000004\", \"LAUST040000000000004\", \"LAUST050000000000004\", \"LAUST060000000000004\", \"LAUST080000000000004\", \"LAUST090000000000004\", \"LAUST100000000000004\", \"LAUST110000000000004\", \"LAUST120000000000004\", \"LAUST130000000000004\", \"LAUST150000000000004\", \"LAUST160000000000004\", \"LAUST170000000000004\", \"LAUST180000000000004\", \"LAUST190000000000004\", \"LAUST200000000000004\", \"LAUST210000000000004\", \"LAUST220000000000004\", \"LAUST230000000000004\", \"LAUST240000000000004\", \"LAUST250000000000004\", \"LAUST260000000000004\", \"LAUST270000000000004\", \"LAUST280000000000004\"], \"startyear\": \"2016\", \"endyear\": \"2025\"}",
+  "sha1": "46e99364dcb684292ef49c56134bde104a801ad8",
+  "url": "https://api.bls.gov/publicAPI/v1/timeseries/data/",
+  "via": "urllib POST, 2026-11-07, by the research pull; copied (keyless daily quota spent)"
+ },
+ "bls_laus_1.json": {
+  "bytes": 292852,
+  "fetched": "2026-11-07",
+  "post": "{\"seriesid\": [\"LAUST290000000000004\", \"LAUST300000000000004\", \"LAUST310000000000004\", \"LAUST320000000000004\", \"LAUST330000000000004\", \"LAUST340000000000004\", \"LAUST350000000000004\", \"LAUST360000000000004\", \"LAUST370000000000004\", \"LAUST380000000000004\", \"LAUST390000000000004\", \"LAUST400000000000004\", \"LAUST410000000000004\", \"LAUST420000000000004\", \"LAUST440000000000004\", \"LAUST450000000000004\", \"LAUST460000000000004\", \"LAUST470000000000004\", \"LAUST480000000000004\", \"LAUST490000000000004\", \"LAUST500000000000004\", \"LAUST510000000000004\", \"LAUST530000000000004\", \"LAUST540000000000004\", \"LAUST550000000000004\"], \"startyear\": \"2016\", \"endyear\": \"2025\"}",
+  "sha1": "a3a1c3875d1a61adedf11fade1ae748b1fd0eaf3",
+  "url": "https://api.bls.gov/publicAPI/v1/timeseries/data/",
+  "via": "urllib POST, 2026-11-07, by the research pull; copied (keyless daily quota spent)"
+ },
+ "bls_laus_2.json": {
+  "bytes": 23647,
+  "fetched": "2026-11-07",
+  "post": "{\"seriesid\": [\"LAUST560000000000004\", \"LAUST720000000000004\"], \"startyear\": \"2016\", \"endyear\": \"2025\"}",
+  "sha1": "1033188c6f4f2e65e150a766ba65dd3e01f3053d",
+  "url": "https://api.bls.gov/publicAPI/v1/timeseries/data/",
+  "via": "urllib POST, 2026-11-07, by the research pull; copied (keyless daily quota spent)"
+ },
+ "bls_uisup_2022.pdf": {
+  "bytes": 259143,
+  "fetched": "2026-11-07",
+  "sha1": "1519e7f447a572cd0f1f647a1bab4e5ccdf3996b",
+  "url": "https://www.bls.gov/news.release/archives/uisup_03292023.pdf",
+  "via": "urllib"
+ },
+ "ccw_w12639.htm": {
+  "bytes": 91725,
+  "fetched": "2026-11-07",
+  "sha1": "c915731c962b6265dcb81a14d26ee22d8fac0e23",
+  "url": "https://www.nber.org/papers/w12639",
+  "via": "urllib"
+ },
+ "census_nst_est.csv": {
+  "bytes": 53555,
+  "fetched": "2026-11-07",
+  "sha1": "abdfbdc08089a3601419591f344f29d08711ba0b",
+  "url": "https://www2.census.gov/programs-surveys/popest/datasets/2020-2025/state/totals/NST-EST2025-ALLDATA.csv",
+  "via": "urllib"
+ },
+ "cramer_nunn_2026.pdf": {
+  "bytes": 1118125,
+  "fetched": "2026-11-07",
+  "sha1": "076d82743d85efdd7e2ec6ec27a967b773538578",
+  "url": "https://www.minneapolisfed.org/-/media/assets/papers/community-development-working-papers/2026/understanding-eligibility-and-take-up-in-state-unemployment-insurance-programs.pdf",
+  "via": "urllib"
+ },
+ "crck_qje2019.htm": {
+  "bytes": 31912,
+  "fetched": "2026-11-07",
+  "sha1": "230331a4de13869bf3d8783ec112581d6d1db93f",
+  "url": "https://ideas.repec.org/a/oup/qjecon/v134y2019i1p227-279..html",
+  "via": "urllib"
+ },
+ "dahl_knepper_w30152.pdf": {
+  "bytes": 876408,
+  "fetched": "2026-11-07",
+  "sha1": "be0638cbb6714b5a5866c4420c5873fda48d4f36",
+  "url": "https://www.nber.org/system/files/working_papers/w30152/w30152.pdf",
+  "via": "urllib"
+ },
+ "dol_a12.csv": {
+  "bytes": 1616,
+  "fetched": "2026-11-07",
+  "post": "begyr=1950&endyr=2026&states=US&chartnum=a12",
+  "sha1": "6ab105822f7e0f98ab54a36c2e5ac7a21de5ebf0",
+  "url": "https://oui.doleta.gov/unemploy/Chartbook/createdf.php",
+  "via": "urllib POST"
+ },
+ "dol_a13_1976.csv": {
+  "bytes": 1348,
+  "fetched": "2026-11-07",
+  "post": "begyr=1976&endyr=1976&states=US&chartnum=a13",
+  "sha1": "6b8d486f5ffdbb72baf660dae6d7a1ee8569b455",
+  "url": "https://oui.doleta.gov/unemploy/Chartbook/createdf.php",
+  "via": "urllib POST"
+ },
+ "dol_a13_1977.csv": {
+  "bytes": 1353,
+  "fetched": "2026-11-07",
+  "post": "begyr=1977&endyr=1977&states=US&chartnum=a13",
+  "sha1": "3d246cafaf87f40876b3108adf56499e8c9fdcb0",
+  "url": "https://oui.doleta.gov/unemploy/Chartbook/createdf.php",
+  "via": "urllib POST"
+ },
+ "dol_a13_1978.csv": {
+  "bytes": 1351,
+  "fetched": "2026-11-07",
+  "post": "begyr=1978&endyr=1978&states=US&chartnum=a13",
+  "sha1": "e65a14ce6623e3703bf8ebb269dd93975dff5479",
+  "url": "https://oui.doleta.gov/unemploy/Chartbook/createdf.php",
+  "via": "urllib POST"
+ },
+ "dol_a13_1979.csv": {
+  "bytes": 1354,
+  "fetched": "2026-11-07",
+  "post": "begyr=1979&endyr=1979&states=US&chartnum=a13",
+  "sha1": "5ece672beac800da2f6dc43664aa81971cf1070c",
+  "url": "https://oui.doleta.gov/unemploy/Chartbook/createdf.php",
+  "via": "urllib POST"
+ },
+ "dol_a13_1980.csv": {
+  "bytes": 1350,
+  "fetched": "2026-11-07",
+  "post": "begyr=1980&endyr=1980&states=US&chartnum=a13",
+  "sha1": "cd437b75cc74b03ee86a2ed4674fd5489483fcde",
+  "url": "https://oui.doleta.gov/unemploy/Chartbook/createdf.php",
+  "via": "urllib POST"
+ },
+ "dol_a13_1981.csv": {
+  "bytes": 1349,
+  "fetched": "2026-11-07",
+  "post": "begyr=1981&endyr=1981&states=US&chartnum=a13",
+  "sha1": "8b31c4598e82ff7a6fbf1d28b1305659f0c611f9",
+  "url": "https://oui.doleta.gov/unemploy/Chartbook/createdf.php",
+  "via": "urllib POST"
+ },
+ "dol_a13_1982.csv": {
+  "bytes": 1352,
+  "fetched": "2026-11-07",
+  "post": "begyr=1982&endyr=1982&states=US&chartnum=a13",
+  "sha1": "f2cb979c8fec604a495e408b2dca9e0812bc8a8f",
+  "url": "https://oui.doleta.gov/unemploy/Chartbook/createdf.php",
+  "via": "urllib POST"
+ },
+ "dol_a13_1983.csv": {
+  "bytes": 1353,
+  "fetched": "2026-11-07",
+  "post": "begyr=1983&endyr=1983&states=US&chartnum=a13",
+  "sha1": "7d3ba56179603495a36cbdd85b33e5904316cd22",
+  "url": "https://oui.doleta.gov/unemploy/Chartbook/createdf.php",
+  "via": "urllib POST"
+ },
+ "dol_a13_1984.csv": {
+  "bytes": 1349,
+  "fetched": "2026-11-07",
+  "post": "begyr=1984&endyr=1984&states=US&chartnum=a13",
+  "sha1": "8b1c42ab260dd1be5400a7457fa372a4c950594c",
+  "url": "https://oui.doleta.gov/unemploy/Chartbook/createdf.php",
+  "via": "urllib POST"
+ },
+ "dol_a13_1985.csv": {
+  "bytes": 1352,
+  "fetched": "2026-11-07",
+  "post": "begyr=1985&endyr=1985&states=US&chartnum=a13",
+  "sha1": "0c443e0f28a8dff0c4febc346907b4af60a30be9",
+  "url": "https://oui.doleta.gov/unemploy/Chartbook/createdf.php",
+  "via": "urllib POST"
+ },
+ "dol_a13_1986.csv": {
+  "bytes": 1351,
+  "fetched": "2026-11-07",
+  "post": "begyr=1986&endyr=1986&states=US&chartnum=a13",
+  "sha1": "98c7f714a0f00db888bdc263e91f18e7fb5d5bfe",
+  "url": "https://oui.doleta.gov/unemploy/Chartbook/createdf.php",
+  "via": "urllib POST"
+ },
+ "dol_a13_1987.csv": {
+  "bytes": 1351,
+  "fetched": "2026-11-07",
+  "post": "begyr=1987&endyr=1987&states=US&chartnum=a13",
+  "sha1": "e6fd44cbc530fc517d83f49fbf21f39a25cd8aaf",
+  "url": "https://oui.doleta.gov/unemploy/Chartbook/createdf.php",
+  "via": "urllib POST"
+ },
+ "dol_a13_1988.csv": {
+  "bytes": 1350,
+  "fetched": "2026-11-07",
+  "post": "begyr=1988&endyr=1988&states=US&chartnum=a13",
+  "sha1": "9a59485626ad772aefa8e505ca5767ea10dddffa",
+  "url": "https://oui.doleta.gov/unemploy/Chartbook/createdf.php",
+  "via": "urllib POST"
+ },
+ "dol_a13_1989.csv": {
+  "bytes": 1355,
+  "fetched": "2026-11-07",
+  "post": "begyr=1989&endyr=1989&states=US&chartnum=a13",
+  "sha1": "822833e30ec9a9588244a997a9014078ef78e700",
+  "url": "https://oui.doleta.gov/unemploy/Chartbook/createdf.php",
+  "via": "urllib POST"
+ },
+ "dol_a13_1990.csv": {
+  "bytes": 1345,
+  "fetched": "2026-11-07",
+  "post": "begyr=1990&endyr=1990&states=US&chartnum=a13",
+  "sha1": "1e2b1cdcae8e8a9bb805910a47b8447620ad61a3",
+  "url": "https://oui.doleta.gov/unemploy/Chartbook/createdf.php",
+  "via": "urllib POST"
+ },
+ "dol_a13_1991.csv": {
+  "bytes": 1353,
+  "fetched": "2026-11-07",
+  "post": "begyr=1991&endyr=1991&states=US&chartnum=a13",
+  "sha1": "8a52b4bf45759ca34781f3f68083919f97524003",
+  "url": "https://oui.doleta.gov/unemploy/Chartbook/createdf.php",
+  "via": "urllib POST"
+ },
+ "dol_a13_1992.csv": {
+  "bytes": 1352,
+  "fetched": "2026-11-07",
+  "post": "begyr=1992&endyr=1992&states=US&chartnum=a13",
+  "sha1": "38558b293419c920f8da6a8af5a764c49d78b191",
+  "url": "https://oui.doleta.gov/unemploy/Chartbook/createdf.php",
+  "via": "urllib POST"
+ },
+ "dol_a13_1993.csv": {
+  "bytes": 1353,
+  "fetched": "2026-11-07",
+  "post": "begyr=1993&endyr=1993&states=US&chartnum=a13",
+  "sha1": "9d8e73fe64cb0e78aeb6fa095b0dcda5b1217e6f",
+  "url": "https://oui.doleta.gov/unemploy/Chartbook/createdf.php",
+  "via": "urllib POST"
+ },
+ "dol_a13_1994.csv": {
+  "bytes": 1350,
+  "fetched": "2026-11-07",
+  "post": "begyr=1994&endyr=1994&states=US&chartnum=a13",
+  "sha1": "87fb692dac212b5e4f7c534ec4787f92a01b3a08",
+  "url": "https://oui.doleta.gov/unemploy/Chartbook/createdf.php",
+  "via": "urllib POST"
+ },
+ "dol_a13_1995.csv": {
+  "bytes": 1351,
+  "fetched": "2026-11-07",
+  "post": "begyr=1995&endyr=1995&states=US&chartnum=a13",
+  "sha1": "034d31f6b8b4088c4187b92062a0ef760085d149",
+  "url": "https://oui.doleta.gov/unemploy/Chartbook/createdf.php",
+  "via": "urllib POST"
+ },
+ "dol_a13_1996.csv": {
+  "bytes": 1348,
+  "fetched": "2026-11-07",
+  "post": "begyr=1996&endyr=1996&states=US&chartnum=a13",
+  "sha1": "b41e3355bdb40d06e484320ba1fcab695f1699c8",
+  "url": "https://oui.doleta.gov/unemploy/Chartbook/createdf.php",
+  "via": "urllib POST"
+ },
+ "dol_a13_1997.csv": {
+  "bytes": 1355,
+  "fetched": "2026-11-07",
+  "post": "begyr=1997&endyr=1997&states=US&chartnum=a13",
+  "sha1": "81e7d31bb32cddac33b4dd643d7d6b1a0cbe11c5",
+  "url": "https://oui.doleta.gov/unemploy/Chartbook/createdf.php",
+  "via": "urllib POST"
+ },
+ "dol_a13_1998.csv": {
+  "bytes": 1354,
+  "fetched": "2026-11-07",
+  "post": "begyr=1998&endyr=1998&states=US&chartnum=a13",
+  "sha1": "5e16f5e6a2b0bc9afb64754ad9edf43610da5d1b",
+  "url": "https://oui.doleta.gov/unemploy/Chartbook/createdf.php",
+  "via": "urllib POST"
+ },
+ "dol_a13_1999.csv": {
+  "bytes": 1354,
+  "fetched": "2026-11-07",
+  "post": "begyr=1999&endyr=1999&states=US&chartnum=a13",
+  "sha1": "f522dab9c3c337c98971732388b658f225d0dc27",
+  "url": "https://oui.doleta.gov/unemploy/Chartbook/createdf.php",
+  "via": "urllib POST"
+ },
+ "dol_a13_2000.csv": {
+  "bytes": 1352,
+  "fetched": "2026-11-07",
+  "post": "begyr=2000&endyr=2000&states=US&chartnum=a13",
+  "sha1": "45600e05a4aeedf88550419ba410c149efa7f0b7",
+  "url": "https://oui.doleta.gov/unemploy/Chartbook/createdf.php",
+  "via": "urllib POST"
+ },
+ "dol_a13_2001.csv": {
+  "bytes": 1354,
+  "fetched": "2026-11-07",
+  "post": "begyr=2001&endyr=2001&states=US&chartnum=a13",
+  "sha1": "6db00601785dd40b52331512a84843d41a948a61",
+  "url": "https://oui.doleta.gov/unemploy/Chartbook/createdf.php",
+  "via": "urllib POST"
+ },
+ "dol_a13_2002.csv": {
+  "bytes": 1352,
+  "fetched": "2026-11-07",
+  "post": "begyr=2002&endyr=2002&states=US&chartnum=a13",
+  "sha1": "e3525e10c71bd7c7dea85c44deae6f4a752f1aa4",
+  "url": "https://oui.doleta.gov/unemploy/Chartbook/createdf.php",
+  "via": "urllib POST"
+ },
+ "dol_a13_2003.csv": {
+  "bytes": 1354,
+  "fetched": "2026-11-07",
+  "post": "begyr=2003&endyr=2003&states=US&chartnum=a13",
+  "sha1": "1fa3e15eb9d9ca3948b2446215f0fb1b975f26da",
+  "url": "https://oui.doleta.gov/unemploy/Chartbook/createdf.php",
+  "via": "urllib POST"
+ },
+ "dol_a13_2004.csv": {
+  "bytes": 1350,
+  "fetched": "2026-11-07",
+  "post": "begyr=2004&endyr=2004&states=US&chartnum=a13",
+  "sha1": "6871fae133be80ded7fb48f33e6ff3925cd3636f",
+  "url": "https://oui.doleta.gov/unemploy/Chartbook/createdf.php",
+  "via": "urllib POST"
+ },
+ "dol_a13_2005.csv": {
+  "bytes": 1354,
+  "fetched": "2026-11-07",
+  "post": "begyr=2005&endyr=2005&states=US&chartnum=a13",
+  "sha1": "fb47ac5d42c5bb22ce1ec88c6b3f2bdc734d821a",
+  "url": "https://oui.doleta.gov/unemploy/Chartbook/createdf.php",
+  "via": "urllib POST"
+ },
+ "dol_a13_2006.csv": {
+  "bytes": 1347,
+  "fetched": "2026-11-07",
+  "post": "begyr=2006&endyr=2006&states=US&chartnum=a13",
+  "sha1": "0d9ae2b042c3a05503a2d6db9351385e3109b42e",
+  "url": "https://oui.doleta.gov/unemploy/Chartbook/createdf.php",
+  "via": "urllib POST"
+ },
+ "dol_a13_2007.csv": {
+  "bytes": 1349,
+  "fetched": "2026-11-07",
+  "post": "begyr=2007&endyr=2007&states=US&chartnum=a13",
+  "sha1": "1376f34fecb47603548526ee167e7d72b027ed74",
+  "url": "https://oui.doleta.gov/unemploy/Chartbook/createdf.php",
+  "via": "urllib POST"
+ },
+ "dol_a13_2008.csv": {
+  "bytes": 1350,
+  "fetched": "2026-11-07",
+  "post": "begyr=2008&endyr=2008&states=US&chartnum=a13",
+  "sha1": "965afee6d02d7ce6d822bb6a960d316ae07b86ee",
+  "url": "https://oui.doleta.gov/unemploy/Chartbook/createdf.php",
+  "via": "urllib POST"
+ },
+ "dol_a13_2009.csv": {
+  "bytes": 1349,
+  "fetched": "2026-11-07",
+  "post": "begyr=2009&endyr=2009&states=US&chartnum=a13",
+  "sha1": "6b8cf53471d7bac97122b33eaa1359cb05e9b0bb",
+  "url": "https://oui.doleta.gov/unemploy/Chartbook/createdf.php",
+  "via": "urllib POST"
+ },
+ "dol_a13_2010.csv": {
+  "bytes": 1352,
+  "fetched": "2026-11-07",
+  "post": "begyr=2010&endyr=2010&states=US&chartnum=a13",
+  "sha1": "9afdbe2d1c4e20ef4e693f082be617937adfed29",
+  "url": "https://oui.doleta.gov/unemploy/Chartbook/createdf.php",
+  "via": "urllib POST"
+ },
+ "dol_a13_2011.csv": {
+  "bytes": 1349,
+  "fetched": "2026-11-07",
+  "post": "begyr=2011&endyr=2011&states=US&chartnum=a13",
+  "sha1": "ef42a12cb3b6a0546d9567dec57a5cbae9613b4e",
+  "url": "https://oui.doleta.gov/unemploy/Chartbook/createdf.php",
+  "via": "urllib POST"
+ },
+ "dol_a13_2012.csv": {
+  "bytes": 1346,
+  "fetched": "2026-11-07",
+  "post": "begyr=2012&endyr=2012&states=US&chartnum=a13",
+  "sha1": "f87f95a16d4cd18fa275eca152ba188751657470",
+  "url": "https://oui.doleta.gov/unemploy/Chartbook/createdf.php",
+  "via": "urllib POST"
+ },
+ "dol_a13_2013.csv": {
+  "bytes": 1356,
+  "fetched": "2026-11-07",
+  "post": "begyr=2013&endyr=2013&states=US&chartnum=a13",
+  "sha1": "9bf34b2efab22a4597abf4becda48d494325869e",
+  "url": "https://oui.doleta.gov/unemploy/Chartbook/createdf.php",
+  "via": "urllib POST"
+ },
+ "dol_a13_2014.csv": {
+  "bytes": 1352,
+  "fetched": "2026-11-07",
+  "post": "begyr=2014&endyr=2014&states=US&chartnum=a13",
+  "sha1": "dbfc2ae5474e166fb59487e6ca6d9e128c761e81",
+  "url": "https://oui.doleta.gov/unemploy/Chartbook/createdf.php",
+  "via": "urllib POST"
+ },
+ "dol_a13_2015.csv": {
+  "bytes": 1347,
+  "fetched": "2026-11-07",
+  "post": "begyr=2015&endyr=2015&states=US&chartnum=a13",
+  "sha1": "c06ab8245a4afbdbb08fb53215f1a7c4b86cc814",
+  "url": "https://oui.doleta.gov/unemploy/Chartbook/createdf.php",
+  "via": "urllib POST"
+ },
+ "dol_a13_2016.csv": {
+  "bytes": 1349,
+  "fetched": "2026-11-07",
+  "post": "begyr=2016&endyr=2016&states=US&chartnum=a13",
+  "sha1": "da5dd86adb671ebc565ea69291008b148d18c47b",
+  "url": "https://oui.doleta.gov/unemploy/Chartbook/createdf.php",
+  "via": "urllib POST"
+ },
+ "dol_a13_2017.csv": {
+  "bytes": 1351,
+  "fetched": "2026-11-07",
+  "post": "begyr=2017&endyr=2017&states=US&chartnum=a13",
+  "sha1": "b6b8eb298d94250997b7ca7ffce423365c743391",
+  "url": "https://oui.doleta.gov/unemploy/Chartbook/createdf.php",
+  "via": "urllib POST"
+ },
+ "dol_a13_2018.csv": {
+  "bytes": 1354,
+  "fetched": "2026-11-07",
+  "post": "begyr=2018&endyr=2018&states=US&chartnum=a13",
+  "sha1": "b5d5158d5ca9526b2b65c5cae84c58288e0da605",
+  "url": "https://oui.doleta.gov/unemploy/Chartbook/createdf.php",
+  "via": "urllib POST"
+ },
+ "dol_a13_2019.csv": {
+  "bytes": 1353,
+  "fetched": "2026-11-07",
+  "post": "begyr=2019&endyr=2019&states=US&chartnum=a13",
+  "sha1": "8cf32ab7478d95fc992cb650abc38dc44de7200d",
+  "url": "https://oui.doleta.gov/unemploy/Chartbook/createdf.php",
+  "via": "urllib POST"
+ },
+ "dol_a13_2020.csv": {
+  "bytes": 1344,
+  "fetched": "2026-11-07",
+  "post": "begyr=2020&endyr=2020&states=US&chartnum=a13",
+  "sha1": "089284c90c425eae5ab2cc0ba6529d81148d6059",
+  "url": "https://oui.doleta.gov/unemploy/Chartbook/createdf.php",
+  "via": "urllib POST"
+ },
+ "dol_a13_2021.csv": {
+  "bytes": 1351,
+  "fetched": "2026-11-07",
+  "post": "begyr=2021&endyr=2021&states=US&chartnum=a13",
+  "sha1": "ad393338c51ef8f1d15f88a4500262ce25523e0c",
+  "url": "https://oui.doleta.gov/unemploy/Chartbook/createdf.php",
+  "via": "urllib POST"
+ },
+ "dol_a13_2022.csv": {
+  "bytes": 1356,
+  "fetched": "2026-11-07",
+  "post": "begyr=2022&endyr=2022&states=US&chartnum=a13",
+  "sha1": "de072de007987472736a40ffd9e1510cb5874f7f",
+  "url": "https://oui.doleta.gov/unemploy/Chartbook/createdf.php",
+  "via": "urllib POST"
+ },
+ "dol_a13_2023.csv": {
+  "bytes": 1352,
+  "fetched": "2026-11-07",
+  "post": "begyr=2023&endyr=2023&states=US&chartnum=a13",
+  "sha1": "f532b2e6cda9ac66fee5faf36b8e73ca965813f8",
+  "url": "https://oui.doleta.gov/unemploy/Chartbook/createdf.php",
+  "via": "urllib POST"
+ },
+ "dol_a13_2024.csv": {
+  "bytes": 1356,
+  "fetched": "2026-11-07",
+  "post": "begyr=2024&endyr=2024&states=US&chartnum=a13",
+  "sha1": "808946adc3969f9ee8effcf9edc68a6dca88e166",
+  "url": "https://oui.doleta.gov/unemploy/Chartbook/createdf.php",
+  "via": "urllib POST"
+ },
+ "dol_a13_2025.csv": {
+  "bytes": 1351,
+  "fetched": "2026-11-07",
+  "post": "begyr=2025&endyr=2025&states=US&chartnum=a13",
+  "sha1": "53fb7a3afbe91c5687e04e2d48a8d859becc21bc",
+  "url": "https://oui.doleta.gov/unemploy/Chartbook/createdf.php",
+  "via": "urllib POST"
+ },
+ "dol_ar5159.csv": {
+  "bytes": 9009479,
+  "fetched": "2026-11-07",
+  "sha1": "e5ae1ece9393e804be0eda2ef884df388a6cc1bc",
+  "url": "https://oui.doleta.gov/unemploy/csv/ar5159.csv",
+  "via": "urllib"
+ },
+ "dol_solvency_2026.pdf": {
+  "bytes": 2334827,
+  "fetched": "2026-11-07",
+  "sha1": "fc8270f2310efc2bb64bf86ce97fa9c0ac37c161",
+  "url": "https://oui.doleta.gov/unemploy/docs/trustFundSolvReport2026.pdf",
+  "via": "urllib"
+ },
+ "ganong_noel_w25417.htm": {
+  "bytes": 93580,
+  "fetched": "2026-11-07",
+  "sha1": "c52dc6d10a3fb71745d44a72184aaf8de88ac0aa",
+  "url": "https://www.nber.org/papers/w25417",
+  "via": "urllib"
+ },
+ "gruber_w4750.htm": {
+  "bytes": 89266,
+  "fetched": "2026-11-07",
+  "sha1": "9b60c0403908550396c78ee9ea86917ffbe3751a",
+  "url": "https://www.nber.org/papers/w4750",
+  "via": "urllib"
+ },
+ "hmm_w20884.htm": {
+  "bytes": 94476,
+  "fetched": "2026-11-07",
+  "sha1": "2d5fb558ae4301d5b6828a7bbcdb5c8b80c7ef99",
+  "url": "https://www.nber.org/papers/w20884",
+  "via": "urllib"
+ },
+ "oecd_nrr.csv": {
+  "bytes": 69132,
+  "fetched": "2026-11-07",
+  "sha1": "0e4d39d3ac3f5ebf72695bc7848575c8d38f15db",
+  "url": "https://sdmx.oecd.org/public/rest/data/OECD.ELS.JAI,DSD_TAXBEN_NRR@DF_NRR,1.0/OECD+USA.NHIDU.PT_INC_DISP_HH_BJL.S_C0..AW67._Z.M1+M12+M24.YES+NO.YES+NO.A?startPeriod=2001",
+  "via": "urllib"
+ }
+}

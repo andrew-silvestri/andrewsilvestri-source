@@ -233,6 +233,11 @@ TARGETS = [
     # printed figures, the page generator and the tests, with the payload and data/fetched.json.
     # Not data/raw: the fetch script re-downloads EIA's files and the readers refuse one whose
     # SHA-1 differs from the manifest.
+    # Who gets an unemployment check (safety-nets lane, 2026-11-07): the fetch script, the build that
+    # reproduces DOL's figures from the raw files before using them, the readers, the page generator and
+    # the tests, with the payload and data/fetched.json. Not data/raw: the fetch script re-downloads.
+    target("safetynet", "safetynet-code.zip", keep={"outputs"},
+           skip=("data/raw", "data/raw/*", "outputs/*.png")),
     target("ethane", "ethane-code.zip", keep={"outputs"},
            skip=("data/raw", "data/raw/*", "outputs/*.png")),
     # From smog rule to corn ethanol (chain-reactions lane, 2026-11-07): the fetch script, readers, payload

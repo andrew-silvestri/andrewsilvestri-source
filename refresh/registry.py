@@ -66,6 +66,19 @@ ENTRIES = [
         "why": "Archived page (D-60): a dated record of EIA's figures and articles, not updated.",
     },
     {
+        # safety-nets lane, 2026-11-07. Disabled: the data is annual, and the year the page reports is
+        # LAST in fetch_public.py. Moving it is a change with its own review (the prose names years and
+        # the build's method check must hold for the new year), not a monthly refresh. The BLS API is
+        # also keyless here, with a daily quota a monthly run could exhaust.
+        "page": "safetynet",
+        "cwd": "safetynet",
+        "fetch": [["python", "fetch_public.py"]],
+        "build": [["python", "build_safetynet.py"]],
+        "keys": [],
+        "enabled": False,
+        "why": "Annual data; the reported year moves by a reviewed change to LAST in fetch_public.py.",
+    },
+    {
         # chain-reactions lane, 2026-11-07. Disabled: the page traces a finished policy chain
         # (1990-2006) and says its data does not update; a refresh would move its numbers under
         # prose written against them. update_page.claims() would stop a rebuild that contradicts it.
