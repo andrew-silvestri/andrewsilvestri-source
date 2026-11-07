@@ -14,7 +14,8 @@ U.S. Bureau of Labor Statistics, public API v1 (no key; 25 series and 10 years a
                          unemployed (LNU03000000), job losers (LNU03023621), job losers on temporary
                          layoff (LNU03023653).
 - bls_laus_<n>.json      Local Area Unemployment Statistics, unemployed, statewide, not seasonally
-                         adjusted (LAUST<fips>0000000000004), monthly, the latest full year.
+                         adjusted (LAUST<fips>0000000000004), monthly, the ten years to the latest
+                         (the build checks DOL's state figures from 2020).
 U.S. Census Bureau
 - census_nst_est.csv     Vintage 2025 state population estimates (NST-EST2025-ALLDATA).
 OECD
@@ -86,7 +87,7 @@ def jobs():
     sts = list(FIPS)
     for i in range(0, len(sts), 25):
         body = json.dumps({"seriesid": [laus_id(s) for s in sts[i:i + 25]],
-                           "startyear": str(LAST), "endyear": str(LAST)})
+                           "startyear": str(LAST - 9), "endyear": str(LAST)})
         out.append((f"bls_laus_{i // 25}.json", BLS, dict(body=body, content_type="application/json")))
     out.append(("census_nst_est.csv", "https://www2.census.gov/programs-surveys/popest/datasets/2020-2025/"
                                       "state/totals/NST-EST2025-ALLDATA.csv", {}))

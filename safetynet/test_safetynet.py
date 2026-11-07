@@ -129,8 +129,8 @@ def main():
     us = spec["series"][0]["values"]
     if BREAK == "hero":
         us = us[1:] + us[-1:]
-    want = [round(P["us"][x], 2) for x in spec["x"]]
-    check("6 hero", us == want and spec["x"][-1] == str(LAST), f"hero's national series is the payload's, {spec['x'][0]}-{spec['x'][-1]}")
+    want = [round(P["us"][x[:4]], 2) for x in spec["x"]]
+    check("6 hero", us == want and spec["x"][-1][:4] == str(LAST), f"hero's national series is the payload's, {spec['x'][0]}-{spec['x'][-1]}")
     # 7 documents ----------------------------------------------------------------
     import update_page as UP
     if BREAK == "documents":
