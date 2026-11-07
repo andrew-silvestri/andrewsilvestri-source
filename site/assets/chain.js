@@ -1,11 +1,11 @@
 /* chain.js - grows the causal tree on oxygen.html as the reader scrolls (2026-11-07).
  *
  * Markup (written by oxygen/update_page.py):
- *   <section class="chain wide">
- *     <figure class="chain-fig"> two SVGs (.tree-wide, .tree-phone) whose nodes and
- *       links carry data-o, the order they belong to (0 policy .. 4 beyond) </figure>
+ *   <figure class="chain wide">
+ *     <div class="chain-fig"> two SVGs (.tree-wide, .tree-phone) whose nodes and
+ *       links carry data-o, the order they belong to (0 policy .. 4 beyond) </div>
  *     <div class="chain-steps"> <div class="step" data-step="k"> ... </div> ... </div>
- *   </section>
+ *   </figure>
  *
  * The page is complete without this file: every node shows. With motion on
  * (assets/motion.js), the section goes live: the figure sticks, and the step
@@ -60,7 +60,7 @@
     this.els.forEach(function (el) { el.classList.remove('off', 'now'); });
   };
 
-  var all = [].slice.call(document.querySelectorAll('section.chain')).map(function (s) { return new Chain(s); });
+  var all = [].slice.call(document.querySelectorAll('figure.chain')).map(function (s) { return new Chain(s); });
   function sync() { all.forEach(function (c) { if (motionOn()) c.start(); else c.stop(); }); }
   document.addEventListener('motionchange', sync);
   sync();

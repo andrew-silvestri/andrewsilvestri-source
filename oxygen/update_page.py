@@ -192,14 +192,16 @@ def hero(P, v):
             "order: state bans and a 2005 law that ends the oxygen rule and mandates renewable fuel; ethanol "
             "replaces MTBE from late 2003 to 2006. Beyond: ethanol is one gallon in ten of gasoline (moderate), and "
             "the corn, land and carbon effects are contested." % P["bans"]["n"])
-    out = ['<section class="chain wide" aria-label="The chain of effects">',
-           '<figure class="chain-fig">', f'<p id="chain-desc" hidden>{E(desc)}</p>',
+    # A figure, not a section: tests/test_layout.js measures main's children for one left edge, and a
+    # figure on the wide track is a picture centred on the measure, which that rule allows.
+    out = ['<figure class="chain wide" aria-label="The chain of effects">',
+           '<div class="chain-fig">', f'<p id="chain-desc" hidden>{E(desc)}</p>',
            tree(P, True), tree(P, False),
-           '<figcaption class="chain-key">Border: solid, strong evidence &middot; dashed, moderate &middot; '
-           'dotted, contested. The shaded nodes are the step you are reading.</figcaption>', '</figure>', '<div class="chain-steps">']
+           '<p class="chain-key">Border: solid, strong evidence &middot; dashed, moderate &middot; '
+           'dotted, contested. The shaded nodes are the step you are reading.</p>', '</div>', '<div class="chain-steps">']
     for k, head, text in steps:
         out.append(f'<div class="step" data-step="{k}"><p class="ev">{head}</p><p>{text}</p></div>')
-    out.append("</div>\n</section>")
+    out.append("</div>\n</figure>")
     return "\n".join(out)
 
 

@@ -120,7 +120,7 @@ def main():
     check("8 tree", not back and steps == [0, 1, 2, 3, 4], f"links backward {back}; step cards {steps}")
     # 9 nojs
     r9 = raw.replace('class="n ev-strong"', 'class="n ev-strong off"', 1) if BREAK == "nojs" else raw
-    offs = re.findall(r'class="[^"]*\boff\b[^"]*"', re.search(r'<section class="chain.*?</section>', r9, re.S).group(0))
+    offs = re.findall(r'class="[^"]*\boff\b[^"]*"', re.search(r'<figure class="chain.*?</figure>', r9, re.S).group(0))
     check("9 nojs", not offs, "no node or link is hidden in the shipped markup" + (f"; {offs[:2]}" if offs else ""))
     # 10 names
     T = page_text(raw) + (" a settlement with Shell" if BREAK == "names" else "")
