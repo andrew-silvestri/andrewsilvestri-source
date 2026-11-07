@@ -75,7 +75,7 @@ NODES = [
     ("B", 2, "strong", ["MTBE leaks from", "tanks into", "groundwater"], "Wells"),
     ("C", 2, "strong", ["{nbans} states ban or", "limit MTBE; water", "suppliers sue"], "Bans"),
     ("D", 3, "strong", ["2005 law ends the", "oxygen rule and", "mandates biofuel"], "Deal"),
-    ("F", 3, "strong", ["Ethanol replaces", "MTBE, 2004", "to 2006"], "Swap"),
+    ("F", 3, "strong", ["Ethanol replaces", "MTBE, late 2003", "to 2006"], "Swap"),
     ("G", 4, "moderate", ["Ethanol: 1 gallon", "in 10 of U.S.", "gasoline today"], "1 in 10"),
     ("H", 4, "contested", ["A third of corn;", "land and carbon", "effects disputed"], "Corn"),
 ]
@@ -177,20 +177,20 @@ def hero(P, v):
          "detected it more often where gasoline carried more of it. States banned or limited it, and water suppliers "
          'sued the oil companies that made and sold it. <a href="#second">The data</a>'),
         (3, "Third order &middot; strong evidence",
-         "California, New York and Connecticut banned MTBE from the start of 2004, and their refiners moved to "
-         "ethanol. The Energy Policy Act of 2005 ended the oxygen requirement for reformulated gasoline and required "
+         "California, New York and Connecticut banned MTBE at the end of 2003, and the gasoline sold there moved "
+         "to ethanol. The Energy Policy Act of 2005 ended the oxygen requirement for reformulated gasoline and required "
          "renewable fuel. It gave MTBE no shield from liability, and refiners removed the rest of it in spring 2006. "
          '<a href="#third">The data</a>'),
         (4, "Beyond &middot; moderate, then contested",
-         "Ethanol is now about one gallon in ten of U.S. gasoline. A 2007 law and tax credits share the credit for "
+         "Ethanol is now about one gallon in ten of U.S. gasoline. A 2007 law and other policies share the credit for "
          "that level, so the link is moderate. About a third of the corn crop goes to make it. One study finds that "
-         "the 2007 mandate added cropland and made corn ethanol's carbon intensity higher than gasoline's; other "
-         'modellers dispute it. <a href="#anyway">The objections</a>'),
+         "the 2007 mandate added cropland and made corn ethanol's carbon intensity no lower than gasoline's, and "
+         'likely higher; other researchers dispute it. <a href="#anyway">The objections</a>'),
     ]
     desc = ("A causal tree. 1990: the Clean Air Act requires oxygen in the gasoline of smoggy cities. First "
             "order: refiners use MTBE. Second order: MTBE leaks into groundwater, and %d states ban or limit it. Third "
             "order: state bans and a 2005 law that ends the oxygen rule and mandates renewable fuel; ethanol "
-            "replaces MTBE from 2004 to 2006. Beyond: ethanol is one gallon in ten of gasoline (moderate), and "
+            "replaces MTBE from late 2003 to 2006. Beyond: ethanol is one gallon in ten of gasoline (moderate), and "
             "the corn, land and carbon effects are contested." % P["bans"]["n"])
     out = ['<section class="chain wide" aria-label="The chain of effects">',
            '<figure class="chain-fig">', f'<p id="chain-desc" hidden>{E(desc)}</p>',
@@ -289,7 +289,8 @@ def claims(P, v):
          P["series"]["mtbe"]["v"][P["series"]["mtbe"]["x"].index("1994-11")]
          > P["series"]["mtbe"]["v"][P["series"]["mtbe"]["x"].index("1993-11")]),
         ("first state ban took effect in 2000 (the chart's first non-zero year)", P["bans"]["first"].startswith("2000")),
-        ("'ethanol use passes MTBE use in {cross}': 2004, when the CA, NY and CT bans took effect", P["cross"] == 2004),
+        ("'ethanol use passes MTBE use in {cross} and stays above it': October 2003, the month before the CA bans",
+         P["cross"] == "2003-10"),
         ("'the share has stayed near one tenth since {y_tenth}': 9.5-11% every full year since",
          all(0.095 <= A[str(y)]["eth_share"] <= 0.11 for y in range(int(v["y_tenth"]), int(last) + 1))),
         ("'seven of them banned MTBE completely'", P["bans"]["complete"] == 7),
@@ -323,7 +324,7 @@ def values(P):
         "chk_1997": f"{A['1997']['mtbe']:.0f}", "eth_share": pct(A[last]["eth_share"]), "y_last": last,
         "zip_kb": f"{round(os.path.getsize(ZIP) / 1024) if os.path.exists(ZIP) else 0:,}",
         "ncomplete": {7: "seven"}.get(P["bans"]["complete"], str(P["bans"]["complete"])),
-        "y_lastban": P["bans"]["last"][:4], "cross": str(P["cross"]), "mtbe_last": str(int(P["mtbe_last"][:4])),
+        "y_lastban": P["bans"]["last"][:4], "cross": "late " + P["cross"][:4] if int(P["cross"][5:]) >= 9 else str(P["cross"]), "mtbe_last": str(int(P["mtbe_last"][:4])),
         "y_tenth": "2011",
         "corn_lo": pct(min(P["corn"]["share"].values()), 0), "corn_hi": pct(max(P["corn"]["share"].values()), 0),
     }

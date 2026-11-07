@@ -102,7 +102,8 @@ def main():
         "peak": {"year": int(peak_y), "kbd": annual[peak_y]["mtbe"], "share": annual[peak_y]["mtbe_share"]},
         "switch": {"jan": mtbe["2006-01"], "may": mtbe["2006-05"], "dec": mtbe["2006-12"]},
         # the first year in which ethanol's annual use exceeds MTBE's
-        "cross": min(int(y) for y in annual if annual[y]["mtbe"] is not None and annual[y]["eth"] > annual[y]["mtbe"]),
+        # the month from which ethanol's use exceeds MTBE's in every later month MTBE is reported
+        "cross": min(m for m in mtbe if m in eth and all(eth[k] > mtbe[k] for k in mtbe if k >= m)),
         "mtbe_last": max(mtbe),
         "bans": {"n": len(bans), "complete": sum(1 for b in bans if b[2]), "first": ban_dates[0],
                  "last": ban_dates[-1], "by_year": bans_by_year,
