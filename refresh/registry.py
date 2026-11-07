@@ -66,6 +66,17 @@ ENTRIES = [
         "why": "Archived page (D-60): a dated record of EIA's figures and articles, not updated.",
     },
     {
+        # Lane lost-einsteins, 2026-11-07. Disabled: the page is built on a published estimate for the
+        # people alive in 2015 and on closed historical series; nothing in it is refreshed on a schedule.
+        "page": "lead",
+        "cwd": "lead",
+        "fetch": [["python", "fetch_public.py"]],
+        "build": [["python", "build_lead.py"]],
+        "keys": [],
+        "enabled": False,
+        "why": "A published 2015 estimate and closed historical series; the page says it does not update.",
+    },
+    {
         "page": "takeaway",
         "cwd": "takeaway",
         # R2 (2026-10-23): production only. The pipeline tracker carries

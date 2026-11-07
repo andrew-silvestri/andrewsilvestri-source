@@ -11,7 +11,6 @@ McFarland, Hauer and Reuben (PNAS 2022), CC BY-NC-ND 4.0
 
 Other papers (open access)
 - lanphear2005_pmc.xml: Lanphear et al. 2005, Environ Health Perspect 113:894, the pooled analysis.
-- bellinger2012_pmc.xml: Bellinger 2012, Environ Health Perspect 120:501.
 - reuben2017_pubmed.txt, trahan2014_pubmed.txt: PubMed abstracts of Reuben et al. 2017 (JAMA 317:1244, the
   Dunedin cohort) and Trahan et al. 2014 (Psychol Bull 140:1332, the Flynn-effect meta-analysis).
 - larsen2023.pdf: Larsen and Sanchez-Triana 2023, Lancet Planet Health 7:e831. thelancet.com refuses
@@ -41,7 +40,6 @@ PNAS = "https://www.pnas.org/doi/suppl/10.1073/pnas.2118631119/suppl_file/"
 FILES = {
     "mcfarland_pmc.xml": EPMC % "PMC8931364",
     "lanphear2005_pmc.xml": EPMC % "PMC1257652",
-    "bellinger2012_pmc.xml": EPMC % "PMC3339460",
     "reuben2017_pubmed.txt": PUBMED + "28350927",
     "trahan2014_pubmed.txt": PUBMED + "24979188",
     "larsen2023.pdf": "https://web.archive.org/web/20250717170553id_/https://www.thelancet.com/action/showPdf"

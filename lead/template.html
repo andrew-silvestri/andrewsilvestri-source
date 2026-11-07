@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Leaded gasoline and lost IQ — Andrew Silvestri</title>
+<meta name="description" content="How many IQ points did Americans lose to lead from gasoline, by year of birth? A published estimate rebuilt from its own data, set beside the lead the additive makers used, the lead measured in children's blood, and the dose-response curves the answer depends on.">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="alternate icon" href="favicon.png">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<meta name="theme-color" content="#F2F0EF">
+<link rel="canonical" href="https://andrewsilvestri.com/lead.html">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Leaded gasoline and lost IQ — Andrew Silvestri">
+<meta property="og:description" content="By one published estimate, Americans born in the late 1960s lost about {{peak5}} IQ points each, on average, to lead in early childhood.">
+<meta property="og:url" content="https://andrewsilvestri.com/lead.html">
+<script>try{document.documentElement.dataset.motion=matchMedia('(prefers-reduced-motion: reduce)').matches?'off':'on';}catch(e){document.documentElement.dataset.motion='on';}</script>
+<link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="assets/scrolly.css">
+</head><body>
+{{nav}}
+<main>
+<h1>The IQ points leaded gasoline took from Americans born around 1970</h1>
+<p class="dim">For seven decades the United States added lead to its gasoline, and its children breathed the exhaust. By one detailed published estimate, Americans born in the late 1960s lost {{peak5}} IQ points each, on average, to lead in early childhood, and the people alive in 2015 lost {{total_m}} million points between them. That figure comes from a model, and the model rests on choices that move it by a factor of more than two. The lead itself was measured: the typical American child had {{b_first}} micrograms of it in each decilitre of blood in {{b_first_p}}, and {{b_last}} in {{b_last_p}}.</p>
+<p class="stamp">{{stamp}}</p>
+{{takeaways}}
+
+<h2>A loss you can date by birth year</h2>
+
+<p>McFarland, Hauer and Reuben estimated the blood lead of American children aged one to four in each year from 1940 on. For the years from 1976, they used the national health survey (NHANES), which measures the lead in children's blood. For the years before 1976, they predicted it from the lead used in gasoline, which they identify as the dominant source of exposure from the 1940s to the late 1980s. Then they converted blood lead to IQ points with published dose-response slopes, and applied the result to each birth year of the people alive in 2015. This page rebuilds their estimate from their published data and gets the same total, {{total_full}} points.</p>
+
+<p>The chart shows the result by year of birth. The height of each bar is the mean loss for the people born in that year.</p>
+
+{{hero}}
+
+<p class="dim">Data: McFarland, Hauer and Reuben (2022), Supporting Information Datasets S01 and S03, people alive in 2015, born {{first_cohort}} to {{last_cohort}}. This page's calculation from those files. Mean IQ points lost per person, on the paper's dose-response.</p>
+
+<p>The people born from 1951 to 1980 carry {{mid_share}} per cent of the total. The table gives the same estimate in five-year groups. The share columns are the part of each group whose blood lead in early childhood was at or above 5 and 10 micrograms per decilitre (µg/dL). The U.S. Centers for Disease Control and Prevention used 5 µg/dL as its reference value for children from 2012 to 2021.</p>
+
+<table class="n" tabindex="0">
+<thead><tr><th>Born</th><th>Alive in 2015</th><th>At or above 5 µg/dL</th><th>At or above 10 µg/dL</th><th>Mean IQ points lost</th></tr></thead>
+<tbody>
+{{cohort_rows}}
+</tbody>
+</table>
+
+<h2>Where the lead came from</h2>
+
+<p>The U.S. Bureau of Mines recorded each year how much lead American factories used to make the antiknock additive for gasoline. That use increased from {{g_first_t}} tonnes in {{g_first}} to a maximum of {{gpeak_t}} tonnes in {{gpeak_y}}, the birth year with the largest loss on the chart above. The figure includes additive that was later exported, so it is an index of exposure, not a measure of the lead burned on American roads.</p>
+
+{{gas_chart}}
+
+<p class="dim">Data: U.S. Bureau of Mines, Minerals Yearbook, lead chapters, {{g_first}} to {{g_last}}; the values for 1987 to 1991 are Department of Commerce estimates printed in the 1991 yearbook. Thousand tonnes of lead.</p>
+
+<p>The Environmental Protection Agency (EPA) issued its first limits in 1973. From 1975, new cars had catalytic converters that needed unleaded fuel. From 1986, leaded gasoline could hold no more than one tenth of a gram of lead a gallon, against about 2.3 grams in the late 1960s, and from 1 January 1996 leaded fuel was banned for road vehicles. By 1986 the lead used in the additive was {{g_fall}} per cent less than in 1970. The lead in children's blood decreased with it:</p>
+
+<table class="n" tabindex="0">
+<thead><tr><th>NHANES survey years</th><th>Median, µg/dL</th><th>95th percentile, µg/dL</th></tr></thead>
+<tbody>
+{{blood_rows}}
+</tbody>
+</table>
+<p class="dim">Children aged one to five. Data: CDC, NHANES, as tabulated by EPA in America's Children and the Environment, indicator B1. No national survey measured children in 1981 to 1987 or 1995 to 1998.</p>
+
+<h2>What six points means</h2>
+
+<p>IQ tests are scaled so that the scores of the reference population have a mean of 100 and a standard deviation of 15. A loss of six points is thus 0.4 of a standard deviation. Such a loss is hard to see in one person. For a whole generation, it moves the whole distribution of scores, and the largest relative changes are at its two ends.</p>
+
+<p>The following is an illustration, not a finding of any study. Assume that, without lead, the scores of the people born from 1966 to 1970 had a normal distribution with a mean of 100 and a standard deviation of 15. Also assume that each person lost the points that the paper assigns to their blood-lead band, whatever their ability. With these assumptions, the share of this group above 130 decreases from {{tail_base}} per cent to {{tail_shift}} per cent, which is {{tail_fewer}} per cent fewer people. Of the {{tail_pop}} million people of this group alive in 2015, about {{tail_n_base}} would have scored above 130 without lead, and about {{tail_n_shift}} with it. The share below 70 increases from {{low_base}} to {{low_shift}} per cent. Real losses were not the same in all homes. Exposure was higher in poorer families and older housing, so the true effect at the top of the distribution can be smaller, and the effect at the bottom larger, than this illustration shows.</p>
+
+<h2>How sure is the number?</h2>
+
+<p>The total has three weak points, and they do not all push in the same direction.</p>
+
+<p><b>The early years are predicted, not measured.</b> No national survey measured children's blood lead before 1976. The paper predicts it from the gasoline series, with the relation fitted on 1976 to 1993. In every year from {{cal_a}} to {{cal_b}}, the additive used more lead than in any year of the fitted period. Thus the estimates for the peak birth years extrapolate beyond the data. A commentary published with the paper argued the opposite risk: gasoline was not the only source, so a model built only on gasoline can understate early exposure.</p>
+
+<p><b>The dose-response curve sets the size.</b> The paper gives no loss below 5 µg/dL, and above it, a loss that starts at {{band1}} points for the 5 to 9.9 band. Other published curves give other totals for the same exposure:</p>
+
+<table class="n" tabindex="0">
+<thead><tr><th>Dose-response curve</th><th>Total, million IQ points</th><th>Mean, born 1966 to 1970</th></tr></thead>
+<tbody>
+{{curve_rows}}
+</tbody>
+</table>
+<p class="dim">This page's calculation, on McFarland and colleagues' blood-lead bands, with each band at its mid-point (32.5 µg/dL for 30 and above). Lanphear and colleagues' fit is {{lan_beta}} IQ points for each unit of the natural logarithm of blood lead; it is counted here from 2.4 µg/dL, the 5th percentile of their data. The curve of Crump and colleagues is the one Larsen and Sánchez-Triana apply worldwide; it has no threshold, so it gives a loss to every child.</p>
+
+<p><b>Not every study finds the same effect.</b> The U.S. EPA's 2024 review of the science concluded that lead causes losses of cognitive function in children. Some researchers argue that studies cannot fully separate lead from poverty and parental IQ. Two studies that followed people into adult life give a mixed picture. In Dunedin, New Zealand, each 5 µg/dL more blood lead at age 11 went with {{reuben}} points lower IQ at age 38, after adjustment for the mother's IQ, the child's IQ and the family's socioeconomic status. In Sweden, a study of the gasoline phase-out found that less lead led to better school results and higher earnings, but it found no consistent effect on cognitive test scores.</p>
+
+<p>Last, the loss cannot be seen in national test scores. IQ scores rose by about {{flynn}} points per decade in the same years, according to a meta-analysis of {{flynn_n}} studies. A loss of six points is more than two decades of that rise. The estimate compares each generation with the same generation without lead; it does not say that scores fell.</p>
+
+<h2>The loss that continues</h2>
+
+<p>Lead exposure did not end with leaded gasoline. Larsen and Sánchez-Triana estimated that children younger than five lost {{w_total}} million IQ points to lead in 2019 alone (95 per cent interval {{w_lo}} to {{w_hi}} million). Of these, {{w_lmic}} million, or {{w_lmic_share}} per cent, were in low- and middle-income countries. Over their first five years, the children of those countries lose {{w_child}} points each on average, about the loss of the American peak birth years. The curve is not the same as McFarland's: it counts losses at low levels of lead, so the two figures do not compare exactly.</p>
+
+<table class="n" tabindex="0">
+<thead><tr><th>Region, low- and middle-income countries</th><th>IQ points lost in 2019, million</th><th>95 per cent interval</th></tr></thead>
+<tbody>
+{{region_rows}}
+</tbody>
+</table>
+<p class="dim">Data: Larsen and Sánchez-Triana (2023), table 2. Blood lead from the Global Burden of Disease 2019 country means; children younger than five.</p>
+
+<h2 id="method">Method</h2>
+
+<p><b>The American estimate.</b> The data is McFarland, Hauer and Reuben's Dataset S01. For each birth year and calendar year it gives the population and the share of children aged one to four in each of seven blood-lead bands. The build takes the calendar year 2015 and multiplies the population of each band by the IQ points that the paper's Dataset S03 gives for that band. Those points are the band's mid-point times 0.513 for the 5 to 9.9 band; each later band adds 5 µg/dL at 0.19 points per µg/dL up to 20, and at 0.11 above. The build reproduces the paper's printed total, {{total_full}} points, its {{per_person}} points per person (the total divided by everyone alive in 2015, {{alive}} people), and its means of 4.8, 5.9 and 5.7 points for the people born in 1961 to 1965, 1966 to 1970 and 1971 to 1975. The paper gives the 5-year means only for these three groups; the other rows of the table and every bar of the chart are this page's calculation from the same files.</p>
+
+<p><b>The gasoline series.</b> The values come from the Minerals Yearbook tables of lead consumption by product, row "gasoline antiknock additives" (before 1948, "tetraethyl lead"). Each value was read from the Internet Archive's text of the yearbook and checked against a second edition, a printed subtotal or the page image. Values in short tons are converted at 0.907 tonnes per short ton.</p>
+
+<p><b>The other curves and the illustration.</b> These are described beside the table and in the section on what six points means. They use the same bands and population as the paper's estimate.</p>
+
+<h2 id="limits">Limits</h2>
+
+<p>The estimate covers only the people alive in 2015. People who died earlier, including any whose deaths lead contributed to, are not counted. The blood-lead bands are coarse, and the paper's data for each birth year uses the blood lead of children aged one to four in the calendar year of birth, not in the years when the cohort was one to four. The estimate counts only IQ. Lead also affects behaviour and the heart, and these effects are not in the total. IQ tests measure some cognitive skills, not all abilities, and a population loss in IQ points is a model output, not a test result. The world estimate depends on modelled blood lead for countries where few children have been tested.</p>
+
+<h2 id="code">The code</h2>
+
+<p>Python: the fetch script, which records where and when each source file came from; the readers; the payload builder with its checks against the paper's printed figures; the page generator; and the tests. The archive carries the payload and the transcribed gasoline and world tables, not the source files. {{zip_kb}} KB.</p>
+<p><a class="btn" href="downloads/lead-code.zip">Download source</a>
+<a class="btn ghost" href="code.html">All code</a></p>
+
+<footer>
+<p><a href="about.html">Andrew Silvestri</a></p>
+<p><a href="code.html">Built with Python, Julia, JavaScript and public data.</a></p>
+</footer>
+</main>
+<script src="assets/motion.js"></script>
+<script src="assets/lightbox.js"></script>
+<script src="assets/nav.js"></script>
+<script src="assets/charts.js"></script>
+<script src="assets/scrolly.js"></script>
+</body></html>

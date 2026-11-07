@@ -1,11 +1,4 @@
 {
- "bellinger2012_pmc.xml": {
-  "bytes": 121119,
-  "fetched": "2026-11-07",
-  "sha1": "71f00aefc2d9f7473a248b9674fada0fa674594c",
-  "url": "https://www.ebi.ac.uk/europepmc/webservices/rest/PMC3339460/fullTextXML",
-  "via": "urllib"
- },
  "epa_1996_phaseout.html": {
   "bytes": 21843,
   "fetched": "2026-11-07",

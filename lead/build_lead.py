@@ -121,11 +121,15 @@ def build():
     n = by[(1966, 1970)]["pop"]
     shifted = sum(v * (1 - z.cdf(cut + loss[b])) for c in ys for b, v in pop[c].items()) / n
     below70 = sum(v * z.cdf(70 + loss[b]) for c in ys for b, v in pop[c].items()) / n
-    tail = {"cut": cut, "base_share": base, "share_1966_70": shifted, "fewer": 1 - shifted / base,
+    tail = {"cut": cut, "base_share": base, "share_1966_70": shifted, "fewer": 1 - shifted / base, "pop": n,
+            "n_base": base * n, "n_shifted": shifted * n,
             "below70_base": z.cdf(70), "below70_1966_70": below70}
 
     gas = S.gasoline()
     gpeak = max(gas, key=lambda r: r["tonnes"])
+    # McFarland's NHANES calibration runs 1976-93; the years before it with more additive lead than any year in it
+    cal_max = max(r["tonnes"] for r in gas if r["year"] >= 1976)
+    above_cal = [r["year"] for r in gas if r["year"] < 1976 and r["tonnes"] > cal_max]
     gtot = sum(r["tonnes"] for r in gas)
     g = {r["year"]: r["tonnes"] for r in gas}
 
@@ -148,7 +152,8 @@ def build():
         "tail": tail,
         "gasoline": {"series": [{"year": r["year"], "tonnes": r["tonnes"]} for r in gas], "peak_year": gpeak["year"],
                      "peak_tonnes": gpeak["tonnes"], "total_tonnes": gtot, "first": gas[0]["year"], "last": gas[-1]["year"],
-                     "t1980": g[1980], "t1986": g[1986], "fall_1970_1986": 1 - g[1986] / g[1970]},
+                     "t1980": g[1980], "t1986": g[1986], "fall_1970_1986": 1 - g[1986] / g[1970],
+                     "cal_max": cal_max, "above_cal": above_cal},
         "blood": {"rows": b1, "first": first, "last": last, "median_ratio": first["median"] / last["median"]},
         "world": {"total_m": world["iq_m"], "lo": world["lo"], "hi": world["hi"], "lmic_m": lmic["iq_m"],
                   "lmic_share": lmic["iq_m"] / world["iq_m"], "regions": regions},
