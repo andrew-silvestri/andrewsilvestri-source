@@ -245,6 +245,8 @@ NAV = [
         # Lane lost-einsteins, 2026-11-07: the IQ cost of lead from gasoline. Other, not Gas:
         # the subject is a health loss, and Gas holds the gas-industry pages (D-18).
         ("Leaded gasoline and lost IQ", "lead.html"),
+        # page/perfidy, 2026-11-07: the Perfidy type family. Label is the page's <title>.
+        ("Perfidy, a type family", "perfidy.html"),
     ]),
     ("Code", "code.html"),
     # LAST, AND IT HAS TO STAY LAST. style.css pins this one right with
