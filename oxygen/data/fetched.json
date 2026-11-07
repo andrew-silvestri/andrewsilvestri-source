@@ -20,6 +20,13 @@
   "url": "https://www.eia.gov/about/copyrights_reuse.php",
   "via": "urllib"
  },
+ "eia_faq_ethanol.html": {
+  "bytes": 51637,
+  "fetched": "2026-11-07",
+  "sha1": "2147d536497d4532190c81ca4b76f61428fd69ea",
+  "url": "https://www.eia.gov/tools/faqs/faq.php?id=27&t=10",
+  "via": "urllib"
+ },
  "eia_gasoline_supplied_a.xls": {
   "bytes": 31232,
   "fetched": "2026-11-07",
@@ -69,6 +76,20 @@
   "url": "https://archive.epa.gov/oust/mtbe-a/web/pdf/r99021.pdf",
   "via": "urllib"
  },
+ "epa_mtbe_gas.html": {
+  "bytes": 11914,
+  "fetched": "2026-11-07",
+  "sha1": "506ec3198ed1beae730530771773b3cdcd3af36d",
+  "url": "https://archive.epa.gov/mtbe/web/html/gas.html",
+  "via": "urllib"
+ },
+ "epa_mtbe_water.html": {
+  "bytes": 17727,
+  "fetched": "2026-11-07",
+  "sha1": "206d3dce06cf94c71f74fe751c89ff309e4cd413",
+  "url": "https://archive.epa.gov/mtbe/web/html/water.html",
+  "via": "urllib"
+ },
  "epa_state_bans_2007.pdf": {
   "bytes": 45800,
   "fetched": "2026-11-07",
@@ -88,6 +109,13 @@
   "fetched": "2026-11-07",
   "sha1": "d5563a47d38e930895866fbba50b5efa04c99177",
   "url": "https://www.govinfo.gov/content/pkg/FR-2006-05-08/pdf/06-4252.pdf",
+  "via": "urllib"
+ },
+ "lark_reply_2022.pdf": {
+  "bytes": 213286,
+  "fetched": "2026-11-07",
+  "sha1": "c773236226a0cf4d7a8e9ba4ba17eb810cd100e2",
+  "url": "https://www.gibbs-lab.wisc.edu/assets/Reply-to-Taheripour-et-al.pdf",
   "via": "urllib"
  },
  "nrc_1999_ozone.html": {

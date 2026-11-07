@@ -19,6 +19,9 @@ Documents the page quotes or reads figures from
 - eia_mtbe2006.pdf: EIA, "Eliminating MTBE in Gasoline in 2006", 22 February 2006.
 - nrc_1999_ozone.html: National Research Council, Ozone-Forming Potential of Reformulated Gasoline (1999), summary.
 - plaw_109_58.html: Energy Policy Act of 2005, Public Law 109-58 (the renewable fuel program and the oxygen repeal).
+- epa_mtbe_water.html, epa_mtbe_gas.html: EPA's archived MTBE pages (Santa Monica; taste and odour; use since 1979).
+- eia_faq_ethanol.html: EIA FAQ, how much ethanol is in gasoline (E10).
+- lark_reply_2022.pdf: Lark and others, reply to Taheripour et al.'s comments on their 2022 PNAS study.
 - eia_copyright.html: EIA's copyright and reuse page.
 
 Run:  python fetch_public.py [name ...]
@@ -44,6 +47,10 @@ FILES = {
     "eia_mtbe2006.pdf": "https://www.eia.gov/petroleum/archive/mtbe2006.pdf",
     "nrc_1999_ozone.html": "https://www.nationalacademies.org/read/9461/chapter/2",
     "plaw_109_58.html": "https://www.govinfo.gov/content/pkg/PLAW-109publ58/html/PLAW-109publ58.htm",
+    "epa_mtbe_water.html": "https://archive.epa.gov/mtbe/web/html/water.html",
+    "epa_mtbe_gas.html": "https://archive.epa.gov/mtbe/web/html/gas.html",
+    "eia_faq_ethanol.html": "https://www.eia.gov/tools/faqs/faq.php?id=27&t=10",
+    "lark_reply_2022.pdf": "https://www.gibbs-lab.wisc.edu/assets/Reply-to-Taheripour-et-al.pdf",
     "eia_copyright.html": "https://www.eia.gov/about/copyrights_reuse.php",
 }
 

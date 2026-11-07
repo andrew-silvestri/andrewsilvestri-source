@@ -131,9 +131,11 @@ def state_bans():
         st, rest = m.group(1), m.group(3)
         if st not in _STATES:
             continue
+        nxt = re.search(r"\b[A-Z]{2} \(\d{1,2}\)", rest)          # the row ends where the next state's begins
+        rest = rest[:nxt.start()] if nxt else rest
         d = re.search(r"delayed to (\d{1,2}/\d{1,2}/\d{2})", rest) or re.search(r"(\d{1,2}/\d{1,2}/\d{2})", rest)
         mo, da, yy = (int(x) for x in d.group(1).split("/"))
-        complete = bool(re.match(r"[^P]*?\b(Complete|complete)\b", rest[:90])) and "Partial" not in rest[:60]
+        complete = "complete" in rest.lower()   # Minnesota's row: "Partial/then complete"
         rows.append((st, dt.date(2000 + yy, mo, da).isoformat(), complete))
     return rows
 

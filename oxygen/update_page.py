@@ -71,19 +71,21 @@ def quotes():
 # (id, order, evidence, wide lines, phone word). Evidence: policy | strong | moderate | contested.
 NODES = [
     ("P", 0, "policy", ["1990 law: gasoline", "in smoggy cities must", "contain oxygen"], "1990"),
-    ("A", 1, "strong", ["Refiners meet it", "with MTBE, a chemical", "from gas and oil"], "MTBE"),
+    ("A", 1, "strong", ["Refiners meet it", "with MTBE, not", "corn ethanol"], "MTBE"),
     ("B", 2, "strong", ["MTBE leaks from", "tanks into", "groundwater"], "Wells"),
     ("C", 2, "strong", ["{nbans} states ban or", "limit MTBE; water", "suppliers sue"], "Bans"),
     ("D", 3, "strong", ["2005 law ends the", "oxygen rule and", "mandates biofuel"], "Deal"),
-    ("F", 3, "moderate", ["Ethanol replaces MTBE;", "now 1 gallon in 10", "of U.S. gasoline"], "Ethanol"),
-    ("G", 4, "contested", ["About a third of", "corn to ethanol;", "land, carbon disputed"], "Corn"),
+    ("F", 3, "strong", ["Ethanol replaces", "MTBE, 2004", "to 2006"], "Swap"),
+    ("G", 4, "moderate", ["Ethanol: 1 gallon", "in 10 of U.S.", "gasoline today"], "1 in 10"),
+    ("H", 4, "contested", ["A third of corn;", "land and carbon", "effects disputed"], "Corn"),
 ]
-EDGES = [("P", "A"), ("A", "B"), ("B", "C"), ("C", "D"), ("C", "F"), ("D", "F"), ("F", "G")]
+EDGES = [("P", "A"), ("A", "B"), ("B", "C"), ("C", "D"), ("C", "F"), ("D", "F"), ("F", "G"), ("G", "H")]
 COLS = ["Policy", "1st order", "2nd order", "3rd order", "Beyond"]
 TAG = {"policy": "the policy", "strong": "strong evidence", "moderate": "moderate", "contested": "contested"}
 GLYPH = {"strong": "full", "moderate": "half", "contested": "open"}
 # where each node sits: column, and row 0 (top), 1 (bottom) or 0.5 (centred)
-SLOT = {"P": (0, .5), "A": (1, .5), "B": (2, 0), "C": (2, 1), "D": (3, 0), "F": (3, 1), "G": (4, .5)}
+SLOT = {"P": (0, .5), "A": (1, .5), "B": (2, 0), "C": (2, 1), "D": (3, 0), "F": (3, 1), "G": (4, 0),
+        "H": (4, 1)}
 
 
 def glyph(cx, cy, kind):
@@ -162,38 +164,39 @@ def tree_fits():
 def hero(P, v):
     steps = [
         (0, "The policy &middot; 1990",
-         f"The Clean Air Act Amendments of 1990 required gasoline in the areas with the worst ozone smog to contain "
-         f"at least {v['o2_rfg']} per cent oxygen by weight from 1995. Winter gasoline in areas with too much carbon "
-         f"monoxide had to contain {v['o2_oxy']} per cent from 1992. Oxygen helps fuel burn more completely. The "
-         f"Senate sponsors' press release said the amendment would &ldquo;{v['q_dole']}&rdquo;, such as ethanol."),
+         f"The Clean Air Act Amendments of 1990 required at least {v['o2_rfg']} per cent oxygen by weight in the "
+         f"gasoline of the areas with the worst ozone, from 1995, and {v['o2_oxy']} per cent in winter gasoline where "
+         f"carbon monoxide was too high, from 1992. Senator Bob Dole's office said the amendment would "
+         f"&ldquo;{v['q_dole']}&rdquo;, such as ethanol."),
         (1, "First order &middot; strong evidence",
-         f"Refiners met the rule mostly with MTBE, not ethanol. U.S. demand for MTBE went from {v['mtbe_a']} thousand "
-         f"barrels a day in {v['y_a']} to {v['mtbe_c']} thousand in gasoline by {v['y_c']}. "
-         f'<a href="#first">The data</a>'),
+         "Refiners met the rule mostly with MTBE, not ethanol. MTBE could go through pipelines with the gasoline; "
+         "ethanol picks up water and was blended at terminals. EIA attributed the growth in MTBE use to the oxygen "
+         'programmes. <a href="#first">The data</a>'),
         (2, "Second order &middot; strong evidence",
-         f"MTBE dissolves easily in water and breaks down slowly. It leaked from underground tanks into groundwater. "
-         f"Where gasoline carried much MTBE, it was found {v['usgs_lo']} to {v['usgs_hi']} times as often. "
-         f"{v['nbans']} states banned or limited it, and water suppliers sued its makers. "
-         f'<a href="#second">The data</a>'),
-        (3, "Third order &middot; strong for the switch, moderate for its size",
-         f"The Energy Policy Act of 2005 ended the oxygen rule and, in the same law, required renewable fuel. "
-         f"Without the rule, and with no shield from lawsuits, refiners stopped using MTBE in 2006 and used ethanol. "
-         f"Ethanol is now about one gallon in ten of U.S. gasoline. Later mandates and tax credits share the credit "
-         f'for that. <a href="#third">The data</a>'),
-        (4, "Beyond &middot; contested",
-         f"About a third of the U.S. corn crop now goes to ethanol plants. One study finds the fuel mandate added "
-         f"cropland and that corn ethanol may emit no less carbon than gasoline; other researchers dispute it. "
-         f'<a href="#anyway">The objections</a>'),
+         "MTBE dissolves easily in water and breaks down slowly. It reached groundwater from leaking tanks. The USGS "
+         "detected it more often where gasoline carried more of it. States banned or limited it, and water suppliers "
+         'sued the oil companies that made and sold it. <a href="#second">The data</a>'),
+        (3, "Third order &middot; strong evidence",
+         "California, New York and Connecticut banned MTBE from the start of 2004, and their refiners moved to "
+         "ethanol. The Energy Policy Act of 2005 ended the oxygen requirement for reformulated gasoline and required "
+         "renewable fuel. It gave MTBE no shield from liability, and refiners removed the rest of it in spring 2006. "
+         '<a href="#third">The data</a>'),
+        (4, "Beyond &middot; moderate, then contested",
+         "Ethanol is now about one gallon in ten of U.S. gasoline. A 2007 law and tax credits share the credit for "
+         "that level, so the link is moderate. About a third of the corn crop goes to make it. One study finds that "
+         "the 2007 mandate added cropland and made corn ethanol's carbon intensity higher than gasoline's; other "
+         'modellers dispute it. <a href="#anyway">The objections</a>'),
     ]
     desc = ("A causal tree. 1990: the Clean Air Act requires oxygen in the gasoline of smoggy cities. First "
-            "order: refiners use MTBE. Second order: MTBE leaks into groundwater, and %d states ban it. Third "
-            "order: a 2005 law ends the oxygen rule and mandates renewable fuel, and ethanol replaces MTBE. "
-            "Beyond, contested: corn and cropland." % P["bans"]["n"])
+            "order: refiners use MTBE. Second order: MTBE leaks into groundwater, and %d states ban or limit it. Third "
+            "order: state bans and a 2005 law that ends the oxygen rule and mandates renewable fuel; ethanol "
+            "replaces MTBE from 2004 to 2006. Beyond: ethanol is one gallon in ten of gasoline (moderate), and "
+            "the corn, land and carbon effects are contested." % P["bans"]["n"])
     out = ['<section class="chain wide" aria-label="The chain of effects">',
            '<figure class="chain-fig">', f'<p id="chain-desc" hidden>{E(desc)}</p>',
            tree(P, True), tree(P, False),
-           '<figcaption class="chain-key">Solid border: strong evidence &middot; dashed: moderate &middot; '
-           'dotted: contested</figcaption>', '</figure>', '<div class="chain-steps">']
+           '<figcaption class="chain-key">Border: solid, strong evidence &middot; dashed, moderate &middot; '
+           'dotted, contested. The shaded nodes are the step you are reading.</figcaption>', '</figure>', '<div class="chain-steps">']
     for k, head, text in steps:
         out.append(f'<div class="step" data-step="{k}"><p class="ev">{head}</p><p>{text}</p></div>')
     out.append("</div>\n</section>")
@@ -205,14 +208,14 @@ def static_chart(spec, caption):
     import insight
     snaps = insight._render(spec, [{"t": 1}])
     return ('<figure class="step-fig wide" role="img" aria-label="%s"><div class="snap-wide">%s</div>'
-            '<div class="snap-phone">%s</div><figcaption class="dim">%s</figcaption></figure>'
-            % (E(spec["title"]), snaps["wide"][0], snaps["phone"][0], caption))
+            '<div class="snap-phone">%s</div><figcaption class="dim"><b>%s.</b> %s</figcaption></figure>'
+            % (E(spec["title"]), snaps["wide"][0], snaps["phone"][0], E(spec["title"]), caption))
 
 
 def chart_mtbe(P):
     s = P["series"]["mtbe"]
     spec = {"id": "oxy-mtbe", "type": "series",
-            "title": "MTBE used in U.S. gasoline, thousand barrels a day, by month, 1993 to 2008",
+            "title": "MTBE blended by U.S. refiners and blenders, thousand barrels a day, by month, 1993 to 2008",
             "x": s["x"], "y": {"label": "thousand b/d"},
             "series": [{"key": "mtbe", "label": "MTBE, refinery and blender net input", "color": "acc",
                         "values": s["v"]}],
@@ -245,14 +248,17 @@ def chart_swap(P):
             "x": s["x"], "y": {"label": "thousand b/d"},
             "series": [{"key": "mtbe", "label": "MTBE", "color": "moss", "values": s["mtbe"]},
                        {"key": "eth", "label": "Fuel ethanol", "color": "acc", "values": s["eth"]}],
-            "annotations": [{"at": "2006-05", "text": "oxygen rule ends", "short": "repeal"},
+            "annotations": [{"at": "2004-01", "text": "CA, NY, CT bans", "short": "bans"},
+                            {"at": "2006-05", "text": "rule ends", "short": "ends"},
                             {"at": "2007-12", "text": "2007 mandate", "short": "2007 law"}],
-            "under": [{"kind": "bars", "label": "Corn used for fuel ethanol, % of crop",
+            "under": [{"kind": "bars", "label": "Corn to fuel ethanol, %% of crop (%s-%s)" % (pct(min(share.values()), 0),
+                                                                               pct(max(share.values()), 0)),
                        "color": "acc", "height": 64,
                        "bars": [{"at": y, "value": round(100 * v, 1), "text": ""} for y, v in sorted(share.items())]}]}
     return static_chart(spec, "Data: EIA, MTBE net input (MMTRIUS1) and Monthly Energy Review Table 10.3 fuel "
-                              "ethanol consumption, monthly; USDA ERS Feed Grains Database, corn for fuel alcohol "
-                              "over production, marketing years to %s/%s." % (P["corn"]["last_final"],
+                              "ethanol consumption, monthly (EIA stops reporting MTBE net input after %s); USDA ERS Feed "
+                              "Grains Database, corn for fuel alcohol over production, marketing years to %s/%s."
+                              % (P["mtbe_last"][:4], P["corn"]["last_final"],
                                                                               str(int(P["corn"]["last_final"]) + 1)[2:]))
 
 
@@ -279,7 +285,16 @@ def claims(P, v):
          > 2 * P["series"]["mtbe"]["v"][P["series"]["mtbe"]["x"].index("1994-07")]),
         ("'decreased from January to May 2006' by more than 90%", P["switch"]["may"] < 0.1 * P["switch"]["jan"]),
         ("peak year is in the RFG era", 1995 <= P["peak"]["year"] <= 2001),
+        ("'from late 1994 ... the summer low disappears': November 1994 above November 1993",
+         P["series"]["mtbe"]["v"][P["series"]["mtbe"]["x"].index("1994-11")]
+         > P["series"]["mtbe"]["v"][P["series"]["mtbe"]["x"].index("1993-11")]),
         ("first state ban took effect in 2000 (the chart's first non-zero year)", P["bans"]["first"].startswith("2000")),
+        ("'ethanol use passes MTBE use in {cross}': 2004, when the CA, NY and CT bans took effect", P["cross"] == 2004),
+        ("'the share has stayed near one tenth since {y_tenth}': 9.5-11% every full year since",
+         all(0.095 <= A[str(y)]["eth_share"] <= 0.11 for y in range(int(v["y_tenth"]), int(last) + 1))),
+        ("'seven of them banned MTBE completely'", P["bans"]["complete"] == 7),
+        ("'net input understates MTBE use by about an eighth (12 per cent in 1997)'",
+         round(100 * (1 - A["1997"]["mtbe"] / d["mtbe_c"]["kbd"])) == 12),
     ]
     bad = [n for n, ok in c if not ok]
     if bad:
@@ -307,19 +322,20 @@ def values(P):
         "corn_last": f"{P['corn']['last_final']}/{str(int(P['corn']['last_final']) + 1)[2:]}",
         "chk_1997": f"{A['1997']['mtbe']:.0f}", "eth_share": pct(A[last]["eth_share"]), "y_last": last,
         "zip_kb": f"{round(os.path.getsize(ZIP) / 1024) if os.path.exists(ZIP) else 0:,}",
+        "ncomplete": {7: "seven"}.get(P["bans"]["complete"], str(P["bans"]["complete"])),
+        "y_lastban": P["bans"]["last"][:4], "cross": str(P["cross"]), "mtbe_last": str(int(P["mtbe_last"][:4])),
+        "y_tenth": "2011",
+        "corn_lo": pct(min(P["corn"]["share"].values()), 0), "corn_hi": pct(max(P["corn"]["share"].values()), 0),
     }
     v.update(quotes())
     v["stamp"] = insight.stamp(through=P["through"], live=False)
     v["takeaways"] = insight.takeaways([
-        f"A 1990 rule that gasoline in smoggy cities carry oxygen more than tripled U.S. use of MTBE, from "
-        f"{v['mtbe_a']} thousand barrels a day in {v['y_a']} to {v['mtbe_c']} thousand in {v['y_c']}, because "
-        f"refiners chose it over corn ethanol.",
-        f"MTBE leaked from fuel tanks into groundwater: where gasoline carried much of it, wells and water supplies "
-        f"were {v['usgs_lo']} to {v['usgs_hi']} times as likely to contain it, and {v['nbans']} states banned or "
-        f"limited it.",
-        f"When Congress ended the oxygen rule in 2005 and mandated renewable fuel, refiners swapped MTBE for corn "
-        f"ethanol within months; ethanol is now about one gallon in ten of U.S. gasoline, though later mandates "
-        f"and tax credits did much of that work."])
+        f"The oxygen rule more than tripled U.S. use of MTBE: EIA put it at {v['mtbe_a']} thousand barrels a day "
+        f"in {v['y_a']} and {v['mtbe_c']} thousand in {v['y_c']}, most of it in the cities the rule covered.",
+        f"Where gasoline carried much MTBE, the U.S. Geological Survey detected it in water {v['usgs_lo']} to "
+        f"{v['usgs_hi']} times as often as elsewhere, and {v['nbans']} states banned or limited it.",
+        "State bans and the end of the oxygen rule in 2006 moved refiners from MTBE to corn ethanol, which is now "
+        "about one gallon in ten of U.S. gasoline; a 2007 law did much of that work."])
     claims(P, v)
     tree_fits()
     v["hero"] = hero(P, v)

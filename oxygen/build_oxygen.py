@@ -101,14 +101,18 @@ def main():
         "annual": annual,
         "peak": {"year": int(peak_y), "kbd": annual[peak_y]["mtbe"], "share": annual[peak_y]["mtbe_share"]},
         "switch": {"jan": mtbe["2006-01"], "may": mtbe["2006-05"], "dec": mtbe["2006-12"]},
-        "bans": {"n": len(bans), "first": ban_dates[0], "last": ban_dates[-1], "by_year": bans_by_year,
+        # the first year in which ethanol's annual use exceeds MTBE's
+        "cross": min(int(y) for y in annual if annual[y]["mtbe"] is not None and annual[y]["eth"] > annual[y]["mtbe"]),
+        "mtbe_last": max(mtbe),
+        "bans": {"n": len(bans), "complete": sum(1 for b in bans if b[2]), "first": ban_dates[0],
+                 "last": ban_dates[-1], "by_year": bans_by_year,
                  "rows": bans},
         "corn": {"share": {y: round(v, 6) for y, v in corn_share.items()}, "last_final": final[-1],
                  "file_last": cy[-1]},
         "rfs": {"mandate_bgal": rfs_gal, "actual_bgal": {y: round(eth_bgal[y], 3) for y in ("2006", "2007", "2008")}},
         "series": {
             "mtbe": {"x": x_mtbe, "v": [round(mtbe[m], 1) for m in x_mtbe]},
-            "swap": {"x": x_all, "mtbe": [round(mtbe[m], 1) if m in mtbe and m <= "2010-12" else None for m in x_all],
+            "swap": {"x": x_all, "mtbe": [round(mtbe[m], 1) if m in mtbe else None for m in x_all],
                      "eth": [round(eth[m], 1) for m in x_all]},
         },
     }
@@ -140,6 +144,8 @@ def check(P):
     # RFG is about a third of US gasoline (EIA)
     if not 0.25 < A["1999"]["rfg_share"] < 0.40:
         errs.append("RFG share in 1999 not about a third")
+    if P["bans"]["complete"] != 7:
+        errs.append(f"EPA's 2007 table has seven complete bans (MN, CO, CA, MI, CT, NY, VT); read {P['bans']['complete']}")
     if P["bans"]["n"] != 25:
         errs.append(f"EPA's 2007 table lists 25 states; read {P['bans']['n']}")
     if d["o2_rfg"] != 2.0 or d["o2_oxy"] != 2.7:

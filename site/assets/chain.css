@@ -42,9 +42,9 @@
 .tree text { font-family: var(--sans); font-size: 13px; fill: var(--ink); }
 .tree .tag, .tree .col, .tree .lab { font-family: var(--mono); font-size: 12px; }
 .tree .tag, .tree .col { fill: var(--dim); }
-.tree .n rect { fill: var(--card); stroke: var(--acc); stroke-width: 1.5; }
-.tree .n.ev-moderate rect { stroke-dasharray: 7 4; }
-.tree .n.ev-contested rect { stroke: var(--moss); stroke-dasharray: 2 3; }
+.tree .n rect { fill: var(--card); stroke: var(--acc); stroke-width: 1.75; }
+.tree .n.ev-moderate rect { stroke-dasharray: 8 5; }
+.tree .n.ev-contested rect { stroke: var(--moss); stroke-dasharray: 2.5 3.5; }
 .tree .n.ev-policy rect { fill: var(--acc-fill); stroke: var(--acc-fill); }
 .tree .n.ev-policy text { fill: var(--acc-ink); }
 .tree .e { fill: none; stroke: var(--dim); stroke-width: 1.5; }
@@ -54,5 +54,6 @@
 .chain.is-live .tree [data-o] { transition: opacity .45s ease, transform .45s ease; }
 .chain.is-live .tree .off { opacity: 0; }
 .chain.is-live .tree .n.off { transform: translateX(-8px); }
-.chain.is-live .tree .n.now rect { stroke-width: 3; }
+/* the step being read: a shaded fill, not a heavier border, so it cannot read as stronger evidence */
+.chain.is-live .tree .n.now:not(.ev-policy) rect { fill: var(--bg-lift); }
 :root[data-motion="off"] .tree * { transition: none !important; }
