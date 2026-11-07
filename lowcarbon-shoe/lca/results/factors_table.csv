@@ -1,0 +1,60 @@
+group,id,central,low,high,unit,basis,source
+factor,EVA,2.3,2.16,3.42,kg CO2e/kg,derived,LDPE 2.16 (PlasticsEurope PE eco-profile 2026) + vinyl-acetate share; high end ADEME Base Carbone generic plastic. factors_polymers.csv
+factor,TPU,3.21,3.0,4.09,kg CO2e/kg,derived,"Stoichiometric build-up: MDI 2.76 (ISOPA 2021), polyether polyol 2.93 (ISOPA 2021), 1,4-butanediol assumed. No producer figure is published. factors_polymers.csv"
+factor,rTPU,0.55,0.48,0.91,kg CO2e/kg,derived,"Mechanical regrind + re-extrusion of post-industrial TPU; proxy ADEME Base Carbone PET recycling to granules (ids 34488, 34490). Cut-off: no burden from first life."
+factor,SBR,3.11,2.32,5.55,kg CO2e/kg,derived,Outsole rubber compound proxy: SBR build-up from butadiene 1.95 and styrene 2.09 (PlasticsEurope); carbon black 3.25 (EPD-IES-0025254) is in the same range. factors_polymers.csv
+factor,PU_FOAM,3.66,3.16,3.79,kg CO2e/kg,published,Moulded flexible PU foam 3.66 (Euromoulders eco-profile); slabstock 3.16-3.79 (EUROPUR 2024)
+factor,PET_FIBRE,2.64,2.19,3.1,kg CO2e/kg,derived,PET resin (CPME/PlasticsEurope 2017) + fibre processing (Zheng & Suh 2019 method). factors_polymers.csv
+factor,rPET_FIBRE,1.32,0.55,2.32,kg CO2e/kg,derived,"Mechanically recycled PET fibre: 25-75 % below virgin (Shen, Worrell & Patel 2010, Resour. Conserv. Recycl. 55:34-52)"
+factor,ADHESIVE,4.79,0.88,8.05,kg CO2e/kg,published,"PU reactive adhesive, FEICA model EPD EPD-FEI-20220021-IBG2-EN (construction product used as proxy)"
+factor,PAPERBOARD,0.718,0.531,0.718,kg CO2e/kg,published,"Corrugated board, fossil GHG (FEFCO carbon footprint 2018)"
+factor,LDPE,2.16,2.09,2.16,kg CO2e/kg,published,LDPE (PlasticsEurope PE eco-profile 2026)
+energy_freight,GRID,0.459,0.459,0.477,kg CO2e/kWh,published,"Ember yearly electricity data: Viet Nam 459 g/kWh (2025), 477 (recent-year high). CC-BY 4.0. Lifecycle basis. Other countries are scenarios, not uncertainty."
+energy_freight,GRID_CN,0.528,0.528,0.528,kg CO2e/kWh,published,"Ember 2025, China 528 g/kWh (scenario)"
+energy_freight,GRID_ID,0.705,0.705,0.705,kg CO2e/kWh,published,"Ember 2025, Indonesia 705 g/kWh (scenario)"
+energy_freight,GRID_US,0.384,0.384,0.384,kg CO2e/kWh,published,"Ember 2025, United States 384 g/kWh"
+energy_freight,GRID_CLEAN,0.048,0.012,0.048,kg CO2e/kWh,published,"Ember lifecycle factors: solar 48, wind 12 g/kWh"
+energy_freight,GAS,0.0562,0.0544,0.0584,kg CO2e/MJ,published,"IPCC 2006 Vol 2 Table 2.2/2.3 natural gas, stationary combustion"
+energy_freight,LIQ_FUEL,0.0741,0.0726,0.0748,kg CO2e/MJ,published,"IPCC 2006 Vol 2 Table 2.2, diesel/gasoline/LPG (diesel value used for all three)"
+energy_freight,COAL,0.0953,0.0902,0.1004,kg CO2e/MJ,published,"IPCC 2006 Vol 2 Table 2.2, other bituminous coal"
+energy_freight,SHIP,0.0198,0.0161,0.0198,kg CO2e/t-km,published,"DESNZ 2025 conversion factors, container ship average, incl. well-to-tank"
+energy_freight,TRUCK,0.125,0.102,0.125,kg CO2e/t-km,published,"DESNZ 2025, HGV all diesel average laden"
+parameter,life_km,550.0,400.0,800.0,km,assumed,Retirement distance of the baseline shoe. Industry rule of thumb 300-500 miles (480-800 km) has no primary source (research/w1-06); Cook et al. 1985 and Aimar et al. 2024 (200k cycles ~ 400-700 km) bracket it.
+parameter,life_mult_lc1,1.0,1.0,1.0,x,assumed,LC-1 sole life relative to baseline. Held at 1.0: runners retire shoes by rule of thumb and do not feel cushioning loss (Cornwall & McPoil 2017). eTPU's slower fatigue (Aimar 2024) is shown only as a scenario (x1.15).
+parameter,upper_lives,1.0,1.0,2.0,sole lives,assumed,How many sole units one LC-1 upper serves. 1 = no resole (headline). No published upper-durability data (research/w2-04).
+parameter,t1_kwh,2.88,1.17,3.32,kWh/pair,derived,"Tier 1 (final assembly incl. stockfitting) grid electricity per pair: FIF 2025 Carbon Report athletic 3.32 kWh-eq x electricity share 86.8 %; low = FIF all-type mean 1.17; high = FIF athletic all carriers 3.32. The MIT 2010 figure (5.0) is not used as a bound: that factory also pressed its own soles, which this model counts separately at the sole maker. research/data/baseline_energy.csv"
+parameter,t1_gas_mj,0.66,0.27,1.32,MJ/pair,derived,FIF 2025 Table 2: natural gas + LPG shares x 3.32 kWh-eq
+parameter,t1_liq_mj,0.61,0.25,1.22,MJ/pair,derived,FIF 2025 Table 2: diesel + gasoline shares x 3.32 kWh-eq
+parameter,noglue_factor,1.0,0.6,1.0,x,assumed,"LC-1 assembly energy relative to baseline: no cementing, priming, activation ovens or chillers. No published split of assembly energy by step."
+parameter,eva_mould_kwh_kg,2.5,0.4,3.08,kWh/kg,derived,EVA midsole moulding: 0.5 kWh/pair for 0.2 kg (baseline_energy.csv); high Bianchi et al. 2023 EVA injection 3.08 kWh/kg; low Thiriez & Gutowski 2006
+parameter,vulc_kwh_pair,0.22,0.1,0.6,kWh/pair,published,"Rubber outsole mixing + vulcanising, Eklund 2018 thesis, scaled by mass (baseline_energy.csv)"
+parameter,etpu_bead_kwh_kg,1.5,0.5,3.0,kWh/kg,assumed,eTPU bead foaming at the bead supplier (grid power). NO open data found (research/w2-09).
+parameter,etpu_mould_kwh_kg,2.5,1.0,5.0,kWh-eq/kg,assumed,eTPU steam-chest moulding at the sole moulder. NO open data found (research/w2-09). Bead foaming + moulding (4.0) is set above EVA moulding (2.5) so as not to favour LC-1.
+parameter,etpu_steam_share,0.5,0.3,0.7,fraction,assumed,Share of eTPU moulding energy delivered as steam from a natural-gas boiler (not electricity); steam does not get cleaner on a clean grid.
+parameter,boiler_eff,0.9,0.8,0.95,fraction,assumed,Natural-gas steam boiler efficiency (fuel to steam)
+parameter,tpu_inj_kwh_kg,0.94,0.41,1.09,kWh/kg,published,"Injection moulding, Thiriez & Gutowski 2006 (hydraulic 0.94; all-electric 0.41; plant 1.09)"
+parameter,knit_kwh_kg,0.26,0.26,3.0,kWh/kg,published,Fabric knitting 0.257 kWh/kg (Cotton Inc. LCA 2016); fully-fashioned knitting 3.0 (JRC IMPRO 2014) as high
+parameter,spin_kwh_kg,1.5,0.75,3.0,kWh/kg,published,Polyester filament spinning 1.5 kWh/kg at 200 dtex (Ecobalyse default); 0.75-3.0 for 400-100 dtex (research/w2-09). Added to virgin and recycled fibre alike.
+parameter,ship_km,13000.0,11000.0,16000.0,km,assumed,Ho Chi Minh City to Los Angeles / Long Beach by sea (great-circle routing range)
+parameter,truck_km,1500.0,500.0,3000.0,km,assumed,"Port to distribution centre to store, US"
+parameter,incin_share,0.19,0.12,0.3,fraction,derived,"US MSW 2018: 11.8 % combusted, 50 % landfilled (EPA Facts and Figures) -> 19 % of disposed mass burned"
+parameter,landfill_kgco2e_kg,0.022,0.0,0.05,kg CO2e/kg,published,"US EPA WARM v16, plastics landfilling (transport and operations; no degradation)"
+parameter,scrap_upper_cut,0.32,0.15,0.35,fraction,published,"Upper cutting loss, Cheah et al. 2012 Fig. 4 (polyester -32 %)"
+parameter,scrap_pu,0.5,0.3,0.5,fraction,published,"PU parts loss 50 %, Cheah et al. 2012 text"
+parameter,scrap_mould,0.1,0.05,0.2,fraction,assumed,Moulded sole parts flash/trim; PEFCR footwear default processing loss 15 %
+parameter,scrap_knit,0.05,0.02,0.1,fraction,assumed,Knit-to-shape upper: little cutting loss
+parameter,scrap_etpu,0.05,0.02,0.15,fraction,assumed,Steam-chest moulding: little flash; runners reground
+parameter,eva_density,170.0,150.0,250.0,kg/m3,published,Midsole EVA 150-250 kg/m3 (Verdejo 2004 thesis); Aimar 2024 F1 170
+parameter,etpu_density,200.0,190.0,240.0,kg/m3,derived,"Design density of the eTPU midsole. tests/fea_heel.py (calibrated rate 1.5) puts 200 kg/m3 within 4 % of the EVA baseline's 5 J drop peak; Aimar 2024 tested 240, Meuchelboeck 2024 250; BASF lists current bead grades at 110-140 g/L bulk."
+parameter,rtpu_share,0.75,0.5,1.0,fraction,assumed,"Post-industrial recycled TPU share in the outsole skin, rim and heel counter. Recycled TPU grades on the market are post-industrial (research/w2-06)."
+parameter,tpu_factor_stress,6.96,6.96,6.96,kg CO2e/kg,published,"Stress case only: finished TPU sealing-ring EPD (EPD-IES-0032224, ecoinvent background) - counter-evidence, not used centrally (DECISIONS.md)"
+incineration,EVA,2.94,2.94,2.94,kg CO2/kg,derived,carbon content x 44/12 (IPCC 2006 Vol 5 Ch 5 Eq 5.2)
+incineration,TPU,2.45,2.45,2.45,kg CO2/kg,derived,carbon content x 44/12 (IPCC 2006 Vol 5 Ch 5 Eq 5.2)
+incineration,rTPU,2.45,2.45,2.45,kg CO2/kg,derived,carbon content x 44/12 (IPCC 2006 Vol 5 Ch 5 Eq 5.2)
+incineration,SBR,3.28,3.28,3.28,kg CO2/kg,derived,carbon content x 44/12 (IPCC 2006 Vol 5 Ch 5 Eq 5.2)
+incineration,PU_FOAM,2.45,2.45,2.45,kg CO2/kg,derived,carbon content x 44/12 (IPCC 2006 Vol 5 Ch 5 Eq 5.2)
+incineration,PET_FIBRE,2.29,2.29,2.29,kg CO2/kg,derived,carbon content x 44/12 (IPCC 2006 Vol 5 Ch 5 Eq 5.2)
+incineration,rPET_FIBRE,2.29,2.29,2.29,kg CO2/kg,derived,carbon content x 44/12 (IPCC 2006 Vol 5 Ch 5 Eq 5.2)
+incineration,ADHESIVE,2.45,2.45,2.45,kg CO2/kg,derived,carbon content x 44/12 (IPCC 2006 Vol 5 Ch 5 Eq 5.2)
+incineration,LDPE,3.14,3.14,3.14,kg CO2/kg,derived,carbon content x 44/12 (IPCC 2006 Vol 5 Ch 5 Eq 5.2)
+incineration,PAPERBOARD,0.0,0.0,0.0,kg CO2/kg,derived,carbon content x 44/12 (IPCC 2006 Vol 5 Ch 5 Eq 5.2)

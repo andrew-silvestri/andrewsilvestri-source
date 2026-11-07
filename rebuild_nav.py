@@ -165,6 +165,8 @@ NAV = [
     # page's own title.
     ("Climate", [
         ("Inside a footprint", "climate-cost.html"),
+        # eco-shoe lane, 2026-11-07: a running shoe's footprint and the LC-1 prototype (Climate tab, BRIEF).
+        ("A lower-carbon running shoe", "lowcarbon-shoe.html"),
     ]),
     # RUNNING WAS RETIRED 2026-09-09, at Andrew's request - "hide the two
     # running pages... I'll republish later, but retire for now". It held

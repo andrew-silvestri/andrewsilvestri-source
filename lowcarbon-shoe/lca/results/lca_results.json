@@ -1,0 +1,431 @@
+{
+ "functional_unit": "one pair, men's US 9, per 100 km run, cradle to grave (retail and consumer travel excluded)",
+ "impact": "GWP100, kg CO2e, fossil GHG only",
+ "scenarios": {
+  "design_only": {
+   "label": "LC-1 design, every supplier on the Viet Nam grid",
+   "reduction_pct": 19.6,
+   "baseline_per100": 0.793,
+   "lc1_per100": 0.638
+  },
+  "lc1": {
+   "label": "LC-1 as specified: design + renewable electricity at final assembly and the sole moulder",
+   "reduction_pct": 49.8,
+   "baseline_per100": 0.793,
+   "lc1_per100": 0.398
+  },
+  "lc1_resole": {
+   "label": "LC-1, upper kept for a second sole unit",
+   "reduction_pct": 58.8,
+   "baseline_per100": 0.793,
+   "lc1_per100": 0.326
+  },
+  "lc1_resole_informed": {
+   "label": "LC-1, second sole unit, and soles run 15 % further (eTPU fatigue, Aimar 2024)",
+   "reduction_pct": 64.2,
+   "baseline_per100": 0.793,
+   "lc1_per100": 0.284
+  },
+  "baseline_clean_power": {
+   "label": "Reference: the BASELINE shoe with renewable electricity at assembly and the sole maker, against the baseline on grid power",
+   "reduction_pct": 32.9,
+   "baseline_per100": 0.532,
+   "lc1_per100": 0.398
+  },
+  "lc1_tpu_stress": {
+   "label": "Stress case: TPU at 6.96 kg CO2e/kg (ecoinvent-based EPD), both shoes",
+   "reduction_pct": 35.0,
+   "baseline_per100": 0.833,
+   "lc1_per100": 0.541
+  },
+  "lc1_cff_5050": {
+   "label": "Allocation sensitivity: recycled content carries half the virgin burden",
+   "reduction_pct": 43.2,
+   "baseline_per100": 0.793,
+   "lc1_per100": 0.45
+  },
+  "lc1_sole_making_in_t1": {
+   "label": "If final-assembly energy already includes sole making: no separate sole-making energy for either shoe",
+   "reduction_pct": 48.0,
+   "baseline_per100": 0.739,
+   "lc1_per100": 0.384
+  },
+  "lc1_made_in_china": {
+   "label": "Both shoes made in China (grid 528 g/kWh)",
+   "reduction_pct": 51.7,
+   "baseline_per100": 0.841,
+   "lc1_per100": 0.406
+  },
+  "lc1_made_in_indonesia": {
+   "label": "Both shoes made in Indonesia (grid 705 g/kWh)",
+   "reduction_pct": 55.6,
+   "baseline_per100": 0.964,
+   "lc1_per100": 0.428
+  }
+ },
+ "cheah_check": {
+  "electricity": 4.4,
+  "coal": 5.48,
+  "total": 9.88,
+  "paper_total": 9.4,
+  "note": "factor check only; not a validation of the model"
+ },
+ "pair": {
+  "baseline": {
+   "total_kg": 4.361,
+   "stages": {
+    "materials": 1.71,
+    "part_making": 0.433,
+    "assembly": 1.404,
+    "packaging": 0.217,
+    "transport": 0.339,
+    "end_of_life": 0.258
+   },
+   "parts": {
+    "Midsole": 0.545,
+    "Outsole": 0.412,
+    "Shank": 0.032,
+    "Sockliner": 0.179,
+    "Strobel board": 0.098,
+    "Upper mesh": 0.365,
+    "Lining": 0.098,
+    "Collar padding": 0.117,
+    "Overlays": 0.076,
+    "Heel counter": 0.073,
+    "Toe puff": 0.021,
+    "Laces": 0.033,
+    "Thread": 0.013,
+    "Adhesive and primer": 0.067,
+    "Labels": 0.013
+   },
+   "parts_materials": {
+    "Midsole": 0.3636,
+    "Outsole": 0.311,
+    "Shank": 0.0285,
+    "Sockliner": 0.1789,
+    "Strobel board": 0.0776,
+    "Upper mesh": 0.2795,
+    "Lining": 0.0776,
+    "Collar padding": 0.1171,
+    "Overlays": 0.0755,
+    "Heel counter": 0.0642,
+    "Toe puff": 0.0214,
+    "Laces": 0.0264,
+    "Thread": 0.0106,
+    "Adhesive and primer": 0.0671,
+    "Labels": 0.0106
+   },
+   "eol_parts": {
+    "Midsole": 0.082,
+    "Outsole": 0.058,
+    "Shank": 0.004,
+    "Sockliner": 0.021,
+    "Strobel board": 0.009,
+    "Upper mesh": 0.033,
+    "Lining": 0.009,
+    "Collar padding": 0.008,
+    "Overlays": 0.008,
+    "Heel counter": 0.009,
+    "Toe puff": 0.003,
+    "Laces": 0.005,
+    "Thread": 0.002,
+    "Adhesive and primer": 0.007,
+    "Labels": 0.002
+   },
+   "mass": {
+    "product_g": 484.3,
+    "fossil_virgin_g": 466.3,
+    "polymer_g": 484.3,
+    "recycled_g": 0.0
+   },
+   "pack_g": 278.0
+  },
+  "lc1": {
+   "total_kg": 2.188,
+   "stages": {
+    "materials": 1.036,
+    "part_making": 0.37,
+    "assembly": 0.221,
+    "packaging": 0.086,
+    "transport": 0.258,
+    "end_of_life": 0.217
+   },
+   "parts": {
+    "Midsole (expanded TPU)": 0.747,
+    "Outsole skin (TPU, recycled share)": 0.098,
+    "Stitch rim (TPU, recycled share)": 0.05,
+    "Sockliner (recycled PET spacer)": 0.049,
+    "Upper mesh and lining (recycled PET)": 0.288,
+    "Collar padding (recycled PET spacer)": 0.047,
+    "Strobel sock (recycled PET)": 0.059,
+    "Heel counter (recycled TPU)": 0.033,
+    "Laces (recycled PET)": 0.02,
+    "Stitchdown thread (recycled PET)": 0.012,
+    "Label (recycled PET)": 0.004
+   },
+   "parts_materials": {
+    "Midsole (expanded TPU)": 0.5655,
+    "Outsole skin (TPU, recycled share)": 0.0942,
+    "Stitch rim (TPU, recycled share)": 0.0478,
+    "Sockliner (recycled PET spacer)": 0.0323,
+    "Upper mesh and lining (recycled PET)": 0.1786,
+    "Collar padding (recycled PET spacer)": 0.0311,
+    "Strobel sock (recycled PET)": 0.0388,
+    "Heel counter (recycled TPU)": 0.0243,
+    "Laces (recycled PET)": 0.0132,
+    "Stitchdown thread (recycled PET)": 0.0079,
+    "Label (recycled PET)": 0.0026
+   },
+   "eol_parts": {
+    "Midsole (expanded TPU)": 0.081,
+    "Outsole skin (TPU, recycled share)": 0.034,
+    "Stitch rim (TPU, recycled share)": 0.017,
+    "Sockliner (recycled PET spacer)": 0.011,
+    "Upper mesh and lining (recycled PET)": 0.042,
+    "Collar padding (recycled PET spacer)": 0.007,
+    "Strobel sock (recycled PET)": 0.009,
+    "Heel counter (recycled TPU)": 0.009,
+    "Laces (recycled PET)": 0.005,
+    "Stitchdown thread (recycled PET)": 0.003,
+    "Label (recycled PET)": 0.001
+   },
+   "mass": {
+    "product_g": 459.8,
+    "fossil_virgin_g": 198.2,
+    "polymer_g": 459.8,
+    "recycled_g": 261.6
+   },
+   "pack_g": 120.0
+  },
+  "lc1_design_only": {
+   "total_kg": 3.508,
+   "stages": {
+    "materials": 1.036,
+    "part_making": 0.506,
+    "assembly": 1.404,
+    "packaging": 0.086,
+    "transport": 0.258,
+    "end_of_life": 0.217
+   },
+   "parts": {
+    "Midsole (expanded TPU)": 0.837,
+    "Outsole skin (TPU, recycled share)": 0.128,
+    "Stitch rim (TPU, recycled share)": 0.065,
+    "Sockliner (recycled PET spacer)": 0.049,
+    "Upper mesh and lining (recycled PET)": 0.288,
+    "Collar padding (recycled PET spacer)": 0.047,
+    "Strobel sock (recycled PET)": 0.059,
+    "Heel counter (recycled TPU)": 0.033,
+    "Laces (recycled PET)": 0.02,
+    "Stitchdown thread (recycled PET)": 0.012,
+    "Label (recycled PET)": 0.004
+   },
+   "parts_materials": {
+    "Midsole (expanded TPU)": 0.5655,
+    "Outsole skin (TPU, recycled share)": 0.0942,
+    "Stitch rim (TPU, recycled share)": 0.0478,
+    "Sockliner (recycled PET spacer)": 0.0323,
+    "Upper mesh and lining (recycled PET)": 0.1786,
+    "Collar padding (recycled PET spacer)": 0.0311,
+    "Strobel sock (recycled PET)": 0.0388,
+    "Heel counter (recycled TPU)": 0.0243,
+    "Laces (recycled PET)": 0.0132,
+    "Stitchdown thread (recycled PET)": 0.0079,
+    "Label (recycled PET)": 0.0026
+   },
+   "eol_parts": {
+    "Midsole (expanded TPU)": 0.081,
+    "Outsole skin (TPU, recycled share)": 0.034,
+    "Stitch rim (TPU, recycled share)": 0.017,
+    "Sockliner (recycled PET spacer)": 0.011,
+    "Upper mesh and lining (recycled PET)": 0.042,
+    "Collar padding (recycled PET spacer)": 0.007,
+    "Strobel sock (recycled PET)": 0.009,
+    "Heel counter (recycled TPU)": 0.009,
+    "Laces (recycled PET)": 0.005,
+    "Stitchdown thread (recycled PET)": 0.003,
+    "Label (recycled PET)": 0.001
+   },
+   "mass": {
+    "product_g": 459.8,
+    "fossil_virgin_g": 198.2,
+    "polymer_g": 459.8,
+    "recycled_g": 261.6
+   },
+   "pack_g": 120.0
+  },
+  "extra_sole_kg": 1.402
+ },
+ "life_km_central": 550.0,
+ "monte_carlo": {
+  "n": 10000,
+  "seed": 20261107,
+  "distribution": "triangular(low, central, high) per input; upper lives uniform 1-2 in lc1_resole_U",
+  "reduction_pct": {
+   "design_only": {
+    "5": 14.866,
+    "25": 20.556,
+    "50": 24.274,
+    "75": 28.05,
+    "95": 33.157
+   },
+   "lc1": {
+    "5": 38.552,
+    "25": 43.858,
+    "50": 47.117,
+    "75": 50.148,
+    "95": 54.095
+   },
+   "lc1_resole_U": {
+    "5": 43.862,
+    "25": 49.487,
+    "50": 53.007,
+    "75": 56.086,
+    "95": 59.824
+   }
+  },
+  "p_lc1_ge_50": 0.261,
+  "p_design_only_ge_50": 0.0,
+  "p_lc1_resole_U_ge_50": 0.72,
+  "p_lc1_lower": 1.0,
+  "base_per100": {
+   "5": 0.611,
+   "25": 0.704,
+   "50": 0.79,
+   "75": 0.879,
+   "95": 1.022
+  },
+  "lc1_per100": {
+   "5": 0.322,
+   "25": 0.372,
+   "50": 0.417,
+   "75": 0.466,
+   "95": 0.542
+  }
+ },
+ "tornado": {
+  "central_reduction_pct": 49.8,
+  "rows": [
+   {
+    "input": "P.t1_kwh",
+    "low": 1.17,
+    "high": 3.32,
+    "red_at_low": 41.1,
+    "red_at_high": 51.58,
+    "span": 10.48
+   },
+   {
+    "input": "F.rPET_FIBRE",
+    "low": 0.55,
+    "high": 2.32,
+    "red_at_low": 53.89,
+    "red_at_high": 44.53,
+    "span": 9.36
+   },
+   {
+    "input": "M.lc1.Upper mesh and lining (recycled PET)",
+    "low": 31,
+    "high": 66,
+    "red_at_low": 52.59,
+    "red_at_high": 46.12,
+    "span": 6.46
+   },
+   {
+    "input": "P.etpu_density",
+    "low": 190.0,
+    "high": 240.0,
+    "red_at_low": 50.85,
+    "red_at_high": 45.68,
+    "span": 5.17
+   },
+   {
+    "input": "P.etpu_bead_kwh_kg",
+    "low": 0.5,
+    "high": 3.0,
+    "red_at_low": 51.67,
+    "red_at_high": 47.04,
+    "span": 4.64
+   },
+   {
+    "input": "F.TPU",
+    "low": 3.0,
+    "high": 4.09,
+    "red_at_low": 50.69,
+    "red_at_high": 46.21,
+    "span": 4.48
+   },
+   {
+    "input": "P.eva_density",
+    "low": 150.0,
+    "high": 250.0,
+    "red_at_low": 48.86,
+    "red_at_high": 53.3,
+    "span": 4.43
+   },
+   {
+    "input": "P.rtpu_share",
+    "low": 0.5,
+    "high": 1.0,
+    "red_at_low": 47.73,
+    "red_at_high": 51.9,
+    "span": 4.17
+   },
+   {
+    "input": "F.SBR",
+    "low": 2.32,
+    "high": 5.55,
+    "red_at_low": 48.89,
+    "red_at_high": 52.48,
+    "span": 3.59
+   },
+   {
+    "input": "M.base.Upper mesh",
+    "low": 25,
+    "high": 50,
+    "red_at_low": 48.26,
+    "red_at_high": 51.67,
+    "span": 3.41
+   },
+   {
+    "input": "M.base.Shank",
+    "low": 0,
+    "high": 30,
+    "red_at_low": 49.36,
+    "red_at_high": 52.63,
+    "span": 3.27
+   },
+   {
+    "input": "P.spin_kwh_kg",
+    "low": 0.75,
+    "high": 3.0,
+    "red_at_low": 50.93,
+    "red_at_high": 47.68,
+    "span": 3.25
+   },
+   {
+    "input": "M.base.Outsole",
+    "low": 30,
+    "high": 60,
+    "red_at_low": 48.2,
+    "red_at_high": 51.34,
+    "span": 3.14
+   },
+   {
+    "input": "P.vulc_kwh_pair",
+    "low": 0.1,
+    "high": 0.6,
+    "red_at_low": 49.18,
+    "red_at_high": 51.75,
+    "span": 2.57
+   },
+   {
+    "input": "P.scrap_etpu",
+    "low": 0.02,
+    "high": 0.15,
+    "red_at_low": 50.34,
+    "red_at_high": 47.8,
+    "span": 2.54
+   }
+  ]
+ }
+}

@@ -126,6 +126,10 @@ GENERATORS = [
     # (safety-nets lane, 2026-11-07).
     ("safetynet page: safetynet/update_page.py --apply",
      ["update_page.py", "--apply"], "safetynet", "site"),
+    # lowcarbon-shoe/update_page.py writes site/lowcarbon-shoe.html from lowcarbon-shoe/outputs/payload.json
+    # (eco-shoe lane, 2026-11-07); it reads nothing gitignored.
+    ("lowcarbon-shoe page: lowcarbon-shoe/update_page.py --apply",
+     ["update_page.py", "--apply"], "lowcarbon-shoe", "site"),
     # storage/update_page.py writes site/storage.html from storage/outputs/payload.json
     # (build_storage.py, which needs ERCOT's files under storage/data/raw, gitignored) and
     # storage/data/imm.json. R4, 2026-10-23.
