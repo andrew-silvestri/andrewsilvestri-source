@@ -1,0 +1,338 @@
+{
+ "bellinger2012_pmc.xml": {
+  "bytes": 121119,
+  "fetched": "2026-11-07",
+  "sha1": "71f00aefc2d9f7473a248b9674fada0fa674594c",
+  "url": "https://www.ebi.ac.uk/europepmc/webservices/rest/PMC3339460/fullTextXML",
+  "via": "urllib"
+ },
+ "epa_1996_phaseout.html": {
+  "bytes": 21843,
+  "fetched": "2026-11-07",
+  "sha1": "0b1e54104108e595d5751d3738b4a5df620fa87c",
+  "url": "https://www.epa.gov/archive/epa/aboutepa/epa-takes-final-step-phaseout-leaded-gasoline.html",
+  "via": "urllib"
+ },
+ "epa_ace_b1.xlsx": {
+  "bytes": 19197,
+  "fetched": "2026-11-07",
+  "sha1": "3731ececbc80e0cf31b75714a867e3eef827dfed",
+  "url": "https://www.epa.gov/system/files/documents/2025-12/b1.xlsx",
+  "via": "urllib"
+ },
+ "gao_rced_86_80fs.pdf": {
+  "bytes": 722029,
+  "fetched": "2026-11-07",
+  "sha1": "4404c76b21203c0bdb54fa5932073f32c2fd5ad6",
+  "url": "https://webarchive.library.unt.edu/eot2008/20081205084746id_/http://archive.gao.gov/d13t3/129585.pdf",
+  "via": "urllib"
+ },
+ "lanphear2005_pmc.xml": {
+  "bytes": 118215,
+  "fetched": "2026-11-07",
+  "sha1": "8ffdc433f008db5209bc3bef016bb391fe8ec5d1",
+  "url": "https://www.ebi.ac.uk/europepmc/webservices/rest/PMC1257652/fullTextXML",
+  "via": "urllib"
+ },
+ "larsen2023.pdf": {
+  "bytes": 1443335,
+  "fetched": "2026-11-07",
+  "sha1": "becb3860387e874a4d99af32b704e95b6f8b2c32",
+  "url": "https://web.archive.org/web/20250717170553id_/https://www.thelancet.com/action/showPdf?pii=S2542-5196%2823%2900166-3",
+  "via": "urllib (Internet Archive)"
+ },
+ "mcfarland_pmc.xml": {
+  "bytes": 83486,
+  "fetched": "2026-11-07",
+  "sha1": "c76b1219bbc26bff96e9772ad3ff9c09ada387ee",
+  "url": "https://www.ebi.ac.uk/europepmc/webservices/rest/PMC8931364/fullTextXML",
+  "via": "urllib"
+ },
+ "myb_1945.txt": {
+  "bytes": 5333987,
+  "fetched": "2026-11-07",
+  "sha1": "be3da34945dac22c229eff4f7379389cccffabc7",
+  "url": "https://archive.org/download/pub_usgov-minerals-yearbook_1945/Minerals_Yearbook_US_1945_djvu.txt",
+  "via": "urllib (Internet Archive)"
+ },
+ "myb_1946.txt": {
+  "bytes": 4667732,
+  "fetched": "2026-11-07",
+  "sha1": "0543457909a9698d3011721d701de35f7a929e13",
+  "url": "https://archive.org/download/pub_usgov-minerals-yearbook_1946/Minerals_Yearbook_US_1946_djvu.txt",
+  "via": "urllib (Internet Archive)"
+ },
+ "myb_1947.txt": {
+  "bytes": 4956018,
+  "fetched": "2026-11-07",
+  "sha1": "ed23ab781a3093338cf50203986e86a45c108aba",
+  "url": "https://archive.org/download/pub_usgov-minerals-yearbook_1947/Minerals_Yearbook_US_1947_djvu.txt",
+  "via": "urllib (Internet Archive)"
+ },
+ "myb_1949.txt": {
+  "bytes": 5041830,
+  "fetched": "2026-11-07",
+  "sha1": "4af8272d99054aea5b985b53c9949c3ff98a9f10",
+  "url": "https://archive.org/download/pub_usgov-minerals-yearbook_1949/Minerals_Yearbook_US_1949_djvu.txt",
+  "via": "urllib (Internet Archive)"
+ },
+ "myb_1950.txt": {
+  "bytes": 4859138,
+  "fetched": "2026-11-07",
+  "sha1": "fa26f4eb5fe186fa92121cf466dd6d539cb60940",
+  "url": "https://archive.org/download/pub_usgov-minerals-yearbook_1950/Minerals_Yearbook_US_1950_djvu.txt",
+  "via": "urllib (Internet Archive)"
+ },
+ "myb_1951.txt": {
+  "bytes": 5067655,
+  "fetched": "2026-11-07",
+  "sha1": "8370916dfdb3967eaa3a79abc3729078134310d8",
+  "url": "https://archive.org/download/pub_usgov-minerals-yearbook_1951/Minerals_Yearbook_US_1951_djvu.txt",
+  "via": "urllib (Internet Archive)"
+ },
+ "myb_1953.txt": {
+  "bytes": 4216861,
+  "fetched": "2026-11-07",
+  "sha1": "912a193f50dd9b86fbabaee2c620fd290169514d",
+  "url": "https://archive.org/download/pub_usgov-minerals-yearbook_1953_1/Minerals_Yearbook_US_1953_v1_djvu.txt",
+  "via": "urllib (Internet Archive)"
+ },
+ "myb_1954.txt": {
+  "bytes": 4264631,
+  "fetched": "2026-11-07",
+  "sha1": "25b0fa46445cdd6d50fff67922cdc271b54f962d",
+  "url": "https://archive.org/download/pub_usgov-minerals-yearbook_1954_1/Minerals_Yearbook_US_1954_v1_djvu.txt",
+  "via": "urllib (Internet Archive)"
+ },
+ "myb_1955.txt": {
+  "bytes": 3996347,
+  "fetched": "2026-11-07",
+  "sha1": "bd9372bbfcb4a881c4026e6faaf629dc59c87682",
+  "url": "https://archive.org/download/pub_usgov-minerals-yearbook_1955_1/Minerals_Yearbook_US_1955_v1_djvu.txt",
+  "via": "urllib (Internet Archive)"
+ },
+ "myb_1956.txt": {
+  "bytes": 4113834,
+  "fetched": "2026-11-07",
+  "sha1": "8cc6ef47643dc00943d30f5fcc2dcc3d9381f0f5",
+  "url": "https://archive.org/download/pub_usgov-minerals-yearbook_1956_1/Minerals_Yearbook_US_1956_v1_djvu.txt",
+  "via": "urllib (Internet Archive)"
+ },
+ "myb_1957.txt": {
+  "bytes": 4099082,
+  "fetched": "2026-11-07",
+  "sha1": "a8fa0becff440d009842d9fbf6fc9753b36b9d48",
+  "url": "https://archive.org/download/pub_usgov-minerals-yearbook_1957_1/Minerals_Yearbook_US_1957_v1_djvu.txt",
+  "via": "urllib (Internet Archive)"
+ },
+ "myb_1958.txt": {
+  "bytes": 3636247,
+  "fetched": "2026-11-07",
+  "sha1": "bb01f3650851e33453cbff628f3efe8439110803",
+  "url": "https://archive.org/download/pub_usgov-minerals-yearbook_1958_1/Minerals_Yearbook_US_1958_v1_djvu.txt",
+  "via": "urllib (Internet Archive)"
+ },
+ "myb_1960.txt": {
+  "bytes": 3732366,
+  "fetched": "2026-11-07",
+  "sha1": "cd285364515d81436dceaa043084793481ff5e96",
+  "url": "https://archive.org/download/pub_usgov-minerals-yearbook_1960_1/Minerals_Yearbook_US_1960_v1_djvu.txt",
+  "via": "urllib (Internet Archive)"
+ },
+ "myb_1962.txt": {
+  "bytes": 3844383,
+  "fetched": "2026-11-07",
+  "sha1": "2c711d580a7c3dace6b963b59dd95e64265f9d78",
+  "url": "https://archive.org/download/pub_usgov-minerals-yearbook_1962_1/Minerals_Yearbook_US_1962_v1_djvu.txt",
+  "via": "urllib (Internet Archive)"
+ },
+ "myb_1963.txt": {
+  "bytes": 3562230,
+  "fetched": "2026-11-07",
+  "sha1": "ae217ec1949fc7d6cafc0967731310e8b6b53fe1",
+  "url": "https://archive.org/download/pub_usgov-minerals-yearbook_1963_1/Minerals_Yearbook_US_1963_v1_djvu.txt",
+  "via": "urllib (Internet Archive)"
+ },
+ "myb_1964.txt": {
+  "bytes": 3673354,
+  "fetched": "2026-11-07",
+  "sha1": "f2c7067b91f28ca6d7e845d1e20727946be5332b",
+  "url": "https://archive.org/download/pub_usgov-minerals-yearbook_1964_1/Minerals_Yearbook_US_1964_v1_djvu.txt",
+  "via": "urllib (Internet Archive)"
+ },
+ "myb_1965.txt": {
+  "bytes": 3579135,
+  "fetched": "2026-11-07",
+  "sha1": "104b445759665bec2c93576ab11e7a61f19a9e30",
+  "url": "https://archive.org/download/pub_usgov-minerals-yearbook_1965_1/Minerals_Yearbook_US_1965_v1_djvu.txt",
+  "via": "urllib (Internet Archive)"
+ },
+ "myb_1966.txt": {
+  "bytes": 3180976,
+  "fetched": "2026-11-07",
+  "sha1": "00afb4dbbf7133feaf9935fcfb8c35c115b9cff1",
+  "url": "https://archive.org/download/pub_usgov-minerals-yearbook_1966_12/Minerals_Yearbook_US_1966_v1,2_djvu.txt",
+  "via": "urllib (Internet Archive)"
+ },
+ "myb_1967.txt": {
+  "bytes": 3707563,
+  "fetched": "2026-11-07",
+  "sha1": "bed54f31f9b65fcde3774ac0de25cc5525bf5a58",
+  "url": "https://archive.org/download/pub_usgov-minerals-yearbook_1967_12/Minerals_Yearbook_US_1967_v1,2_djvu.txt",
+  "via": "urllib (Internet Archive)"
+ },
+ "myb_1968.txt": {
+  "bytes": 3531265,
+  "fetched": "2026-11-07",
+  "sha1": "55ecdd917901bf70077c2d0cc07ad135cb08760e",
+  "url": "https://archive.org/download/pub_usgov-minerals-yearbook_1968_12/Minerals_Yearbook_US_1968_v1,2_djvu.txt",
+  "via": "urllib (Internet Archive)"
+ },
+ "myb_1969.txt": {
+  "bytes": 3637115,
+  "fetched": "2026-11-07",
+  "sha1": "0b5849046c55c4c78421b37e6f89e748fd12b0ce",
+  "url": "https://archive.org/download/pub_usgov-minerals-yearbook_1969_12/Minerals_Yearbook_US_1969_v1,2_djvu.txt",
+  "via": "urllib (Internet Archive)"
+ },
+ "myb_1970.txt": {
+  "bytes": 3764604,
+  "fetched": "2026-11-07",
+  "sha1": "54e8b69f1487c0aec4b92f731cf5ebbdddf2e776",
+  "url": "https://archive.org/download/pub_usgov-minerals-yearbook_1970_1/Minerals_Yearbook_US_1970_v1_djvu.txt",
+  "via": "urllib (Internet Archive)"
+ },
+ "myb_1971.txt": {
+  "bytes": 4033440,
+  "fetched": "2026-11-07",
+  "sha1": "2edd3e081df40bfd6808d9ca0761d9fc8a8be661",
+  "url": "https://archive.org/download/pub_usgov-minerals-yearbook_1971_1/Minerals_Yearbook_US_1971_v1_djvu.txt",
+  "via": "urllib (Internet Archive)"
+ },
+ "myb_1973.txt": {
+  "bytes": 4317967,
+  "fetched": "2026-11-07",
+  "sha1": "88e8a419adcf836714aea2a6fc07321de9aa27d2",
+  "url": "https://archive.org/download/pub_usgov-minerals-yearbook_1973_1/Minerals_Yearbook_US_1973_v1_djvu.txt",
+  "via": "urllib (Internet Archive)"
+ },
+ "myb_1974.txt": {
+  "bytes": 4388154,
+  "fetched": "2026-11-07",
+  "sha1": "51e54ba483beeae67ea25531209c15dcc90dccf4",
+  "url": "https://archive.org/download/pub_usgov-minerals-yearbook_1974_1/Minerals_Yearbook_US_1974_v1_djvu.txt",
+  "via": "urllib (Internet Archive)"
+ },
+ "myb_1975.txt": {
+  "bytes": 4608443,
+  "fetched": "2026-11-07",
+  "sha1": "57bb8f556849cd40481728d417bda527be971e0f",
+  "url": "https://archive.org/download/pub_usgov-minerals-yearbook_1975_1/Minerals_Yearbook_US_1975_v1_djvu.txt",
+  "via": "urllib (Internet Archive)"
+ },
+ "myb_1976.txt": {
+  "bytes": 4369000,
+  "fetched": "2026-11-07",
+  "sha1": "a44ae133b55b84ce390c7f3d7997df86fc1ab86e",
+  "url": "https://archive.org/download/pub_usgov-minerals-yearbook_1976_1/Minerals_Yearbook_US_1976_v1_djvu.txt",
+  "via": "urllib (Internet Archive)"
+ },
+ "myb_1977.txt": {
+  "bytes": 3206915,
+  "fetched": "2026-11-07",
+  "sha1": "b8e3913708c1ff680842a3c25d6aa9cdeaa13707",
+  "url": "https://archive.org/download/pub_usgov-minerals-yearbook_1977_1/Minerals_Yearbook_US_1977_v1_djvu.txt",
+  "via": "urllib (Internet Archive)"
+ },
+ "myb_1980.txt": {
+  "bytes": 2757704,
+  "fetched": "2026-11-07",
+  "sha1": "94c393f7eb9b78484e3181e7abb31939f5ec5888",
+  "url": "https://archive.org/download/pub_usgov-minerals-yearbook_1980_1/Minerals_Yearbook_US_1980_v1_djvu.txt",
+  "via": "urllib (Internet Archive)"
+ },
+ "myb_1981.txt": {
+  "bytes": 2954146,
+  "fetched": "2026-11-07",
+  "sha1": "d0035488fc603be1a34d933b7237413ebe8eb139",
+  "url": "https://archive.org/download/pub_usgov-minerals-yearbook_1981_1/Minerals_Yearbook_US_1981_v1_djvu.txt",
+  "via": "urllib (Internet Archive)"
+ },
+ "myb_1983.txt": {
+  "bytes": 3238677,
+  "fetched": "2026-11-07",
+  "sha1": "63bdffdd822d0a6fd7215070766557f93ac91e71",
+  "url": "https://archive.org/download/pub_usgov-minerals-yearbook_1983_1/Minerals_Yearbook_US_1983_v1_djvu.txt",
+  "via": "urllib (Internet Archive)"
+ },
+ "myb_1984.txt": {
+  "bytes": 3422291,
+  "fetched": "2026-11-07",
+  "sha1": "0c68582967716ac50c8465a081debab1c5019eeb",
+  "url": "https://archive.org/download/pub_usgov-minerals-yearbook_1984_1/Minerals_Yearbook_US_1984_v1_djvu.txt",
+  "via": "urllib (Internet Archive)"
+ },
+ "myb_1986.txt": {
+  "bytes": 3509349,
+  "fetched": "2026-11-07",
+  "sha1": "3433f685a748d2bd317ceff763d76a9a90fd0fd5",
+  "url": "https://archive.org/download/pub_usgov-minerals-yearbook_1986_1/Minerals_Yearbook_US_1986_v1_djvu.txt",
+  "via": "urllib (Internet Archive)"
+ },
+ "myb_1987.txt": {
+  "bytes": 3146256,
+  "fetched": "2026-11-07",
+  "sha1": "39c6054d06187d71ff8e5697e5ddd15d2b881704",
+  "url": "https://archive.org/download/pub_usgov-minerals-yearbook_1987_1/Minerals_Yearbook_US_1987_v1_djvu.txt",
+  "via": "urllib (Internet Archive)"
+ },
+ "myb_1991.txt": {
+  "bytes": 5531794,
+  "fetched": "2026-11-07",
+  "sha1": "dec9da9b53e87259ecf18ced2c37e12fd8477abe",
+  "url": "https://archive.org/download/pub_usgov-minerals-yearbook_1991_1/Minerals_Yearbook_US_1991_v1_djvu.txt",
+  "via": "urllib (Internet Archive)"
+ },
+ "myb_micro_IA41152809_0265.txt": {
+  "bytes": 2531323,
+  "fetched": "2026-11-07",
+  "sha1": "c7f9ba5d568652668107cc8a9db92c4017f7c084",
+  "url": "https://archive.org/download/micro_IA41152809_0265/micro_IA41152809_0265_djvu.txt",
+  "via": "urllib (Internet Archive)"
+ },
+ "pnas_sd01.xlsx": {
+  "bytes": 2491796,
+  "fetched": "2026-11-07",
+  "sha1": "c7f6f6c7cf0ab587c5cdfeafe8c73567e5d5089e",
+  "url": "https://www.pnas.org/doi/suppl/10.1073/pnas.2118631119/suppl_file/pnas.2118631119.sd01.xlsx",
+  "via": "browser (pnas.org refuses scripted requests)"
+ },
+ "pnas_sd03.xlsx": {
+  "bytes": 12966,
+  "fetched": "2026-11-07",
+  "sha1": "71b991a8b295be62de4a9a202ad66b4378c4c9c8",
+  "url": "https://www.pnas.org/doi/suppl/10.1073/pnas.2118631119/suppl_file/pnas.2118631119.sd03.xlsx",
+  "via": "browser (pnas.org refuses scripted requests)"
+ },
+ "pnas_si_appendix.pdf": {
+  "bytes": 354065,
+  "fetched": "2026-11-07",
+  "sha1": "3b30d6ccb0c1978c1f996092b3ede7ef31c7920a",
+  "url": "https://www.pnas.org/doi/suppl/10.1073/pnas.2118631119/suppl_file/pnas.2118631119.sapp.pdf",
+  "via": "browser (pnas.org refuses scripted requests)"
+ },
+ "reuben2017_pubmed.txt": {
+  "bytes": 4429,
+  "fetched": "2026-11-07",
+  "sha1": "dce6f85de3edadbb69ef44a72ba4f1d1914e4374",
+  "url": "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/efetch.fcgi?db=pubmed&rettype=abstract&retmode=text&id=28350927",
+  "via": "urllib"
+ },
+ "trahan2014_pubmed.txt": {
+  "bytes": 2212,
+  "fetched": "2026-11-07",
+  "sha1": "853b64ecb8044483de15984d20214c8a6ffce3b0",
+  "url": "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/efetch.fcgi?db=pubmed&rettype=abstract&retmode=text&id=24979188",
+  "via": "urllib"
+ }
+}
