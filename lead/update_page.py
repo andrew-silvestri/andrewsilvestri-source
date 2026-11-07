@@ -75,11 +75,11 @@ def hero_spec(P):
     return {"id": "lead-hero", "type": "strip",
             "title": "Mean IQ points lost to lead in early childhood, by year of birth, people alive in the United "
                      "States in 2015, from McFarland, Hauer and Reuben (2022)",
-            "bins": bins, "y": {"label": "IQ points lost, mean"}, "x": {"label": "year of birth"},
+            "bins": bins, "y": {"label": "IQ points lost, mean"}, "x": {"label": "year of birth", "years": True},
             "lights": [{"key": "mid", "color": "moss", "state": "m"},
                        {"key": "peak", "color": "acc", "state": "p"}],
-            "marks": [{"at": 1975, "label": "1975 cars need unleaded", "state": "k"},
-                      {"at": 1986, "label": "1986 0.1 g a gallon", "state": "k"}]}
+            "marks": [{"at": 1975, "label": "1975: unleaded cars", "state": "k"},
+                      {"at": 1986, "label": "1986: 0.1 g/gallon", "state": "k"}]}
 
 
 def hero(P, v):
@@ -111,7 +111,7 @@ def gas_spec(P):
     return {"id": "lead-gas", "type": "strip",
             "title": "Lead used by U.S. makers of the gasoline antiknock additive, thousand tonnes a year, "
                      f"{G['first']} to {G['last']}, U.S. Bureau of Mines",
-            "bins": bins, "y": {"label": "thousand tonnes of lead"}, "x": {"label": "year"},
+            "bins": bins, "y": {"label": "thousand tonnes of lead"}, "x": {"label": "year", "years": True},
             "lights": [{"key": "pk", "color": "acc", "state": "p"}]}
 
 
