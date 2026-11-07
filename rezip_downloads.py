@@ -245,6 +245,13 @@ TARGETS = [
            skip=("data/raw", "data/raw/*")),
     target("ethane", "ethane-code.zip", keep={"outputs"},
            skip=("data/raw", "data/raw/*", "outputs/*.png")),
+    # Leaded gasoline and lost IQ (lane lost-einsteins, 2026-11-07): the fetch script, the readers,
+    # the payload builder with its checks against the paper's printed figures, the page generator
+    # and the tests, with the payload, data/fetched.json and the two transcribed tables. Not
+    # data/raw: the PNAS datasets are CC BY-NC-ND and the yearbook texts run to 140 MB; the fetch
+    # script names every URL and the readers refuse a file whose SHA-1 differs from the manifest.
+    target("lead", "lead-code.zip", keep={"outputs"},
+           skip=("data/raw", "data/raw/*", "outputs/*.png")),
     # food-code.zip retired with its page on 2026-09-09: food.html was
     # unpublished at Andrew's request, for now, and the last build is
     # unpublished/downloads/food-code.zip. The TARGET goes with the page,

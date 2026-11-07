@@ -126,6 +126,10 @@ GENERATORS = [
     # (safety-nets lane, 2026-11-07).
     ("safetynet page: safetynet/update_page.py --apply",
      ["update_page.py", "--apply"], "safetynet", "site"),
+    # lead/update_page.py writes site/lead.html from lead/outputs/payload.json, reading figures
+    # from lead/data/raw (gitignored) at render time (lane lost-einsteins, 2026-11-07).
+    ("lead page: lead/update_page.py --apply",
+     ["update_page.py", "--apply"], "lead", "site"),
     # lowcarbon-shoe/update_page.py writes site/lowcarbon-shoe.html from lowcarbon-shoe/outputs/payload.json
     # (eco-shoe lane, 2026-11-07); it reads nothing gitignored.
     ("lowcarbon-shoe page: lowcarbon-shoe/update_page.py --apply",

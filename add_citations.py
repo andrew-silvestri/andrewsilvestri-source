@@ -969,6 +969,89 @@ PAGES = {
          'Peter Ganong and Pascal Noel, &ldquo;Consumer Spending During Unemployment: Positive and Normative Implications&rdquo;, NBER Working Paper 25417, 2019; <i>American Economic Review</i> 109(7), 2019.',
          'Spending drops sharply at benefit exhaustion.'),
     ],
+    # Lane lost-einsteins, 2026-11-07: the lead page (lead/update_page.py applies this table itself).
+    "lead.html": [
+        ("Anchor phrase", "Source", "What it supports"),
+        ("McFarland, Hauer and Reuben estimated",
+         'McFarland MJ, Hauer ME, Reuben A. &ldquo;Half of US population exposed to adverse lead levels in early '
+         'childhood&rdquo;. <i>Proceedings of the National Academy of Sciences</i> 119(11):e2118631119, 2022, with '
+         'Supporting Information Datasets S01 and S03. CC BY-NC-ND 4.0.',
+         'Blood-lead bands by birth year and calendar year, 1940 on; gasoline as the dominant source from the 1940s '
+         'to the late 1980s; the IQ loss per band; the total, the per-person figure and the cohort means the build '
+         'reproduces.'),
+        ("recorded each year how much lead American factories used",
+         'U.S. Bureau of Mines, <i>Minerals Yearbook</i>, chapter &ldquo;Lead&rdquo;, editions of 1945 to 1991, table '
+         'of lead consumption by product (row &ldquo;tetraethyl lead&rdquo;, later &ldquo;gasoline antiknock '
+         'additives&rdquo; and &ldquo;gasoline additives&rdquo;), read from the Internet Archive&rsquo;s copies.',
+         'Lead used to make the gasoline additive, 1941 to 1991; Department of Commerce estimates for 1987 to '
+         '1991.'),
+        ("issued its first limits on lead in gasoline in 1973",
+         'U.S. Environmental Protection Agency, &ldquo;EPA takes final step in phaseout of leaded gasoline&rdquo;, '
+         'press release, 29 January 1996.',
+         'First standards in 1973; catalytic converters needing lead-free fuel from 1975; 0.1 gram a gallon by '
+         '1986; the ban for road vehicles from 1 January 1996.'),
+        ("about 2.3 grams in the late 1960s",
+         'U.S. General Accounting Office, <i>Air Pollution: EPA&rsquo;s Efforts To Reduce and End the Use of Lead in '
+         'Gasoline</i>, GAO/RCED-86-80FS, March 1986.',
+         'About 2.3 grams per leaded gallon in the late 1960s and early 1970s; the 0.10 gram standard.'),
+        ("as tabulated by EPA in America's Children and the Environment",
+         'U.S. Environmental Protection Agency, <i>America&rsquo;s Children and the Environment</i>, Biomonitoring: '
+         'Lead, indicator B1, from CDC&rsquo;s National Health and Nutrition Examination Survey, 1976 to March 2020.',
+         'Median and 95th percentile blood lead of children aged one to five, by survey period.'),
+        ("used 5 µg/dL as its reference value",
+         'Ruckart PZ, Jones RL, Courtney JG, et al. &ldquo;Update of the blood lead reference value &mdash; United '
+         'States, 2021&rdquo;. <i>MMWR</i> 70(43):1509&ndash;1512, 2021.',
+         'The reference value of 5 &micro;g/dL adopted in 2012 and lowered to 3.5 &micro;g/dL in 2021.'),
+        ("A commentary on the paper in the same journal",
+         'Sampson RJ. &ldquo;Legacies of inequality, legacy lead exposures, and improving population '
+         'well-being&rdquo;. <i>Proceedings of the National Academy of Sciences</i> 119(14):e2202401119, 2022.',
+         'Estimates built on gasoline alone are likely to understate exposure from paint, plumbing and industry.'),
+        ("Lanphear and colleagues give",
+         'Lanphear BP, Hornung R, Khoury J, et al. &ldquo;Low-level environmental lead exposure and children&rsquo;s '
+         'intellectual function: an international pooled analysis&rdquo;. <i>Environmental Health Perspectives</i> '
+         '113(7):894&ndash;899, 2005.',
+         'The log-linear slopes, 2.70 IQ points per natural-log unit of blood lead at the IQ test and 2.04 for '
+         'early-childhood blood lead, and the 5th percentiles of their data, 2.4 and 4.1 &micro;g/dL.'),
+        ("the curve of Crump and colleagues",
+         'Crump KS, Van Landingham C, Bowers TS, et al. &ldquo;A statistical reevaluation of the data used in the '
+         'Lanphear et al. (2005) pooled-analysis that related low levels of blood lead to intellectual deficits in '
+         'children&rdquo;. <i>Critical Reviews in Toxicology</i> 43(9):785&ndash;799, 2013.',
+         'The no-threshold function, as applied by Larsen and S&aacute;nchez-Triana with a slope of 3.246.'),
+        ("Larsen and Sánchez-Triana estimated",
+         'Larsen B, S&aacute;nchez-Triana E. &ldquo;Global health burden and cost of lead exposure in children and '
+         'adults: a health impact and economic modelling analysis&rdquo;. <i>The Lancet Planetary Health</i> '
+         '7(10):e831&ndash;e840, 2023. CC BY 4.0.',
+         'IQ points lost by children under five in 2019, worldwide, by income group and region; the mean loss per '
+         'child over the first five years in low- and middle-income countries; the dose-response used.'),
+        ("2024 review of the science",
+         'U.S. Environmental Protection Agency, <i>Integrated Science Assessment for Lead</i>, final report, '
+         'EPA/600/R-23/375, January 2024.',
+         'The causal relationship between lead exposure and cognitive effects in children.'),
+        ("In 2001, one review argued",
+         'Kaufman AS. &ldquo;Do low levels of lead produce IQ loss in children? A careful examination of the '
+         'literature&rdquo;. <i>Archives of Clinical Neuropsychology</i> 16(4):303&ndash;341, 2001.',
+         'The argument that confounding by parental IQ and home environment may account for low-level '
+         'associations.'),
+        ("In Dunedin, New Zealand",
+         'Reuben A, Caspi A, Belsky DW, et al. &ldquo;Association of childhood blood lead levels with cognitive '
+         'function and socioeconomic status at age 38 years and with IQ change and socioeconomic mobility between '
+         'childhood and adulthood&rdquo;. <i>JAMA</i> 317(12):1244&ndash;1251, 2017.',
+         'Adult IQ 1.61 points lower for each 5 &micro;g/dL of blood lead at age 11, adjusted for maternal IQ, '
+         'childhood IQ and childhood socioeconomic status.'),
+        ("In Sweden, a study of the gasoline phase-out",
+         'Gr&ouml;nqvist H, Nilsson JP, Robling P-O. &ldquo;Understanding how low levels of early lead exposure affect '
+         'children&rsquo;s life trajectories&rdquo;. <i>Journal of Political Economy</i> 128(9):3376&ndash;3433, 2020.',
+         'Effects of the phase-out on school grades, high-school completion and convictions; no consistent effect on '
+         'the enlistment cognitive test; no significant effect on earnings measured at ages 29 to 40.'),
+        ("according to a meta-analysis",
+         'Trahan LH, Stuebing KK, Fletcher JM, Hiscock M. &ldquo;The Flynn effect: a meta-analysis&rdquo;. '
+         '<i>Psychological Bulletin</i> 140(5):1332&ndash;1360, 2014.',
+         'A mean rise of 2.31 IQ points per decade across 285 studies since 1951.'),
+        ("Exposure was higher in poorer families",
+         'Centers for Disease Control and Prevention. &ldquo;Blood lead levels in children aged 1&ndash;5 years '
+         '&mdash; United States, 1999&ndash;2010&rdquo;. <i>MMWR</i> 62(13):245&ndash;248, 2013.',
+         'Disparities in children&rsquo;s blood lead by income, race and age of housing.'),
+    ],
     # A lower-carbon running shoe (eco-shoe lane, 2026-11-07). lowcarbon-shoe/update_page.py applies this
     # entry itself. Anchors are prose-only phrases: none appears in the hero's SVG labels or JSON.
     "lowcarbon-shoe.html": [
