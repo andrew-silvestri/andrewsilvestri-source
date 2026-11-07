@@ -240,6 +240,13 @@ TARGETS = [
            skip=("data/raw", "data/raw/*", "outputs/*.png")),
     target("ethane", "ethane-code.zip", keep={"outputs"},
            skip=("data/raw", "data/raw/*", "outputs/*.png")),
+    # Leaded gasoline and lost IQ (lane lost-einsteins, 2026-11-07): the fetch script, the readers,
+    # the payload builder with its checks against the paper's printed figures, the page generator
+    # and the tests, with the payload, data/fetched.json and the two transcribed tables. Not
+    # data/raw: the PNAS datasets are CC BY-NC-ND and the yearbook texts run to 140 MB; the fetch
+    # script names every URL and the readers refuse a file whose SHA-1 differs from the manifest.
+    target("lead", "lead-code.zip", keep={"outputs"},
+           skip=("data/raw", "data/raw/*", "outputs/*.png")),
     # From smog rule to corn ethanol (chain-reactions lane, 2026-11-07): the fetch script, readers, payload
     # builder and checks, the page generator with the causal tree, and the tests, with the payload and
     # data/fetched.json. Not data/raw: the fetch script re-downloads the files and the readers refuse one

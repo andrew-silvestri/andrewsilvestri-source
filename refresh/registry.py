@@ -79,6 +79,17 @@ ENTRIES = [
         "why": "Annual data; the reported year moves by a reviewed change to LAST in fetch_public.py.",
     },
     {
+        # Lane lost-einsteins, 2026-11-07. Disabled: the page is built on a published estimate for the
+        # people alive in 2015 and on closed historical series; nothing in it is refreshed on a schedule.
+        "page": "lead",
+        "cwd": "lead",
+        "fetch": [["python", "fetch_public.py"]],
+        "build": [["python", "build_lead.py"]],
+        "keys": [],
+        "enabled": False,
+        "why": "A published 2015 estimate and closed historical series; the page says it does not update.",
+    },
+    {
         # chain-reactions lane, 2026-11-07. Disabled: the page traces a finished policy chain
         # (1990-2006) and says its data does not update; a refresh would move its numbers under
         # prose written against them. update_page.claims() would stop a rebuild that contradicts it.
