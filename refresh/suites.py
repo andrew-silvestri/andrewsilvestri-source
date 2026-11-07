@@ -31,6 +31,7 @@ OPTIONAL = [
     "python uri/test_uri.py", "python ethane/test_ethane.py",
     "python safetynet/test_safetynet.py",
     "python lead/test_lead.py",
+    "python oxygen/test_oxygen.py",
     "node tests/test_kit.js", "python tests/test_refresh.py",
 ]
 # test files in tests/ that are not suites in their own right

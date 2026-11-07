@@ -130,6 +130,10 @@ GENERATORS = [
     # from lead/data/raw (gitignored) at render time (lane lost-einsteins, 2026-11-07).
     ("lead page: lead/update_page.py --apply",
      ["update_page.py", "--apply"], "lead", "site"),
+    # oxygen/update_page.py writes site/oxygen.html from oxygen/outputs/payload.json, reading its
+    # quotations from oxygen/data/raw (gitignored) at render time (chain-reactions lane, 2026-11-07).
+    ("oxygen page: oxygen/update_page.py --apply",
+     ["update_page.py", "--apply"], "oxygen", "site"),
     # storage/update_page.py writes site/storage.html from storage/outputs/payload.json
     # (build_storage.py, which needs ERCOT's files under storage/data/raw, gitignored) and
     # storage/data/imm.json. R4, 2026-10-23.

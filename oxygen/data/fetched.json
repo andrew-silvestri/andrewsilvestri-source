@@ -1,0 +1,149 @@
+{
+ "crec_2000_s3514.html": {
+  "bytes": 307047,
+  "fetched": "2026-11-07",
+  "sha1": "f16c531f7ee3dd411b321a132f811a51fd07100d",
+  "url": "https://www.congress.gov/106/crec/2000/05/04/146/54/modified/CREC-2000-05-04-pt1-PgS3514-2.htm",
+  "via": "urllib"
+ },
+ "dole_1990.pdf": {
+  "bytes": 2173363,
+  "fetched": "2026-11-07",
+  "sha1": "08c687890f4ce78d96a8620cb7d9726139be4f1b",
+  "url": "https://dolearchivecollections.ku.edu/collections/press_releases/900329ame.pdf",
+  "via": "urllib"
+ },
+ "eia_copyright.html": {
+  "bytes": 52530,
+  "fetched": "2026-11-07",
+  "sha1": "b9a53523ec25f083857375eb5597d592fde4a843",
+  "url": "https://www.eia.gov/about/copyrights_reuse.php",
+  "via": "urllib"
+ },
+ "eia_faq_ethanol.html": {
+  "bytes": 51637,
+  "fetched": "2026-11-07",
+  "sha1": "2147d536497d4532190c81ca4b76f61428fd69ea",
+  "url": "https://www.eia.gov/tools/faqs/faq.php?id=27&t=10",
+  "via": "urllib"
+ },
+ "eia_gasoline_supplied_a.xls": {
+  "bytes": 31232,
+  "fetched": "2026-11-07",
+  "sha1": "e7afcce058519d0793e45874adefbd9a8d93db02",
+  "url": "https://www.eia.gov/dnav/pet/hist_xls/MGFUPUS2a.xls",
+  "via": "urllib"
+ },
+ "eia_mer_t1003.csv": {
+  "bytes": 641215,
+  "fetched": "2026-11-07",
+  "sha1": "c73532d3444c8b40b09c443d95ffd98dc2fbf3da",
+  "url": "https://www.eia.gov/totalenergy/data/browser/csv.php?tbl=T10.03",
+  "via": "urllib"
+ },
+ "eia_mtbe2006.pdf": {
+  "bytes": 483034,
+  "fetched": "2026-11-07",
+  "sha1": "70fe831b79a75a3689ca94380f6552146be99b32",
+  "url": "https://www.eia.gov/petroleum/archive/mtbe2006.pdf",
+  "via": "urllib"
+ },
+ "eia_mtbe_1999.pdf": {
+  "bytes": 113959,
+  "fetched": "2026-11-07",
+  "sha1": "c21760a738f264c6946e2bda64874cbec704d992",
+  "url": "https://www.eia.gov/outlooks/steo/special/pdf/mtbe.pdf",
+  "via": "urllib"
+ },
+ "eia_mtbe_net_input_m.xls": {
+  "bytes": 43008,
+  "fetched": "2026-11-07",
+  "sha1": "bbb3cc47ad69cae65d1772d8da6352027fec9012",
+  "url": "https://www.eia.gov/dnav/pet/hist_xls/MMTRIUS1m.xls",
+  "via": "urllib"
+ },
+ "eia_rfg_supplied_a.xls": {
+  "bytes": 29184,
+  "fetched": "2026-11-07",
+  "sha1": "53bc1fcc74c4408efcbdde1067953940419763f5",
+  "url": "https://www.eia.gov/dnav/pet/hist_xls/MGRUPUS2a.xls",
+  "via": "urllib"
+ },
+ "epa_brp_1999.pdf": {
+  "bytes": 497891,
+  "fetched": "2026-11-07",
+  "sha1": "71c9e4a55ae9ad7ed8d1455c4fab87359c1b69c9",
+  "url": "https://archive.epa.gov/oust/mtbe-a/web/pdf/r99021.pdf",
+  "via": "urllib"
+ },
+ "epa_mtbe_gas.html": {
+  "bytes": 11914,
+  "fetched": "2026-11-07",
+  "sha1": "506ec3198ed1beae730530771773b3cdcd3af36d",
+  "url": "https://archive.epa.gov/mtbe/web/html/gas.html",
+  "via": "urllib"
+ },
+ "epa_mtbe_water.html": {
+  "bytes": 17727,
+  "fetched": "2026-11-07",
+  "sha1": "206d3dce06cf94c71f74fe751c89ff309e4cd413",
+  "url": "https://archive.epa.gov/mtbe/web/html/water.html",
+  "via": "urllib"
+ },
+ "epa_state_bans_2007.pdf": {
+  "bytes": 45800,
+  "fetched": "2026-11-07",
+  "sha1": "56afa29944ae0afd6bb6fece199750f13e038da3",
+  "url": "http://web.archive.org/web/2009id_/http://www.epa.gov/mtbe/420b07013.pdf",
+  "via": "urllib"
+ },
+ "ers_feed_grains.csv": {
+  "bytes": 17318474,
+  "fetched": "2026-11-07",
+  "sha1": "0c13e74e0c04888f59b535ab21163712acf06be4",
+  "url": "https://www.ers.usda.gov/media/5766/feed-grains-yearbook-tables-all-years.csv",
+  "via": "urllib"
+ },
+ "fr_2006_26691.pdf": {
+  "bytes": 197115,
+  "fetched": "2026-11-07",
+  "sha1": "d5563a47d38e930895866fbba50b5efa04c99177",
+  "url": "https://www.govinfo.gov/content/pkg/FR-2006-05-08/pdf/06-4252.pdf",
+  "via": "urllib"
+ },
+ "lark_reply_2022.pdf": {
+  "bytes": 213286,
+  "fetched": "2026-11-07",
+  "sha1": "c773236226a0cf4d7a8e9ba4ba17eb810cd100e2",
+  "url": "https://www.gibbs-lab.wisc.edu/assets/Reply-to-Taheripour-et-al.pdf",
+  "via": "urllib"
+ },
+ "nrc_1999_ozone.html": {
+  "bytes": 414516,
+  "fetched": "2026-11-07",
+  "sha1": "5d5f33ffa1beef439013a5489ff91c61afa6635c",
+  "url": "https://www.nationalacademies.org/read/9461/chapter/2",
+  "via": "urllib"
+ },
+ "plaw_109_58.html": {
+  "bytes": 1913018,
+  "fetched": "2026-11-07",
+  "sha1": "f2966cccd4db8dd34576b2bd1d5aa09e58dd51ff",
+  "url": "https://www.govinfo.gov/content/pkg/PLAW-109publ58/html/PLAW-109publ58.htm",
+  "via": "urllib"
+ },
+ "uscode_7545_2000.html": {
+  "bytes": 72790,
+  "fetched": "2026-11-07",
+  "sha1": "2ac1368238e299618b9c86403343d34a8f7ec7ec",
+  "url": "https://www.govinfo.gov/content/pkg/USCODE-2000-title42/html/USCODE-2000-title42-chap85-subchapII-partA-sec7545.htm",
+  "via": "urllib"
+ },
+ "usgs_wri034200.pdf": {
+  "bytes": 1559316,
+  "fetched": "2026-11-07",
+  "sha1": "6828641adba72dc6c0ae18a978e093e6893dc4b3",
+  "url": "https://pubs.usgs.gov/wri/wri034200/wri034200.pdf",
+  "via": "urllib"
+ }
+}
