@@ -90,6 +90,18 @@ ENTRIES = [
         "why": "A published 2015 estimate and closed historical series; the page says it does not update.",
     },
     {
+        # chain-reactions lane, 2026-11-07. Disabled: the page traces a finished policy chain
+        # (1990-2006) and says its data does not update; a refresh would move its numbers under
+        # prose written against them. update_page.claims() would stop a rebuild that contradicts it.
+        "page": "oxygen",
+        "cwd": "oxygen",
+        "fetch": [["python", "fetch_public.py"]],
+        "build": [["python", "build_oxygen.py"]],
+        "keys": [],
+        "enabled": False,
+        "why": "A finished policy chain, 1990-2006, stated on the page as not updated.",
+    },
+    {
         "page": "takeaway",
         "cwd": "takeaway",
         # R2 (2026-10-23): production only. The pipeline tracker carries

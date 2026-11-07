@@ -31,6 +31,7 @@ OPTIONAL = [
     "python uri/test_uri.py", "python ethane/test_ethane.py",
     "python safetynet/test_safetynet.py",
     "python lead/test_lead.py",
+    "python oxygen/test_oxygen.py",
     "python lowcarbon-shoe/test_lowcarbon_shoe.py",
     "node tests/test_kit.js", "python tests/test_refresh.py",
 ]
