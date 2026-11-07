@@ -240,6 +240,8 @@ NAV = [
         ("Endangered, and studied", "beauty.html"),
         ("Skylines, played", "skyline.html"),
         ("Where the ground goes", "continents.html"),
+        # safety-nets lane, 2026-11-07: unemployment insurance's reach (non-energy pages go in Other).
+        ("Who gets an unemployment check", "safetynet.html"),
         # Lane lost-einsteins, 2026-11-07: the IQ cost of lead from gasoline. Other, not Gas:
         # the subject is a health loss, and Gas holds the gas-industry pages (D-18).
         ("Leaded gasoline and lost IQ", "lead.html"),
