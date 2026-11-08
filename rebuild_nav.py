@@ -248,6 +248,8 @@ NAV = [
         # chain-reactions lane, 2026-11-07: one clause of the 1990 Clean Air Act through three orders of
         # effects. In Other, not Gas (natural gas pages) or Climate (heading held): lane DECISIONS D1.
         ("From smog rule to corn ethanol", "oxygen.html"),
+        # page/perfidy, 2026-11-07: the Perfidy type family. Label is the page's <title>.
+        ("Perfidy, a type family", "perfidy.html"),
     ]),
     ("Code", "code.html"),
     # LAST, AND IT HAS TO STAY LAST. style.css pins this one right with
