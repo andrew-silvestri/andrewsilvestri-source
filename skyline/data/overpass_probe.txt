@@ -1,0 +1,7 @@
+
+overpass-api.de OK 1900
+lz4.overpass-api.de ERR The remote server returned an error: (502) Bad Gateway.
+z.overpass-api.de OK 1900
+overpass.kumi.systems ERR The operation has timed out
+overpass.private.coffee ERR The operation has timed out
+DONE

@@ -10,7 +10,7 @@ Serve `site/` and open each option's three pages side by side with the live
 page:
 
 ```powershell
-Set-Location "C:\Users\dasil\Documents\50 - ENERGY MODEL\00 PUBLISH\site"
+Set-Location "C:\Users\dasil\Code\energy-model\00 PUBLISH\site"
 python -m http.server 8765 --bind 127.0.0.1
 ```
 

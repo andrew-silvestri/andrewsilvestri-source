@@ -1,0 +1,17 @@
+3 Hudson Boulevard (Q229605) not built - only foundations; upstream standing filter passed it
+20 Times Square (Q2631694): Wikidata 261 m, built ~150-168 m
+600 Third Avenue: Wikidata 197 m vs ~174 m
+Olympic Tower: Wikidata 221 m vs roof ~190 m
+Chrysler: Wikidata 282 vs pinnacle 318.9
+Gevora (Dubai): Wikidata 342 vs 356.3
+Paramount Tower Hotel (Dubai): OSM parts were DAMAC Towers 2.6km away; Burj Binghatti under construction
+Toronto SP!RE: OSM 162 vs roof 142
+Converter TODO: authored top short of Wikidata h by >8% and no needle -> draw gap as needle instead of stretching (Main Tower 200 vs 240, Commerce Court West etc)
+Warsaw Unit: Wikidata 220 vs real 202; Lucka City 120 vs ~112
+Auckland Sentinel: CTBUH 120 vs Wikipedia 150; 1 Queen St OSM 81 vs Wikidata 138
+Auckland Queens Residences 107 vs 113.2; National Bank Tower CTBUH 92/77 vs Wikidata 104
+Madrid: Gate of Europe item draws both towers; east tower duplicates Q56787345 (Puerta de Europa I) - remove east tier from the complex item in QA
+Madrid: Gate of Europe complex (Q1141262) + Puerta de Europa I & II are 3 ring items for 2 buildings - upstream dedupe
+Moscow Q251006 'City Hall and City Duma' cancelled; site is Grand Tower 283.4 m (Wikidata 308.4)
+Sentinel Auckland: CTBUH 120 m, Wikidata 150 -> app draws a fake 30 m needle; fix Wikidata or cap
+Austro Tower Wikidata 146 vs ~136.6

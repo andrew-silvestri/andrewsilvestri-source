@@ -1,0 +1,39 @@
+New York: 1844 elements in 75s
+Dubai: 169 elements in 32s
+Shenzhen: 198 elements in 32s
+Tokyo: 265 elements in 60s
+   try 1 failed: HTTP Error 502: Bad Gateway
+Chicago: 234 elements in 67s
+   try 1 failed: HTTP Error 502: Bad Gateway
+   try 2 failed: HTTP Error 502: Bad Gateway
+   try 3 failed: HTTP Error 502: Bad Gateway
+Toronto: 384 elements in 232s
+Paris: 524 elements in 67s
+Moscow: 426 elements in 61s
+Taipei: 232 elements in 64s
+   try 1 failed: HTTP Error 429: Too Many Requests
+Hong Kong: 137 elements in 114s
+Tel Aviv: 174 elements in 33s
+   try 1 failed: HTTP Error 502: Bad Gateway
+Seoul: 85 elements in 60s
+Austin: 11 elements in 32s
+   try 1 failed: HTTP Error 502: Bad Gateway
+London: 419 elements in 77s
+Frankfurt: 255 elements in 31s
+   try 1 failed: HTTP Error 502: Bad Gateway
+Warsaw: 686 elements in 87s
+   try 1 failed: HTTP Error 502: Bad Gateway
+Osaka: 83 elements in 73s
+Los Angeles: 87 elements in 56s
+   try 1 failed: HTTP Error 502: Bad Gateway
+Auckland: 162 elements in 71s
+   try 1 failed: HTTP Error 502: Bad Gateway
+Nashville: 25 elements in 61s
+Calgary: 106 elements in 34s
+Madrid: 524 elements in 61s
+   try 1 failed: HTTP Error 502: Bad Gateway
+   try 2 failed: HTTP Error 504: Gateway Timeout
+Vienna: 209 elements in 176s
+Brussels: 116 elements in 37s
+wrote C:\Users\dasil\Code\energy-model\00 PUBLISH\skyline\data\raw\massing_2026-11-07.json.gz
+DONE

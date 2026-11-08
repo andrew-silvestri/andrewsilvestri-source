@@ -14,6 +14,9 @@ the towers in view, the louder the chord.
 | `fetch_osm.py` | Pulls the buildings OpenStreetMap maps near each city, archived the same way. |
 | `build_skylines.py` | Builds `data/skylines.json` from the two archived pulls: which towers stand, which cities have enough of them for a wheel, and the wheel and meter for each. Its docstring lists every filter. Writes `data/filter_report.json`, every dropped item and why. |
 | `test_skylines.py` | Recomputes from the raw pulls that every tower on every wheel stands, is a building, is in its city and appears once; that each city's tallest tower is its loudest bar; and that the build reproduces the payload. Each check has a `--break` that puts back the fault it exists for. |
+| `fetch_massing.py` | Pulls each ring tower's OpenStreetMap outline and every `building:part` around it, with full geometry, one Overpass query per city, into `data/raw/massing_<date>.json.gz`. Resumes after a failure. |
+| `fetch_wikidata_extra.py` | Pulls each ring tower's architectural style, floor count, every height statement with its qualifiers, image and architect into `data/raw/wdextra_<date>.json`. |
+| `build_massing.py` | Turns those into `data/massing.json`: each tower's faces as seen from the centre of its city, with their compass normals, roofs and needles, and where each shape came from. |
 | `keys.py` | What key each city is in, and why that is chosen rather than derived from the buildings. |
 | `app.js` | The app: the wheel, the meter, the synthesis and the keyboard handling. |
 | `template.html` | The app's shell and its styles. |
@@ -28,6 +31,9 @@ the towers in view, the louder the chord.
 python fetch_wikidata.py         # minutes; writes data/raw/wikidata_<date>.json
 python fetch_osm.py              # ten minutes or so; writes data/raw/osm_<date>.json.gz
 python build_skylines.py --apply # writes data/skylines.json
+python fetch_massing.py          # 20-30 minutes; data/raw/massing_<date>.json.gz
+python fetch_wikidata_extra.py   # a minute; data/raw/wdextra_<date>.json
+python build_massing.py          # writes data/massing.json
 python test_skylines.py          # exit 0 when every check passes
 python build_app.py              # writes skyline-app.html, self-contained
 node test_app.js
@@ -55,6 +61,15 @@ payload exactly, and `test_skylines.py` checks that they do.
   order; the angle between any two of them does not survive, because a
   downtown occupies perhaps forty degrees of a real horizon and a wheel
   reproducing that would be almost nine-tenths empty.
+- **Measured, for the picture.** Each tower's outline and, where mappers
+  modelled it in 3D, its parts and roofs (OpenStreetMap), seen along the line
+  from the centre to it. Where the massing stops short of Wikidata's height,
+  the rest is a needle. The sun and moon positions and the moon's phase, for
+  each city's clock (computed in the browser). The current weather
+  (Open-Meteo, fetched when a city is chosen; drawn clear if unavailable).
+- **Invented, for the picture.** Windows (spaced by floor count, patterned by
+  recorded style or year), each city's night palette, haze, searchlights,
+  blimp, beacons, and the staged depth (height falls as distance^-0.12).
 - **Invented.** The sound, all of it. There is no sense in which a city has a
   pitch. A tower's height, as a share of its city's tallest, to the power 1.6,
   sets how loud its note is; the mapping is written out in full on the page

@@ -20,7 +20,7 @@ publishes. Nothing reaches GitHub until you have seen the options.
 Run these yourself, in a normal PowerShell window.
 
 ```powershell
-Set-Location "C:\Users\dasil\Documents\50 - ENERGY MODEL\00 PUBLISH"
+Set-Location "C:\Users\dasil\Code\energy-model\00 PUBLISH"
 
 # 1. Checkpoint the ~20 uncommitted files sitting in the tree, so the
 #    deslop diff is readable.
@@ -65,7 +65,7 @@ git -C $repo log --oneline -5
 ```powershell
 # 4. Optional: look at the site as it stands, so you have a baseline in your
 #    head before Fable starts. Ctrl+C to stop the server.
-Set-Location "C:\Users\dasil\Documents\50 - ENERGY MODEL\00 PUBLISH\site"
+Set-Location "C:\Users\dasil\Code\energy-model\00 PUBLISH\site"
 Start-Process "http://localhost:8000/"
 python -m http.server 8000
 ```
@@ -118,7 +118,7 @@ rather than a judgement call.
 ## Start Fable
 
 ```powershell
-Set-Location "C:\Users\dasil\Documents\50 - ENERGY MODEL\00 PUBLISH"
+Set-Location "C:\Users\dasil\Code\energy-model\00 PUBLISH"
 claude --model fable
 ```
 
@@ -148,7 +148,7 @@ When you're satisfied, tell it to proceed to Phase 2.
 Serve the previews and compare:
 
 ```powershell
-Set-Location "C:\Users\dasil\Documents\50 - ENERGY MODEL\00 PUBLISH\site"
+Set-Location "C:\Users\dasil\Code\energy-model\00 PUBLISH\site"
 python -m http.server 8000
 ```
 
@@ -167,7 +167,7 @@ flatters a design, a long prose page and a figure-dense page do not.
 Name your choice. Fable runs Phase 3 and publishes, from Git Bash:
 
 ```bash
-cd "/c/Users/dasil/Documents/50 - ENERGY MODEL/00 PUBLISH"
+cd "/c/Users/dasil/Code/energy-model/00 PUBLISH"
 ./publish.sh --dry-run
 ./publish.sh
 ```
@@ -181,7 +181,7 @@ To revert the live site to what it was before the pass:
 ```powershell
 $repo  = Join-Path $HOME 'andrew-silvestri.github.io'
 $stamp = '<the date stamp you used above>'
-$old   = Get-Content "C:\Users\dasil\Documents\50 - ENERGY MODEL\00 PUBLISH\backups\published-live-$stamp\LIVE_COMMIT.txt"
+$old   = Get-Content "C:\Users\dasil\Code\energy-model\00 PUBLISH\backups\published-live-$stamp\LIVE_COMMIT.txt"
 git -C $repo revert --no-edit "$old..HEAD"
 git -C $repo push
 ```
@@ -189,7 +189,7 @@ git -C $repo push
 To restore the source instead and republish from it:
 
 ```powershell
-Set-Location "C:\Users\dasil\Documents\50 - ENERGY MODEL\00 PUBLISH"
+Set-Location "C:\Users\dasil\Code\energy-model\00 PUBLISH"
 $stamp = '<the date stamp you used above>'
 Remove-Item site\* -Recurse -Force
 Copy-Item "backups\site-pre-deslop-$stamp\*" site\ -Recurse -Force
@@ -199,7 +199,7 @@ python bust_cache.py
 then, from Git Bash (not PowerShell; `publish.ps1` is retired):
 
 ```bash
-cd "/c/Users/dasil/Documents/50 - ENERGY MODEL/00 PUBLISH"
+cd "/c/Users/dasil/Code/energy-model/00 PUBLISH"
 ./publish.sh --dry-run
 ./publish.sh
 ```

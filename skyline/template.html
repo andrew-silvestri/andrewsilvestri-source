@@ -85,6 +85,14 @@ input[type=range]{accent-color:var(--acc);margin:6px 0 0}
 #spin:hover{background:var(--faint)}
 #spin.on{background:var(--acc-fill);color:var(--acc-ink);border-color:var(--acc-fill)}
 #spin[hidden]{display:none}
+.timerow{display:flex;align-items:center;gap:10px}
+.timerow input{flex:1}
+#now{flex:none;padding:4px 10px;border-radius:2px;background:transparent;
+  color:var(--ink);border:1px solid var(--acc);font:600 var(--fs-2) var(--sans);
+  cursor:pointer}
+#now:hover{background:var(--faint)}
+#now.on{background:var(--acc-fill);color:var(--acc-ink)}
+#when{margin-top:6px}
 .tier{display:inline-block;font-size:var(--fs-2);text-transform:uppercase;
   letter-spacing:.12em;color:var(--moss);border:1px solid var(--moss);
   border-radius:20px;padding:0 7px;margin-left:2px}
@@ -109,7 +117,12 @@ ol.tow span{display:block;font-size:var(--fs-2)}
 /* The sky is the paper, flat. The towers are drawn in --acc and --cool on
    it, as skyline_towers.png draws them on the page; the night-sky gradient
    went with the site's other gradients (2026-09-04). */
-#stage{position:relative;overflow:hidden;background:var(--bg)}
+/* The stage is a painting on black (2026-11-07): the sky is drawn per
+   city by app.js, and the meter sits on --stage, a fixed near-black that
+   the foot's text below is measured against. */
+#stage{position:relative;overflow:hidden;background:#0c0b0d;
+  --stage:#0c0b0d; --stage-ink:#ECE5DA; --stage-dim:#B9AFA4}
+#tip .src{display:block;margin-top:2px;color:var(--dim);font-size:var(--fs-2)}
 canvas{position:absolute;inset:0;width:100%;height:100%;display:block;
   cursor:ew-resize;touch-action:none}
 #foot{position:absolute;left:0;right:0;bottom:0;display:flex;
@@ -118,7 +131,7 @@ canvas{position:absolute;inset:0;width:100%;height:100%;display:block;
 #left{min-width:0;display:flex;flex-direction:column;gap:3px}
 /* the notes sounding now: the meter as names, for anyone who cannot hear it
    (or has it muted). --ink, not --dim, because it is a reading, not a hint */
-#notes{font:var(--fs-2) var(--mono);color:var(--ink);white-space:nowrap;
+#notes{font:var(--fs-2) var(--mono);color:var(--stage-ink);white-space:nowrap;
   overflow:hidden;text-overflow:ellipsis}
 /* At 390 this was 238px of text in 171px and ellipsised to about 72%: the
    last notes of the chord vanished, and this line is the only account of what
@@ -128,7 +141,7 @@ canvas{position:absolute;inset:0;width:100%;height:100%;display:block;
   #foot{align-items:flex-start}
 }
 
-#hint{font-size:var(--fs-2);color:var(--dim);letter-spacing:.03em;
+#hint{font-size:var(--fs-2);color:var(--stage-dim);letter-spacing:.03em;
   min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 /* A ground, not a darker ink. #foot is absolute over #stage, so at 390 this
    line sits on the meter's bars, where --dim measured 2.90:1 at the 10th
@@ -141,8 +154,8 @@ canvas{position:absolute;inset:0;width:100%;height:100%;display:block;
    --dim is 5.80 and 1.08, white is 1.10 and 7.10. So the reading gets an
    opaque ground of its own and keeps its colour, and what is behind it stops
    deciding whether it can be read at all. */
-#az{font:var(--fs-2) var(--mono);color:var(--dim);flex:none;white-space:nowrap;
-  margin-left:auto;background:var(--bg);padding:1px 6px;border-radius:2px}
+#az{font:var(--fs-2) var(--mono);color:var(--stage-dim);flex:none;white-space:nowrap;
+  margin-left:auto;background:var(--stage);padding:1px 6px;border-radius:2px}
 /* Below the point where the panel stacks the long hint goes - it talks
    about arrow keys and the space bar, which a phone does not have - and a
    four-word one takes its place, because a reader who is never told to drag
@@ -203,6 +216,14 @@ canvas{position:absolute;inset:0;width:100%;height:100%;display:block;
   <label class="f" for="vol" style="margin-top:12px">Volume</label>
   <input type="range" id="vol" min="0" max="100" step="1" value="55">
 
+  <label class="f" for="time" style="margin-top:12px">Time in the city</label>
+  <div class="timerow">
+    <input type="range" id="time" min="0" max="1435" step="5" value="720"
+      aria-describedby="when">
+    <button id="now" type="button">Now</button>
+  </div>
+  <p class="note" id="when"></p>
+
   <div class="btns">
     <button id="play">Play</button>
     <button id="spin">Spin</button>
@@ -225,6 +246,39 @@ canvas{position:absolute;inset:0;width:100%;height:100%;display:block;
   changes the chord and never silences it. The line
   under the meter names the notes sounding now.</p>
 
+  <h2>How it looks</h2>
+  <p class="note">The heights, the outlines and the compass order are
+  measured; the painting is not. Each tower stands at its Wikidata height in
+  the footprint OpenStreetMap maps for it, seen along the line from the
+  centre of the city to it, so its width and its setbacks are its own.
+  Where mappers have modelled a tower in 3D, every part is drawn at its own
+  height, with its roof; where they have only mapped the outline, that
+  outline is raised to the tower&rsquo;s height.</p>
+  <p class="note" id="looks"></p>
+  <p class="note">Measured too: the light. The sun and the moon stand at
+  their real bearings and heights for the city&rsquo;s own clock, the moon
+  in its real phase, and every face is lit by them according to the compass
+  direction it faces, so turning toward the sun backlights the skyline and
+  turning away lights it, as a sundial would. Drag the time to watch it move.
+  The weather is the city&rsquo;s current weather, from
+  <a href="https://open-meteo.com/" target="_blank" rel="noopener">Open-Meteo</a>.
+  The sun and moon are drawn several times larger than life.</p>
+  <p class="note">Bent a little, for the picture: in each city every
+  tower&rsquo;s width is stretched or narrowed by the same factor (between
+  0.65 and 1.6) so the skyline neither thins to needles nor fuses into a
+  wall; heights are never touched. Behind the towers, a hazy low city is
+  drawn as texture. It is invented: it is not in the data, not on the map
+  and not in the sound.</p>
+  <p class="note">Invented: the windows, spaced by each tower&rsquo;s floor
+  count and patterned by its recorded style or, failing that, its year; the
+  colours of each city&rsquo;s night, chosen like its key; the haze, the
+  searchlights, the blimp and the red beacons. Depth is staged rather than optical: height falls off
+  only gently with distance, and far towers stand a little higher and
+  fainter, as in a painted backdrop. Windows light with the chord: the
+  louder a tower&rsquo;s note, the more of them are on. The circle at the
+  top right is the city from above, true bearings and distances, with your
+  view as the wedge.</p>
+
   <h2>This skyline</h2>
   <dl id="stats"></dl>
 
@@ -236,7 +290,7 @@ canvas{position:absolute;inset:0;width:100%;height:100%;display:block;
 </div>
 
 <div id="stage">
-  <canvas id="c" role="img" aria-label="The city's towers on a wheel, and the same ring as a meter. Turn with drag, arrow keys or Spin; the towers and the notes sounding are listed as text in the panel and under the meter."></canvas>
+  <canvas id="c" role="img" aria-label="The city's towers around you, drawn as a skyline, with a map of them from above, and the same ring as a meter. Turn with drag, arrow keys or Spin; the towers and the notes sounding are listed as text in the panel and under the meter."></canvas>
   <div id="tip"></div>
   <div id="noaudio">This browser did not offer Web Audio, so the skyline is
     drawn but not played.</div>
@@ -244,9 +298,9 @@ canvas{position:absolute;inset:0;width:100%;height:100%;display:block;
     <div id="left">
       <div id="notes"></div>
       <div id="hint"><span class="desk">drag to turn &middot; arrow keys
-        nudge &middot; space to spin &middot; the top panel is the city, the
-        bottom is the same ring as a meter</span><span class="phone">drag the
-        wheel to turn</span></div>
+        nudge &middot; space to spin &middot; click the map to face a bearing &middot;
+        the bottom is the same ring as a meter</span><span class="phone">drag
+        the skyline to turn</span></div>
     </div>
     <div id="az"></div>
   </div>

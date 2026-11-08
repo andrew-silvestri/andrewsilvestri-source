@@ -35,7 +35,7 @@ merge back is real work and I would not bother for two files.
 Each in its own terminal, from `00 PUBLISH`:
 
 ```powershell
-Set-Location "C:\Users\dasil\Documents\50 - ENERGY MODEL\00 PUBLISH"
+Set-Location "C:\Users\dasil\Code\energy-model\00 PUBLISH"
 claude --model fable
 ```
 

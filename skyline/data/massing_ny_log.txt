@@ -1,0 +1,4 @@
+   try 1 failed: HTTP Error 502: Bad Gateway
+New York: 1844 elements in 119s
+wrote C:\Users\dasil\Code\energy-model\00 PUBLISH\skyline\data\raw\massing_2026-11-07.json.gz 1 cities
+DONE

@@ -12,7 +12,7 @@ the message Andrew pastes back into each one. The terminals do the work.
 
 ## 1. What this is
 
-`C:\Users\dasil\Documents\50 - ENERGY MODEL\00 PUBLISH` is a hand-built static
+`C:\Users\dasil\Code\energy-model\00 PUBLISH` is a hand-built static
 site — plain HTML, one stylesheet, no framework, no build step. `site/` **is**
 the website. Everything else in the folder generates or verifies part of it.
 `publish.sh` (Git Bash, **not** `publish.ps1` — that one is retired and
@@ -232,7 +232,7 @@ into an archive. When several terminals are live, only one writes at a time.
 ### Archive before anything destructive
 
 ```powershell
-Set-Location "C:\Users\dasil\Documents\50 - ENERGY MODEL\00 PUBLISH"
+Set-Location "C:\Users\dasil\Code\energy-model\00 PUBLISH"
 git add -A; git commit -m "<what changed>"
 git tag "<stage>-2026-09-06"
 git bundle create "$HOME\Desktop\00-PUBLISH-2026-09-06.bundle" --all

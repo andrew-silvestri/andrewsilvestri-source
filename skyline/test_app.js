@@ -27,6 +27,8 @@ function ok(cond, label, detail) {
 }
 
 const VW = 1400, VH = 900;
+/* An offscreen canvas in this DOM has no layout, so its width and height are
+   whatever the app set; jsdom keeps them as attributes. */
 let rects = [];
 function stub() {
   return { clearRect() {}, strokeStyle: '', lineWidth: 0, globalAlpha: 1,
@@ -34,6 +36,15 @@ function stub() {
     lineTo() {}, stroke() {},
     createLinearGradient: () => ({ addColorStop() {} }),
     fillRect(x, y, w, h) { rects.push({ x, y, w, h }); },
+    /* The stage (2026-11-07) draws each tower once into its own canvas and
+       stamps it with drawImage, so a stamp is recorded as the rectangle it
+       covers: the sprite's size at the place it lands. */
+    drawImage(cv, x, y) { rects.push({ x, y, w: cv.width, h: cv.height, img: true }); },
+    arc() {}, ellipse() {}, rect() {}, fill() {}, closePath() {},
+    bezierCurveTo() {}, save() {}, restore() {}, clip() {},
+    globalCompositeOperation: 'source-over',
+    createRadialGradient: () => ({ addColorStop() {} }),
+    createPattern: () => null,
     /* Text is recorded as a box, the way the app sizes it: measureText
        returns a width from the string, not a constant, so the app's own
        collision test runs on the same numbers this file checks. 6.6px per
@@ -142,15 +153,17 @@ ok(new Set(c0.ring.map((r, i) =>
      +(r[0] - 360 * i / c0.ring.length).toFixed(3))).size === 1,
    'ring spacing is exactly equalised');
 
-console.log('\n  The wheel is actually visible');
+console.log('\n  The stage is actually visible');
 /* Split what is drawn into the two panels by where it sits, and require the
    top panel to contain bars of a real size. A panel of hairlines passes a
    count and fails a person. */
 let worstTall = 1e9, worstCity = '', worstFill = 1e9, fillCity = '';
 let spilled = 0, spillCity = '';
 for (let i = 0; i < K.cities.length; i++) {
-  K.S.i = i; K.setKey(); K.S.az = 0;
+  K.S.i = i; K.setKey(); K.S.az = K.cities[i].look;
+  K.S.fov = K.defaultFov(i);   // what choosing the city sets
   for (let s = 0; s < 40; s++) K.step(0.016);
+  K.scene();             // build the sprites first: their own drawing is not the stage
   rects = []; K.draw();
   /* The divider, in device pixels. Everything the wheel draws must sit above
      it - that is the check, not a convenience for the filter. The first
@@ -161,8 +174,9 @@ for (let i = 0; i < K.cities.length; i++) {
      a factor of two made the panel look twice its real height and reported
      every wheel as a third too short - a measurement bug wearing a drawing
      bug's clothes, for the second time in this file. */
-  const split = Math.round(doc.getElementById('c').height * 0.56);
-  const top = rects.filter(r => r.y < split && r.h > 1.5);
+  const split = K.layout().groundY;
+  // the towers are the stamps; backgrounds and haze are full-width fills
+  const top = rects.filter(r => r.img && r.y < split && r.h > 1.5);
   const spill = top.filter(r => r.y + r.h > split + 2).length;
   if (spill) { spilled += spill; spillCity = K.cities[i].city; }
   const tallest = top.reduce((m, r) => Math.max(m, r.h), 0);
@@ -175,7 +189,11 @@ for (let i = 0; i < K.cities.length; i++) {
 ok(worstTall > 0.35,
    'in every city the tallest tower fills a good part of the panel',
    `worst ${(worstTall * 100).toFixed(0)}% (${worstCity})`);
-ok(worstFill >= 12, 'and the wheel is populated, not one lonely spike',
+K.S.fov = 100;
+/* 8, not 12: the drum showed the whole ring at once and the stage shows the
+   field of view, which a small wheel opens toward nine towers in view
+   (defaultFov), up to the slider's 160 degrees - eight, for Calgary. */
+ok(worstFill >= 8, 'and the stage is populated, not one lonely spike',
    `worst ${worstFill} visible towers (${fillCity})`);
 ok(spilled === 0, 'and no part of it hangs down over the meter',
    spilled ? `${spilled} bars spill in ${spillCity}` : '');
@@ -441,7 +459,9 @@ console.log('\n  Labels do not collide');
      clashes ? `${clashes} clashes, first: ${first}` : `${K.cities.length} cities x 8 bearings`);
   // the meter's lowest bar must clear the foot: 66px of canvas at the bottom
   const H = doc.getElementById('c').height;
-  const low = rects.filter(r => r.y + r.h > H - 60).length;
+  // the meter's ground is one full-width fill; the bars are the narrow ones
+  const low = rects.filter(r => r.w < doc.getElementById('c').width / 2 &&
+                                r.y + r.h > H - 60).length;
   ok(low === 0, 'the meter ends above the notes line', low ? `${low} bars reach into the foot` : '');
 }
 
