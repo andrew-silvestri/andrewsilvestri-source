@@ -91,20 +91,20 @@ def hero(P, v):
     y = {r["cohort"]: r for r in U["per_year"]}
     mid = f"{100 * U['mid_century_share']:.0f}"
     steps = [
-        (f"<p><b>One bar for each birth year.</b> The height is the mean number of IQ points that the people born "
-         f"in that year lost to lead as small children. For birth years before 1976 (shaded), blood lead is "
-         f"predicted from the gasoline series; from 1976, it is measured, with the years between surveys filled in.</p>", {"t": 1, "r": 1}),
+        (f"<p><b>One bar for each birth year.</b> Each bar's height is the mean number of IQ points that the people born "
+         f"in that year lost to lead as small children. Before 1976 (shaded), their blood lead is "
+         f"predicted from the gasoline series; from 1976 it is measured, with the years between surveys filled in.</p>", {"t": 1, "r": 1}),
         (f"<p><b>The peak: born 1966 to 1970.</b> This group lost {v['peak5']} points each on average. For those "
-         f"born in {U['peak1']['cohort']}, the mean was {U['peak1']['mean']:.1f} points. In "
+         f"born in {U['peak1']['cohort']}, the mean was {U['peak1']['mean']:.1f} points, the largest of any birth year. And in "
          f"{P['gasoline']['peak_year']}, the makers of the gasoline additive used more lead than in any other "
          f"year: {v['gpeak_t']} metric tons.</p>", {"t": 1, "p": 1}),
-        (f"<p><b>Born 1951 to 1980: {mid} per cent of the total.</b> Counted in people, not bars, these thirty "
+        (f"<p><b>Born 1951 to 1980: {mid} per cent of the total.</b> Counted in people rather than bars, these thirty "
          f"birth years carry "
          f"{U['mid_century']['points'] / 1e6:,.0f} million of the {v['total_m']} million points.</p>",
          {"t": 1, "m": 1}),
-        (f"<p><b>The fall.</b> From 1975, new cars needed unleaded gasoline. From 1986, the standard for leaded "
+        (f"<p><b>The fall.</b> From 1975, new cars needed unleaded gasoline, and from 1986 the standard for leaded "
          f"gasoline was 0.1 gram of lead a gallon. The mean loss was {y[1980]['mean']:.1f} points for the people "
-         f"born in 1980, {y[1990]['mean']:.1f} for 1990, and {y[2000]['mean']:.2f} for 2000. The dip at 1975 "
+         f"born in 1980, {y[1990]['mean']:.1f} for 1990 and {y[2000]['mean']:.2f} for 2000. The dip at 1975 is an echo: it "
          f"follows a dip in the gasoline series that year, which the model carries into blood lead.</p>",
          {"t": 1, "k": 1}),
     ]
@@ -126,7 +126,7 @@ def gas_chart(P):
     import insight
     G = P["gasoline"]
     steps = [(f"<p><b>{G['first']} to {G['last']}.</b> Lead in the additive reached its maximum in "
-              f"{G['peak_year']}. By 1986 it was {G['t1986']:,.0f} metric tons.</p>", {"t": 1, "p": 1})]
+              f"{G['peak_year']}; by 1986 it was down to {G['t1986']:,.0f} metric tons.</p>", {"t": 1, "p": 1})]
     return insight.scrolly(gas_spec(P), steps, from_state={"t": 0})
 
 
@@ -234,7 +234,7 @@ def values(P):
         f"each, on average, to lead in early childhood, more than any other group of birth years.",
         f"The total for the people alive in 2015 is {v['total_m']} million points, and the people born from 1951 to "
         f"1980 carry {100 * U['mid_century_share']:.0f} per cent of it.",
-        f"The total depends on the dose-response curve. Applied to the same exposure, other published curves give "
+        f"The total rests on one choice, the dose-response curve: applied to the same exposure, other published curves give "
         f"{C['lanphear_early']['points'] / 1e6:,.0f} million to {C['crump']['points'] / 1e9:.2f} billion points."])
     v["hero"] = hero(P, v)
     v["gas_chart"] = gas_chart(P)
