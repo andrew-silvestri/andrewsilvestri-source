@@ -331,13 +331,15 @@ def draw_phone(cheese, shoes, out):
         share_of = _stage_share(panel)
         # placed in points under the x label, not in axes fractions: the
         # two panels differ in height, so one fraction is two distances
+        # -48, not -40: under Perfidy an x label's box is 1.25 em tall, not
+        # 1.00 as under IBM Plex, and -40 put this line on it (2026-11-08)
         texts.append(ax.annotate(f"contested stage: {share_of:.0%} of the total",
                                  (0, 0), xycoords="axes fraction",
-                                 xytext=(0, -40), textcoords="offset points",
+                                 xytext=(0, -48), textcoords="offset points",
                                  ha="left", va="top", fontsize=FS_2, color=DIM))
         texts.append(ax.annotate(f"spread ×{spread:.2f}",
                                  (1, 0), xycoords="axes fraction",
-                                 xytext=(0, -40), textcoords="offset points",
+                                 xytext=(0, -48), textcoords="offset points",
                                  ha="right", va="top", fontsize=FS_1, color=INK))
     sitefig.centre(fig)
     problems = audit(fig, texts)
