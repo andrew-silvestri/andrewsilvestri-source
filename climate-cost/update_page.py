@@ -302,15 +302,15 @@ def values():
     L = legacy()
     steps = [
         (f"<p>A kilogram of beef from a Brazilian herd, eaten in Texas, comes to "
-         f"{b:.1f} kg of CO<sub>2</sub>e. This unit counts the warming effect of "
+         f"{b:.1f} kg of CO<sub>2</sub>e, a unit that counts the warming effect of "
          f"every gas as carbon dioxide. A petrol car with one person in it "
-         f"emits {car_km:.2f} kg a kilometer, including its share of the factory and "
+         f"emits {car_km:.2f} kg a kilometer, counting its share of the factory and "
          f"the road. So the kilogram of beef is {km_word(b / car_km)} km of driving.</p>", {"s": 0}),
         (f"<p>Split by source, {100 * (enteric + land) / b:.0f}% is two "
-         f"things that happen on the ranch: methane from the cow's gut, and the "
+         f"things that happen on the ranch: methane from the cow's gut and the "
          f"forest cleared for its pasture. Everything after the animal leaves the "
-         f"farm is {100 * after / b:.1f}%. The {beef['km']:,.0f} km ocean "
-         f"crossing is {100 * fr['beef']:.1f}% of the total.</p>", {"s": 1}),
+         f"farm comes to {100 * after / b:.1f}%, and the {beef['km']:,.0f} km ocean "
+         f"crossing, the leg that food-miles arguments are about, is {100 * fr['beef']:.1f}% of the total. At under 1%, the voyage barely registers.</p>", {"s": 1}),
     ]
     zip_kb = round(os.path.getsize(ZIP) / 1024) if os.path.exists(ZIP) else 0
     v = {
@@ -345,14 +345,14 @@ def values():
         "stamp": insight.stamp(live=False),
         "takeaways": insight.takeaways([
             f"A kilogram of beef is {b / total('cheese'):.1f} times a kilogram of "
-            f"hard cheese and {b / total('chicken'):.0f} times a kilogram of chicken. "
-            "This is because a cow's gut makes methane and this herd's pasture was cut "
+            f"hard cheese and {b / total('chicken'):.0f} times a kilogram of chicken, "
+            "because a cow's gut makes methane and this herd's pasture was cut "
             "from forest.",
-            f"Heat for a greenhouse adds about {sum(adders) / len(adders):.1f} kg to "
-            "every kilogram of tomatoes on every sea route the model runs. That is more "
+            f"Heating a greenhouse adds about {sum(adders) / len(adders):.1f} kg to "
+            "every kilogram of tomatoes on every sea route the model runs, more "
             "than twice the whole footprint of a field tomato on the "
             "same route.",
-            f"Most of the footprint of a pair of leather shoes is the tanning, {100 * tan:.0f}% of it. "
+            f"The tanning is most of the footprint of a pair of leather shoes: {100 * tan:.0f}% of it. "
             f"The shoe's share of the cow, the part that footprints argue over, is "
             f"{100 * hide:.0f}% of the pair.",
         ]),
@@ -399,7 +399,7 @@ def values():
                  adders=adders, ratio=ratio, shoe_spread=shoe_spread,
                  cheese_spread=cheese_spread, beef_air=beef_air, L=L,
                  loss=loss, farm=farm, farm_min=farm_min,
-                 field_cult=stage(field, "cultivation") / field["total"])
+                 field_cult=stage(field, "cultivation") / field["total"], herd=herd)
     return v, facts
 
 
@@ -465,6 +465,8 @@ def claims(f):
         bad.append("'mostly the tanning'")
     if not f["hide"] < 0.02:
         bad.append("'under 2%' for the hide")
+    if not f["herd"] >= 0.9:
+        bad.append(f"'nearly all of the cheese': the herd stages are {f['herd']:.0%}")
     if not f["shoe_spread"] < f["cheese_spread"]:
         bad.append("allocation moves the shoe more than the cheese")
     if not max(f["fr"].values()) < 0.3:
