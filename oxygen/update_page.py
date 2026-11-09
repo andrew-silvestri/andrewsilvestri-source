@@ -152,9 +152,12 @@ def tree(P, wide):
 
 
 def tree_fits():
-    """Plex Sans at 13px averages under 0.56 em a character on these lines; a node's text box is 144px.
-    A line over 144 / (13 * 0.56) = 19.8 characters can touch the border, so the build refuses it.
-    The phone map's words are Plex Mono at 12px, 7.2px a character, in a 58px box: 7 characters at most."""
+    """A node's text box is 144px. Measured with fontTools on 2026-11-08, when the site moved from IBM
+    Plex to Perfidy: Perfidy Text at 13px averages 0.450 em a character on these lines (Plex Sans
+    0.468), and the widest line, "in smoggy cities must", is 121.8px (Plex 125.7). The 22-character
+    limit below was set for Plex and still holds with room to spare.
+    The phone map's words are Perfidy Mono at 12px, 6.72px a character (Plex Mono was 7.2), in a 58px
+    box: the 7-character limit is 47px."""
     bad = [ln for n in NODES for ln in n[3] if len(ln.format(nbans=25)) > 22]
     bad += [n[4] for n in NODES if len(n[4]) > 7]
     if bad:
