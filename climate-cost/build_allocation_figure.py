@@ -112,7 +112,9 @@ SHOES = dict(
 # 2026-10-24 (R5, D-26/D-27): 13.18 -> 13.37 (milk share 0.85 -> IDF's 0.88,
 # corrected GWPs) and 3.66 -> 10.56 (tanning no longer carries the hide's
 # 2.2%, so the contested stage fell from 9% of the pair to under 2%).
-PUBLISHED = {"cheese": 13.37, "leather_shoes": 10.56}
+# 2026-11-10 (D-26 item 1, D-57 (a)): 13.37 -> 12.12, the cheese plant's 0.90
+# now reaching the milk that went into it, so every cheese bar moved.
+PUBLISHED = {"cheese": 12.12, "leather_shoes": 10.56}
 
 
 def total_at(item, stages, share):

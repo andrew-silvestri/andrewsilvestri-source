@@ -23,7 +23,13 @@ those factors down the path, so they can compound; in data/processes.py every
 edge below a stage carries 1.0, so a process reaches us at its stage's share
 and no less. (Corrected 2026-10-22, D-27: this said a process four levels deep
 might contribute only a third of its emissions to our tomato, which no path in
-the data does.) Allocation is where most of the disagreement
+the data does.) A share set on the stage where the co-products separate also
+applies to every stage before it, because everything upstream flows into that
+stage: the slaughterhouse's share to the meat covers the animal's methane,
+feed, manure and land too, as ISO 14044 allocates the inputs of a process
+that makes more than one product. (Since 2026-11-10, D-26 item 1 and D-57 (a);
+until then a share reached its own stage only, and the beef carried its
+animal in full.) Allocation is where most of the disagreement
 between published footprints actually lives, and it is usually invisible. Here
 it is a number on every edge.
 
@@ -48,6 +54,40 @@ from processes import PROCESSES, PRODUCTS, REGIONS, TRANSPORT  # noqa: E402
 # product total. Reported in the output so the reader knows what is missing.
 CUTOFF = 0.0015
 MAX_DEPTH = 6
+
+# A co-product share applies to its own stage and to every stage before it
+# (see the module docstring). False restores the method used until
+# 2026-11-10, a share reaching its own stage only; climate-cost/update_page.py
+# uses it to recompute the totals published before, and nothing else should.
+# engine.js has no switch: the calculator always applies the current method.
+SHARE_UPSTREAM = True
+
+
+def stage_shares(stages):
+    """The co-product share that reaches each stage, with its basis.
+
+    A stage's own share times the share of every split after it, so a split
+    downstream reaches everything that flowed into it. Stages that carry the
+    same share on the same basis are one split, applied once: the cheese's
+    four herd stages are one cow at the milk share, and the cheesemaking
+    plant's whey share then reaches all four. The basis names each split
+    that contributed, so the visualiser can say what kind of share it is
+    and where it was set."""
+    out = []
+    down = []                      # (share, basis, stage name), nearest first
+    for st in reversed(stages):
+        own = st.get("share", 1.0)
+        key = (st.get("share"), st.get("basis"))
+        later = [d for d in down if (d[0], d[1]) != key]
+        share = own
+        for d in later:
+            share *= d[0]
+        basis = ([st["basis"]] if st.get("basis") else []) +             [f"{d[1]}, set at {d[2].lower()}" for d in later]
+        out.append((share, "; ".join(basis)))
+        if "share" in st and SHARE_UPSTREAM:
+            if all((d[0], d[1]) != key for d in down):
+                down.insert(0, (st["share"], st["basis"], st["name"]))
+    return out[::-1]
 
 
 def great_circle(a, b):
@@ -181,12 +221,13 @@ class Model:
         overproduce = 1.0 / (1.0 - w)
 
         spine = []
-        for st in self.p["stages"]:
+        shares = stage_shares(self.p["stages"])
+        for st, (share, basis) in zip(self.p["stages"], shares):
             # Three multipliers, three meanings (see processes.py): a
             # co-product share, a capital-good amortisation, and the mass
             # shipped on a freight leg. Share and amortisation reach every
-            # node in the stage; the mass reaches only the freight node.
-            share = st.get("share", 1.0)
+            # node in the stage; the mass reaches only the freight node. The
+            # share includes every split downstream (stage_shares()).
             amort = st.get("amortise", 1.0)
             if st["id"] in self.life_stages:
                 amort *= self.life_scale
@@ -208,7 +249,7 @@ class Model:
                 "land_use": bool(st.get("land_use")),
                 # the allocation basis travels with the number, so the
                 # visualiser can say *which kind* of share this is
-                "basis": st.get("basis", ""),
+                "basis": basis,
             }
             if st.get("waste"):
                 # The wasted mass itself decays in landfill. Everything above
