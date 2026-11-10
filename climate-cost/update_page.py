@@ -469,7 +469,7 @@ def claims(f):
         bad.append(f"'nearly all of the cheese': the herd stages are {f['herd']:.0%}")
     if not f["shoe_spread"] < f["cheese_spread"]:
         bad.append("allocation moves the shoe more than the cheese")
-    if not max(f["fr"].values()) < 0.3:
+    if not max(f["fr"].values()) <= 0.25:
         bad.append("shipping by sea or rail is not 'at most a quarter' of any food")
     if not f["ratio"] > 2:
         bad.append(f"'more than twice a field tomato' fails on some route: {f['ratio']:.2f}")
