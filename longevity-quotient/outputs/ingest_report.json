@@ -8,36 +8,36 @@
     "fishbase": 2088
   },
   "kept_by_source": {
-    "fishbase": 1250,
-    "anage": 3441,
-    "seed": 417,
-    "amphibio": 116,
-    "amniote": 2649
+    "fishbase": 1210,
+    "anage": 3465,
+    "seed": 416,
+    "amphibio": 117,
+    "amniote": 2590
   },
   "grades": {
-    "C": 1474,
-    "B": 6250,
-    "A": 149
+    "C": 1436,
+    "B": 6217,
+    "A": 145
   },
   "origins": {
-    "unrecorded": 3482,
-    "wild": 2596,
-    "captive": 1486,
-    "wild+captive": 309
+    "unrecorded": 3417,
+    "wild": 2586,
+    "captive": 1487,
+    "wild+captive": 308
   },
   "classes": {
-    "Actinopterygii": 1966,
+    "Actinopterygii": 1954,
     "Amphibia": 207,
     "Anthozoa": 3,
     "Arachnida": 5,
     "Asteroidea": 1,
-    "Aves": 1929,
+    "Aves": 1898,
     "Bdelloidea": 1,
     "Bivalvia": 6,
     "Branchiopoda": 2,
     "Cephalopoda": 5,
     "Chilopoda": 1,
-    "Chondrichthyes": 146,
+    "Chondrichthyes": 143,
     "Chromadorea": 1,
     "Clitellata": 2,
     "Demospongiae": 1,
@@ -50,21 +50,54 @@
     "Hydrozoa": 1,
     "Insecta": 19,
     "Malacostraca": 7,
-    "Mammalia": 2609,
+    "Mammalia": 2586,
     "Merostomata": 1,
     "Petromyzontida": 19,
     "Polychaeta": 1,
-    "Reptilia": 928,
+    "Reptilia": 922,
     "Sarcopterygii": 1,
     "Scyphozoa": 1,
     "Thecostraca": 1
   },
   "mass_index": 14673,
-  "species_with_a_lifespan": 8583,
-  "mass_filled": 524,
-  "mass_modelled_from_length": 641,
-  "dropped_no_mass": 710,
-  "final": 7873,
+  "species_with_a_lifespan": 8471,
+  "mass_filled": 557,
+  "mass_modelled_from_length": 622,
+  "dropped_no_mass": 673,
+  "synonyms_merged": 112,
+  "corrections": [
+    {
+      "source": "seed",
+      "species": "Proteus anguinus",
+      "dropped": [
+        "wild_yr",
+        "captive_yr"
+      ],
+      "why": "the hand-checked table's 100 years is the projected maximum of Voituron et al., Biology Letters 7:105, 2011 (about 102 years), and its 68 is their mean adult lifespan in a laboratory population; neither is an observed maximum, so the species takes its lifespan from the next source in precedence that records one"
+    },
+    {
+      "source": "anage",
+      "species": "Proteus anguinus",
+      "dropped": [
+        "wild_yr",
+        "captive_yr",
+        "unknown_yr"
+      ],
+      "why": "AnAge's 102 years is the same projection (Voituron et al. 2011), not an observed age"
+    },
+    {
+      "source": "seed",
+      "species": "Furcifer labordi",
+      "dropped": [
+        "mass_g"
+      ],
+      "why": "the hand-checked table's 25 g cites no source; AnAge and Amniote both give 8.73 g"
+    }
+  ],
+  "one_family_genera": [
+    "Sebastes"
+  ],
+  "final": 7798,
   "citations": {
     "seed": "Hand-checked records, sourced individually on the page.",
     "anage": "Tacutu et al., Nucleic Acids Research 46:D1083, 2018. AnAge build 15.",

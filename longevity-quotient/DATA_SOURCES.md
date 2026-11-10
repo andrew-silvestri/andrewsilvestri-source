@@ -4,16 +4,16 @@ The current build merges six sources that carry a lifespan (the hand-checked
 seed table, AnAge build 15, the Amniote life-history database, PanTHERIA,
 AmphiBIO and FishBase v25.04) and fills missing masses from AVONET, PanTHERIA
 and Amniote. README.md gives what each contributed. The merged table holds
-7,873 species, and this is what it is made of:
+7,798 species, and this is what it is made of:
 
 ```
 merged table by class:
-    Mammalia         2609
-    Actinopterygii   1966
-    Aves             1929
-    Reptilia          928
+    Mammalia         2586
+    Actinopterygii   1954
+    Aves             1898
+    Reptilia          922
     Amphibia          207
-    Chondrichthyes    146
+    Chondrichthyes    143
     Insecta            19
     Petromyzontida     19
     Malacostraca        7
@@ -175,17 +175,17 @@ on arrival.
 
 ### AnAge — merged
 
-Build 15: 4,141 records with a lifespan, 3,441 used as the record (it ranks
+Build 15: 4,141 records with a lifespan, 3,465 used as the record (it ranks
 second, after the seed table). Graded from its own *Data quality* field: high
 is A, acceptable B, questionable or low C. Its *Sample size* field is not used.
 Its limitation is structural: one longevity figure per species, so after the
-merge only 309 of the 7,873 species carry both a wild and a captive maximum.
+merge only 308 of the 7,798 species carry both a wild and a captive maximum.
 
 ### Amniote Life History Database — merged
 
 Myhrvold et al. 2015, *Ecology* (Ecological Archives E096-269): up to 29
 life-history parameters for **21,322 species** of birds, mammals and reptiles.
-5,500 carry a maximum longevity and 2,649 are used as the record, all graded B,
+5,500 carry a maximum longevity and 2,590 are used as the record, all graded B,
 since the compilation has no quality field and does not say whether an animal
 was wild or captive.
 
@@ -197,11 +197,11 @@ second variable in life-history theory, which the model does not yet use.
 ### FishBase — merged, graded C
 
 v25.04, read from rOpenSci's parquet snapshot: 2,088 species with a maximum
-age, 1,250 used as the record. FishBase does carry a **`LongevityWild`** field,
+age, 1,210 used as the record. FishBase does carry a **`LongevityWild`** field,
 but the age taken is the largest of that, the per-population maximum and the
-growth-curve tmax, and 641 masses are computed from maximum length, so every
+growth-curve tmax, and 622 masses are computed from maximum length, so every
 FishBase row is grade C: shown, and held out of the fits. The fish fit
-(r² = 0.56 over 868 species) comes from the seed table and AnAge. Fish hold a
+(r² = 0.57 over 893 species) comes from the seed table and AnAge. Fish hold a
 disproportionate share of the extremes — *Somniosus microcephalus* (Greenland
 shark) at 392 years, *Sebastes aleutianus* (rougheye rockfish) at 205,
 *Hoplostethus atlanticus* (orange roughy) at 149, *Ictiobus cyprinellus*
@@ -220,11 +220,11 @@ traits and IUCN status. Not merged.
 
 **AmphiBIO** (*Scientific Data*, 2017): 17 traits for **6,775 amphibian
 species** across all three orders, from 1,500+ sources. Merged: 359 carry a
-maximum longevity and 116 are used as the record, all graded C because
+maximum longevity and 117 are used as the record, all graded C because
 AmphiBIO has no origin field.
 
-It did not rescue the amphibian fit. On the 83 grade-A and B amphibians, all
-from the seed table and AnAge, r² is 0.043, so the fit is rejected and
+It did not rescue the amphibian fit. On the 81 grade-A and B amphibians, all
+from the seed table and AnAge, r² is 0.087, so the fit is rejected and
 amphibian species are scored against the global baseline.
 
 ### AVONET — merged, for bird mass only
@@ -283,7 +283,7 @@ whose record-holder is unrepresentative — which is a result, not a caveat.
 ## Part 4 — The second regressor
 
 Body mass explains a third to a half of the variance in log lifespan (r² 0.32
-across all animals, 0.36 to 0.56 within the fitted groups). The quotient is the
+across all animals, 0.36 to 0.57 within the fitted groups). The quotient is the
 other half, and the group view already suggests what is in it: bats, parrots,
 primates and albatrosses high; ground birds, shrews, opossums and bandicoots
 low. That is a predation-risk gradient — flight, burrowing, armour, venom and
