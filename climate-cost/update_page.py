@@ -14,6 +14,12 @@ copied from `python lca.py --all` on master 4dd30c2, 2026-10-24); then it
 applies the corrections one at a time, so each item's move is credited to
 the correction that made it.
 
+The 10 November 2026 correction (D-26 item 1, D-57 (a): a co-product share
+reaches every stage before its own, so the beef's 0.72 covers the animal) is
+computed the same way: reverted({"upstream"}) switches lca.SHARE_UPSTREAM off,
+legacy() runs with it off throughout (the October table is history and keeps
+the totals published then), and november() compares the two methods.
+
 claims() asserts what page.html's words say about the numbers ("most of it
 is the animal", "under 2%", "nearly ten times"); if the model moves one, the
 generator stops rather than ship prose the model contradicts.
@@ -81,8 +87,10 @@ def stage(res, sid):
 @contextlib.contextmanager
 def reverted(which):
     """Put the named corrections back as they stood, in memory, and restore
-    them afterwards. which: a subset of {"tanning", "gwp", "milk"}."""
+    them afterwards. which: a subset of {"tanning", "gwp", "milk",
+    "upstream"}."""
     saved = []
+    was_upstream = lca.SHARE_UPSTREAM
 
     def put(obj, key, value):
         saved.append((obj, key, obj[key]))
@@ -102,8 +110,11 @@ def reverted(which):
             for x in PRODUCTS["cheese"]["stages"]:
                 if x.get("share") == D.MILK_SHARE:
                     put(x, "share", 0.85)
+        if "upstream" in which:
+            lca.SHARE_UPSTREAM = False
         yield
     finally:
+        lca.SHARE_UPSTREAM = was_upstream
         for obj, key, value in reversed(saved):
             obj[key] = value
 
@@ -129,12 +140,14 @@ def GAS_TERMS():
 
 
 def legacy():
-    """Totals with all three corrections reverted, then with each applied in
-    turn. Returns {item: [before, +tanning, +gwp, +milk = now]}."""
+    """Totals with all three October corrections reverted, then with each
+    applied in turn, all under the allocation method of the time (a share at
+    its own stage only). Returns {item: [before, +tanning, +gwp, +milk]}; the
+    last is what the page published on 24 October 2026."""
     order = ["tanning", "gwp", "milk"]
     out = {k: [] for k in PRODUCTS}
     for i in range(len(order) + 1):
-        with reverted(set(order[i:])):
+        with reverted(set(order[i:]) | {"upstream"}):
             for k in PRODUCTS:
                 out[k].append(total(k))
     bad = [k for k in PRODUCTS if round(out[k][0], 2) != BEFORE[k]]
@@ -285,11 +298,14 @@ def values():
         raise SystemExit("the two cars no longer share a lifetime; the page says one figure")
     life = {k: [total(k, life=lt / 2), total(k), total(k, life=lt * 2)] for k in ("car_petrol", "car_ev")}
     fuel = {k: stage(run(k), "fuel") for k in ("flight_short", "flight_long")}
-    with reverted({"tanning", "gwp", "milk"}):
+    with reverted({"tanning", "gwp", "milk", "upstream"}):
         old = run("leather_shoes")
         hide_before = stage(old, "hide") / old["total"]
-    up_list = ", ".join(f"{SHORT[k].replace('kilogram of ', '')} {v:.0f}%" for k, v in
-                        sorted(UPSTREAM["others"].items(), key=lambda kv: -kv[1]))
+    N = november()
+    moves = [100 * (1 - c / a) for a, c in N.values() if abs(c - a) >= 0.005]
+    slaughter = next(x["share"] for x in PRODUCTS["beef"]["stages"] if x["id"] == "slaughter")
+    # the part of the kilogram of beef the slaughterhouse's share reaches
+    reach = sum(x["total"] for x in beef["spine"] if x["alloc"] < 1.0) / b
     disp = max(stage(run(k), "waste") / total(k) for k, p in PRODUCTS.items() if p.get("group") == "Clothing")
     shoes = run("leather_shoes")
     tan = stage(shoes, "tanning") / shoes["total"]
@@ -321,7 +337,8 @@ def values():
                  "shipping matters little unless the food flies or goes a long way "
                  "by truck. A life-cycle model of twenty everyday things, with "
                  "its working shown."),
-        "iso_km": km_word(UPSTREAM["beef"] / car_km),
+        "whole_km": km_word(N["beef"][0] / car_km),
+        "coprod_pct": f"{100 * (1 - slaughter):.0f}",
         "farm_min": f"{100 * farm_min:.0f}",
         "hi_foods": and_list([NAMED[k] for k in sorted(farm, key=lambda k: -total(k))
                               if k != "beef" and total(k) >= 2.0]),
@@ -378,7 +395,10 @@ def values():
         "shoe_lo_all": f"{min(sr.values()):.1f}",
         "shoe_x": f"{L['leather_shoes'][-1] / L['leather_shoes'][0]:.1f}",
         "hide_pct_before": f"{100 * hide_before:.0f}",
-        "up_list": up_list,
+        "nov_rows": november_rows(N),
+        "nov_lo": f"{min(moves, default=0):.0f}",
+        "nov_hi": f"{max(moves, default=0):.0f}",
+        "reach_pct": f"{100 * reach:.0f}",
         "shoe_spread": f"{shoe_spread:.2f}",
         "hide_pct": f"{100 * hide:.0f}",
         "heat_lo": f"{min(adders):.2f}", "heat_hi": f"{max(adders):.2f}",
@@ -388,9 +408,7 @@ def values():
         "beef_air_pct": f"{100 * beef_air:.0f}",
         "field_air_x": f"{field_air:.0f}",
         "chain_alt": chain_alt(),
-        "upstream_beef": f"{UPSTREAM['beef']:.1f}",
-        "upstream_pct": f"{100 * (1 - UPSTREAM['beef'] / b):.0f}",
-        "slaughter_share": f"{100 * next(x['share'] for x in PRODUCTS['beef']['stages'] if x['id'] == 'slaughter'):.0f}",
+        "slaughter_share": f"{100 * slaughter:.0f}",
         "hide_share": f"{100 * next(x['share'] for x in PRODUCTS['leather_shoes']['stages'] if x['id'] == 'hide'):.1f}",
         "zip_kb": f"{zip_kb:,}",
     }
@@ -399,7 +417,9 @@ def values():
                  adders=adders, ratio=ratio, shoe_spread=shoe_spread,
                  cheese_spread=cheese_spread, beef_air=beef_air, L=L,
                  loss=loss, farm=farm, farm_min=farm_min,
-                 field_cult=stage(field, "cultivation") / field["total"], herd=herd)
+                 field_cult=stage(field, "cultivation") / field["total"], herd=herd,
+                 N=N, reach=reach, slaughter=slaughter, beef_spine=beef["spine"],
+                 cheese_spine=run("cheese")["spine"])
     return v, facts
 
 
@@ -416,41 +436,23 @@ def chain_alt():
         "physical quantity flowing along each arrow.")
 
 
-def upstream(key):
-    """QA's ISO-strict variant (D-26 item 1, not adopted; qa-audit
-    cc_rev_exp.py "upstream"): the share at the stage where the co-products
-    separate also charged to every stage before it. The split stage is the
-    last share before the freight leg; a stage that already carries a share
-    (the cheese's milk) takes the product of the two. Printed in Limits."""
-    st = PRODUCTS[key]["stages"]
-    ids = [x["id"] for x in st]
-    pre = st[:ids.index("freight")] if "freight" in ids else st
-    split = [i for i, x in enumerate(pre) if x.get("share", 1.0) < 1.0][-1]
-    share = pre[split]["share"]
-    saved = [(x, x.get("share")) for x in st]
-    try:
-        for x in pre[:split]:
-            x["share"] = x.get("share", 1.0) * share
-        return total(key)
-    finally:
-        for x, s in saved:
-            if s is None:
-                x.pop("share", None)
-            else:
-                x["share"] = s
+def november():
+    """Every item's total under the method used until 10 November 2026 (a
+    co-product share at its own stage only) and now. {item: (before, now)}."""
+    with reverted({"upstream"}):
+        old = {k: total(k) for k in PRODUCTS}
+    return {k: (old[k], total(k)) for k in PRODUCTS}
 
 
-def upstream_all():
-    out = {}
-    for k in foods():
-        st = PRODUCTS[k]["stages"]
-        if any(x.get("share", 1.0) < 1.0 for x in st):
-            out[k] = upstream(k)
-    UPSTREAM["beef"] = out.pop("beef")
-    UPSTREAM["others"] = {k: 100 * (1 - v / total(k)) for k, v in out.items()}
-
-
-UPSTREAM = {}
+def november_rows(N):
+    rows = []
+    for k, (b, now) in sorted(N.items(), key=lambda kv: kv[1][1] / kv[1][0] - 1):
+        if abs(now - b) < 0.005:
+            continue
+        rows.append(f'<tr><td>{html.escape(PRODUCTS[k]["name"])}</td>'
+                    f'<td class="n">{b:.2f}</td><td class="n">{now:.2f}</td>'
+                    f'<td class="n">{100 * (now / b - 1):+.1f}%</td></tr>')
+    return "\n".join(rows)
 
 
 def claims(f):
@@ -483,6 +485,31 @@ def claims(f):
         bad.append("foods of 2 kg or more: under half before leaving the region")
     if not f["beef_air"] < 0.2:
         bad.append("air freight moves beef by a fifth or more")
+    # 10 November 2026 (D-26 item 1, D-57 (a)): the share covers the animal
+    animal = [x for x in f["beef_spine"] if x["id"] in ("enteric", "feed", "manure", "landuse")]
+    if len(animal) != 4 or any(abs(x["alloc"] - f["slaughter"]) > 1e-12 for x in animal):
+        bad.append("'the slaughterhouse's share covers the whole animal' (gut, feed, "
+                   "manure, pasture not all at the slaughterhouse's share)")
+    herd = [x["alloc"] for x in f["cheese_spine"] if x["id"] in ("enteric", "feed", "manure", "dairy")]
+    plant = next(x["share"] for x in PRODUCTS["cheese"]["stages"] if x["id"] == "cheesemaking")
+    if len(herd) != 4 or any(abs(a - D.MILK_SHARE * plant) > 1e-12 for a in herd):
+        bad.append("the cheese's herd is not at the milk share times the plant's share")
+    N = f["N"]
+    for when, i in (("now", 1), ("before 10 November", 0)):
+        if max(N, key=lambda k: N[k][i]) != "beef":
+            bad.append(f"'the largest footprint here either way': beef is not the largest {when}")
+    if not f["reach"] >= 0.95:
+        bad.append(f"'almost in proportion': the beef's share reaches {f['reach']:.0%} of it")
+    moved = {k for k, (a, c) in N.items() if abs(c - a) >= 0.005}
+    shared = {k for k in foods() if any("share" in x for x in PRODUCTS[k]["stages"])}
+    if moved != shared:
+        bad.append(f"'the foods with a co-product moved, and nothing else did': {sorted(moved ^ shared)}")
+    if any(N[k][1] >= N[k][0] for k in moved):
+        bad.append("a total rose under the stricter allocation")
+    unsourced = [k for k in shared for x in PRODUCTS[k]["stages"] if "share" in x
+                 and x["share"] != D.MILK_SHARE and "assumed" not in x["basis"]]
+    if unsourced:
+        bad.append(f"'apart from the milk share, no food's share has a named source': {unsourced}")
     return bad
 
 
@@ -499,7 +526,6 @@ def keep_from_shipped(text, shipped):
 
 
 def render():
-    upstream_all()
     t = open(TEMPLATE, encoding="utf-8").read()
     v, f = values()
     missing = sorted(set(re.findall(r"{{(\w+)}}", t)) - set(v) - {"nav"})

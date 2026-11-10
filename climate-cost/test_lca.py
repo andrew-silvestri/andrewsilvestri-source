@@ -9,6 +9,7 @@ a stage's allocation reaches the processes beneath it, and that the levers move 
 in the direction physics says they should.
 """
 import sys, math
+import lca
 from lca import Model, paths
 # The module lca.py itself imported (it puts data/ on the path), not a second
 # copy as data.processes: a --break that mutates a copy the engine never reads
@@ -24,6 +25,7 @@ PRODUCTS, REGIONS = D.PRODUCTS, D.REGIONS
 GWP_HELD = {"ch4_bio": 25.3, "ch4_fossil": 28.1, "n2o": 267.0}
 SOIL_HELD = (0.010 + 0.11 * 0.010 + 0.24 * 0.011) * 44.0 / 28.0 * 267.0
 MILK_HELD = 0.88
+WHEY_HELD = 0.90    # the cheese plant's share, which reaches the herd too
 
 # --break replays a historical fault in memory and the run must exit 1:
 #   tanning  tanning back inside the hide stage, so the 2.2% share reaches it
@@ -31,6 +33,10 @@ MILK_HELD = 0.88
 #   gwp      the single-gas terms back at the values typed before the errata
 #            (D-26 item 3: 38.0 enteric, 4.4 soil N2O, 0.42 gas leak)
 #   milk     the herd stages back at Flysjo's Swedish 0.85 (D-27 item 5)
+#   split    a share reaching its own stage only, so the beef carries its
+#            animal in full (D-26 item 1, the method until 2026-11-10)
+#   double   one herd stage on a basis of its own, so the cow's milk share is
+#            no longer one split and compounds onto the herd a second time
 BREAK = sys.argv[sys.argv.index("--break") + 1] if "--break" in sys.argv else None
 if BREAK == "tanning":
     st = {x["id"]: x for x in PRODUCTS["leather_shoes"]["stages"]}
@@ -44,6 +50,10 @@ elif BREAK == "milk":
     for x in PRODUCTS["cheese"]["stages"]:
         if x.get("share") == D.MILK_SHARE:
             x["share"] = 0.85
+elif BREAK == "split":
+    lca.SHARE_UPSTREAM = False
+elif BREAK == "double":
+    [x for x in PRODUCTS["cheese"]["stages"] if x["id"] == "manure"][0]["basis"] += " "
 elif BREAK:
     raise SystemExit(f"unknown --break {BREAK}")
 
@@ -119,15 +129,16 @@ for key in PRODUCTS:
 print(f"  tree sums correctly at every node      {'ok' if not bad else bad[:2]}")
 if bad: fails += 1
 
-# 2. allocation compounds: cheese carries 0.88 to milk on the herd stages.
+# 2. allocation compounds: cheese carries 0.88 to milk on the herd stages,
+# and the cheese plant's 0.90 to cheese reaches the milk that flowed into it.
 # The stage is also scaled by the overproduction factor, because 8% of the
 # cheese made is never eaten and the cow still had to produce it.
 r = Model("cheese","FR","US-NY").run()
 ent = [s for s in r["spine"] if s["id"]=="enteric"][0]
 raw, op = 8.4 * 25.3 / 27.0, r["overproduce"]
-ok = abs(ent["direct"] - raw*MILK_HELD*op) < 1e-9
+ok = abs(ent["direct"] - raw*MILK_HELD*WHEY_HELD*op) < 1e-9
 print(f"  allocation x overproduction at stage   {'ok' if ok else 'FAIL'}"
-      f"  ({raw:.3f} x {MILK_HELD} x {op:.3f} = {ent['direct']:.3f})")
+      f"  ({raw:.3f} x {MILK_HELD} x {WHEY_HELD} x {op:.3f} = {ent['direct']:.3f})")
 fails += 0 if ok else 1
 
 # 3. allocation compounds down a chain: feed stage inherits 0.88 onto ammonia
@@ -135,7 +146,7 @@ fails += 0 if ok else 1
 # share other than 1.0, so nothing compounds further than this (D-27).
 feed = [s for s in r["spine"] if s["id"]=="feed"][0]
 am = [c for c in feed["children"] if c["id"]=="ammonia"][0]
-ok = abs(am["alloc"] - MILK_HELD) < 1e-9
+ok = abs(am["alloc"] - MILK_HELD * WHEY_HELD) < 1e-9
 print(f"  allocation compounds into children     {'ok' if ok else 'FAIL'}"
       f"  (ammonia alloc {am['alloc']:.2f})")
 fails += 0 if ok else 1
@@ -270,6 +281,36 @@ herd = [x.get("share") for x in PRODUCTS["cheese"]["stages"]
 ok = all(h == MILK_HELD for h in herd)
 print(f"  milk share is IDF's 0.88 on every herd stage {'ok' if ok else 'FAIL'}"
       f"  ({herd})")
+fails += 0 if ok else 1
+
+# 14. a co-product share reaches everything that flowed into its stage
+# (ISO 14044; D-26 item 1, D-57 (a), 2026-11-10). Held here as structure:
+# which stage is the split and which stages sit above it. The beef's animal
+# is charged at the slaughterhouse's share, not in full; the cheese's herd at
+# the milk share once and the plant's share once, not the milk share four
+# times; nothing after a split, and nothing in the shoe but the hide, moves.
+SPLITS = {"beef": "slaughter", "chicken": "slaughter", "coffee": "wet_mill",
+          "almond": "hulling", "rice": "milling", "cheese": "cheesemaking",
+          "leather_shoes": "hide"}
+bad = []
+for pk, sid in SPLITS.items():
+    pp = PRODUCTS[pk]
+    st = {x["id"]: x for x in pp["stages"]}
+    r = Model(pk, pp["default_origin"], pp["default_dest"]).run()
+    ids = [x["id"] for x in r["spine"]]
+    i = ids.index(sid)
+    for j, node in enumerate(r["spine"]):
+        want = st[sid]["share"] if j <= i else 1.0
+        if pk == "cheese" and j < i:
+            want *= MILK_HELD
+        if abs(node["alloc"] - want) > 1e-12:
+            bad.append(f"{pk}/{node['id']} {node['alloc']:.4f} != {want:.4f}")
+others = [k for k, p in PRODUCTS.items() if k not in SPLITS
+          and any("share" in x for x in p["stages"])]
+bad += [f"{k}: a share this test does not know" for k in others]
+ok = not bad
+print(f"  a share reaches every stage above its split {'ok' if ok else 'FAIL'}"
+      f"  {bad[:3] if bad else ''}")
 fails += 0 if ok else 1
 
 # 9. what the cutoff discards is genuinely small
