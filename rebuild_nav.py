@@ -119,14 +119,14 @@ NAV = [
         # redirect stubs to lostgas.html (noindex); the meter model ships as
         # meter-code.zip from lostgas.html's appendix and code.html.
         ("Lost gas", "lostgas.html"),
-        ("When the pipe is full", "takeaway.html"),
+        ("Pipeline capacity", "takeaway.html"),
         # Q12, 2026-10-24: the Winter Storm Uri bonds (D-18: new gas pages go in Gas).
-        ("Uri's long gas bill", "uri.html"),
+        ("Storm-cost bonds", "uri.html"),
         # Q11, 2026-10-25: ethane rejection, an archived EIA record (D-60 C; D-18: gas pages in Gas).
-        ("Ethane left in the gas", "ethane.html"),
+        ("Ethane rejection", "ethane.html"),
     ]),
     ("Power", [
-        ("The electric boiler's break-even", "heat.html"),
+        ("Electric boiler break-even", "heat.html"),
         # UNLISTED 2026-10-22 (D-39, packet R0 section 2): storage, climate-cost,
         # longevity, beauty and skyline left the bar and the home index while
         # their rework or repair runs (R4, R5). Their URLs and apps keep
@@ -135,7 +135,7 @@ NAV = [
         # ("Battery revenue simulator", "storage.html"),
         # Storage relisted 2026-10-23 by R4 (D-20 rework on ERCOT's real prices),
         # under the reworked page's own title.
-        ("Batteries and scarcity", "storage.html"),
+        ("Battery revenue", "storage.html"),
     ]),
     # CLIMATE IS ONE PAGE AND RENDERS AS A DROPDOWN. That is the point of the
     # 2026-09-09 change, not an oversight - do not "simplify" it back to a bare
@@ -164,7 +164,7 @@ NAV = [
     # Climate relisted 2026-10-24 by R5 (D-26, D-27), under the reworked
     # page's own title.
     ("Climate", [
-        ("Inside a footprint", "climate-cost.html"),
+        ("Food footprints", "climate-cost.html"),
     ]),
     # RUNNING WAS RETIRED 2026-09-09, at Andrew's request - "hide the two
     # running pages... I'll republish later, but retire for now". It held
@@ -236,20 +236,20 @@ NAV = [
     # global fit as the page says; the study-effort correction printed beside
     # the pooled figures), first, in its old place, under its takeaway's name.
     ("Other", [
-        ("Outliving their size", "longevity.html"),
-        ("Endangered, and studied", "beauty.html"),
-        ("Skylines, played", "skyline.html"),
-        ("Where the ground goes", "continents.html"),
+        ("Longevity quotient", "longevity.html"),
+        ("Endangered-bird research", "beauty.html"),
+        ("Skyline sonification", "skyline.html"),
+        ("Plate motion", "continents.html"),
         # safety-nets lane, 2026-11-07: unemployment insurance's reach (non-energy pages go in Other).
-        ("Who gets an unemployment check", "safetynet.html"),
+        ("Unemployment insurance", "safetynet.html"),
         # Lane lost-einsteins, 2026-11-07: the IQ cost of lead from gasoline. Other, not Gas:
         # the subject is a health loss, and Gas holds the gas-industry pages (D-18).
-        ("Leaded gasoline and lost IQ", "lead.html"),
+        ("Leaded gasoline", "lead.html"),
         # chain-reactions lane, 2026-11-07: one clause of the 1990 Clean Air Act through three orders of
         # effects. In Other, not Gas (natural gas pages) or Climate (heading held): lane DECISIONS D1.
-        ("From smog rule to corn ethanol", "oxygen.html"),
+        ("Oxygenated gasoline", "oxygen.html"),
         # page/perfidy, 2026-11-07: the Perfidy type family. Label is the page's <title>.
-        ("Perfidy, a type family", "perfidy.html"),
+        ("Perfidy", "perfidy.html"),
     ]),
     ("Code", "code.html"),
     # LAST, AND IT HAS TO STAY LAST. style.css pins this one right with
@@ -269,9 +269,9 @@ BACK = '<a href="#" class="back" id="backlink">&larr; back</a>'
 # site/ and still serve at their URLs. To relist one, take it out of this set
 # and restore its index.html entry (class "entry off" -> "entry", the <span
 # class="off"> h3 back to <a href>).
-HOLD = {"lostgas.html", "takeaway.html", "uri.html", "ethane.html",
-        "heat.html", "storage.html", "climate-cost.html", "beauty.html",
-        "continents.html"}
+# Relisted 2026-11-10 (DECISIONS D-78 to D-86, Andrew): all nine came back
+# with the house-style rewrite. The set stays so a page can be held again.
+HOLD = set()
 
 
 def nav_for(page):

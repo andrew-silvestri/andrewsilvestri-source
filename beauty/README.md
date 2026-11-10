@@ -18,8 +18,9 @@ on use of the IUCN Red List Categories associated with each named taxonomic
 entity" (section 3). This archive takes the cautious reading: no file here
 carries a Red List category beside a species name, in a column or by the
 order of its rows (`data/topic_counts.csv` is sorted by species name for
-that reason), though `data/lc_matched.csv` lists the 1,000 Least Concern
-species the comparison is matched against.
+that reason). `data/lc_matched.csv`, the 1,000 Least Concern species the
+comparison is matched against, is left out for the same reason; `match_lc.py`
+rebuilds it from your own Red List download.
 Everything else is here: every script, every join, and every input whose
 licence allows it (AVONET and the attractiveness scores, CC BY 4.0;
 Wikipedia pageviews and OpenAlex counts, CC0; the Red List summary table,

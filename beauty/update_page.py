@@ -122,6 +122,10 @@ def values(P):
     if not (math.exp(cmod["CR"]["lo"]) < 1.2 and cmod["VU"]["coef"] < cmod["NT"]["coef"]):
         raise SystemExit("count model no longer 'only just distinguishable' with VU below NT; "
                          "rewrite that paragraph")
+    # "the multiple falls from {cr_tot_x} to {cr_dir_x}" when views are held equal (D-83 d).
+    if not adjf["CR"] / adjf["LC"] < ratio:
+        raise SystemExit("holding views equal no longer lowers the CR multiple; "
+                         "rewrite 'the multiple falls from ... to ...'")
     pv = full["robust"]["attractiveness"]["p"]
     v = {
         "attr_p": f"{pv:.2f}" if pv >= 0.01 else "under 0.01",

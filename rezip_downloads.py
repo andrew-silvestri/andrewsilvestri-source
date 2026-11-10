@@ -331,7 +331,9 @@ TARGETS = [
     # fetches that column with their own token. beauty/test_beauty.py opens
     # the built zip and fails if a category column has crept in.
     # A column check cannot see row order, which is why fetch_topics.py
-    # sorts its table by species name (D-33, 2026-10-22).
+    # sorts its table by species name (D-33, 2026-10-22). data/lc_matched.csv
+    # is left out too (D-44, 2026-11-10): 1,000 species that are all Least
+    # Concern carry their category by construction. match_lc.py rebuilds it.
     #
     # This rule stays HERE rather than inside beauty/, and the difference is
     # not cosmetic. On 2026-09-05 a session that knew nothing about the Red
@@ -346,7 +348,7 @@ TARGETS = [
     repo_target("perfidy-code.zip", PERFIDY_PUBLIC, PERFIDY_COMMIT),
     target("beauty", "beauty-code.zip", keep={"outputs"},
            skip=("data/raw", "data/raw/*", "data/iucn_aves.csv",
-                 "data/birds_joined.csv", "outputs/*.png")),
+                 "data/birds_joined.csv", "data/lc_matched.csv", "outputs/*.png")),
     # The measured neuron: the scripts, the frozen census, the opened complete
     # set and the three reconstructions the figures draw; not the 1,500 sampled
     # files, which fetch_data.py pulls again.

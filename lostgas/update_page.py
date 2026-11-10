@@ -103,27 +103,27 @@ def hero(P, I):
     d = I["defaults"]
     steps = [
         (f"<p><b>{h['n']:,} reports for {h['year']}.</b> Each bar counts the reports in one quarter-point step of "
-         f"the share reported as lost and unaccounted for. The median report is {h['median']:g} per "
+         f"the share reported as lost and unaccounted for, and the median report is {h['median']:g} per "
          f"cent. The two end bars hold the {h['tail_lo']} reports at −{abs(h['lo']):g} or below and the "
          f"{h['tail_hi']} reports above {h['hi']:g}.</p>", {"t": 1, "med": 1}),
         (f"<p><b>Zero or less: {pct(h['le0'] / h['n'])} per cent.</b> {h['zero']} reports give exactly zero and "
-         f"{h['neg']} are negative. In a negative report, the meters show more gas went out than came in. A negative "
+         f"{h['neg']} are negative, and in a negative report the meters show more gas went out than came in. A negative "
          f"figure cannot be a physical loss.</p>", {"t": 1, "med": 1, "neg": 1}),
         (f"<p><b>A system that loses nothing.</b> The shaded range shows what this page's model of ordinary meter "
-         f"error reports for systems with no loss at all. The middle 90 per cent of these systems are between "
-         f"{num(b['lo'])} and {num(b['hi'])} per cent. The position of the range depends on two assumptions: the "
+         f"error reports for systems with no loss at all: the middle 90 per cent of them fall between "
+         f"{num(b['lo'])} and {num(b['hi'])} per cent. Where the range sits depends on two assumptions, the "
          f"gas temperature and how many customer meters correct for it. Its width, about {I['width_min']:.0f} points, "
-         f"almost does not change.</p>", {"t": 1, "band": 1}),
+         f"barely moves.</p>", {"t": 1, "band": 1}),
         (f"<p><b>Inside it: {pct(d['all'])} per cent of reports</b> at this page's assumptions. The range also "
          f"holds {pct(d['no_zero'])} per cent of those that are not exactly zero, and {pct(I['services_weighted'])} per "
-         f"cent of customers, counted by their service lines. That share changes with the two assumptions (see the "
-         f"table in the appendix), but the width does not. The typical report, {h['median']:g} per cent, is smaller "
-         f"than the spread that meter error alone produces. At these assumptions, a real two-point loss read by "
-         f"perfect meters is also inside the range.</p>", {"t": 1, "band": 1, "inside": 1}),
-        (f"<p><b>Far outside it.</b> For {h['year']}, {h['tail_hi']} reports are above {h['hi']:g} per cent, and "
-         f"{h['tail_lo']} are at −{abs(h['lo']):g} or below. The ordinary meter errors in this model do not "
-         f"produce figures like those. Here the figure can give information. It cannot show what occurs, but it "
-         f"can show that something other than ordinary meter error occurs.</p>", {"t": 1, "band": 1}),
+         f"cent of customers, counted by their service lines. That share is not a figure to lean on: it moves with the "
+         f"two assumptions (see the table in the appendix), while the width does not. What holds is that the typical "
+         f"report, {h['median']:g} per cent, is smaller than the spread that meter error alone produces. At these "
+         f"assumptions, even a real two-point loss read by perfect meters would land inside the range.</p>", {"t": 1, "band": 1, "inside": 1}),
+        (f"<p><b>Far outside it.</b> For {h['year']}, {h['tail_hi']} reports are above {h['hi']:g} per cent and "
+         f"{h['tail_lo']} are at −{abs(h['lo']):g} or below, figures that the ordinary meter errors in this model do "
+         f"not produce. Here the figure finally says something. It cannot show what is happening, only that "
+         f"something other than ordinary meter error is.</p>", {"t": 1, "band": 1}),
     ]
     return insight.scrolly(hero_spec(P), steps, from_state={"t": 0})
 
@@ -188,16 +188,16 @@ def values(P):
         "stamp": insight.stamp_annual(h["year"], "PHMSA's gas distribution annual reports", P["data_as_of"],
                                       "PHMSA adds each year's reports to the file"),
         "takeaways": insight.takeaways([
-            f"Customers pay the cost of lost gas. In Texas, the rule disallows lost-gas costs above {tx_cap:g} per "
-            f"cent of the gas a utility takes in unless the Commission allows more. The rule binds the utilities that "
-            f"the Railroad Commission regulates. In Oklahoma, the approved tariff of at least one large utility "
+            f"Customers pay the cost of lost gas. Texas's rule disallows lost-gas costs above {tx_cap:g} per "
+            f"cent of the gas a utility takes in unless the Commission allows more, though it binds only the utilities "
+            f"that the Railroad Commission regulates. In Oklahoma, the approved tariff of at least one large utility "
             f"collects the cost through the gas charge.",
-            f"The figure gives the most information where it is far from the other reports. For {h['year']}, "
+            f"The figure says the most where it sits far from the other reports. For {h['year']}, "
             f"{h['tail_hi']} reports are above {h['hi']:g} per cent, beyond anything ordinary meter error produces. "
             f"But a report cannot show why.",
-            "Where the gas is colder than 60 °F, some gas reported as lost was in fact delivered. Cold gas is "
+            "Where the gas is colder than 60 °F, some gas reported as lost was in fact delivered: cold gas is "
             "denser, and a meter that does not correct for temperature counts too little of it. The utility then "
-            "charges that gas to every customer through the gas charge instead."]),
+            "charges that gas to every customer, through the gas charge instead of the meter."]),
         "hero": hero(P, I),
         "clip": insight.clip(CLIP, "How an orifice meter infers flow, why an error that every meter shares "
                                    "does not average away, and where that error lands. Captions on; about "
