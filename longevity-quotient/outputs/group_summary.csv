@@ -203,7 +203,6 @@ family,Heterocephalidae,1,0,6.3703,own,31.0,35.0,35.0,Naked mole-rat,31.0
 family,Natalidae,4,0,6.3414,own,20.0,4.7,4.7,Jamaican Greater Funnel-eared Bat,20.0
 family,Sphenodontidae,1,0,6.2351,own,100.0,700.0,700.0,Tuatara,100.0
 family,Hydridae,1,0,5.9807,own,4.0,0.001,0.001,Hydra,4.0
-family,Miniopteridae,1,0,5.5993,own,22.0,13.0,13.0,Schreibers's long-fingered bat,22.0
 family,Epigonidae,1,0,5.1256,own,104.0,7545.39,7545.39,Telescope cardinal,104.0
 family,Hirudinidae,1,0,4.5596,own,27.0,5.0,5.0,Medicinal leech,27.0
 family,Somniosidae,2,0,4.0782,own,224.5,11333.5,700000.0,Greenland shark,392.0
@@ -218,10 +217,12 @@ family,Ixodidae,1,0,3.3857,own,3.0,0.003,0.003,Deer tick,3.0
 family,Mochokidae,1,0,3.3779,own,31.0,275.0,275.0,Upside-down catfish,31.0
 family,Plethodontidae,8,0,3.3141,global,18.75,0.6,46.0,Red-backed salamander,25.0
 family,Proteidae,1,0,3.2934,global,34.0,200.0,200.0,Common mudpuppy,34.0
-family,Vespertilionidae,121,0,3.2622,own,16.0,3.56,28.55,Brandt's bat,41.0
+family,Vespertilionidae,111,0,3.2857,own,16.0,3.56,28.55,Brandt's bat,41.0
+family,Cebidae,14,0,3.246,own,46.0,615.0,3000.0,White-faced capuchin,54.0
 family,Diplodactylidae,4,0,3.2376,own,23.1,6.63,118.0,Gray gecko,37.0
 family,Salamandridae,13,0,3.2226,global,19.5,1.77,40.0,Fire salamander,50.0
 family,Eublepharidae,5,0,3.1997,own,28.0,3.3,60.0,Texas Banded Gecko,34.8
+family,Miniopteridae,11,0,3.1863,own,22.0,7.4,13.0,Southeast Asian Long-fingered Bat,22.0
 family,Cheilodactylidae,1,0,3.0986,own,50.0,2900.0,2900.0,Tarakihi,50.0
 family,Mytilidae,1,0,3.0592,own,24.0,15.0,15.0,Blue mussel,24.0
 family,Nephropidae,1,0,3.0442,own,70.0,1000.0,1000.0,American lobster,70.0
@@ -233,23 +234,20 @@ family,Tachyglossidae,3,0,2.9017,own,41.2,4500.0,8951.71,Short-beaked echidna,50
 family,Phyllostomidae,25,0,2.8473,own,12.0,8.02,171.61,Common vampire bat,29.0
 family,Blanidae,2,0,2.8008,own,16.0,4.625,6.0,"Mediterranean worm lizard, or Spanish grey amphisbaena",16.0
 family,Latimeriidae,1,0,2.7994,own,100.0,80000.0,80000.0,Coelacanth,100.0
-family,Choloepodidae,1,0,2.7733,own,41.0,6000.0,6000.0,Linnaeus's two-toed sloth,41.0
-family,Megalonychidae,1,0,2.749,own,41.0,6250.0,6250.0,Hoffmann's two-toed sloth,41.0
+family,Choloepodidae,2,0,2.7611,own,41.0,6000.0,6250.0,Linnaeus's two-toed sloth,41.0
 family,Ambystomatidae,5,0,2.7274,global,25.0,5.93,120.0,Spotted salamander,32.0
 family,Emballonuridae,7,0,2.722,own,19.4,5.68,230.99,Indonesian Tomb Bat,20.0
 family,Cheirogaleidae,14,0,2.7153,own,18.2,60.0,420.11,Fat-tailed dwarf lemur,29.0
-family,Cebidae,32,0,2.6593,own,23.846,272.705,3000.0,White-faced capuchin,54.0
 family,Hydrobatidae,6,0,2.6446,own,32.0,28.0,84.0,Harcourt's storm petrel,36.0
 family,Hominidae,7,0,2.6044,own,60.0,39000.0,160000.0,Human,122.5
 family,Lemuridae,19,0,2.5877,own,36.2,1012.5,3601.3,"Black-and-white ruffed lemur, or Ruffed lemur",40.0
 family,Haliotidae,1,0,2.573,own,54.0,700.0,700.0,Red abalone,54.0
 family,Podocnemididae,3,0,2.4872,own,50.0,14.3,25800.0,Yellow-spotted Amazon River Turtle,70.0
-family,Cacatuidae,3,0,2.4722,own,36.0,90.0,900.0,Sulphur-crested cockatoo,83.0
 family,Noctilionidae,2,0,2.4623,own,12.804,44.0,50.0,Lesser Bulldog Bat,13.8083
 family,Lorisidae,8,0,2.456,own,20.45,238.2,959.75,Potto,32.4
 family,Danionidae,1,0,2.428,own,5.5,0.8,0.8,Zebrafish,5.5
-family,Callitrichidae,20,0,2.4254,own,20.35,124.0,654.5,Golden lion tamarin,31.6
 family,Squalidae,3,0,2.373,own,75.0,3673.95,7262.0,Spur dogfish,75.0
+family,Callitrichidae,38,0,2.3541,own,20.35,124.0,803.0,Superagui Lion Tamarin,31.6
 family,Kinosternidae,19,0,2.3539,own,36.5,137.9,4200.0,Flattened Musk Turtle,60.0
 family,Bucorvidae,2,0,2.3343,own,70.0,3767.5,4000.0,Abyssinian Ground Hornbill,70.0
 family,Cryptobranchidae,2,0,2.3328,global,42.5,400.0,25000.0,Japanese giant salamander,55.0
@@ -257,7 +255,6 @@ family,Strigopidae,1,0,2.3068,own,60.0,2000.0,2000.0,Kakapo,60.0
 family,Hipposideridae,7,0,2.3017,own,12.0,7.0,115.42,Fulvus roundleaf bat,13.0
 family,Galagidae,18,0,2.232,own,16.85,60.0,1300.0,"Brown greater galago, or Greater galago",22.7
 family,Amphiumidae,1,0,2.1987,global,27.0,500.0,500.0,Two-toed amphiuma,27.0
-family,Indriidae,1,0,2.1811,own,31.0,5000.0,5000.0,Verreaux's sifaka,31.0
 family,Chimaeridae,1,0,2.1787,own,29.4,1375.0,1375.0,Rabbitfish,29.4
 family,Calomyscidae,7,0,2.1705,own,9.4,20.4,20.4,Mouse-like hamster,9.4
 family,Emydidae,43,0,2.1629,own,41.0,132.1,3748.5,Terrapene mexicana,138.0
@@ -265,7 +262,8 @@ family,Harpagiferidae,1,0,2.1472,own,9.0,10.439,10.439,Antarctic spiny plunderfi
 family,Prunellidae,1,0,2.1435,own,20.8,20.2,20.2,Hedge sparrow,20.8
 family,Characidae,3,0,2.1296,own,18.0,17.4065,13750.0,Pirapitinga,28.0
 family,Dugongidae,1,0,2.121,own,73.0,300000.0,300000.0,Dugong,73.0
-family,Charinidae,2,0,2.1168,own,28.75,219.0,450.0,Rosy boa,31.0
+family,Charinidae,3,0,2.1151,own,26.5,219.0,450.0,Rosy boa,31.0
+family,Cacatuidae,11,0,2.1015,own,36.0,90.0,900.0,Sulphur-crested cockatoo,83.0
 family,Helodermatidae,2,0,2.0988,own,35.2,600.0,1244.15,Gila monster,36.0
 family,Anguidae,11,0,2.0762,own,14.8,10.0,450.0,Peloponnese Slow Worm,54.0
 family,Xantusiidae,15,0,2.0643,own,11.0,1.475,18.15,Sandstone Night Lizard,14.3
@@ -274,8 +272,8 @@ family,Ornithorhynchidae,1,0,2.0429,own,23.0,1700.0,1700.0,Platypus,23.0
 family,Polyodontidae,1,0,2.0344,own,55.0,25000.0,25000.0,American paddlefish,55.0
 family,Tarsiidae,8,0,2.0237,own,12.0,118.445,173.0,Western tarsier,16.3
 family,Macrouridae,5,0,2.002,own,54.0,929.5,86000.0,Roughscale rattail,73.0
+family,Erycidae,4,0,2.0005,own,24.7,196.0,196.0,Central Asia Sand Boa,24.7
 family,Anguillidae,9,0,1.9933,own,40.0,412.5,13000.0,European eel,85.0
-family,Erycidae,2,0,1.9862,own,24.35,196.0,196.0,Caucasian sand-boa,24.7
 family,Scorpaenidae,4,0,1.9854,own,28.0,264.953,1442.0,Longspine thornyhead,45.0
 family,Pelomedusidae,3,0,1.9779,own,47.0,800.0,2273.0,Yellowbelly Mud Turtle (castanoides: East African Yellowbelly Mud Turtle; intergularis: Seychelles Yellowbelly Mud Turtle),47.0
 family,Testudinidae,36,0,1.9674,own,31.8,229.4,250000.0,Aldabra giant tortoise,190.0
@@ -296,7 +294,6 @@ family,Archaeobalanidae,1,0,1.8271,own,6.0,0.5,0.5,Acorn barnacle,6.0
 family,Bradypodidae,3,0,1.827,own,32.0,4000.0,4184.21,Pale-throated Sloth,40.0
 family,Nandiniidae,1,0,1.821,own,21.0,1900.0,1900.0,African palm civet,21.0
 family,Lumbricidae,1,0,1.788,own,10.0,4.0,4.0,Common earthworm,10.0
-family,Hylidae,9,0,1.788,global,9.0,2.88,100.0,European tree frog,22.0
 family,Acipenseridae,12,0,1.7741,own,60.0,27.775,550000.0,Lake sturgeon,152.0
 family,Petauridae,9,0,1.7528,own,14.8,127.0,572.5,Biak Glider,17.8
 family,Megalopidae,2,0,1.7474,own,49.5,9900.0,88550.0,Tarpon,55.0
@@ -313,6 +310,7 @@ family,Astacidae,1,0,1.6606,own,20.0,80.0,80.0,Signal crayfish,20.0
 family,Pipidae,2,0,1.65,global,18.85,60.0,200.0,African clawed frog,30.0
 family,Burramyidae,4,0,1.6335,own,10.308,23.05,45.0,Mountain pygmy possum,12.0
 family,Pitheciidae,33,0,1.6165,own,20.0,795.0,3165.0,Guianan saki,36.0
+family,Hylidae,10,0,1.6159,global,9.0,2.88,100.0,European tree frog,22.0
 family,Alepocephalidae,1,0,1.6067,own,38.0,14305.0,14305.0,Baird's smoothhead,38.0
 family,Amiidae,1,0,1.6046,own,30.0,5362.5,5362.5,Bowfin,30.0
 family,Haematopodidae,10,0,1.6032,own,43.317,480.0,789.2,Chatham Oystercatcher,43.3333
@@ -331,12 +329,13 @@ family,Pipridae,2,0,1.501,own,14.0,16.7,16.9,Blue-backed manakin,14.0
 family,Alligatoridae,8,0,1.4857,own,59.0,5900.0,200000.0,American alligator,77.0
 family,Notorynchidae,1,0,1.4764,own,49.0,58850.0,58850.0,Bluntnose sevengill shark,49.0
 family,Ariidae,1,0,1.4671,own,36.0,16683.8,16683.8,White sea catfish,36.0
-family,Cordylidae,24,0,1.4664,own,15.6,12.2,284.0,Giant Girdled Lizard or Sungazer,24.9
 family,Latridae,1,0,1.4572,own,33.0,11934.0,11934.0,Bastard trumpeter,33.0
-family,Psittacidae,173,0,1.4404,own,21.0,24.0,1330.0,Amazon parrot,71.0
+family,Indriidae,5,0,1.443,own,30.5,3588.26,6568.99,Verreaux's sifaka,31.0
 family,Pleuronectidae,19,0,1.4309,own,24.0,233.75,199650.0,Atlantic halibut,50.0
 family,Machaerirhynchidae,1,0,1.4231,own,12.0,10.5,10.5,Yellow-breasted boatbill,12.0
 family,Soleidae,5,0,1.42,own,14.0,53.28,1650.0,Common sole,27.0
+family,Cordylidae,27,0,1.4192,own,15.6,12.2,284.0,Giant Girdled Lizard or Sungazer,24.9
+family,Psittacidae,165,0,1.4184,own,20.1,24.0,1330.0,Amazon parrot,71.0
 family,Procyonidae,11,0,1.4181,own,21.8,900.0,6270.0,Kinkajou,38.4
 family,Carangidae,6,0,1.4165,own,25.0,1700.0,9955.0,White trevally,49.0
 family,Laridae,64,0,1.4143,own,25.9,31.0,1658.5,Herring gull,49.0
@@ -355,7 +354,6 @@ family,Chaetodontidae,3,0,1.3737,own,10.0,117.539,516.103,Longnose butterflyfish
 family,Dactyloidae,19,0,1.3726,own,8.0,2.415,56.0,Baracoa Anole,16.5
 family,Nototheniidae,6,0,1.3622,own,19.5,110.0,44000.0,Patagonian toothfish,50.0
 family,Oriolidae,5,0,1.3603,own,15.5,56.3,121.5,Black-naped oriole,29.0
-family,Boidae,13,0,1.3556,own,30.0,196.0,45000.0,Boa constrictor,40.0
 family,Hemiscylliidae,1,0,1.3507,own,25.0,5142.4,5142.4,Whitespotted bambooshark,25.0
 family,Hyaenidae,4,0,1.3486,own,28.45,10000.0,55000.0,Spotted hyena,41.0
 family,Cracticidae,6,0,1.3447,own,21.6,80.675,400.0,Pied currawong,24.2
@@ -369,7 +367,6 @@ family,Momotidae,7,0,1.3116,own,20.3,75.7,133.0,Andean Motmot,20.3
 family,Leiocephalidae,2,0,1.3094,own,10.8,30.0,30.0,Northern curly-tailed lizard,10.8
 family,Procellariidae,47,0,1.3072,own,24.833,99.0,4313.0,Manx shearwater,55.0
 family,Potoroidae,9,0,1.3051,own,14.5,908.285,3250.0,Woylie,18.8
-family,Indridae,4,0,1.3014,own,20.779,3588.26,6568.99,Coquerel's Sifaka,30.5
 family,Tupaiidae,10,0,1.3011,own,11.8,49.99,350.0,Golden-bellied Treeshrew,12.4167
 family,Corcoracidae,2,0,1.296,own,21.3,132.0,364.0,Apostlebird,25.0
 family,Irenidae,1,0,1.2954,own,16.1,64.025,64.025,Asian Fairy-bluebird,16.1
@@ -405,6 +402,7 @@ family,Homalopsidae,1,0,1.2079,own,13.6,131.0,131.0,East Indian tentacled snake,
 family,Ceratophryidae,2,0,1.2069,global,12.65,130.0,300.0,Argentine horned frog,15.0
 family,Ranidae,12,0,1.2069,global,9.5,10.6,500.0,American bullfrog,16.0
 family,Squatinidae,1,0,1.2048,own,35.0,33748.9,33748.9,Pacific angel shark,35.0
+family,Boidae,10,0,1.198,own,31.0,1306.0,45000.0,Boa constrictor,40.0
 family,Dicaeidae,1,0,1.1947,own,9.7,8.8,8.8,Mistletoebird,9.7
 family,Charadriidae,23,0,1.1945,own,17.0,31.5,379.0,Black-bellied plover,25.6
 family,Elassomatidae,1,0,1.1925,own,3.0,1.2393,1.2393,Banded pygmy sunfish,3.0
@@ -436,7 +434,6 @@ family,Threskiornithidae,27,0,1.11,own,28.2,431.2,1900.0,Straw-necked ibis,39.4
 family,Viverridae,27,0,1.1079,own,16.0,570.08,13666.7,Crested Servaline Genet,34.0
 family,Delphinidae,30,0,1.1042,own,33.5,46666.7,5000000.0,Killer whale,90.0
 family,Vireonidae,16,0,1.0985,own,10.2,8.65,18.0,Puerto rican vireo,16.8
-family,Gerrhosauridae,3,0,1.0921,own,8.3,62.9,67.29,Desert Plated Lizard,17.2
 family,Octodontidae,4,0,1.0889,own,9.183,98.0,235.0,Degu,14.0
 family,Cuniculidae,2,0,1.0877,own,17.6,8999.9,9000.0,Mountain paca,18.9
 family,Plesiopidae,1,0,1.0863,own,9.0,179.41,179.41,Taumaka,9.0
@@ -486,7 +483,6 @@ family,Petroicidae,13,0,1.0058,own,9.6,8.2,33.95,White-breasted robin,18.3
 family,Bathyergidae,8,0,1.0034,own,11.0,77.95,664.4,Ansell's mole-rat,20.6
 family,Podargidae,1,0,1.0009,own,17.9,349.0,349.0,Tawny frogmouth,17.9
 family,Labridae,11,0,1.0007,own,8.0,25.3062,16000.0,California sheephead,53.0
-family,Cyprinidae,16,0,0.9994,own,9.5,1.31841,24750.0,Koi,50.0
 family,Tapiridae,4,0,0.9972,own,32.3,148950.0,300000.0,Malayan tapir,36.5
 family,Zosteropidae,5,0,0.9967,own,8.7,8.6,12.7,Silvereye,18.7
 family,Leiothrichidae,7,0,0.9958,own,15.0,21.5,145.0,Southern Pied Babbler,16.5
@@ -514,6 +510,7 @@ family,Parulidae,51,0,0.951,own,8.6,6.6,26.0,Black-and-white warbler,12.2
 family,Troglodytidae,8,0,0.9474,own,7.65,9.1,38.9,Buff-breasted wren,15.0
 family,Dasypodidae,14,0,0.9472,own,13.75,83.53,33000.0,Southern three-banded armadillo,36.8
 family,Anseranatidae,1,0,0.9464,own,24.8,2071.0,2071.0,Magpie goose,24.8
+family,Cyprinidae,13,0,0.9463,own,10.0,15.034,24750.0,Koi,50.0
 family,Burhinidae,2,0,0.9438,own,17.9,459.0,459.0,Indian Stone-curlew,17.9
 family,Gaviidae,5,0,0.943,own,28.0,1816.0,5212.5,Yellow-billed Loon,30.0
 family,Trichiuridae,1,0,0.9415,own,15.0,2750.0,2750.0,Atlantic cutlassfish,15.0
@@ -534,7 +531,6 @@ family,Percidae,54,0,0.9117,own,3.0,0.687974,11000.0,Walleye,29.0
 family,Triglidae,7,0,0.9106,own,15.0,622.647,4774.6,East Atlantic red gurnard,21.0
 family,Caprimulgidae,10,0,0.9098,own,14.0,48.925,115.0,Mexican Whip-poor-will,15.0
 family,Accipitridae,84,0,0.9093,own,20.85,135.0,9625.0,Eastern imperical eagle,56.0
-family,Passerellidae,31,0,0.9087,own,9.1,11.0,47.0,Savannah sparrow,18.0
 family,Candoiidae,2,0,0.9073,own,13.25,384.0,384.0,Pacific ground boa,16.6
 family,Umbridae,2,0,0.9072,own,6.0,14.91,201.3,Alaska blackfish,8.0
 family,Alcidae,20,0,0.9067,own,15.1,96.0,1000.0,Common guillemot,43.0
@@ -555,6 +551,8 @@ family,Sulidae,8,0,0.8801,own,24.25,1017.0,3000.0,Northern gannet,37.0
 family,Maluridae,11,0,0.8748,own,7.7,7.4,18.2,Lovely fairywren,12.0
 family,Estrildidae,13,0,0.874,own,6.0,8.725,24.8,Red-browed finch,23.4
 family,Limulidae,1,0,0.8698,own,20.0,1000.0,1000.0,Atlantic horseshoe crab,20.0
+family,Leuciscidae,75,0,0.869,own,4.0,1.18648,36290.0,Altai osman,40.0
+family,Passerellidae,36,0,0.8654,own,8.85,11.0,47.0,Savannah sparrow,18.0
 family,Lithodidae,1,0,0.864,own,30.0,5000.0,5000.0,Red king crab,30.0
 family,Pythonidae,24,0,0.86,own,24.15,82.0,245988.0,Ball python,47.0
 family,Balaenopteridae,7,0,0.8593,own,74.0,7500000.0,150000000.0,Humpback whale,95.0
@@ -562,7 +560,6 @@ family,Bagridae,1,0,0.8567,own,17.0,6875.0,6875.0,African catfish,17.0
 family,Aphredoderidae,1,0,0.8566,own,4.0,16.3855,16.3855,Pirate perch,4.0
 family,Rhinocerotidae,5,0,0.8564,own,43.5,1000000.0,2300000.0,White rhinoceros,50.0
 family,Rhinobatidae,1,0,0.8558,own,16.0,5362.5,5362.5,Shovelnose guitarfish,16.0
-family,Leuciscidae,72,0,0.8555,own,4.0,1.18648,36290.0,Altai osman,40.0
 family,Nectariniidae,7,0,0.854,own,5.5,6.85,13.0,Purple sunbird,22.0
 family,Scorpionidae,1,0,0.8539,own,8.0,30.0,30.0,Emperor scorpion,8.0
 family,Centrolophidae,3,0,0.8534,own,15.0,979.801,33000.0,Antarctic butterfish,15.0
@@ -571,13 +568,13 @@ family,Embiotocidae,4,0,0.8494,own,8.5,145.634,1100.0,Black perch,10.0
 family,Tripterygiidae,3,0,0.8473,own,3.0,3.31119,34.7476,Striped triplefin,4.0
 family,Spheniscidae,11,0,0.8472,own,27.0,1100.0,30000.0,Gentoo penguin,41.0
 family,Sciaenidae,13,0,0.8464,own,15.0,55.3,100000.0,Red drum,50.0
-family,Hyperoodontidae,4,0,0.8456,own,55.0,2701000.0,11380000.0,Baird's beaked whale,84.0
 family,Salmonidae,34,0,0.844,own,12.0,72.7416,38500.0,Lake trout,62.0
 family,Regulidae,3,0,0.8412,own,6.3,5.5,6.75,Goldcrest,7.0
 family,Eschrichtiidae,1,0,0.8366,own,77.0,28500000.0,28500000.0,Gray whale,77.0
 family,Nemipteridae,1,0,0.8358,own,8.0,327.8,327.8,Japanese threadfin-bream,8.0
 family,Myctophidae,4,0,0.8344,own,5.5,3.83184,25.1077,Glacier lanterfish,8.0
 family,Alaudidae,5,0,0.8344,own,10.1,26.9,43.15,Crested lark,11.6
+family,Emberizidae,16,0,0.8336,own,8.05,12.5,48.8,Yellowhammer,13.2
 family,Dipodidae,18,0,0.8334,own,4.35,8.92,350.0,Lesser Egyptian jerboa,7.3
 family,Gempylidae,3,0,0.8332,own,15.0,797.016,8800.0,Silver gemfish,16.0
 family,Anatidae,87,0,0.833,own,22.0,326.0,13000.0,Greater white-fronted goose,47.0
@@ -605,16 +602,15 @@ family,Neosittidae,1,0,0.7995,own,6.9,11.7,11.7,Varied sittella,6.9
 family,Rhincodontidae,1,0,0.799,own,100.0,15000000.0,15000000.0,Whale shark,100.0
 family,Moschidae,4,0,0.7978,own,13.892,12488.7,12907.8,Anhui Musk Deer,13.8917
 family,Trionychidae,7,0,0.7952,own,17.8,1444.5,23463.0,African softshell turtle,50.6
-family,Iguanidae,23,0,0.7943,own,13.8,29.175,6754.63,Galapagos Land Iguana,50.0
 family,Panuridae,1,0,0.794,own,7.1,13.8,13.8,Bearded parrotbill,7.1
 family,Rajidae,17,0,0.7899,own,15.0,110.0,115315.0,"Blue skate, or Common skate",50.0
+family,Hyperoodontidae,8,0,0.7881,own,42.5,900000.0,11380000.0,Arnoux's Beaked Whale,84.0
 family,Ictaluridae,18,0,0.7881,own,5.0,5.59117,37450.0,Channel catfish,24.0
 family,Psophodidae,2,0,0.787,own,10.192,68.0,72.1,Eastern whipbird,12.3
 family,Ardeidae,27,0,0.7861,own,21.1,101.0,4468.0,Purple heron,25.4
 family,Podicipedidae,8,0,0.7852,own,14.0,174.0,1475.5,Great crested grebe,19.2
 family,Palinuridae,1,0,0.784,own,20.0,1500.0,1500.0,Caribbean spiny lobster,20.0
 family,Achiridae,1,0,0.7831,own,6.0,129.456,129.456,Hogchoker,6.0
-family,Emberizidae,21,0,0.7826,own,7.0,12.5,48.8,Yellowhammer,13.2
 family,Bovidae,137,0,0.7811,own,20.3,2250.0,825000.0,Anoa,36.1
 family,Triakidae,12,0,0.7797,own,15.5,3146.0,24585.0,Tope shark,55.0
 family,Cervidae,43,0,0.7792,own,18.8,9674.98,450000.0,Pere David's deer,27.5
@@ -625,12 +621,13 @@ family,Polioptilidae,2,0,0.7685,own,6.1,6.0,6.5,California gnatcatcher,8.0
 family,Cinclidae,2,0,0.7683,own,9.35,50.2,61.7,White-throated dipper,10.6
 family,Teiidae,15,0,0.768,own,7.8,7.9,4700.0,Argentine Black and White Tegu,16.1
 family,Arripidae,3,0,0.7675,own,9.0,440.0,5775.0,Australian salmon,26.0
+family,Colubridae,125,0,0.7645,own,12.6,6.0,8324.0,Eastern Rat Snake (alleghaniensis),33.9
 family,Talpidae,20,0,0.7615,own,3.5,18.85,983.805,Desman,10.0
 family,Lacertidae,48,0,0.7613,own,4.0,2.1,195.995,Gallotia auaritae,20.0
 family,Artamidae,1,0,0.7606,own,8.2,33.0,33.0,Dusky woodswallow,8.2
-family,Colubridae,106,0,0.7602,own,14.55,6.0,8324.0,Eastern Rat Snake (alleghaniensis),33.9
 family,Microbiotheriidae,1,0,0.7559,own,3.492,27.5,27.5,Monito del Monte,3.49167
 family,Picidae,35,0,0.7533,own,10.5,19.8,364.0,Red-bellied woodpecker,20.7
+family,Iguanidae,29,0,0.7532,own,9.3,6.94,6754.63,Galapagos Land Iguana,50.0
 family,Suidae,18,0,0.7508,own,18.4,8000.0,200315.0,Domestic pig,27.0
 family,Callorhinchidae,1,0,0.7444,own,12.0,2887.5,2887.5,Cape elephantfish,12.0
 family,Phylloscopidae,8,0,0.7432,own,8.0,8.0,10.0,Willow warbler,11.8
@@ -639,7 +636,6 @@ family,Paradisaeidae,4,0,0.7428,own,12.05,86.5,250.0,Greater bird-of-paradise,12
 family,Dinomyidae,1,0,0.7421,own,12.8,12250.0,12250.0,Pacarana,12.8
 family,Polynemidae,1,0,0.7416,own,20.0,24750.0,24750.0,King threadfin,20.0
 family,Chanidae,1,0,0.7357,own,15.0,7700.0,7700.0,Milkfish,15.0
-family,Ziphiidae,4,0,0.7346,own,33.5,900000.0,7000000.0,Arnoux's Beaked Whale,84.0
 family,Motacillidae,16,0,0.7312,own,6.708,16.55,27.5042,White wagtail,13.7
 family,Anhingidae,4,0,0.7275,own,16.2,1080.0,1518.0,Australasian darter,22.3
 family,Dasyatidae,5,0,0.7271,own,21.0,445.0,225259.0,Diamond stingray,28.0
@@ -652,7 +648,6 @@ family,Dasyuridae,51,0,0.7103,own,3.9,5.3,8000.0,Kowari,8.0
 family,Synodontidae,1,0,0.708,own,7.0,375.328,375.328,Snakefish,7.0
 family,Dromaiidae,1,0,0.7076,own,35.0,40000.0,40000.0,Emu,35.0
 family,Priacanthidae,1,0,0.697,own,9.0,1144.0,1144.0,Bulleye,9.0
-family,Dipsadidae,12,0,0.6944,own,11.85,104.0,1587.0,Dusty Hognose Snake,20.0
 family,Sphaerodactylidae,8,0,0.6934,own,2.2,0.5,16.235,Gonatodes fuscus,13.0
 family,Atrichornithidae,1,0,0.6887,own,7.8,41.525,41.525,Noisy scrubbird,7.8
 family,Pholidae,1,0,0.6846,own,5.0,105.982,105.982,Rock gunnel,5.0
@@ -671,13 +666,11 @@ family,Osphronemidae,1,0,0.6659,own,2.0,2.59629,2.59629,Siamese fighting fish,2.
 family,Phalacrocoracidae,17,0,0.6645,own,13.1,542.875,3336.0,Australian pied cormorant,46.4
 family,Leporidae,37,0,0.6628,own,8.9,431.19,4175.0,Arctic Hare,18.0
 family,Dalatiidae,1,0,0.6517,own,18.4,29965.7,29965.7,Kitefin shark,18.4
-family,Phyllomedusidae,1,0,0.6499,global,5.5,70.0,70.0,Maroon-eyed tree frog,5.5
 family,Thylacinidae,1,0,0.6461,own,13.0,25000.0,25000.0,Thylacine,13.0
 family,Pellorneidae,2,0,0.6433,own,6.208,15.8,20.5,Nepal Fulvetta,7.41667
 family,Antilocapridae,1,0,0.6418,own,15.0,50000.0,50000.0,Pronghorn,15.0
 family,Cricetidae,216,0,0.6376,own,3.8,8.0,1200.0,Anthony's Woodrat,10.5
 family,Retropinnidae,2,0,0.6373,own,4.0,5.12861,186.0,Australian grayling,6.0
-family,Natricidae,15,0,0.6363,own,9.6,26.0,1587.0,"Pacific Coast Aquatic Garter Snake, Santa Cruz Garter Snake",17.8
 family,Achatinidae,1,0,0.6362,own,9.0,150.0,150.0,Giant African land snail,9.0
 family,Caviidae,10,0,0.6343,own,6.15,337.9,50000.0,Capybara,15.0
 family,Tephrodornithidae,2,0,0.6324,own,6.25,22.0,22.0,Sri Lanka Woodshrike,6.25
@@ -695,6 +688,7 @@ family,Nesomyidae,24,0,0.6099,own,3.521,4.99,1500.0,Malagasy giant rat,12.6
 family,Dicruridae,5,0,0.6073,own,7.917,79.1833,82.25,Wallacean Drongo,7.91667
 family,Soricidae,91,0,0.6008,own,2.5,2.33,45.9,Cyrenaica Shrew,4.0
 family,Pristidae,1,0,0.6002,own,30.0,325050.0,325050.0,Largetooth sawfish,30.0
+family,Natricidae,3,0,0.5995,own,9.0,512.0,512.0,Andaman Keelback,9.0
 family,Cracidae,6,0,0.5924,own,14.417,495.5,4133.0,Great curassow,24.0
 family,Muridae,250,0,0.5886,own,4.2,6.0,1750.0,Slender-tailed cloud rat,13.6
 family,Rhinopteridae,1,0,0.5861,own,15.5,22800.0,22800.0,Cownose ray,15.5
@@ -742,7 +736,6 @@ family,Campephagidae,4,0,0.4606,own,5.5,25.5,115.133,Black-faced cuckooshrike,9.
 family,Heterodontidae,2,0,0.4602,own,12.0,16294.2,28366.6,Horn shark,12.0
 family,Gonostomatidae,1,0,0.4598,own,1.0,0.675148,0.675148,Brauer's bristlemouth,1.0
 family,Kogiidae,1,0,0.4582,own,17.0,424600.0,424600.0,Pygmy sperm whale,17.0
-family,Phrynosomatidae,13,0,0.454,own,6.0,6.94,35.59,Coachella Valley Fringe-toed Lizard,8.1
 family,Alopiidae,2,0,0.4512,own,25.0,200090.0,1120960.0,Pelagic thresher shark,29.0
 family,Pittidae,1,0,0.4479,own,6.0,90.75,90.75,Noisy pitta,6.0
 family,Citharinidae,1,0,0.4471,own,7.5,3410.0,3410.0,Nile distichodus,7.5
@@ -761,9 +754,11 @@ family,Dermatemydidae,1,0,0.3834,own,11.3,12500.0,12500.0,Central american river
 family,Drosophilidae,1,0,0.3738,own,0.25,0.001,0.001,Common fruit fly,0.25
 family,Mormyridae,1,0,0.3714,own,6.0,2915.0,2915.0,Mormyrids,6.0
 family,Nesospingidae,1,0,0.3659,own,4.0,35.2,35.2,Puerto Rican tanager,4.0
+family,Dipsadidae,5,0,0.359,own,4.8,131.0,271.0,Banded Cat-eyed Snake,4.9
 family,Thryonomyidae,1,0,0.3578,own,5.4,6600.0,6600.0,Greater cane rat,5.4
 family,Lepidosirenidae,1,0,0.3555,own,8.3,13563.1,13563.1,South American lungfish,8.3
 family,Culicidae,1,0,0.3548,own,0.3,0.0025,0.0025,Northern house mosquito,0.3
+family,Phrynosomatidae,7,0,0.3503,own,1.3,15.345,23.44,Coachella Valley Fringe-toed Lizard,8.1
 family,Acrochordidae,1,0,0.3473,own,8.8,6107.0,6107.0,Arafura filesnake,8.8
 family,Apidae,3,0,0.3441,own,1.0,0.09,0.6,Honey bee queen,5.0
 family,Glareolidae,1,0,0.3412,own,4.4,76.0,76.0,Oriental pratincole,4.4
