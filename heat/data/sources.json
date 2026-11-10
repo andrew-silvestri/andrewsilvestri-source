@@ -60,5 +60,5 @@
   "dollar_year": 2018,
   "basis": "LBNL-2001436 Appendix B, Figure B-1 (p.43): investment cost of an electric boiler, 2018 $/kW, from about 160 for boilers under 2.9 MW to about 46 for boilers over 73 MW (read from the chart; the text gives the range as 13 to 44 $/GJ); equipment and installation, grid connection excluded. The model's own default, $30,000 per MMBtu/h of heat output, is $100 per kW of electric input."
  },
- "discount_rate_note": "The model's 8 per cent real rate is an assumption (LBNL-2001436 uses 10 per cent, pp.20-21)."
+ "discount_rate_note": "The model's 8 percent real rate is an assumption (LBNL-2001436 uses 10 percent, pp.20-21)."
 }

@@ -98,7 +98,7 @@ def hero(P, v):
          f"born in {U['peak1']['cohort']}, the mean was {U['peak1']['mean']:.1f} points, the largest of any birth year. And in "
          f"{P['gasoline']['peak_year']}, the makers of the gasoline additive used more lead than in any other "
          f"year: {v['gpeak_t']} metric tons.</p>", {"t": 1, "p": 1}),
-        (f"<p><b>Born 1951 to 1980: {mid} per cent of the total.</b> Counted in people rather than bars, these thirty "
+        (f"<p><b>Born 1951 to 1980: {mid} percent of the total.</b> Counted in people rather than bars, these thirty "
          f"birth years carry "
          f"{U['mid_century']['points'] / 1e6:,.0f} million of the {v['total_m']} million points.</p>",
          {"t": 1, "m": 1}),
@@ -233,7 +233,7 @@ def values(P):
         f"By the estimate of McFarland and colleagues, Americans born from 1966 to 1970 lost {v['peak5']} IQ points "
         f"each, on average, to lead in early childhood, more than any other group of birth years.",
         f"The total for the people alive in 2015 is {v['total_m']} million points, and the people born from 1951 to "
-        f"1980 carry {100 * U['mid_century_share']:.0f} per cent of it.",
+        f"1980 carry {100 * U['mid_century_share']:.0f} percent of it.",
         f"The total rests on one choice, the dose-response curve: applied to the same exposure, other published curves give "
         f"{C['lanphear_early']['points'] / 1e6:,.0f} million to {C['crump']['points'] / 1e9:.2f} billion points."])
     v["hero"] = hero(P, v)
