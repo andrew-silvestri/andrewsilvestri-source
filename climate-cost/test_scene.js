@@ -127,7 +127,9 @@ for row in routes:
     life = row[4] if len(row) > 4 else None
     r = Model(item, o, d, m, life=life).run()
     out.append({"total": r["total"],
-                "stages": [s["total"] for s in r["spine"]]})
+                "stages": [s["total"] for s in r["spine"]],
+                "allocs": [s["alloc"] for s in r["spine"]],
+                "bases": [s["basis"] for s in r["spine"]]})
 print(json.dumps(out))
 `, JSON.stringify(ROUTES)], { encoding: 'utf8' });
 const py = JSON.parse(pyOut);
@@ -144,6 +146,21 @@ ROUTES.forEach(([item, o, d, m, life], i) => {
 });
 ok(worst < 1e-9, `${ROUTES.length} routes match the Python, stage by stage`,
    `worst relative difference ${worst.toExponential(2)} (${worstLabel})`);
+
+/* The share that reaches each stage, and the basis the calculator prints
+   beside it, since a split now reaches every stage above it (2026-11-10):
+   the two engines must agree on which splits reached which stage, not only
+   on the totals, which could agree by accident. */
+let shareBad = [];
+ROUTES.forEach(([item, o, d, m, life], i) => {
+  const js = win.__lca.model(item, o, d, m, life);
+  js.spine.forEach((s, k) => {
+    if (s.alloc !== py[i].allocs[k] || s.basis !== py[i].bases[k])
+      shareBad.push(`${item}/${s.id}: js ${s.alloc} "${s.basis}" vs py ${py[i].allocs[k]} "${py[i].bases[k]}"`);
+  });
+});
+ok(shareBad.length === 0, 'every stage carries the same share and basis as the Python',
+   shareBad.slice(0, 2).join('; '));
 
 /* ------------------------------------------------------- 2. the layout --- */
 console.log('\n  Layout');

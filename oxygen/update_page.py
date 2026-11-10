@@ -167,8 +167,8 @@ def tree_fits():
 def hero(P, v):
     steps = [
         (0, "The policy &middot; 1990",
-         f"The Clean Air Act Amendments of 1990 required at least {v['o2_rfg']} per cent oxygen by weight in the "
-         f"gasoline of the areas with the worst ozone, from 1995, and {v['o2_oxy']} per cent in winter gasoline where "
+         f"The Clean Air Act Amendments of 1990 required at least {v['o2_rfg']} percent oxygen by weight in the "
+         f"gasoline of the areas with the worst ozone, from 1995, and {v['o2_oxy']} percent in winter gasoline where "
          f"carbon monoxide was too high, from 1992. Senator Bob Dole's office said the amendment would "
          f"&ldquo;{v['q_dole']}&rdquo;, such as ethanol."),
         (1, "First order &middot; strong evidence",
@@ -231,7 +231,7 @@ def chart_mtbe(P):
                             {"at": "2006-05", "text": "rule ends", "short": "ends"}]}
     return static_chart(spec, "In 1993 and early 1994 use rises only in winter, when the carbon monoxide programme "
                               "applies; once reformulated gasoline starts, the summer low disappears. The annual "
-                              "average peaks in %s at %s per cent of U.S. gasoline, about one gallon in thirty, "
+                              "average peaks in %s at %s percent of U.S. gasoline, about one gallon in thirty, "
                               "against one in ten for ethanol today. " % (P["peak"]["year"], pct(P["peak"]["share"])) +
                               "Data: EIA, refinery and blender net input of MTBE (MMTRIUS1), monthly. "
                               "RFG is reformulated gasoline.")
@@ -271,7 +271,7 @@ def chart_swap(P):
                        "bars": [{"at": y, "value": round(100 * v, 1), "text": ""} for y, v in sorted(share.items())]}]}
     return static_chart(spec, "Ethanol overtakes MTBE before the federal rule changes, and in 2006 MTBE falls from %s "
                               "to %s thousand barrels a day between January and May. Below, the share of the corn crop "
-                              "going to fuel ethanol runs from %s to %s per cent, from about a twentieth of the crop to "
+                              "going to fuel ethanol runs from %s to %s percent, from about a twentieth of the crop to "
                               "more than two fifths. "
                               % ("%.0f" % P["switch"]["jan"], "%.0f" % P["switch"]["may"],
                                  pct(min(share.values()), 0), pct(max(share.values()), 0)) +
@@ -318,7 +318,7 @@ def claims(P, v):
         ("'the share has stayed near one tenth since {y_tenth}': 9.5-11% every full year since",
          all(0.095 <= A[str(y)]["eth_share"] <= 0.11 for y in range(int(v["y_tenth"]), int(last) + 1))),
         ("'seven of them banned MTBE completely'", P["bans"]["complete"] == 7),
-        ("'net input understates MTBE use by about an eighth (12 per cent in 1997)'",
+        ("'net input understates MTBE use by about an eighth (12 percent in 1997)'",
          round(100 * (1 - A["1997"]["mtbe"] / d["mtbe_c"]["kbd"])) == 12),
     ]
     bad = [n for n, ok in c if not ok]

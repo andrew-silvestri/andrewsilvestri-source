@@ -205,7 +205,7 @@ def cuts(P, L):
          f"and seven states, Florida and North Carolina among them, then cut the maximum number of weeks. Florida&rsquo;s "
          f"figure had already about halved by 2011, to {r0(fl[2011])}. From {L['fl_date']}, Florida paid at most "
          f"{L['fl_max']} weeks instead of 26, and {L['fl_min']} when its unemployment rate is below {L['fl_ur']} "
-         f"per cent. North Carolina&rsquo;s cut followed in July 2013.</p>", {"t": t_at(xs, 2013)}),
+         f"percent. North Carolina&rsquo;s cut followed in July 2013.</p>", {"t": t_at(xs, 2013)}),
         (f"<p><b>2014 to {last}: low.</b> In 2019, the figure was {r0(fl[2019])} in Florida and {r0(nc[2019])} in "
          f"North Carolina, less than half the national {r0(us[2019])}, and in {last} it was {r0(fl[last])}, "
          f"{r0(nc[last])} and {r0(us[last])}. The cuts did not wear off.</p>", {"t": 1}),
@@ -253,7 +253,7 @@ def strip(P):
          f"unemployed people; the national figure ({r0(P['us'][str(last)])}) is higher because large states such "
          f"as California and New York are above the middle.</p>", {"t": 1, "us": 1}),
         (f"<p><b>Below one in five.</b> In {len(low)} states, fewer than {P['low_line']:.0f} of every 100 "
-         f"unemployed people claimed. Together they are home to {r0(100 * P['low_pop_share'])} per cent "
+         f"unemployed people claimed. Together they are home to {r0(100 * P['low_pop_share'])} percent "
          f"of U.S. residents, about two Americans in five.</p>", {"t": 1, "us": 1, "under": 1}),
         (f"<p><b>Six to one.</b> {NAMES[lo]} had the lowest figure, {r1(v[lo])}, and {NAMES[hi]} the highest, "
          f"{r1(v[hi])}. The same lost job brings a claim six times as often in one state as in the other.</p>", {"t": 1, "us": 1, "under": 1, "ends": 1}),
@@ -391,12 +391,12 @@ def values(P):
                                       "the page adds each year after both agencies publish it"),
         "takeaways": insight.takeaways([
             f"Most unemployed people who receive nothing never applied: in a 2022 BLS survey, only about one in four "
-            f"of the unemployed who had worked in the past year had applied ({L['bls_applied']} per cent), and a little "
-            f"over half of those who applied received benefits ({L['bls_received']} per cent).",
+            f"of the unemployed who had worked in the past year had applied ({L['bls_applied']} percent), and a little "
+            f"over half of those who applied received benefits ({L['bls_received']} percent).",
             f"Job losers, the group the program is for, were about the same share of the unemployed in {last} as "
             f"in 1970 ({r0(C[str(last)]['job_loser_share'])} against {r0(C['1970']['job_loser_share'])} in 100), "
             f"while claimants fell by about two-fifths, from {r0(us[1970])} in 100 to {r0(us[last])}, over the same years.",
-            f"In {len(P['low_states'])} states, home to {r0(100 * P['low_pop_share'])} per cent of U.S. residents, "
+            f"In {len(P['low_states'])} states, home to {r0(100 * P['low_pop_share'])} percent of U.S. residents, "
             f"fewer than 20 of every 100 unemployed people claimed in {last}. {NAMES[lo]} was lowest "
             f"({r0(P['states'][lo][str(last)])}) and {NAMES[hi]} highest ({r0(P['states'][hi][str(last)])}), "
             f"about six times as high."]),

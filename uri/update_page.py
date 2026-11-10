@@ -188,7 +188,7 @@ def claims(P, H):
         ("hero step 2 'most of' the interest still to be paid",
          (P["hero"]["total"][P["hero"]["x"].index(P["today"][:7])] - P["hero"]["principal"][P["hero"]["x"].index(P["today"][:7])])
          > b["interest"] / 2),
-        ("Method 'up to about $N million lower': the unused capacity is positive and under 0.5 per cent",
+        ("Method 'up to about $N million lower': the unused capacity is positive and under 0.5 percent",
          0 < tx["six_months_interest"] - tx["prepaid_interest"] < 0.005 * tx["repay"]),
         ("takeaway 3 'about a third ... more for an Oklahoma Natural Gas home'",
          all(0.28 <= H[k]["interest_share"] <= 0.37 for k in ("TX", "SUO"))
@@ -200,7 +200,7 @@ def claims(P, H):
         ("'Oklahoma Natural Gas's have been' reset", H["ONG-A"]["alloc"] != H["ONG-A"]["alloc_latest"]),
         ("'what CenterPoint's tariff states': the pressure-raised rate rounds to its 14.73 figure",
          round(H["TX"]["per_mcf_eia"] / 10, 5) == H["TX"]["cnp_1473"]),
-        ("Oklahoma reserves 'would change the total by' under one per cent",
+        ("Oklahoma reserves 'would change the total by' under one percent",
          (ok["ong"]["reserve"] + ok["suo"]["reserve"]) / P["ok_all"]["repay"] < 0.01),
         ("the split's parts are non-negative and sum to the total", b["costs"] > 0),
     ]

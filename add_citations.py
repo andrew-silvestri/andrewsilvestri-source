@@ -107,7 +107,7 @@ PAGES = {
          'NREL, <i>Annual Technology Baseline</i> 2024, financial assumptions.',
          # ATB uses a 30-year recovery period and a fixed charge rate; only
          # the 8% matches the model (D-19 item 5).
-         "The eight per cent discount rate."),
+         "The eight percent discount rate."),
     ],
     # economy.html: RETIRED 2026-09-09 with the Running group.
     # Commented, not deleted - these tuples are the citation data and
@@ -575,7 +575,7 @@ PAGES = {
          # D-21 item 4: ATB gives batteries no discount rate and a 15-year
          # life; the twenty years and the 8% are the model's.
          "plus $44/kW-yr fixed operations, annualised over twenty years at "
-         "an assumed eight per cent; ATB itself gives these batteries a 15-year "
+         "an assumed eight percent; ATB itself gives these batteries a 15-year "
          "life and no financial assumptions. A representative figure for scale, "
          "not a quote for any particular project."),
     ],
@@ -630,7 +630,7 @@ PAGES = {
          'Oklahoma Natural Gas Company, tariff schedules 1001 (Purchased Gas Adjustment '
          'Clause), 1071 (Unrecovered Purchased Gas Cost) and 1191 (Lost, Used, and '
          'Unaccounted for Gas Rider), as approved by the Oklahoma Corporation Commission.',
-         "\"LUFG shall be collected through the PGA\", the two per cent safe harbor and "
+         "\"LUFG shall be collected through the PGA\", the two percent safe harbor and "
          "the Commission's power to disallow the excess; LUFG includes gas used."),
         ("at the city gate",
          'U.S. Energy Information Administration, natural gas series for Texas and Oklahoma: '
@@ -706,7 +706,7 @@ PAGES = {
         ("Anchor phrase", "Source", "What it supports"),
         ("where carbon monoxide was too high",
          '42 U.S.C. 7545(k)(2)(B) and (m)(2), Clean Air Act section 211, as added by the Clean Air Act Amendments of 1990 (P.L. 101-549, section 219), United States Code, 2000 edition, <a href="https://www.govinfo.gov/content/pkg/USCODE-2000-title42/html/USCODE-2000-title42-chap85-subchapII-partA-sec7545.htm">govinfo.gov</a>.',
-         'The 2.0 per cent oxygen requirement for reformulated gasoline from 1995 and the 2.7 per cent winter oxygenated fuel requirement from 1992.'),
+         'The 2.0 percent oxygen requirement for reformulated gasoline from 1995 and the 2.7 percent winter oxygenated fuel requirement from 1992.'),
         ("Senator Bob Dole's office said the amendment would",
          'Office of Senator Bob Dole, press release on the Daschle-Dole reformulated gasoline amendment, 29 March 1990, <a href="https://dolearchivecollections.ku.edu/collections/press_releases/900329ame.pdf">Robert J. Dole Institute of Politics archive</a>.',
          'The amendment and its stated aim for grain-based fuels such as ethanol.'),
@@ -715,7 +715,7 @@ PAGES = {
          'MTBE made from methanol and isobutylene; shipped through existing pipelines, unlike ethanol; lower volatility; chosen for blending characteristics and economic reasons; used at low levels since 1979 to replace lead.'),
         ("the federal panel on oxygenates",
          'Blue Ribbon Panel on Oxygenates in Gasoline, <i>Achieving Clean Air and Clean Water</i>, EPA420-R-99-021, U.S. Environmental Protection Agency, September 1999, <a href="https://archive.epa.gov/oust/mtbe-a/web/pdf/r99021.pdf">PDF</a>.',
-         'MTBE in over 85 per cent of reformulated gasoline and ethanol in about 8 per cent; ethanol blended at terminals; releases from underground gasoline storage systems as the major source of contamination; the turpentine-like taste and odour.'),
+         'MTBE in over 85 percent of reformulated gasoline and ethanol in about 8 percent; ethanol blended at terminals; releases from underground gasoline storage systems as the major source of contamination; the turpentine-like taste and odour.'),
         ("Reformulated gasoline was about a third of U.S. gasoline from 1996 on",
          'U.S. Energy Information Administration, product supplied of reformulated motor gasoline (MGRUPUS2) and of finished motor gasoline (MGFUPUS2), annual, fetched 7 November 2026.',
          'The share of reformulated gasoline in U.S. gasoline, and the gasoline total behind the ethanol and MTBE shares.'),
@@ -757,7 +757,7 @@ PAGES = {
          'The exemption of alcohol fuel blends from the federal motor fuels excise tax.'),
         ("a federal appeals court struck the rule down in 1995",
          '<i>American Petroleum Institute v. Environmental Protection Agency</i>, 52 F.3d 1113 (D.C. Cir. 1995).',
-         "EPA's 1994 renewable oxygenate requirement (30 per cent of the oxygen in reformulated gasoline) and the court's decision against it."),
+         "EPA's 1994 renewable oxygenate requirement (30 percent of the oxygen in reformulated gasoline) and the court's decision against it."),
         ("took effect only in September 2007",
          'U.S. Environmental Protection Agency, &ldquo;Regulation of Fuels and Fuel Additives: Renewable Fuel Standard Program&rdquo;, final rule, 72 FR 23900, 1 May 2007, <a href="https://www.federalregister.gov/documents/2007/05/01/E7-7140">federalregister.gov</a>.',
          'The start of the full renewable fuel standard rules, 1 September 2007.'),
@@ -766,7 +766,7 @@ PAGES = {
          'The expanded renewable fuel standard: 36 billion gallons by 2022, of which up to 15 billion conventional.'),
         ("Most U.S. gasoline is now E10",
          'U.S. Energy Information Administration, &ldquo;How much ethanol is in gasoline, and how does it affect fuel economy?&rdquo;, <a href="https://www.eia.gov/tools/faqs/faq.php?id=27&amp;t=10">FAQ</a>.',
-         'Most finished motor gasoline sold in the United States is E10, about 10 per cent ethanol.'),
+         'Most finished motor gasoline sold in the United States is E10, about 10 percent ethanol.'),
         ("upgraded, replaced or closed by the end of 1998",
          'U.S. Environmental Protection Agency, 40 CFR 280.21, &ldquo;Upgrading of existing UST systems&rdquo; (rule of 23 September 1988), <a href="https://www.govinfo.gov/content/pkg/CFR-2014-title40-vol27/xml/CFR-2014-title40-vol27-sec280-21.xml">govinfo.gov</a>.',
          'The deadline of 22 December 1998 for upgrading existing underground storage tanks.'),
@@ -778,7 +778,7 @@ PAGES = {
          "Federal gasoline content standards did not improve air quality; California's targeted rules did."),
         ("One study of the 2007 expansion of the mandate estimated",
          'T. J. Lark and others, &ldquo;Environmental outcomes of the US Renewable Fuel Standard&rdquo;, <i>Proceedings of the National Academy of Sciences</i> 119(9), 2022, e2101084119, <a href="https://doi.org/10.1073/pnas.2101084119">doi.org</a>.',
-         'Corn prices about 30 per cent higher and cropland about 2.1 million hectares larger, 2008 to 2016; carbon intensity no less than gasoline and likely at least 24 per cent higher (estimates).'),
+         'Corn prices about 30 percent higher and cropland about 2.1 million hectares larger, 2008 to 2016; carbon intensity no less than gasoline and likely at least 24 percent higher (estimates).'),
         ("its authors replied that the critique was unsupported",
          'T. J. Lark and others, &ldquo;Reply to Taheripour et al.: Comments on &lsquo;Environmental Outcomes of the US Renewable Fuel Standard&rsquo;&rdquo;, 7 April 2022, <a href="https://www.gibbs-lab.wisc.edu/assets/Reply-to-Taheripour-et-al.pdf">PDF</a>.',
          "Taheripour and others' comments that the study overestimated corn ethanol's emissions, and the authors' reply."),

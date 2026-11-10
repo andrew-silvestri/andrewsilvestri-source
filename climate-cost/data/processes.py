@@ -410,6 +410,15 @@ PROCESSES = {
 #
 # The engine multiplies share x amortise onto everything in the stage, and
 # freight_kg onto the freight leg only. Renaming changed no total.
+#
+# A share also reaches every stage before its own, because those stages are
+# what flows into the process where the products separate (ISO 14044
+# allocates the inputs of a multi-output process): the slaughterhouse's 0.72
+# covers the animal's methane, feed, manure and land, and the cheese plant's
+# 0.90 covers the milk. Stages carrying the same share on the same basis are
+# one split and are applied once, so the four herd stages at MILK_SHARE are
+# one cow (lca.py stage_shares()). Until 2026-11-10 a share reached its own
+# stage only and the beef carried its animal in full (D-26 item 1, D-57 (a)).
 PRODUCTS = {
 
     "tomato_field": dict(
@@ -544,8 +553,10 @@ PRODUCTS = {
                 ("cold_store_origin", 0.35, 1.0)], direct=0.0,
                 share=0.72, basis="economic (assumed)",
                 note="Allocation: hide, tallow, offal and bone meal leave the "
-                     "plant as saleable products, so not all of the plant's "
-                     "burden belongs to the meat. 0.72 is an economic split; a "
+                     "plant as saleable products, so not all of the animal's "
+                     "or the plant's burden belongs to the meat. The share "
+                     "applies to this stage and to every stage above it, the "
+                     "animal included. 0.72 is an economic split; a "
                      "mass split would give roughly 0.55 and a different total. "
                      "Neither figure is from a named source."),
             dict(id="freight", name="Freight to market", inputs=[],

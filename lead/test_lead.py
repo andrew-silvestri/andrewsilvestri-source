@@ -3,7 +3,7 @@ each has a --break that reproduces that fault, and the run must exit 1 under it 
 check recomputes from the raw files through sources.py, not from the payload it is checking (trap 20).
 
  1. known      The paper's printed figures reproduce from its own datasets: 824,097,690 points, 2.6 per person,
-               53.5 per cent at or above 5 ug/dL, and the means 4.8, 5.9 and 5.7 for 1961-65, 1966-70 and
+               53.5 percent at or above 5 ug/dL, and the means 4.8, 5.9 and 5.7 for 1961-65, 1966-70 and
                1971-75. --break known charges the 0-4.9 band at the 5-9.9 slope (a band read off by one).
  2. slopes     The per-band losses parsed from Dataset S03's formulas use the slopes the SI Appendix prints
                (0.513, 0.19, 0.11). --break slopes reads 0.19 as 0.91.

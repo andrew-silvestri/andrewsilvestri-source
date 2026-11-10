@@ -38,7 +38,8 @@ POOLS = [("All animals", None), ("Mammals", "Mammalia"), ("Birds", "Aves"),
 SOURCE_ROWS = [
     ("seed", "Hand-checked seed table",
      "Entered by hand, one species at a time; 88 of its rows are graded A. "
-     "It includes projections as well as observed ages."),
+     "It includes growth-rate estimates as well as observed ages, and a "
+     "projected age for the olm that the merge does not use."),
     ("anage", "AnAge build 15",
      "The curated standard, with its own quality grade and a distinction "
      "between wild and captive. The model keeps both and does not overwrite "
@@ -150,7 +151,8 @@ def sources_section(report, rows):
     prov = list(csv.DictReader(open(os.path.join(OUT, "provenance.csv"),
                                     encoding="utf-8")))
     idx = collections.Counter(p["mass_from"] for p in prov
-                              if p["mass_from"] != p["taken_from"])
+                              if p["mass_from"] != p["taken_from"]
+                              and p["mass_from"] in MASS_NAME)
     from_index = sum(idx.values())
     idx_bits = " and ".join(f"{fmt(v)} from {MASS_NAME.get(k, k)}"
                             for k, v in sorted(idx.items())) or "none from the index"
@@ -192,7 +194,9 @@ Those masses are modeled, not measured, and their records are marked and
 graded to show this. What
 remains is <strong>{fmt(n)} species</strong>, graded {grade_bits} as they
 come from their sources. The outlier rule described under the arithmetic
-then demotes {o["demoted"]} grade-B records to C, and the
+then demotes {o["demoted"]} grade-B records to C, {_n(len(o["demoted_by_name"]))}
+more {"is" if len(o["demoted_by_name"]) == 1 else "are"} demoted by name for the
+reason given there, and the
 {_n(sum(col.values()))} colonies ({col_bits}) are set aside, so the model runs
 on {final_bits}.</p>
 
@@ -242,8 +246,31 @@ def arithmetic_section(summary, rows):
     pools = {"Pisces": "fish", "Aves": "birds", "Mammalia": "mammals",
              "Reptilia": "reptiles", "Amphibia": "amphibians",
              "Invertebrata": "invertebrates"}
-    by_pool = ", ".join(f"{v} {pools.get(k, k)}" for k, v in
+    by_pool = ", ".join(f"{v} {pools.get(k, k) if v != 1 else pools.get(k, k)[:-1]}"
+                        for k, v in
                         sorted(o["by_pool"].items(), key=lambda kv: -kv[1]))
+    # D-29 item 7, D-56 b: records demoted by name (build_lq.DEMOTE_BY_NAME)
+    tab = {r["scientific_name"]: r for r in rows}
+    named = []
+    label = {"Macropus greyi": ("toolache wallaby", 0),
+             "Thryonomys gregorianus": ("lesser cane rat", 1)}
+    bits = []
+    for sci in o["demoted_by_name"]:
+        r = tab[sci]
+        if sci not in label:
+            raise SystemExit(f"arithmetic: no sentence for {sci} demoted by name")
+        nm, d = label[sci]
+        yr = r["unknown_yr"] or r.get("maximum") or ""
+        bits.append(f"{float(yr) * 12:.0f} months for the "
+                    f"{float(r['mass_g']) / 1000:.{d}f}&nbsp;kg {nm}")
+    if bits:
+        k = len(bits)
+        named.append(
+            f"{'One more record is' if k == 1 else _n(k).capitalize() + ' more records are'} "
+            f"demoted by name before the preliminary fit, with the reason in "
+            f"each note: the Amniote compilation&rsquo;s {' and its '.join(bits)}, "
+            f"very likely errors of the same kind, for which no other source "
+            f"here records a lifespan.")
 
     lines = []
     for label, key in POOLS:
@@ -283,7 +310,7 @@ the demoted records are twenty-seven of its mammals and reptiles
 (twenty-five and two), with maximum lifespans of one to three months at
 body masses up to five and a half kilograms. One is a 2.2&nbsp;kg hare at
 one month. These are unit or field errors, not observations, and they were
-at the bottom of every ranking on this page.</p>
+at the bottom of every ranking on this page. {" ".join(named)}</p>
 
 <p>The rule is symmetric, so nobody
 can say that it removes only the records that hurt the result. It never
@@ -325,21 +352,39 @@ def data_section(summary, report, rows):
     multi = [v for v in by_name.values() if len({r["sci"] for r in v}) > 1]
     in_fits = sum(1 for v in multi if sum(
         1 for r in v if r["quality"] != "C" and r["colonial"] != "True") > 1)
+    # D-56 b: synonyms are merged in data/ingest.py; the count is read from
+    # the list it writes, restricted to species that reached the table.
+    syn = [s for s in csv.DictReader(open(os.path.join(OUT, "synonyms.csv"),
+                                          encoding="utf-8"))
+           if s["kept_record_source"]]
+    syn_names = {s["merged_name"] for s in syn}
+    syn_species = {s["kept_as"] for s in syn}
+    names = {r["sci"] for r in tab}
+    for want in ("Centrochelys sulcata", "Cacatua leadbeateri"):
+        if want not in names:
+            raise SystemExit(f"data: {want} is no longer the kept name")
+    if "Lophochroa leadbeateri" in names:
+        raise SystemExit("data: the two cockatoo names are no longer merged")
     return f"""<h2>Data</h2>
 
 <p>The table has {fmt(report['final'])} species in {rk['phylum']} phyla,
 {rk['class']} classes, {rk['order']} orders, {rk['family']} families and
 {fmt(rk['genus'])} genera, and each record has full taxonomy, an adult body
 mass, at least one maximum lifespan, a quality grade and its provenance.
-Species are matched on the binomial alone, with no synonym resolution, so a
-species that the sources name in two ways is in the table twice. How often
-does that happen? A match on
-common names finds {fmt(len(multi))} common names that two or more binomials
-carry. Among them is the African
-spurred tortoise, as both <i>Centrochelys</i> and <i>Geochelone sulcata</i>,
-though some are distinct species that share a name. For {fmt(in_fits)} of
-those names, at least two copies are grade A or B and enter the fits. The pink cockatoo and Major Mitchell&rsquo;s cockatoo,
-one bird under two common names, are a further pair that this check misses.</p>
+A species that the sources name in two ways, such as the African spurred
+tortoise, as both <i>Centrochelys</i> and <i>Geochelone sulcata</i>, is merged
+into one record before anything is fitted. Two names are merged when they
+carry the same common name and their species epithets agree, or when the
+crosswalk between bird taxonomies in AVONET pairs them one to one, which is
+how the pink cockatoo and Major Mitchell&rsquo;s cockatoo become one bird. The
+merged record takes its numbers from the best source, like any other, and
+keeps the other name in its note. The merge folded {fmt(len(syn_names))}
+second names into {fmt(len(syn_species))} species. After the merge, {fmt(len(multi))} common
+names are still carried by two or more binomials. Some are species that one
+source splits in two and another does not, some are distinct species that
+share a name, and a few may be one species under two names that neither rule
+joins; for {fmt(in_fits)} of those names, at least two copies are grade A or
+B and enter the fits.</p>
 
 <p>Then there is the question of where the animal lived.
 {fmt(wild)} species have a maximum that their source labeled wild, {fmt(cap)}
@@ -494,23 +539,16 @@ def groups_paragraph(groups, table=None):
 
 
 def _caveat(r):
-    """D-29 items 7 and 9: two of the named extremes are not what they look
-    like. Said beside them for as long as they are named."""
+    """D-29 item 7: a named extreme from the Amniote compilation of the same
+    kind as the records the outlier rule demotes. Said beside it for as long
+    as it is named."""
     n = r["name"].strip().lower()
-    if n == "olm":
-        return ("The olm&rsquo;s 100 years is a projection, not an observed "
-                "age: Voituron <i>et al.</i> (<i>Biology Letters</i> 7:105, "
-                "2011) estimated a maximum of about 102 years from a "
-                "laboratory population, and the 68 years that the table gives "
-                "as its wild maximum is the mean adult lifespan of that "
-                "population.")
-    if n == "toolache wallaby":
-        return (f"The toolache wallaby&rsquo;s figure is the Amniote "
+    if n == "lesser cane rat" and r["quality"] == "B":
+        return (f"The lesser cane rat&rsquo;s figure is the Amniote "
                 f"compilation&rsquo;s {float(r['maximum']) * 12:.0f} months "
-                f"for a {float(r['mass_g']) / 1000:.0f}&nbsp;kg animal, very "
-                f"likely an error of the kind that the outlier rule "
-                f"removes. The rule&rsquo;s three-standard-deviation cut "
-                f"narrowly misses it.")
+                f"for a {float(r['mass_g']) / 1000:.1f}&nbsp;kg animal, a "
+                f"figure of the same kind as the records that the outlier "
+                f"rule demotes, but inside its cut.")
     return None
 
 
@@ -522,8 +560,10 @@ def outcome_paragraph(table):
     rows.sort(key=lambda r: -lq(r))
     top, bot = rows[:6], rows[-5:][::-1]
     art = lambda s: ("an " if s[0].lower() in "aeiou" else "a ") + s
-    ts = [f"{art(r['name'].lower())} at {lq(r):.0f}&times;" for r in top]
-    bs = [f"{art(r['name'].lower())} at {lq(r):.2f}&times;" for r in bot]
+    # a common name led by a person's name keeps its capital (Brandt's bat)
+    low = lambda s: s if "'" in s.split(" ")[0] else s.lower()
+    ts = [f"{art(low(r['name']))} at {lq(r):.0f}&times;" for r in top]
+    bs = [f"{art(low(r['name']))} at {lq(r):.2f}&times;" for r in bot]
     inv = [r for r in top if r["phylum"] != "Chordata"]
     n_inv = sum(1 for r in table if r["phylum"] != "Chordata"
                 and r["quality"] != "C" and r["colonial"] != "True")
@@ -734,9 +774,10 @@ def limits_section(summary, table=()):
         "across groups. The maximum also mixes record types (a zoo record for "
         "one species, a banding recapture for another, a compilation figure of "
         "unknown origin for a third), and part of the position of each order "
-        "comes from the record types of its members. And some species are "
-        "in the table twice under two names (see Data), so their groups "
-        "count them twice.</p>\n")
+        "comes from the record types of its members. And the merge of "
+        "synonyms (see Data) joins only the names its two rules find, so a "
+        "species renamed in a way that neither rule sees is still in the "
+        "table twice and counted twice in its groups.</p>\n")
 
 
 def code_section():
@@ -760,6 +801,13 @@ def main(apply=False):
                                       encoding="utf-8")))
     n = report["final"]
     changes = []
+    # D-29 item 9, typed on the page: Labord's chameleon at 8.73 g, which
+    # its body size predicts at about six years.
+    cham = [r for r in table0 if r["sci"] == "Furcifer labordi"]
+    if not cham or float(cham[0]["mass_g"]) != 8.73 or round(
+            float(cham[0]["pred_class"])) != 6:
+        raise SystemExit("page: Labord's chameleon is no longer 8.73 g "
+                         "predicted at about six years")
 
     def sub(pattern, repl, label, count=1):
         nonlocal t

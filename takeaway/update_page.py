@@ -189,9 +189,9 @@ def hero(P, S):
         (f"<p><b>2018 to mid-2019.</b> Production climbs quickly, and no large line leaves the basin. In "
          f"September 2019 EIA wrote that limited takeaway kept Waha's prices \"very low, or even negative, in recent "
          f"months\", and in 2019 the three Texas districts vented or flared {Y[2019]['vf_bcfd']:.2f} Bcf/d ("
-         f"{100 * Y[2019]['vf_share']:.1f} per cent of their gas).</p>", {"t": t_of(S, S["ref_2019"])}),
+         f"{100 * Y[2019]['vf_share']:.1f} percent of their gas).</p>", {"t": t_of(S, S["ref_2019"])}),
         (f"<p><b>Gulf Coast Express, {long(gcx['month'])}.</b> The line carries {gcx['bcfd']:.2f} Bcf/d to the Texas "
-         f"coast, and the share vented or flared drops to {100 * Y[2020]['vf_share']:.1f} per cent in 2020, half the 2019 "
+         f"coast, and the share vented or flared drops to {100 * Y[2020]['vf_share']:.1f} percent in 2020, half the 2019 "
          f"share. But the 2020 price collapse also stops production growing.</p>", {"t": t_of(S, "2020-12")}),
         (f"<p><b>Permian Highway and Whistler, 2021.</b> The two lines add {php['bcfd']:.1f} and {wh['bcfd']:.1f} Bcf/d, "
          f"six months apart, while the 2020 slump still holds production down. Reuters lists no below-zero day at Waha in 2021 "
@@ -256,8 +256,8 @@ def values(P):
             f"counts {rc[2019]} such days in 2019, {rc[2024]} in 2024 and {rc[2026]} in 2026 by late "
             f"{cited.REUTERS['date'].split()[0]}, already more than in any full year.",
             f"Flaring has not come back with the full pipes. Operators in the Texas "
-            f"Permian vented or flared {100 * Y[2019]['vf_share']:.1f} per cent of their gas in 2019. In any year since "
-            f"2021, they vented or flared no more than {100 * max(r['vf_share'] for r in since21):.1f} per cent."]),
+            f"Permian vented or flared {100 * Y[2019]['vf_share']:.1f} percent of their gas in 2019. In any year since "
+            f"2021, they vented or flared no more than {100 * max(r['vf_share'] for r in since21):.1f} percent."]),
         "hero": hero(P, S),
         "t0_long": long(t0), "t0_short": short(t0), "last_long": long(last), "last_year": str(ym(last)[0]),
         "k_def": f"{k['default']:.3f}", "k_year": str(k["year"]),
