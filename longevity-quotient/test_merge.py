@@ -9,7 +9,8 @@ runs, and the number on the page is wrong by an amount nobody can see.
 
 So the things that would be invisible are measured.
 
-Run:  python3 test_merge.py [--break nan]
+Run:  python test_merge.py [--break nan|synonym|sebastes|manual|family|
+                                      source|olm]
 """
 
 import collections
@@ -115,7 +116,7 @@ import ingest                                         # noqa: E402
 dropped = {}
 for c in ingest.CORRECTIONS:
     if c["source"] == "seed":
-        dropped.setdefault(c["sci"].lower(), set()).update(c["drop"])
+        dropped.setdefault(c["sci"].lower(), set()).update(c.get("drop", ()))
 moved = []
 by_pair = {(r["scientific_name"].strip().lower(),
             r["common_name"].strip().lower()): r for r in rows}
@@ -160,6 +161,22 @@ if "--break" in sys.argv and "sebastes" in sys.argv:
     for r in rows + table:
         if (r.get("scientific_name") or r.get("sci")) == "Sebastes borealis":
             r["family"] = "Scorpaenidae"
+if "--break" in sys.argv and "manual" in sys.argv:
+    # a hand-listed name back in the table as a record of its own
+    src = next(r for r in rows if r["scientific_name"] == "Pristis pristis")
+    rows.append(dict(src, scientific_name="Pristis perotteti"))
+    srct = next(r for r in table if r["sci"] == "Pristis pristis")
+    table.append(dict(srct, sci="Pristis perotteti"))
+if "--break" in sys.argv and "family" in sys.argv:
+    # one grouper filed apart from its genus again (D-92 c)
+    for r in rows + table:
+        if (r.get("scientific_name") or r.get("sci")) == "Epinephelus itajara":
+            r["family"] = "Epinephelidae"
+if "--break" in sys.argv and "olm" in sys.argv:
+    # AmphiBIO's unsourced 12 years back in place of the projection
+    for r in rows:
+        if r["scientific_name"] == "Proteus anguinus":
+            r["unknown_yr"] = "12"
 
 # 1. The pairs D-29 item 4 named, at most one name each in the table.
 named_pairs = [("Centrochelys sulcata", "Geochelone sulcata"),
@@ -205,13 +222,68 @@ fam = {r["family"] for r in rows if r["genus"] == "Sebastes"} | \
 ok(fam == {"Sebastidae"}, "every Sebastes is filed under one family",
    f"families: {sorted(fam)}")
 
+# 4b. D-92 c: one family for every genus, in both tables (a genus is keyed
+#     with its class, as ingest.py keys it).
+gfam = collections.defaultdict(set)
+for r in rows:
+    gfam[(r["class"], r["genus"])].add(r["family"])
+for r in table:
+    gfam[(r["class"], r["genus"])].add(r["family"])
+split = sorted(g for g, f in gfam.items() if len(f) > 1)
+refiled = list(csv.DictReader(open(os.path.join(HERE, "outputs",
+                                                "genus_families.csv"),
+                                   encoding="utf-8")))
+ok(not split and len(refiled) >= 50,
+   "every genus is filed under one family",
+   f"{len(gfam):,} genera, {len(refiled)} refiled (outputs/genus_families.csv)"
+   if not split else f"split: {split[:4]}")
+
+# 4c. D-92 d: every hand-listed pair is one record under its kept name, and
+#     its source says so: for a FishBase pair, the FishBase remark on the
+#     merged name names the kept one as its senior synonym.
+manual = list(csv.DictReader(open(ingest.SYNONYMS_MANUAL, encoding="utf-8")))
+if "--break" in sys.argv and "source" in sys.argv:
+    manual.append({"name_a": "Physeter catodon",
+                   "name_b": "Physeter macrocephalus",
+                   "kept": "Physeter macrocephalus",
+                   "source": "FishBase species table, Remark of Physeter "
+                             "catodon"})
+tnames = {r["sci"] for r in table}
+unmerged = []
+for m in manual:
+    gone_name = m["name_b"] if m["kept"] == m["name_a"] else m["name_a"]
+    if (gone_name in names_now or gone_name in tnames
+            or m["kept"] not in names_now or m["kept"] not in tnames):
+        unmerged.append(gone_name)
+ok(manual and not unmerged, "every hand-listed pair is one record, kept name",
+   f"{len(manual)} pairs" if not unmerged else f"unmerged: {unmerged}")
+import re                                             # noqa: E402
+import pandas as pd                                   # noqa: E402
+fb = pd.read_parquet(os.path.join(ingest.RAW, "fishbase_species.parquet"))
+remark = {f"{g} {sp}": re.sub(r"<[^>]+>", "", str(rm)).lower()
+          for g, sp, rm in zip(fb["Genus"], fb["Species"], fb["Remark"])}
+unsourced = []
+for m in manual:
+    gone_name = m["name_b"] if m["kept"] == m["name_a"] else m["name_a"]
+    if not m["source"].startswith("FishBase"):
+        unsourced.append((gone_name, "no checker for this source"))
+    elif not re.search(r"synonym\s+of\s+" + re.escape(m["kept"].lower()),
+                       remark.get(gone_name, "")):
+        unsourced.append((gone_name, "remark does not say so"))
+ok(not unsourced, "each hand-listed pair is stated by the source it cites",
+   "every FishBase remark checked" if not unsourced else f"{unsourced}")
+
 # 5. The corrections hold in the output, not only in the code.
 olm = merged_by.get("proteus anguinus", {})
-ok(olm and not {olm.get("wild_yr"), olm.get("captive_yr"),
-                olm.get("unknown_yr")} & {"68", "100", "102"},
-   "the olm carries no projected or mean age",
-   f"olm: {olm.get('unknown_yr') or olm.get('captive_yr')} yr, "
-   f"grade {olm.get('quality')}")
+olm_t = next((r for r in table if r["sci"] == "Proteus anguinus"), {})
+# D-92 a: Voituron et al.'s projection, as AnAge gives it, at grade C, in the
+# unrecorded column, with a note that opens by calling it a projection.
+ok(olm and olm.get("unknown_yr") == "102" and not olm.get("wild_yr")
+   and not olm.get("captive_yr") and olm.get("quality") == "C"
+   and olm.get("note", "").startswith("a projection, not an observed age")
+   and olm_t.get("quality") == "C",
+   "the olm carries the projected maximum, marked and out of the fits",
+   f"olm: {olm.get('unknown_yr')} yr, grade {olm.get('quality')}")
 cham = merged_by.get("furcifer labordi", {})
 ok(cham and float(cham["mass_g"]) == 8.73,
    "Labord's chameleon has the mass AnAge and Amniote record",

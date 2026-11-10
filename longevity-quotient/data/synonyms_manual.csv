@@ -1,0 +1,8 @@
+name_a,name_b,kept,source
+Pristis microdon,Pristis pristis,Pristis pristis,"FishBase species table (raw/fishbase_species.parquet), Remark of Pristis microdon: ""Synonym of Pristis pristis (Linnaeus, 1758) according to Faria et al., 2012 and Weigmann, 2016"""
+Pristis perotteti,Pristis pristis,Pristis pristis,"FishBase species table (raw/fishbase_species.parquet), Remark of Pristis perotteti: ""Synonym of Pristis pristis (Linnaeus, 1758) according to Faria et al., 2012 and Weigmann, 2016"""
+Conger japonicus,Conger myriaster,Conger myriaster,"FishBase species table (raw/fishbase_species.parquet), Remark of Conger japonicus: ""Junior synonym of Conger myriaster according to Smith et al."""
+Macruronus magellanicus,Macruronus novaezelandiae,Macruronus novaezelandiae,"FishBase species table (raw/fishbase_species.parquet), Remark of Macruronus magellanicus: ""Junior synonym of Macruronus novaezelandiae according to Olavarria et al. 2006"""
+Makaira mazara,Makaira nigricans,Makaira nigricans,"FishBase species table (raw/fishbase_species.parquet), Remark of Makaira mazara: ""This species is synonym of Makaira nigricans Lacepede, 1802 in Eschmeyer (CofF)"""
+Salmo cenerinus,Salmo marmoratus,Salmo marmoratus,"FishBase species table (raw/fishbase_species.parquet), Remark of Salmo cenerinus: ""This species is synonym of Salmo marmoratus Cuvier, 1829 in Eschmeyer (CofF)"""
+Salvelinus anaktuvukensis,Salvelinus malma,Salvelinus malma,"FishBase species table (raw/fishbase_species.parquet), Remark of Salvelinus anaktuvukensis: ""This species is synonym of Salvelinus malma (Walbaum, 1792) in Eschmeyer (CofF)"""

@@ -48,6 +48,7 @@ Clanga pomarina,Aquila pomarina,AVONET BirdLife–BirdTree,amniote,anage
 Coccyzus vieilloti,Saurothera vieilloti,same common name and epithet,amniote,anage
 Coelognathus helena,Elaphe helena,same common name and epithet,amniote,
 Coluber flagellum,Masticophis flagellum,same common name and epithet,amniote,anage
+Conger japonicus,Conger myriaster,hand list,fishbase,fishbase
 Coptodon rendalli,Tilapia rendalli,same common name and epithet,fishbase,anage
 Coptodon zillii,Tilapia zillii,same common name and epithet,fishbase,anage
 Corcorax melanorhamphos,Corcorax melanoramphos,same common name and epithet,amniote,anage
@@ -88,6 +89,8 @@ Ptilotula penicillata,Lichenostomus penicillatus,same common name and epithet,am
 Myzopsetta ferruginea,Limanda ferruginea,same common name and epithet,fishbase,anage
 Percalates novemaculeatus,Macquaria novemaculeata,same common name and epithet,fishbase,anage
 Macropus rufus,Osphranter rufus,same common name and epithet,amniote;anage;pantheria,seed
+Macruronus magellanicus,Macruronus novaezelandiae,hand list,fishbase,anage
+Makaira mazara,Makaira nigricans,hand list,fishbase,anage
 Malayopython reticulatus,Python reticulatus,same common name and epithet,amniote,anage
 Malayopython timoriensis,Python timoriensis,same common name and epithet,amniote,
 Strongylocentrotus franciscanus,Mesocentrotus franciscanus,same common name and epithet,anage,seed
@@ -108,6 +111,8 @@ Uncia uncia,Panthera uncia,same common name and epithet,amniote;anage;pantheria,
 Pipistrellus subflavus,Perimyotis subflavus,same common name and epithet,amniote;pantheria,anage
 Phylloscopus sibilatrix,Phylloscopus sibillatrix,same common name and epithet,amniote,anage
 Spermophilus franklinii,Poliocitellus franklinii,same common name and epithet,amniote,anage
+Pristis microdon,Pristis pristis,hand list,fishbase,anage
+Pristis perotteti,Pristis pristis,hand list,anage;fishbase,anage
 Pseudobatos productus,Rhinobatos productus,same common name and epithet,fishbase,anage
 Psiloscops flammeolus,Otus flammeolus,AVONET BirdLife–BirdTree,amniote,anage
 Psittacara erythrogenys,Aratinga erythrogenys,AVONET BirdLife–BirdTree,amniote,anage
@@ -116,7 +121,9 @@ Ptilotula fusca,Lichenostomus fuscus,AVONET BirdLife–BirdTree,amniote,anage
 Ptilotula ornata,Lichenostomus ornatus,AVONET BirdLife–BirdTree,amniote,anage
 Ptilotula penicillata,Lichenostomus penicillatus,AVONET BirdLife–BirdTree,amniote,anage
 Rostroraja texana,Raja texana,same common name and epithet,fishbase,anage
+Salmo cenerinus,Salmo marmoratus,hand list,fishbase,fishbase
 Salvator rufescens,Tupinambis rufescens,same common name and epithet,amniote,anage
+Salvelinus anaktuvukensis,Salvelinus malma,hand list,fishbase,fishbase
 Sargochromis carlottae,Serranochromis carlottae,same common name and epithet,fishbase,anage
 Selasphorus calliope,Stellula calliope,AVONET BirdLife–BirdTree,amniote,anage
 Selasphorus calliope,Stellula calliope,same common name and epithet,amniote,anage

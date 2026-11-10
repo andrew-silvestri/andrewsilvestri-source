@@ -4,16 +4,16 @@ The current build merges six sources that carry a lifespan (the hand-checked
 seed table, AnAge build 15, the Amniote life-history database, PanTHERIA,
 AmphiBIO and FishBase v25.04) and fills missing masses from AVONET, PanTHERIA
 and Amniote. README.md gives what each contributed. The merged table holds
-7,798 species, and this is what it is made of:
+7,791 species, and this is what it is made of:
 
 ```
 merged table by class:
     Mammalia         2586
-    Actinopterygii   1954
+    Actinopterygii   1948
     Aves             1898
     Reptilia          922
     Amphibia          207
-    Chondrichthyes    143
+    Chondrichthyes    141
     Insecta            19
     Petromyzontida     19
     Malacostraca        7
@@ -175,11 +175,14 @@ on arrival.
 
 ### AnAge — merged
 
-Build 15: 4,141 records with a lifespan, 3,465 used as the record (it ranks
+Build 15: 4,141 records with a lifespan, 3,466 used as the record (it ranks
 second, after the seed table). Graded from its own *Data quality* field: high
 is A, acceptable B, questionable or low C. Its *Sample size* field is not used.
 Its limitation is structural: one longevity figure per species, so after the
-merge only 308 of the 7,798 species carry both a wild and a captive maximum.
+merge only 308 of the 7,791 species carry both a wild and a captive maximum.
+It has no synonym field. Its olm figure, 102 years, is Voituron et al.'s
+2011 projection filed as a wild maximum; the merge carries it as a
+projection at grade C.
 
 ### Amniote Life History Database — merged
 
@@ -197,15 +200,23 @@ second variable in life-history theory, which the model does not yet use.
 ### FishBase — merged, graded C
 
 v25.04, read from rOpenSci's parquet snapshot: 2,088 species with a maximum
-age, 1,210 used as the record. FishBase does carry a **`LongevityWild`** field,
+age, 1,203 used as the record. FishBase does carry a **`LongevityWild`** field,
 but the age taken is the largest of that, the per-population maximum and the
-growth-curve tmax, and 622 masses are computed from maximum length, so every
+growth-curve tmax, and 620 masses are computed from maximum length, so every
 FishBase row is grade C: shown, and held out of the fits. The fish fit
 (r² = 0.57 over 893 species) comes from the seed table and AnAge. Fish hold a
 disproportionate share of the extremes — *Somniosus microcephalus* (Greenland
 shark) at 392 years, *Sebastes aleutianus* (rougheye rockfish) at 205,
 *Hoplostethus atlanticus* (orange roughy) at 149, *Ictiobus cyprinellus*
 (bigmouth buffalo) at 112.
+
+Its species table also carries a *Remark* field, where FishBase records when
+a name it still lists is a synonym of another ("Junior synonym of *Conger
+myriaster*"). That is the source of all seven pairs in
+`data/synonyms_manual.csv`, each quoted there; a remark that only says
+"possibly" or "questionably" a synonym is not used. Nor is one that records dissent: *Istiophorus albicans*, a synonym in
+Eschmeyer by its remark, which adds that "several authors consider it as a
+valid species", stays a species of its own.
 
 Fish ages come from otolith annuli and bomb-radiocarbon dating, both far more
 reliable than captive maxima. **Fish are the one vertebrate group where more
@@ -220,7 +231,7 @@ traits and IUCN status. Not merged.
 
 **AmphiBIO** (*Scientific Data*, 2017): 17 traits for **6,775 amphibian
 species** across all three orders, from 1,500+ sources. Merged: 359 carry a
-maximum longevity and 117 are used as the record, all graded C because
+maximum longevity and 116 are used as the record, all graded C because
 AmphiBIO has no origin field.
 
 It did not rescue the amphibian fit. On the 81 grade-A and B amphibians, all
