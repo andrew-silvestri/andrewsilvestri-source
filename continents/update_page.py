@@ -25,6 +25,9 @@ import os
 import re
 import sys
 
+WORDS = ["zero", "one", "two", "three", "four", "five", "six", "seven", "eight",
+         "nine", "ten", "eleven", "twelve"]
+
 HERE = os.path.dirname(os.path.abspath(__file__))
 ROOT = os.path.abspath(os.path.join(HERE, ".."))
 SITE = os.path.join(ROOT, "site")
@@ -166,7 +169,40 @@ def values(P):
                 if oldest_of[name] >= far["age"]
                 and m["lat"][i_far] is not None]
         if len(lats) >= 2:
+            if (max(lats) - min(lats)) * km_deg > far_lat_km:
+                far_lat_place = tr["place"]
             far_lat_km = max(far_lat_km, (max(lats) - min(lats)) * km_deg)
+    # D-84 c: "Most of that is in longitude" is about the widest pair itself,
+    # so find that pair (great circle at the same radius) and its latitude gap.
+    import math
+    rad = P["antipodal_km"] / math.pi
+    pair = (0.0, 0.0, "")
+    for tr in past["tracks"]:
+        ms = [m for name, m in tr["models"].items()
+              if oldest_of[name] >= far["age"] and m["lat"][i_far] is not None]
+        for x in range(len(ms)):
+            for y in range(x + 1, len(ms)):
+                p1, p2 = [(math.radians(m["lat"][i_far]), math.radians(m["lon"][i_far]))
+                          for m in (ms[x], ms[y])]
+                h = (math.sin((p2[0] - p1[0]) / 2) ** 2 + math.cos(p1[0]) * math.cos(p2[0])
+                     * math.sin((p2[1] - p1[1]) / 2) ** 2)
+                d = 2 * rad * math.asin(min(1.0, math.sqrt(h)))
+                if d > pair[0]:
+                    pair = (d, abs(ms[x]["lat"][i_far] - ms[y]["lat"][i_far]) * km_deg,
+                            tr["place"])
+    if abs(pair[0] - far["max_km"]) > 0.01 * far["max_km"]:
+        raise SystemExit(f"widest pair {pair[0]:.0f} km is not past.spread's {far['max_km']:.0f}")
+    if not pair[1] < far["max_km"] / 2:
+        raise SystemExit("the widest pair is no longer mostly longitude; rewrite 'Most of that'")
+    # D-84 d, e: counts the figures draw, read from fig_continents.py's source
+    # (not imported: it pulls in matplotlib) so the prose cannot drift from them.
+    fsrc = open(os.path.join(os.path.dirname(os.path.abspath(__file__)), "fig_continents.py"),
+                encoding="utf-8").read()
+    label_at = set(re.findall(r'"([A-Z]{2})": \(', re.search(r"LABEL_AT = \{(.*?)\}", fsrc, re.S).group(1)))
+    fan = re.findall(r'"([^"]+)"', re.search(r"FAN_PLACES = \((.*?)\)", fsrc, re.S).group(1))
+    n_labelled = sum(1 for r in pres["plates"] if r["plate"] in label_at)
+    if not set(fan) <= {t["place"] for t in past["tracks"]}:
+        raise SystemExit("a figure place is not among the places asked")
     steps = []
     for r in sorted(past["spread"], key=lambda r: r["age"]):
         if steps and steps[-1][0] == r["n_models_in_range"]:
@@ -247,6 +283,15 @@ def values(P):
         "past_near_lo_km": fmt(int(near["min_of_max_km"])),
         "past_near_hi_km": fmt(int(near["max_km"])),
         "past_far_lat_km": fmt(int(round(far_lat_km))),
+        "past_far_pair_lat_km": fmt(int(round(pair[1]))),
+        "past_far_pair_place": pair[2],
+        "past_far_lat_place": far_lat_place,
+        "n_fan_word": WORDS[len(fan)],
+        "n_models_word": WORDS[len(past["models"])],
+        "N_models_word": WORDS[len(past["models"])].capitalize(),
+        "N_plates_word": WORDS[pres["n_plates_fitted"]].capitalize(),
+        "n_labelled_word": WORDS[n_labelled],
+        "N_labelled_word": WORDS[n_labelled].capitalize(),
         "model_count_steps": model_steps,
         "sydney_line": sydney_line(P),
         "common_age": fmt(fut["common_age"]),
