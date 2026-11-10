@@ -16,7 +16,7 @@ Each --break replays the fault the check exists for and must exit 1.
 2. effort: the effort-corrected run reproduced the audit's V3/family figures
    on the table before the D-56 b data corrections (qa-audit/
    lq_rev_rerun_out.txt, run by QA with its own script): birds against
-   mammals 1.79, mammal at 1 kg 13.6 yr, mammal slope 0.190, human 4.13,
+   mammals 1.79, mammal at 1 kg 13.6 yr, mammal slope 0.190, human 4.12,
    Brandt's bat 7.76, naked mole-rat 4.32; the cruder bound (V2, thin-effort
    records left out) 1.45, 0.120, human 4.30, Brandt's bat 4.30, naked
    mole-rat 2.68, bats 1.48. The same code with the named demotion switched
@@ -88,7 +88,7 @@ def main(brk=None):
     want = [("birds vs mammals at 1 kg", ec["bird_mammal_1kg"], 1.786, .005),
             ("mammal at 1 kg, yr", ec["mammal_1kg_yr"], 13.53, .05),
             ("mammal slope", ec["mammal_b"], .190, .0005),
-            ("human", ec["species"]["Human"], 4.130, .005),
+            ("human", ec["species"]["Human"], 4.124, .005),  # 4.130 before the cane rat was demoted by name (D-92 b)
             ("Brandt's bat", ec["species"]["Brandt's bat"], 7.789, .005),
             ("naked mole-rat", ec["species"]["Naked mole-rat"], 4.336, .005)]
     bats = {o[0]: o[1] for o in dr["orders"]}.get("Chiroptera", 0)

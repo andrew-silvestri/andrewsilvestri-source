@@ -102,12 +102,12 @@ both, and 3,417 carry a maximum whose source does not say.
   seed rows, and the outlier demotions below.
 
 AnAge's sample-size field is not used. On arrival the grades are A 145, B 6,217,
-C 1,436. One record is demoted by name first (`DEMOTE_BY_NAME` in
-`build_lq.py`: the toolache wallaby, below). A preliminary fit per group then
+C 1,436. Two records are demoted by name first (`DEMOTE_BY_NAME` in
+`build_lq.py`: the toolache wallaby and the lesser cane rat, below). A preliminary fit per group then
 demotes any grade-B record more than 3 residual standard deviations from it,
 in either direction: 58 records (31 mammals, 10 birds, 8 fish, 8 reptiles, 1
 amphibian). The four colonies (one B, three C) are held out of everything, so
-the model runs on A 145, B 6,157, C 1,492.
+the model runs on A 145, B 6,156, C 1,493.
 
 ## The fits
 
@@ -174,6 +174,9 @@ with its reason recorded where it is applied:
 - The toolache wallaby's 13 months at 10 kg (Amniote, grade B) is very likely
   a data error that fell 0.006 log units inside the outlier cut. No other source
   here records its lifespan, so it is demoted to C by name, not replaced.
+- The lesser cane rat's 10 months at 2.3 kg (Amniote, grade B) is the same kind
+  of likely error, just inside the cut; demoted to C by name the same way
+  (2026-11-10).
 - The olm's 100 years in the seed table is Voituron et al.'s projection
   (*Biology Letters* 7:105, 2011, about 102 years), its "wild" 68 is their mean
   adult lifespan in a laboratory population, and AnAge's 102 years is the same

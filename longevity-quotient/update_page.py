@@ -252,16 +252,24 @@ def arithmetic_section(summary, rows):
     # D-29 item 7, D-56 b: records demoted by name (build_lq.DEMOTE_BY_NAME)
     tab = {r["scientific_name"]: r for r in rows}
     named = []
+    label = {"Macropus greyi": ("toolache wallaby", 0),
+             "Thryonomys gregorianus": ("lesser cane rat", 1)}
+    bits = []
     for sci in o["demoted_by_name"]:
         r = tab[sci]
-        if sci != "Macropus greyi":
+        if sci not in label:
             raise SystemExit(f"arithmetic: no sentence for {sci} demoted by name")
+        nm, d = label[sci]
+        yr = r["unknown_yr"] or r.get("maximum") or ""
+        bits.append(f"{float(yr) * 12:.0f} months for the "
+                    f"{float(r['mass_g']) / 1000:.{d}f}&nbsp;kg {nm}")
+    if bits:
+        k = len(bits)
         named.append(
-            f"One more record is demoted by name before the preliminary fit, "
-            f"with its reason in its note: the Amniote compilation&rsquo;s "
-            f"{float(r['unknown_yr']) * 12:.0f} months for the "
-            f"{float(r['mass_g']) / 1000:.0f}&nbsp;kg toolache wallaby, very "
-            f"likely an error of the same kind, for which no other source "
+            f"{'One more record is' if k == 1 else _n(k).capitalize() + ' more records are'} "
+            f"demoted by name before the preliminary fit, with the reason in "
+            f"each note: the Amniote compilation&rsquo;s {' and its '.join(bits)}, "
+            f"very likely errors of the same kind, for which no other source "
             f"here records a lifespan.")
 
     lines = []

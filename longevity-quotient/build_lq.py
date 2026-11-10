@@ -337,6 +337,10 @@ DEMOTE_BY_NAME = {
     "Macropus greyi": "Amniote's 13 months for a 10 kg wallaby is very "
                       "likely a unit or field error; no other source here "
                       "records its lifespan",
+    "Thryonomys gregorianus": "Amniote's 10 months for a 2.3 kg cane rat is "
+                              "very likely the same kind of error, just inside "
+                              "the outlier cut; no other source here records "
+                              "its lifespan (D-92 b, 2026-11-10)",
 }
 
 
