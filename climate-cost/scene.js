@@ -1118,7 +1118,7 @@
       ' km' + (road ? ' on a short-haul flight' : ' in an average car') +
       '. Grid: ' + D.regions[o].grid.toFixed(2) +
       ' kg/kWh where it is made, ' + D.regions[d].grid.toFixed(2) +
-      ' where it is eaten.' +
+      ' where it is used.' +
       (r.cut ? ' ' + fmt(r.cut) + ' kg dropped below the ' +
         (CUT * 100).toFixed(2) + '% cutoff.' : '');
 
