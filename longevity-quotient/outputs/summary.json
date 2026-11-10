@@ -1,8 +1,8 @@
 {
-  "n_species": 7790,
+  "n_species": 7791,
   "n_colonial_excluded_from_fits": 4,
   "grade_census": {
-    "C": 1485,
+    "C": 1486,
     "B": 6156,
     "A": 145
   },
@@ -85,7 +85,7 @@
     }
   },
   "origin_census": {
-    "wild": 2888,
+    "wild": 2889,
     "captive": 1795,
     "unrecorded": 3415
   },

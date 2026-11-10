@@ -18,7 +18,7 @@ Every number below is from the current build: `outputs/summary.json`,
 |---|---|
 | `data/animals.csv` | the hand-checked seed table, 417 rows |
 | `data/ingest.py` | merges the seed with five databases, merges synonyms, files each genus under one family and applies the recorded corrections; writes `data/animals_merged.csv`, `outputs/provenance.csv`, `outputs/synonyms.csv`, `outputs/genus_families.csv`, `outputs/ingest_report.json` |
-| `data/animals_merged.csv` | the merged table, 7,790 species |
+| `data/animals_merged.csv` | the merged table, 7,791 species |
 | `data/synonyms_manual.csv` | the hand list of synonym pairs: both names, the name kept, and the source in this archive that states the synonymy, quoted |
 | `data/anage_sample.py`, `data/anage_sample.csv` | AnAge's own sample-size band per species, from the raw zip; `build_lq.py`'s study-effort check reads the CSV |
 | `build_lq.py` | the fits, the quotients, the group summaries, the figures and the visualiser |
@@ -69,7 +69,7 @@ record from the highest in this order and lists the others as corroboration.
 | Amniote life-history database | 5,500 | 2,590 |
 | PanTHERIA | 1,013 | 0 |
 | AmphiBIO | 359 | 116 |
-| FishBase v25.04 | 2,088 | 1,202 |
+| FishBase v25.04 | 2,088 | 1,203 |
 
 Two binomials are one species when they carry the same common name in the
 same class and their epithets agree (once the Latin gender ending is set
@@ -77,16 +77,16 @@ aside, or to within one letter for epithets of six letters or more), or when
 AVONET's BirdLife-eBird or BirdLife-BirdTree crosswalk pairs them one to one;
 never when one source lists both. A third route is the hand list,
 `data/synonyms_manual.csv`: a pair is listed only where a source in this
-archive states the synonymy in its own words, quoted in the file (all eight
+archive states the synonymy in its own words, quoted in the file (all seven
 so far are FishBase remarks, such as *Pristis microdon* and *P. perotteti*
 as synonyms of *Pristis pristis*), and a listed pair is merged even where
 that source carries both names. The merged record is the one the precedence
 order picks, under its own name (a hand-listed pair takes the name the list
-keeps), with the other name in its note. That folds 116 second names into
-114 species (`outputs/synonyms.csv`).
+keeps), with the other name in its note. That folds 115 second names into
+113 species (`outputs/synonyms.csv`).
 
-8,463 species carried a lifespan after the merge. 673 had no body mass in any
-source and were dropped, which leaves 7,790. Masses come from the record's own
+8,464 species carried a lifespan after the merge. 673 had no body mass in any
+source and were dropped, which leaves 7,791. Masses come from the record's own
 source where it has one. AVONET (birds only), PanTHERIA and Amniote together
 hold a mass for 14,673 species. 557 records took a mass from elsewhere: 542
 from another lifespan record of the same species (468 AnAge records from
@@ -96,7 +96,7 @@ masses are computed from maximum length through FishBase's length-weight
 relationship, and their notes say so.
 
 The table spans 10 phyla, 32 classes, 199 orders, 751 families and 2,896
-genera, from a rotifer at 0.5 µg to a blue whale at 150 tonnes. 2,888 species
+genera, from a rotifer at 0.5 µg to a blue whale at 150 tonnes. 2,889 species
 have a maximum their source labels wild, 1,795 one it labels captive, 308 have
 both, and 3,415 carry a maximum whose source does not say.
 
@@ -118,12 +118,12 @@ its families before and the source that decided.
   below.
 
 AnAge's sample-size field is not used. On arrival the grades are A 145, B 6,217,
-C 1,428. Two records are demoted by name first (`DEMOTE_BY_NAME` in
+C 1,429. Two records are demoted by name first (`DEMOTE_BY_NAME` in
 `build_lq.py`: the toolache wallaby and the lesser cane rat, below). A preliminary fit per group then
 demotes any grade-B record more than 3 residual standard deviations from it,
 in either direction: 58 records (31 mammals, 10 birds, 8 fish, 8 reptiles, 1
 amphibian). The four colonies (one B, three C) are held out of everything, so
-the model runs on A 145, B 6,156, C 1,485.
+the model runs on A 145, B 6,156, C 1,486.
 
 ## The fits
 
@@ -177,7 +177,7 @@ with its reason recorded where it is applied:
   twice (*Centrochelys* and *Geochelone sulcata*; the pink cockatoo and Major
   Mitchell's cockatoo, *Cacatua* and *Lophochroa leadbeateri*). `ingest.py`
   now merges them by the two rules and the hand list under The data. After the
-  merge, 32 common names are still carried by two or more binomials, for 26 of
+  merge, 33 common names are still carried by two or more binomials, for 26 of
   them at least two copies grade A or B (`update_page.py` counts them): species
   one source splits and another does not, distinct species that share a name,
   and possibly a few synonyms that no rule joins and no source here states,
@@ -232,7 +232,7 @@ which keep six significant figures.
 ## Licences of the data
 
 AnAge is CC BY 3.0. HAGR asks users to cite de Magalhães et al., *Nucleic Acids
-Research* 52:D900, 2024. FishBase is CC BY-NC 4.0, so the 1,202 rows with
+Research* 52:D900, 2024. FishBase is CC BY-NC 4.0, so the 1,203 rows with
 `taken_from = fishbase` in `outputs/provenance.csv` carry its non-commercial
 term. For the other sources, see their own terms; `DATA_SOURCES.md` links each
 one.

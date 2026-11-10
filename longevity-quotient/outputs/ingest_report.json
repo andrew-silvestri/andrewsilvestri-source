@@ -8,25 +8,25 @@
     "fishbase": 2088
   },
   "kept_by_source": {
-    "fishbase": 1202,
+    "fishbase": 1203,
     "anage": 3466,
     "seed": 416,
     "amphibio": 116,
     "amniote": 2590
   },
   "grades": {
-    "C": 1428,
+    "C": 1429,
     "B": 6217,
     "A": 145
   },
   "origins": {
     "unrecorded": 3415,
-    "wild": 2580,
+    "wild": 2581,
     "captive": 1487,
     "wild+captive": 308
   },
   "classes": {
-    "Actinopterygii": 1948,
+    "Actinopterygii": 1949,
     "Amphibia": 207,
     "Anthozoa": 3,
     "Arachnida": 5,
@@ -60,11 +60,11 @@
     "Thecostraca": 1
   },
   "mass_index": 14673,
-  "species_with_a_lifespan": 8463,
+  "species_with_a_lifespan": 8464,
   "mass_filled": 557,
   "mass_modelled_from_length": 620,
   "dropped_no_mass": 673,
-  "synonyms_merged": 120,
+  "synonyms_merged": 119,
   "corrections": [
     {
       "source": "anage",
@@ -99,7 +99,7 @@
     }
   ],
   "genera_refiled_to_one_family": 50,
-  "final": 7790,
+  "final": 7791,
   "citations": {
     "seed": "Hand-checked records, sourced individually on the page.",
     "anage": "Tacutu et al., Nucleic Acids Research 46:D1083, 2018. AnAge build 15.",

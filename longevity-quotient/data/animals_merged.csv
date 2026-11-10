@@ -869,7 +869,8 @@ Inimicus japonicus,Inimicus japonicus,Animalia,Chordata,Actinopterygii,Perciform
 Butter sole,Isopsetta isolepis,Animalia,Chordata,Actinopterygii,Pleuronectiformes,Pleuronectidae,Isopsetta,2265.29,11,,,no,B,
 Goldman's goby,Istigobius goldmanni,Animalia,Chordata,Actinopterygii,Gobiiformes,Gobiidae,Istigobius,4.26057,,,1.08,no,C,"mass estimated from maximum length by FishBase's length-weight relationship, not weighed"
 Black marlin,Istiompax indica,Animalia,Chordata,Actinopterygii,Carangiformes,Istiophoridae,Istiompax,750000,,,11,no,C,
-Atlantic sailfish,Istiophorus platypterus,Animalia,Chordata,Actinopterygii,Perciformes,Istiophoridae,Istiophorus,55110,13,,,no,B,also listed as Istiophorus albicans
+Atlantic sailfish,Istiophorus albicans,Animalia,Chordata,Actinopterygii,Carangiformes,Istiophoridae,Istiophorus,58100,3.5,,,no,C,
+Atlantic sailfish,Istiophorus platypterus,Animalia,Chordata,Actinopterygii,Perciformes,Istiophoridae,Istiophorus,55110,13,,,no,B,
 Indian perch,Jaydia lineata,Animalia,Chordata,Actinopterygii,Kurtiformes,Apogonidae,Jaydia,15.2,,,5,no,C,
 Sin croaker,Johnius dussumieri,Animalia,Chordata,Actinopterygii,Eupercaria/misc,Sciaenidae,Johnius,689.167,,,6.7,no,C,"mass estimated from maximum length by FishBase's length-weight relationship, not weighed"
 Pale spotfin croaker,Johnius glaucus,Animalia,Chordata,Actinopterygii,Eupercaria/misc,Sciaenidae,Johnius,257,,,30,no,C,
