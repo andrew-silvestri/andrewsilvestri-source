@@ -63,7 +63,9 @@ EXPECTED = {
     "cheese":            (11, 30,  "P&N cheese, 21 median"),
     "chicken":           (3, 12,   "P&N poultry, 6 median"),
     "rice":              (2.5, 6,  "P&N rice, 4 median"),
-    "coffee":            (2.5, 30, "P&N roasted, wide; wet-processed low end"),
+    # Floor 2.4, was 2.5 (D-57 a follow-up, 2026-11-10): the whole-animal
+    # allocation puts coffee at 2.46. Neither bound has a source (QA F11).
+    "coffee":            (2.4, 30, "P&N roasted, wide; wet-processed low end; floor unsourced"),
     "tomato_greenhouse": (2, 8,    "heated glasshouse, northern Europe"),
     "tomato_field":      (0.3, 1.5,"P&N field tomato, 0.7-2.1 incl. glasshouse"),
     "banana":            (0.5, 1.5,"P&N bananas, 0.9 median"),

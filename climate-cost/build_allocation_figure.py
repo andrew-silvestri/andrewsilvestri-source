@@ -156,7 +156,7 @@ def compute(panel):
 # The source note under the figure. Both renders print it; the 714 keeps its
 # hand-set breaks, the 350 breaks it by measured width (_fill).
 FOOT = ("Spread = highest ÷ lowest total across the published bases shown; the model’s assumed\n"
-        "2.2% and the 100% no-allocation case are drawn grey and not counted. Bars: the shipped\n"
+        "2.2% and the 100% case (no split between milk and meat) are drawn grey and not counted. Bars: the shipped\n"
         "default in dark blue, published alternatives in light blue. Milk–meat factors: Flysjö,\n"
         "Cederberg, Henriksson & Ledgard 2011, Int J LCA 16:420, Table 1; IDF Bulletin 479 (2015)\n"
         "pp. 35–36. Hide factors: Lunesu et al. 2025, Animals 15:3546. Every bar is one run of\n"
