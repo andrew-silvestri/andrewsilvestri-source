@@ -1,0 +1,51 @@
+class,genus,families_before,family,decided_by,decided_by_counts,tie_broken_alphabetically,records_refiled
+Actinopterygii,Alosa,Clupeidae 10; Alosidae 5,Clupeidae,anage,Clupeidae 11,no,5
+Actinopterygii,Barbatula,Balitoridae 1; Nemacheilidae 1,Balitoridae,anage,Balitoridae 1,no,1
+Actinopterygii,Cephalopholis,Epinephelidae 11; Serranidae 1,Serranidae,anage,Serranidae 1,no,11
+Actinopterygii,Ciliata,Gadidae 1; Gaidropsaridae 1,Gadidae,anage,Gadidae 1,no,1
+Actinopterygii,Clupeonella,Ehiravidae 5; Clupeidae 1,Clupeidae,anage,Clupeidae 1,no,5
+Actinopterygii,Epinephelus,Epinephelidae 18; Serranidae 8,Serranidae,anage,Serranidae 8,no,18
+Actinopterygii,Helicolenus,Sebastidae 3; Scorpaenidae 1,Scorpaenidae,anage,Scorpaenidae 1,no,3
+Actinopterygii,Hydrocynus,Alestidae 1; Alestiidae 1,Alestiidae,anage,Alestiidae 1,no,1
+Actinopterygii,Lates,Latidae 5; Centropomidae 1,Centropomidae,anage,Centropomidae 1,no,5
+Actinopterygii,Leuciscus,Leuciscidae 5; Cyprinidae 1,Leuciscidae,anage,Cyprinidae 1; Leuciscidae 2,no,1
+Actinopterygii,Molva,Gadidae 1; Lotidae 1,Gadidae,anage,Gadidae 2,no,1
+Actinopterygii,Mycteroperca,Epinephelidae 4; Serranidae 2,Serranidae,anage,Serranidae 2,no,4
+Actinopterygii,Nemadactylus,Cheilodactylidae 1; Latridae 1,Cheilodactylidae,anage,Cheilodactylidae 1,no,1
+Actinopterygii,Notropis,Leuciscidae 22; Cyprinidae 1,Leuciscidae,anage,Cyprinidae 1; Leuciscidae 20,no,1
+Actinopterygii,Phycis,Gadidae 1; Phycidae 1,Gadidae,anage,Gadidae 1,no,1
+Actinopterygii,Plectropomus,Epinephelidae 4; Serranidae 1,Serranidae,anage,Serranidae 1,no,4
+Actinopterygii,Rhinichthys,Leuciscidae 2; Cyprinidae 1,Leuciscidae,anage,Cyprinidae 1; Leuciscidae 2,no,1
+Actinopterygii,Rhodeus,Acheilognathidae 1; Cyprinidae 1,Cyprinidae,anage,Cyprinidae 1,no,1
+Actinopterygii,Sardinella,Dorosomatidae 5; Clupeidae 3,Clupeidae,anage,Clupeidae 3,no,5
+Actinopterygii,Sebastes,Scorpaenidae 46; Sebastidae 13,Sebastidae,seed,Sebastidae 3,no,46
+Actinopterygii,Urophycis,Gadidae 1; Phycidae 1,Gadidae,anage,Gadidae 1,no,1
+Amphibia,Agalychnis,Hylidae 1; Phyllomedusidae 1,Hylidae,seed,Hylidae 1,no,1
+Amphibia,Typhlonectes,Caeciliidae 1; Typhlonectidae 1,Typhlonectidae,seed,Typhlonectidae 1,no,1
+Aves,Ammodramus,Emberizidae 7; Passerellidae 1,Emberizidae,anage,Emberizidae 5; Passerellidae 1,no,1
+Aves,Amphispiza,Emberizidae 1; Passerellidae 1,Passerellidae,anage,Passerellidae 1,no,1
+Aves,Artemisiospiza,Emberizidae 1; Passerellidae 1,Passerellidae,anage,Passerellidae 1,no,1
+Aves,Cacatua,Psittacidae 11; Cacatuidae 2,Cacatuidae,seed,Cacatuidae 1,no,11
+Aves,Junco,Passerellidae 2; Emberizidae 1,Passerellidae,anage,Passerellidae 2,no,1
+Aves,Spizella,Passerellidae 4; Emberizidae 1,Passerellidae,anage,Passerellidae 4,no,1
+Aves,Zonotrichia,Passerellidae 4; Emberizidae 2,Passerellidae,anage,Passerellidae 4,no,2
+Mammalia,Berardius,Hyperoodontidae 1; Ziphiidae 1,Hyperoodontidae,anage,Hyperoodontidae 1,no,1
+Mammalia,Callithrix,Cebidae 9; Callitrichidae 4,Callitrichidae,seed,Callitrichidae 1,no,9
+Mammalia,Choloepus,Choloepodidae 1; Megalonychidae 1,Choloepodidae,seed,Choloepodidae 1,no,1
+Mammalia,Hyperoodon,Hyperoodontidae 1; Ziphiidae 1,Hyperoodontidae,anage,Hyperoodontidae 1,no,1
+Mammalia,Leontopithecus,Callitrichidae 3; Cebidae 1,Callitrichidae,anage,Callitrichidae 3,no,1
+Mammalia,Mesoplodon,Ziphiidae 2; Hyperoodontidae 1,Hyperoodontidae,anage,Hyperoodontidae 1,no,2
+Mammalia,Miniopterus,Vespertilionidae 10; Miniopteridae 1,Miniopteridae,anage,Miniopteridae 1,no,10
+Mammalia,Propithecus,Indridae 4; Indriidae 3,Indriidae,anage,Indriidae 3,no,4
+Mammalia,Saguinus,Callitrichidae 8; Cebidae 8,Callitrichidae,anage,Callitrichidae 8,no,8
+Reptilia,Charina,Boidae 1; Charinidae 1,Charinidae,anage,Charinidae 1,no,1
+Reptilia,Clelia,Colubridae 1; Dipsadidae 1,Colubridae,anage,Colubridae 1,no,1
+Reptilia,Eryx,Boidae 2; Erycidae 2,Erycidae,anage,Erycidae 5,no,2
+Reptilia,Gerrhosaurus,Gerrhosauridae 3; Cordylidae 1,Cordylidae,anage,Cordylidae 2,no,3
+Reptilia,Heterodon,Colubridae 2; Dipsadidae 2,Colubridae,anage,Colubridae 2,no,2
+Reptilia,Hypsiglena,Dipsadidae 4; Colubridae 1,Colubridae,anage,Colubridae 1,no,4
+Reptilia,Natrix,Colubridae 1; Natricidae 1,Colubridae,anage,Colubridae 1,no,1
+Reptilia,Nerodia,Colubridae 3; Natricidae 2,Colubridae,anage,Colubridae 3,no,2
+Reptilia,Sceloporus,Phrynosomatidae 6; Iguanidae 3,Iguanidae,anage,Iguanidae 3,no,6
+Reptilia,Storeria,Colubridae 2; Natricidae 2,Colubridae,anage,Colubridae 2,no,2
+Reptilia,Thamnophis,Colubridae 9; Natricidae 7,Colubridae,seed,Colubridae 1,no,7

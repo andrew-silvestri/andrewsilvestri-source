@@ -39,7 +39,8 @@ SOURCE_ROWS = [
     ("seed", "Hand-checked seed table",
      "Entered by hand, one species at a time; 88 of its rows are graded A. "
      "It includes growth-rate estimates as well as observed ages, and a "
-     "projected age for the olm that the merge does not use."),
+     "projected age for the olm, which the merge carries only as a "
+     "projection, at grade C and out of the fits."),
     ("anage", "AnAge build 15",
      "The curated standard, with its own quality grade and a distinction "
      "between wild and captive. The model keeps both and does not overwrite "
@@ -359,6 +360,32 @@ def data_section(summary, report, rows):
            if s["kept_record_source"]]
     syn_names = {s["merged_name"] for s in syn}
     syn_species = {s["kept_as"] for s in syn}
+    # D-92 d: pairs from the hand list, each with a source in the tree
+    hand = {s["merged_name"] for s in syn if s["rule"] == "hand list"}
+    if not hand:
+        raise SystemExit("data: the hand list merged nothing")
+    # D-92 c: every genus filed under two families takes one
+    refiled = list(csv.DictReader(open(os.path.join(OUT,
+                                                    "genus_families.csv"),
+                                       encoding="utf-8")))
+    if not any(g["genus"] == "Sebastes" for g in refiled):
+        raise SystemExit("data: Sebastes is no longer among the refiled "
+                         "genera")
+    fam_of = collections.defaultdict(set)
+    for r in tab:
+        fam_of[(r["class"], r["genus"])].add(r["family"])
+    if any(len(v) > 1 for v in fam_of.values()):
+        raise SystemExit("data: a genus is still filed under two families")
+    # the examples the paragraph names
+    names = {r["sci"] for r in tab}
+    if not ({"Pristis pristis"} <= names
+            and not names & {"Pristis microdon", "Pristis perotteti"}):
+        raise SystemExit("data: the sawfish names are no longer merged")
+    if not {"Physeter catodon", "Physeter macrocephalus"} <= names:
+        raise SystemExit("data: the sperm whale is no longer under two names")
+    if {r["family"] for r in tab if r["genus"] == "Epinephelus"} != {
+            "Serranidae"}:
+        raise SystemExit("data: Epinephelus is no longer filed in Serranidae")
     names = {r["sci"] for r in tab}
     for want in ("Centrochelys sulcata", "Cacatua leadbeateri"):
         if want not in names:
@@ -376,15 +403,25 @@ tortoise, as both <i>Centrochelys</i> and <i>Geochelone sulcata</i>, is merged
 into one record before anything is fitted. Two names are merged when they
 carry the same common name and their species epithets agree, or when the
 crosswalk between bird taxonomies in AVONET pairs them one to one, which is
-how the pink cockatoo and Major Mitchell&rsquo;s cockatoo become one bird. The
+how the pink cockatoo and Major Mitchell&rsquo;s cockatoo become one bird.
+{_n(len(hand)).capitalize()} more names are merged by a hand list, each pair
+only where a source here states the synonymy in its own words: FishBase&rsquo;s
+remarks file the largetooth sawfish&rsquo;s two other names under
+<i>Pristis pristis</i>, for example. The
 merged record takes its numbers from the best source, like any other, and
 keeps the other name in its note. The merge folded {fmt(len(syn_names))}
 second names into {fmt(len(syn_species))} species. After the merge, {fmt(len(multi))} common
 names are still carried by two or more binomials. Some are species that one
 source splits in two and another does not, some are distinct species that
-share a name, and a few may be one species under two names that neither rule
-joins; for {fmt(in_fits)} of those names, at least two copies are grade A or
-B and enter the fits.</p>
+share a name, and a few may be one species under two names that no rule
+joins and no source here states, such as the sperm whale as both
+<i>Physeter catodon</i> and <i>P.&nbsp;macrocephalus</i>; for {fmt(in_fits)} of
+those names, at least two copies are grade A or B and enter the fits.
+Where the sources file one genus under two families, as they do for
+{fmt(len(refiled))} genera here, every species of the genus takes the family
+that its highest-ranked source gives, so the groupers of <i>Epinephelus</i>
+are scored with Serranidae, as AnAge files them, not split between it and
+Epinephelidae.</p>
 
 <p>Then there is the question of where the animal lived.
 {fmt(wild)} species have a maximum that their source labeled wild, {fmt(cap)}
@@ -420,6 +457,7 @@ NICK = {
     "Testudines": "the turtles of", "Vespertilionidae": "the evening bats of",
     "Rhinolophidae": "the horseshoe bats of", "Sebastidae": "the rockfishes of",
     "Scorpaenidae": "the scorpionfishes of", "Hylobatidae": "the gibbons of",
+    "Cebidae": "the capuchins and squirrel monkeys of",
     "Phyllostomidae": "the leaf-nosed bats of",
     "Natalidae": "the funnel-eared bats of",
     "Urodela": "the salamanders and newts of", "Anura": "the frogs and toads of",
@@ -534,6 +572,12 @@ def groups_paragraph(groups, table=None):
                 f"file partly under Sebastidae and partly under "
                 f"Scorpaenidae. Without the rockfishes, the family comes to "
                 f"{gm:.2f}. ")
+    # D-92 c: the nickname is true only while the family holds capuchins and
+    # squirrel monkeys alone (marmosets and tamarins are Callitrichidae).
+    if table is not None and "Cebidae" in [g["group"] for g in f[:3]]:
+        gen = {r["genus"] for r in table if r["family"] == "Cebidae"}
+        if not gen <= {"Cebus", "Sapajus", "Saimiri"}:
+            raise SystemExit(f"groups: Cebidae now holds {sorted(gen)}")
     parts.append("</p>")
     return "".join(parts)
 
@@ -775,9 +819,9 @@ def limits_section(summary, table=()):
         "one species, a banding recapture for another, a compilation figure of "
         "unknown origin for a third), and part of the position of each order "
         "comes from the record types of its members. And the merge of "
-        "synonyms (see Data) joins only the names its two rules find, so a "
-        "species renamed in a way that neither rule sees is still in the "
-        "table twice and counted twice in its groups.</p>\n")
+        "synonyms (see Data) joins only the names its two rules and its hand "
+        "list find, so a species renamed in a way that none of them sees is "
+        "still in the table twice and counted twice in its groups.</p>\n")
 
 
 def code_section():

@@ -430,20 +430,30 @@ def mass_index():
 # record in place as a donor of names, taxonomy and mass, so the species takes
 # its lifespan from the next source in precedence that has an observed one. A
 # dropped mass is refilled from another source of the same species by the
-# ordinary gap filling below.
+# ordinary gap filling below. A moved lifespan (move) is a figure the source
+# files in the wrong column: it keeps its value and goes where it belongs, and
+# a regraded record (grade) keeps the source's figure at the stated grade.
+#
+# D-92 a (2026-11-10): the olm carries Voituron et al.'s projected maximum at
+# grade C, marked as a projection, rather than AmphiBIO's unsourced 12 years.
+# The figure is AnAge's (its reference 934, the same paper); AnAge files it as
+# a wild maximum, which a projection is not, so it moves to the unrecorded
+# column. Grade C keeps it out of the fits.
 CORRECTIONS = [
+    dict(source="anage", sci="Proteus anguinus",
+         move={"wild_yr": "unknown_yr"}, grade="C",
+         why="a projection, not an observed age: AnAge's 102 years is the "
+             "projected maximum of Voituron et al., Biology Letters 7:105, "
+             "2011, from survival in a laboratory population, which AnAge "
+             "files as a wild maximum; carried here as a projection of "
+             "unrecorded origin at grade C, so it is shown but not fitted "
+             "(D-92 a)"),
     dict(source="seed", sci="Proteus anguinus", drop=("wild_yr", "captive_yr"),
-         why="the hand-checked table's 100 years is the projected maximum "
-             "of Voituron et al., Biology Letters 7:105, 2011 (about 102 "
-             "years), and its 68 is their mean adult lifespan in a "
-             "laboratory population; neither is an observed maximum, so the "
-             "species takes its lifespan from the next source in precedence "
-             "that records one"),
-    dict(source="anage", sci="Proteus anguinus", drop=("wild_yr",
-                                                       "captive_yr",
-                                                       "unknown_yr"),
-         why="AnAge's 102 years is the same projection (Voituron et al. "
-             "2011), not an observed age"),
+         why="the hand-checked table's 100 years is the same projection "
+             "rounded, and its 68 is Voituron et al.'s mean adult lifespan "
+             "in that laboratory population; neither is an observed "
+             "maximum, so the record carries AnAge's figure for the "
+             "projection instead"),
     dict(source="seed", sci="Furcifer labordi", drop=("mass_g",),
          why="the hand-checked table's 25 g cites no source; AnAge and "
              "Amniote both give 8.73 g"),
@@ -456,9 +466,15 @@ def apply_corrections(rows):
     for c in CORRECTIONS:
         for r in rows:
             if r["source"] == c["source"] and r["scientific_name"] == c["sci"]:
-                for f in c["drop"]:
+                for a, b in c.get("move", {}).items():
+                    if r[a] is None:
+                        sys.exit(f"correction moves an empty {a}: {c['sci']}")
+                    r[b], r[a] = r[a], None
+                if c.get("grade"):
+                    r["quality"] = c["grade"]
+                for f in c.get("drop", ()):
                     r[f] = None
-                if "mass_g" in c["drop"]:
+                if "mass_g" in c.get("drop", ()):
                     r["mass_dropped"] = True
                 hit.add((c["source"], c["sci"]))
                 notes.setdefault(c["sci"].lower(), []).append(c["why"])
@@ -495,8 +511,35 @@ def has_life(r):
 # a source that lists both treats them as two species. The merged record is
 # the one the precedence order picks, under that record's own name, and the
 # other names are kept in its note and in outputs/synonyms.csv.
+#
+#   3. the hand list, data/synonyms_manual.csv (D-92 d, 2026-11-10). A pair is
+#      listed only where a source already in this tree states the synonymy in
+#      its own words, quoted in the file's source column; nothing is listed
+#      on the strength of a name looking alike. A listed pair is merged even
+#      where one source carries both names, because that source is the one
+#      saying they are one species, and the merged record takes the name in
+#      the kept column (the accepted name the source gives), with its numbers
+#      from the best source as usual.
 CROSSWALK_1TO1 = {"1BL to 1eBird", "1BL to 1eBird*", "1BL to 1BT"}
 SYNONYMS_OUT = os.path.join(HERE, "..", "outputs", "synonyms.csv")
+SYNONYMS_MANUAL = os.path.join(HERE, "synonyms_manual.csv")
+MANUAL_RULE = "hand list"
+
+
+def manual_links(path=SYNONYMS_MANUAL):
+    """(name_a, name_b, kept, source) from the hand list; exits on a row that
+    does not name its source or keeps a name that is neither of the pair."""
+    if not os.path.exists(path):
+        return []
+    out = []
+    with open(path, newline="", encoding="utf-8") as fh:
+        for r in csv.DictReader(fh):
+            a, b, k = (" ".join(r[c].split()) for c in
+                       ("name_a", "name_b", "kept"))
+            if not r["source"].strip() or k not in (a, b) or a == b:
+                sys.exit(f"synonyms_manual.csv: bad row {r}")
+            out.append((a, b, k, r["source"].strip()))
+    return out
 
 
 def common_key(s):
@@ -599,6 +642,16 @@ def synonym_groups(rows, rank):
         a, b = a.lower(), b.lower()
         if a in info and b in info:
             links.append((a, b, why))
+    kept_manual, absent = set(), []
+    for a, b, k, src in manual_links():
+        if a.lower() in info and b.lower() in info:
+            links.append((a.lower(), b.lower(), MANUAL_RULE))
+            kept_manual.add(k.lower())
+        else:
+            absent.append((a, b))
+    if absent:
+        print(f"  hand list: {len(absent)} pair(s) with a name no source "
+              f"carries, nothing to merge: {absent}")
 
     parent = {}
 
@@ -609,7 +662,7 @@ def synonym_groups(rows, rank):
 
     used = []
     for a, b, why in links:
-        if info[a]["sources"] & info[b]["sources"]:
+        if why != MANUAL_RULE and info[a]["sources"] & info[b]["sources"]:
             continue                    # one source lists both: two species
         ra, rb = find(a), find(b)
         if ra != rb:
@@ -625,20 +678,72 @@ def synonym_groups(rows, rank):
 
     to = {}
     for members in comps.values():
-        acc = min(members, key=lambda n: (best_rank(n), n))
+        named = [n for n in members if n in kept_manual]
+        if len(named) > 1:
+            sys.exit(f"hand list keeps two names in one group: {named}")
+        acc = named[0] if named else min(members,
+                                         key=lambda n: (best_rank(n), n))
         for n in members:
             if n != acc:
                 to[n] = acc
-    return to, used, info
+    return to, used, info, kept_manual
 
 
 # ----------------------------------------------------------------- merge ----
-# D-29 item 8: genus Sebastes was filed under Sebastidae by the hand-checked
-# table and FishBase and under Scorpaenidae by AnAge, so the rockfishes were
-# split across two families and carried the Scorpaenidae figure. A genus
-# listed here takes one family for all its species: the family that the
-# highest-precedence source filing any member of the genus gives it.
-ONE_FAMILY_GENERA = ("Sebastes",)
+# One family per genus. D-29 item 8: genus Sebastes was filed under Sebastidae
+# by the hand-checked table and FishBase and under Scorpaenidae by AnAge, so
+# the rockfishes were split across two families and carried the Scorpaenidae
+# figure. D-92 c (2026-11-10) made the rule general: every genus whose merged
+# records sit in more than one family takes one family for all its species,
+# the family that the highest-precedence source filing any member of the genus
+# gives it (within that source, the family it gives most members of the genus;
+# a tie goes to the first name alphabetically, and genus_families.csv says
+# so). A genus is keyed with its class, so a name used in two classes is two
+# genera. Each refiled genus, its families before and the source that decided
+# are written to outputs/genus_families.csv.
+GENUS_FAMILIES_OUT = os.path.join(HERE, "..", "outputs", "genus_families.csv")
+
+
+def one_family_per_genus(final, all_rows, rank):
+    """Refile split genera in place; return one row per refiled genus."""
+    canon = lambda c: CLASS_SYNONYM.get(c.strip(), c.strip())   # noqa: E731
+    fams = {}
+    for r in final:
+        fams.setdefault((canon(r["class_"]), r["genus"]), []).append(r)
+    out = []
+    for (cls, g), members in sorted(fams.items()):
+        before = {}
+        for r in members:
+            before[r["family"]] = before.get(r["family"], 0) + 1
+        if len(before) < 2:
+            continue
+        filed = [x for x in all_rows if x["genus"] == g and x["family"]
+                 and canon(x["class_"]) == cls]
+        top = min(rank[x["source"]] for x in filed)
+        count = {}
+        for x in filed:
+            if rank[x["source"]] == top:
+                count[x["family"]] = count.get(x["family"], 0) + 1
+        most = max(count.values())
+        tied = sorted(f for f, n in count.items() if n == most)
+        fam = tied[0]
+        moved = 0
+        for r in members:
+            if r["family"] != fam:
+                r["family"] = fam
+                moved += 1
+        out.append({"class": cls, "genus": g,
+                    "families_before": "; ".join(
+                        f"{f or '(none)'} {n}" for f, n in
+                        sorted(before.items(), key=lambda kv: (-kv[1],
+                                                               kv[0]))),
+                    "family": fam, "decided_by": ORDER[top],
+                    "decided_by_counts": "; ".join(
+                        f"{f} {n}" for f, n in sorted(count.items())),
+                    "tie_broken_alphabetically": "yes" if len(tied) > 1
+                    else "no",
+                    "records_refiled": moved})
+    return out
 
 
 def merge(apply=False):
@@ -661,7 +766,7 @@ def merge(apply=False):
 
     # one record per species, best source wins
     rank = {s: i for i, s in enumerate(ORDER)}
-    syn_to, syn_links, syn_info = synonym_groups(all_rows, rank)
+    syn_to, syn_links, syn_info, syn_kept = synonym_groups(all_rows, rank)
     print(f"  {len(syn_to):,} binomials merged into another as synonyms "
           f"({len(syn_links):,} links)")
 
@@ -741,6 +846,11 @@ def merge(apply=False):
             estimated += 1
         r["sources"] = sorted(seen_in[k])
         base = k.split("|")[0]
+        # a hand-listed group carries the accepted name its source gives,
+        # whichever record supplied the numbers
+        if base in syn_kept and r["scientific_name"].lower() != base:
+            r["scientific_name"] = syn_info[base]["sci"]
+            r["genus"] = r["scientific_name"].split(" ")[0]
         extra = []
         others = sorted(syn_info[n]["sci"] for n, a in syn_to.items()
                         if a == base)
@@ -751,25 +861,19 @@ def merge(apply=False):
             r["note"] = "; ".join(([r["note"]] if r["note"] else []) + extra)
         final.append(r)
 
-    # one family per listed genus, from the highest-precedence source
-    regenus = 0
-    for g in ONE_FAMILY_GENERA:
-        src = sorted((rank[x["source"]], x["family"]) for x in all_rows
-                     if x["genus"] == g and x["family"])
-        if not src:
-            continue
-        fam = src[0][1]
-        for r in final:
-            if r["genus"] == g and r["family"] != fam:
-                r["family"] = fam
-                regenus += 1
-        print(f"  genus {g}: one family, {fam} ({regenus} records refiled)")
+    # one family per genus, from the highest-precedence source (D-92 c)
+    refiled = one_family_per_genus(final, all_rows, rank)
+    print(f"  {len(refiled)} genera were filed under more than one family by "
+          f"their sources; each now takes one family "
+          f"({sum(g['records_refiled'] for g in refiled)} records refiled)")
+    canon = lambda c: CLASS_SYNONYM.get(c.strip(), c.strip())   # noqa: E731
     split = {}
     for r in final:
-        split.setdefault((r["class_"], r["genus"]), set()).add(r["family"])
+        split.setdefault((canon(r["class_"]), r["genus"]), set()).add(
+            r["family"])
     split = sorted(g for g, f in split.items() if len(f) > 1)
-    print(f"  {len(split)} other genera are still filed under more than one "
-          f"family by their sources (not refiled)")
+    if split:
+        sys.exit(f"genera still in two families after refiling: {split}")
 
     renamed = 0
     for r in final:
@@ -867,6 +971,15 @@ def merge(apply=False):
                             kept[acc]["source"] if acc in kept else ""])
     print(f"  wrote {os.path.normpath(SYNONYMS_OUT)}")
 
+    with open(GENUS_FAMILIES_OUT, "w", newline="", encoding="utf-8") as fh:
+        cols = ["class", "genus", "families_before", "family", "decided_by",
+                "decided_by_counts", "tie_broken_alphabetically",
+                "records_refiled"]
+        w = csv.DictWriter(fh, fieldnames=cols, lineterminator="\n")
+        w.writeheader()
+        w.writerows(refiled)
+    print(f"  wrote {os.path.normpath(GENUS_FAMILIES_OUT)}")
+
     # The page is generated from this, so what a reader sees under "where the
     # data comes from" is the merge's own accounting rather than a number
     # somebody typed and forgot to update.
@@ -884,9 +997,11 @@ def merge(apply=False):
             "dropped_no_mass": dropped_nomass,
             "synonyms_merged": len(syn_to),
             "corrections": [{"source": c["source"], "species": c["sci"],
-                             "dropped": list(c["drop"]), "why": c["why"]}
+                             "dropped": list(c.get("drop", ())),
+                             "moved": c.get("move", {}),
+                             "grade": c.get("grade", ""), "why": c["why"]}
                             for c in CORRECTIONS],
-            "one_family_genera": list(ONE_FAMILY_GENERA),
+            "genera_refiled_to_one_family": len(refiled),
             "final": len(final),
             "citations": CITATION,
         }, fh, indent=2)
