@@ -269,9 +269,9 @@ BACK = '<a href="#" class="back" id="backlink">&larr; back</a>'
 # site/ and still serve at their URLs. To relist one, take it out of this set
 # and restore its index.html entry (class "entry off" -> "entry", the <span
 # class="off"> h3 back to <a href>).
-HOLD = {"lostgas.html", "takeaway.html", "uri.html", "ethane.html",
-        "heat.html", "storage.html", "climate-cost.html", "beauty.html",
-        "continents.html"}
+# Relisted 2026-11-10 (DECISIONS D-78 to D-86, Andrew): all nine came back
+# with the house-style rewrite. The set stays so a page can be held again.
+HOLD = set()
 
 
 def nav_for(page):
