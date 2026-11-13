@@ -165,6 +165,8 @@ NAV = [
     # page's own title.
     ("Climate", [
         ("Food footprints", "climate-cost.html"),
+        # sustainable-messaging lane, 2026-11-13: what moved people toward lower-carbon choices, and by how much.
+        ("Climate messaging", "messaging.html"),
     ]),
     # RUNNING WAS RETIRED 2026-09-09, at Andrew's request - "hide the two
     # running pages... I'll republish later, but retire for now". It held

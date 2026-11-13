@@ -296,6 +296,12 @@ TARGETS = [
     # whose SHA-1 differs from the manifest.
     target("oxygen", "oxygen-code.zip", keep={"outputs"},
            skip=("data/raw", "data/raw/*", "outputs/*.png")),
+    # What moved people toward lower-carbon choices (sustainable-messaging lane, 2026-11-13): the fetch script,
+    # reader, payload builder and checks, the page generator with its three charts, the tests, the transcribed
+    # tables in data/*.csv, data/fetched.json and the payload. Not data/raw: the tournament data (CC BY 4.0,
+    # 9 MB) are re-downloaded by fetch_public.py, which checks them against Zenodo's published MD5.
+    target("messaging", "messaging-code.zip", keep={"outputs"},
+           skip=("data/raw", "data/raw/*")),
     # food-code.zip retired with its page on 2026-09-09: food.html was
     # unpublished at Andrew's request, for now, and the last build is
     # unpublished/downloads/food-code.zip. The TARGET goes with the page,

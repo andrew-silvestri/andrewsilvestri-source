@@ -102,6 +102,17 @@ ENTRIES = [
         "why": "A finished policy chain, 1990-2006, stated on the page as not updated.",
     },
     {
+        # sustainable-messaging lane, 2026-11-13. Disabled: the page is a review of published trials and
+        # says its data does not update; the one fetched file is a fixed Zenodo deposit.
+        "page": "messaging",
+        "cwd": "messaging",
+        "fetch": [["python", "fetch_public.py"]],
+        "build": [["python", "build_messaging.py"]],
+        "keys": [],
+        "enabled": False,
+        "why": "A review of published trials, stated on the page as not updated.",
+    },
+    {
         "page": "takeaway",
         "cwd": "takeaway",
         # R2 (2026-10-23): production only. The pipeline tracker carries

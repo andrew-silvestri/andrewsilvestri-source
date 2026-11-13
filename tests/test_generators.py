@@ -134,6 +134,10 @@ GENERATORS = [
     # quotations from oxygen/data/raw (gitignored) at render time (chain-reactions lane, 2026-11-07).
     ("oxygen page: oxygen/update_page.py --apply",
      ["update_page.py", "--apply"], "oxygen", "site"),
+    # messaging/update_page.py writes site/messaging.html from messaging/outputs/payload.json
+    # (sustainable-messaging lane, 2026-11-13).
+    ("messaging page: messaging/update_page.py --apply",
+     ["update_page.py", "--apply"], "messaging", "site"),
     # storage/update_page.py writes site/storage.html from storage/outputs/payload.json
     # (build_storage.py, which needs ERCOT's files under storage/data/raw, gitignored) and
     # storage/data/imm.json. R4, 2026-10-23.

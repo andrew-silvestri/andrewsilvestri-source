@@ -1,0 +1,720 @@
+{
+ "effects": [
+  {
+   "id": "lohmann",
+   "o": 0,
+   "group": "words",
+   "label": "Carbon labels on the menu",
+   "short": "Carbon labels",
+   "setting": "5 University of Cambridge college cafeterias, UK, 2020, 7 weeks",
+   "outcome": "share of meals vegetarian or vegan",
+   "n": 75659,
+   "n_unit": "meal choices",
+   "design": "difference-in-differences with untreated cafeterias",
+   "measure": "purchase",
+   "baseline": 41.0,
+   "treated": 42.7,
+   "effect": 1.7,
+   "cite": "Lohmann et al. 2022, Journal of Environmental Economics and Management",
+   "where": "Table 2 (baseline share), Table 3 col. 5 (meat or fish share -0.017)"
+  },
+  {
+   "id": "lowrie",
+   "o": 0,
+   "group": "words",
+   "label": "Carbon labels, preregistered repeat",
+   "short": "Labels, repeat",
+   "setting": "4 call-centre worksite cafeterias, Northern England, Oct-Dec 2023, 6 weeks",
+   "outcome": "share of meals vegetarian",
+   "n": 4068,
+   "n_unit": "meals",
+   "design": "preregistered difference-in-differences",
+   "measure": "purchase",
+   "baseline": 7.0,
+   "treated": 8.5,
+   "effect": 1.5,
+   "cite": "Lowrie and Lohmann 2025, Behavioural Public Policy",
+   "where": "Abstract; Table 2"
+  },
+  {
+   "id": "coker",
+   "o": 0,
+   "group": "words",
+   "label": "\"More people are eating less meat\" sign",
+   "short": "Norm sign",
+   "setting": "22 in-store restaurants of a UK retail chain, Jun-Jul 2019, 2 weeks each",
+   "outcome": "share of meals sold plant-based",
+   "n": 22,
+   "n_unit": "restaurants",
+   "design": "preregistered crossover trial",
+   "measure": "purchase",
+   "baseline": 10.0,
+   "treated": 9.98,
+   "effect": -0.022,
+   "cite": "Çoker et al. 2022, Appetite",
+   "where": "Abstract (beta -0.022 percentage points, 95% CI -1.63 to 1.58); baseline 10 percent, Results"
+  },
+  {
+   "id": "wri",
+   "o": 0,
+   "group": "words",
+   "label": "Renaming a meat-free breakfast",
+   "short": "Dish renamed",
+   "setting": "28 Sainsbury's cafés, UK, Jun-Oct 2017, 8 weeks",
+   "outcome": "share of breakfasts that were the renamed dish",
+   "n": 28,
+   "n_unit": "cafés",
+   "design": "10 test and 18 control cafés",
+   "measure": "purchase",
+   "baseline": 4.6,
+   "treated": 5.4,
+   "effect": 0.8,
+   "cite": "Bacon et al. 2018, World Resources Institute",
+   "where": "p. 6 (odds ratio 1.19; +18 percent)"
+  },
+  {
+   "id": "garnett",
+   "o": 1,
+   "group": "menus",
+   "label": "Doubling vegetarian options",
+   "short": "2x veg options",
+   "setting": "one Cambridge college cafeteria, UK, autumn 2017, 44 lunches",
+   "outcome": "share of meals vegetarian",
+   "n": 7712,
+   "n_unit": "meals",
+   "design": "fortnightly alternation (experiment)",
+   "measure": "purchase",
+   "baseline": 19.1,
+   "treated": 26.9,
+   "effect": 7.8,
+   "cite": "Garnett et al. 2019, PNAS",
+   "where": "p. 20926 and abstract"
+  },
+  {
+   "id": "arrazat",
+   "o": 1,
+   "group": "menus",
+   "label": "Doubling vegetarian main dishes",
+   "short": "2x veg mains",
+   "setting": "one university cafeteria, Dijon, France, 2 + 2 weeks",
+   "outcome": "share of main dishes vegetarian",
+   "n": 37299,
+   "n_unit": "main-dish choices",
+   "design": "before and after",
+   "measure": "purchase",
+   "baseline": 23.0,
+   "treated": 45.0,
+   "effect": 22.0,
+   "cite": "Arrazat et al. 2024, International Journal of Behavioral Nutrition and Physical Activity",
+   "where": "Results and Table 1"
+  },
+  {
+   "id": "ginn",
+   "o": 2,
+   "group": "food_default",
+   "label": "Plant-based dish unless meat is asked for",
+   "short": "Plant-based hot",
+   "setting": "3 US university dining halls, fall 2022, 5 weeks",
+   "outcome": "share of hot dishes served plant-based",
+   "n": 15278,
+   "n_unit": "dishes served",
+   "design": "station-days alternated",
+   "measure": "servings",
+   "baseline": 26.9,
+   "treated": 57.6,
+   "effect": 30.7,
+   "cite": "Ginn and Sparkman 2024, Journal of Environmental Psychology (Food for Climate League summary)",
+   "where": "Executive summary"
+  },
+  {
+   "id": "reinders",
+   "o": 2,
+   "group": "food_default",
+   "label": "Vegetarian default on the chef's menu",
+   "short": "Veg chef's menu",
+   "setting": "one restaurant, Netherlands, 1 week against 1 week",
+   "outcome": "share of chef's menus ordered vegetarian",
+   "n": 571,
+   "n_unit": "visitors",
+   "design": "one condition a week",
+   "measure": "order",
+   "baseline": 13.6,
+   "treated": 56.9,
+   "effect": 43.3,
+   "cite": "Reinders, Bouwman and Onwezen 2024, Journal of Environmental Psychology",
+   "where": "Results 3.2"
+  },
+  {
+   "id": "boronowsky",
+   "o": 2,
+   "group": "food_default",
+   "label": "Plant-based meal pre-ticked on the RSVP",
+   "short": "Pre-ticked form",
+   "setting": "3 catered university events, Harvard and UCLA",
+   "outcome": "share of attendees choosing the plant-based meal",
+   "n": 280,
+   "n_unit": "attendees",
+   "design": "randomised by attendee",
+   "measure": "selection on a form",
+   "baseline": 18.4,
+   "treated": 65.5,
+   "effect": 46.8,
+   "cite": "Boronowsky et al. 2022, Frontiers in Sustainable Food Systems",
+   "where": "Table 4 (risk difference 46.8, 95% CI 28.8 to 64.8)"
+  },
+  {
+   "id": "ebeling",
+   "o": 3,
+   "group": "energy_default",
+   "label": "Green electricity as the default tariff",
+   "short": "Green tariff",
+   "setting": "a German energy supplier's website, early summer 2012, 4.5 weeks",
+   "outcome": "share of contracts bought that were green",
+   "n": 41952,
+   "n_unit": "households visiting",
+   "design": "randomised by visitor",
+   "measure": "purchase",
+   "baseline": 7.2,
+   "treated": 69.1,
+   "effect": 61.9,
+   "cite": "Ebeling and Lotz 2015, Nature Climate Change",
+   "where": "Main text after Fig. 1; Fig. 2"
+  },
+  {
+   "id": "fowlie",
+   "o": 3,
+   "group": "energy_default",
+   "label": "Time-of-use pricing as the default plan",
+   "short": "Time-of-use",
+   "setting": "Sacramento Municipal Utility District, California, 2012",
+   "outcome": "share of households on the time-of-use plan",
+   "n": 15142,
+   "n_unit": "households offered",
+   "design": "randomised by household",
+   "measure": "enrolment",
+   "baseline": 19.3,
+   "treated": 97.9,
+   "effect": 78.6,
+   "cite": "Fowlie et al. 2021, Review of Economic Studies (NBER working paper 23553)",
+   "where": "Working paper Table 2, p. 40; Table 1"
+  }
+ ],
+ "shrink": [
+  {
+   "id": "nudge",
+   "label": "Nudge trials",
+   "first_label": "in academic journals",
+   "later_label": "run by government nudge units",
+   "unit": "percentage points",
+   "cite": "DellaVigna and Linos 2022, Econometrica",
+   "where": "p. 2 and abstract (26 academic trials; 126 nudge-unit trials, over 23 million people)",
+   "first": 8.7,
+   "later": 1.4,
+   "kept": 0.16091954022988506
+  },
+  {
+   "id": "opower",
+   "label": "Home energy reports",
+   "first_label": "first 10 utilities",
+   "later_label": "all 111 utilities",
+   "unit": "percent of electricity use",
+   "cite": "Allcott 2015, Quarterly Journal of Economics (NBER working paper 18373)",
+   "where": "Working paper p. 20 (1.707), p. 16 (1.31)",
+   "first": 1.707,
+   "later": 1.31,
+   "kept": 0.7674282366725249
+  },
+  {
+   "id": "nisa",
+   "label": "Household climate trials",
+   "first_label": "small samples",
+   "later_label": "large samples",
+   "unit": "Cohen's d",
+   "cite": "Nisa et al. 2019, Nature Communications",
+   "where": "Table 1 (100 or fewer per arm, k = 82; 500 or more per arm, k = 17)",
+   "first": 0.335,
+   "later": 0.028,
+   "kept": 0.08358208955223881
+  },
+  {
+   "id": "bergquist",
+   "label": "Climate field interventions",
+   "first_label": "after bias correction",
+   "later_label": "32 largest studies",
+   "unit": "Cohen's d",
+   "cite": "Bergquist et al. 2023, PNAS",
+   "where": "Results, Overall effect; Methods, Publication bias",
+   "first": 0.18,
+   "later": 0.04,
+   "kept": 0.22222222222222224
+  },
+  {
+   "id": "structure",
+   "label": "Nudges that change the choice (defaults, menus)",
+   "first_label": "before bias correction",
+   "later_label": "after",
+   "unit": "Cohen's d",
+   "cite": "Maier et al. 2022, PNAS",
+   "where": "Table 1",
+   "first": 0.58,
+   "later": 0.12,
+   "kept": 0.20689655172413793
+  },
+  {
+   "id": "info",
+   "label": "Nudges that add information (labels, facts)",
+   "first_label": "before bias correction",
+   "later_label": "after",
+   "unit": "Cohen's d",
+   "cite": "Maier et al. 2022, PNAS",
+   "where": "Table 1",
+   "first": 0.25,
+   "later": 0.0,
+   "kept": 0.0
+  }
+ ],
+ "tournament": {
+  "n": 59392,
+  "countries": 63,
+  "belief": {
+   "n": 59293,
+   "countries": 63,
+   "control_mean": 77.73059001115706,
+   "arms": {
+    "WorkTogetherNorm": {
+     "name": "Working-together norms",
+     "est": -0.6153,
+     "lo": -1.7867,
+     "hi": 0.556
+    },
+    "SystemJust": {
+     "name": "System justification",
+     "est": 1.7151,
+     "lo": 0.4113,
+     "hi": 3.019
+    },
+    "BindingMoral": {
+     "name": "Binding moral foundations",
+     "est": 1.0903,
+     "lo": -0.3577,
+     "hi": 2.5382
+    },
+    "CollectAction": {
+     "name": "Exposure to effective collective action",
+     "est": 2.255,
+     "lo": 0.8248,
+     "hi": 3.6851
+    },
+    "FutureSelfCont": {
+     "name": "Future self-continuity",
+     "est": 1.7887,
+     "lo": 0.8117,
+     "hi": 2.7657
+    },
+    "SciConsens": {
+     "name": "Scientific consensus",
+     "est": 1.2524,
+     "lo": 0.1096,
+     "hi": 2.3952
+    },
+    "PsychDistance": {
+     "name": "Decreasing psychological distance",
+     "est": 3.229,
+     "lo": 1.8403,
+     "hi": 4.6178
+    },
+    "DynamicNorm": {
+     "name": "Dynamic social norms",
+     "est": 0.7561,
+     "lo": -0.2429,
+     "hi": 1.7551
+    },
+    "PluralIgnorance": {
+     "name": "Correcting pluralistic ignorance",
+     "est": 0.9422,
+     "lo": -0.0213,
+     "hi": 1.9057
+    },
+    "LetterFutureGen": {
+     "name": "Letter to future generations",
+     "est": 1.8837,
+     "lo": 0.8392,
+     "hi": 2.9281
+    },
+    "NegativeEmotions": {
+     "name": "Negative emotion",
+     "est": 0.7532,
+     "lo": -0.2995,
+     "hi": 1.8059
+    }
+   }
+  },
+  "policy": {
+   "n": 58879,
+   "countries": 63,
+   "control_mean": 68.8946897761417,
+   "arms": {
+    "WorkTogetherNorm": {
+     "name": "Working-together norms",
+     "est": -0.1013,
+     "lo": -0.9143,
+     "hi": 0.7116
+    },
+    "SystemJust": {
+     "name": "System justification",
+     "est": 0.8673,
+     "lo": -0.0092,
+     "hi": 1.7437
+    },
+    "BindingMoral": {
+     "name": "Binding moral foundations",
+     "est": 0.689,
+     "lo": -0.2838,
+     "hi": 1.6617
+    },
+    "CollectAction": {
+     "name": "Exposure to effective collective action",
+     "est": 2.8536,
+     "lo": 1.9,
+     "hi": 3.8073
+    },
+    "FutureSelfCont": {
+     "name": "Future self-continuity",
+     "est": 2.0291,
+     "lo": 1.1204,
+     "hi": 2.9377
+    },
+    "SciConsens": {
+     "name": "Scientific consensus",
+     "est": 0.7627,
+     "lo": -0.116,
+     "hi": 1.6413
+    },
+    "PsychDistance": {
+     "name": "Decreasing psychological distance",
+     "est": 1.3018,
+     "lo": 0.3152,
+     "hi": 2.2884
+    },
+    "DynamicNorm": {
+     "name": "Dynamic social norms",
+     "est": 1.1373,
+     "lo": 0.3658,
+     "hi": 1.9088
+    },
+    "PluralIgnorance": {
+     "name": "Correcting pluralistic ignorance",
+     "est": 0.3525,
+     "lo": -0.3457,
+     "hi": 1.0507
+    },
+    "LetterFutureGen": {
+     "name": "Letter to future generations",
+     "est": 2.7895,
+     "lo": 1.6776,
+     "hi": 3.9014
+    },
+    "NegativeEmotions": {
+     "name": "Negative emotion",
+     "est": -0.2997,
+     "lo": -1.0529,
+     "hi": 0.4535
+    }
+   }
+  },
+  "share": {
+   "n": 44006,
+   "countries": 63,
+   "control_mean": 48.47631241997439,
+   "arms": {
+    "WorkTogetherNorm": {
+     "name": "Working-together norms",
+     "est": 4.72,
+     "lo": 2.8,
+     "hi": 6.64
+    },
+    "SystemJust": {
+     "name": "System justification",
+     "est": 4.71,
+     "lo": 2.49,
+     "hi": 6.92
+    },
+    "BindingMoral": {
+     "name": "Binding moral foundations",
+     "est": 3.87,
+     "lo": 2.08,
+     "hi": 5.67
+    },
+    "CollectAction": {
+     "name": "Exposure to effective collective action",
+     "est": 8.01,
+     "lo": 5.87,
+     "hi": 10.15
+    },
+    "FutureSelfCont": {
+     "name": "Future self-continuity",
+     "est": 6.31,
+     "lo": 4.36,
+     "hi": 8.26
+    },
+    "SciConsens": {
+     "name": "Scientific consensus",
+     "est": 3.7,
+     "lo": 1.34,
+     "hi": 6.06
+    },
+    "PsychDistance": {
+     "name": "Decreasing psychological distance",
+     "est": 7.03,
+     "lo": 4.79,
+     "hi": 9.26
+    },
+    "DynamicNorm": {
+     "name": "Dynamic social norms",
+     "est": 6.28,
+     "lo": 4.26,
+     "hi": 8.29
+    },
+    "PluralIgnorance": {
+     "name": "Correcting pluralistic ignorance",
+     "est": 1.91,
+     "lo": -0.06,
+     "hi": 3.87
+    },
+    "LetterFutureGen": {
+     "name": "Letter to future generations",
+     "est": 7.96,
+     "lo": 5.91,
+     "hi": 10.01
+    },
+    "NegativeEmotions": {
+     "name": "Negative emotion",
+     "est": 9.78,
+     "lo": 7.62,
+     "hi": 11.95
+    }
+   }
+  },
+  "wept": {
+   "n": 59392,
+   "countries": 63,
+   "control_mean": 4.998623402163225,
+   "arms": {
+    "WorkTogetherNorm": {
+     "name": "Working-together norms",
+     "est": -0.4389,
+     "lo": -0.5535,
+     "hi": -0.3244
+    },
+    "SystemJust": {
+     "name": "System justification",
+     "est": -0.0937,
+     "lo": -0.2238,
+     "hi": 0.0364
+    },
+    "BindingMoral": {
+     "name": "Binding moral foundations",
+     "est": 0.051,
+     "lo": -0.0726,
+     "hi": 0.1746
+    },
+    "CollectAction": {
+     "name": "Exposure to effective collective action",
+     "est": -0.187,
+     "lo": -0.3499,
+     "hi": -0.0241
+    },
+    "FutureSelfCont": {
+     "name": "Future self-continuity",
+     "est": -0.2102,
+     "lo": -0.3453,
+     "hi": -0.075
+    },
+    "SciConsens": {
+     "name": "Scientific consensus",
+     "est": 0.0317,
+     "lo": -0.0866,
+     "hi": 0.1499
+    },
+    "PsychDistance": {
+     "name": "Decreasing psychological distance",
+     "est": -0.4711,
+     "lo": -0.6153,
+     "hi": -0.327
+    },
+    "DynamicNorm": {
+     "name": "Dynamic social norms",
+     "est": 0.0099,
+     "lo": -0.127,
+     "hi": 0.1468
+    },
+    "PluralIgnorance": {
+     "name": "Correcting pluralistic ignorance",
+     "est": -0.1153,
+     "lo": -0.2524,
+     "hi": 0.0217
+    },
+    "LetterFutureGen": {
+     "name": "Letter to future generations",
+     "est": -0.389,
+     "lo": -0.5246,
+     "hi": -0.2534
+    },
+    "NegativeEmotions": {
+     "name": "Negative emotion",
+     "est": -0.5152,
+     "lo": -0.6525,
+     "hi": -0.3778
+    }
+   }
+  },
+  "wept_ctrl_any": 0.8269419862340216,
+  "wept_ctrl_all8": 0.5307767944936087,
+  "paper_s4": {
+   "BindingMoral": 0.038,
+   "SciConsens": 0.003,
+   "DynamicNorm": -0.009,
+   "SystemJust": -0.12,
+   "PluralIgnorance": -0.165,
+   "CollectAction": -0.185,
+   "FutureSelfCont": -0.229,
+   "LetterFutureGen": -0.365,
+   "WorkTogetherNorm": -0.438,
+   "PsychDistance": -0.51,
+   "NegativeEmotions": -0.536
+  }
+ },
+ "kit": [
+  {
+   "id": "default",
+   "item": "Make the low-carbon option the one people get unless they choose otherwise",
+   "example": "\"Your plan is renewable power at the same price. Switch any time.\"",
+   "effect": "62 points more green contracts; 31 to 47 points more plant-based meals",
+   "evidence": "Field trials, energy and food",
+   "grade": "A",
+   "fails": "The choice at one counter or form, not what people eat all day. Weaker as the price or the effort to opt out rises.",
+   "cite": "Ebeling and Lotz 2015; Fowlie et al. 2021; Boronowsky et al. 2022"
+  },
+  {
+   "id": "menu",
+   "item": "Add low-carbon dishes, and keep the others",
+   "example": "\"Half the mains are plant-based, and the burger is still there.\"",
+   "effect": "8 to 22 points more vegetarian meals sold",
+   "evidence": "Field studies, university cafeterias",
+   "grade": "A",
+   "fails": "Only where the dishes are good and actually served. Eighteen worksites that partly made the change moved 2.3 points, not significant.",
+   "cite": "Garnett et al. 2019; Arrazat et al. 2024; Pechey et al. 2022"
+  },
+  {
+   "id": "taste",
+   "item": "Name the dish for its taste, not for what it lacks",
+   "example": "\"Smoky chipotle black-bean chili\", not \"vegan chili\"",
+   "effect": "14 percent more diners took vegetables than with plain names, 29 percent more than with health names",
+   "evidence": "Preregistered field study, 137,842 diner decisions, 5 US dining halls",
+   "grade": "B",
+   "fails": "Vegetables, not meat swaps. No effect at the dining hall with the least tasty food.",
+   "cite": "Turnwald et al. 2019"
+  },
+  {
+   "id": "less",
+   "item": "Ask for less, not none",
+   "example": "\"Could we skip meat two days a week?\"",
+   "effect": "6.9 points more meatless meals than a go-vegetarian appeal, not significant; 59 percent took the pledge, against 15 percent",
+   "evidence": "Preregistered field trial, 617 students, one café",
+   "grade": "C",
+   "fails": "Neither appeal beat no appeal. Fewer of those who pledged to cut back kept the pledge.",
+   "cite": "Anderson et al. 2020 (Faunalytics)"
+  },
+  {
+   "id": "size",
+   "item": "Give the honest size of a small step",
+   "example": "\"Green power is a good step. It covers a small part of emissions, so the larger changes still matter.\"",
+   "effect": "Support for a carbon tax fell from 70.3 to 55.0 percent when a green default was offered; one sentence on the default's small size brought it back to 72",
+   "evidence": "Online surveys, United States",
+   "grade": "C",
+   "fails": "Hypothetical votes, one research group. No study has measured real policy outcomes.",
+   "cite": "Hagmann, Ho and Loewenstein 2019"
+  },
+  {
+   "id": "norm",
+   "item": "Say what most people already think and do",
+   "example": "\"Most people here want more renewable power.\"",
+   "effect": "Donations to a climate charity rose 12 dollars, 4.7 percent, when people learned that 62 percent of Americans try to fight global warming",
+   "evidence": "Online experiment with real money, United States",
+   "grade": "C",
+   "fails": "One study, measured at once. A norm below what the audience already does can pull them down.",
+   "cite": "Andre et al. (Review of Economics and Statistics); Schultz et al. 2007"
+  },
+  {
+   "id": "messenger",
+   "item": "Let someone who already does it make the ask",
+   "example": "\"We put panels on last spring. Come and see the bill.\"",
+   "effect": "Volunteers who had solar themselves recruited 62.8 percent more installations",
+   "evidence": "Field program, 58 Connecticut towns",
+   "grade": "B",
+   "fails": "One program. An activist image or a superior tone lowers willingness.",
+   "cite": "Kraft-Todd et al. 2018"
+  },
+  {
+   "id": "health",
+   "item": "Lead with health and comfort, not only money",
+   "example": "\"Less standby power, cleaner air for the children in this building.\"",
+   "effect": "Health and environment messages cut electricity use 8.2 percent; cost messages saved nothing",
+   "evidence": "Field trial, 118 apartments, Los Angeles",
+   "grade": "B",
+   "fails": "One building complex. Real money still moves large purchases.",
+   "cite": "Asensio and Delmas 2015"
+  },
+  {
+   "id": "step",
+   "item": "If you name the threat, name one step in the same breath",
+   "example": "\"The heat waves are getting worse. The boiler is the largest thing this house controls, and a grant pays half.\"",
+   "effect": "Fear appeals worked better with a step attached (d 0.43 against 0.21); in the 63-country test, no message raised the tree-planting task",
+   "evidence": "Meta-analysis (mostly health); online tournament",
+   "grade": "C",
+   "fails": "Doom alone raised sharing and lowered effort in the tournament.",
+   "cite": "Tannenbaum et al. 2015; Vlasceanu et al. 2024"
+  },
+  {
+   "id": "easy",
+   "item": "Point at the large choices, and make them easy",
+   "example": "\"One vetted installer, one price for the whole town, a free site visit.\"",
+   "effect": "37 more solar installations per campaign town; free home retrofits went from under 1 to about 6 percent take-up",
+   "evidence": "Field programs and trials, Connecticut and Michigan",
+   "grade": "A",
+   "fails": "The campaign effect stopped when the campaign did. Outreach cost more than 1,000 dollars per extra home.",
+   "cite": "Gillingham and Bollinger 2021; Fowlie, Greenstone and Wolfram 2018"
+  },
+  {
+   "id": "cost",
+   "item": "Cut the upfront cost and the paperwork, not add facts",
+   "example": "\"Nothing to pay upfront, and the grant forms are done for you.\"",
+   "effect": "Efficiency information alone did not change water-heater purchases; a 100-dollar rebate did",
+   "evidence": "Field trial, US retail call center",
+   "grade": "A",
+   "fails": "Rebates cost money per tonne. Stated-choice surveys overstate uptake.",
+   "cite": "Allcott and Sweeney 2017"
+  },
+  {
+   "id": "compare",
+   "item": "Compare with similar neighbors, and approve those doing well",
+   "example": "\"You used 12 percent less than similar homes nearby.\" with a smiley",
+   "effect": "Home energy reports cut electricity use 1.3 to 2.0 percent",
+   "evidence": "Field trials, millions of US homes",
+   "grade": "A",
+   "fails": "Small, and smaller at scale. Low users told the average used more, unless the report added approval.",
+   "cite": "Allcott 2011; Allcott 2015; Schultz et al. 2007"
+  },
+  {
+   "id": "feedback",
+   "item": "Show the use where and when it happens",
+   "example": "A shower display that counts liters as the water runs",
+   "effect": "Shower energy fell 22 percent at home, 11.4 percent in hotels",
+   "evidence": "Field trials, Switzerland",
+   "grade": "A",
+   "fails": "The repeat with hotel guests gave half the effect.",
+   "cite": "Tiefenbeck et al. 2018; Tiefenbeck et al. 2019"
+  }
+ ],
+ "literature_through": "2026-11"
+}
