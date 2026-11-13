@@ -111,16 +111,8 @@ def hero_svg(P, wide):
             "moon": f"{D['moon']['lo_s']:.1f} to {D['moon']['hi_s']:.1f} s away",
             "orbit": f"{S['n_orbit']:,} flights",
             "ground": "rehearsals"}
-    # rows: a hairline band, its name and a line under the name
-    for k, _ in g.rows:
-        t, h = g.top[k]
-        out.append(f'<rect class="band band-{k}" x="{g.x0}" y="{t}" width="{g.x1 - g.x0}" height="{h}"/>')
-        if wide:
-            out.append(text(g, 8, t + 20, names[k], "rname"))
-            out.append(text(g, 8, t + 38, subs[k], "rsub"))
-        else:
-            out.append(text(g, g.x0, t - 6, f"{names[k]} · {subs[k]}", "rname-p"))
-    # axis: decades of days, and a one-year rule
+    # axis: decades of days, and a one-year rule; drawn before the row names and every label, whose halo
+    # (evmap.css, paint-order stroke) masks the dotted line where it crosses them (w3-05 critic, 2026-11-13)
     base = g.top["ground"][0] + g.top["ground"][1]
     ticks = ((1, "1 day"), (10, "10 days"), (100, "100 days"), (1000, "1,000 days")) if wide else         ((1, "1"), (10, "10"), (100, "100"), (1000, "1,000"))
     for d, lab in ticks:
@@ -132,6 +124,15 @@ def hero_svg(P, wide):
     out.append(f'<line class="yr" x1="{xy:.1f}" x2="{xy:.1f}" y1="{g.top["mars"][0]}" y2="{base}"/>')
     out.append(text(g, g.x1, base + 32, "length of one stay, log scale", "tick", "end") if wide else
                text(g, g.x1, base + 32, "days in one stay, log scale", "tick", "end"))
+    # rows: a hairline band, its name and a line under the name
+    for k, _ in g.rows:
+        t, h = g.top[k]
+        out.append(f'<rect class="band band-{k}" x="{g.x0}" y="{t}" width="{g.x1 - g.x0}" height="{h}"/>')
+        if wide:
+            out.append(text(g, 8, t + 20, names[k], "rname"))
+            out.append(text(g, 8, t + 38, subs[k], "rsub"))
+        else:
+            out.append(text(g, g.x0, t - 6, f"{names[k]} · {subs[k]}", "rname-p"))
     # dots: one per person-flight; y spread through the row by the golden-ratio sequence (repeatable, no RNG)
     paths = {"d-short": [], "d-long": [], "d-moon": []}
     strip = 40 if not wide else 26                # the orbit row keeps a strip at the top for the step notes
@@ -150,13 +151,13 @@ def hero_svg(P, wide):
     # step notes in the orbit row's top strip, kept apart so the static figure shows all of them
     t, _ = g.top["orbit"]
     n180 = f"{S['n_gt180']} flights over six months"
-    meas = f"about {P['n_measured']} measured with a mood scale"
+    meas = f"about {P['n_measured']} measured with a mood scale"   # ink, no blue square: blue is the >180 d dots (w3-05)
     if wide:
         out.append(text(g, g.x1 - 6, t + 17, n180 + " →", "note", "end", o=1, lo=g.x0, hi=g.x1))
-        out.append(text(g, g.x0 + 6, t + 17, "■ " + meas + ", all in orbit", "note note-m", o=2, lo=g.x0, hi=g.x1))
+        out.append(text(g, g.x0 + 6, t + 17, meas + ", all in orbit", "note note-m", o=2, lo=g.x0, hi=g.x1))
     else:
         out.append(text(g, g.x1 - 4, t + 15, n180 + " →", "note", "end", o=1, lo=g.x0, hi=g.x1))
-        out.append(text(g, g.x0 + 4, t + 32, "■ " + meas, "note note-m", o=2, lo=g.x0, hi=g.x1))
+        out.append(text(g, g.x0 + 4, t + 32, meas, "note note-m", o=2, lo=g.x0, hi=g.x1))
     # Moon note, right of its dots
     t, h = g.top["moon"]
     mx = g.x(S["moon_max_days"]) + 10
@@ -216,7 +217,7 @@ def hero(P, v):
          'plateau. <a href="#ground">What they found</a>'),
         (5, "Mars",
          f"NASA's reference missions run from {v['dra_s1']} to {v['dra_l2']} days, with messages {v['lo_min']} to "
-         f"{v['hi_min']} minutes each way. No human has spent a day in that box. NASA rates the risk of a behavioural "
+         f"{v['hi_min']} minutes each way. No human has spent a day in that box. NASA rates the risk of a behavioral "
          f'or psychiatric problem there red. <a href="#rating">The rating</a>'),
     ]
     desc = (f"A chart of every crewed flight to orbit or beyond, one dot per person per flight, placed by length "
@@ -229,7 +230,7 @@ def hero(P, v):
            '<div class="evmap-fig">', f'<p id="evmap-desc" hidden>{E(desc)}</p>',
            hero_svg(P, True), hero_svg(P, False),
            '<p class="evmap-key">Dots: grey, flights in Earth orbit; blue, longer than six months; brown, to the '
-           'Moon. Diamonds: ground rehearsals, with crew size. Dotted line: one year.</p>', '</div>', '<div class="evmap-steps">']
+           'Moon. Diamonds: ground rehearsals, with the number of people studied. Dotted line: one year.</p>', '</div>', '<div class="evmap-steps">']
     for k, head, body in steps:
         out.append(f'<div class="step" data-step="{k}"><p class="ev">{head}</p><p>{body}</p></div>')
     out.append("</div>\n</figure>")
@@ -252,12 +253,12 @@ def chart_delay(P, v):
             "x": m["x"], "y": {"label": "minutes", "max": 25},
             "series": [{"key": "lt", "label": "Light time, Earth to Mars", "color": "acc", "values": m["min"]}],
             "annotations": [{"at": 2034.63, "text": "Sun between", "short": "Sun"},
-                            {"at": 2035.69, "text": "closest", "short": "near"}]}
+                            {"at": 2035.69, "text": "closest", "short": "closest"}]}
     return static_chart(spec, f"The delay swings from {v['lo_min']} minutes on {day(m['lo']['date'])} to "
                               f"{v['hi_min']} minutes on {day(m['hi']['date'])}, when Mars is nearly behind the Sun. "
                               f"A question and its answer take from about {v['rt_lo']} minutes to "
-                              f"{v['rt_hi']}, against about {v['moon_rt']} seconds for the Moon. Data: JPL Horizons, "
-                              f"one-way light time from Earth's centre, daily (plotted weekly), computed "
+                              f"{v['rt_hi']}, against {v['moon_rt']} seconds for the Moon. Data: JPL Horizons, "
+                              f"one-way light time from Earth's center, daily (plotted weekly), computed "
                               f"{v['hz_date']}.")
 
 
@@ -267,13 +268,15 @@ def table_rating(P):
             ("Earth orbit", "30 days to 1 year", f["rr_leo_long"]),
             ("Mars, preparatory", "under 1 year", f["rr_mars_prep"]),
             ("Mars, planetary", "730 to 1,224 days", f["rr_mars_plan"])]
-    body = "".join(f'<tr><td>{a}</td><td>{b}</td><td class="n">{c.replace("x", " &times; ")}</td></tr>'
+    # no-break spaces: at 390 px "5 x 3" broke after the sign (w3-05 critic, 2026-11-13)
+    body = "".join(f'<tr><td>{a}</td><td>{b}</td><td class="n">{c.replace("x", "&nbsp;&times;&nbsp;")}</td></tr>'
                    for a, b, c in rows)
     return ('<table class="rating"><thead><tr><th>Mission</th><th>Length</th>'
             '<th class="n">Rating</th></tr></thead><tbody>' + body +
             '</tbody></table>\n<p class="dim caption">NASA\'s rating, likelihood &times; consequence, of the risk of '
-            'adverse cognitive or behavioural conditions and psychiatric disorders during the mission (July 2024 board '
-            'decision). Each factor runs from 1 to 5. Data: NASA Human System Risk Board, Behavioral Health risk record, '
+            'adverse cognitive or behavioral conditions and psychiatric disorders during the mission (July 2024 board '
+            'decision). Each factor runs from 1 to 5. The mission classes are the board\'s; its planetary class '
+            '(730 to 1,224 days) is not the same span as the reference missions above. Data: NASA Human System Risk Board, Behavioral Health risk record, '
             'Rev D.1.</p>')
 
 
@@ -333,7 +336,7 @@ def values(P):
         "lo_min": f"{lo:.1f}", "hi_min": f"{hi:.0f}",
         "rt_lo": f"{2 * lo:.0f}", "rt_hi": f"{2 * hi:.0f}",
         "moon_s": f"{(D['moon']['lo_s'] + D['moon']['hi_s']) / 2:.1f}",
-        "moon_rt": f"{D['moon']['lo_s'] + D['moon']['hi_s']:.1f}".rstrip("0").rstrip("."),
+        "moon_rt": f"{2 * D['moon']['lo_s']:.1f} to {2 * D['moon']['hi_s']:.1f}",   # w3-04: a range, not lo+hi
         "n_people_moon": str(S["n_people_moon"]), "n_moon": str(S["n_moon"]),
         "moon_pd": num(S["py_moon"] * YEAR, 0), "py_moon": f"{S['py_moon']:.2f}",
         "crew_pd": num(C["crew_min"] * C["mission_days"]), "py_min": f"{C['py_min']:.1f}",
@@ -349,12 +352,12 @@ def values(P):
     }
     v["stamp"] = insight.stamp(through=P["through"], live=False)
     v["takeaways"] = insight.takeaways([
-        f"The only validated mood scores taken in flight cover about {v['n_measured']} people, all in Earth orbit, "
+        f"The only validated mood scores taken in flight cover about {v['n_measured']} crew-missions, all in Earth orbit, "
         f"and none of those studies found mood falling late in a mission.",
         f"All human time beyond Earth orbit adds up to {v['py_moon']} person-years; a single four-person Mars "
         f"mission would log about {v['py_min']}, with messages taking up to {v['hi_min']} minutes each way.",
-        "NASA rates the Mars risk red from ground rehearsals and an event rate it calls an underestimate, so the "
-        "first Mars crew will produce the first real data."])
+        "NASA rates the Mars risk red, projected from ground rehearsals and a space-station event rate it calls "
+        "likely an underestimate; no one has yet flown the mission it describes."])
     claims(P, v)
     v["hero"] = hero(P, v)
     v["chart_delay"] = chart_delay(P, v)

@@ -55,7 +55,12 @@
 .evmap-svg .analog .mark { fill: var(--acc); }
 .evmap-svg .analog .span { stroke: var(--acc); stroke-width: 2.5; }
 .evmap-svg .marsbox rect { fill: var(--bg-lift); stroke: var(--moss); stroke-width: 1.5; stroke-dasharray: 5 3; }
-.evmap-svg .note-m { fill: var(--acc); }
+.evmap-svg .note-m { fill: var(--ink); }
+/* labels sit on a halo of the page background so the dotted one-year rule, drawn first, does not run
+   through them (w3-05 critic: "Mars-500", "NASA plans", "1.2 to 1.4 s away"). */
+.evmap-svg .rname-p, .evmap-svg .rsub, .evmap-svg .note, .evmap-svg .alab, .evmap-svg .mlab {
+  paint-order: stroke; stroke: var(--bg); stroke-width: 4px; stroke-linejoin: round;
+}
 
 /* live: data-o later than the current step is hidden; the step's own lights up, the rest recede */
 .evmap.is-live .evmap-svg [data-o] { transition: opacity .45s ease, stroke-opacity .45s ease; }
