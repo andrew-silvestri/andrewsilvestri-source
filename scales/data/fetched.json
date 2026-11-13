@@ -1,0 +1,51 @@
+{
+ "bea_cagdp1.zip": {
+  "bytes": 1928241,
+  "fetched": "2026-11-13",
+  "sha1": "d7291a9a94cf90f3c94610af622c907716b37a6f",
+  "url": "https://apps.bea.gov/regional/zip/CAGDP1.zip",
+  "via": "urllib"
+ },
+ "census_cbsa_2023.csv": {
+  "bytes": 608132,
+  "fetched": "2026-11-13",
+  "sha1": "3ce9cea056d9426e096cbe62847c911e6d221581",
+  "url": "https://www2.census.gov/programs-surveys/popest/datasets/2020-2023/metro/totals/cbsa-est2023-alldata.csv",
+  "via": "urllib"
+ },
+ "eker2018_table1.tsv": {
+  "bytes": 126644,
+  "fetched": "2026-11-13",
+  "sha1": "c96be615c4bd2f8546a466d11ee22b65b48e9792",
+  "url": "https://vizier.cfa.harvard.edu/viz-bin/asu-tsv?-source=J/MNRAS/479/5491/table1&-out.max=unlimited&-out.all",
+  "via": "urllib"
+ },
+ "hatton_link_scaling.zip": {
+  "bytes": 849654,
+  "fetched": "2026-11-13",
+  "sha1": "694c64b5d8e927bd1add802b805d8dca97cbf7d5",
+  "url": "https://zenodo.org/api/records/3145281/files/Link-scaling.zip/content",
+  "via": "urllib"
+ },
+ "iau_2015_b3.pdf": {
+  "bytes": 122423,
+  "fetched": "2026-11-13",
+  "sha1": "b6318ded12040c1cac631ec4a9221ebfcf3794cb",
+  "url": "https://arxiv.org/pdf/1605.09788",
+  "via": "urllib"
+ },
+ "owid_energy_per_capita.csv": {
+  "bytes": 328044,
+  "fetched": "2026-11-13",
+  "sha1": "9cdf7301fb39f5d585276de1850dac3bc30e0908",
+  "url": "https://ourworldindata.org/grapher/per-capita-energy-use.csv?v=1&csvType=full&useColumnShortNames=true",
+  "via": "urllib"
+ },
+ "owid_energy_per_capita.json": {
+  "bytes": 2201,
+  "fetched": "2026-11-13",
+  "sha1": "a562d60399ec70c2f5f5ed125e1349e8f8d0e12f",
+  "url": "https://ourworldindata.org/grapher/per-capita-energy-use.metadata.json?v=1&csvType=full&useColumnShortNames=true",
+  "via": "urllib"
+ }
+}
