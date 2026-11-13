@@ -655,8 +655,9 @@
      are sorted by a; at 1 the bars are b and the rows sorted by b. Each
      measure has its own scale (its largest value fills the plot), so a bar
      compares items within one measure, never a with b. The header names the
-     measure shown; the value labels switch at m = 0.5. Opt-in: only a spec
-     with type "rank" reaches this code. */
+     measure shown; the value labels switch at m = 0.5. State f runs 0..1 and
+     fades the rows whose color is "dim", so a step can point at the others.
+     Opt-in: only a spec with type "rank" reaches this code. */
 
   var RROW = 32;          // one row: label line, then the bar
 
@@ -690,10 +691,11 @@
 
   function rankDyn(spec, L, st) {
     var m = clamp(st.m == null ? 0 : st.m, 0, 1), e = m * m * (3 - 2 * m), o = {};
+    var f = clamp(st.f == null ? 0 : st.f, 0, 1);
     spec.items.forEach(function (it, i) {
       var f = (1 - m) * it.a / L.amax + m * it.b / L.bmax, bw = Math.max(f * L.pw, 0.5);
       var y = L.top + ((1 - e) * L.pa[i] + e * L.pb[i]) * RROW;
-      o['r' + i] = { transform: 'translate(0,' + r2(y) + ')' };
+      o['r' + i] = { transform: 'translate(0,' + r2(y) + ')', opacity: it.color === 'dim' ? r2(1 - 0.7 * f) : 1 };
       o['b' + i] = { width: r2(bw) };
       o['v' + i] = { x: r2(bw + 5), _text: m < 0.5 ? L.vlab(spec.a, it.a) : L.vlab(spec.b, it.b) };
     });

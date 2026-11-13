@@ -50,7 +50,7 @@ def eu_rows(g):
 
 # code: (chart label, [(domain, option, row filter)], match, why)
 MAP = {
-    "QD6_13": ("Reduce waste and recycle", None, "close",
+    "QD6_13": ("Reduce waste and recycle", None, "loose",
                "Wynes and Nicholas (2017), recycling for a year"),
     "QD6_14": ("Cut down on disposable items", [("Food", "Less packaging", None)], "loose",
                "less packaging"),

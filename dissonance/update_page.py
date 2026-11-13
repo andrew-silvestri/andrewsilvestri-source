@@ -37,6 +37,7 @@ sys.path.insert(0, ROOT)
 
 TOP = ["QD6_13", "QD6_14", "QD6_6"]      # the template names these three, in this order
 BOT = ["QD6_8", "QD6_2", "QD6_5"]
+ORD = {7: "seventh", 8: "eighth", 9: "ninth", 10: "tenth", 11: "eleventh", 12: "twelfth"}
 BARRIER_ROWS = [("ev", "Electric car"), ("heatpump", "Heat pump"), ("solar", "Rooftop solar"),
                 ("meat", "Eat less meat")]
 
@@ -51,11 +52,12 @@ def hero_spec(P):
         color = "acc" if r["code"] in TOP else "moss" if r["code"] in BOT else "dim"
         items.append({"label": r["label"], "a": round(r["pct_calc"], 2), "b": round(r["t"], 4), "color": color})
     return {"id": "dissonance-hero", "type": "rank",
-            "title": "Fourteen climate actions, sorted by the share of EU adults who say they apply to them "
+            "title": "Fourteen climate actions, sorted by the share of people in the EU aged 15 and over who say "
+                     "they apply to them "
                      "(Special Eurobarometer 565, 2025), then by the median tonnes of CO2e each saves per "
                      "person a year (Ivanova and colleagues, 2020)",
             "items": items,
-            "a": {"label": "Say it applies, % of EU adults", "unit": "%", "decimals": 0},
+            "a": {"label": "Say it applies, % of people 15+", "unit": "%", "decimals": 0},
             "b": {"label": "Tonnes CO2e saved a year, median", "unit": " t", "decimals": 2}}
 
 
@@ -64,14 +66,15 @@ def hero(P, v):
     by_t = sorted(P["items"], key=lambda r: -r["t"])
     rec_rank = 1 + [r["code"] for r in by_t].index("QD6_13")
     steps = [
-        (f"<p><b>Sorted by what people say.</b> Each bar is the share of EU adults who say an action applies to "
-         f"them. Recycling leads at {v['rec_pct']} percent. An electric car and a low-energy home come last, at "
+        (f"<p><b>Sorted by what people say.</b> Each bar is the share of people in the EU aged 15 and over who "
+         f"say an action applies to them. Recycling leads at {v['rec_pct']} percent. An electric car and a low-energy home come last, at "
          f"{v['ev_pct']} and {v['home_pct']} percent.</p>", {"m": 0}),
         (f"<p><b>Sorted by tonnes.</b> The same fourteen actions, each bar now the median saving per person per "
          f"year. The electric car moves to the top at {v['ev_t']} tonnes. Recycling, at {v['rec_t']} tonnes, is "
          f"number {rec_rank} of 14.</p>", {"m": 1}),
-        (f"<p><b>The ends trade places.</b> The three actions named most often (blue) save {v['top3_t']} tonnes "
-         f"each on average. The three named least often (brown) save {v['bot3_t']} tonnes.</p>", {"m": 1}),
+        (f"<p><b>The order reverses at the ends.</b> The three actions named most often (blue) save "
+         f"{v['top3_t']} tonnes each on average. The three named least often (brown) save {v['bot3_t']} tonnes. "
+         f"The middle of the list keeps no clear order.</p>", {"m": 1, "f": 1}),
     ]
     return insight.scrolly(hero_spec(P), steps, from_state={"m": 0})
 
@@ -79,7 +82,7 @@ def hero(P, v):
 def action_rows(P):
     out = []
     for r in sorted(P["items"], key=lambda r: -r["pct_calc"]):
-        mid = "&ndash;" if r["p25"] is None else f"{r['p25']:.2f} to {r['p75']:.2f}"
+        mid = "one value" if r["p25"] is None else f"{r['p25']:.2f}&ndash;{r['p75']:.2f}"
         out.append(f"<tr><td>{r['label']}</td><td class=\"n\">{r['pct']}</td><td class=\"n\">{r['t']:.2f}</td>"
                    f"<td class=\"n\">{mid}</td><td class=\"n\">{r['n']}</td><td>{r['match']}</td></tr>")
     return "\n".join(out)
@@ -108,7 +111,7 @@ def claims(P, v):
     need(E["ratio_adverse"] > 2, "'the second group still saves' more than twice: adverse ratio below 2")
     need(E["weighted_t"] < E["unweighted_t"], "the weighted tick is no longer worth less than the even spread")
     need(E["spearman"] < 0, "the rank correlation is no longer negative")
-    need(E["none"] <= 10, "'Very few people do nothing': the share answering none is above 10%")
+    need(E["at_least_one"] >= 85, "'Nine in ten name at least one': the share naming one is below 85%")
     need(max(I, key=lambda c: I[c]["pct_calc"]) == "QD6_13", "recycling is no longer the most named action")
     need(max(I, key=lambda c: I[c]["t"]) == "QD6_2", "the electric car is no longer the largest saving")
     need(I["QD6_2"]["pct"] <= I["QD6_5"]["pct"] + 1 and I["QD6_5"]["pct"] == min(r["pct"] for r in I.values()),
@@ -149,11 +152,13 @@ def values(P):
         v[key + "_t"] = t2(I[code]["t"])
     for k in ("car_pct", "meat_pct", "travel_pct", "green_pct"):   # the template quotes only their tonnes
         del v[k]
+    rec, ev = I["QD6_13"], I["QD6_2"]
     v["takeaways"] = insight.takeaways([
-        f"In 2025, {v['serious']} percent of EU adults called climate change a serious problem, and "
-        f"{v['atleast']} percent said at least one of fourteen listed climate actions applied to them.",
-        f"The three actions named most often save about {v['top3_t']} tonnes of greenhouse gas per person a year on "
-        f"average; the three named least often save about {v['bot3_t']} tonnes.",
+        f"Recycling is the action Europeans name most often ({rec['pct']} percent); by a published estimate it "
+        f"saves {t2(rec['t'])} tonnes a year, about one-{ORD[round(ev['t'] / rec['t'])]} of the median saving from "
+        f"replacing a car with an electric one.",
+        f"Weighted by how often each action is named, the average reported action saves {v['weighted_t']} tonnes "
+        f"a year; spread evenly over the fourteen, it would save {v['unweighted_t']}.",
         "Surveys point to two causes: people misjudge which actions matter most, and the large ones need money, "
         "a home of one's own or a suitable building."])
     v["hero"] = hero(P, v)
