@@ -6,8 +6,12 @@
  * as each step card reaches the middle of the screen. Colours are style.css
  * tokens; no gradients. Same structure as chain.css (oxygen.html).
  *
- * Two drawings ship: 600px and 340px, each shown at the size it was drawn,
- * never scaled up, so their text stays at 12px.
+ * Two drawings ship: 680 x 600 and 350 x 350, each shown at the size it was
+ * drawn, never scaled up, so their text stays at 12px. Live, on a screen
+ * 1100px or wider, the clock sticks on the left and the step cards scroll on
+ * the right, because a 600px clock above the cards would cover the middle
+ * of the screen where the step changes; narrower, the phone drawing sticks
+ * above the cards.
  */
 .nclock-fig { position: relative; margin: 28px 0; display: grid; grid-template-columns: subgrid; }
 .nclock-fig > .nc-fig { grid-column: wide; min-width: 0; }
@@ -16,11 +20,11 @@
 .nc-fig { margin: 0 0 18px; container-type: inline-size; }
 .nc-fig svg { display: block; margin: 0 auto; max-width: 100%; height: auto; }
 .nc-fig .nclock-wide { display: none; }
-@container (min-width: 600px) {
+@container (min-width: 680px) {
   .nc-fig .nclock-wide { display: block; }
   .nc-fig .nclock-phone { display: none; }
 }
-.nc-key { font: var(--fs-2)/1.5 var(--mono); color: var(--dim); text-align: center; margin: 8px auto 0; max-width: 600px; }
+.nc-key { font: var(--fs-2)/1.5 var(--mono); color: var(--dim); text-align: center; margin: 8px auto 0; max-width: 560px; }
 
 .nclock-fig .step { margin: 0 0 18px; background: var(--card); border: 1px solid var(--rule); padding: 14px 18px; }
 .nclock-fig .step > p:first-child { margin-top: 0; }
@@ -35,6 +39,15 @@
 .nclock-fig.is-live .nc-steps { position: relative; z-index: 1; padding: 18vh 0 26vh; }
 .nclock-fig.is-live .step { margin-bottom: 48vh; }
 .nclock-fig.is-live .step:last-child { margin-bottom: 0; }
+@media (max-width: 1099px) {
+  .nclock-fig.is-live .nclock-wide { display: none; }
+  .nclock-fig.is-live .nclock-phone { display: block; }
+}
+@media (min-width: 1100px) {
+  .nclock-fig.is-live { grid-template-columns: minmax(0, 1fr) 360px; column-gap: 40px; }
+  .nclock-fig.is-live > .nc-fig { grid-column: 1; align-self: start; top: 24px; border-bottom: 0; }
+  .nclock-fig.is-live > .nc-steps { grid-column: 2; padding: 40vh 0 40vh; }
+}
 
 /* the drawing */
 .nclock text { font-family: var(--mono); font-size: 12px; fill: var(--dim); }
@@ -49,6 +62,6 @@
 
 .nclock-fig.is-live .nclock [data-o] { transition: opacity .45s ease; }
 .nclock-fig.is-live .nclock .off { opacity: 0; }
-/* the earlier rings stay, dimmed, so the step being read stands out */
-.nclock-fig.is-live .nclock .band:not(.now):not(.off) { opacity: .55; }
+/* while a ring is the step being read, the earlier rings dim; on the body-clock and evening steps all stay full */
+.nclock-fig.is-live .nclock:has(.band.now) .band:not(.now):not(.off) { opacity: .55; }
 :root[data-motion="off"] .nclock * { transition: none !important; }

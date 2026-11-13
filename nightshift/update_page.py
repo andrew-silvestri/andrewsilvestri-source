@@ -95,18 +95,20 @@ def ring(cx, cy, r0, h, sleep, work, step, start):
 
 
 def clock(P, wide):
-    if wide:
-        W, hole, h, gap, lab_r, arc_r = 600, 70, 54, 8, 284, 266
-    else:
-        W, hole, h, gap, lab_r, arc_r = 340, 34, 31, 4, 160, 148
-    cx = cy = W / 2
+    if wide:          # 680 x 600: room either side for the 06:00 and 18:00 labels
+        W, H, hole, h, gap, arc_r, lab_r = 680, 600, 70, 54, 8, 266, 284
+        lab_side, lab_tb = 284, 284
+    else:             # 350 x 350 for a phone; side labels sit inside the canvas edge
+        W, H, hole, h, gap, arc_r, lab_r = 350, 350, 28, 28, 4, 127, 141
+        lab_side, lab_tb = 140, 146
+    cx, cy = W / 2, H / 2
     step = P["slot_min"]
     start = int(P["clock_start"][:2]) * 60
     G = P["groups"]
     bands = [("night", G["night_work"]["clock"], 2), ("day", G["day_work"]["clock"], 1),
              ("all", P["pop"], 0)]
-    out = [f'<svg class="nclock {"nclock-wide" if wide else "nclock-phone"}" viewBox="0 0 {W} {W}" width="{W}" '
-           f'height="{W}" role="img" aria-labelledby="nclock-desc">']
+    out = [f'<svg class="nclock {"nclock-wide" if wide else "nclock-phone"}" viewBox="0 0 {W} {H}" width="{W}" '
+           f'height="{H}" role="img" aria-labelledby="nclock-desc">']
     # ring outlines first, so an empty ring still reads as a ring
     for k, (key, c, o) in enumerate(bands):
         r0 = hole + k * (h + gap)
@@ -122,16 +124,24 @@ def clock(P, wide):
     if wide:
         labels.update({3 * 60: "03:00", 9 * 60: "09:00", 15 * 60: "15:00", 21 * 60: "21:00"})
     for m in range(0, 1440, 180):
-        x0, y0 = pt(cx, cy, outer + 2, m)
-        x1, y1 = pt(cx, cy, outer + (8 if m % 360 == 0 else 5), m)
+        t0 = outer + 2 if wide else arc_r + 6
+        x0, y0 = pt(cx, cy, t0, m)
+        x1, y1 = pt(cx, cy, t0 + (6 if m % 360 == 0 else 3), m)
         out.append(f'<line x1="{x0:.1f}" y1="{y0:.1f}" x2="{x1:.1f}" y2="{y1:.1f}"/>')
         if m in labels:
-            x, y = pt(cx, cy, lab_r, m)
-            anchor = "middle" if m in (0, 720) else ("start" if m < 720 else "end")
-            dy = 4 if m not in (0, 720) else (0 if m == 0 else 9)
             if m == 0:
-                y = y + 4
-            out.append(f'<text x="{x:.1f}" y="{y + dy:.1f}" text-anchor="{anchor}">{labels[m]}</text>')
+                x, y, anchor = cx, cy - lab_tb + 4, "middle"
+            elif m == 720:
+                x, y, anchor = cx, cy + lab_tb + 9, "middle"
+            elif m == 360:
+                x, y, anchor = cx + lab_side, cy + 4, "start"
+            elif m == 1080:
+                x, y, anchor = cx - lab_side, cy + 4, "end"
+            else:
+                x, y = pt(cx, cy, lab_r, m)
+                y += 4
+                anchor = "start" if m < 720 else "end"
+            out.append(f'<text x="{x:.1f}" y="{y:.1f}" text-anchor="{anchor}">{labels[m]}</text>')
     out.append("</g>")
     # body clock (step 3): melatonin arc and the temperature low
     out.append('<g class="bclock" data-o="3">')
@@ -185,9 +195,8 @@ def hero(P, v):
     out = ['<figure class="nclock-fig wide" aria-label="Three 24-hour clocks">',
            '<div class="nc-fig">', f'<p id="nclock-desc" hidden>{E(desc)}</p>',
            clock(P, True), clock(P, False),
-           '<p class="nc-key">Rings, outside in: everyone aged 15 and over; usual day workers on days they '
-           'worked; usual night workers on days they worked. Dark: share asleep. Blue: share at work. '
-           'Midnight at the top, ten-minute steps. Arc and dot: body clock of day-active adults.</p>',
+           '<p class="nc-key">Outer ring: everyone 15 and over. Middle: day workers. Inner: night workers, on '
+           'days they worked. Dark: share asleep. Blue: share at work. Arc: body clock.</p>',
            '</div>', '<div class="nc-steps">']
     for k, head, text in steps:
         out.append(f'<div class="step" data-step="{k}"><p class="ev">{head}</p><p>{text}</p></div>')
