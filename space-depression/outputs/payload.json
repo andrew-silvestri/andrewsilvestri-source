@@ -7560,6 +7560,8 @@
   "arch_four": "four",
   "barger_hyp": 75,
   "barger_iss_h": 6.09,
+  "bell_n": 72,
+  "bell_q3": "team mood dynamics did not consistently support the third-quarter phenomenon",
   "chapea1": [
    "June 25, 2023",
    "July 6, 2024"
@@ -7613,6 +7615,8 @@
   "rr_mars_plan": "5x3",
   "rr_mars_prep": "5x3",
   "rr_underest": "likely an underestimate",
+  "sandal_hib": "psychological hibernation",
+  "sandal_mid": "several variables reached a minimum value during the midwinter period, which corresponded to the third quarter",
   "sandal_n": [
    "27",
    "10"
@@ -7645,6 +7649,13 @@
    "fetched": "2026-11-13",
    "sha1": "21cb19114b0a94f3ddb75d600d4ab9c89299a945",
    "url": "https://journals.plos.org/plosone/article/file?id=10.1371/journal.pone.0093298&type=manuscript",
+   "via": "urllib"
+  },
+  "bell2019.xml": {
+   "bytes": 191791,
+   "fetched": "2026-11-13",
+   "sha1": "e5b3d1402ca9a46ffded9b850f3c479ed9fac7fd",
+   "url": "https://www.ebi.ac.uk/europepmc/webservices/rest/PMC6530432/fullTextXML",
    "via": "urllib"
   },
   "bmed_er.txt": {
@@ -7774,6 +7785,7 @@
   "longest": {
    "days": 437.75,
    "mission": "Soyuz TM-18",
+   "name": "Valeriy Vladimirovich Polyakov",
    "year": 1994
   },
   "moon_max_days": 12.58,

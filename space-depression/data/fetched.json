@@ -27,6 +27,13 @@
   "url": "https://journals.plos.org/plosone/article/file?id=10.1371/journal.pone.0093298&type=manuscript",
   "via": "urllib"
  },
+ "bell2019.xml": {
+  "bytes": 191791,
+  "fetched": "2026-11-13",
+  "sha1": "e5b3d1402ca9a46ffded9b850f3c479ed9fac7fd",
+  "url": "https://www.ebi.ac.uk/europepmc/webservices/rest/PMC6530432/fullTextXML",
+  "via": "urllib"
+ },
  "bmed_er.txt": {
   "bytes": 833697,
   "fetched": "2026-11-13",

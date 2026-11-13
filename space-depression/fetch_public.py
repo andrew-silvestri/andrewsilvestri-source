@@ -23,6 +23,7 @@ Documents the page reads figures out of
 - chapea.html: NASA's CHAPEA page (mission dates, crew size).
 - sandal2018.html: Sandal et al. 2018, Front Psychol 9:2235, Concordia winter-over, coping, mood and sleep.
 - rosenberg2022.html: Rosenberg et al. 2022, Front Physiol 13:898841, HI-SEAS missions 3 to 5.
+- bell2019.xml: Bell et al. 2019, Front Psychol 10:811, systematic review of analog team research (full text).
 - arch2025.pdf: NASA 2025 Architecture Update (Mars surface crew size).
 
 Run:  python fetch_public.py [name ...]
@@ -54,6 +55,7 @@ FILES = {
     "chapea.html": "https://www.nasa.gov/humans-in-space/chapea/",
     "sandal2018.html": "https://www.frontiersin.org/journals/psychology/articles/10.3389/fpsyg.2018.02235/full",
     "rosenberg2022.html": "https://www.frontiersin.org/journals/physiology/articles/10.3389/fphys.2022.898841/full",
+    "bell2019.xml": "https://www.ebi.ac.uk/europepmc/webservices/rest/PMC6530432/fullTextXML",
     "arch2025.pdf": "https://www.nasa.gov/wp-content/uploads/2025/12/2025-architecture-update-for-publication.pdf",
 }
 

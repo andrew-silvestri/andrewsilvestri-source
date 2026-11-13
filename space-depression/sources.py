@@ -151,6 +151,11 @@ FACTS = {
     "sandal_n": ("sandal2018.html", r"Two crews \( ?N = (27)\) spending approximately (10) months at the Concordia", None, str),
     "hiseas": ("rosenberg2022.html", r"data from (18) subjects who participated in three HI-SEAS missions: (8)-month "
                                      r"HI-SEAS mission 3 \(HM3\), the (12)-month HI-SEAS mission 4", None, str),
+    "bell_n": ("bell2019.xml", r"We were able to locate (72) different sources", 1, int),
+    "bell_q3": ("bell2019.xml", r"team mood dynamics did not consistently support the third-quarter phenomenon", None, str),
+    "sandal_mid": ("sandal2018.html", r"several variables reached a minimum value during the midwinter period, which "
+                                      r"corresponded to the third quarter", None, str),
+    "sandal_hib": ("sandal2018.html", r"psychological hibernation", None, str),
     # Mission architecture and signal delay
     "dra_short": ("dra5.pdf", r"short-stay missions range from (500) to (650) days", None, str),
     "dra_long": ("dra5.pdf", r"long-stay missions range from (890) to (950) days", None, str),
