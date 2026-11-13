@@ -130,7 +130,7 @@ def timeline(P, wide):
             o.append(f'<rect class="band" x="{x(hi):.1f}" y="{by - 7}" width="{max(x(lo) - x(hi), 2):.1f}" height="14"/>')
             o.append(f'<line class="wait" x1="{x(r["prev"]):.1f}" x2="{x(r["best"]):.1f}" y1="{by}" y2="{by}"/>')
             o.append(f'<circle class="dot" cx="{x(r["best"]):.1f}" cy="{by}" r="{5 if wide else 4}"/>')
-            o.append(f'<text x="{WAIT_R}" y="{by + 4}" text-anchor="end">{g1(r["wait"])}{" Gyr" if wide else ""}</text>')
+            o.append(f'<text x="{WAIT_R}" y="{by + 4}" text-anchor="end">{r["wait"]:.2f}{" Gyr" if wide else ""}</text>')
             word = r["count_word"] if wide else {"once": "once", "unknown": "?"}.get(
                 r["count_word"] if r["count"] != "unknown" else "unknown", str(r["count"]))
             if r["count"] == "unknown":
@@ -144,7 +144,7 @@ def timeline(P, wide):
 
 def hero(P, v):
     c = P["chain"]
-    w = {r["key"]: g1(r["wait"]) for r in c["rows"]}
+    w = {r["key"]: f"{r['wait']:.2f}" for r in c["rows"]}   # waits always to two decimals
     X = S.EXTRA
     cards = [
         (0, "The window &middot; 4.4 billion years ago to about 1 billion years ahead",
@@ -179,7 +179,7 @@ def hero(P, v):
          f"built technology that accumulates. The wait from the first large fossils was about {w['tech']} billion "
          "years."),
         (6, "Time left &middot; about 1 billion years",
-         f"The five waits lie between {g1(c['wait_min'])} and {g1(c['wait_max'])} billion years, and the time left is "
+         f"The five waits lie between {c['wait_min']:.2f} and {c['wait_max']:.2f} billion years, and the time left is "
          "about the same. "
          '<a href="#longest">Does the longest wait mark the hardest step?</a>'),
     ]
@@ -384,13 +384,13 @@ def values(P):
         "n_multi": "six" if org["Complex multicellularity"][1] == 6 else str(org["Complex multicellularity"][1]),
         "n_simple": str(org["Simple multicellularity"][1]), "n_farm": str(org["Farming, by humans"][1]),
         "n_insect": {9: "nine"}.get(org["Farming, by insects"][1], str(org["Farming, by insects"][1])),
-        "w_cell": g1([r for r in c["rows"] if r["key"] == "cell"][0]["wait"]),
+        "w_cell": f"{[r for r in c['rows'] if r['key'] == 'cell'][0]['wait']:.2f}",
         "n_hard": {5: "five"}[len(h["means"])], "h_min": g1(h["means"][0]), "h_max": f"{h['means'][-1]:,.0f}",
         "T": g1(c["T"]), "h_left": f"{h['left']:.1f}",
         "h_lo": f"{min(d for d, m in zip(h['dur'], h['means']) if m > h['T']):.2f}",
         "h_hi": f"{max(d for d, m in zip(h['dur'], h['means']) if m > h['T']):.2f}",
         "n_ahead": {5: "five", 6: "six"}[len(S.AHEAD)], "bl_gbt": f"{K['bl_gbt']:,}",
-        "w_min": g1(c["wait_min"]), "w_max": g1(c["wait_max"]), "w_mean": g1(c["wait_mean"]),
+        "w_min": f"{c['wait_min']:.2f}", "w_max": f"{c['wait_max']:.2f}", "w_mean": f"{c['wait_mean']:.2f}",
         "left": g1(S.WINDOW["end_gyr"]), "end_lo": g1(S.WINDOW["end_band"][0]), "end_hi": g1(S.WINDOW["end_band"][1]),
         "start": g1(S.WINDOW["start_ga"]), "earth": "4.5",
         "wat_T": g1(S.WATSON["T"]), "wat_left": g1(S.WATSON["left"]), "wat_n": str(S.WATSON["n"]),
@@ -412,7 +412,7 @@ def values(P):
     claims(P, v)
     fits()
     v["stamp"] = insight.stamp(live=False)
-    life_wait = g1(c["rows"][0]["wait"])
+    life_wait = f"{c['rows'][0]['wait']:.2f}"
     v["takeaways"] = insight.takeaways([
         f"Life appeared within {life_wait} billion years of the first water on Earth, but oxygen-making "
         "photosynthesis, the complex cell and technology each arose only once, so if a Great Filter lies in the "
