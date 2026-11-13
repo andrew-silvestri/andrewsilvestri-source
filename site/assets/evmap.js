@@ -9,7 +9,7 @@
  *
  * The page is complete without this file: everything shows. With motion on
  * (assets/motion.js), the figure sticks, and the step whose card crosses the
- * middle of the screen sets data-step on the figure; elements introduced by a
+ * lower quarter of the screen sets data-step on the figure; elements introduced by a
  * later step get .off, and evmap.css dims or lights the rest by step. With
  * motion off, or on "motionchange" to off, it tears down. The same idiom as
  * assets/chain.js.
@@ -31,7 +31,7 @@
       es.forEach(function (e) {
         if (e.isIntersecting) self.set(+e.target.getAttribute('data-step'));
       });
-    }, { rootMargin: '-50% 0px -49% 0px' });
+    }, { rootMargin: '-76% 0px -23% 0px' });   // the map sticks over the top half; read cards below it
   }
   Map.prototype.set = function (k) {
     this.cur = k;
@@ -49,7 +49,7 @@
     this.fig.classList.add('is-live');
     var io = this.io;
     this.steps.forEach(function (s) { io.observe(s); });
-    var mid = window.innerHeight / 2, k = 0;
+    var mid = window.innerHeight * 0.76, k = 0;
     this.steps.forEach(function (s) { if (s.getBoundingClientRect().top < mid) k = +s.getAttribute('data-step'); });
     this.set(k);
   };

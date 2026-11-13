@@ -3,7 +3,7 @@
  * Without JS, or with reduced motion, .evmap is the whole map followed by its
  * steps as cards: every dot, note and mark shows. evmap.js adds .is-live only
  * when motion is on, and sets data-step on the figure as each step card
- * reaches the middle of the screen; the rules below then dim, light and
+ * reaches the lower quarter of the screen (the map sticks over the top half); the rules below then dim, light and
  * reveal by step. Elements carry data-o, the step that introduces them.
  * Colours and sizes are style.css tokens; no gradients.
  *
@@ -34,8 +34,8 @@
   background: var(--bg); padding: 10px 0 8px; margin: 0;
   border-bottom: 1px solid var(--faint);
 }
-.evmap.is-live .evmap-steps { position: relative; z-index: 1; padding: 18vh 0 26vh; }
-.evmap.is-live .step { margin-bottom: 48vh; }
+.evmap.is-live .evmap-steps { position: relative; z-index: 1; padding: 40vh 0 30vh; }
+.evmap.is-live .step { margin-bottom: 40vh; }
 .evmap.is-live .step:last-child { margin-bottom: 0; }
 
 /* the drawing */

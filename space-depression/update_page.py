@@ -63,11 +63,11 @@ class Geo:
         self.wide = wide
         if wide:
             self.W, self.x0, self.x1 = 900, 186, 884
-            self.rows = [("mars", 64), ("moon", 54), ("orbit", 176), ("ground", 92)]
+            self.rows = [("mars", 54), ("moon", 46), ("orbit", 150), ("ground", 88)]
             self.head = 0
         else:
             self.W, self.x0, self.x1 = 340, 8, 332
-            self.rows = [("mars", 70), ("moon", 62), ("orbit", 168), ("ground", 104)]
+            self.rows = [("mars", 46), ("moon", 40), ("orbit", 124), ("ground", 92)]
             self.head = 20                      # a row's name sits on a line above its band on the phone
         self.top = {}
         y = 8
@@ -122,16 +122,16 @@ def hero_svg(P, wide):
             out.append(text(g, g.x0, t - 6, f"{names[k]} · {subs[k]}", "rname-p"))
     # axis: decades of days, and a one-year rule
     base = g.top["ground"][0] + g.top["ground"][1]
-    for d, lab in ((1, "1 day"), (10, "10 days"), (100, "100 days"), (1000, "1,000 days")):
+    ticks = ((1, "1 day"), (10, "10 days"), (100, "100 days"), (1000, "1,000 days")) if wide else         ((1, "1"), (10, "10"), (100, "100"), (1000, "1,000"))
+    for d, lab in ticks:
         x = g.x(d)
         out.append(f'<line class="grid" x1="{x:.1f}" x2="{x:.1f}" y1="{g.top["mars"][0]}" y2="{base}"/>')
         anchor = "end" if d == 1000 else "middle"
-        out.append(text(g, x + (10 if d == 1000 else 0), base + 18, lab, "tick", anchor))
+        out.append(text(g, x + ((10 if wide else 6) if d == 1000 else 0), base + 18, lab, "tick", anchor))
     xy = g.x(YEAR)
     out.append(f'<line class="yr" x1="{xy:.1f}" x2="{xy:.1f}" y1="{g.top["mars"][0]}" y2="{base}"/>')
-    out.append(text(g, xy - 4, g.top["mars"][0] + 14, "1 year", "tick", "end"))
     out.append(text(g, g.x1, base + 32, "length of one stay, log scale", "tick", "end") if wide else
-               text(g, g.x1, base + 32, "length of stay, log scale", "tick", "end"))
+               text(g, g.x1, base + 32, "days in one stay, log scale", "tick", "end"))
     # dots: one per person-flight; y spread through the row by the golden-ratio sequence (repeatable, no RNG)
     paths = {"d-short": [], "d-long": [], "d-moon": []}
     strip = 40 if not wide else 26                # the orbit row keeps a strip at the top for the step notes
@@ -144,7 +144,7 @@ def hero_svg(P, wide):
         y = t0 + frac * (t + h - pad - t0)
         cls = "d-moon" if moon else ("d-long" if days > 180 else "d-short")
         paths[cls].append(f"M{g.x(max(days, LO)):.1f} {y:.1f}h0")
-    order = {"d-short": 0, "d-long": 1, "d-moon": 3}
+    order = {"d-short": 0, "d-long": 0, "d-moon": 0}    # every flight shows from the first step; later steps light a subset
     for cls, segs in paths.items():
         out.append(f'<path class="dots {cls}" data-o="{order[cls]}" d="{"".join(segs)}"/>')
     # step notes in the orbit row's top strip, kept apart so the static figure shows all of them
@@ -229,7 +229,7 @@ def hero(P, v):
            '<div class="evmap-fig">', f'<p id="evmap-desc" hidden>{E(desc)}</p>',
            hero_svg(P, True), hero_svg(P, False),
            '<p class="evmap-key">Dots: grey, flights in Earth orbit; blue, longer than six months; brown, to the '
-           'Moon. Diamonds: ground rehearsals, with crew size.</p>', '</div>', '<div class="evmap-steps">']
+           'Moon. Diamonds: ground rehearsals, with crew size. Dotted line: one year.</p>', '</div>', '<div class="evmap-steps">']
     for k, head, body in steps:
         out.append(f'<div class="step" data-step="{k}"><p class="ev">{head}</p><p>{body}</p></div>')
     out.append("</div>\n</figure>")
@@ -269,12 +269,12 @@ def table_rating(P):
             ("Mars, planetary", "730 to 1,224 days", f["rr_mars_plan"])]
     body = "".join(f'<tr><td>{a}</td><td>{b}</td><td class="n">{c.replace("x", " &times; ")}</td></tr>'
                    for a, b, c in rows)
-    return ('<figure class="rating"><table><thead><tr><th>Mission</th><th>Length</th>'
-            '<th class="n">Likelihood &times; consequence</th></tr></thead><tbody>' + body +
-            '</tbody></table><figcaption class="dim">NASA\'s rating of the risk of adverse cognitive or behavioural '
-            'conditions and psychiatric disorders during the mission, July 2024 board decision. Each factor runs '
-            'from 1 to 5. Data: NASA Human System Risk Board, Behavioral Health risk record, Rev D.1.'
-            '</figcaption></figure>')
+    return ('<table class="rating"><thead><tr><th>Mission</th><th>Length</th>'
+            '<th class="n">Rating</th></tr></thead><tbody>' + body +
+            '</tbody></table>\n<p class="dim caption">NASA\'s rating, likelihood &times; consequence, of the risk of '
+            'adverse cognitive or behavioural conditions and psychiatric disorders during the mission (July 2024 board '
+            'decision). Each factor runs from 1 to 5. Data: NASA Human System Risk Board, Behavioral Health risk record, '
+            'Rev D.1.</p>')
 
 
 # ---------------------------------------------------------------- claims ---
