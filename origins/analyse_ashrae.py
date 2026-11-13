@@ -305,17 +305,17 @@ def main():
                                tmot_range=f"{xs[okp].min():.1f}-{xs[okp].max():.1f}",
                                ref_slope=0.31, ref_intercept=17.8))
     out = pd.DataFrame(allrows + diffs)
-    out.to_csv(OUT / "ashrae_crossovers.csv", index=False, float_format="%.3f")
-    pd.concat(tabs).to_csv(OUT / "ashrae_bins_by_group.csv", index=False,
+    out.to_csv(OUT / "ashrae_crossovers.csv", index=False, float_format="%.3f", lineterminator="\n")
+    pd.concat(tabs).to_csv(OUT / "ashrae_bins_by_group.csv", index=False, lineterminator="\n",
                            float_format="%.4f")
-    tabs[0].to_csv(OUT / "ashrae_bins_all.csv", index=False,
+    tabs[0].to_csv(OUT / "ashrae_bins_all.csv", index=False, lineterminator="\n",
                    float_format="%.4f")
-    pd.DataFrame(adapt).to_csv(OUT / "ashrae_adaptive_bins.csv", index=False,
+    pd.DataFrame(adapt).to_csv(OUT / "ashrae_adaptive_bins.csv", index=False, lineterminator="\n",
                                float_format="%.3f")
     sl = pd.DataFrame(slopes)
-    sl.to_csv(OUT / "ashrae_adaptive_slopes.csv", index=False,
+    sl.to_csv(OUT / "ashrae_adaptive_slopes.csv", index=False, lineterminator="\n",
               float_format="%.3f")
-    pd.Series(counts).to_csv(OUT / "ashrae_counts.csv", header=["value"])
+    pd.Series(counts).to_csv(OUT / "ashrae_counts.csv", header=["value"], lineterminator="\n")
     pd.set_option("display.width", 250)
     print(out.drop(columns=["boot_B"]).to_string())
     print(pd.DataFrame(adapt)[["group", "metric", "estimate", "ci_lo", "ci_hi",

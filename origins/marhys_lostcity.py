@@ -20,7 +20,7 @@ print('gas/carbon headers:', [(j, name[j], unit[j]) for j in range(105, 135) if 
 lc = [r for r in data if r and any('lost city' in str(r[j] or '').lower() for j in (1,2,3,4,5))]
 print('Lost City rows:', len(lc), 'of', len(data))
 with open(out, 'w', newline='', encoding='utf-8') as f:
-    w = csv.writer(f)
+    w = csv.writer(f, lineterminator='\n')
     w.writerow([f"{name[j]} [{unit[j]}]" if unit[j] else name[j] for j in cols])
     for r in lc:
         w.writerow(['' if r[j] is None else r[j] for j in cols])

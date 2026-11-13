@@ -5,7 +5,7 @@ Source for andrewsilvestri.com/origins.html. Python 3 with pandas, numpy and ope
 ## Run
 
     python fetch_public.py      # downloads the two databases into data/raw and checks their SHA-1
-    python analyse_ashrae.py    # comfort votes -> outputs/ashrae_*.csv (1,000 bootstrap resamples, about 2 minutes)
+    python analyse_ashrae.py > outputs/ashrae_run_log.txt    # comfort votes -> outputs/ashrae_*.csv (1,000 bootstrap resamples, about 2 minutes)
     python marhys_lostcity.py data/raw/MARHYS_DB_3_0.xlsx data/lost_city_marhys3.csv
     python build_origins.py     # -> outputs/payload.json, with checks against the page's words
     python update_page.py       # renders the page (needs the site tree; --apply writes it)
