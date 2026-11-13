@@ -54,7 +54,7 @@ def boot_slope(x, y, n=1000, seed=1):
     return bs[int(0.025 * n)], bs[int(0.975 * n) - 1]
 
 
-def life():
+def life(t_ref=T_REF):
     rows = S.metabolism()
     n_rows = len(rows)
     kept = []
@@ -67,7 +67,7 @@ def life():
             if not r["Temperature_C"].strip():
                 continue                 # tempcorr() drops rows it cannot correct
             t = float(r["Temperature_C"])
-            w = w / math.exp(E_ACT / K_B * (1 / (273.15 + T_REF) - 1 / (273.15 + t)))
+            w = w / math.exp(E_ACT / K_B * (1 / (273.15 + t_ref) - 1 / (273.15 + t)))
         kept.append({"g": g, "sp": r["Species"], "m": m, "w": w})
     # aggre(funx=min, aggmass=FALSE): one value per species, its lowest power and that row's mass; plants
     # and "Unknown" species are not aggregated
@@ -228,6 +228,10 @@ def main():
     # a single 3/4-power law over the eukaryote mass span would spread W/kg by this factor
     P["life"]["kleiber_spread"] = 10 ** (0.25 * (span[1] - span[0]))
     P["life"]["band_ratio"] = P["life"]["band_hi"] / P["life"]["band_lo"]
+    # the same band with the cold-blooded groups corrected to 37 C, body temperature, instead of Hatton's 20 C
+    L37 = life(37.0)
+    P["life"]["band37"] = {"lo": L37["band_lo"], "hi": L37["band_hi"], "ratio": L37["band_hi"] / L37["band_lo"],
+                           "euk_slope": L37["euk_slope"]}
     P["sun_vs_human"] = P["life"]["human"]["wkg"] / P["stars"]["sun_wkg"]
     check(P)
     os.makedirs(os.path.dirname(OUT), exist_ok=True)
@@ -238,6 +242,7 @@ def main():
     print(f"life: {L['n_rows']} rows -> {L['n_species_pts']} points; eukaryote slope {L['euk_slope']:.3f} "
           f"[{L['euk_ci'][0]:.3f}, {L['euk_ci'][1]:.3f}]; within groups {L['within_min']:.2f}-{L['within_max']:.2f}; "
           f"group means {L['band_lo']:.2f}-{L['band_hi']:.2f} W/kg (x{L['band_ratio']:.0f}); "
+          f"at 37 C {L['band37']['lo']:.2f}-{L['band37']['hi']:.2f} (x{L['band37']['ratio']:.0f}, slope {L['band37']['euk_slope']:.3f}); "
           f"species 1-99% {L['sp_p01']:.3f}-{L['sp_p99']:.1f}; 3/4 spread x{L['kleiber_spread']:.2e}")
     for k, g in L["groups"].items():
         print(f"  {k:14s} n={g['n']:5d} gmean {g['gmean_wkg']:.3g} W/kg slope {g['slope']:.3f} "

@@ -102,6 +102,18 @@ ENTRIES = [
         "why": "A finished policy chain, 1990-2006, stated on the page as not updated.",
     },
     {
+        # scales lane, 2026-11-13. Disabled: published datasets (2018, 2019) and one year of city data;
+        # the page says its data does not update, and update_page.claims() stops a rebuild that would
+        # contradict its words.
+        "page": "scales",
+        "cwd": "scales",
+        "fetch": [["python", "fetch_public.py"]],
+        "build": [["python", "build_scales.py"]],
+        "keys": [],
+        "enabled": False,
+        "why": "Published datasets and one year of city data, stated on the page as not updated.",
+    },
+    {
         "page": "takeaway",
         "cwd": "takeaway",
         # R2 (2026-10-23): production only. The pipeline tracker carries

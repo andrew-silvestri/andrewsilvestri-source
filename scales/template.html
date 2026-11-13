@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<link rel="preload" href="assets/perfidy/PerfidyText-Regular.woff2" as="font" type="font/woff2" crossorigin>
+<title>Watts per kilogram, from bacteria to stars — Andrew Silvestri</title>
+<meta name="description" content="Power per kilogram on one pair of axes, from bacteria to animals, people with their fuel, cities and stars. Life sits in a narrow band; the 3/4 law holds only inside groups; the Sun runs at about {{sun_x}} times less power per kilogram than a resting body.">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="alternate icon" href="favicon.png">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<meta name="theme-color" content="#F2F0EF">
+<link rel="canonical" href="https://andrewsilvestri.com/scales.html">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Watts per kilogram, from bacteria to stars — Andrew Silvestri">
+<meta property="og:description" content="Which patterns really carry from cells to cities to stars, tested on public data: a narrow band of power per kilogram for life, the opposite tilt for stars, and cities that are not big organisms.">
+<meta property="og:url" content="https://andrewsilvestri.com/scales.html">
+<script>try{document.documentElement.dataset.motion=matchMedia('(prefers-reduced-motion: reduce)').matches?'off':'on';}catch(e){document.documentElement.dataset.motion='on';}</script>
+<link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="assets/scrolly.css">
+<link rel="stylesheet" href="assets/scales.css">
+</head><body>
+{{nav}}
+<main>
+<h1>Per kilogram, a resting body puts out more power than the Sun</h1>
+<p class="dim">In 1932 Max Kleiber, an animal scientist at the University of California, found that the resting heat of mammals rises with body mass to about the three-quarter power. The rule became one of biology's few laws, and it has since been stretched to cells, cities, economies and stars, as if one law of size ran through all of them. This page tests that idea on one pair of axes: mass, and power per kilogram. It uses public data for {{n_species}} species, {{n_stars}} stars, {{c_n}} US cities and the energy use of every country. Some patterns survive the test. The three-quarter law survives only inside each group of living things, and its best-known extensions, to cities and to stars, do not.</p>
+{{stamp}}
+{{takeaways}}
+
+{{hero}}
+
+<h2 id="band">Why does life stay between {{band_lo}} and {{band_hi}} watts a kilogram?</h2>
+
+<p>The reference unit on this page is a resting adult: about {{h_w}} watts for a 70 kg body, or {{h_wkg}} watts per kilogram (W/kg). That is the heat of a dim incandescent bulb. In 2019 the ecologist Ian Hatton and four colleagues collected {{n_rows}} measurements of resting metabolism, from bacteria and single-celled algae to trees and elephants, and published them with their code. When this page reruns their method, the average for each major group (birds, mammals, invertebrates, cold-blooded vertebrates, plants, protists) lies between {{band_lo}} and {{band_hi}} W/kg. Birds are at the top, at {{g_birds}} W/kg; mammals average {{g_mammals}}; fish, amphibians and reptiles {{g_cold}}; plants {{g_plants}}. Across about 18 orders of magnitude of eukaryote mass, a single three-quarter-power law would spread those averages about {{kspread}}-fold. They spread about {{band_ratio}}-fold.</p>
+
+<p>Anastassia Makarieva and colleagues reported the same band in 2008 from a different compilation of 3,006 species: group averages of 0.3 to 9 W/kg. The tilt that Kleiber saw is real, but it lives inside each group. Fitted on Hatton's data, the exponents inside the groups run from {{within_lo}} to {{within_hi}}, and the exponent for all eukaryotes pooled is {{euk_slope}} (95 percent interval {{euk_lo}} to {{euk_hi}}), close to one. So a bigger species within a group uses less power per kilogram, while the groups themselves sit side by side on a nearly flat floor. Why each group tilts is still argued. Geoffrey West, James Brown and Brian Enquist derived three quarters in 1997 from the geometry of branching supply networks; later work found the exponent curved and varied from group to group. The tilt is a fitted law. The single line is not.</p>
+
+<p>How firm is the band? It is well measured for what it measures, which is resting animals and plants, and it moves when that choice moves. Field metabolic rates of active animals run 1.5 to 7 times their resting rates, and a growing bacterium can use power at ten to twenty times its starved rate. Temperature is the other lever. Hatton's method adjusts cold-blooded species to 20 &deg;C; at 37 &deg;C, body temperature for a mammal, the same groups average {{b37_lo}} to {{b37_hi}} W/kg and the range narrows to about {{b37_ratio}}-fold. Individual species spread wider than the averages: the middle 98 percent of them lie between {{sp_lo}} and {{sp_hi}} W/kg. What survives every one of these choices is the comparison. Life's spread is tens to hundreds of times, where a single law of size would demand tens of thousands.</p>
+
+<p class="ev-line"><b>Evidence: strong for the band of resting rates; the exact width depends on temperature and activity.</b></p>
+
+<h2 id="sun">The Sun runs cold</h2>
+
+<p>The arithmetic for the Sun is short enough to show in full. The International Astronomical Union fixes the Sun's power output, as a nominal value, at {{L_N}} watts. Its mass, from the Union's solar mass parameter divided by the gravitational constant, is {{msun}} kilograms. Divide the first by the second and the Sun gives off {{sun_sci}} W/kg, or about 0.2 milliwatts per kilogram. A resting adult gives off {{h_wkg}} W/kg, so per kilogram the body puts out about {{sun_x}} times more power than the Sun. The Sun is enormous because it is heavy, not because each kilogram works hard. The slowest group of animals in Hatton's table, fish, amphibians and reptiles at {{g_cold}} W/kg, does more than a thousand times better.</p>
+
+<p>Stars also tilt the other way. Zeki Eker, an astronomer at Akdeniz University in Turkey, and colleagues measured the masses and radii of {{n_stars}} main-sequence stars in eclipsing binary pairs, from {{m_lo}} to {{m_hi}} times the Sun's mass. From their radii and temperatures, luminosity rises roughly as mass to the power {{mlr}}, so power per kilogram rises as mass to the power {{star_slope}}. The lightest stars in the sample give off about {{star_lo}} W/kg; the heaviest give off {{star_hi}} W/kg, about as much as a resting body. The reason is physical, not biological. A heavier star squeezes its core hotter and denser, fusion runs much faster at higher temperature, and the energy leaks out faster too. An animal's tilt is set by how it supplies its cells; a star's tilt is set by gravity and the rate of fusion.</p>
+
+<p>Eric Chaisson, an astrophysicist at Harvard, has made a long table of such numbers, which he calls free energy rate density, and argues that it rises from galaxies to stars to plants to animals to society. The arithmetic of each entry is sound. As a law it is weak: each value depends on where the boundary is drawn and which mass is used, and the entries are chosen rather than sampled. It is an ordering, and an analogy, not a fitted law.</p>
+
+<p class="ev-line"><b>Evidence: strong for the numbers; the opposite tilt has a known physical cause. A common law with life: none.</b></p>
+
+<h2 id="fuel">Fuel takes people out of the band</h2>
+
+<p>A body at rest uses about {{h_w}} watts. In {{f_year}} the world used about {{world_kwh}} kilowatt-hours of primary energy per person, according to Our World in Data's compilation of the Energy Institute's statistics. Spread over the hours of a year, that is a steady {{world_w}} watts for every person alive, about {{world_x}} times the power of the body. The figure is about {{us_w}} watts in the United States, roughly {{us_x}} times the body, and about {{india_w}} watts in India, {{india_x}} times. Counted per kilogram of the people who use it, the average person with fuel runs at {{world_wkg}} W/kg and the average American at {{us_wkg}} W/kg, above the band of every group of living things. No other species takes a step of this size away from the floor that the rest of life shares.</p>
+
+<p class="ev-line"><b>Evidence: strong; national energy statistics, divided by population and by a 70 kg body.</b></p>
+
+<h2 id="cities">Cities are not big organisms</h2>
+
+<p>The most quoted extension of Kleiber's law is to cities. In 2007 Lu&iacute;s Bettencourt, Geoffrey West and colleagues reported that a city's economic output grows faster than its population, with exponents near 1.1 to 1.3, while the length of its roads and cables grows slower, near 0.8. The second finding invited the analogy with animals: a big city as a large organism, saving on its networks as an elephant does. The first finding is the opposite of an animal's tilt. The chart below repeats the economic test on current US data. Summing the Bureau of Economic Analysis's county GDP into {{c_n}} of the Census Bureau's {{c_msa}} metropolitan areas for {{c_year}} gives an exponent of {{c_slope}} (95 percent interval {{c_lo}} to {{c_hi}}). A metro ten times larger produces about {{c_x10}} percent more per person.</p>
+
+{{chart_cities}}
+
+<p>Energy is where the organism analogy should show, and it does not. In Bettencourt's own table, household electricity in German cities scales with an exponent of 1.00 (interval 0.94 to 1.06), and in Chinese cities with 1.05. Michail Fragkias and colleagues found that carbon dioxide emissions of US metros scale at about 0.93, and at about 1 once density and income are held constant. A city ten times larger uses about ten times the energy, not the five or six times an organism's tilt would predict. The networks that deliver the energy are leaner in big cities; the people at the ends of them are not.</p>
+
+<p>The exponents themselves are softer than animal exponents. Elsa Arcaute and colleagues at University College London redrew the boundaries of cities in England and Wales thousands of ways and found that most measures scaled close to one, and that the exponents that did differ from one moved with the boundary. This page's own fit has the same weakness: one year, one definition of a metro, and GDP counted where people work. It shows a gain in output with size in the United States in {{c_year}}. It does not show a law of cities.</p>
+
+<p class="ev-line"><b>Evidence: moderate for output rising with size in US data; strong that per-person energy does not fall the way an organism's would.</b></p>
+
+<h2 id="score">The scorecard</h2>
+
+<p>Each pattern below is marked as a fitted law (a measured relation, fitted to data), a model (a mechanism that predicts the relation), or an analogy (a resemblance with no shared mechanism).</p>
+
+<table tabindex="0">
+<thead><tr><th>Pattern</th><th>Kind</th><th>Verdict on the data</th></tr></thead>
+<tbody>
+<tr><td>Power rises as mass to about 3/4 inside a group of species</td><td>Fitted law</td><td>Holds; exponents {{within_lo}} to {{within_hi}}, not one number</td></tr>
+<tr><td>One 3/4 law from bacterium to elephant</td><td>Model</td><td>Fails; groups sit in a {{band_ratio}}-fold band</td></tr>
+<tr><td>Life shares a band of power per kilogram</td><td>Fitted law</td><td>Holds for resting rates, {{band_lo}} to {{band_hi}} W/kg</td></tr>
+<tr><td>Stars follow the same scaling as life</td><td>Analogy</td><td>Fails; stars tilt the other way</td></tr>
+<tr><td>Energy rate density orders the cosmos</td><td>Analogy</td><td>An ordering; depends on chosen boundaries</td></tr>
+<tr><td>City output grows faster than population</td><td>Fitted law</td><td>Holds in US data, {{c_slope}}; moves with boundaries</td></tr>
+<tr><td>Cities save energy with size, like organisms</td><td>Analogy</td><td>Fails; energy scales near 1</td></tr>
+</tbody>
+</table>
+
+<p>Mass sets the tilt inside each group. It does not set the rules between them.</p>
+
+<h2 id="method">Method</h2>
+
+<p><b>Life.</b> The data are Hatton and colleagues' Metabolism.csv ({{n_rows}} rows: mass in grams, resting or basal power in watts, temperature). The method follows their own R code. The power of cold-blooded groups and bacteria is corrected to 20 &deg;C with an Arrhenius factor (activation energy 0.6 eV); birds and mammals are not corrected. Rows without a temperature in those groups are dropped. Each species keeps its lowest power and the mass of that row, except plants, which are not aggregated. The band is the range of the geometric means of power per kilogram of the six eukaryote groups. Exponents are ordinary least-squares fits of log power on log mass; the interval for the pooled exponent is from 1,000 bootstrap samples. The 37 &deg;C variant changes only the reference temperature. The resting human is the 70 kg row in the same table.</p>
+
+<p><b>People with fuel.</b> Our World in Data's total energy supply per person (kilowatt-hours a year; updated {{owid_updated}}), divided by 8,766 hours, gives watts per person. Per kilogram uses a 70 kg body for every country, which is an assumption.</p>
+
+<p><b>Stars.</b> Eker and colleagues' table on VizieR lists {{n_stars_all}} stars; the {{n_stars}} marked for their calibration are used. Luminosity is radius squared times temperature to the fourth power, in units of the IAU nominal Sun (5,772 K, {{L_N}} W). Mass in kilograms uses the IAU solar mass parameter divided by the CODATA 2018 gravitational constant.</p>
+
+<p><b>Cities.</b> GDP is BEA's county GDP in current dollars (CAGDP1, line 1) for {{c_year}}, summed over the counties that the Census Bureau's {{c_year}} population file lists in each metropolitan statistical area. Where BEA reports a Virginia county together with its independent cities, the combined value is used when every part lies in the same metro. {{c_dropped}} metros are left out: five in Connecticut, where BEA has no {{c_year}} values for the planning regions the Census file uses, and three in Virginia. The fit is least squares on logarithms (R&sup2; {{c_r2}}), with a bootstrap interval. The energy exponents for cities are published fits, not this page's.</p>
+
+<p><b>Data vintage.</b> Hatton and colleagues, Zenodo record 3145281 (2019); Eker and colleagues (2018), VizieR J/MNRAS/479/5491; Our World in Data energy per person, years to {{f_year}}; BEA county GDP and Census metro population estimates, {{c_year}}.</p>
+
+<h2 id="limits">Limits</h2>
+
+<p>The band is a statement about resting rates. Active animals, growing microbes and plants in full sun all run higher, and the bacteria in the table are mostly at rest. Mass is wet mass; in dry mass, water-rich organisms such as jellyfish would move up. National energy statistics leave out traditional biomass such as firewood, so they understate energy use in the poorest countries, and a 70 kg body for every country is a simplification. The stars are main-sequence stars between {{m_lo}} and {{m_hi}} solar masses; giants, white dwarfs and brown dwarfs are not in the sample. The city fit is one cross-section of one country, and its exponent depends on how metros are drawn.</p>
+
+<h2 id="code">The code</h2>
+
+<p>Python: the fetch script, which records where and when each file came from; the readers; the payload builder, which reruns Hatton's method, the star luminosities and the city fit, and checks them against figures the sources print; the page generator with the chart; and the tests. The archive carries the payload, not the source files. {{zip_kb}} KB.</p>
+<p><a class="btn" href="downloads/scales-code.zip">Download source</a>
+<a class="btn ghost" href="code.html">All code</a></p>
+
+<footer>
+<p><a href="about.html">Andrew Silvestri</a></p>
+<p><a href="code.html">Built with Python, Julia, JavaScript and public data.</a></p>
+</footer>
+</main>
+<script src="assets/motion.js"></script>
+<script src="assets/lightbox.js"></script>
+<script src="assets/nav.js"></script>
+<script src="assets/scales.js"></script>
+</body></html>
