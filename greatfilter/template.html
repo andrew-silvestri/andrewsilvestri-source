@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<link rel="preload" href="assets/perfidy/PerfidyText-Regular.woff2" as="font" type="font/woff2" crossorigin>
+<title>The Great Filter — Andrew Silvestri</title>
+<meta name="description" content="On the road from chemistry to radio, Earth took five big steps. Life came fast; oxygen-making photosynthesis, the complex cell and technology each happened only once. Which of them could be the Great Filter, and what the empty sky does and does not show.">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="alternate icon" href="favicon.png">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<meta name="theme-color" content="#F2F0EF">
+<link rel="canonical" href="https://andrewsilvestri.com/greatfilter.html">
+<meta property="og:type" content="website">
+<meta property="og:title" content="The Great Filter — Andrew Silvestri">
+<meta property="og:description" content="Five big steps took Earth from chemistry to radio. Three of them happened only once. Which could be the Great Filter, and what the empty sky shows.">
+<meta property="og:url" content="https://andrewsilvestri.com/greatfilter.html">
+<script>try{document.documentElement.dataset.motion=matchMedia('(prefers-reduced-motion: reduce)').matches?'off':'on';}catch(e){document.documentElement.dataset.motion='on';}</script>
+<link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="assets/chain.css">
+<link rel="stylesheet" href="assets/greatfilter.css">
+</head><body>
+{{nav}}
+<main>
+<h1>Of the five big steps from chemistry to radio, three happened only once on Earth</h1>
+<p class="dim">At lunch at Los Alamos, probably in the summer of 1950, Enrico Fermi asked his companions where everybody was. Herbert York, one of his three companions, later recalled the reasoning: there are so many stars, and so much time, that visitors should have arrived long ago and many times. Nobody has arrived, and nothing in the sky looks made. In 1998 the economist Robin Hanson gave the silence a shape. Somewhere on the road from dead chemistry to a civilization that spreads visibly through space, at least one step must be very improbable, and he called it the Great Filter. The question that matters is where it sits. If it is behind us, in Earth's history, humans are a rare success. If it is ahead, most civilizations fail at a stage humans have not yet reached. Earth's record cannot settle that alone, but it can say which steps are poor candidates.</p>
+{{stamp}}
+{{takeaways}}
+
+{{hero}}
+
+<h2 id="once">Once, or many times?</h2>
+
+<p>The dates give the order of the steps. A second kind of evidence says more about their difficulty: how many times each step happened independently. Evolution has run many parallel experiments, in thousands of lineages over hundreds of millions of years. A trait that appeared {{n_eyes}} separate times, as eyes did, cannot be a step that almost no planet passes. The biologist Ernst Mayr made this argument in 1995: eyes and bioluminescence evolved many times, high intelligence once. The chart below counts independent origins for {{n_traits}} traits, from the published counts.</p>
+
+{{fig_origins}}
+
+<p>Most traits a reader might name as milestones turn out to be repeats. Complex multicellular life, with tissues and organs, evolved {{n_multi}} times: animals, land plants, red algae, brown algae and two groups of fungi. Simple multicellularity evolved at least {{n_simple}} times. Farming began in at least {{n_farm}} places among humans, and {{n_insect}} times among insects. The steps on the chain that happened only once are oxygen-making photosynthesis, the complex cell, and technology that builds on itself. Life itself is a special case: all life descends from one ancestor, but nobody knows how many times life began, because later starts would have been eaten and the oldest rocks are mostly gone.</p>
+
+<p>But "once" is weaker evidence than it looks. The first lineage to take a niche can block every later attempt, so one survivor is what an easy step would also leave behind. In 1983 David Raup and James Valentine showed that life could have begun many times, with all but one line dying out. Nitrogen fixation is another warning: the enzyme evolved once, yet it is everywhere, because bacteria pass genes among themselves. The biochemist Nick Lane answers for the complex cell. Simple eukaryotes that lack full mitochondria arose at least 20 times, all from eukaryotes and never from bacteria, and they were not driven out, so the niche was not closed. On his reading the barrier is in the cell's energy supply, not in luck. The dispute is open.</p>
+
+<p class="ev-line"><b>Evidence: moderate.</b> The counts come from peer-reviewed reviews; some depend on definitions, and a single origin is consistent with both a hard step and an early winner.</p>
+
+<h2 id="longest">Does the longest wait mark the hardest step?</h2>
+
+<p>The obvious reading of the timeline is that the longest wait, about {{w_cell}} billion years from oxygen-making photosynthesis to the complex cell, was the hardest step. A simple model says this inference is wrong. Brandon Carter proposed it in 1983, and Hanson and the Earth scientist Andrew Watson worked it out: give each step a random waiting time with its own average, and look only at the histories in which every step finishes before the planet stops being habitable. Those are the only histories that contain someone to look back.</p>
+
+<p>The chart shows the result for {{n_hard}} steps whose average waits, on their own, run from {{h_min}} to {{h_max}} billion years, in Earth's window of {{T}} billion years. In the histories that finish in time, every hard step takes about {{h_dur}} billion years, whatever its average. A step a thousand times harder than another does not take longer; it only makes success rarer. The time left over at the end is the same size, about {{h_left}} billion years.</p>
+
+{{fig_hard}}
+
+<p>Earth fits that pattern. Its five waits all lie between {{w_min}} and {{w_max}} billion years, averaging {{w_mean}}, and about {{left}} billion years of habitable time remain. Watson used the remaining time to estimate the number of hard steps: with a window of {{wat_T}} billion years and {{wat_left}} left, his best guess was {{wat_n}}. The even spacing has a second explanation, however. In 2025 Daniel Mills, Adam Frank and colleagues argued that each step waited for the planet, not for luck: the oxygen level ruled out complex cells and animals for about {{mills_frac}} of Earth's history. Their model predicts the same even spacing without any improbable step. Both readings fit the dates; the dates alone cannot choose.</p>
+
+<p class="ev-line"><b>Evidence: strong for the model's mathematics, weak for its application.</b> The spacing result is exact; whether Earth's steps were hard, or waited on the environment, is contested.</p>
+
+<h2 id="any">Is there a filter at all?</h2>
+
+<p>The Fermi question assumes that the expected number of civilizations is large, so their absence needs explaining. In 2018 Anders Sandberg, Eric Drexler and Toby Ord replaced each factor of the Drake equation with the range of values that scientists have published, rather than a single guess. The widest is the rate at which life begins, which they spread over {{sdo_dex}} orders of magnitude. With the published ranges, the chance that the galaxy holds fewer than one other civilization is about {{p_alone}} percent before anyone looks at the sky; this page's code repeats their calculation and gets {{p_alone_ours}} percent. After the empty sky is taken into account, the chance rises to between {{post_lo}} and {{post_hi}} percent. On this view the silence is no paradox. The filter may simply be the low odds that the ranges already contain.</p>
+
+<h2 id="sky">What the sky has ruled out</h2>
+
+<p>How empty is the sky? It depends on what is being looked for. A civilization that uses most of its galaxy's starlight must shed the energy as heat, which shows in the mid-infrared. A 2015 search of about {{ghat}} galaxies found none that turns more than {{ghat_frac}} percent of its starlight into such heat. That rules out galaxy-spanning engineering on a large scale nearby. Radio searches are much less complete. Breakthrough Listen observed {{bl_stars}} nearby stars and found no transmitter; at most {{bl_frac}} percent of them could hold one sending more than {{bl_tw}} trillion watts in all directions, about {{bl_share}} of humanity's total energy supply. But Jason Wright and colleagues estimated in 2018 that all radio searches to date had examined about {{haystack}} of the possible signals. As a share of Earth's oceans, that is about {{litres}} litres, a hot tub of water.</p>
+
+<p>So the silence is strong evidence against large, loud civilizations close to us in space and time, and weak evidence against quiet or distant ones. A civilization that spread from star to star could cross the galaxy in less than {{cross}} million years, which is short beside Earth's {{earth}} billion, so the absence of visitors still needs an answer. One answer is that settlement is patchy: a 2019 model by Jonathan Carroll-Nellenback and colleagues found that Earth could go unvisited for long periods in a galaxy that is partly settled.</p>
+
+<h2 id="ahead">Is the filter ahead?</h2>
+
+<p>If the past steps were easy, the filter is ahead, and it would have to stop nearly every civilization at a stage close to the present. Hanson put it bluntly: the easier the past, the worse the future odds. Estimates of the risks ahead are judgements, not measurements. The table lists six of them, labeled by kind.</p>
+
+{{table_ahead}}
+
+<p>The estimates differ by type and by scope. A tournament of forecasters and experts (the XPT) asked about extinction by 2100; superforecasters gave a median of {{xpt_sf}} percent and domain experts {{xpt_ex}} percent, a {{xpt_ratio}}-fold gap. Ord's figure covers any permanent loss of humanity's potential, not only extinction. The record of the human species gives only a floor for natural causes: if the yearly risk were above 1 in 14,000, a species of Homo sapiens' age would almost certainly not have survived this long. None of these numbers says that a filter lies ahead. A filter must stop almost every civilization, and nobody's estimate approaches that.</p>
+
+<h2 id="change">What would change the answer</h2>
+
+<p>The cheapest test is to look for a second origin of life. In 2008 the philosopher Nick Bostrom argued that independent life on Mars would be bad news: it would show the first step to be easy, and push the filter later, toward the present. Fossils of complex life there would be worse news. One caveat is not his. Rocks travel between the planets, and simulations find that a few percent of rocks thrown off Mars reach Earth, so life found there might share Earth's origin rather than repeat it. A second origin found in the oceans of Europa or Enceladus would be cleaner evidence. Each new search that finds nothing makes large civilizations rarer. Each step found a second time makes the filter less likely to be behind us.</p>
+
+<h2 id="method">Method</h2>
+
+<p><b>Dates.</b> Each step's date is the oldest widely accepted evidence for it, from the paper named in Sources; the bands on the timeline are the ranges those papers give. A wait is the gap between the dates of two consecutive steps. The first wait, from the first liquid water at {{start}} billion years ago to the oldest accepted fossils, is an upper bound: life may be older. The end of the window is the expected end of an oxygen-rich atmosphere, in about {{left}} billion years (range {{end_lo}} to {{end_hi}}). This end applies to complex life. Microbes can live longer.</p>
+
+<p><b>Origins.</b> A count is the number of independent origins in the published review named for each trait. Where a review gives "at least", the chart draws the lower bound. The count for complex cognition is this page's tally of lineages (great apes, cetaceans, elephants, crows, parrots, octopuses and squid); no formal count exists.</p>
+
+<p><b>Hard-steps model.</b> Each step's waiting time is exponential with a set mean. The code draws each wait from its exponential cut off at the window length T, and keeps a history when the waits add up to T or less. This gives the same result as keeping only finished histories, at about 1 history in {{accept_inv}} instead of a few in a billion. It keeps {{n_kept}} histories. Check: with 3, 4 or 5 equally hard steps the code gives each step 1/(n+1) of the window, the exact answer. The means are an illustration, not estimates for Earth's steps.</p>
+
+<p><b>Drake ranges.</b> The code draws every factor from the ranges in Table 1 of Sandberg, Drexler and Ord, uniform in the logarithm, and the rate of abiogenesis from a log-normal distribution with a standard deviation of {{sdo_dex}} orders of magnitude. It takes {{sdo_n}} draws. The posterior figures are quoted from the paper, not recomputed.</p>
+
+<h2 id="limits">Limits</h2>
+
+<p>The fossil record gives the oldest surviving evidence for a step, not the date it happened, and every early date is disputed by someone. The list of steps is a choice: other lists include sex, nervous systems or language, and a different list gives different waits. The hard-steps model assumes steps that are independent and memoryless; real steps depend on the environment, as Mills and colleagues argue. Counts of origins count only lineages that survived. The estimates of future risk are beliefs, and this page does not rank them. It takes no position on where the filter is, or whether there is one.</p>
+
+<h2 id="code">The code</h2>
+
+<p>Python: the table of published dates and counts with a source for each row, the model script (hard-steps simulation and Drake ranges), the page generator that draws the timeline and the two figures, and the tests. {{zip_kb}} KB.</p>
+<p><a class="btn" href="downloads/greatfilter-code.zip">Download source</a>
+<a class="btn ghost" href="code.html">All code</a></p>
+
+<footer>
+<p><a href="about.html">Andrew Silvestri</a></p>
+<p><a href="code.html">Built with Python, Julia, JavaScript and public data.</a></p>
+</footer>
+</main>
+<script src="assets/motion.js"></script>
+<script src="assets/lightbox.js"></script>
+<script src="assets/nav.js"></script>
+<script src="assets/chain.js"></script>
+</body></html>
