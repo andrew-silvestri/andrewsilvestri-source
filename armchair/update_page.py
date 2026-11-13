@@ -150,25 +150,30 @@ Y0, Y1 = -600, 2030
 
 
 def tl_svg(rows, W, gut, rh, cls, fs):
-    x0, x1 = gut + 8, W - 10
+    """gut > 0: labels in a left gutter, right-aligned. gut == 0 (phones): each label sits above its line."""
+    stacked = gut == 0
+    x0, x1 = (8, W - 10) if stacked else (gut + 8, W - 10)
     top = 26
 
     def X(y):
         return x0 + (y - Y0) / (Y1 - Y0) * (x1 - x0)
     parts = []
-    for t in (-500, 0, 500, 1000, 1500, 2000):
+    ticks = (-500, 500, 1000, 1500, 2000) if stacked else (-500, 0, 500, 1000, 1500, 2000)
+    for t in ticks:
         xx = X(t)
         lab = "500 BCE" if t == -500 else "AD 1" if t == 0 else str(t)
+        anchor = "start" if stacked and t == -500 else "end" if stacked and t == 2000 else "middle"
         parts.append(f'<line class="tl-grid" x1="{xx:.1f}" y1="{top - 6}" x2="{xx:.1f}" '
                      f'y2="{top + rh * len(rows)}"/><text class="tl-ax" x="{xx:.1f}" y="{top - 10}" '
-                     f'text-anchor="middle">{lab}</text>')
+                     f'text-anchor="{anchor}">{lab}</text>')
     for i, r in enumerate(rows):
-        y = top + rh * i + rh / 2
+        y = top + rh * i + (rh - 7 if stacked else rh / 2)
         a, b = X(r["idea_year"]), X(r["confirm_year"])
         g = r["grade"].lower()
+        lab = (f'<text class="tl-lab" x="{x0}" y="{y - 9:.1f}">{E(SHORT[r["id"]])}</text>' if stacked else
+               f'<text class="tl-lab" x="{gut}" y="{y + fs * 0.35:.1f}" text-anchor="end">{E(SHORT[r["id"]])}</text>')
         parts.append(
-            f'<g class="tl-row g-{g}"><text class="tl-lab" x="{gut}" y="{y + fs * 0.35:.1f}" '
-            f'text-anchor="end">{E(SHORT[r["id"]])}</text>'
+            f'<g class="tl-row g-{g}">{lab}'
             f'<line class="tl-line" x1="{a:.1f}" y1="{y:.1f}" x2="{b:.1f}" y2="{y:.1f}"/>'
             f'<circle class="tl-idea" cx="{a:.1f}" cy="{y:.1f}" r="3.5"/>'
             f'<rect class="tl-end" x="{b - 3.5:.1f}" y="{y - 3.5:.1f}" width="7" height="7"/>'
@@ -191,7 +196,7 @@ def timeline(P, v):
     return "\n".join([
         '<figure class="wide tl-fig" aria-label="From idea to decisive event">',
         f'<p id="tl-desc" hidden>{E(desc)}</p>',
-        tl_svg(rows, 900, 250, 17, "tl-wide", 13), tl_svg(rows, 340, 150, 17, "tl-phone", 12),
+        tl_svg(rows, 900, 250, 17, "tl-wide", 13), tl_svg(rows, 340, 0, 30, "tl-phone", 12),
         '<p class="chain-key crowd-key"><span class="sw g-strong"></span>strong &middot; '
         '<span class="sw g-partial"></span>partial &middot; <span class="sw g-loose"></span>loose &middot; '
         '<span class="sw g-wrong"></span>wrong. Circle: the idea. Square: the event.</p>',
