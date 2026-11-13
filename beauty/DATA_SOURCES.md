@@ -61,9 +61,9 @@ List Categories associated with each named taxonomic entity"; the token is
 personal. The archive takes the cautious reading and ships no table that
 pairs a species with its category, in a column or by the order of its
 rows: `data/topic_counts.csv` is sorted by species name (it was written
-non-Least-Concern species first). The exception:
-`data/lc_matched.csv` lists the 1,000 Least Concern species the comparison
-is matched against.
+non-Least-Concern species first). `data/lc_matched.csv`, the 1,000 Least
+Concern species the comparison is matched against, is not in the archive
+(D-44): every row would carry its category. `match_lc.py` rebuilds it.
 `data/iucn_aves.csv` and `data/raw/iucn_aves/` are **not in git and not in
 the archive**. Cite as: IUCN 2026. The IUCN Red List of Threatened Species.
 Version 2026-1. https://www.iucnredlist.org. IUCN asks that a copy of any

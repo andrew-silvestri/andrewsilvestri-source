@@ -168,16 +168,16 @@ def hero(P, L):
             "annotations": []}
     steps = [
         (f"<p><b>The 1950s: about half.</b> From 1950 to 1959, the figure averaged {r0(a50)} claimants per 100 "
-         f"unemployed people. The highest year was {hi_y}, at {r0(us[hi_y])}.</p>", {"t": t_at(xs, 1959)}),
-        (f"<p><b>1980 to 1984: a step down.</b> The figure decreased from {r0(us[1980])} in 1980 to "
-         f"{r0(us[1984])} in 1984. Rebecca Blank and David Card found that fewer eligible unemployed people "
-         f"claimed between 1980 and 1982. That decrease alone took about {L['bc_pts']} points off the figure.</p>",
+         f"unemployed people, and in the peak year, {hi_y}, more than half claimed ({r0(us[hi_y])}).</p>", {"t": t_at(xs, 1959)}),
+        (f"<p><b>1980 to 1984: a step down.</b> In four years the figure fell by about a third, from {r0(us[1980])} to "
+         f"{r0(us[1984])}. Rebecca Blank and David Card found that fewer eligible unemployed people "
+         f"claimed between 1980 and 1982, and that this alone took about {L['bc_pts']} points off the figure, some two-fifths of the fall.</p>",
          {"t": t_at(xs, 1984)}),
         (f"<p><b>1985 to 2019: lower.</b> From 1985 to 2007, the figure stayed between {r0(mid_lo)} and "
-         f"{r0(mid_hi)}. After the recession of 2008 and 2009 it decreased again, to {r0(us[2019])} in 2019.</p>",
+         f"{r0(mid_hi)}, never back at the 1950s average. After the recession of 2008 and 2009 it decreased again, to {r0(us[2019])} in 2019, below any year of those two decades.</p>",
          {"t": t_at(xs, 2019)}),
         (f"<p><b>2020 to {last}: up, then down.</b> When employers laid off millions of workers at once in 2020, "
-         f"the figure increased to {r0(us[2020])}. In {last}, it was {r0(us[last])}.</p>", {"t": 1}),
+         f"the figure jumped to {r0(us[2020])}, the highest on the chart. By {last} it was back to {r0(us[last])}.</p>", {"t": 1}),
     ]
     return insight.scrolly(spec, steps, from_state={"t": 0})
 
@@ -198,17 +198,17 @@ def cuts(P, L):
                         "values": [round(nc[y], 2) for y in xs]}],
             "annotations": []}
     steps = [
-        (f"<p><b>1976 to 2007.</b> Florida&rsquo;s figure was below the national one in most of these years; "
-         f"North Carolina&rsquo;s was close to it. In 2007, the figure was {r0(fl[2007])} in Florida, "
-         f"{r0(nc[2007])} in North Carolina and {r0(us[2007])} for the nation.</p>", {"t": t_at(xs, 2007)}),
-        (f"<p><b>2008 to 2013: the cuts.</b> In the recession, several state trust funds came close to insolvency. "
-         f"Seven states, Florida and North Carolina among them, then cut the maximum number of weeks. Florida&rsquo;s "
-         f"figure had already decreased to {r0(fl[2011])} by 2011. From {L['fl_date']}, Florida paid at most "
+        (f"<p><b>1976 to 2007.</b> Before the cuts, neither state stood out for long. Florida&rsquo;s figure was below the national one in most of these years, "
+         f"and North Carolina&rsquo;s was close to it; in 2007 all three were within a few points ({r0(fl[2007])} in Florida, "
+         f"{r0(nc[2007])} in North Carolina and {r0(us[2007])} for the nation).</p>", {"t": t_at(xs, 2007)}),
+        (f"<p><b>2008 to 2013: the cuts.</b> In the recession, several state trust funds came close to insolvency, "
+         f"and seven states, Florida and North Carolina among them, then cut the maximum number of weeks. Florida&rsquo;s "
+         f"figure had already about halved by 2011, to {r0(fl[2011])}. From {L['fl_date']}, Florida paid at most "
          f"{L['fl_max']} weeks instead of 26, and {L['fl_min']} when its unemployment rate is below {L['fl_ur']} "
-         f"per cent. North Carolina&rsquo;s cut followed in July 2013.</p>", {"t": t_at(xs, 2013)}),
+         f"percent. North Carolina&rsquo;s cut followed in July 2013.</p>", {"t": t_at(xs, 2013)}),
         (f"<p><b>2014 to {last}: low.</b> In 2019, the figure was {r0(fl[2019])} in Florida and {r0(nc[2019])} in "
-         f"North Carolina, against {r0(us[2019])} for the nation. In {last}, it was {r0(fl[last])}, "
-         f"{r0(nc[last])} and {r0(us[last])}.</p>", {"t": 1}),
+         f"North Carolina, less than half the national {r0(us[2019])}, and in {last} it was {r0(fl[last])}, "
+         f"{r0(nc[last])} and {r0(us[last])}. The cuts did not wear off.</p>", {"t": 1}),
     ]
     return insight.scrolly(spec, steps, from_state={"t": 0})
 
@@ -248,15 +248,15 @@ def strip(P):
             "x": {"label": f"claimants per 100 unemployed, {last}"}}
     med = statistics.median(v.values())
     steps = [
-        (f"<p><b>{len(v)} programs.</b> Each bar shows how many states have a {last} figure in one {w}-point step. "
-         f"The count includes the District of Columbia. The middle state had {r0(med)} claimants per 100 "
-         f"unemployed people. The national figure, {r0(P['us'][str(last)])}, is higher because large states such "
+        (f"<p><b>{len(v)} programs.</b> Each bar counts the states, the District of Columbia included, whose {last} figure falls in one {w}-point step. "
+         f"The middle state had {r0(med)} claimants per 100 "
+         f"unemployed people; the national figure ({r0(P['us'][str(last)])}) is higher because large states such "
          f"as California and New York are above the middle.</p>", {"t": 1, "us": 1}),
         (f"<p><b>Below one in five.</b> In {len(low)} states, fewer than {P['low_line']:.0f} of every 100 "
-         f"unemployed people claimed. These {len(low)} states are home to {r0(100 * P['low_pop_share'])} per cent "
-         f"of U.S. residents.</p>", {"t": 1, "us": 1, "under": 1}),
-        (f"<p><b>Six to one.</b> {NAMES[lo]} had the lowest figure, {r1(v[lo])}. {NAMES[hi]} had the highest, "
-         f"{r1(v[hi])}.</p>", {"t": 1, "us": 1, "under": 1, "ends": 1}),
+         f"unemployed people claimed. Together they are home to {r0(100 * P['low_pop_share'])} percent "
+         f"of U.S. residents, about two Americans in five.</p>", {"t": 1, "us": 1, "under": 1}),
+        (f"<p><b>Six to one.</b> {NAMES[lo]} had the lowest figure, {r1(v[lo])}, and {NAMES[hi]} the highest, "
+         f"{r1(v[hi])}. The same lost job brings a claim six times as often in one state as in the other.</p>", {"t": 1, "us": 1, "under": 1, "ends": 1}),
     ]
     return insight.scrolly(spec, steps, from_state={"t": 0})
 
@@ -278,12 +278,12 @@ def comp(P):
             "annotations": []}
     steps = [
         (f"<p><b>{xs[0]} to 1979: close together.</b> In 1970, job losers were "
-         f"{r0(C[1970]['job_loser_share'])} of every 100 unemployed people. Claimants were also "
-         f"{r0(us[1970])} per 100 unemployed people.</p>", {"t": t_at(xs, 1979)}),
+         f"{r0(C[1970]['job_loser_share'])} of every 100 unemployed people, and claimants were also "
+         f"{r0(us[1970])} per 100: about one claimant for every job loser.</p>", {"t": t_at(xs, 1979)}),
         (f"<p><b>1980 to {last}: apart.</b> The share of job losers increases in recessions and decreases after "
-         f"them. In 2019, before the pandemic, job losers were {r0(C[2019]['job_loser_share'])} of every 100 "
+         f"them, and by 2019, before the pandemic, job losers were back to {r0(C[2019]['job_loser_share'])} of every 100 "
          f"unemployed people, close to the {r0(C[1970]['job_loser_share'])} of 1970. Claimants did not return "
-         f"to the 1970 level. They were {r0(us[2019])} per 100 unemployed people in 2019 and {r0(us[last])} in "
+         f"to the 1970 level: they were {r0(us[2019])} per 100 unemployed people in 2019 and {r0(us[last])} in "
          f"{last}. In {last}, that was about {r0(C[last]['recip_per_100_losers'])} claimants for every 100 job "
          f"losers, against about {r0(C[1970]['recip_per_100_losers'])} in 1970.</p>", {"t": 1}),
     ]
@@ -333,6 +333,18 @@ def claims(P, L):
         ("cuts step 1: North Carolina 'close to' the nation, within 6 points in most years 1976-2007",
          sum(abs(nc[y] - us[y]) < 6 for y in range(1976, 2008)) > 16),
         ("cuts step 2: Florida 'had already decreased' by 2011 from 2007", fl[2011] < fl[2007] - 10),
+        ("cuts step 2: Florida's figure 'about halved' 2007 to 2011: ratio 0.4-0.6",
+         0.4 <= fl[2011] / fl[2007] <= 0.6),
+        ("strip step 2 'about two Americans in five': low-state population share 0.35-0.45",
+         0.35 <= P["low_pop_share"] <= 0.45),
+        ("hero step 2 'fell by about a third' 1980 to 1984: fall / 1980 within 0.28-0.38",
+         0.28 <= (us[1980] - us[1984]) / us[1980] <= 0.38),
+        ("hero step 2 Blank and Card's points 'some two-fifths of the fall': 0.35-0.45",
+         0.35 <= float(L["bc_pts"]) / (us[1980] - us[1984]) <= 0.45),
+        ("takeaway 2 'claimants fell by about two-fifths' 1970 to last year: 0.35-0.45",
+         0.35 <= (us[1970] - us[last]) / us[1970] <= 0.45),
+        ("NC section 'cut the maximum weekly benefit by about a third': 0.28-0.38",
+         0.28 <= 1 - float(L["nc_wba1"].replace(",", "")) / float(L["nc_wba0"].replace(",", "")) <= 0.38),
         ("cuts step 3 'low': both states below half the national figure in 2019 and the last year",
          all(s[y] < us[y] / 2 for s in (fl, nc) for y in (2019, last))),
         ("the lowest state is Florida, which the takeaway and standfirst name with Minnesota", (lo, hi) == ("FL", "MN")),
@@ -378,16 +390,16 @@ def values(P):
         "stamp": insight.stamp_annual(last, "U.S. Department of Labor and Bureau of Labor Statistics", fetched,
                                       "the page adds each year after both agencies publish it"),
         "takeaways": insight.takeaways([
-            f"Most unemployed people who receive nothing never applied: in a 2022 BLS survey, "
-            f"{L['bls_applied']} per cent of the unemployed who had worked in the past year had applied, and "
-            f"{L['bls_received']} per cent of those who applied received benefits.",
+            f"Most unemployed people who receive nothing never applied: in a 2022 BLS survey, only about one in four "
+            f"of the unemployed who had worked in the past year had applied ({L['bls_applied']} percent), and a little "
+            f"over half of those who applied received benefits ({L['bls_received']} percent).",
             f"Job losers, the group the program is for, were about the same share of the unemployed in {last} as "
-            f"in 1970, {r0(C[str(last)]['job_loser_share'])} against {r0(C['1970']['job_loser_share'])} in 100, "
-            f"while claimants decreased from {r0(us[1970])} in 100 to {r0(us[last])} in 100 over the same years.",
-            f"In {len(P['low_states'])} states, home to {r0(100 * P['low_pop_share'])} per cent of U.S. residents, "
-            f"fewer than 20 of every 100 unemployed people claimed in {last}; {NAMES[lo]}, at "
-            f"{r0(P['states'][lo][str(last)])}, was lowest and {NAMES[hi]}, at {r0(P['states'][hi][str(last)])}, "
-            f"highest."]),
+            f"in 1970 ({r0(C[str(last)]['job_loser_share'])} against {r0(C['1970']['job_loser_share'])} in 100), "
+            f"while claimants fell by about two-fifths, from {r0(us[1970])} in 100 to {r0(us[last])}, over the same years.",
+            f"In {len(P['low_states'])} states, home to {r0(100 * P['low_pop_share'])} percent of U.S. residents, "
+            f"fewer than 20 of every 100 unemployed people claimed in {last}. {NAMES[lo]} was lowest "
+            f"({r0(P['states'][lo][str(last)])}) and {NAMES[hi]} highest ({r0(P['states'][hi][str(last)])}), "
+            f"about six times as high."]),
         "hero": hero(P, L), "cuts": cuts(P, L), "strip": strip(P), "comp": comp(P), "state_rows": state_rows(P),
         "tol": f"{P['repro']['tol']:g}", "repro_us0": str(P["repro"]["us_years"][0]),
         "repro_us1": str(P["repro"]["us_years"][1]), "repro_st0": str(P["repro"]["state_years"][0]),

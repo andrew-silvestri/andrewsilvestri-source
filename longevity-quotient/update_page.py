@@ -37,16 +37,18 @@ POOLS = [("All animals", None), ("Mammals", "Mammalia"), ("Birds", "Aves"),
 
 SOURCE_ROWS = [
     ("seed", "Hand-checked seed table",
-     "Entered by hand, one species at a time. 88 of its rows are graded A. "
-     "It includes projections as well as observed ages."),
+     "Entered by hand, one species at a time; 88 of its rows are graded A. "
+     "It includes growth-rate estimates as well as observed ages, and a "
+     "projected age for the olm, which the merge carries only as a "
+     "projection, at grade C and out of the fits."),
     ("anage", "AnAge build 15",
-     "The curated standard. It has its own quality grade and a distinction "
+     "The curated standard, with its own quality grade and a distinction "
      "between wild and captive. The model keeps both and does not overwrite "
      "them."),
     ("amniote", "Amniote life-history database",
      "Birds, mammals and reptiles. A peer-reviewed compilation that gives the "
-     "median where its own sources disagreed. It has one maximum per species, "
-     "with no record of whether the animal was wild or captive. This page "
+     "median where its own sources disagreed, and one maximum per species "
+     "with no record of whether the animal was wild or captive, so this page "
      "carries these records as origin not recorded."),
     ("pantheria", "PanTHERIA",
      "Mammals. Maximum longevity in months, converted."),
@@ -57,7 +59,7 @@ SOURCE_ROWS = [
      "Fish. The maximum age is the largest of three fields that disagree: "
      "the curated wild longevity, the maximum for each population, and the "
      "tmax used to fit growth curves. Only the first is kept as a wild "
-     "maximum. The others are carried as origin not recorded. All its "
+     "maximum; the others are carried as origin not recorded. All its "
      "records are grade C."),
 ]
 
@@ -150,7 +152,8 @@ def sources_section(report, rows):
     prov = list(csv.DictReader(open(os.path.join(OUT, "provenance.csv"),
                                     encoding="utf-8")))
     idx = collections.Counter(p["mass_from"] for p in prov
-                              if p["mass_from"] != p["taken_from"])
+                              if p["mass_from"] != p["taken_from"]
+                              and p["mass_from"] in MASS_NAME)
     from_index = sum(idx.values())
     idx_bits = " and ".join(f"{fmt(v)} from {MASS_NAME.get(k, k)}"
                             for k, v in sorted(idx.items())) or "none from the index"
@@ -161,10 +164,11 @@ def sources_section(report, rows):
 
     return f"""<h2>Where the data comes from</h2>
 
-<p>Six databases give a maximum lifespan. They overlap a lot, and they
-disagree. A species in more than one database takes its numbers from the best
-available source, and the others are kept as corroboration. An average of a
-careful record and a careless one gives a number that belongs to neither.</p>
+<p>Six databases give a maximum lifespan, and they overlap a lot and
+disagree. A species in more than one of them takes its numbers from the best
+available source, with the others kept as corroboration, rather than from an
+average. An average of a careful record and a careless one gives a number that
+belongs to neither.</p>
 
 <table>
 <tr><th>Source</th><th>Records with a lifespan</th><th>Used as the record</th>
@@ -172,38 +176,41 @@ careful record and a careless one gives a number that belongs to neither.</p>
 {chr(10).join(tr)}
 </table>
 
-<p>Body-mass databases are a separate matter, and they are much larger. AVONET
+<p>Body-mass databases are a separate matter, and they are much larger: AVONET
 (birds only), PanTHERIA and Amniote together have a mass for
-{fmt(report['mass_index'])} species. None of them creates a record: a species
-with a mass and no lifespan gives this model nothing to use. A record with a
-lifespan and no mass takes a mass from another source. This occurred
+{fmt(report['mass_index'])} species. None of them creates a record, since a
+species with a mass and no lifespan gives this model nothing to use. A record
+with a lifespan and no mass takes a mass from another source, which happened
 {fmt(report['mass_filled'])} times:
 {fmt(report['mass_filled'] - from_index)} from another lifespan record of the
 same species, and {idx_bits}.</p>
 
 <p>After the merge, {fmt(report['species_with_a_lifespan'])} distinct species
-had a lifespan. {fmt(report['dropped_no_mass'])} of them were dropped because
+had a lifespan, and {fmt(report['dropped_no_mass'])} of them were dropped because
 no source gave a body mass. Most of these are reptiles and amphibians, which
-are usually measured snout to vent and never weighed.
-{fmt(report['mass_modelled_from_length'])} fish stay in, with a mass calculated
+are usually measured snout to vent and never weighed. The exception is
+{fmt(report['mass_modelled_from_length'])} fish, kept with a mass calculated
 from maximum length through FishBase's own length&ndash;weight relationship.
 Those masses are modeled, not measured, and their records are marked and
 graded to show this. What
 remains is <strong>{fmt(n)} species</strong>, graded {grade_bits} as they
 come from their sources. The outlier rule described under the arithmetic
-then demotes {o["demoted"]} grade-B records to C. The
+then demotes {o["demoted"]} grade-B records to C, {_n(len(o["demoted_by_name"]))}
+more {"is" if len(o["demoted_by_name"]) == 1 else "are"} demoted by name for the
+reason given there, and the
 {_n(sum(col.values()))} colonies ({col_bits}) are set aside, so the model runs
 on {final_bits}.</p>
 
 <p class="small">This is the ceiling, and the reason matters.
-About 2.24 million species have been described. The six databases merged here
-hold fewer than nine thousand with both an age and a weight. Sources that are
+About 2.24 million species have been described, and the six databases merged
+here hold fewer than nine thousand with both an age and a weight, under half of
+one percent of them. Sources that are
 not merged add some more (<code>DATA_SOURCES.md</code>, in the download, lists
 Add-my-Pet, SeaLifeBase and a compilation of bivalve ages among them). But a
 maximum lifespan needs somebody to watch an animal until it dies, and
 for most species nobody has. The limit is less the access to data than the
-absence of the observations. Wikidata is the aggregate
-of individual species pages, not a compiled table. It holds 1,147 taxa with
+absence of the observations. Wikidata, the aggregate of individual species
+pages rather than a compiled table, holds 1,147 taxa with
 a recorded maximum lifespan and 259 with a lifespan and a mass together.
 That is less than a twentieth of what the compiled databases give, so scraping
 species pages one at a time would not do better.</p>
@@ -240,8 +247,31 @@ def arithmetic_section(summary, rows):
     pools = {"Pisces": "fish", "Aves": "birds", "Mammalia": "mammals",
              "Reptilia": "reptiles", "Amphibia": "amphibians",
              "Invertebrata": "invertebrates"}
-    by_pool = ", ".join(f"{v} {pools.get(k, k)}" for k, v in
+    by_pool = ", ".join(f"{v} {pools.get(k, k) if v != 1 else pools.get(k, k)[:-1]}"
+                        for k, v in
                         sorted(o["by_pool"].items(), key=lambda kv: -kv[1]))
+    # D-29 item 7, D-56 b: records demoted by name (build_lq.DEMOTE_BY_NAME)
+    tab = {r["scientific_name"]: r for r in rows}
+    named = []
+    label = {"Macropus greyi": ("toolache wallaby", 0),
+             "Thryonomys gregorianus": ("lesser cane rat", 1)}
+    bits = []
+    for sci in o["demoted_by_name"]:
+        r = tab[sci]
+        if sci not in label:
+            raise SystemExit(f"arithmetic: no sentence for {sci} demoted by name")
+        nm, d = label[sci]
+        yr = r["unknown_yr"] or r.get("maximum") or ""
+        bits.append(f"{float(yr) * 12:.0f} months for the "
+                    f"{float(r['mass_g']) / 1000:.{d}f}&nbsp;kg {nm}")
+    if bits:
+        k = len(bits)
+        named.append(
+            f"{'One more record is' if k == 1 else _n(k).capitalize() + ' more records are'} "
+            f"demoted by name before the preliminary fit, with the reason in "
+            f"each note: the Amniote compilation&rsquo;s {' and its '.join(bits)}, "
+            f"very likely errors of the same kind, for which no other source "
+            f"here records a lifespan.")
 
     lines = []
     for label, key in POOLS:
@@ -254,15 +284,16 @@ def arithmetic_section(summary, rows):
     return f"""<h2>The arithmetic, written out</h2>
 
 <p>Each baseline is one ordinary least squares regression, unweighted, of
-log&#8321;&#8320; maximum lifespan in years on log&#8321;&#8320; adult body mass in grams.
-It uses the grade-A and grade-B records. Grade C is kept out of all fits and
-is scored against the result. Nothing is weighted. This rests on an
-assumption: an uncertain record is biased short, not merely noisy. If so, a
-lower weight still lets the bias through, but removal of the record does not.
-The simulation in <code>test_fit_strategy.py</code> shows this. But it marks
-exactly the records that it shortened, so it illustrates the choice and does
-not prove it. In the real table, grade C does not identify the briefly watched
-records (see Limits). The count beside each
+log&#8321;&#8320; maximum lifespan in years on log&#8321;&#8320; adult body mass in grams,
+over the grade-A and grade-B records. Grade C is kept out of all fits and
+is scored against the result. Why leave the uncertain records out rather than
+weight them down? The choice rests on an assumption: an uncertain record is
+biased short, not merely noisy. If so, a lower weight still lets the bias
+through, and removing the record does not. The simulation in
+<code>test_fit_strategy.py</code> shows this, but it marks exactly the records
+that it shortened, so it illustrates the choice rather than proving it; in the
+real table, grade C does not identify the briefly watched records (see
+Limits). The count beside each
 baseline above is the number of records in that fit. The sample spans
 {span:.1f} orders of magnitude of body mass, from {mass_str(lo)} to
 {mass_str(hi)}.</p>
@@ -274,25 +305,27 @@ LQ                  =  observed maximum lifespan / predicted</code></pre>
 
 <p>One rule runs before the final fit. A preliminary fit for each group finds
 each grade-B record more than {o["sigma"]:g} residual standard deviations from it,
-in either direction. The rule demotes these records to grade C: {o["demoted"]} records here
-({by_pool}). The Amniote compilation is grade B by construction. Among
+in either direction, and the rule demotes these records to grade C: {o["demoted"]} records here
+({by_pool}). The Amniote compilation is grade B by construction, and among
 the demoted records are twenty-seven of its mammals and reptiles
-(twenty-five and two). They have maximum lifespans of one to three months at
-body masses up to five and a half kilograms. One example is a 2.2&nbsp;kg hare at
+(twenty-five and two), with maximum lifespans of one to three months at
+body masses up to five and a half kilograms. One is a 2.2&nbsp;kg hare at
 one month. These are unit or field errors, not observations, and they were
-at the bottom of each ranking on this page. The rule is symmetric, so nobody
+at the bottom of every ranking on this page. {" ".join(named)}</p>
+
+<p>The rule is symmetric, so nobody
 can say that it removes only the records that hurt the result. It never
-changes a grade-A record. Of those, {fmt(ga.get("seed", 0))} are rows of the
-hand-checked table, entered and checked by hand; the other
+changes a grade-A record: of those, {fmt(ga.get("seed", 0))} are rows of the
+hand-checked table, entered and checked by hand, and the other
 {fmt(sum(ga.values()) - ga.get("seed", 0))} are AnAge records that AnAge itself
-grades high. The rule deletes
-nothing: a demoted record keeps its row, its note gives the reason, and the
-visualiser shows it under <b>Include C</b>.</p>
+grades high. Nor does the rule delete anything. A demoted record keeps its
+row, its note gives the reason, and the visualiser shows it under
+<b>Include C</b>.</p>
 
 <p>The slope is the interesting parameter. At {sig(g['b'])}, it means that a
 tenfold increase in mass gives a {10 ** g['b']:.2f}-fold increase in maximum
-lifespan. Thus lifespan goes approximately as the {1 / g['b']:.0f}th root of
-mass. For this reason, growth is a poor way to escape the prediction. An animal
+lifespan, so lifespan goes approximately as the {1 / g['b']:.0f}th root of
+mass. Growing is a poor way to escape the prediction. An animal
 a thousand times heavier than another has a predicted lifespan only about
 {10 ** (3 * g['b']):.1f} times longer.</p>
 """
@@ -320,34 +353,91 @@ def data_section(summary, report, rows):
     multi = [v for v in by_name.values() if len({r["sci"] for r in v}) > 1]
     in_fits = sum(1 for v in multi if sum(
         1 for r in v if r["quality"] != "C" and r["colonial"] != "True") > 1)
+    # D-56 b: synonyms are merged in data/ingest.py; the count is read from
+    # the list it writes, restricted to species that reached the table.
+    syn = [s for s in csv.DictReader(open(os.path.join(OUT, "synonyms.csv"),
+                                          encoding="utf-8"))
+           if s["kept_record_source"]]
+    syn_names = {s["merged_name"] for s in syn}
+    syn_species = {s["kept_as"] for s in syn}
+    # D-92 d: pairs from the hand list, each with a source in the tree
+    hand = {s["merged_name"] for s in syn if s["rule"] == "hand list"}
+    if not hand:
+        raise SystemExit("data: the hand list merged nothing")
+    # D-92 c: every genus filed under two families takes one
+    refiled = list(csv.DictReader(open(os.path.join(OUT,
+                                                    "genus_families.csv"),
+                                       encoding="utf-8")))
+    if not any(g["genus"] == "Sebastes" for g in refiled):
+        raise SystemExit("data: Sebastes is no longer among the refiled "
+                         "genera")
+    fam_of = collections.defaultdict(set)
+    for r in tab:
+        fam_of[(r["class"], r["genus"])].add(r["family"])
+    if any(len(v) > 1 for v in fam_of.values()):
+        raise SystemExit("data: a genus is still filed under two families")
+    # the examples the paragraph names
+    names = {r["sci"] for r in tab}
+    if not ({"Pristis pristis"} <= names
+            and not names & {"Pristis microdon", "Pristis perotteti"}):
+        raise SystemExit("data: the sawfish names are no longer merged")
+    if not {"Physeter catodon", "Physeter macrocephalus"} <= names:
+        raise SystemExit("data: the sperm whale is no longer under two names")
+    if {r["family"] for r in tab if r["genus"] == "Epinephelus"} != {
+            "Serranidae"}:
+        raise SystemExit("data: Epinephelus is no longer filed in Serranidae")
+    names = {r["sci"] for r in tab}
+    for want in ("Centrochelys sulcata", "Cacatua leadbeateri"):
+        if want not in names:
+            raise SystemExit(f"data: {want} is no longer the kept name")
+    if "Lophochroa leadbeateri" in names:
+        raise SystemExit("data: the two cockatoo names are no longer merged")
     return f"""<h2>Data</h2>
 
 <p>The table has {fmt(report['final'])} species in {rk['phylum']} phyla,
 {rk['class']} classes, {rk['order']} orders, {rk['family']} families and
-{fmt(rk['genus'])} genera. Each record has full taxonomy, an adult body
+{fmt(rk['genus'])} genera, and each record has full taxonomy, an adult body
 mass, at least one maximum lifespan, a quality grade and its provenance.
-Species are matched on the binomial alone, with no synonym resolution. Thus a
-species that the sources name in two ways is in the table twice. A match on
-common names finds {fmt(len(multi))} common names that two or more binomials
-carry. Among them is the African
-spurred tortoise, as both <i>Centrochelys</i> and <i>Geochelone sulcata</i>;
-some are distinct species that share a name. For {fmt(in_fits)} of
-those names, at least two copies are grade A or B and enter the fits. The pink cockatoo and Major Mitchell&rsquo;s cockatoo,
-one bird under two common names, are a further pair that this check misses.
+A species that the sources name in two ways, such as the African spurred
+tortoise, as both <i>Centrochelys</i> and <i>Geochelone sulcata</i>, is merged
+into one record before anything is fitted. Two names are merged when they
+carry the same common name and their species epithets agree, or when the
+crosswalk between bird taxonomies in AVONET pairs them one to one, which is
+how the pink cockatoo and Major Mitchell&rsquo;s cockatoo become one bird.
+{_n(len(hand)).capitalize()} more names are merged by a hand list, each pair
+only where a source here states the synonymy in its own words: FishBase&rsquo;s
+remarks file the largetooth sawfish&rsquo;s two other names under
+<i>Pristis pristis</i>, for example. The
+merged record takes its numbers from the best source, like any other, and
+keeps the other name in its note. The merge folded {fmt(len(syn_names))}
+second names into {fmt(len(syn_species))} species. After the merge, {fmt(len(multi))} common
+names are still carried by two or more binomials. Some are species that one
+source splits in two and another does not, some are distinct species that
+share a name, and a few may be one species under two names that no rule
+joins and no source here states, such as the sperm whale as both
+<i>Physeter catodon</i> and <i>P.&nbsp;macrocephalus</i>; for {fmt(in_fits)} of
+those names, at least two copies are grade A or B and enter the fits.
+Where the sources file one genus under two families, as they do for
+{fmt(len(refiled))} genera here, every species of the genus takes the family
+that its highest-ranked source gives, so the groupers of <i>Epinephelus</i>
+are scored with Serranidae, as AnAge files them, not split between it and
+Epinephelidae.</p>
+
+<p>Then there is the question of where the animal lived.
 {fmt(wild)} species have a maximum that their source labeled wild, {fmt(cap)}
 have one labeled captive, and {fmt(both)} have both. The
 hand-checked table was built for that comparison, so the model does not let a
 bulk source overwrite it. The largest set, {fmt(unrec)} species, has a maximum
-with no statement of where the animal lived. The Amniote and AmphiBIO
-compilations give one figure per species with no origin, and FishBase
-population maxima do the same. Also, {fmt(anage_unrec)} AnAge rows give the
-specimen origin as unknown. A captive maximum is longer than a wild one. Thus
+with no statement of where the animal lived: the Amniote and AmphiBIO
+compilations give one figure per species with no origin, FishBase
+population maxima do the same, and {fmt(anage_unrec)} AnAge rows give the
+specimen origin as unknown. A captive maximum is longer than a wild one, so
 a record with no stated origin is carried, drawn and counted as a maximum of
 unrecorded origin, not as a wild one.</p>
 
 <p>Disputed records lose to verified ones: the 226-year koi and the 120-year
 cockatoo are both out. Grade C records are in the table and in the
-visualiser, with their grade, but are kept out of all regressions. Thus a
+visualiser, with their grade, but are kept out of all regressions. A
 reader can examine a weak record, but the record cannot move the baseline that
 judges it.</p>
 """
@@ -367,6 +457,7 @@ NICK = {
     "Testudines": "the turtles of", "Vespertilionidae": "the evening bats of",
     "Rhinolophidae": "the horseshoe bats of", "Sebastidae": "the rockfishes of",
     "Scorpaenidae": "the scorpionfishes of", "Hylobatidae": "the gibbons of",
+    "Cebidae": "the capuchins and squirrel monkeys of",
     "Phyllostomidae": "the leaf-nosed bats of",
     "Natalidae": "the funnel-eared bats of",
     "Urodela": "the salamanders and newts of", "Anura": "the frogs and toads of",
@@ -423,9 +514,9 @@ def groups_paragraph(groups, table=None):
         mr = re.search(r"r2=([\d.]+)", fits)
         parts.append(
             f"{_named('order', lead)} top the list at {v(lead)}, but on a "
-            f"different basis. Body mass explains "
+            f"different basis: body mass explains "
             + (f"only {float(mr.group(1)):.0%} of" if mr else "almost none of")
-            + " the spread in amphibian lifespans. Thus amphibians are scored "
+            + " the spread in amphibian lifespans, so amphibians are scored "
             "against the line for all animals, "
             "not against a fit of their own."
             + "".join(f" {cap(_named('order', g))} get {v(g)} on the "
@@ -442,7 +533,7 @@ def groups_paragraph(groups, table=None):
                          f"species" for g in big) + ". ")
     parts.append("At the bottom are " + " and ".join(
         f"{_named('order', g)} at {v(g)}" for g in bottom[:2])
-        + ". Just above them are " + " and ".join(
+        + ", and just above them sit " + " and ".join(
         f"{_named('order', g)} at {v(g)}" for g in bottom[2:]))
     extra = [by[k] for k in ("Galliformes", "Eulipotyphla") if k in by
              and by[k] not in bottom]
@@ -477,32 +568,31 @@ def groups_paragraph(groups, table=None):
             gm = 10 ** (sum(math.log10(x) for x in rest) / len(rest))
             parts.append(
                 f"The scorpionfish figure is mostly rockfishes: {len(seb)} of "
-                f"its {len(sc)} species are <i>Sebastes</i>. The sources put "
-                f"this genus partly under Sebastidae and partly under "
+                f"its {len(sc)} species are <i>Sebastes</i>, a genus the sources "
+                f"file partly under Sebastidae and partly under "
                 f"Scorpaenidae. Without the rockfishes, the family comes to "
                 f"{gm:.2f}. ")
+    # D-92 c: the nickname is true only while the family holds capuchins and
+    # squirrel monkeys alone (marmosets and tamarins are Callitrichidae).
+    if table is not None and "Cebidae" in [g["group"] for g in f[:3]]:
+        gen = {r["genus"] for r in table if r["family"] == "Cebidae"}
+        if not gen <= {"Cebus", "Sapajus", "Saimiri"}:
+            raise SystemExit(f"groups: Cebidae now holds {sorted(gen)}")
     parts.append("</p>")
     return "".join(parts)
 
 
 def _caveat(r):
-    """D-29 items 7 and 9: two of the named extremes are not what they look
-    like. Said beside them for as long as they are named."""
+    """D-29 item 7: a named extreme from the Amniote compilation of the same
+    kind as the records the outlier rule demotes. Said beside it for as long
+    as it is named."""
     n = r["name"].strip().lower()
-    if n == "olm":
-        return ("The olm&rsquo;s 100 years is a projection, not an observed "
-                "age. Voituron <i>et al.</i> (<i>Biology Letters</i> 7:105, "
-                "2011) estimated a maximum of about 102 years from a "
-                "laboratory population. The 68 years that the table gives as "
-                "its wild maximum is the mean adult lifespan of that "
-                "population.")
-    if n == "toolache wallaby":
-        return (f"The toolache wallaby&rsquo;s figure is the Amniote "
+    if n == "lesser cane rat" and r["quality"] == "B":
+        return (f"The lesser cane rat&rsquo;s figure is the Amniote "
                 f"compilation&rsquo;s {float(r['maximum']) * 12:.0f} months "
-                f"for a {float(r['mass_g']) / 1000:.0f}&nbsp;kg animal. It is "
-                f"very likely an error of the kind that the outlier rule "
-                f"removes, but the rule&rsquo;s three-standard-deviation cut "
-                f"narrowly misses it.")
+                f"for a {float(r['mass_g']) / 1000:.1f}&nbsp;kg animal, a "
+                f"figure of the same kind as the records that the outlier "
+                f"rule demotes, but inside its cut.")
     return None
 
 
@@ -514,13 +604,15 @@ def outcome_paragraph(table):
     rows.sort(key=lambda r: -lq(r))
     top, bot = rows[:6], rows[-5:][::-1]
     art = lambda s: ("an " if s[0].lower() in "aeiou" else "a ") + s
-    ts = [f"{art(r['name'].lower())} at {lq(r):.0f}&times;" for r in top]
-    bs = [f"{art(r['name'].lower())} at {lq(r):.2f}&times;" for r in bot]
+    # a common name led by a person's name keeps its capital (Brandt's bat)
+    low = lambda s: s if "'" in s.split(" ")[0] else s.lower()
+    ts = [f"{art(low(r['name']))} at {lq(r):.0f}&times;" for r in top]
+    bs = [f"{art(low(r['name']))} at {lq(r):.2f}&times;" for r in bot]
     inv = [r for r in top if r["phylum"] != "Chordata"]
     n_inv = sum(1 for r in table if r["phylum"] != "Chordata"
                 and r["quality"] != "C" and r["colonial"] != "True")
-    note = (f" {_n(len(inv)).capitalize()} of those six are invertebrates. "
-            f"They are scored against one line pooled from {n_inv} species of "
+    note = (f" {_n(len(inv)).capitalize()} of those six are invertebrates, "
+            f"scored against one line pooled from {n_inv} species of "
             f"all the invertebrate phyla here, which is a coarse yardstick."
             if inv else "")
     return ("<p>The highest quotients against their own group, among the grade-A "
@@ -590,9 +682,9 @@ def headline(summary, table):
         f"short</h1>\n"
         f'<p class="dim">Bats and primates live one and a half to two and a '
         f"half times as long as their size predicts; pheasants and their kin, "
-        f"half as long. Bigger animals live longer, by a predictable amount. "
-        f"Draw a line through the record lifespans of the {fmt(round(g['n']))} "
-        f"species whose records are sound enough to fit, against their body "
+        f"half as long. Draw a line through the record lifespans of the "
+        f"{fmt(round(g['n']))} "
+        f"species whose records are sound enough to fit, plotted against body "
         f"weight, and each tenfold gain in weight "
         f"adds about {(10 ** g['b'] - 1):.0%} to the years; mammals, birds, "
         f"reptiles, fish and invertebrates each get a line of their own. "
@@ -600,25 +692,25 @@ def headline(summary, table):
         f"times as long as their size predicts, across "
         f"{oo['Chiroptera'][2]} species, and primates {oo['Primates'][1]:.1f} "
         f"times across {oo['Primates'][2]}. Tenrecs and golden moles, and "
-        f"opossums, reach about half of what their size predicts; against the "
-        f"bird line, so do the "
-        f"{oo['Galliformes'][2]} pheasants, grouse, quail and chickens. The "
-        f"figures depend on a gap in the data: many mammals have been watched "
-        f"only briefly, which makes their records short and pulls the mammal "
-        f"line down. Corrected for that, bats come to "
-        f"{co['Chiroptera'][1]:.1f} and primates to {co['Primates'][1]:.1f}. "
-        f"Leave the briefly watched mammals out altogether and they come to "
+        f"opossums, reach about half of what their size predicts, and against "
+        f"the bird line so do the "
+        f"{oo['Galliformes'][2]} pheasants, grouse, quail and chickens. How "
+        f"firm are those figures? They lean on a gap in the data: many mammals "
+        f"have been watched only briefly, which makes their records short and "
+        f"pulls the mammal line down. Corrected for that, bats come to "
+        f"{co['Chiroptera'][1]:.1f} and primates to {co['Primates'][1]:.1f}; "
+        f"leave the briefly watched mammals out altogether and they come to "
         f"{do['Chiroptera'][1]:.1f} and {do['Primates'][1]:.1f}, still above "
         f"their size (the Limits section at the foot of the page shows each "
-        f"figure all three ways). People sit "
-        f"higher still: the longest verified human life, "
+        f"figure all three ways). People sit higher still. The longest "
+        f"verified human life, "
         f"{float(hu['maximum']):g} years, is {hs[0]:.1f} to {hs[-1]:.1f} times "
         f"the line for a {float(hu['mass_g']) / 1000:.0f}-kilogram mammal, "
         f"depending on the same correction, though a record set among "
         f"billions of people is an upper bound "
         f"against species watched a few dozen times. The animals far above "
-        f"their line, bats, the naked mole-rat and the ocean quahog, a clam "
-        f"recorded at {qu:.0f} years, are where biologists look for clues to "
+        f"their line &mdash; bats, the naked mole-rat and the ocean quahog, a "
+        f"clam recorded at {qu:.0f} years &mdash; are where biologists look for clues to "
         f"slowing ageing, the case Steven Austad makes in "
         f"<i>Methuselah&rsquo;s Zoo</i> (2022).</p>")
 
@@ -671,43 +763,44 @@ def limits_section(summary, table=()):
     tbl.append("</table>")
     return (
         "<h2>Limits</h2>\n\n"
-        "<p>The biggest one is who has been watched. A maximum lifespan is a "
-        "record, and records increase with the number of animals that "
+        "<p>The biggest limit is who has been watched. A maximum lifespan is a "
+        "record, and records rise with the number of animals that "
         "somebody followed. "
         "The Amniote compilation supplies a lifespan only for species that "
-        f"AnAge does not have, which are the less-studied ones. It is "
+        f"AnAge does not have, which are the less-studied ones, and it makes up "
         f"{sh['Mammalia']:.0%} of the mammal baseline, {sh['Reptilia']:.0%} of "
         f"the reptile baseline and {sh['Aves']:.0%} of the bird baseline. "
         "Where both databases have a species, the audit found that they agree "
         "(median difference zero). But at equal mass within a "
         f"family, an Amniote-only mammal record is {x('Mammalia')} the lifespan "
-        f"of an AnAge record from a medium number of animals. AnAge "
-        f"sorts its records from tiny to huge by the number of animals "
-        f"behind them. The ratio is "
+        f"of an AnAge record from a medium number of animals, on AnAge&rsquo;s "
+        f"own scale, which sorts its records from tiny to huge by the number "
+        f"of animals behind them. The ratio is "
         f"{x('Reptilia')} in reptiles and {x('Aves')} in birds. That "
-        "decreases each baseline, so the quotient of each well-studied "
-        "species above it is biased high. The figures on this page keep the "
+        "lowers each baseline, so the quotient of every well-studied "
+        "species above it is biased high.</p>\n\n"
+        "<p>The figures on this page keep the "
         "pooled baseline. The "
         "site&rsquo;s October 2026 quality audit measured the gap and ran two "
-        "checks. Both are rebuilt in <code>build_lq.py</code> and run on each "
-        "build. The first check rescales to the medium level each record "
+        "checks, both rebuilt in <code>build_lq.py</code> and run on each "
+        "build. The first rescales to the medium level each record "
         "whose source has a measurable offset, and then runs the same fits "
-        "again. These sources are Amniote, and AnAge by sample size; the "
+        "again; those sources are Amniote, and AnAge by sample size, while the "
         "hand-checked rows, FishBase and AmphiBIO are not rescaled. The "
         "second check is cruder. It removes each record based on few "
-        "animals or on an unknown number. This cuts the mammal line to "
+        "animals or on an unknown number, which cuts the mammal line to "
         f"{dr['n_mammals']} species "
         "and skews it towards the well-kept ones, so it is a bound, not a "
-        "better estimate. The fish and invertebrate lines do not change in "
-        "either check, because they use only hand-checked and AnAge "
+        "better estimate. Neither check moves the fish or invertebrate "
+        "lines, because they use only hand-checked and AnAge "
         "records.</p>\n\n" + "\n".join(tbl) + "\n\n"
-        "<p>Relative to other amphibians, the lead of the salamanders "
-        "is smaller than their rank suggests. Amphibians as a whole are "
+        "<p>The salamanders&rsquo; lead over other amphibians "
+        "is smaller than their rank suggests. Amphibians as a whole sit "
         f"{amph:.1f} times above the all-animal line, so Urodela&rsquo;s "
-        f"{uro:.2f} is about {uro / amph:.1f} times the amphibian "
+        f"{uro:.2f} is only about {uro / amph:.1f} times the amphibian "
         "average.</p>\n\n"
-        "<p>With the correction, the ranking of orders almost does not "
-        "change. Across the "
+        "<p>With the correction, the ranking of orders barely "
+        "changes: across the "
         f"{e['orders_compared']} orders that the two runs share, the rank "
         f"correlation is {e['order_rank_spearman']:.3f}, and "
         + ("all ten" if e['top10_shared'] == 10 else _n(e['top10_shared']))
@@ -715,19 +808,20 @@ def limits_section(summary, table=()):
         "the figures for single well-documented mammals, including the "
         "human. The human figure has a further problem that "
         "no correction here can fix. It is the best of billions of "
-        "documented lives, against species watched a few dozen times, "
+        "documented lives, set against species watched a few dozen times, "
         "so it is an upper bound.</p>\n\n"
         "<p>Three more limits. The model treats species as independent "
-        "points, but related species share their lifespans by descent. "
-        "Inside mammal families, lifespan increases more slowly with mass "
-        "than it does across families. Thus &ldquo;each tenfold gain in "
+        "points, but related species share their lifespans by descent, and "
+        "inside mammal families lifespan rises more slowly with mass "
+        "than it does across families. So &ldquo;each tenfold gain in "
         "weight&rdquo; is a statement "
-        "across groups. The maximum mixes record types: a zoo record for one "
-        "species, a banding recapture for another, a compilation figure of "
-        "unknown origin for a third. Part of the position of each order "
-        "comes from the record types of its members. Also, some species are "
-        "in the table twice under two names (see Data), so their groups "
-        "count them twice.</p>\n")
+        "across groups. The maximum also mixes record types (a zoo record for "
+        "one species, a banding recapture for another, a compilation figure of "
+        "unknown origin for a third), and part of the position of each order "
+        "comes from the record types of its members. And the merge of "
+        "synonyms (see Data) joins only the names its two rules and its hand "
+        "list find, so a species renamed in a way that none of them sees is "
+        "still in the table twice and counted twice in its groups.</p>\n")
 
 
 def code_section():
@@ -751,6 +845,13 @@ def main(apply=False):
                                       encoding="utf-8")))
     n = report["final"]
     changes = []
+    # D-29 item 9, typed on the page: Labord's chameleon at 8.73 g, which
+    # its body size predicts at about six years.
+    cham = [r for r in table0 if r["sci"] == "Furcifer labordi"]
+    if not cham or float(cham[0]["mass_g"]) != 8.73 or round(
+            float(cham[0]["pred_class"])) != 6:
+        raise SystemExit("page: Labord's chameleon is no longer 8.73 g "
+                         "predicted at about six years")
 
     def sub(pattern, repl, label, count=1):
         nonlocal t

@@ -423,7 +423,329 @@ def mass_index():
     return idx
 
 
+# ----------------------------------------------------------- corrections ----
+# Values a source carries that are not what the column says they are (D-29
+# items 4 and 9, D-56 b). Each entry names the source record it changes and
+# why; nothing here supplies a figure of its own. A dropped lifespan leaves the
+# record in place as a donor of names, taxonomy and mass, so the species takes
+# its lifespan from the next source in precedence that has an observed one. A
+# dropped mass is refilled from another source of the same species by the
+# ordinary gap filling below. A moved lifespan (move) is a figure the source
+# files in the wrong column: it keeps its value and goes where it belongs, and
+# a regraded record (grade) keeps the source's figure at the stated grade.
+#
+# D-92 a (2026-11-10): the olm carries Voituron et al.'s projected maximum at
+# grade C, marked as a projection, rather than AmphiBIO's unsourced 12 years.
+# The figure is AnAge's (its reference 934, the same paper); AnAge files it as
+# a wild maximum, which a projection is not, so it moves to the unrecorded
+# column. Grade C keeps it out of the fits.
+CORRECTIONS = [
+    dict(source="anage", sci="Proteus anguinus",
+         move={"wild_yr": "unknown_yr"}, grade="C",
+         why="a projection, not an observed age: AnAge's 102 years is the "
+             "projected maximum of Voituron et al., Biology Letters 7:105, "
+             "2011, from survival in a laboratory population, which AnAge "
+             "files as a wild maximum; carried here as a projection of "
+             "unrecorded origin at grade C, so it is shown but not fitted "
+             "(D-92 a)"),
+    dict(source="seed", sci="Proteus anguinus", drop=("wild_yr", "captive_yr"),
+         why="the hand-checked table's 100 years is the same projection "
+             "rounded, and its 68 is Voituron et al.'s mean adult lifespan "
+             "in that laboratory population; neither is an observed "
+             "maximum, so the record carries AnAge's figure for the "
+             "projection instead"),
+    dict(source="seed", sci="Furcifer labordi", drop=("mass_g",),
+         why="the hand-checked table's 25 g cites no source; AnAge and "
+             "Amniote both give 8.73 g"),
+]
+
+
+def apply_corrections(rows):
+    """Apply CORRECTIONS in place; return the notes keyed by binomial."""
+    notes, hit = {}, set()
+    for c in CORRECTIONS:
+        for r in rows:
+            if r["source"] == c["source"] and r["scientific_name"] == c["sci"]:
+                for a, b in c.get("move", {}).items():
+                    if r[a] is None:
+                        sys.exit(f"correction moves an empty {a}: {c['sci']}")
+                    r[b], r[a] = r[a], None
+                if c.get("grade"):
+                    r["quality"] = c["grade"]
+                for f in c.get("drop", ()):
+                    r[f] = None
+                if "mass_g" in c.get("drop", ()):
+                    r["mass_dropped"] = True
+                hit.add((c["source"], c["sci"]))
+                notes.setdefault(c["sci"].lower(), []).append(c["why"])
+    missing = [(c["source"], c["sci"]) for c in CORRECTIONS
+               if (c["source"], c["sci"]) not in hit]
+    if missing:
+        sys.exit(f"corrections that matched no record: {missing}")
+    return notes
+
+
+def has_life(r):
+    return any(r.get(k) for k in ("wild_yr", "captive_yr", "unknown_yr"))
+
+
+# ---------------------------------------------------------- synonym pairs ----
+# Six sources, several taxonomies, and a genus that one source has moved and
+# another has not: Geochelone sulcata in Amniote is Centrochelys sulcata in
+# AnAge. Keyed on the binomial alone, the same tortoise was two records, and
+# where both were grade A or B it entered the fits twice (D-29 item 4). Two
+# binomials are one species when either of two rules joins them, and the rule
+# is applied to the loaded records, not to a list typed here:
+#
+#   1. same common name and epithet. Both names carry the same common name
+#      (case and punctuation aside) in the same class, and their species
+#      epithets agree once the Latin gender ending is set aside (sulcata /
+#      sulcata, dorsata / dorsatum, fuscus / fusca) or, for epithets of six
+#      letters or more, differ by a single letter (sibilatrix / sibillatrix).
+#   2. AVONET's crosswalks. AVONET maps every BirdLife species one-to-one onto
+#      eBird and BirdTree names where the taxonomies agree; a pair linked by a
+#      one-to-one match is one bird under two names (Cacatua / Lophochroa
+#      leadbeateri). A match that splits or lumps species is not used.
+#
+# Neither rule joins two names that one source carries as separate records:
+# a source that lists both treats them as two species. The merged record is
+# the one the precedence order picks, under that record's own name, and the
+# other names are kept in its note and in outputs/synonyms.csv.
+#
+#   3. the hand list, data/synonyms_manual.csv (D-92 d, 2026-11-10). A pair is
+#      listed only where a source already in this tree states the synonymy in
+#      its own words, quoted in the file's source column; nothing is listed
+#      on the strength of a name looking alike. A listed pair is merged even
+#      where one source carries both names, because that source is the one
+#      saying they are one species, and the merged record takes the name in
+#      the kept column (the accepted name the source gives), with its numbers
+#      from the best source as usual.
+CROSSWALK_1TO1 = {"1BL to 1eBird", "1BL to 1eBird*", "1BL to 1BT"}
+SYNONYMS_OUT = os.path.join(HERE, "..", "outputs", "synonyms.csv")
+SYNONYMS_MANUAL = os.path.join(HERE, "synonyms_manual.csv")
+MANUAL_RULE = "hand list"
+
+
+def manual_links(path=SYNONYMS_MANUAL):
+    """(name_a, name_b, kept, source) from the hand list; exits on a row that
+    does not name its source or keeps a name that is neither of the pair."""
+    if not os.path.exists(path):
+        return []
+    out = []
+    with open(path, newline="", encoding="utf-8") as fh:
+        for r in csv.DictReader(fh):
+            a, b, k = (" ".join(r[c].split()) for c in
+                       ("name_a", "name_b", "kept"))
+            if not r["source"].strip() or k not in (a, b) or a == b:
+                sys.exit(f"synonyms_manual.csv: bad row {r}")
+            out.append((a, b, k, r["source"].strip()))
+    return out
+
+
+def common_key(s):
+    s = re.sub(r"[^a-z' ]", " ", str(s or "").lower().replace("’", "'"))
+    return " ".join(s.split())
+
+
+def epithet_stem(sci):
+    ep = sci.split(" ")[1].lower() if " " in sci else ""
+    for suf in ("ae", "um", "us", "is", "a", "e", "i", "os", "on"):
+        if ep.endswith(suf) and len(ep) - len(suf) >= 3:
+            return ep[: -len(suf)]
+    return ep
+
+
+def one_letter_apart(a, b):
+    """True when two epithets differ by one inserted, dropped or changed
+    letter: the spelling variants sibilatrix / sibillatrix, duquesnei /
+    duquesnii, melanoramphos / melanorhamphos."""
+    if a == b or abs(len(a) - len(b)) > 1:
+        return a == b
+    if len(a) > len(b):
+        a, b = b, a
+    i = 0
+    while i < len(a) and a[i] == b[i]:
+        i += 1
+    return a[i + (len(a) == len(b)):] == b[i + 1:]
+
+
+def epithets_agree(a, b):
+    ea = a.split(" ")[1].lower() if " " in a else ""
+    eb = b.split(" ")[1].lower() if " " in b else ""
+    return epithet_stem(a) == epithet_stem(b) or (
+        min(len(ea), len(eb)) >= 6 and one_letter_apart(ea, eb))
+
+
+def crosswalk_links():
+    """One-to-one name pairs from AVONET's two crosswalk sheets."""
+    p = os.path.join(RAW, "avonet.xlsx")
+    if not os.path.exists(p):
+        return []
+    try:
+        import pandas as pd
+        xl = pd.ExcelFile(p)
+    except Exception as e:                              # noqa: BLE001
+        print(f"  avonet crosswalk: skipped ({e})")
+        return []
+    birdlife = {" ".join(str(s).split()) for s in
+                pd.read_excel(xl, "AVONET1_BirdLife")["Species1"]}
+    out = []
+    for sheet in xl.sheet_names:
+        if "crosswalk" not in sheet:
+            continue
+        df = pd.read_excel(xl, sheet)
+        other = [c for c in df.columns if c.startswith("Species")
+                 and c != "Species1"][0]
+        for a, b, mt in zip(df["Species1"], df[other], df["Match.type"]):
+            if not (isinstance(a, str) and isinstance(b, str)):
+                continue
+            a, b = " ".join(a.split()), " ".join(b.split())
+            # b must not be a BirdLife species in its own right, or the
+            # "one-to-one" row is half of a lump
+            if mt in CROSSWALK_1TO1 and a != b and b not in birdlife:
+                out.append((a, b, "AVONET " + sheet.split(" ")[0]
+                            .replace("�", "-")))
+    return out
+
+
+def synonym_groups(rows, rank):
+    """{binomial (lower): accepted binomial (lower)} for every name merged
+    into another, and the pairs that joined them."""
+    info = {}
+    for r in rows:
+        n = r["scientific_name"].lower()
+        if " " not in n:
+            continue
+        d = info.setdefault(n, {"sources": set(), "common": set(),
+                                "cls": set(), "sci": r["scientific_name"]})
+        d["sources"].add(r["source"])
+        if r["common_name"]:
+            d["common"].add(common_key(r["common_name"]))
+        c = r["class_"].strip()
+        if c:
+            d["cls"].add(CLASS_SYNONYM.get(c, c))
+
+    links = []
+    by_common = {}
+    for n, d in info.items():
+        for c in d["common"]:
+            if c:
+                by_common.setdefault(c, []).append(n)
+    for c, names in by_common.items():
+        names = sorted(set(names))
+        for i, a in enumerate(names):
+            for b in names[i + 1:]:
+                if (epithets_agree(a, b)
+                        and info[a]["cls"] & info[b]["cls"]):
+                    links.append((a, b, "same common name and epithet"))
+    for a, b, why in crosswalk_links():
+        a, b = a.lower(), b.lower()
+        if a in info and b in info:
+            links.append((a, b, why))
+    kept_manual, absent = set(), []
+    for a, b, k, src in manual_links():
+        if a.lower() in info and b.lower() in info:
+            links.append((a.lower(), b.lower(), MANUAL_RULE))
+            kept_manual.add(k.lower())
+        else:
+            absent.append((a, b))
+    if absent:
+        print(f"  hand list: {len(absent)} pair(s) with a name no source "
+              f"carries, nothing to merge: {absent}")
+
+    parent = {}
+
+    def find(x):
+        while parent.get(x, x) != x:
+            x = parent[x]
+        return x
+
+    used = []
+    for a, b, why in links:
+        if why != MANUAL_RULE and info[a]["sources"] & info[b]["sources"]:
+            continue                    # one source lists both: two species
+        ra, rb = find(a), find(b)
+        if ra != rb:
+            parent[ra] = rb
+        used.append((a, b, why))
+
+    comps = {}
+    for n in {x for a, b, _ in used for x in (a, b)}:
+        comps.setdefault(find(n), []).append(n)
+
+    def best_rank(n):
+        return min(rank[s] for s in info[n]["sources"])
+
+    to = {}
+    for members in comps.values():
+        named = [n for n in members if n in kept_manual]
+        if len(named) > 1:
+            sys.exit(f"hand list keeps two names in one group: {named}")
+        acc = named[0] if named else min(members,
+                                         key=lambda n: (best_rank(n), n))
+        for n in members:
+            if n != acc:
+                to[n] = acc
+    return to, used, info, kept_manual
+
+
 # ----------------------------------------------------------------- merge ----
+# One family per genus. D-29 item 8: genus Sebastes was filed under Sebastidae
+# by the hand-checked table and FishBase and under Scorpaenidae by AnAge, so
+# the rockfishes were split across two families and carried the Scorpaenidae
+# figure. D-92 c (2026-11-10) made the rule general: every genus whose merged
+# records sit in more than one family takes one family for all its species,
+# the family that the highest-precedence source filing any member of the genus
+# gives it (within that source, the family it gives most members of the genus;
+# a tie goes to the first name alphabetically, and genus_families.csv says
+# so). A genus is keyed with its class, so a name used in two classes is two
+# genera. Each refiled genus, its families before and the source that decided
+# are written to outputs/genus_families.csv.
+GENUS_FAMILIES_OUT = os.path.join(HERE, "..", "outputs", "genus_families.csv")
+
+
+def one_family_per_genus(final, all_rows, rank):
+    """Refile split genera in place; return one row per refiled genus."""
+    canon = lambda c: CLASS_SYNONYM.get(c.strip(), c.strip())   # noqa: E731
+    fams = {}
+    for r in final:
+        fams.setdefault((canon(r["class_"]), r["genus"]), []).append(r)
+    out = []
+    for (cls, g), members in sorted(fams.items()):
+        before = {}
+        for r in members:
+            before[r["family"]] = before.get(r["family"], 0) + 1
+        if len(before) < 2:
+            continue
+        filed = [x for x in all_rows if x["genus"] == g and x["family"]
+                 and canon(x["class_"]) == cls]
+        top = min(rank[x["source"]] for x in filed)
+        count = {}
+        for x in filed:
+            if rank[x["source"]] == top:
+                count[x["family"]] = count.get(x["family"], 0) + 1
+        most = max(count.values())
+        tied = sorted(f for f, n in count.items() if n == most)
+        fam = tied[0]
+        moved = 0
+        for r in members:
+            if r["family"] != fam:
+                r["family"] = fam
+                moved += 1
+        out.append({"class": cls, "genus": g,
+                    "families_before": "; ".join(
+                        f"{f or '(none)'} {n}" for f, n in
+                        sorted(before.items(), key=lambda kv: (-kv[1],
+                                                               kv[0]))),
+                    "family": fam, "decided_by": ORDER[top],
+                    "decided_by_counts": "; ".join(
+                        f"{f} {n}" for f, n in sorted(count.items())),
+                    "tie_broken_alphabetically": "yes" if len(tied) > 1
+                    else "no",
+                    "records_refiled": moved})
+    return out
+
+
 def merge(apply=False):
     loaders = [("seed", load_seed), ("anage", load_anage),
                ("amniote", load_amniote), ("pantheria", load_pantheria),
@@ -440,8 +762,13 @@ def merge(apply=False):
     print(f"  {'mass index':10s} {len(masses):7,} species with a body mass "
           f"(gap filling only)")
 
+    corrected = apply_corrections(all_rows)
+
     # one record per species, best source wins
     rank = {s: i for i, s in enumerate(ORDER)}
+    syn_to, syn_links, syn_info, syn_kept = synonym_groups(all_rows, rank)
+    print(f"  {len(syn_to):,} binomials merged into another as synonyms "
+          f"({len(syn_links):,} links)")
 
     # A binomial is not always one record. The seed carries a honey bee worker
     # and a honey bee queen: same genome, same species name, lifespans a factor
@@ -462,6 +789,7 @@ def merge(apply=False):
 
     def key_of(r):
         n = r["scientific_name"].lower()
+        n = syn_to.get(n, n)
         if n in seed_dupes and r["source"] == "seed":
             return n + "|" + r["common_name"].lower()
         return n
@@ -472,6 +800,10 @@ def merge(apply=False):
         if not k or " " not in k:
             continue
         seen_in.setdefault(k, set()).add(r["source"])
+        # A record whose lifespan a correction removed is not a lifespan
+        # record; it stays a donor of names, taxonomy and mass.
+        if not has_life(r):
+            continue
         cur = best.get(k)
         if cur is None or rank[r["source"]] < rank[cur["source"]]:
             best[k] = r
@@ -497,6 +829,8 @@ def merge(apply=False):
             for s in sibs:
                 if s["mass_g"]:
                     r["mass_g"] = s["mass_g"]
+                    if r.get("mass_dropped"):
+                        r["mass_src"] = s["source"]
                     filled_mass += 1
                     break
         if r["mass_g"] is None:
@@ -511,7 +845,35 @@ def merge(apply=False):
         if "estimated from maximum length" in (r["note"] or ""):
             estimated += 1
         r["sources"] = sorted(seen_in[k])
+        base = k.split("|")[0]
+        # a hand-listed group carries the accepted name its source gives,
+        # whichever record supplied the numbers
+        if base in syn_kept and r["scientific_name"].lower() != base:
+            r["scientific_name"] = syn_info[base]["sci"]
+            r["genus"] = r["scientific_name"].split(" ")[0]
+        extra = []
+        others = sorted(syn_info[n]["sci"] for n, a in syn_to.items()
+                        if a == base)
+        if others:
+            extra.append("also listed as " + ", ".join(others))
+        extra += corrected.get(base, [])
+        if extra:
+            r["note"] = "; ".join(([r["note"]] if r["note"] else []) + extra)
         final.append(r)
+
+    # one family per genus, from the highest-precedence source (D-92 c)
+    refiled = one_family_per_genus(final, all_rows, rank)
+    print(f"  {len(refiled)} genera were filed under more than one family by "
+          f"their sources; each now takes one family "
+          f"({sum(g['records_refiled'] for g in refiled)} records refiled)")
+    canon = lambda c: CLASS_SYNONYM.get(c.strip(), c.strip())   # noqa: E731
+    split = {}
+    for r in final:
+        split.setdefault((canon(r["class_"]), r["genus"]), set()).add(
+            r["family"])
+    split = sorted(g for g, f in split.items() if len(f) > 1)
+    if split:
+        sys.exit(f"genera still in two families after refiling: {split}")
 
     renamed = 0
     for r in final:
@@ -590,6 +952,34 @@ def merge(apply=False):
                         r.get("mass_src", r["source"]), origin_of(r)])
     print(f"  wrote {os.path.normpath(PROV)}")
 
+    # Every name merged into another, the rule that joined it, and the record
+    # that survived: the list the page's count of merged names is read from.
+    kept = {r["scientific_name"].lower(): r for r in final}
+    with open(SYNONYMS_OUT, "w", newline="", encoding="utf-8") as fh:
+        w = csv.writer(fh, lineterminator="\n")
+        w.writerow(["merged_name", "kept_as", "rule", "merged_name_sources",
+                    "kept_record_source"])
+        seen_pair = set()
+        for a, b, why in sorted(syn_links):
+            for n in (a, b):
+                acc = syn_to.get(n)
+                if acc is None or (n, acc, why) in seen_pair:
+                    continue
+                seen_pair.add((n, acc, why))
+                w.writerow([syn_info[n]["sci"], syn_info[acc]["sci"], why,
+                            ";".join(sorted(syn_info[n]["sources"])),
+                            kept[acc]["source"] if acc in kept else ""])
+    print(f"  wrote {os.path.normpath(SYNONYMS_OUT)}")
+
+    with open(GENUS_FAMILIES_OUT, "w", newline="", encoding="utf-8") as fh:
+        cols = ["class", "genus", "families_before", "family", "decided_by",
+                "decided_by_counts", "tie_broken_alphabetically",
+                "records_refiled"]
+        w = csv.DictWriter(fh, fieldnames=cols, lineterminator="\n")
+        w.writeheader()
+        w.writerows(refiled)
+    print(f"  wrote {os.path.normpath(GENUS_FAMILIES_OUT)}")
+
     # The page is generated from this, so what a reader sees under "where the
     # data comes from" is the merge's own accounting rather than a number
     # somebody typed and forgot to update.
@@ -605,6 +995,13 @@ def merge(apply=False):
             "mass_filled": filled_mass,
             "mass_modelled_from_length": estimated,
             "dropped_no_mass": dropped_nomass,
+            "synonyms_merged": len(syn_to),
+            "corrections": [{"source": c["source"], "species": c["sci"],
+                             "dropped": list(c.get("drop", ())),
+                             "moved": c.get("move", {}),
+                             "grade": c.get("grade", ""), "why": c["why"]}
+                            for c in CORRECTIONS],
+            "genera_refiled_to_one_family": len(refiled),
             "final": len(final),
             "citations": CITATION,
         }, fh, indent=2)

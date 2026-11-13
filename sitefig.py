@@ -66,8 +66,13 @@ CYCLE = [ACC, MOSS, COOL, ROSE, SUPPLY, PSYCH, SLATE, GOLD]
 
 # ---- the type scale, from style.css ---------------------------------------
 FS_2, FS_1, FS0, FS1, FS2 = 12, 14.5, 17.5, 21, 25
-FONT = "IBM Plex Sans"
-MONO = "IBM Plex Mono"
+# Perfidy, the site's face since 2026-11-08 (style.css), registered from fonts/
+# (PerfidyText-*.ttf, PerfidyMono-Regular.ttf, OFL in LICENSE-Perfidy-OFL.txt;
+# the desktop builds of the same release as site/assets/perfidy/*.woff2). The
+# IBM Plex OTFs stay in fonts/ because rezip_downloads.py's retired atlas entry
+# still names them.
+FONT = "Perfidy Text"
+MONO = "Perfidy Mono"
 
 # ---- aspect: chosen by what the figure holds, never defaulted -------------
 # A figure is as tall as its content needs and no taller. Lines, few-category

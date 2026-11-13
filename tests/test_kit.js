@@ -276,7 +276,9 @@ function serve() {
         document.querySelectorAll('.scrolly-stage svg text').forEach(t => {
           const cs = getComputedStyle(t); out.sizes.add(cs.fontSize);
           if (!t.textContent.length) return;
-          const want = t.textContent.length * 0.6 * (t.classList.contains('ch-now') ? FS_BIG : FS);
+          // CW / FS is charts.js's own advance in em, read from it rather than restated
+          // here: this line said 0.6 (Plex Mono) and would have outlived the font (2026-11-08).
+          const want = t.textContent.length * (CW / FS) * (t.classList.contains('ch-now') ? FS_BIG : FS);
           const got = t.getComputedTextLength(), err = Math.abs(got - want) / want;
           out.n++; if (err > out.worst) { out.worst = err; out.label = t.textContent; }
         });

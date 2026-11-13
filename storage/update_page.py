@@ -173,14 +173,14 @@ def hero(F):
     ma = half_months(A, F["R"][A])
     steps = [
         (f"<p><b>{A}: ${usd(F['c4'][A])} per kilowatt.</b> This is the year in which half the money came fastest, "
-         f"shown one day at a time. On most days the battery made a little; on a few it made a great deal. Its best "
-         f"day, {da.day} {MONTHS[da.month - 1]}, earned ${usd2(va)} per kilowatt by itself.</p>", {"t": 1}),
-        (f"<p><b>Half of it on {ra['days_for_half']} days.</b> Sort the days that made money from best to worst. "
-         f"The first {ra['days_for_half']} give half the year's total, and {'all' if len(ma) == 1 else 'most'} of them "
+         f"shown one day at a time. On most days the battery made a little, and on a few it made a great deal: its "
+         f"best day, {da.day} {MONTHS[da.month - 1]}, earned ${usd2(va)} per kilowatt by itself.</p>", {"t": 1}),
+        (f"<p><b>Half of it on {ra['days_for_half']} days.</b> Sort the days that made money from best to worst, "
+         f"and the first {ra['days_for_half']} give half the year's total. {'All' if len(ma) == 1 else 'Most'} of them "
          f"are in {ma[0]}.</p>", {"t": 1, "lit": 1}),
-        (f"<p><b>{B}: ${usd(F['c4'][B])}.</b> This is the same battery on the same scale, in {B}. The tall days are "
-         f"gone: the best one, {db.day} {MONTHS[db.month - 1]}, made ${usd2(vb)}. The market monitor credits the growth "
-         f"of storage with much of the fall in price spikes during the evening ramp, as the sun sets.</p>", {"t": 1, "mix": 1}),
+        (f"<p><b>{B}: ${usd(F['c4'][B])}.</b> This is the same battery on the same scale, in {B}, and the tall days "
+         f"are gone: the best one, {db.day} {MONTHS[db.month - 1]}, made ${usd2(vb)}. The market monitor credits the "
+         f"growth of storage itself with much of the fall in price spikes during the evening ramp, as the sun sets.</p>", {"t": 1, "mix": 1}),
         (f"<p><b>Half on {rb['days_for_half']} days.</b> No single day stands out. The money came in small amounts, "
          f"and it took {rb['days_for_half']} days to reach half, more than in any year since 2011.</p>",
          {"t": 1, "mix": 1, "lit": 1}),
@@ -249,8 +249,8 @@ def values(P, I):
     part_note = ""
     for y, r in sorted(F["part"].items()):
         t = dt.date.fromisoformat(r["through"])
-        part_note = (f"* {y} to {t.day} {MONTHS[t.month - 1]}, the last day in ERCOT's file. This is the profit to that "
-                     f"date, not the profit for a full year. "
+        part_note = (f"* {y} to {t.day} {MONTHS[t.month - 1]}, the last day in ERCOT's file, so this is the profit to "
+                     f"that date, not the profit for a full year. "
                      f"Highlighted rows show the years in which the ceiling took {SCARCE_DAYS} days or fewer to reach half.")
     if not part_note:
         part_note = f"Highlighted rows show the years in which the ceiling took {SCARCE_DAYS} days or fewer to reach half."
@@ -268,13 +268,13 @@ def values(P, I):
         "stamp": insight.stamp(P["through"][:7], "ERCOT's settlement point prices"),
         "takeaways": insight.takeaways([
             f"The {len(F['scar'])} best years since 2011 were all years when half the money came in "
-            f"{max(F['dh'][y] for y in F['scar'])} days or fewer. In {F['fast']}, half came in only "
+            f"{max(F['dh'][y] for y in F['scar'])} days or fewer; in {F['fast']}, half came in only "
             f"{fast_d['days_for_half']} days of {fm[0]}.",
-            f"{F['last']} earned {last_earned}, but its money was the most spread out. No day made more than "
-            f"${usd2(last_b)} per kilowatt, and half its money took {F['dh'][F['last']]} days to arrive.",
+            f"{F['last']} earned {last_earned}, but its money was more spread out than in any other year: no day made "
+            f"more than ${usd2(last_b)} per kilowatt, and half its money took {F['dh'][F['last']]} days to arrive.",
             f"Real batteries earned roughly a {frac} of the ceiling. Read from the market monitor's chart, the fleet's "
-            f"income from energy was about ${usd(F['fleet_energy'])} per kilowatt in {fl}. The ceiling for a "
-            f"two-hour battery with perfect foresight was ${usd(P['rtm'][fl]['dur']['2']['net_per_kw'])}."]),
+            f"income from energy was about ${usd(F['fleet_energy'])} per kilowatt in {fl}, against a ceiling for a "
+            f"two-hour battery with perfect foresight of ${usd(P['rtm'][fl]['dur']['2']['net_per_kw'])}."]),
         "hero": hero(F),
         "fast_year": F["fast"], "fast_days": str(fast_d["days_for_half"]), "fast_event": fast_event(F, q),
         "top_year": F["top"], "top_val": usd(F["c4"][F["top"]]), "med_val": usd(F["med"]),

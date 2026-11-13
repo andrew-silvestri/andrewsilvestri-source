@@ -18,6 +18,7 @@ some other way.
                                               recorded URL with mailto=...%40gmail.com,
                                               inside a zip) in a copy; must exit 1
 """
+import hashlib
 import io
 import os
 import re
@@ -33,6 +34,13 @@ SITE = os.path.join(os.path.dirname(HERE), "site")
 # not silently a change to both.
 PERSONAL = re.compile(rb"[A-Za-z0-9._%+-]+(?:@|%40|&#0*64;|&#x0*40;)(?:gmail|utexas)(?:\.|%2e)(?:com|edu)\b",
                       re.I)
+# Third-party licence files that carry their author's own address in the
+# copyright line the licence requires to be shipped unchanged (OFL section 2),
+# matched by the SHA-1 of the whole file so nothing else - and no edited copy
+# of these - gets through. The address is not Andrew's; the domain rule above
+# cannot tell, so this names the file instead of the address (D-64, 2026-11-07).
+#   ceed5b87d68aa557957097beaa92dfadeadabaf1  Perfidy repo licenses/OFL-FiraMath.txt (Fira Math, Xiangdong Zeng)
+THIRD_PARTY_LICENCES = {"ceed5b87d68aa557957097beaa92dfadeadabaf1"}
 SKIP_DIRS = {"_preview"}   # gitignored option renderings; publish.sh deletes them from the mirror
 
 
@@ -54,6 +62,8 @@ def scan(name, b, hits):
         return
     if b[:5] == b"%PDF-":
         b = inflate_pdf(b)
+    if hashlib.sha1(b).hexdigest() in THIRD_PARTY_LICENCES:
+        return
     c = len(PERSONAL.findall(b))
     if c:
         hits.append((name, c))

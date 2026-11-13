@@ -13,13 +13,19 @@ Each --break replays the fault the check exists for and must exit 1.
    the amphibian orders are scored against the global fit. The historical
    fault: Anura and Urodela had a blank quotient, so "81 orders" was 83 less
    the two the page said fell back (QA 2026-10-22, D-28 item 2).
-2. effort: the effort-corrected run reproduces the audit's V3/family figures
-   (qa-audit/lq_rev_rerun_out.txt, run by QA with its own script): birds
-   against mammals 1.79, mammal at 1 kg 13.6 yr, mammal slope 0.190, human
-   4.13, Brandt's bat 7.76, naked mole-rat 4.32. Recomputed here from the raw
-   data, not read from summary.json. The cruder bound (V2, thin-effort
-   records left out) reproduces the audit's 1.45, 0.120, human 4.30, Brandt's
-   bat 4.30, naked mole-rat 2.68, bats 1.48.
+2. effort: the effort-corrected run reproduced the audit's V3/family figures
+   on the table before the D-56 b data corrections (qa-audit/
+   lq_rev_rerun_out.txt, run by QA with its own script): birds against
+   mammals 1.79, mammal at 1 kg 13.6 yr, mammal slope 0.190, human 4.12,
+   Brandt's bat 7.76, naked mole-rat 4.32; the cruder bound (V2, thin-effort
+   records left out) 1.45, 0.120, human 4.30, Brandt's bat 4.30, naked
+   mole-rat 2.68, bats 1.48. The same code with the named demotion switched
+   off still reproduces all twelve on that table (checked 2026-11-10). The
+   corrections (synonyms merged, toolache demoted, olm and chameleon fixed)
+   move them slightly, and so does one family per genus (D-92 c), so the
+   references below are the corrected table's,
+   pinned so that any further move is seen. Recomputed here from the data,
+   not read from summary.json.
 3. page: every figure in the page's Limits table, h1 and standfirst is the
    one in summary.json, so a build that moves a figure cannot leave the page
    behind.
@@ -80,22 +86,26 @@ def main(brk=None):
     with contextlib.redirect_stdout(io.StringIO()):
         full = B.effort_check()
     ec, dr = full["corrected"], full["dropped"]
-    want = [("birds vs mammals at 1 kg", ec["bird_mammal_1kg"], 1.79, .005),
-            ("mammal at 1 kg, yr", ec["mammal_1kg_yr"], 13.6, .05),
-            ("mammal slope", ec["mammal_b"], .190, .0005),
-            ("human", ec["species"]["Human"], 4.13, .005),
-            ("Brandt's bat", ec["species"]["Brandt's bat"], 7.76, .005),
-            ("naked mole-rat", ec["species"]["Naked mole-rat"], 4.32, .005)]
+    # Re-pinned for D-92 c/d/a (2026-11-10): one family per genus moves the
+    # family fixed effects the correction is estimated within, so all six
+    # corrected figures moved (before: 1.786, 13.53, .190, 4.124, 7.789,
+    # 4.336). The thin-effort bound (dropped, below) did not move.
+    want = [("birds vs mammals at 1 kg", ec["bird_mammal_1kg"], 1.796, .005),
+            ("mammal at 1 kg, yr", ec["mammal_1kg_yr"], 13.44, .05),
+            ("mammal slope", ec["mammal_b"], .1911, .0005),
+            ("human", ec["species"]["Human"], 4.143, .005),  # 4.130 before the cane rat was demoted by name (D-92 b), 4.124 before D-92 c
+            ("Brandt's bat", ec["species"]["Brandt's bat"], 7.878, .005),
+            ("naked mole-rat", ec["species"]["Naked mole-rat"], 4.379, .005)]
     bats = {o[0]: o[1] for o in dr["orders"]}.get("Chiroptera", 0)
-    want += [("dropped: birds vs mammals", dr["bird_mammal_1kg"], 1.45, .005),
-             ("dropped: mammal slope", dr["mammal_b"], .120, .0005),
-             ("dropped: human", dr["species"]["Human"], 4.30, .005),
-             ("dropped: Brandt's bat", dr["species"]["Brandt's bat"], 4.30, .005),
-             ("dropped: naked mole-rat", dr["species"]["Naked mole-rat"], 2.68, .005),
-             ("dropped: bats", bats, 1.48, .005)]
+    want += [("dropped: birds vs mammals", dr["bird_mammal_1kg"], 1.453, .005),
+             ("dropped: mammal slope", dr["mammal_b"], .121, .0005),
+             ("dropped: human", dr["species"]["Human"], 4.299, .005),
+             ("dropped: Brandt's bat", dr["species"]["Brandt's bat"], 4.305, .005),
+             ("dropped: naked mole-rat", dr["species"]["Naked mole-rat"], 2.681, .005),
+             ("dropped: bats", bats, 1.485, .005)]
     for name, got, ref, tol in want:
         check(abs(got - ref) <= tol,
-              f"effort: {name} {got:.3f} against the audit's {ref}")
+              f"effort: {name} {got:.3f} against the pinned {ref}")
 
     # 3: the page against summary.json
     s = json.load(open(SUMMARY, encoding="utf-8"))

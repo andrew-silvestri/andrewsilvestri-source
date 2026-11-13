@@ -96,7 +96,9 @@ does not know what a reader can actually resolve, so a 12px label in a pale
 grey on a busy ground passes here and tests/test_contrast.js is what looks at
 that. It sees only text drawn by a builder through matplotlib: text baked into
 a raster the builder composites, and any text an app draws into a canvas, are
-invisible to it. It covers the ten document pages and not the four viewers. It
+invisible to it. The one exception is RASTER_BUILDERS (D-63): a figure rendered
+from a PDF, whose text spans are read from the PDF inside the crop; there the
+BODY size is gated and smaller script text is only printed. It covers the ten document pages and not the four viewers. It
 says nothing about overlap, off-canvas text or layout at any width - each
 builder's own audit() owns that, and at 350 those counts are the Stage A2
 workload rather than this gate's business. And it measures at 1440 and 390
@@ -303,6 +305,95 @@ BUILDERS = [
     # charts are SVG from site/assets/charts.js, held by tests/test_kit.js.
 ]
 
+# Builders that draw a figure by rasterising a PDF rather than through
+# matplotlib, so the savefig hook in min_points() sees nothing of them. Each
+# module has CROPS(page) -> {asset name: [rects in PDF points]} and pdf(); the
+# gate runs the builder into the work copy, then reads the size of every text
+# span the PDF draws inside each crop and scales it by the PNG's own pixels
+# per point (PNG width over crop width). The size gated is the BODY size, the
+# one most characters are set in: sub- and superscripts are smaller, are
+# printed beside it and are not gated, because the floor was written for text
+# a reader is meant to read at that size (D-63, 2026-11-07). A PNG whose
+# height disagrees with its crops by more than 2px means the crops are not
+# what was drawn, and fails the run rather than being measured.
+RASTER_BUILDERS = [
+    ("build_perfidy_latex.py", "."),     # perfidy.html's LaTeX figure (D-63)
+]
+
+RASTER_RUNNER = r'''
+import importlib.util, json, os, subprocess, sys
+from collections import Counter
+from PIL import Image
+rel, cwd, out = sys.argv[1], sys.argv[2], sys.argv[3]
+ROOT = os.path.dirname(os.path.abspath(__file__))
+script = os.path.join(ROOT, rel)
+r = subprocess.run([sys.executable, script], cwd=os.path.join(ROOT, cwd),
+                   capture_output=True, text=True)
+if r.returncode != 0:
+    json.dump({"status": "exit %d: %s" % (r.returncode, (r.stderr or r.stdout)[-300:]),
+               "figures": {}}, open(out, "w")); sys.exit(0)
+sys.path.insert(0, os.path.dirname(script))
+spec = importlib.util.spec_from_file_location("raster_builder", script)
+m = importlib.util.module_from_spec(spec); spec.loader.exec_module(m)
+page = m.pdf()[0]
+spans = [s for s in m.spans(page)]
+REC = {}
+for name, rects in m.CROPS(page).items():
+    png = os.path.join(m.ASSETS, name)
+    w, h = Image.open(png).size
+    widths = {round(rc.width, 3) for rc in rects}
+    s_px = w / rects[0].width                       # PNG px per PDF point
+    want_h = sum(rc.height for rc in rects) * s_px + m.GAP * m.ZOOM * (len(rects) - 1)
+    if len(widths) != 1 or abs(want_h - h) > 2:
+        REC[name] = {"error": "crops %s do not match the %dx%d PNG (want height %.1f)"
+                              % (sorted(widths), w, h, want_h)}
+        continue
+    inside = []
+    for sp in spans:
+        x0, y0, x1, y1 = sp["bbox"]; cx, cy = (x0 + x1) / 2, (y0 + y1) / 2
+        if any(rc.x0 <= cx <= rc.x1 and rc.y0 <= cy <= rc.y1 for rc in rects):
+            inside.append(sp)
+    if not inside:
+        REC[name] = {"error": "no text span inside the crops"}; continue
+    by = Counter()
+    for sp in inside:
+        by[round(sp["size"], 2)] += len(sp["text"].strip())
+    body = by.most_common(1)[0][0]
+    small = min(by)
+    REC[name] = {"authored": round(rects[0].width, 1), "min_pt": body,
+                 "text": "body %.2fpt; smallest %.2fpt not gated" % (body, small),
+                 "smallest": small}
+json.dump({"status": "ok", "figures": REC}, open(out, "w"))
+'''
+
+
+def raster_points(work):
+    """min_points() for RASTER_BUILDERS. 'authored' is the crop's width and
+    'min_pt' the body text's size, both in PDF points, so the gate's one
+    formula, min_pt * served / authored, gives CSS px for both kinds of row.
+    The PNG's own size enters through the height check in RASTER_RUNNER."""
+    runner = os.path.join(work, "_raster_runner.py")
+    open(runner, "w", encoding="utf-8").write(RASTER_RUNNER)
+    status, figures = {}, {}
+    for i, (rel, cwd) in enumerate(RASTER_BUILDERS):
+        res = os.path.join(work, f"_raster_{i}.json")
+        out = subprocess.run([PY, runner, rel, cwd, res], cwd=work, capture_output=True,
+                             text=True, encoding="utf-8", errors="replace")
+        if not os.path.exists(res):
+            status[rel] = "produced nothing: " + (out.stderr or out.stdout or "")[-300:].replace("\n", " ")
+            continue
+        got = json.load(open(res, encoding="utf-8"))
+        status[rel] = got["status"]
+        figures.update(got["figures"])
+        # The copy's PNG must be the one that ships, or this measured a precursor (trap 38).
+        for name in got["figures"]:
+            built = os.path.join(work, "site", "assets", name)
+            shipped = os.path.join(ROOT, "site", "assets", name)
+            if not os.path.exists(shipped) or open(built, "rb").read() != open(shipped, "rb").read():
+                status[rel] = f"{name}: the rebuilt PNG differs from site/assets/ - run {rel}"
+    return {"status": status, "figures": figures}
+
+
 # outputs/ name -> site/assets/ name, where they differ. sync_assets.py's
 # PREFIX_SOURCE does the same mapping for the copy; this is the same fact and
 # the two must not be allowed to disagree silently, so ASSET_OF is asserted
@@ -455,6 +546,9 @@ def main():
     work, tree = copy_tree()
     try:
         run = min_points(tree)
+        raster = raster_points(tree)
+        run["status"].update(raster["status"])
+        run["figures"].update(raster["figures"])
     finally:
         if not args.keep:
             shutil.rmtree(work, ignore_errors=True)

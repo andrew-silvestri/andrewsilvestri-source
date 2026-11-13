@@ -11,7 +11,7 @@ the shipped tree and expect no change. The idiom is uri/update_page.py's.
 The page is archived (D-60, Andrew 2026-10-25: "make a note on the top/near the top that its an (Archived)
 page"): the card under the h1 says what it is built from, through which month, and that it is not updated.
 
-claims() asserts every direction and range the template's words commit to ("about 16 to 27 per cent",
+claims() asserts every direction and range the template's words commit to ("about 16 to 27 percent",
 "about what it was in 2010", "fell behind propane", ...). If a rebuild moves one, the generator stops rather
 than ship prose the payload contradicts. quotes() refuses a quotation that forecasts (plan review 17).
 
@@ -129,7 +129,7 @@ def grab(name, pat):
 
 
 def heat_states():
-    """TIE 18371: the two states' delivered gas, per cent above the national average, and the month's year."""
+    """TIE 18371: the two states' delivered gas, percent above the national average, and the month's year."""
     import sources as S
     m = S.quote("eia_tie_18371.html", r"In July (20\d\d), natural gas delivered in West Virginia and North Dakota had "
                                       r"average heat contents (\d+)% and (\d+)% higher, respectively, than the national "
@@ -155,7 +155,7 @@ def price_rows(P):
 def hero_spec(P):
     h = P["hero"]
     return {"id": "ethane-hero", "type": "series",
-            "title": "Ethane's share of the liquids U.S. gas plants produce, per cent, by month, with ethane and "
+            "title": "Ethane's share of the liquids U.S. gas plants produce, percent, by month, with ethane and "
                      "propane production below in million barrels a day",
             "x": h["x"], "y": {"label": "ethane share, %", "min": 30},
             "series": [{"key": "share", "label": "Ethane, share of all plant liquids", "color": "acc",
@@ -181,21 +181,21 @@ def hero(P):
     r = P["rejection_2014"]
     lo_y = P["low_share"][0]
     steps = [
-        (f"<p><b>2009 to 2012: before the fall.</b> Ethane was {pct(A['2010']['share'])} per cent of the liquids "
-         f"that U.S. gas plants produced in 2010, and {pct(A['2012']['share'])} per cent in 2012.</p>",
+        (f"<p><b>2009 to 2012: before the fall.</b> Ethane was {pct(A['2010']['share'])} percent of the liquids "
+         f"that U.S. gas plants produced in 2010, and still {pct(A['2012']['share'])} percent in 2012.</p>",
          {"t": t_at(P, "2012-12")}),
-        (f"<p><b>2013 to {lo_y}: ethane fell behind.</b> From 2012 to {lo_y}, propane production increased from "
-         f"{A['2012']['pro']:,.0f} to {A[str(lo_y)]['pro']:,.0f} thousand barrels a day. Ethane production increased "
-         f"only from {A['2012']['eth']:,.0f} to {A[str(lo_y)]['eth']:,.0f}. Ethane's share decreased to "
-         f"{pct(P['low_share'][1])} per cent in {lo_y}.</p>", {"t": t_at(P, f"{lo_y}-12")}),
-        (f"<p><b>2016 to 2019: more of it recovered.</b> The first ship exports left in {mon(P['first_ship'])}, and "
-         f"new petrochemical plants started operation. Ethane production increased "
-         f"{pct(A['2018']['eth'] / A['2017']['eth'] - 1, 0)} per cent in 2018 alone, and its share increased again to "
-         f"{pct(A['2018']['share'])} per cent.</p>",
+        (f"<p><b>2013 to {lo_y}: ethane fell behind.</b> From 2012 to {lo_y}, propane production rose from "
+         f"{A['2012']['pro']:,.0f} to {A[str(lo_y)]['pro']:,.0f} thousand barrels a day, while ethane production rose "
+         f"only from {A['2012']['eth']:,.0f} to {A[str(lo_y)]['eth']:,.0f}, and ethane's share fell to "
+         f"{pct(P['low_share'][1])} percent in {lo_y}.</p>", {"t": t_at(P, f"{lo_y}-12")}),
+        (f"<p><b>2016 to 2019: more of it recovered.</b> The first ship exports left in {mon(P['first_ship'])} and "
+         f"new petrochemical plants started operation. Ethane production rose "
+         f"{pct(A['2018']['eth'] / A['2017']['eth'] - 1, 0)} percent in 2018 alone, and its share rose again to "
+         f"{pct(A['2018']['share'])} percent.</p>",
          {"t": t_at(P, "2019-12")}),
         (f"<p><b>Since 2020: back near the 2010 share.</b> Over the twelve months to {mon(t['to'])}, plants "
-         f"produced {t['eth'] / 1000:.2f} million barrels a day of ethane. This was {pct(t['share'])} per cent of the "
-         f"liquids, compared with {pct(A['2010']['share'])} per cent in 2010.</p>", {"t": 1}),
+         f"produced {t['eth'] / 1000:.2f} million barrels a day of ethane, {pct(t['share'])} percent of the "
+         f"liquids, against {pct(A['2010']['share'])} percent in 2010.</p>", {"t": 1}),
     ]
     return insight.scrolly(hero_spec(P), steps, from_state={"t": 0})
 
@@ -204,7 +204,7 @@ def hero(P):
 def claims(P, v):
     A, r, t, g = P["annual"], P["rejection_2014"], P["ttm"], P["growth"]
     c = [
-        ("standfirst 'about {plo} to {phi} per cent' is the payload's range, rounded",
+        ("standfirst 'about {plo} to {phi} percent' is the payload's range, rounded",
          v["plo"] == f"{100 * r['frac_lo']:.0f}" and v["phi"] == f"{100 * r['frac_hi']:.0f}"),
         ("takeaway 2 'about what it was in 2010': latest twelve months within one point of 2010",
          abs(t["share"] - A["2010"]["share"]) < 0.01),
@@ -240,18 +240,18 @@ def values(P):
         "first_year": str(years[0]), "last_year": str(years[-1]),
         # cold reader 1: "archived on the same day the data was fetched ... abandoned at birth"; the note now
         # says what the page is a record of, and that it will not be updated, in fewer words
-        "archived": (f"This page is a finished record. It uses the monthly figures of the U.S. Energy Information "
+        "archived": (f"This page is a finished record, built from the monthly figures of the U.S. Energy Information "
                      f"Administration (EIA) through {mon(P['through'])} and its articles of "
                      f"{years[0]} to {years[-1]}. It will not be updated."),
         "takeaways": insight.takeaways([
             f"When plants leave ethane in the gas, ethane falls behind the other four liquids that the plants "
-            f"produce: propane, two butanes and natural gasoline. Ethane's share of the five liquids fell "
-            f"from {pct(A['2010']['share'])} per cent in 2010 to {pct(P['low_share'][1])} per cent in "
-            f"{P['low_share'][0]}. At the same time, propane output grew faster than ethane output.",
-            f"The share was {pct(t['share'])} per cent over the twelve months to {mon(t['to'])}, about the same as "
-            f"in 2010. This came after new plastics plants and the first ethane export ships began to take more of it.",
+            f"produce (propane, two butanes and natural gasoline). Ethane's share of the five liquids fell "
+            f"from {pct(A['2010']['share'])} percent in 2010 to {pct(P['low_share'][1])} percent in "
+            f"{P['low_share'][0]}, while propane output grew faster than ethane output.",
+            f"The share was {pct(t['share'])} percent over the twelve months to {mon(t['to'])}, about the same as "
+            f"in 2010, after new plastics plants and the first ethane export ships began to take more of it.",
             f"Since 2015, ethane production has grown {g['eth']:.1f} times and the other plant liquids "
-            f"{g['other']:.1f} times. For {int(y[64785]) - 1}, a record year, EIA gave two causes. The causes were "
+            f"{g['other']:.1f} times. For {int(y[64785]) - 1}, a record year, EIA gave two causes: "
             f"more recovery as gas production increased, and continued growth in demand from petrochemical plants at home and abroad."]),
         "hero": hero(P), "price_rows": price_rows(P),
         "x0": mon(P["hero"]["x"][0]), "x1": mon(P["hero"]["x"][-1]), "fetched": long(fetched),

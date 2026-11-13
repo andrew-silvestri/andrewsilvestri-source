@@ -298,8 +298,8 @@ def page_numbers():
     derived = {
         "pace range (takeaway 1)": f"on average, {S['pace']['k_fit']:.1f} to {S['pace']['default']:.1f} billion cubic feet",
         "months range (takeaway 1)": f"holds only {min(months):.0f} to {max(months):.0f} months",
-        "flaring 2019 share": f"{100 * Y[2019]['vf_share']:.1f} per cent of their gas in 2019",
-        "flaring max since 2021": f"no more than {100 * max(r['vf_share'] for r in since21):.1f} per cent",
+        "flaring 2019 share": f"{100 * Y[2019]['vf_share']:.1f} percent of their gas in 2019",
+        "flaring max since 2021": f"no more than {100 * max(r['vf_share'] for r in since21):.1f} percent",
         "flaring 2019 volume": f"{Y[2019]['vf_bcfd']:.2f} Bcf/d was vented or flared in 2019",
         "pace default": f"grown by {S['pace']['default']:.2f} Bcf/d a year",
         "Matterhorn recovery": f"Matterhorn Express {big[3]['recovery_months']}.",
@@ -309,7 +309,7 @@ def page_numbers():
         "two-point k": f"as full as August 2024 is {S['k_fit']['list']:.2f}",
         "2019 reference, default": f"gives {S['H_ref_2019']['default']:+.2f} Bcf/d of room that month",
         "EIA Permian k": f"or {S['k_permian']['net']:.3f} less fuel",
-        "oil-well share": f"{100 * pay['csgd']['share']:.0f} per cent of the gas",
+        "oil-well share": f"{100 * pay['csgd']['share']:.0f} percent of the gas",
         "k default": f"({pay['k']['default']:.3f})",
     }
     missing = [n for n, s in derived.items() if s not in text]

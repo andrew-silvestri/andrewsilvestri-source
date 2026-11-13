@@ -37,7 +37,7 @@ is not part of it.
 
 ## What to expect
 
-`--all` prints twenty items at their default routes, from beef at 73.42 kg CO2e
+`--all` prints twenty items at their default routes, from beef at 53.08 kg CO2e
 per kilogram as eaten down to a field tomato at 0.67. `test_lca.py` prints
 `0 failure(s)`; every total lands inside the published range it is checked
 against, and the cutoff it applies discards under 1% of any total.
@@ -60,6 +60,12 @@ against, and the cutoff it applies discards under 1% of any total.
   full (it had carried the hide's 2.2% share), soil nitrous oxide counts the
   indirect part as well as the direct, and the cheese's milk share is IDF's.
   The article's Corrections section lists every total that moved.
+- **Corrected 10 November 2026**: a co-product share now applies to every
+  stage that flows into the stage where the products separate, as ISO 14044
+  allocates the inputs of a multi-output process, so the slaughterhouse's
+  0.72 to the meat covers the animal too (`lca.py` `stage_shares()`; until
+  then the beef carried its animal in full). The foods with a co-product fell
+  9-30%; beef 73.42 -> 53.08.
 - **A vehicle's factory is divided by the distance it will cover**, and that
   lifetime is an assumption rather than a measurement. It is exposed as a
   control so it can be argued with instead of inherited.

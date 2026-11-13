@@ -44,8 +44,10 @@ Run:
 
 import argparse
 import fnmatch
+import hashlib
 import os
 import re
+import subprocess
 import sys
 import tempfile
 import time
@@ -123,6 +125,47 @@ ATLAS_FILES = {
     "tests/three-stub.js": "tests/three-stub.js",
     "README.md": "atlas-code-README.md",
 }
+
+
+def repo_target(name, repo, commit):
+    """An archive of another git repository's tracked files at one pinned
+    commit, read with `git show` and never from its working tree, so nothing
+    untracked or gitignored there can ship. For perfidy-code.zip, whose
+    source is the public Perfidy repository (D-64, 2026-11-07): the zip is
+    that commit as GitHub shows it, and moving the pin is a deliberate edit
+    here, not something a rebuild does on its own. The file list is read
+    when an archive is built, so importing this module needs no repository."""
+    t = target(None, name)
+    t["git"] = (repo, commit)
+    return t
+
+
+def _git(repo, *args):
+    try:
+        return subprocess.run(["git", "-C", repo] + list(args), check=True,
+                              capture_output=True).stdout
+    except (OSError, subprocess.CalledProcessError) as e:
+        err = getattr(e, "stderr", b"") or b""
+        raise SystemExit(f"cannot read {args[-1]} in {repo}: "
+                         f"{err.decode(errors='replace').strip() or e}")
+
+
+def _resolve(t):
+    """Fill a repo target's extras: archive name -> ("git", repo, "commit:path")."""
+    if "git" in t and not t["extras"]:
+        repo, commit = t["git"]
+        names = _git(repo, "ls-tree", "-r", "--name-only", "-z", commit).decode().split("\0")
+        t["extras"] = {n: ("git", repo, f"{commit}:{n}") for n in names if n}
+    return t
+
+
+# The Perfidy fonts' public repository (github.com/andrew-silvestri/perfidy).
+# PERFIDY_PUBLIC names the local clone; it defaults to ~/Code/perfidy-public,
+# an absolute path so the copy tests/test_generators.py runs this in finds it.
+PERFIDY_PUBLIC = os.environ.get("PERFIDY_PUBLIC",
+                                os.path.join(os.path.expanduser("~"), "Code", "perfidy-public"))
+# b9687bf: "Perfidy 1.000", the remote's HEAD on 2026-11-07 (git ls-remote).
+PERFIDY_COMMIT = "b9687bf606ec7513636a099c2b9e5f44b2819a62"
 
 
 TARGETS = [
@@ -293,7 +336,9 @@ TARGETS = [
     # fetches that column with their own token. beauty/test_beauty.py opens
     # the built zip and fails if a category column has crept in.
     # A column check cannot see row order, which is why fetch_topics.py
-    # sorts its table by species name (D-33, 2026-10-22).
+    # sorts its table by species name (D-33, 2026-10-22). data/lc_matched.csv
+    # is left out too (D-44, 2026-11-10): 1,000 species that are all Least
+    # Concern carry their category by construction. match_lc.py rebuilds it.
     #
     # This rule stays HERE rather than inside beauty/, and the difference is
     # not cosmetic. On 2026-09-05 a session that knew nothing about the Red
@@ -302,9 +347,13 @@ TARGETS = [
     # would have protected only a run that went through beauty/'s own
     # tooling. Moving it next to the project it describes reads better and
     # protects less. HANDOFF.md section 8, trap 19.
+    # Perfidy, a type family (page/perfidy, 2026-11-07; D-64): the public repository at a pinned
+    # commit - the fonts, the build that makes them from their open-source sources, the LaTeX
+    # package and the web CSS. Its row on code.html links this zip like every other row.
+    repo_target("perfidy-code.zip", PERFIDY_PUBLIC, PERFIDY_COMMIT),
     target("beauty", "beauty-code.zip", keep={"outputs"},
            skip=("data/raw", "data/raw/*", "data/iucn_aves.csv",
-                 "data/birds_joined.csv", "outputs/*.png")),
+                 "data/birds_joined.csv", "data/lc_matched.csv", "outputs/*.png")),
     # The measured neuron: the scripts, the frozen census, the opened complete
     # set and the three reconstructions the figures draw; not the 1,500 sampled
     # files, which fetch_data.py pulls again.
@@ -400,10 +449,19 @@ ENTRY_MODE = 0o644 << 16       # and not the source file's, which varies by OS
 # meter's AGA8 sources) are other domains and pass.
 PERSONAL = re.compile(rb"[A-Za-z0-9._%+-]+(?:@|%40|&#0*64;|&#x0*40;)(?:gmail|utexas)(?:\.|%2e)(?:com|edu)\b",
                       re.I)
+# Third-party licence files that carry their author's own address in the
+# copyright line the licence requires to be shipped unchanged (OFL section 2),
+# matched by the SHA-1 of the whole file so nothing else - and no edited copy
+# of these - gets through. The address is not Andrew's; the domain rule above
+# cannot tell, so this names the file instead of the address (D-64, 2026-11-07).
+#   ceed5b87d68aa557957097beaa92dfadeadabaf1  Perfidy repo licenses/OFL-FiraMath.txt (Fira Math, Xiangdong Zeng)
+THIRD_PARTY_LICENCES = {"ceed5b87d68aa557957097beaa92dfadeadabaf1"}
 
 
 def personal(name, data):
     """Raise when data, a file about to be archived as name, holds one."""
+    if hashlib.sha1(data).hexdigest() in THIRD_PARTY_LICENCES:
+        return
     n = len(PERSONAL.findall(data))
     if n:
         raise SystemExit(f"refusing to archive {name}: {n} personal email address(es) in it "
@@ -420,8 +478,11 @@ def _write(order, src_dir, extras, out_path):
                 info = zipfile.ZipInfo(name, date_time=ENTRY_STAMP)
                 info.compress_type = zipfile.ZIP_DEFLATED
                 info.external_attr = ENTRY_MODE
-                with open(src, "rb") as fh:
-                    data = fh.read()
+                if isinstance(src, tuple):            # ("git", repo, "commit:path")
+                    data = _git(src[1], "show", src[2])
+                else:
+                    with open(src, "rb") as fh:
+                        data = fh.read()
                 personal(name, data)
                 z.writestr(info, data)
 
@@ -429,6 +490,7 @@ def _write(order, src_dir, extras, out_path):
 def rezip(t, src_dir):
     """Rebuild t['zip'] from src_dir. Written beside the target and moved
     into place, so a failure leaves the shipped archive untouched."""
+    _resolve(t)
     order = _order(t, src_dir)
     bad = polluted(order, t["keep"], t["skip"])
     if bad:
@@ -458,6 +520,7 @@ def verify(t, src_dir):
     if not os.path.exists(t["zip"]):
         print(f"  {name}: MISSING (nothing shipped to verify)")
         return False
+    _resolve(t)
     shipped = _members(t["zip"])
     bad = polluted([n for n, _ in shipped], t["keep"], t["skip"])
     order = _order(t, src_dir, quiet=True)
@@ -496,7 +559,8 @@ def scan_all():
         t = by_zip.get(p)
         with zipfile.ZipFile(p) as z:
             entries = z.namelist()
-            leaks = [n for n in entries if PERSONAL.search(z.read(n))]
+            leaks = [n for n in entries if PERSONAL.search(z.read(n))
+                     and hashlib.sha1(z.read(n)).hexdigest() not in THIRD_PARTY_LICENCES]
         bad = polluted(entries, t["keep"] if t else (), t["skip"] if t else ())
         if leaks:
             ok = False

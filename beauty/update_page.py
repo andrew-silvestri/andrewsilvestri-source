@@ -122,6 +122,10 @@ def values(P):
     if not (math.exp(cmod["CR"]["lo"]) < 1.2 and cmod["VU"]["coef"] < cmod["NT"]["coef"]):
         raise SystemExit("count model no longer 'only just distinguishable' with VU below NT; "
                          "rewrite that paragraph")
+    # "the multiple falls from {cr_tot_x} to {cr_dir_x}" when views are held equal (D-83 d).
+    if not adjf["CR"] / adjf["LC"] < ratio:
+        raise SystemExit("holding views equal no longer lowers the CR multiple; "
+                         "rewrite 'the multiple falls from ... to ...'")
     pv = full["robust"]["attractiveness"]["p"]
     v = {
         "attr_p": f"{pv:.2f}" if pv >= 0.01 else "under 0.01",
@@ -225,9 +229,10 @@ def values(P):
     }
     v["meta_description"] = (
         f"Across {v['n_modelled']} bird species, only {v['share_research_all']}% of what a search of "
-        f"OpenAlex returns for a bird's name is research. On research alone, a Critically Endangered "
-        f"bird has about {v['cr_tot_x']} times the work of a Least Concern one, with family, size, "
-        f"range, description date and rated attractiveness held equal.")
+        f"OpenAlex returns for a bird's name is research. On average, a Critically Endangered bird "
+        f"has about {v['ppml_x']} times the research of a Least Concern one (interval {v['ppml_lo']} to "
+        f"{v['ppml_hi']}); the typical one about {v['cr_tot_x']} times, with family, size, range, "
+        f"description date and rated attractiveness held equal.")
     return v
 
 

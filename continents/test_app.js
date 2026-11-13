@@ -18,7 +18,7 @@
  * 9. The land is reconstructed, present at every age, and decodes to real
  *    coordinates. A delta-encoded ring that accumulates wrong drifts off the
  *    map slowly rather than failing, so the decoded extent is checked.
- *10. The land agrees with the Earth: about 29 per cent of the surface at
+ *10. The land agrees with the Earth: about 29 percent of the surface at
  *    0 Ma, and a plausible fraction at every age. A delta-encoded ring that
  *    accumulates wrong drifts slowly rather than failing.
  *11. Switching the land model changes the land. If it did not, the selector
@@ -216,7 +216,7 @@ function main() {
 
     /* The models do not share a coastline dataset, so at 0 Ma they are not
        byte-identical - PALEOMAP is not EarthByte's outline. What they must
-       agree with is the Earth: land is about 29 per cent of the surface, and
+       agree with is the Earth: land is about 29 percent of the surface, and
        every model at every age has to stay in a plausible band, which is
        also what catches a delta-encoded ring that accumulates wrong and
        drifts. And at older ages they must actually differ, or the selector

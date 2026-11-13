@@ -71,15 +71,35 @@ function model(item, origin, dest, mode, life){
     return node;
   }
 
+  /* The co-product share that reaches each stage (lca.py stage_shares()):
+     its own share times the share of every later stage, because a split
+     downstream reaches everything that flowed into it. The slaughterhouse's
+     share to the meat covers the animal too (ISO 14044; since 2026-11-10). */
+  const shares = [];
+  { const down = [];               // [share, basis, stage name], nearest first
+    const same = (d, st) => d[0] === st.share && d[1] === st.basis;
+    for (let i = p.stages.length - 1; i >= 0; i--){
+      const st = p.stages[i];
+      const later = down.filter(d => !same(d, st));
+      let share = st.share != null ? st.share : 1.0;
+      for (const d of later) share *= d[0];
+      const basis = (st.basis ? [st.basis] : [])
+        .concat(later.map(d => `${d[1]}, set at ${d[2].toLowerCase()}`));
+      shares[i] = [share, basis.join("; ")];
+      if (st.share != null && !down.some(d => same(d, st)))
+        down.unshift([st.share, st.basis, st.name]);
+    }
+  }
+
   function build(hint){
     cut = 0;
     const w = p.waste_frac, over = 1/(1-w);
-    const spine = p.stages.map(st => {
+    const spine = p.stages.map((st, i) => {
       /* Three multipliers, three meanings (see processes.py): a co-product
          share, a capital-good amortisation, and the mass shipped on a
          freight leg. Share and amortisation reach every node in the stage;
          the mass reaches only the freight node. */
-      const share = st.share != null ? st.share : 1.0;
+      const [share, basis] = shares[i];
       let amort = st.amortise != null ? st.amortise : 1.0;
       if (scalesWithLife(st.id)) amort *= lifeScale;
       const alloc = share * amort;
@@ -110,7 +130,7 @@ function model(item, origin, dest, mode, life){
       }
       const total = direct + kids.reduce((s,c)=>s+c.total, 0);
       return {id:st.id, name:st.name, alloc, direct, note, children:kids,
-              total, land_use:!!st.land_use, basis:st.basis||""};
+              total, land_use:!!st.land_use, basis};
     });
     return {spine, total:spine.reduce((s,x)=>s+x.total,0), km, cut,
             over, waste:w};

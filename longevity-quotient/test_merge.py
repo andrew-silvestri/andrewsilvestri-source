@@ -9,7 +9,8 @@ runs, and the number on the page is wrong by an amount nobody can see.
 
 So the things that would be invisible are measured.
 
-Run:  python3 test_merge.py [--break nan]
+Run:  python test_merge.py [--break nan|synonym|sebastes|manual|family|
+                                      source|olm]
 """
 
 import collections
@@ -109,6 +110,13 @@ print("\n  The seed table is not overwritten")
 # has replaced one of them, the whole precedence order is broken and nothing
 # else in the file can be trusted either.
 merged_by = {r["scientific_name"].strip().lower(): r for r in rows}
+# A field that ingest.CORRECTIONS drops from a seed row, with its reason, is
+# not expected to survive; a seed row left with no lifespan is not a record.
+import ingest                                         # noqa: E402
+dropped = {}
+for c in ingest.CORRECTIONS:
+    if c["source"] == "seed":
+        dropped.setdefault(c["sci"].lower(), set()).update(c.get("drop", ()))
 moved = []
 by_pair = {(r["scientific_name"].strip().lower(),
             r["common_name"].strip().lower()): r for r in rows}
@@ -118,7 +126,13 @@ for s in seed:
     m = by_pair.get(key) or merged_by.get(s["scientific_name"].strip().lower())
     if not m:
         continue
+    drop = dropped.get(key[0], set())
+    if not [f for f in ("wild_yr", "captive_yr", "unknown_yr")
+            if s.get(f, "").strip() and f not in drop]:
+        continue                     # no lifespan left: not the record
     for f in ("mass_g", "wild_yr", "captive_yr", "quality"):
+        if f in drop:
+            continue
         a, b = s[f].strip(), m[f].strip()
         if f == "mass_g" and a and b:
             if abs(float(a) - float(b)) / float(a) > 1e-6:
@@ -130,6 +144,155 @@ for s in seed:
 ok(not moved, "every hand-checked value survives the merge intact",
    f"{len(seed)} seed rows" if not moved else f"{len(moved)} changed: "
    f"{moved[:3]}")
+
+print("\n  Synonyms, one family per genus, recorded corrections (D-56 b)")
+# Each check below is computed from the shipped tables, not from the list
+# ingest.py writes, so a merge that silently stops merging is caught here.
+table = list(csv.DictReader(open(os.path.join(HERE, "outputs", "lq_table.csv"),
+                                 encoding="utf-8")))
+if "--break" in sys.argv and "synonym" in sys.argv:
+    # a merged-away copy back in the table and in the fits
+    src = next(r for r in rows if r["scientific_name"] == "Centrochelys sulcata")
+    rows.append(dict(src, scientific_name="Geochelone sulcata",
+                     genus="Geochelone"))
+    srct = next(r for r in table if r["sci"] == "Centrochelys sulcata")
+    table.append(dict(srct, sci="Geochelone sulcata", genus="Geochelone"))
+if "--break" in sys.argv and "sebastes" in sys.argv:
+    for r in rows + table:
+        if (r.get("scientific_name") or r.get("sci")) == "Sebastes borealis":
+            r["family"] = "Scorpaenidae"
+if "--break" in sys.argv and "manual" in sys.argv:
+    # a hand-listed name back in the table as a record of its own
+    src = next(r for r in rows if r["scientific_name"] == "Pristis pristis")
+    rows.append(dict(src, scientific_name="Pristis perotteti"))
+    srct = next(r for r in table if r["sci"] == "Pristis pristis")
+    table.append(dict(srct, sci="Pristis perotteti"))
+if "--break" in sys.argv and "family" in sys.argv:
+    # one grouper filed apart from its genus again (D-92 c)
+    for r in rows + table:
+        if (r.get("scientific_name") or r.get("sci")) == "Epinephelus itajara":
+            r["family"] = "Epinephelidae"
+if "--break" in sys.argv and "olm" in sys.argv:
+    # AmphiBIO's unsourced 12 years back in place of the projection
+    for r in rows:
+        if r["scientific_name"] == "Proteus anguinus":
+            r["unknown_yr"] = "12"
+
+# 1. The pairs D-29 item 4 named, at most one name each in the table.
+named_pairs = [("Centrochelys sulcata", "Geochelone sulcata"),
+               ("Apus melba", "Tachymarptis melba"),
+               ("Tapirella bairdii", "Tapirus bairdii"),
+               ("Hydrochoerus hydrochaeris", "Hydrochoeris hydrochaeris"),
+               ("Cacatua leadbeateri", "Lophochroa leadbeateri")]
+names_now = {r["scientific_name"] for r in rows}
+both = [p for p in named_pairs if p[0] in names_now and p[1] in names_now]
+ok(not both, "the audit's named synonym pairs are one record each",
+   f"{len(named_pairs)} pairs" if not both else f"both present: {both}")
+
+# 2. Rule one, re-run on the merged table itself: no two rows share a common
+#    name, a class and a species epithet (gender ending or one letter aside).
+grp = collections.defaultdict(list)
+for r in rows:
+    grp[(ingest.common_key(r["common_name"]), r["class"])].append(r)
+again = []
+for (cn, _), rs in grp.items():
+    for i, a in enumerate(rs):
+        for b in rs[i + 1:]:
+            if (a["scientific_name"] != b["scientific_name"]
+                    and ingest.epithets_agree(a["scientific_name"],
+                                              b["scientific_name"])):
+                again.append((a["scientific_name"], b["scientific_name"]))
+ok(not again, "no two rows are one species by the common-name rule",
+   f"{len(again)}: {again[:3]}" if again else "")
+
+# 3. No merged name reaches the fits.
+syn = list(csv.DictReader(open(os.path.join(HERE, "outputs", "synonyms.csv"),
+                               encoding="utf-8")))
+gone = {s["merged_name"] for s in syn}
+fit = {r["sci"] for r in table
+       if r["quality"] != "C" and r["colonial"] != "True"}
+back = sorted((gone & fit) | {b for a, b in named_pairs
+                              if a in fit and b in fit})
+ok(syn and not back, "no merged synonym is in the fits",
+   f"{len(gone)} names merged" if not back else f"in the fits: {back[:4]}")
+
+# 4. One family for Sebastes, in the merged table and in the scored table.
+fam = {r["family"] for r in rows if r["genus"] == "Sebastes"} | \
+      {r["family"] for r in table if r["genus"] == "Sebastes"}
+ok(fam == {"Sebastidae"}, "every Sebastes is filed under one family",
+   f"families: {sorted(fam)}")
+
+# 4b. D-92 c: one family for every genus, in both tables (a genus is keyed
+#     with its class, as ingest.py keys it).
+gfam = collections.defaultdict(set)
+for r in rows:
+    gfam[(r["class"], r["genus"])].add(r["family"])
+for r in table:
+    gfam[(r["class"], r["genus"])].add(r["family"])
+split = sorted(g for g, f in gfam.items() if len(f) > 1)
+refiled = list(csv.DictReader(open(os.path.join(HERE, "outputs",
+                                                "genus_families.csv"),
+                                   encoding="utf-8")))
+ok(not split and len(refiled) >= 50,
+   "every genus is filed under one family",
+   f"{len(gfam):,} genera, {len(refiled)} refiled (outputs/genus_families.csv)"
+   if not split else f"split: {split[:4]}")
+
+# 4c. D-92 d: every hand-listed pair is one record under its kept name, and
+#     its source says so: for a FishBase pair, the FishBase remark on the
+#     merged name names the kept one as its senior synonym.
+manual = list(csv.DictReader(open(ingest.SYNONYMS_MANUAL, encoding="utf-8")))
+if "--break" in sys.argv and "source" in sys.argv:
+    manual.append({"name_a": "Physeter catodon",
+                   "name_b": "Physeter macrocephalus",
+                   "kept": "Physeter macrocephalus",
+                   "source": "FishBase species table, Remark of Physeter "
+                             "catodon"})
+tnames = {r["sci"] for r in table}
+unmerged = []
+for m in manual:
+    gone_name = m["name_b"] if m["kept"] == m["name_a"] else m["name_a"]
+    if (gone_name in names_now or gone_name in tnames
+            or m["kept"] not in names_now or m["kept"] not in tnames):
+        unmerged.append(gone_name)
+ok(manual and not unmerged, "every hand-listed pair is one record, kept name",
+   f"{len(manual)} pairs" if not unmerged else f"unmerged: {unmerged}")
+import re                                             # noqa: E402
+import pandas as pd                                   # noqa: E402
+fb = pd.read_parquet(os.path.join(ingest.RAW, "fishbase_species.parquet"))
+remark = {f"{g} {sp}": re.sub(r"<[^>]+>", "", str(rm)).lower()
+          for g, sp, rm in zip(fb["Genus"], fb["Species"], fb["Remark"])}
+unsourced = []
+for m in manual:
+    gone_name = m["name_b"] if m["kept"] == m["name_a"] else m["name_a"]
+    if not m["source"].startswith("FishBase"):
+        unsourced.append((gone_name, "no checker for this source"))
+    elif not re.search(r"synonym\s+of\s+" + re.escape(m["kept"].lower()),
+                       remark.get(gone_name, "")):
+        unsourced.append((gone_name, "remark does not say so"))
+ok(not unsourced, "each hand-listed pair is stated by the source it cites",
+   "every FishBase remark checked" if not unsourced else f"{unsourced}")
+
+# 5. The corrections hold in the output, not only in the code.
+olm = merged_by.get("proteus anguinus", {})
+olm_t = next((r for r in table if r["sci"] == "Proteus anguinus"), {})
+# D-92 a: Voituron et al.'s projection, as AnAge gives it, at grade C, in the
+# unrecorded column, with a note that opens by calling it a projection.
+ok(olm and olm.get("unknown_yr") == "102" and not olm.get("wild_yr")
+   and not olm.get("captive_yr") and olm.get("quality") == "C"
+   and olm.get("note", "").startswith("a projection, not an observed age")
+   and olm_t.get("quality") == "C",
+   "the olm carries the projected maximum, marked and out of the fits",
+   f"olm: {olm.get('unknown_yr')} yr, grade {olm.get('quality')}")
+cham = merged_by.get("furcifer labordi", {})
+ok(cham and float(cham["mass_g"]) == 8.73,
+   "Labord's chameleon has the mass AnAge and Amniote record",
+   f"{cham.get('mass_g')} g")
+wal = [r for r in table if r["sci"] == "Macropus greyi"]
+ok(wal and wal[0]["quality"] == "C" and "demoted to C" in wal[0]["note"]
+   and "Macropus greyi" in summary["outlier_rule"]["demoted_by_name"],
+   "the toolache wallaby is demoted, with its reason",
+   wal[0]["note"][:60] if wal else "missing")
 
 print("\n  Unit sanity, source by source")
 # PanTHERIA stores maximum longevity in months. Read as years it makes every

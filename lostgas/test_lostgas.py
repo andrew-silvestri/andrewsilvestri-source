@@ -217,7 +217,7 @@ def main():
     if BREAK == "scope":
         t12 = t12.replace("can still judge whether the cost is reasonable", "")
     need = ["unless the Commission allows more", "can still judge whether the cost is reasonable", "owned by cities",
-            "safe harbor", f"{100 * d['no_zero']:.0f} per cent of those that are not exactly zero"]
+            "safe harbor", f"{100 * d['no_zero']:.0f} percent of those that are not exactly zero"]
     gone = [n for n in need if n not in t12]
     check("12 scope", not gone, "the Texas rule's scope, the Oklahoma safe harbor and the share without zeros are on "
                                 "the page" + (f"; missing {gone}" if gone else ""))

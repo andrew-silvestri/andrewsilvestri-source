@@ -58,13 +58,13 @@ KEYS = {
     # in"; the clause is gone and the root is stated as a choice.
     "Chicago": ("E", "blues", "MODE",
                 "the Chicago blues, which is a named genre of the city; E, "
-                "an open key on the guitar, is our choice of root"),
+                "an open key on the guitar, is this page's choice of root"),
     # D-31: no source says session players default to G; the Number
     # System is key-independent by design, so the root is a choice.
     "Nashville": ("G", "major", "MODE",
                   "the Nashville Number System, the chord notation developed "
                   "here, which writes chords as numbers in any key; the root, "
-                  "G, is our choice"),
+                  "G, is this page's choice"),
     # D-31: E shapes on a guitar tuned down a half step sound in E flat,
     # so the sounding key of the source is E flat (was E until 2026-10-24).
     "Austin": ("Eb", "blues", "PIECE",
@@ -240,7 +240,7 @@ KEYS = {
     # R5 claims check: the anthem's published key was never sourced
     "Brussels": ("Bb", "major", "ANTHEM",
                  "La Brabanconne, Belgium's anthem, in a major key; the "
-                 "root, B flat, is our choice"),
+                 "root, B flat, is this page's choice"),
     "Vienna_alt": ("D", "major", "PIECE", "The Blue Danube"),
     "Benidorm": ("E", "hijaz", "MODE", "the Phrygian dominant of flamenco"),
 }
