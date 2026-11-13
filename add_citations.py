@@ -1200,7 +1200,7 @@ PAGES = {
         ("Alan Hodgkin and Andrew Huxley measured in 1939",
          'A. L. Hodgkin and A. F. Huxley, &ldquo;Action potentials recorded from inside a nerve fibre&rdquo;, <i>Nature</i> 144:710&ndash;711, 1939, <a href="https://doi.org/10.1038/144710a0">doi:10.1038/144710a0</a>.',
          'A resting potential of about 50 mV and spikes of 80 to 95 mV in the squid giant axon.'),
-        ("takes about 20 percent of the body",
+        ("takes about 20 percent of the body's oxygen at rest",
          'M. E. Raichle and D. A. Gusnard, &ldquo;Appraising the brain&rsquo;s energy budget&rdquo;, <i>PNAS</i> 99(16):10237&ndash;10239, 2002, <a href="https://doi.org/10.1073/pnas.172399499">doi:10.1073/pnas.172399499</a>.',
          'The brain at about 2 percent of body weight and about 20 percent of oxygen use.'),
         ("a 2012 model of rat cortex",

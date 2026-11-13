@@ -210,8 +210,8 @@ def chart_ladder(P):
             o.append(f'<rect class="{cls}" x="{sx(r["lo"]):.1f}" y="{by}" width="{max(2, sx(r["hi"]) - sx(r["lo"])):.1f}" height="14"/>')
             if wide:
                 o.append(f'<text class="ch-tick" x="{sx(r["hi"]) + 6:.1f}" y="{by + 11}">{r["lo"]}&#8211;{r["hi"]}</text>')
-        if wide:
-            o.append(f'<text class="ch-tick" x="{x1:.1f}" y="{top - 2}" text-anchor="end">millivolts</text>')
+        o.append(f'<text class="ch-tick" x="{x1:.1f}" y="{H - 8 - (14 if wide else 0)}" text-anchor="end">'
+                 f'{"millivolts" if wide else ""}</text>' if wide else "")
         o.append("</svg>")
         return "".join(o)
     cap = ("The solid part of each bar is the reported range; the paler part runs from zero. The vent bar is "

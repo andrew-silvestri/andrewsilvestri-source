@@ -59,3 +59,6 @@
 @keyframes og-in  { 0% { transform: translateX(0); opacity: 0; } 15% { opacity: 1; } 85% { opacity: 1; } 100% { transform: translateX(-28px); opacity: 0; } }
 @keyframes og-out { 0% { transform: translateX(0); opacity: 0; } 15% { opacity: 1; } 85% { opacity: 1; } 100% { transform: translateX(28px); opacity: 0; } }
 :root[data-motion="off"] .og * { transition: none !important; animation: none !important; }
+
+/* the static charts on this page are drawn at 720 and 320; centre them on the wide track */
+main .step-fig .chart { margin: 0 auto; }

@@ -28,6 +28,7 @@ DATA = os.path.join(HERE, "data")
 # CODATA 2018 exact values
 R = 8.314462618        # J/(mol K)
 F = 96485.33212        # C/mol
+MIN_N = 200            # votes per 1 C bin, as in analyse_ashrae.py
 
 
 def nernst_mv_per_ph(t_c):
@@ -57,7 +58,17 @@ def ashrae():
         with open(os.path.join(OUT, name), encoding="utf-8") as f:
             return list(csv.DictReader(f))
     counts = {r[""]: int(r["value"]) for r in rows("ashrae_counts.csv")}
-    bins = [r for r in rows("ashrae_bins_all.csv") if r["included"] == "True"]
+    allb = rows("ashrae_bins_all.csv")
+    # the chart: the unbroken run of 1 C bins with at least MIN_N votes that holds the peak of "no change"
+    ok = [int(r["n"]) >= MIN_N for r in allb]
+    top = max((i for i in range(len(allb)) if ok[i]), key=lambda i: float(allb[i]["share_no_change"]))
+    a = top
+    while a > 0 and ok[a - 1]:
+        a -= 1
+    z = top
+    while z < len(allb) - 1 and ok[z + 1]:
+        z += 1
+    bins = allb[a:z + 1]
     cross = {(r["group"], r["metric"]): r for r in rows("ashrae_crossovers.csv")}
     slopes = {(r["subset"], r["metric"]): r for r in rows("ashrae_adaptive_slopes.csv")}
     b = [{"t": float(r["ta_bin_lo"]), "n": int(r["n"]), "nc": float(r["share_no_change"]),
@@ -70,7 +81,7 @@ def ashrae():
     return {
         "votes": counts["rows_ta_and_preference"], "buildings": counts["buildings"],
         "rows_raw": counts["rows_raw"], "bins": b, "bin_lo": b[0]["t"], "bin_hi": b[-1]["t"] + 1,
-        "min_n": min(r["n"] for r in b),
+        "min_n": MIN_N,
         "peak": {"t": pk["t"], "nc": pk["nc"]},
         "cross": {"t": f(wc, "estimate"), "lo": f(wc, "ci_lo"), "hi": f(wc, "ci_hi")},
         "slope_pref": {"v": f(s_pref, "slope"), "lo": f(s_pref, "slope_ci_lo"), "hi": f(s_pref, "slope_ci_hi"),
