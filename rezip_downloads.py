@@ -296,6 +296,11 @@ TARGETS = [
     # whose SHA-1 differs from the manifest.
     target("oxygen", "oxygen-code.zip", keep={"outputs"},
            skip=("data/raw", "data/raw/*", "outputs/*.png")),
+    # The sub-3 marathon (sub3-marathon lane, 2026-11-13): the fetch script, the build, the page generator
+    # and template, and the tests, with the payload and data/fetched.json. Not data/raw: the Berlin file is
+    # 113 MB and holds runners' names; fetch_public.py downloads it from Zenodo and checks its MD5.
+    target("sub3", "sub3-code.zip", keep={"outputs"},
+           skip=("data/raw", "data/raw/*", "outputs/*.png")),
     # food-code.zip retired with its page on 2026-09-09: food.html was
     # unpublished at Andrew's request, for now, and the last build is
     # unpublished/downloads/food-code.zip. The TARGET goes with the page,

@@ -250,6 +250,9 @@ NAV = [
         ("Oxygenated gasoline", "oxygen.html"),
         # page/perfidy, 2026-11-07: the Perfidy type family. Label is the page's <title>.
         ("Perfidy", "perfidy.html"),
+        # sub3-marathon lane, 2026-11-13: what a sub-3-hour marathon takes, from Berlin results. Other:
+        # not an energy page (lane DECISIONS D3).
+        ("The sub-3 marathon", "sub3.html"),
     ]),
     ("Code", "code.html"),
     # LAST, AND IT HAS TO STAY LAST. style.css pins this one right with

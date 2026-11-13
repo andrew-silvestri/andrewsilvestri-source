@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<link rel="preload" href="assets/perfidy/PerfidyText-Regular.woff2" as="font" type="font/woff2" crossorigin>
+<title>The sub-3 marathon — Andrew Silvestri</title>
+<meta name="description" content="Of {{band_n}} Berlin Marathon runners who passed halfway on pace for a sub-3, {{band_pct}} percent finished under three hours. The time is lost after 25 km, and heat makes it worse. What a sub-3 marathon takes, from {{all_n}} results.">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="alternate icon" href="favicon.png">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<meta name="theme-color" content="#F2F0EF">
+<link rel="canonical" href="https://andrewsilvestri.com/sub3.html">
+<meta property="og:type" content="website">
+<meta property="og:title" content="The sub-3 marathon — Andrew Silvestri">
+<meta property="og:description" content="Of the Berlin Marathon runners who reached halfway on pace for a sub-3, about one in three finished under three hours.">
+<meta property="og:url" content="https://andrewsilvestri.com/sub3.html">
+<script>try{document.documentElement.dataset.motion=matchMedia('(prefers-reduced-motion: reduce)').matches?'off':'on';}catch(e){document.documentElement.dataset.motion='on';}</script>
+<link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="assets/scrolly.css">
+</head><body>
+{{nav}}
+<main>
+<h1>Most runners on pace for a sub-3 marathon at halfway still miss it</h1>
+<p class="dim">On 29 September 2024, {{y24_n}} runners passed halfway in the Berlin Marathon between 1:28:30 and 1:29:59. They were on schedule to finish in under three hours, the line that many amateur marathoners treat as the mark of a serious runner. Half of them made it. A year later, on a morning {{dt}} °C warmer, {{y25_n}} runners passed the same point in the same 90 seconds, and fewer than one in five made it. Over all {{years_n}} races from {{first}} to {{last}}, {{band_pct}} percent of the runners who reached halfway in that window finished under 3:00. Being on pace at halfway is not enough. The runners who missed lost their time after 25 km, so a runner needs enough margin at halfway to survive the last 12 km.</p>
+{{stamp}}
+{{takeaways}}
+
+{{hero}}
+
+<p class="small">Data: Berlin Marathon results {{first}} to {{last}}, net times, Zenodo record by Seffrin and others (2026). Bars: this page's count, finishers only.</p>
+
+<h2>A schedule that holds for half a race</h2>
+
+<p>The pattern is not a quirk of one year. In {{years_less1}} of the {{years_n}} races, most of the runners who passed halfway in 1:28:30 to 1:29:59 finished slower than 3:00; in the other, 2024, it was an even split. Their success rate ranged from {{yr_lo}} percent in {{yr_lo_y}} to {{yr_hi}} percent in {{yr_hi_y}}, and since 2019, with larger fields and faster shoes, it has been {{recent_pct}} percent. Look from the other end and the picture is the same. Of the {{near_n}} runners who finished between 3:00:00 and 3:04:59, {{near_pct}} percent had passed halfway under 1:30. Most near misses were on schedule at halfway.</p>
+
+<p>Many of these runners were aiming at 3:00 on purpose. In 9.5 million marathon finishes, Eric Allen and colleagues found 51.4 percent more runners in the minute before three hours than in the minute after it, which is the mark of a target that people push for. So the halfway group is full of people with the same plan. About one in three carried it out.</p>
+
+<h2>What three hours asks for</h2>
+
+<p>The plan is simple to state. The marathon is 42.195 km, so three hours means {{pace3}} a kilometre ({{mile3}} a mile), or {{split5}} for every 5 km, held from the start to the finish. In Berlin, a flat course on which the men's world record was broken repeatedly from 2003 to 2022, {{all_pct}} percent of the {{all_n}} finishers since {{first}} did it: {{m_pct}} percent of men and {{w_pct}} percent of women. Jack Daniels and Jimmy Gilbert's running formula, which many coaches use, gives a 3:00 marathon the same fitness as a {{half3}} half marathon run on its own. That is about three minutes faster than the halfway split of the runners this page follows.</p>
+
+<p>Physiology explains why the gap is needed. Michael Joyner's model of the marathon makes speed the product of three things: the maximum rate at which a runner can use oxygen (VO2max), the fraction of it they can hold for the whole race, and their running economy, the oxygen cost of each kilometre. Elite marathoners hold about 75 to 85 percent of VO2max, and in a 1983 laboratory study of 28 finishers of one marathon the fastest held about 75 percent and the slowest about 60. A runner can reach 3:00 with any mix of the three. What the model leaves out is time: it describes a rested runner, and nobody runs the last 10 km rested.</p>
+
+<h2>Where the time goes</h2>
+
+<p>The race splits show when the two groups separate. The table gives the median pace of the runners in the halfway window who made it and of those who missed, for each 5 km of the race. For the first 15 km the two groups are the same, a few seconds a kilometre faster than 3:00 pace. The difference opens slowly from 15 km and fast after 25 km. Between 35 and 40 km the median runner who missed ran {{miss_3540}} a kilometre. The runners who made it held {{made_3540}}.</p>
+
+<table class="n" tabindex="0">
+<thead><tr><th>Section</th><th>Made it, pace per km</th><th>Missed, pace per km</th></tr></thead>
+<tbody>
+{{seg_rows}}
+</tbody>
+</table>
+<p class="small">Median pace in each section for the runners who passed halfway in 1:28:30 to 1:29:59 and had every 5-km split: {{made_n}} who finished under 3:00 and {{missed_n}} who did not. Even 3:00 pace is {{pace3}} a kilometre. Data: Berlin Marathon results {{first}} to {{last}}.</p>
+
+<p>In time against an even 3:00 schedule, the median runner who missed was {{ahead_half}} seconds ahead at halfway, {{behind30}} seconds behind at 30 km and {{behind40}} behind at 40 km. In other words, nearly all of the deficit came in the last 12 km, after the two groups had run the first half the same way.</p>
+
+<h2>Why the second half is different</h2>
+
+<p>Two things change as the race goes on, and laboratory work on runners near this level measures both. The first is what physiologists now call durability. In 2025 Marco Zanini and colleagues at Loughborough University tested 14 trained marathoners (average best 2:47) fresh and again after 90 and 120 minutes of running at 14.1 km/h, almost exactly 3:00 pace. Their speed at the lactate threshold, roughly the fastest pace a runner can hold without fatigue building quickly, fell from 14.0 km/h fresh to 13.5 after 90 minutes and 13.0 after two hours. In race data from 82,303 marathoners, Barry Smyth and colleagues found that heart rate began to drift up against pace at about 25 km on average.</p>
+
+<p>The second is fuel. The arithmetic is worth doing once. Running costs about 1 kilocalorie per kilogram of body weight per kilometre, so a 70 kg runner uses about 2,950 kcal over a marathon, whatever the pace. At 3:00 pace a trained runner is working hard enough for carbohydrate to supply about three quarters of that energy; that is the share measured at 72 percent of VO2max in trained cyclists. Three quarters of 2,950 is about 2,200 kcal, and at about 4 kcal a gram that is about 550 grams of carbohydrate. Benjamin Rapoport's model of marathon fuel puts a typical runner's stores at about 400 grams (88 in the liver, about 310 in the leg muscles). The shortfall is about 150 grams, and without carbohydrate taken during the race the stores run low in the last third of the race. This is an estimate, not a measurement, and it changes with body size, diet and pace.</p>
+
+<p>The estimate lines up with what runners report. In 4.2 million race records, Smyth found that about a third of runners hit the wall, defined as slowing by at least a quarter for 5 km or more, and that it began, on average, at about 29.5 km. Sports nutrition guidelines advise up to 90 grams of carbohydrate an hour in events longer than about 2.5 hours, from mixed sugars, and two weeks of practice with race fuel reduced gut symptoms in one trial. But no controlled trial has tested race fuel on runners at the sub-3 level, so its effect on their finishing time is not measured.</p>
+
+<h2>How much margin is enough?</h2>
+
+<p>If the second half is slower, the first half must be faster than half of 3:00. The chart answers "how much faster" from the data. It groups every finisher with a halfway split by the minute in which they passed halfway, and gives the share who finished under three hours.</p>
+
+{{chart_curve}}
+
+<p>A runner who passed halfway in 1:29 had a {{c89}} percent chance; in 1:28, {{c88}} percent, about a coin flip; in 1:27, {{c87}} percent; in 1:25, {{c85}} percent. The median sub-3 finisher passed halfway in {{s3_half}} and finished in {{s3_final}}, and slowed by a median of {{slow_s3}} percent in the second half. Applied to a 1:29:30 half, a fade of that size makes {{fade_finish}}. Slower finishers faded more: {{slow_330}} percent for finishers between 3:00 and 3:29, and {{slow_5h}} percent for those over five hours.</p>
+
+<h2>Heat takes it out of the second half</h2>
+
+<p>Berlin is run in late September, and the weather on race morning varies more than the course does. The chart gives, for each race, the share of the halfway group who finished under 3:00, with the hottest race mornings in a separate colour. The temperatures are hourly readings from the German weather service (DWD) at Berlin-Tempelhof, averaged from 09:00 to 13:00.</p>
+
+{{chart_weather}}
+
+<p>Across the {{years_n}} races, the warmer the morning, the fewer of these runners made it: about {{slope}} percentage points fewer for each degree, a correlation of {{r_temp}}. In {{t24}} °C in 2024, {{y24_pct}} percent made it; in {{t25}} °C in 2025, the warmest race morning of the {{years_n}}, {{y25_pct}} percent did. Larger studies agree on the direction. In 1.8 million finishes at six major marathons, Berlin among them, Nour El Helou and colleagues found that air temperature was the weather factor that mattered most, and that runners were fastest at roughly 4 to 10 °C. Matthew Ely and colleagues found that slower runners lost more in the heat than the leaders did. The Berlin figures are 26 points, not an experiment: the field has grown and changed over the same years.</p>
+
+<h2>What the numbers do not show</h2>
+
+<p>An expert would object to one thing first. The runners who missed may simply have been less fit than those who made it, and a better schedule would not have saved them. Faster runners pace more evenly in every large study of marathon splits, so some of the link runs from fitness to pacing and not the other way. Two checks limit how far this goes. Of the runners in the halfway window who had already finished an earlier Berlin under 3:00, only {{rep_pct}} percent did it again ({{rep_n}} runners), little better than the rest. And in Strava data from 31,190 runners, Smyth and Daniel Muniz-Pumares estimated each runner's sustainable speed from training; a start faster than that speed still raised the share who slowed badly, from 17 to 23 percent.</p>
+
+<p>The data has gaps in both directions. It counts finishers only, so the runners who passed halfway at 1:29 and then dropped out are missing, and the true success rate is lower than {{band_pct}} percent. It cannot say which runners were aiming at 3:00. And the experimental evidence on pacing is thin: a 2025 review of 24 trials, most of them over distances much shorter than a marathon, found that no imposed strategy, even pacing included, beat letting athletes pace themselves. This page's reading is therefore narrow: a halfway split on 3:00 schedule leaves no room for the fade that almost every runner has, and only the margin protects against it.</p>
+
+<h2>Beyond three hours</h2>
+
+<p>Each further step is a different scale of rarity. The table gives each threshold its pace, Daniels and Gilbert's equivalent half marathon, and the number of Berlin finishers since {{first}} who ran under it.</p>
+
+<table class="n" tabindex="0">
+<thead><tr><th>Marathon</th><th>Pace per km</th><th>Equivalent half</th><th>Berlin finishers under it, {{first}}&ndash;{{last}}</th></tr></thead>
+<tbody>
+{{ladder_rows}}
+</tbody>
+</table>
+<p class="small">2:16:00 is the men's qualifying standard for the 2028 U.S. Olympic Marathon Trials; 1:59:30 is the men's world record. Equivalent halves are from Daniels and Gilbert's formulas, which assume equal training for both distances.</p>
+
+<p>For most amateurs the next line is set by qualifying standards and by age. To enter the Boston Marathon in 2027 a man aged 18 to 34 needed 2:55:00 and a woman 3:25:00, and entries were so many that runners had to beat their standard by 5 minutes 17 seconds. Age-grading tables, which adjust times for age and sex, make 3:00 at 60 worth {{ag60m}} for a man in his prime. At the top, Sabastian Sawe of Kenya ran 1:59:30 in London on 26 April 2026, the first marathon under two hours in a record-eligible race, at {{wr_pace}} a kilometre. On the same course that day, Tigst Assefa of Ethiopia ran 2:15:41, a record for a women-only race. Modern men's world records have been run with a second half as fast as the first, or faster: at that level, the fade this page measures has been trained and paced out of the race.</p>
+
+<h2 id="method">Method</h2>
+
+<p><b>Data.</b> The results are the Berlin Marathon file that Aldo Seffrin, Beat Knechtle and colleagues published on Zenodo in 2026 under a CC BY 4.0 licence: {{rows}} official results from {{first}} to {{last}}, with net times and splits every 5 km and at halfway. There was no race in 2020. A finisher is a result with a finish time ({{all_n}}). The halfway window is 1:28:30 to 1:29:59; an even second half from there finishes between 2:57:00 and 2:59:58. The build reads the file only after it matches the checksum that the Zenodo record publishes, and it never writes a runner's name.</p>
+
+<p><b>Calculations.</b> The second-half slowdown is the second-half time minus the first-half time, divided by the first-half time. The section paces in the table use runners with every 5-km split. The check on earlier sub-3 finishers links a runner across years by name, nationality and sex; a name that appears twice in one year is left out of the linking. The weather series is the mean of DWD's five hourly air temperatures at station 433, Berlin-Tempelhof, from 09:00 to 13:00 local time; DWD's station file gives these readings in UTC, and the build converts them. The race dates are from the race's records. The VDOT figures use Daniels and Gilbert's published equations for the oxygen cost of running speed and the fraction of VO2max held for a given time.</p>
+
+<h2 id="limits">Limits</h2>
+
+<p>Berlin is one flat race, usually run in mild weather, and its rates are likely higher than those of a hilly or hot course. The data counts finishers only. The runners in the halfway window were not all aiming at 3:00, and the data cannot say who was. Shoes, field size and the share of fast runners changed over the years; this page does not separate these from the weather, so the weather correlation is a description, not an estimate of cause. The fuel arithmetic uses typical values from laboratory studies of a few dozen people, and the physiology studies cited are small. This page is an evidence summary, not a training plan or medical advice.</p>
+
+<h2 id="code">The code</h2>
+
+<p>Python: the fetch script, which checks the Zenodo file against its published checksum and records the weather file; the build, which computes every figure on this page from the results and the weather; the page generator; and the tests. The archive carries the computed figures, not the results file, which is 113 MB and can be downloaded from Zenodo. {{zip_kb}} KB.</p>
+<p><a class="btn" href="downloads/sub3-code.zip">Download source</a>
+<a class="btn ghost" href="code.html">All code</a></p>
+
+<footer>
+<p><a href="about.html">Andrew Silvestri</a></p>
+<p><a href="code.html">Built with Python, Julia, JavaScript and public data.</a></p>
+</footer>
+</main>
+<script src="assets/motion.js"></script>
+<script src="assets/lightbox.js"></script>
+<script src="assets/nav.js"></script>
+<script src="assets/charts.js"></script>
+<script src="assets/scrolly.js"></script>
+</body></html>

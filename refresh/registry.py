@@ -102,6 +102,17 @@ ENTRIES = [
         "why": "A finished policy chain, 1990-2006, stated on the page as not updated.",
     },
     {
+        # sub3-marathon lane, 2026-11-13. Disabled: the Berlin results are a published Zenodo file that
+        # ends with 2025, and the page says its data does not update; a new edition is a reviewed change.
+        "page": "sub3",
+        "cwd": "sub3",
+        "fetch": [["python", "fetch_public.py"]],
+        "build": [["python", "build_sub3.py"]],
+        "keys": [],
+        "enabled": False,
+        "why": "A published results file, 1999-2025, stated on the page as not updated.",
+    },
+    {
         "page": "takeaway",
         "cwd": "takeaway",
         # R2 (2026-10-23): production only. The pipeline tracker carries
