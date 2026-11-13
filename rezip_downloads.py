@@ -296,6 +296,11 @@ TARGETS = [
     # whose SHA-1 differs from the manifest.
     target("oxygen", "oxygen-code.zip", keep={"outputs"},
            skip=("data/raw", "data/raw/*", "outputs/*.png")),
+    # Night work (night-shift lane, batch 2, 2026-11-13): the fetch script, the payload builder with its
+    # checks against BLS's printed tables, the page generator with the clock, and the tests, with the payload
+    # and data/fetched.json. Not data/raw: the BLS files are public and the fetch script re-downloads them.
+    target("nightshift", "nightshift-code.zip", keep={"outputs"},
+           skip=("data/raw", "data/raw/*", "outputs/*.png")),
     # food-code.zip retired with its page on 2026-09-09: food.html was
     # unpublished at Andrew's request, for now, and the last build is
     # unpublished/downloads/food-code.zip. The TARGET goes with the page,

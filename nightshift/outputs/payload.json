@@ -12,6 +12,29 @@
   "day_pct": 85.24,
   "night_thousands": 5144,
   "men_share_night": 61.4,
+  "men_share_all": 52.1,
+  "reasons_by_sex": {
+   "men": {
+    "family": 14.4,
+    "pay": 22.6,
+    "school": 2.9,
+    "no_other": 13.7,
+    "nature": 24.8,
+    "preference": 20.0,
+    "other": 1.5,
+    "n": 106
+   },
+   "women": {
+    "family": 19.7,
+    "pay": 9.4,
+    "school": 5.3,
+    "no_other": 6.2,
+    "nature": 11.8,
+    "preference": 47.6,
+    "other": 0.0,
+    "n": 84
+   }
+  },
   "reasons": {
    "family": 16.5,
    "pay": 17.5,

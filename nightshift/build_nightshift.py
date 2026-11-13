@@ -122,6 +122,7 @@ def main():
         m = (sch == 3) & (rs > 0)
         return np.array([(w * m * (rs == k)).sum() / (w * m).sum() * 100 for k in REASONS])
     rs_pct, rs_se = fay(reasons, W, R)
+    pub8_sex = {"men": {"preference": 20.0}, "women": {"preference": 47.6}}
     pub8 = {"preference": 30.7, "nature": 19.8, "pay": 17.5, "family": 16.5, "no_other": 10.8}
 
     # ---------------------------------------------------------------- diaries
@@ -255,6 +256,13 @@ def main():
     # sex mix of night workers (module weights)
     sex = m.TESEX.values
     men_share = (W * (sch == 3) * (sex == 1)).sum() / (W * (sch == 3)).sum() * 100
+    men_all = (W * valid * (sex == 1)).sum() / (W * valid).sum() * 100
+    by_sex = {}
+    for sx, name in ((1, "men"), (2, "women")):
+        mm = (sch == 3) & (rs > 0) & (sex == sx)
+        by_sex[name] = {REASONS[k]: round(float((W * mm * (rs == k)).sum() / (W * mm).sum() * 100), 1)
+                        for k in REASONS}
+        by_sex[name]["n"] = int(mm.sum())
 
     P = {
         "source": "BLS American Time Use Survey 2024 and 2025 microdata, with the Leave and Job Flexibilities "
@@ -264,7 +272,7 @@ def main():
         "module": {"n": int(len(lv)), "n_night": int((sch == 3).sum()), "n_day": int((sch == 1).sum()),
                    "night_pct": round(float(night_pct), 2), "night_se": round(float(night_se), 2),
                    "day_pct": round(float(day_pct), 2), "night_thousands": round(float(night_k)),
-                   "men_share_night": round(float(men_share), 1),
+                   "men_share_night": round(float(men_share), 1), "men_share_all": round(float(men_all), 1), "reasons_by_sex": by_sex,
                    "reasons": {REASONS[k]: round(float(v), 1) for k, v in zip(REASONS, rs_pct)},
                    "reasons_se": {REASONS[k]: round(float(v), 1) for k, v in zip(REASONS, rs_se)}},
         "checks": {"table7_night_printed": pub7, "a3_2025": {k: round(v, 2) for k, v in a3.items()},
@@ -288,6 +296,9 @@ def main():
     for k, v in pub8.items():
         if abs(P["module"]["reasons"][k] - v) > 0.06:
             bad.append(f"reason {k} {P['module']['reasons'][k]} vs Table 8's {v}")
+    for sx, d in pub8_sex.items():
+        if abs(by_sex[sx]["preference"] - d["preference"]) > 0.06:
+            bad.append(f"preference, {sx}: {by_sex[sx]['preference']} vs Table 8's {d['preference']}")
     for k, v in pubA3.items():
         if abs(a3[k] - v) > 0.06:
             bad.append(f"A-3 {k} {a3[k]:.2f} vs printed {v}")
