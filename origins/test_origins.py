@@ -57,7 +57,7 @@ def main():
     t = open(PAGE, encoding="utf-8").read()
     A, g = P["ashrae"], P["gradient"]
     for label, s in [("vote count", f"{A['votes']:,}"), ("buildings", str(A["buildings"])),
-                     ("balance point", f"{A['cross']['t']:.1f} &deg;C"),
+                     ("balance point", f"{A['cross']['t']:.1f}&nbsp;&deg;C"),
                      ("neutral slope", f"{A['slope_neut']['v']:.2f}"), ("vent median pH", f"{P['vents']['ph_med']:.1f}"),
                      ("Nernst at 25 C", f"{g['s25']:.1f} millivolts"), ("record count", f"{A['rows_raw']:,}")]:
         check(f"page prints the payload's {label} ({s})", s in t)

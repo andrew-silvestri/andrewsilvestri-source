@@ -43,7 +43,8 @@ def tw(s):
 
 
 def f(x, k=0):
-    return f"{x:,.{k}f}"
+    s = f"{x:,.{k}f}"
+    return "&minus;" + s[1:] if s.startswith("-") else s
 
 
 class Fit(SystemExit):
@@ -61,7 +62,7 @@ STATES = [   # key, title (wide), word (phone), level difference in mV (outside 
     ("mito", "Mitochondrion", "mito", 172, "172 mV", "make"),
     ("rest", "Nerve at rest", "rest", 70, "70 mV", "pump"),
     ("spike", "Spike", "spike", -40, "+40 mV", "open"),
-    ("dead", "Equilibrium", "dead", 0, "0 mV", None),
+    ("dead", "Equilibrium", "equil.", 0, "0 mV", None),
 ]
 
 
@@ -124,32 +125,38 @@ def hero(P, v):
         (0, "1 &middot; A wall at a vent &middot; hypothesis",
          f"Imagine a thin mineral wall in a sea-floor vent, with alkaline vent fluid on one side and the more "
          f"acidic early ocean on the other. The difference in protons across it, about {v['dph']} pH units, is "
-         f"worth roughly {v['mv25']} millivolts. The star marks a calculated equivalent, not a measurement. "
+         f"worth up to about {v['mv25']} millivolts. The star marks a calculated upper bound, not a measurement. "
          f'<a href="#vent">The vent</a>'),
         (1, "2 &middot; The same push in every cell",
          "A mitochondrion pumps protons out and lets them fall back through ATP synthase, a rotor in its "
          "membrane; the fall makes ATP. It holds about 172 millivolts, the same order as the vent. "
          '<a href="#harvest">The machinery</a>'),
         (2, "3 &middot; A nerve pays to stay ready",
-         "A neuron runs the machinery the other way: it spends ATP on a pump that moves sodium out, and holds "
-         "its inside tens of millivolts below the outside, about 70 in many mammalian neurons."),
+         "A neuron runs the machinery the other way: it spends ATP on a pump that moves sodium out and "
+         "potassium in. Potassium leaking back out then holds the inside tens of millivolts below the outside, "
+         "about 70 in many mammalian neurons."),
         (3, "4 &middot; Harm opens the gate",
          "A touch or a burn opens channels. Sodium falls in, the inside swings to tens of millivolts above the "
-         "outside, and the swing runs along the fibre to a muscle that pulls away. A single-celled Paramecium "
+         "outside, and the swing runs along the fibre to the spinal cord, which signals a muscle to pull away. "
+         "A single-celled Paramecium "
          "does the same with calcium and backs off. "
          '<a href="#pain">Pain and set points</a>'),
         (4, "5 &middot; Equilibrium",
-         "Stop paying and the levels even out. With nothing to push, nothing can be made or sent. For a cell "
-         'that is death. <a href="#goal">The end goal</a>'),
+         "Stop paying and the levels run down towards even. A blocked mould cell falls from about 200 "
+         "millivolts to about 30 within a minute. At equilibrium nothing is left to push, so nothing can be made "
+         'or sent. For a cell that is death. <a href="#goal">The end goal</a>'),
     ]
     desc = ("Five panels show the same membrane as a wall with water on each side; the difference in level is the "
-            "voltage. Vent wall: about %s millivolts, calculated from pH. Mitochondrion: 172. Nerve at rest: 70, "
-            "kept by a pump. Spike: the inside rises 40 above the outside. Equilibrium: 0." % v["mv25"])
+            "push. Vent wall: up to about %s millivolts, calculated from pH. Mitochondrion: 172. Nerve at rest: 70, "
+            "after a pump has sorted the ions. Spike: the inside rises 40 above the outside. Equilibrium: 0."
+            % v["mv25"])
     out = ['<figure class="grad wide" aria-label="One membrane, five states">',
            '<div class="grad-fig">', f'<p id="og-desc" hidden>{E(desc)}</p>',
            hero_svg(v["mv25"], True), hero_svg(v["mv25"], False),
-           '<p class="grad-key">Left of each wall: inside. Right: outside. The gap between the two levels is the '
-           'voltage. * calculated from pH, not measured.</p>', '</div>', '<div class="grad-steps">']
+           '<p class="grad-key">Left of each wall: inside; right: outside. The gap between the levels is the push: '
+           'a pH difference stated as millivolts at the vent, proton-motive force in the mitochondrion, membrane '
+           'voltage in the nerve. Circle: ATP synthase. Square: the sodium-potassium pump. Bar: an open channel. '
+           'Dots: ions crossing. * calculated from pH, an upper bound.</p>', '</div>', '<div class="grad-steps">']
     for k, head, text in steps:
         out.append(f'<div class="step" data-step="{k}"><p class="ev">{head}</p><p>{text}</p></div>')
     out.append("</div>\n</figure>")
@@ -169,7 +176,7 @@ def svg_open(W, H):
 
 def ladder_rows(P):
     g = P["gradient"]
-    rows = [{"label": "Vent pH gradient, as voltage*", "short": "vent, calculated*", "lo": g["lo"], "hi": g["hi"],
+    rows = [{"label": "Vent pH gradient, as millivolts*", "short": "vent, calculated*", "lo": g["lo"], "hi": g["hi"],
              "mid": g["mv25"], "est": True}]
     rows += [{"label": r["label"], "short": r["short"], "lo": r["lo"], "hi": r["hi"], "mid": r["mid"], "est": False}
              for r in P["ladder"]]
@@ -214,11 +221,12 @@ def chart_ladder(P):
                  f'{"millivolts" if wide else ""}</text>' if wide else "")
         o.append("</svg>")
         return "".join(o)
-    cap = ("The solid part of each bar is the reported range; the paler part runs from zero. The vent bar is "
-           "calculated from pH (the Lost City median against a model of the early ocean, at 25 and 70 &deg;C), "
-           "the others are measured. Magnitudes only: the inside of each cell is negative. Data: MARHYS 3.0; "
+    cap = ("The solid part of each bar is the reported range or spread; the paler part runs from zero. The vent "
+           "bar is calculated from pH: the Lost City median against the 95 percent range of the modelled early "
+           "ocean, at 25 and 70&nbsp;&deg;C. The others are measured. Magnitudes only: at rest the inside of each cell "
+           "is negative. Data: MARHYS 3.0; "
            "Krissansen-Totton et al. 2018; BioNumbers; Reyer et al. 2020; Lo et al. 2007; Hodgkin and Huxley 1939.")
-    return figure("Voltage across a membrane, millivolts", draw(720, True), draw(320, False), cap)
+    return figure("Push across a membrane or barrier, millivolts", draw(720, True), draw(320, False), cap)
 
 
 TL = [   # key, wide label, phone label
@@ -296,7 +304,7 @@ def chart_time(P):
            f"traces of life, about {f(T['life']['ma'])} million years ago, to the oldest fossil brain, about "
            f"{f(T['brain']['ma'])} million: some {f(T['gap'])} million years. Fossils give minimum ages, so nerves may be "
            "older. The common ancestor is a 2024 model estimate (4.09 to 4.33 billion years). Data: ICS chart 2024; "
-           "Wilde et al. 2001; Moody et al. 2024; Van Kranendonk et al.; Ma et al. 2012; and others in the "
+           "Wilde et al. 2001; Moody et al. 2024; Djokic et al. 2017; Ma et al. 2012; and others in the "
            "page's archive (timeline.csv).")
     return figure("From Earth's formation to the first brains", wide_svg(), phone_svg(), cap)
 
@@ -330,9 +338,12 @@ def chart_comfort(P):
         for key, name, cs, fs in lines:
             pts = " ".join(f"{sx(b['t'] + 0.5):.1f},{sy(b[key]):.1f}" for b in B)
             o.append(f'<polyline class="ch-line {cs}" points="{pts}"/>')
-            if wide:
+            if wide and key != "nc":
                 ends.append([sy(B[-1][key]) + 4, name, fs])
         if wide:
+            pk = max(B, key=lambda b: b["nc"])     # "no change" is labelled at its peak, not its tail
+            o.append(f'<text class="f-ink" x="{sx(pk["t"] + 0.5):.1f}" y="{sy(pk["nc"]) - 10:.1f}" '
+                     f'text-anchor="middle">no change</text>')
             ends.sort()
             for i in range(1, len(ends)):
                 ends[i][0] = max(ends[i][0], ends[i - 1][0] + 15)
@@ -346,8 +357,9 @@ def chart_comfort(P):
             o.append(f'<text class="f-ink" x="{sx(pk["t"] + 0.5):.1f}" y="{sy(pk["nc"]) - 8:.1f}" text-anchor="middle">no change</text>')
         o.append("</svg>")
         return "".join(o)
-    cap = (f"Share of {f(A['votes'])} votes from {A['buildings']} buildings, by indoor air temperature in 1 &deg;C "
-           f"bins with at least {A['min_n']} votes. The dashed line is where requests for warmer and cooler "
+    cap = (f"Share of votes by indoor air temperature, in the unbroken run of 1 &deg;C bins from {f(A['bin_lo'])} "
+           f"to {f(A['bin_hi'])}&nbsp;&deg;C that each hold at least {A['min_n']} votes ({f(A['n_chart'])} of "
+           f"{f(A['votes'])} votes, from {A['buildings']} buildings). The dashed line is where requests for warmer and cooler "
            "balance. Data: ASHRAE Global Thermal Comfort Database II, version 2.1.0 (CC BY 4.0); this page's "
            "analysis.")
     return figure("What people asked for, by indoor temperature", draw(720, True), draw(320, False), cap)
@@ -380,7 +392,7 @@ def values(P):
     import insight
     A, g, V, T = P["ashrae"], P["gradient"], P["vents"], P["timeline"]
     v = {
-        "n_ph": str(V["n_ph"]), "ph_papers": {8: "eight"}.get(V["ph_papers"], str(V["ph_papers"])),
+        "n_ph": str(V["n_ph"]), "n_ph_hf": str(V["n_ph_hf"]), "n_ph_em": str(V["n_ph_em"]), "ph_papers": {8: "eight"}.get(V["ph_papers"], str(V["ph_papers"])),
         "ph_med": f(V["ph_med"], 1), "n_t": str(V["n_t"]), "t_med": f(V["t_med"]), "n_rows": str(V["n_rows"]),
         "ocean": f(g["ocean"], 1), "ocean_lo": f(g["ocean_lo"], 1), "ocean_hi": f(g["ocean_hi"], 1),
         "s25": f(g["s25"], 1), "s70": f(g["s70"], 1), "dph": f(g["dph"], 1),
@@ -392,20 +404,21 @@ def values(P):
         "peak_pct": f(100 * A["peak"]["nc"]),
         "cross": f(A["cross"]["t"], 1), "cross_lo": f(A["cross"]["lo"], 1), "cross_hi": f(A["cross"]["hi"], 1),
         "sl_neut": f(A["slope_neut"]["v"], 2), "sl_pref": f(A["slope_pref"]["v"], 2),
-        "sl_pref_lo": f(A["slope_pref"]["lo"], 2), "sl_pref_hi": f(A["slope_pref"]["hi"], 2),
+        "sl_logit": f(A["slope_pref_logit"]["v"], 2), "sl_logit_lo": f(A["slope_pref_logit"]["lo"], 2),
+        "sl_logit_hi": f(A["slope_pref_logit"]["hi"], 2),
         "min_n": str(A["min_n"]), "bin_lo": f(A["bin_lo"]), "bin_hi": f(A["bin_hi"]),
         "zip_kb": f"{round(os.path.getsize(ZIP) / 1024) if os.path.exists(ZIP) else 0:,}",
     }
     v["stamp"] = insight.stamp(live=False)
     v["takeaways"] = insight.takeaways([
-        f"Every cell holds a voltage of tens to a couple of hundred millivolts across a membrane about 5 "
-        f"nanometres thick, a field of {v['f_lo']} to {v['f_hi']} million volts a metre, about ten times what makes "
-        f"dry air spark.",
-        f"A leading hypothesis says life began on a ready-made gradient: Lost City vent fluid against the early "
-        f"ocean is worth about {v['mv25']} millivolts, close to a mitochondrion's 172, though no experiment has "
-        f"shown a vent making life.",
+        f"A mitochondrion holds 150 to 200 millivolts across a membrane about 5 nanometres thick, a field of "
+        f"{v['f_lo']} to {v['f_hi']} million volts a metre, about ten times what makes dry air spark; other cells "
+        f"hold from about ten to two hundred.",
+        f"A leading hypothesis says life began on a ready-made gradient: modern Lost City vent fluid against a "
+        f"modelled early ocean is worth up to about {v['mv25']} millivolts, the same order as a mitochondrion's "
+        f"172, though no experiment has shown a vent making life.",
         f"In {v['votes_c']} comfort votes, {v['peak_pct']} percent wanted no change at 23 to 24 &deg;C and requests "
-        f"to change rose on both sides, a measured trace of the homeostatic signal that pain and pleasure carry."])
+        f"to change rose on both sides, the U-shape a set point predicts, though thermal preference is not pain."])
     claims(P, v)
     v["hero"] = hero(P, v)
     v["chart_ladder"] = chart_ladder(P)

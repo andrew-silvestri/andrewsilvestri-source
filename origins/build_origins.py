@@ -46,10 +46,10 @@ LADDER = [
      "lo": 160, "hi": 180, "mid": 170, "src": "Reyer et al. 2020, PNAS, Arabidopsis mesophyll"},
     {"key": "ecoli", "label": "E. coli, membrane voltage only", "short": "E. coli",
      "lo": 126, "hi": 154, "mid": 140, "src": "Lo et al. 2007, Biophys J, -140 +/- 14 mV at pH 7"},
-    {"key": "squid_ap", "label": "Squid nerve impulse, full swing", "short": "nerve spike",
+    {"key": "squid_ap", "label": "Squid nerve impulse, peak to peak", "short": "nerve spike",
      "lo": 80, "hi": 95, "mid": 90, "src": "Hodgkin & Huxley 1939, Nature, 80-95 mV at 20 C"},
     {"key": "squid_rest", "label": "Squid nerve at rest, 1939", "short": "nerve rest",
-     "lo": 45, "hi": 50, "mid": 50, "src": "Hodgkin & Huxley 1939; Hodgkin & Katz 1949"},
+     "lo": 50, "hi": 50, "mid": 50, "src": "Hodgkin & Huxley 1939, about 50 mV"},
 ]
 
 
@@ -77,6 +77,7 @@ def ashrae():
     wc = cross[("all", "T_wc")]
     s_pref, s_neut = slopes[("all", "T_wc")], slopes[("all", "T_ts0")]
     s_nv = slopes[("NV", "T_wc")]
+    s_lg = slopes[("all", "T_logit")]
     f = lambda r, k: round(float(r[k]), 3)
     return {
         "votes": counts["rows_ta_and_preference"], "buildings": counts["buildings"],
@@ -86,6 +87,8 @@ def ashrae():
         "cross": {"t": f(wc, "estimate"), "lo": f(wc, "ci_lo"), "hi": f(wc, "ci_hi")},
         "slope_pref": {"v": f(s_pref, "slope"), "lo": f(s_pref, "slope_ci_lo"), "hi": f(s_pref, "slope_ci_hi"),
                        "range": s_pref["tmot_range"]},
+        "slope_pref_logit": {"v": f(s_lg, "slope"), "lo": f(s_lg, "slope_ci_lo"), "hi": f(s_lg, "slope_ci_hi")},
+        "n_chart": sum(r["n"] for r in b),
         "slope_pref_nv": {"v": f(s_nv, "slope"), "lo": f(s_nv, "slope_ci_lo"), "hi": f(s_nv, "slope_ci_hi")},
         "slope_neut": {"v": f(s_neut, "slope"), "lo": f(s_neut, "slope_ci_lo"), "hi": f(s_neut, "slope_ci_hi"),
                        "range": s_neut["tmot_range"]},
@@ -104,12 +107,13 @@ def vents():
         except (TypeError, ValueError):
             return None
     ph = [num(r, "pH [[]]") for r in rows if num(r, "pH [[]]") is not None]
+    ph_em = sum(1 for r in rows if num(r, "pH [[]]") is not None and r["Sample type [(HF,EM,SW,STD)]"] == "EM")
     t = [num(r, "T [°C]") for r in rows if num(r, "T [°C]") is not None]
     pure = [num(r, "pH [[]]") for r in rows
             if num(r, "pH [[]]") is not None and num(r, "Mg [mmol/kg]") is not None and num(r, "Mg [mmol/kg]") < 5]
     papers = sorted({r["Author (primary)"] + " " + r["Year of publication (primary)"]
                      for r in rows if num(r, "pH [[]]") is not None})
-    return {"n_rows": len(rows), "n_ph": len(ph), "ph_med": round(st.median(ph), 2), "ph_min": min(ph),
+    return {"n_rows": len(rows), "n_ph": len(ph), "n_ph_em": ph_em, "n_ph_hf": len(ph) - ph_em, "ph_med": round(st.median(ph), 2), "ph_min": min(ph),
             "ph_max": max(ph), "n_t": len(t), "t_med": round(st.median(t), 1), "t_min": min(t), "t_max": max(t),
             "pure_n": len(pure), "pure_min": min(pure), "pure_max": max(pure), "ph_papers": len(papers)}
 
@@ -159,6 +163,8 @@ def checks(P):
         ("neutral slope CI covers ASHRAE 55's 0.31", a["slope_neut"]["lo"] <= a["ref_slope"] <= a["slope_neut"]["hi"]),
         ("preference slope 'a sixth or less' of neutral slope", a["slope_pref"]["v"] <= a["slope_neut"]["v"] / 6),
         ("preference slope CI excludes the neutral slope", a["slope_pref"]["hi"] < a["slope_neut"]["lo"]),
+        ("'not clearly different from zero': the logistic slope's interval spans zero",
+         a["slope_pref_logit"]["lo"] < 0 < a["slope_pref_logit"]["hi"]),
         ("vent median pH 'about 10': 9.7-10.4", 9.7 <= v["ph_med"] <= 10.4),
         ("'roughly 200 mV' vent equivalent at 25 C: 180-240", 180 <= g["mv25"] <= 240),
         ("vent equivalent 'same order as a mitochondrion': within 0.7-1.5x of 172",

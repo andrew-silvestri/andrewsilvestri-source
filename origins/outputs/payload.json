@@ -179,6 +179,7 @@
    "t": 22.735
   },
   "min_n": 200,
+  "n_chart": 84999,
   "peak": {
    "nc": 0.5961,
    "t": 23.0
@@ -196,6 +197,11 @@
    "lo": 0.012,
    "range": "7.7-28.4",
    "v": 0.045
+  },
+  "slope_pref_logit": {
+   "hi": 0.067,
+   "lo": -0.031,
+   "v": 0.015
   },
   "slope_pref_nv": {
    "hi": 0.344,
@@ -256,7 +262,7 @@
   {
    "hi": 95,
    "key": "squid_ap",
-   "label": "Squid nerve impulse, full swing",
+   "label": "Squid nerve impulse, peak to peak",
    "lo": 80,
    "mid": 90,
    "short": "nerve spike",
@@ -266,10 +272,10 @@
    "hi": 50,
    "key": "squid_rest",
    "label": "Squid nerve at rest, 1939",
-   "lo": 45,
+   "lo": 50,
    "mid": 50,
    "short": "nerve rest",
-   "src": "Hodgkin & Huxley 1939; Hodgkin & Katz 1949"
+   "src": "Hodgkin & Huxley 1939, about 50 mV"
   }
  ],
  "timeline": {
@@ -323,6 +329,8 @@
  },
  "vents": {
   "n_ph": 70,
+  "n_ph_em": 9,
+  "n_ph_hf": 61,
   "n_rows": 155,
   "n_t": 131,
   "ph_max": 12.1,
