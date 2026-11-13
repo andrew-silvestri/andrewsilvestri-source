@@ -71,3 +71,9 @@
 /* while a ring is the step being read, the earlier rings dim; on the body-clock and evening steps all stay full */
 .nclock-fig.is-live .nclock:has(.band.now) .band:not(.now):not(.off) { opacity: .55; }
 :root[data-motion="off"] .nclock * { transition: none !important; }
+
+/* the page's two tables: five columns of numbers in mono; on a phone the site's 12px side padding would push
+   them 20px past the measure (tests/test_invariants.js rule 4), so the padding narrows instead */
+@media (max-width: 480px) {
+  .nc-table th, .nc-table td { padding-left: 5px; padding-right: 5px; }
+}
