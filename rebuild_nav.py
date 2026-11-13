@@ -165,6 +165,9 @@ NAV = [
     # page's own title.
     ("Climate", [
         ("Food footprints", "climate-cost.html"),
+        # climate-dissonance lane, 2026-11-13: what Europeans say they do against climate change, set
+        # beside the tonnes each action saves. Label is the page's <title>.
+        ("Climate effort", "dissonance.html"),
     ]),
     # RUNNING WAS RETIRED 2026-09-09, at Andrew's request - "hide the two
     # running pages... I'll republish later, but retire for now". It held

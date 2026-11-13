@@ -296,6 +296,11 @@ TARGETS = [
     # whose SHA-1 differs from the manifest.
     target("oxygen", "oxygen-code.zip", keep={"outputs"},
            skip=("data/raw", "data/raw/*", "outputs/*.png")),
+    # Climate effort (climate-dissonance lane, 2026-11-13): the step that trims the downloaded survey,
+    # review and OWID files, the build with its checks against the review's printed medians, the page
+    # generator and the tests, with the trimmed tables in data/ and the payload.
+    target("dissonance", "dissonance-code.zip", keep={"outputs"},
+           skip=("outputs/*.png",)),
     # food-code.zip retired with its page on 2026-09-09: food.html was
     # unpublished at Andrew's request, for now, and the last build is
     # unpublished/downloads/food-code.zip. The TARGET goes with the page,

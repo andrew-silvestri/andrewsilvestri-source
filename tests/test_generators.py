@@ -130,6 +130,10 @@ GENERATORS = [
     # from lead/data/raw (gitignored) at render time (lane lost-einsteins, 2026-11-07).
     ("lead page: lead/update_page.py --apply",
      ["update_page.py", "--apply"], "lead", "site"),
+    # dissonance/update_page.py writes site/dissonance.html from dissonance/outputs/payload.json; every
+    # input is a committed table in dissonance/data (climate-dissonance lane, 2026-11-13).
+    ("dissonance page: dissonance/update_page.py --apply",
+     ["update_page.py", "--apply"], "dissonance", "site"),
     # oxygen/update_page.py writes site/oxygen.html from oxygen/outputs/payload.json, reading its
     # quotations from oxygen/data/raw (gitignored) at render time (chain-reactions lane, 2026-11-07).
     ("oxygen page: oxygen/update_page.py --apply",
