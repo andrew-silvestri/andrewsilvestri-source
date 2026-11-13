@@ -73,7 +73,7 @@ def hero_steps(P):
         f"{d['upper']:.2f} kg and the outsole to {d['out']:.2f} kg; without a shoebox, the box, freight and bin fall to "
         f"{d['rest']:.2f} kg. The expanded-TPU midsole emits more than the EVA one, {d['mid']:.2f} kg against {b['mid']:.2f} kg, "
         f"and foaming and moulding it takes more energy, so factory energy rises slightly, to {d['factory']:.2f} kg. "
-        f"The pair: {P['pair']['lc1_design_only']:.1f} kg.</p>",
+        f"The pair comes to {P['pair']['lc1_design_only']:.1f} kg.</p>",
         f"<p><b>LC-1 as specified.</b> With renewable electricity at final assembly and at the sole moulder, factory energy "
         f"falls to {l['factory']:.2f} kg and the pair to {P['pair']['lc1']:.1f} kg.</p>",
     ]
@@ -85,7 +85,7 @@ def tornado_rows(P):
         name, fmt = TORNADO_LABELS[t["input"]]
         lo, hi = t["low"], t["high"]
         if t["input"] == "P.rtpu_share":
-            rng = f"{round(100 * lo)}-{round(100 * hi)} per cent"
+            rng = f"{round(100 * lo)}-{round(100 * hi)} percent"
         else:
             rng = fmt.format(lo=lo, hi=hi)
         rows.append(f'<tr><td>{name}</td><td>{rng}</td><td class="n">{pc(t["red_at_low"])}</td>'
@@ -147,9 +147,9 @@ def values(P):
         "red_baseclean": pc(s["baseline_clean_power"]),
         "takeaways": insight.takeaways([
             f"In this model a typical trainer emits {P['pair']['baseline']:.1f} kg of greenhouse gas per pair, and "
-            f"{pc(100 * fac / P['pair']['baseline'])} per cent of it is factory energy rather than material.",
-            f"Renewable electricity at final assembly and at the sole maker cuts that by {pc(s['baseline_clean_power'])} per cent; "
-            f"the LC-1 redesign alone cuts {pc(s['design_only'])} per cent, and the two together just under half.",
+            f"{pc(100 * fac / P['pair']['baseline'])} percent of it is factory energy rather than material.",
+            f"Renewable electricity at final assembly and at the sole maker cuts that by {pc(s['baseline_clean_power'])} percent; "
+            f"the LC-1 redesign alone cuts {pc(s['design_only'])} percent, and the two together just under half.",
             "LC-1 needs less than half as much new fossil plastic, but no scheme open to a runner recycles its sole back "
             "into plastic today.",
         ]),
