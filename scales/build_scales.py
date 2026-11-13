@@ -113,6 +113,11 @@ def life():
     within = {k: groups[k]["slope"] for k in LABEL if k not in ("bacteria",)}
     return {
         "n_rows": n_rows, "n_species_pts": len(pts), "n_euk": len(euk),
+        "n_species": len({p["sp"] for p in pts if p["sp"] != "Unknown"}),
+        "heaviest": {k: max((p for p in pts if p["grp"] == k), key=lambda p: p["m"])["sp"] for k in LABEL},
+        "heaviest_kg": {k: max(p["m"] for p in pts if p["grp"] == k) / 1000 for k in LABEL},
+        "lightest": {k: min((p for p in pts if p["grp"] == k), key=lambda p: p["m"])["sp"] for k in LABEL},
+        "lightest_kg": {k: min(p["m"] for p in pts if p["grp"] == k) / 1000 for k in LABEL},
         "euk_slope": b, "euk_icpt": a, "euk_ci": [lo, hi],
         "euk_lx_span": [lx_e[0], lx_e[-1]],
         "within_min": min(within.values()), "within_max": max(within.values()),
@@ -167,7 +172,30 @@ def stars():
 def cities(year=2023):
     gdp = S.county_gdp(year)
     msa, counties = S.msa_population(year)
-    pts, dropped = [], 0
+    # BEA's combined areas: give each part's FIPS a pointer to the combo, matched by name in the Census file
+    names = S.county_names()
+    part_of, outside = {}, set()
+    for bfips, (st, parts) in S.county_combos().items():
+        for j, part in enumerate(parts):
+            # BEA names the county first and the independent cities after it ("Roanoke + Salem")
+            want = (part + " County", part + " County and city") if j == 0 else (part + " city",)
+            if st == "HI":
+                want = (part + " County",)
+            hits = [f for f, n in names.items() if n.endswith(", " + st) and n[:-len(st) - 2] in want]
+            if len(hits) > 1:
+                raise SystemExit(f"BEA combo part {part}, {st}: {len(hits)} Census matches")
+            if hits:
+                part_of[hits[0]] = bfips
+            else:                       # a part outside every metro area: the combo cannot be split
+                outside.add(bfips)
+    pts, dropped, merged = [], 0, 0
+    for c in msa:
+        fs = counties[c]
+        combos = {part_of[f] for f in fs if f not in gdp and f in part_of}
+        whole = all(f in fs for f, b in part_of.items() if b in combos)   # every part of each combo in this MSA
+        if combos and whole and not combos & outside:
+            counties[c] = [f for f in fs if f not in part_of] + sorted(combos)
+            merged += 1
     for c, (name, pop) in msa.items():
         g = [gdp.get(f) for f in counties[c]]
         if not g or any(v is None for v in g):
@@ -183,7 +211,8 @@ def cities(year=2023):
     big = max(pts, key=lambda p: p["pop"])
     small = min(pts, key=lambda p: p["pop"])
     return {
-        "year": year, "n": len(pts), "n_msa": len(msa), "dropped": dropped,
+        "year": year, "n": len(pts), "n_msa": len(msa), "dropped": dropped, "merged": merged,
+        "dropped_names": sorted(n for c, (n, _) in msa.items() if c not in {p["cbsa"] for p in pts}),
         "slope": b, "icpt": a, "ci": [lo, hi], "r2": float(r2),
         "pts": sorted((round(math.log10(p["pop"]), 3), round(math.log10(p["gdp"] / p["pop"]), 3)) for p in pts),
         "big": {"name": big["name"], "pop": big["pop"], "gdp_pc": big["gdp"] / big["pop"]},
@@ -250,9 +279,13 @@ def check(P):
     # Eker et al.'s mass range is 0.179 to 31 Msun
     if not (abs(St["m_lo"] - 0.179) < 0.01 and abs(St["m_hi"] - 31) < 1):
         errs.append(f"star mass range {St['m_lo']}-{St['m_hi']}")
-    # our run-1 fit (2026-11-07, research/w1-03): 309 MSAs, 1.157 [1.111, 1.202]
-    if not (1.10 < C["slope"] < 1.22 and 280 < C["n"] < 340):
+    # published US fits of GDP or wages on metro population run 1.12-1.16 (Bettencourt et al. 2007, Table 1); our
+    # first fit (2026-11-07) read Metropolitan Divisions as if they were whole MSAs (New York at 11.9 million);
+    # the 387 MSAs are now read alone, and New York must come out near 19.5 million people
+    if not (1.05 < C["slope"] < 1.22 and 340 < C["n"] <= 387):
         errs.append(f"city GDP slope {C['slope']:.3f} on {C['n']} MSAs")
+    if not 18e6 < C["big"]["pop"] < 21e6:
+        errs.append(f"largest MSA {C['big']['name']} {C['big']['pop']:.0f} people")
     if errs:
         raise SystemExit("payload checks failed:\n  " + "\n  ".join(errs))
 
