@@ -326,6 +326,23 @@ def median(vals):
 
 OUTLIER_SIGMA = 3.0
 
+# Grade-B records demoted by name, for a reason recorded here, before the
+# preliminary fit sees them. Same consequence as the outlier rule (grade C,
+# note says why, nothing deleted). D-29 item 7: Amniote gives the toolache
+# wallaby (Macropus greyi) a maximum of 13 months at
+# 10 kg, which is the kind of unit or field error the rule exists to catch,
+# and it sat 0.006 log units inside the rule's cut. No other source in the
+# tree records a lifespan for it, so none replaces the figure.
+DEMOTE_BY_NAME = {
+    "Macropus greyi": "Amniote's 13 months for a 10 kg wallaby is very "
+                      "likely a unit or field error; no other source here "
+                      "records its lifespan",
+    "Thryonomys gregorianus": "Amniote's 10 months for a 2.3 kg cane rat is "
+                              "very likely the same kind of error, just inside "
+                              "the outlier cut; no other source here records "
+                              "its lifespan (D-92 b, 2026-11-10)",
+}
+
 
 def demote_outliers(rows):
     """Grade-B records more than OUTLIER_SIGMA residual standard deviations
@@ -353,6 +370,14 @@ def demote_outliers(rows):
     keeps its row, its grade becomes C, its note says why, and the visualiser
     shows it under "Include C" like every other uncertain record.
     """
+    by_name = []
+    for r in rows:
+        why = DEMOTE_BY_NAME.get(r["sci"])
+        if why and r["quality"] == "B":
+            r["quality"] = "C"
+            r["note"] = ((r["note"] + "; ") if r["note"] else "") + (
+                "demoted to C: " + why)
+            by_name.append(r["sci"])
     pre = [r for r in rows if in_fit(r)]
     ga, gb, _, _ = ols_loglog(pre)
     pools = {}
@@ -382,6 +407,7 @@ def demote_outliers(rows):
                 demoted[pool] = demoted.get(pool, 0) + 1
     return {"sigma": OUTLIER_SIGMA, "applies_to": "grade B, non-colonial",
             "demoted": sum(demoted.values()), "by_pool": demoted,
+            "demoted_by_name": by_name,
             "residual_sd_log10": {k: round(v, 4) for k, v in sd.items()}}
 
 
@@ -893,7 +919,7 @@ def figures(rows, summary, fit_rows, width=NOTES, only=None):
     # chameleon" where two species sat close together, and pushed the label
     # of the heaviest animal off the right edge.
     named = ("Greenland shark", "Ocean quahog", "Bowhead whale",
-             "Naked mole-rat", "Brandt's bat", "Olm", "Glass sponge",
+             "Naked mole-rat", "Brandt's bat", "Glass sponge",
              "Giant Pacific octopus", "Common shrew", "Turquoise killifish",
              "Black coral", "Labord's chameleon")
     fig.canvas.draw()

@@ -112,7 +112,9 @@ SHOES = dict(
 # 2026-10-24 (R5, D-26/D-27): 13.18 -> 13.37 (milk share 0.85 -> IDF's 0.88,
 # corrected GWPs) and 3.66 -> 10.56 (tanning no longer carries the hide's
 # 2.2%, so the contested stage fell from 9% of the pair to under 2%).
-PUBLISHED = {"cheese": 13.37, "leather_shoes": 10.56}
+# 2026-11-10 (D-26 item 1, D-57 (a)): 13.37 -> 12.12, the cheese plant's 0.90
+# now reaching the milk that went into it, so every cheese bar moved.
+PUBLISHED = {"cheese": 12.12, "leather_shoes": 10.56}
 
 
 def total_at(item, stages, share):
@@ -154,7 +156,7 @@ def compute(panel):
 # The source note under the figure. Both renders print it; the 714 keeps its
 # hand-set breaks, the 350 breaks it by measured width (_fill).
 FOOT = ("Spread = highest ÷ lowest total across the published bases shown; the model’s assumed\n"
-        "2.2% and the 100% no-allocation case are drawn grey and not counted. Bars: the shipped\n"
+        "2.2% and the 100% case (no split between milk and meat) are drawn grey and not counted. Bars: the shipped\n"
         "default in dark blue, published alternatives in light blue. Milk–meat factors: Flysjö,\n"
         "Cederberg, Henriksson & Ledgard 2011, Int J LCA 16:420, Table 1; IDF Bulletin 479 (2015)\n"
         "pp. 35–36. Hide factors: Lunesu et al. 2025, Animals 15:3546. Every bar is one run of\n"
@@ -331,13 +333,15 @@ def draw_phone(cheese, shoes, out):
         share_of = _stage_share(panel)
         # placed in points under the x label, not in axes fractions: the
         # two panels differ in height, so one fraction is two distances
+        # -48, not -40: under Perfidy an x label's box is 1.25 em tall, not
+        # 1.00 as under IBM Plex, and -40 put this line on it (2026-11-08)
         texts.append(ax.annotate(f"contested stage: {share_of:.0%} of the total",
                                  (0, 0), xycoords="axes fraction",
-                                 xytext=(0, -40), textcoords="offset points",
+                                 xytext=(0, -48), textcoords="offset points",
                                  ha="left", va="top", fontsize=FS_2, color=DIM))
         texts.append(ax.annotate(f"spread ×{spread:.2f}",
                                  (1, 0), xycoords="axes fraction",
-                                 xytext=(0, -40), textcoords="offset points",
+                                 xytext=(0, -48), textcoords="offset points",
                                  ha="right", va="top", fontsize=FS_1, color=INK))
     sitefig.centre(fig)
     problems = audit(fig, texts)

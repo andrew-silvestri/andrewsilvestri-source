@@ -8,7 +8,7 @@ EIA's raw files through sources.py, not from the payload it is checking (trap 20
                or misread column, the fault the column-title check in sources.ngpl exists for).
  2. total      EIA's NGPL total is the five products every month, so the share is ethane over all of them.
                --break total drops natural gasoline from the sum (a share of the wrong total).
- 3. fraction   The standfirst's "about 15 to 27 per cent" is EIA's 200-400 thousand b/d against what plants recovered
+ 3. fraction   The standfirst's "about 15 to 27 percent" is EIA's 200-400 thousand b/d against what plants recovered
                on average in 2014. --break fraction uses January-April 2014, the build's earlier base, which the
                claims ledger (57) found the article does not support.
  4. share      The share the page prints for the latest twelve months is that, recomputed. --break share uses
@@ -95,13 +95,13 @@ def main():
     lo = int(S.quote("eia_tie_16191.html", r"range between (\d+) and (\d+) Mbbl/d").group(1))
     hi = int(S.quote("eia_tie_16191.html", r"range between (\d+) and (\d+) Mbbl/d").group(2))
     rec = st.fmean(eth[m] for m in ("2014-01", "2014-02", "2014-03", "2014-04")) if BREAK == "fraction" else ymean(eth, 2014)
-    words = f"about {100 * lo / (rec + lo):.0f} to {100 * hi / (rec + hi):.0f} per cent of the ethane in the gas the plants processed"
+    words = f"about {100 * lo / (rec + lo):.0f} to {100 * hi / (rec + hi):.0f} percent of the ethane in the gas the plants processed"
     check("3 fraction", words in T, f"the standfirst carries '{words}'")
     # 4 share ---------------------------------------------------------------------
     xs = sorted(N)
     ttm = xs[-1:] if BREAK == "share" else xs[-12:]
     sh = sum(eth[m] for m in ttm) / sum(tot[m] for m in ttm)
-    s_words = f"The share was {100 * sh:.1f} per cent over the twelve months to"
+    s_words = f"The share was {100 * sh:.1f} percent over the twelve months to"
     check("4 share", s_words in T, f"the page says '{s_words}'")
     # 5 growth --------------------------------------------------------------------
     other = {m: tot[m] - eth[m] for m in N}

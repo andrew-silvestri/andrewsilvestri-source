@@ -493,7 +493,7 @@
 
     // a compass ring under it, so turning still reads as turning
     ctx.fillStyle = dim;
-    ctx.font = (12 * dpr) + 'px ui-sans-serif, system-ui, sans-serif';
+    ctx.font = (12 * dpr) + 'px "Perfidy Text", ui-sans-serif, system-ui, sans-serif';
     ctx.textAlign = 'center';
     /* every piece of text drawn on the canvas goes in here as a box, so a
        label placed later can be tested against all of them, compass points
@@ -555,7 +555,7 @@
        first, and two labels clash when their boxes overlap. */
     ctx.textAlign = 'center';
     var fpx = 12 * dpr;                     // the site's floor, on a phone too
-    ctx.font = fpx + 'px ui-sans-serif, system-ui, sans-serif';
+    ctx.font = fpx + 'px "Perfidy Text", ui-sans-serif, system-ui, sans-serif';
     var maxLabels = W < 560 * dpr ? 3 : (W < 900 * dpr ? 4 : 6);
     var gap = 14 * dpr;
     var named = 0;

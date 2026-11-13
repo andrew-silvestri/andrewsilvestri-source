@@ -532,8 +532,8 @@ def main():
 
 
 def ratio_check(P, page):
-    """Check 9. The multiple in the h1 and the body is the ratio of the two
-    adjusted typical counts the page prints, CR over LC."""
+    """Check 9. The body's multiple is the ratio of the two adjusted typical
+    counts the page prints, CR over LC; the h1's is the count model's average."""
     import math
     nov = P["model_noviews"]
     want = nov["adjusted"]["CR"] / nov["adjusted"]["LC"]
@@ -545,9 +545,13 @@ def ratio_check(P, page):
         return ["page: 'counting only research, N times' not found"]
     if m.group(1) != f"{want:.1f}":
         out.append(f"page multiple {m.group(1)} != adjusted CR/LC {want:.1f}")
+    # The h1 leads with the count model's average multiple (D-55 b, 2026-11-10).
+    avg = math.exp(P["count_model"]["CR"]["coef"])
+    if BREAK == "ratio":
+        avg = want
     h = re.search(r"<h1>[^<]*?about ([0-9.]+) times", page)
-    if not h or abs(float(h.group(1)) - want) > 0.5:
-        out.append(f"h1 multiple {h.group(1) if h else None} does not round {want:.2f}")
+    if not h or h.group(1) != f"{avg:.1f}":
+        out.append(f"h1 multiple {h.group(1) if h else None} != count-model average {avg:.1f}")
     return out
 
 

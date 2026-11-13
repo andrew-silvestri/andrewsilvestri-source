@@ -63,6 +63,7 @@ if hasattr(sys, "stdout") and hasattr(sys.stdout, "reconfigure"):
 matplotlib.use("Agg")
 import matplotlib.pyplot as plt          # noqa: E402
 from matplotlib.patches import Circle    # noqa: E402
+from matplotlib.ticker import MultipleLocator   # noqa: E402
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 OUT = os.path.join(HERE, "outputs")
@@ -129,7 +130,10 @@ def explain(rows, summary, path=None):
         kg = r["mass_g"] / 1000.0
         ax.text(0, 2.70, r["name"], ha="center", va="top",
                 fontsize=FS0, color=INK)
-        ax.text(0, 2.44,
+        # 2.44 under IBM Plex Sans. Perfidy's text box is 1.25 em tall, not
+        # 1.00 (matplotlib sizes it from the font's typo ascent + descent), so
+        # the mass hangs lower to clear the name (2026-11-08).
+        ax.text(0, 2.34,
                 f"{kg:,.0f} kg" if kg >= 1 else f"{r['mass_g']:,.0f} g",
                 ha="center", va="top", fontsize=FS_1, color=DIM)
         ax.plot([-1.16, 1.16], [-0.06, -0.06], color=FAINT, lw=1)
@@ -172,14 +176,14 @@ def explain(rows, summary, path=None):
         ax.axis("off")
         good = lq[i] >= 1
         col = colours[i] if good else ROSE
-        ax.text(0.5, 0.66, f"LQ {lq[i]:.2f}", ha="center", va="center",
+        ax.text(0.5, 0.76, f"LQ {lq[i]:.2f}", ha="center", va="center",   # 0.66 under Plex
                 fontsize=FS2, color=col, transform=ax.transAxes)
         # two lines: a third of 714 px holds about 30 characters at FS_2
         verdict = (f"lives {lq[i]:.1f} times longer\nthan its size predicts"
                    if lq[i] >= 1.05 else
                    f"lives {1 / lq[i]:.1f} times shorter\nthan its size predicts" if lq[i] <= 0.95 else
                    "lives about exactly as long\nas its size predicts")
-        ax.text(0.5, 0.22, verdict, ha="center", va="center",
+        ax.text(0.5, 0.16, verdict, ha="center", va="center",   # 0.22 under Plex
                 fontsize=FS_2, color=DIM, transform=ax.transAxes, linespacing=1.35)
 
     # header lines broken to the 714 px width by hand: at one point per
@@ -232,10 +236,10 @@ def explain_phone(rows, summary, path=None):
     pred = [10 ** (a + b * math.log10(r["mass_g"])) for r in picked]
     lq = [o / p for o, p in zip(obs, pred)]
 
-    fig = plt.figure(figsize=fig_size(sitefig.PHONE, 0.72))
+    fig = plt.figure(figsize=fig_size(sitefig.PHONE, 0.82))   # 0.72 under Plex; Perfidy's boxes are 1.25 em
     gs = fig.add_gridspec(
-        3, 3, height_ratios=[1.35, 1.0, 0.75],
-        hspace=0.30, wspace=0.12, left=0.19, right=0.985, top=0.80, bottom=0.03)
+        3, 3, height_ratios=[1.35, 1.0, 1.0],   # 0.75 under Plex
+        hspace=0.30, wspace=0.12, left=0.19, right=0.985, top=0.70, bottom=0.03)
 
     rmax = max(r["mass_g"] for r in picked) ** (1 / 3)
     for i, r in enumerate(picked):
@@ -248,19 +252,30 @@ def explain_phone(rows, summary, path=None):
         ax.set_aspect("equal")
         ax.axis("off")
         kg = r["mass_g"] / 1000.0
-        ax.text(0, 3.50, "\n".join(textwrap.wrap(r["name"], 12)),
-                ha="center", va="top", fontsize=FS_1, color=INK,
-                linespacing=1.15)
         # Stood on a line just above the largest sphere's top (2.0) rather
         # than hung from 2.30: hung, "4,000 kg" sat on the elephant.
         ax.text(0, 2.15,
                 f"{kg:,.0f} kg" if kg >= 1 else f"{r['mass_g']:,.0f} g",
                 ha="center", va="bottom", fontsize=FS_2, color=DIM)
+        # The name stands on the mass label, a fixed number of POINTS above it
+        # (one Perfidy box, 1.25 em of FS_2, plus 2pt), not at a data height:
+        # under Plex it hung from y = 3.50, and with Perfidy's 1.25 em boxes a
+        # two-line name reached down onto the mass in this equal-aspect axes,
+        # where raising the limit shrinks the axes instead of adding room
+        # (2026-11-08).
+        ax.annotate("\n".join(textwrap.wrap(r["name"], 12)), xy=(0, 2.15),
+                    xytext=(0, 1.25 * FS_2 + 2), textcoords="offset points",
+                    ha="center", va="bottom", fontsize=FS_1, color=INK,
+                    linespacing=1.15, annotation_clip=False)
         ax.plot([-1.16, 1.16], [-0.06, -0.06], color=FAINT, lw=1)
 
     ymax = max(obs + pred) * 1.30
     for i, r in enumerate(picked):
         ax = fig.add_subplot(gs[1, i])
+        # 200-year ticks, pinned: they were the auto choice at the Plex-era row
+        # height, and the shorter row Perfidy's taller boxes forced made the
+        # locator pick 500 (2026-11-08).
+        ax.yaxis.set_major_locator(MultipleLocator(200))
         good = lq[i] >= 1
         col = colours[i] if good else ROSE
         ax.bar([0], [pred[i]], width=0.6, color="none",
@@ -289,13 +304,13 @@ def explain_phone(rows, summary, path=None):
         ax.axis("off")
         good = lq[i] >= 1
         col = colours[i] if good else ROSE
-        ax.text(0.5, 0.92, f"LQ {lq[i]:.2f}", ha="center", va="top",
+        ax.text(0.5, 1.06, f"LQ {lq[i]:.2f}", ha="center", va="top",   # 0.92 under Plex
                 fontsize=FS1, color=col, transform=ax.transAxes)
         verdict = (f"lives {lq[i]:.1f} times longer than its size predicts"
                    if lq[i] >= 1.05 else
                    f"lives {1 / lq[i]:.1f} times shorter than its size predicts" if lq[i] <= 0.95 else
                    "lives about exactly as long as its size predicts")
-        ax.text(0.5, 0.0, "\n".join(textwrap.wrap(verdict, 15)),
+        ax.text(0.5, -0.10, "\n".join(textwrap.wrap(verdict, 15)),
                 ha="center", va="bottom", fontsize=FS_2, color=DIM,
                 transform=ax.transAxes, linespacing=1.25)
 
@@ -303,7 +318,7 @@ def explain_phone(rows, summary, path=None):
         Patch(facecolor="none", edgecolor=DIM, lw=1.5, linestyle="--",
               label="predicted from mass"),
         Patch(facecolor=DIM, alpha=0.6, label="actually observed")],
-        loc="upper left", bbox_to_anchor=(0.02, 0.905), ncol=2,
+        loc="upper left", bbox_to_anchor=(0.02, 0.835), ncol=2,
         fontsize=FS_2, frameon=False, handlelength=1.2, columnspacing=1.0,
         handletextpad=0.5)
     fig.text(0.02, 0.995,

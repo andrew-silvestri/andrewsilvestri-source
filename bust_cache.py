@@ -24,9 +24,16 @@ SITE = os.path.join(HERE, "site")
 # force-bg and force-graph-data - which shipped unstamped for as long as they
 # existed, because forgetting to add a new file here fails quietly. Images are
 # already handled by walking a directory (below); scripts now match.
+# Recursive (assets/**): perfidy.html (2026-11-07) was the first page to keep
+# its script and stylesheet in a folder of their own, assets/perfidy/, and the
+# top-level-only glob left all three unstamped with no message.
+def rel(f):
+    return os.path.relpath(f, SITE).replace("\\", "/")
+
+
 def scripts():
-    return sorted("assets/" + os.path.basename(f)
-                  for f in glob.glob(os.path.join(SITE, "assets", "*.js")))
+    return sorted(rel(f) for f in glob.glob(os.path.join(SITE, "assets", "**", "*.js"),
+                                            recursive=True))
 
 # Images need this at least as much as the scripts do. A regenerated
 # chart keeps the same filename, so a browser holding the old one shows
@@ -41,7 +48,8 @@ def digest(path):
 def main():
     css = digest(os.path.join(SITE, "style.css"))
     vers = {a: digest(os.path.join(SITE, a)) for a in scripts()}
-    sheets = {"assets/" + os.path.basename(c): digest(c) for c in glob.glob(os.path.join(SITE, "assets", "*.css"))}
+    sheets = {rel(c): digest(c) for c in glob.glob(os.path.join(SITE, "assets", "**", "*.css"),
+                                                   recursive=True)}
     for d in IMAGE_DIRS:
         for ext in ("*.png", "*.svg", "*.mp4", "*.webp"):
             for img in glob.glob(os.path.join(SITE, d, ext)):

@@ -27,6 +27,8 @@ asks the only two questions worth asking about a lever:
 WHAT THE THREE FIGURES SAY AT 350, MEASURED 2026-09-13:
 
   beauty_fig3_terms      ticks clear with a 10% margin, no wrapping
+                         (6% since 2026-11-08: Perfidy Text replaced IBM Plex
+                         Sans and its tick labels are narrower)
   beauty_fig4_strata     ticks clear with a 10% margin, no wrapping (figure retired
                          2026-10-24 with the topic test, D-32; no longer driven)
   continents_fig3_rigidity   RAISES - 4 off canvas at every margin it has,
@@ -77,7 +79,7 @@ WORKERS = ("beauty", "continents")
 # What each figure is expected to say at 350. Written out rather than derived,
 # because a gate that accepts whatever it is told is not a gate.
 AT_PHONE = {
-    "beauty_fig3_terms": ("applied", "wrap none, margin +10%"),
+    "beauty_fig3_terms": ("applied", "wrap none, margin +6%"),   # +10% under Plex
     "continents_fig3_rigidity": ("raises", None),
 }
 

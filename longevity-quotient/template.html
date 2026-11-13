@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<meta name="robots" content="noindex"><!-- unlisted 2026-10-22 (D-39, R0 section 2); remove when relisted -->
+<link rel="preload" href="assets/perfidy/PerfidyText-Regular.woff2" as="font" type="font/woff2" crossorigin>
 <title>Longevity quotient — how long animals live for their size</title>
 <link rel="canonical" href="https://andrewsilvestri.com/longevity-app.html">
 <meta property="og:type" content="website">
@@ -30,8 +30,8 @@ try{document.documentElement.dataset.motion=matchMedia('(prefers-reduced-motion:
   --moss:#733E24; --rose:#A9724F; --slate:#7F8A8F;
   --overlay:rgba(36,30,26,.82); --shadow:0 14px 34px rgba(36,30,26,.12);
   --panel:var(--bg-lift);
-  --sans:"IBM Plex Sans",system-ui,-apple-system,"Segoe UI",sans-serif;
-  --mono:"IBM Plex Mono",ui-monospace,"Cascadia Mono",Consolas,monospace;
+  --sans:"Perfidy Text","Perfidy Text Fallback",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --mono:"Perfidy Mono","Perfidy Mono Fallback",ui-monospace,"Cascadia Mono",Consolas,monospace;
   --serif:var(--sans);
   /* the type scale (style.css); 12 px is the floor and nothing here goes under it */
   --fs-2:12px; --fs-1:14.5px; --fs0:17.5px; --fs1:21px; --fs2:25px; --fs3:30px;
@@ -40,9 +40,12 @@ try{document.documentElement.dataset.motion=matchMedia('(prefers-reduced-motion:
      group range the tan; --line is a control edge, --rule the gridline */
   --wild:#733E24; --cap:#245F73; --unk:#7F8A8F; --avg:#241E1A; --grp:#B08A63; --line:#625C57;
 }
-@font-face{font-family:"IBM Plex Sans";src:url("assets/fonts/IBMPlexSans-Regular.woff2") format("woff2");font-weight:400;font-style:normal;font-display:swap}
-@font-face{font-family:"IBM Plex Sans";src:url("assets/fonts/IBMPlexSans-SemiBold.woff2") format("woff2");font-weight:600;font-style:normal;font-display:swap}
-@font-face{font-family:"IBM Plex Mono";src:url("assets/fonts/IBMPlexMono-Regular.woff2") format("woff2");font-weight:400;font-style:normal;font-display:swap}
+@font-face{font-family:"Perfidy Text";src:url("assets/perfidy/PerfidyText-Regular.woff2") format("woff2");font-weight:400;font-style:normal;font-display:swap}
+@font-face{font-family:"Perfidy Text";src:url("assets/perfidy/PerfidyText-SemiBold.woff2") format("woff2");font-weight:600;font-style:normal;font-display:swap}
+@font-face{font-family:"Perfidy Mono";src:url("assets/perfidy/PerfidyMono-Regular.woff2") format("woff2");font-weight:400;font-style:normal;font-display:swap}
+@font-face{font-family:"Perfidy Text Fallback";src:local("Arial"),local("ArialMT"),local("Liberation Sans");font-weight:400;size-adjust:95.97%;ascent-override:100.03%;descent-override:30.22%;line-gap-override:0%}
+@font-face{font-family:"Perfidy Text Fallback";src:local("Arial Bold"),local("Arial-BoldMT"),local("Liberation Sans Bold");font-weight:600 700;size-adjust:87.98%;ascent-override:109.11%;descent-override:32.96%;line-gap-override:0%}
+@font-face{font-family:"Perfidy Mono Fallback";src:local("Consolas"),local("Liberation Mono"),local("Menlo");font-weight:400;size-adjust:101.85%;ascent-override:94.25%;descent-override:28.47%;line-gap-override:0%}
 *{box-sizing:border-box}
 body{margin:0;background:var(--bg);color:var(--ink);
  font:var(--fs0)/1.6 var(--sans)}
@@ -201,7 +204,8 @@ should live.</p>
 <p>Body mass predicts lifespan. Across the species below — from a rotifer at
 half a microgram to a blue whale at 150 tonnes, fourteen and a half orders of
 magnitude — each tenfold increase in mass buys roughly a 1.5-fold increase in
-maximum lifespan, and the relationship holds across the whole animal kingdom.
+maximum lifespan. The trend runs across the animal kingdom, though each group
+sits at its own level, which is why the baseline below is fitted group by group.
 The longevity quotient is what is left once that relationship is divided out:
 observed maximum lifespan over the lifespan predicted for that mass. A quotient
 of one is exactly as long as expected. The interesting animals, and the
@@ -678,7 +682,7 @@ function render(){
      '<span><i class="sw" style="background:repeating-linear-gradient(90deg,var(--unk) 0 3px,transparent 3px 5px)"></i>maximum, origin not recorded</span>'+
      '<span><i class="sw" style="background:var(--avg);width:2px;height:12px">'+
      '</i>average of the recorded maxima</span>'+
-     '<span>'+(barMode()==='lq'?'bar length: quotient, from parity':'bar length: years')+'</span>'
+     '<span>'+(barMode()==='lq'?'bar length: quotient, measured from 1':'bar length: years')+'</span>'
    : '<span><i class="sw" style="background:var(--grp)"></i>group value</span>'+
      '<span><i class="sw" style="background:var(--grp);opacity:.32;height:2px">'+
      '</i>range across the group</span>'+

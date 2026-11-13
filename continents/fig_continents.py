@@ -379,7 +379,7 @@ def fig4_slowdown(D):
             if r["morvel"] is not None and r["itrf"] is not None]
     rows.sort(key=lambda r: -r["speed_change_mm_yr"])
     n = len(rows)
-    fig, ax = plt.subplots(figsize=fig_size(NOTES, row_aspect(n, row_px=34, header_px=120)))
+    fig, ax = plt.subplots(figsize=fig_size(NOTES, row_aspect(n, row_px=34, header_px=136)))  # 120 under IBM Plex; Perfidy boxes are 1.25 em (2026-11-08)
     for i, r in enumerate(rows):
         col = MOSS if abs(r["speed_change_mm_yr"]) >= 5 else SLATE
         ax.plot([r["itrf"], r["morvel"]], [i, i], color=col, lw=1.4, zorder=2)
@@ -403,6 +403,9 @@ def fig4_slowdown(D):
     ax.scatter([], [], s=36, color=SLATE,
                label="ITRF2020-PMM, averaged over decades")
     ax.legend(frameon=False, fontsize=FS_2, loc="upper left")
+    # 12px more room under the axes than the rc default: with Perfidy's 1.25 em
+    # text boxes the x label's box ended 3.4px below the canvas (2026-11-08).
+    fig.subplots_adjust(bottom=fig.subplotpars.bottom + 12 / fig.bbox.height)
     sitefig.centre(fig)
     return fig
 

@@ -117,6 +117,11 @@ def claims(P, R, T, v):
                                "duplicate", "kept"))
     if total != T["items"]:
         bad.append(f"the funnel does not add up: {total} != {T['items']}")
+    # prose: no row of the first table removes more records than "not in the city"
+    if any(T[k] >= T["outside city"] for k in (
+            "not building", "tower structure", "no usable height", "below floor",
+            "implausible height", "not standing (Wikidata)", "not in OSM", "duplicate")):
+        bad.append("'not in the city' is not the largest removal in the funnel")
     if abs(20 * math.log10(0.5 ** 1.6) + 10) > 0.6:
         bad.append("'about ten decibels quieter' at half height fails")
     for c, name in (("Paris", "Eiffel Tower"), ("Toronto", "CN Tower"),
@@ -244,12 +249,12 @@ def values(P, R):
     n_all = len(fetch_wikidata.CITIES)
     import insight
     v = {
-        "h1": ("One in twenty of an open database's tall buildings in "
-               f"{n_all} cities is not there"),
+        "h1": ("One in twenty of the tall buildings an open database lists in "
+               f"{n_all} cities is not standing"),
         "meta": (f"Wikidata lists {T['cand']:,} buildings of "
-                 f"{B.RING_FLOOR:.0f} m or more for {n_all} cities. By its own records, "
+                 f"{B.RING_FLOOR:.0f} m or more in {n_all} cities, and by its own records "
                  f"{T['not standing (Wikidata)']} of them are demolished or unbuilt. "
-                 "The towers that stand are played as "
+                 "The towers that still stand are played here as "
                  "sound."),
         "stamp": insight.stamp(live=False),
         "floor": f"{B.RING_FLOOR:.0f}", "n_all": str(n_all),
@@ -260,9 +265,9 @@ def values(P, R):
         "park_year": park_year(),
         "park_new": str(park[0][5]) if park and park[0][5] else "undated",
         "fig_alt": html.escape(
-            "New York's eight tallest towers on the wheel as bars, by height "
-            f"in meters, from {top8[0][4]} at {top8[0][3]:.0f} m to "
-            f"{top8[-1][4]} at {top8[-1][3]:.0f} m."),
+            "Bar chart of New York's eight tallest towers on the wheel, in "
+            f"meters, falling from {top8[0][4]} at {top8[0][3]:.0f} m on the left to "
+            f"{top8[-1][4]} at {top8[-1][3]:.0f} m on the right."),
         "radius": f"{fetch_wikidata.RADIUS_KM:.0f}",
         "pull_floor": f"{fetch_wikidata.FLOOR_M:.0f}",
         "items": f"{T['items']:,}",

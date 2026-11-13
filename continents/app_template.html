@@ -1,10 +1,11 @@
 <!DOCTYPE html>
 <html lang="en"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Reconstruction viewer — Where the ground goes</title>
+<link rel="preload" href="assets/perfidy/PerfidyText-Regular.woff2" as="font" type="font/woff2" crossorigin>
+<title>Reconstruction viewer — Plate motion</title>
 <link rel="canonical" href="https://andrewsilvestri.com/continents-app.html">
 <meta property="og:type" content="website">
-<meta property="og:title" content="Reconstruction viewer — Where the ground goes">
+<meta property="og:title" content="Reconstruction viewer — Plate motion">
 <meta property="og:description" content="Pick a place, drag back through 500 million years, and watch eight published plate models disagree about where the ground under it was.">
 <meta property="og:url" content="https://andrewsilvestri.com/continents-app.html">
 <link rel="icon" href="favicon.svg" type="image/svg+xml">
@@ -21,8 +22,8 @@
   --bg:#F2F0EF; --card:#FAF9F8; --ink:#241E1A; --dim:#625C57;
   --faint:#D9D8D6; --rule:#BBBDBC; --acc:#245F73; --cool:#4A8AA0;
   --moss:#733E24; --rose:#A9724F; --slate:#7F8A8F;
-  --sans:"IBM Plex Sans",system-ui,-apple-system,Segoe UI,Roboto,sans-serif;
-  --mono:"IBM Plex Mono",ui-monospace,SFMono-Regular,Menlo,monospace;
+  --sans:"Perfidy Text","Perfidy Text Fallback",system-ui,-apple-system,Segoe UI,Roboto,sans-serif;
+  --mono:"Perfidy Mono","Perfidy Mono Fallback",ui-monospace,SFMono-Regular,Menlo,monospace;
   --fs-2:12px; --fs-1:14.5px; --fs0:17.5px; --fs1:21px;
   /* 12 px is the floor and nothing here goes under it */
 }
@@ -161,8 +162,8 @@ canvas{display:block;width:100%}
   spread you are looking at is each model's own assumption, not a measurement.
   It is also why the chart above plots latitude and nothing else.</p>
   <p class="note">Equal Earth is equal-area, so a polar continent is squeezed
-  into a thin band along the pole line. Antarctica today is 2.7 per cent of
-  the Earth's surface and takes 2.7 per cent of this map.</p>
+  into a thin band along the pole line. Antarctica today is 2.7 percent of
+  the Earth's surface and takes 2.7 percent of this map.</p>
   <p class="note">Reconstructions fetched {{fetched}}. Every model is named
   explicitly; none of this is the service's default, which is documented as
   liable to change.</p>
@@ -191,6 +192,8 @@ const css=n=>getComputedStyle(document.documentElement).getPropertyValue(n).trim
 
 let placeIdx=0, ageIdx=0, hi=null, landModel=null;
 const AGES=DATA.ages, MODELS=DATA.models;
+/* Ages in sentences; the axis and slider keep "Ma". */
+const ago=a=>a?a+" million years ago":"today";
 
 /* Rings arrive delta-encoded on a quarter-degree grid: the first pair is
    absolute and every pair after it is a step. Decoding is cheap but there is
@@ -316,11 +319,11 @@ function drawGlobe(){
   const inRange=MODELS.filter(m=>state(m)!=="out").length;
   if(shown.length===0 && inRange>0){
     emp.style.display="flex";
-    emp.textContent="No model places any crust here at "+AGES[ageIdx]+
-      " Ma. The ground you picked did not exist yet.";
+    emp.textContent="No model places any crust here "+ago(AGES[ageIdx])+
+      ". The ground you picked did not exist yet.";
   } else if(inRange===0){
     emp.style.display="flex";
-    emp.textContent="No model reaches "+AGES[ageIdx]+" Ma.";
+    emp.textContent="No model reaches back to "+ago(AGES[ageIdx])+".";
   } else emp.style.display="none";
   return {shown:shown.length,widest:best>0?best:null};
 }
@@ -416,7 +419,7 @@ function drawLegend(info){
     v.textContent = st==="here"
       ? posAt(m,ageIdx)[1].toFixed(1)+"°, "+posAt(m,ageIdx)[0].toFixed(1)+"°"
       : (st==="nocrust" ? "no crust in this model"
-                        : "does not reach "+AGES[ageIdx]+" Ma");
+                        : "does not reach back that far");
     li.append(sw,nm,v);
     li.onmouseenter=()=>{hi=m.name;render();};
     li.onmouseleave=()=>{hi=null;render();};
@@ -425,7 +428,8 @@ function drawLegend(info){
   const inRange=MODELS.filter(m=>state(m)!=="out").length;
   const nc=MODELS.filter(m=>state(m)==="nocrust").length;
   const r=document.getElementById("readout");
-  let s="At "+AGES[ageIdx]+" Ma, "+inRange+" of the "+MODELS.length+
+  const when=ago(AGES[ageIdx]);
+  let s=when[0].toUpperCase()+when.slice(1)+", "+inRange+" of the "+MODELS.length+
         " models reach this age.";
   if(nc) s+=" "+nc+" of them place no crust at "+DATA.tracks[placeIdx].place+".";
   if(info.widest) s+=" The two furthest apart are "+

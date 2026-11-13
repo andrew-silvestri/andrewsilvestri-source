@@ -152,9 +152,12 @@ def tree(P, wide):
 
 
 def tree_fits():
-    """Plex Sans at 13px averages under 0.56 em a character on these lines; a node's text box is 144px.
-    A line over 144 / (13 * 0.56) = 19.8 characters can touch the border, so the build refuses it.
-    The phone map's words are Plex Mono at 12px, 7.2px a character, in a 58px box: 7 characters at most."""
+    """A node's text box is 144px. Measured with fontTools on 2026-11-08, when the site moved from IBM
+    Plex to Perfidy: Perfidy Text at 13px averages 0.450 em a character on these lines (Plex Sans
+    0.468), and the widest line, "in smoggy cities must", is 121.8px (Plex 125.7). The 22-character
+    limit below was set for Plex and still holds with room to spare.
+    The phone map's words are Perfidy Mono at 12px, 6.72px a character (Plex Mono was 7.2), in a 58px
+    box: the 7-character limit is 47px."""
     bad = [ln for n in NODES for ln in n[3] if len(ln.format(nbans=25)) > 22]
     bad += [n[4] for n in NODES if len(n[4]) > 7]
     if bad:
@@ -164,33 +167,35 @@ def tree_fits():
 def hero(P, v):
     steps = [
         (0, "The policy &middot; 1990",
-         f"The Clean Air Act Amendments of 1990 required at least {v['o2_rfg']} per cent oxygen by weight in the "
-         f"gasoline of the areas with the worst ozone, from 1995, and {v['o2_oxy']} per cent in winter gasoline where "
+         f"The Clean Air Act Amendments of 1990 required at least {v['o2_rfg']} percent oxygen by weight in the "
+         f"gasoline of the areas with the worst ozone, from 1995, and {v['o2_oxy']} percent in winter gasoline where "
          f"carbon monoxide was too high, from 1992. Senator Bob Dole's office said the amendment would "
          f"&ldquo;{v['q_dole']}&rdquo;, such as ethanol."),
         (1, "First order &middot; strong evidence",
-         "Refiners met the rule mostly with MTBE, not ethanol. MTBE could go through pipelines with the gasoline; "
-         "ethanol picks up water and was blended at terminals. EIA attributed the growth in MTBE use to the oxygen "
-         'programmes. <a href="#first">The data</a>'),
+         "Refiners met the rule mostly with MTBE, not ethanol, because MTBE could go through pipelines with the "
+         "gasoline while ethanol picks up water and had to be blended at terminals. EIA attributed the growth in MTBE "
+         'use to the oxygen programmes. <a href="#first">The data</a>'),
         (2, "Second order &middot; strong evidence",
-         "MTBE dissolves easily in water and breaks down slowly. It reached groundwater from leaking tanks. The USGS "
-         "detected it more often where gasoline carried more of it. States banned or limited it, and water suppliers "
-         'sued the oil companies that made and sold it. <a href="#second">The data</a>'),
+         "MTBE dissolves easily in water and breaks down slowly, and it reached groundwater from leaking tanks. The "
+         "USGS detected it more often where gasoline carried more of it; states banned or limited it, and water "
+         'suppliers sued the oil companies that made and sold it. <a href="#second">The data</a>'),
         (3, "Third order &middot; strong evidence",
          "California, New York and Connecticut banned MTBE at the end of 2003, and the gasoline sold there moved "
-         "to ethanol. The Energy Policy Act of 2005 ended the oxygen requirement for reformulated gasoline and required "
-         "renewable fuel. It gave MTBE no shield from liability, and refiners removed the rest of it in spring 2006. "
+         "to ethanol. The Energy Policy Act of 2005 then ended the oxygen requirement for reformulated gasoline and "
+         "required renewable fuel in its place; it gave MTBE no shield from liability, and refiners removed the rest of "
+         "it in spring 2006. "
          '<a href="#third">The data</a>'),
         (4, "Beyond &middot; moderate, then contested",
-         "Ethanol is now about one gallon in ten of U.S. gasoline. A 2007 law and other policies share the credit for "
-         "that level, so the link is moderate. About a third of the corn crop goes to make it. One study finds that "
+         "Ethanol is now about one gallon in ten of U.S. gasoline, but a 2007 law and other policies share the credit "
+         "for that level, so the link is moderate. About a third of the corn crop goes to make it. One study finds that "
          "the 2007 mandate added cropland and made corn ethanol's carbon intensity no lower than gasoline's, and "
          'likely higher; other researchers dispute it. <a href="#anyway">The objections</a>'),
     ]
-    desc = ("A causal tree. 1990: the Clean Air Act requires oxygen in the gasoline of smoggy cities. First "
+    desc = ("A causal tree in five columns, read left to right. Policy, 1990: the Clean Air Act requires oxygen in "
+            "the gasoline of smoggy cities. First "
             "order: refiners use MTBE. Second order: MTBE leaks into groundwater, and %d states ban or limit it. Third "
             "order: state bans and a 2005 law that ends the oxygen rule and mandates renewable fuel; ethanol "
-            "replaces MTBE from late 2003 to 2006. Beyond: ethanol is one gallon in ten of gasoline (moderate), and "
+            "replaces MTBE from late 2003 to 2006. Beyond: ethanol is one gallon in ten of gasoline (moderate evidence), and "
             "the corn, land and carbon effects are contested." % P["bans"]["n"])
     # A figure, not a section: tests/test_layout.js measures main's children for one left edge, and a
     # figure on the wide track is a picture centred on the measure, which that rule allows.
@@ -224,7 +229,11 @@ def chart_mtbe(P):
             "annotations": [{"at": "1995-01", "text": "RFG starts", "short": "RFG"},
                             {"at": "2004-01", "text": "state bans", "short": "bans"},
                             {"at": "2006-05", "text": "rule ends", "short": "ends"}]}
-    return static_chart(spec, "Data: EIA, refinery and blender net input of MTBE (MMTRIUS1), monthly. "
+    return static_chart(spec, "In 1993 and early 1994 use rises only in winter, when the carbon monoxide programme "
+                              "applies; once reformulated gasoline starts, the summer low disappears. The annual "
+                              "average peaks in %s at %s percent of U.S. gasoline, about one gallon in thirty, "
+                              "against one in ten for ethanol today. " % (P["peak"]["year"], pct(P["peak"]["share"])) +
+                              "Data: EIA, refinery and blender net input of MTBE (MMTRIUS1), monthly. "
                               "RFG is reformulated gasoline.")
 
 
@@ -237,7 +246,10 @@ def chart_bans(P):
             "series": [{"key": "bans", "label": "States with a ban or limit in effect", "color": "moss",
                         "values": [by[x[:4]] for x in xs]}],
             "annotations": [{"at": "2004-12", "text": "CA, NY, CT in force", "short": "CA, NY"}]}
-    return static_chart(spec, "Data: EPA, State Actions Banning MTBE (Statewide), EPA420-B-07-013, August 2007, "
+    return static_chart(spec, "The count climbs to %s states by %s, half the country; the largest step is "
+                              "the one the chart marks, when the California, New York and Connecticut bans came into force. "
+                              % (P["bans"]["n"], P["bans"]["last"][:4]) +
+                              "Data: EPA, State Actions Banning MTBE (Statewide), EPA420-B-07-013, August 2007, "
                               "phaseout dates.")
 
 
@@ -257,7 +269,13 @@ def chart_swap(P):
                                                                                pct(max(share.values()), 0)),
                        "color": "acc", "height": 64,
                        "bars": [{"at": y, "value": round(100 * v, 1), "text": ""} for y, v in sorted(share.items())]}]}
-    return static_chart(spec, "Data: EIA, MTBE net input (MMTRIUS1) and Monthly Energy Review Table 10.3 fuel "
+    return static_chart(spec, "Ethanol overtakes MTBE before the federal rule changes, and in 2006 MTBE falls from %s "
+                              "to %s thousand barrels a day between January and May. Below, the share of the corn crop "
+                              "going to fuel ethanol runs from %s to %s percent, from about a twentieth of the crop to "
+                              "more than two fifths. "
+                              % ("%.0f" % P["switch"]["jan"], "%.0f" % P["switch"]["may"],
+                                 pct(min(share.values()), 0), pct(max(share.values()), 0)) +
+                              "Data: EIA, MTBE net input (MMTRIUS1) and Monthly Energy Review Table 10.3 fuel "
                               "ethanol consumption, monthly (EIA stops reporting MTBE net input after %s); USDA ERS Feed "
                               "Grains Database, corn for fuel alcohol over production, marketing years to %s/%s."
                               % (P["mtbe_last"][:4], P["corn"]["last_final"],
@@ -271,6 +289,10 @@ def claims(P, v):
     share = P["corn"]["share"]
     rfg = [A[str(y)]["rfg_share"] for y in range(1996, 2008)]
     c = [
+        ("'roughly one gallon in thirty': MTBE peak share of gasoline 2.8-3.8%", 0.028 <= P["peak"]["share"] <= 0.038),
+        ("'half the country': states with a ban or limit 22-28", 22 <= P["bans"]["n"] <= 28),
+        ("'about a twentieth of the crop': lowest corn-to-ethanol share 3.5-7%", 0.035 <= min(share.values()) <= 0.07),
+        ("'more than two fifths': highest corn-to-ethanol share above 40%", max(share.values()) > 0.40),
         ("'more than tripled': EIA's 1997 MTBE over its 1990 figure", 3 < d["mtbe_c"]["kbd"] / d["mtbe_a"]["kbd"] < 4),
         ("'about one gallon in ten': latest full year's ethanol share 9-12%", 0.09 < A[last]["eth_share"] < 0.12),
         ("'about a third of the corn crop': latest final year 28-40%", 0.28 < share[P["corn"]["last_final"]] < 0.40),
@@ -296,7 +318,7 @@ def claims(P, v):
         ("'the share has stayed near one tenth since {y_tenth}': 9.5-11% every full year since",
          all(0.095 <= A[str(y)]["eth_share"] <= 0.11 for y in range(int(v["y_tenth"]), int(last) + 1))),
         ("'seven of them banned MTBE completely'", P["bans"]["complete"] == 7),
-        ("'net input understates MTBE use by about an eighth (12 per cent in 1997)'",
+        ("'net input understates MTBE use by about an eighth (12 percent in 1997)'",
          round(100 * (1 - A["1997"]["mtbe"] / d["mtbe_c"]["kbd"])) == 12),
     ]
     bad = [n for n, ok in c if not ok]
@@ -333,12 +355,13 @@ def values(P):
     v.update(quotes())
     v["stamp"] = insight.stamp(through=P["through"], live=False)
     v["takeaways"] = insight.takeaways([
-        f"The oxygen rule more than tripled U.S. use of MTBE: EIA put it at {v['mtbe_a']} thousand barrels a day "
-        f"in {v['y_a']} and {v['mtbe_c']} thousand in {v['y_c']}, most of it in the cities the rule covered.",
+        f"The oxygen rule more than tripled U.S. use of MTBE, by EIA's count from {v['mtbe_a']} thousand barrels a day "
+        f"in {v['y_a']} to {v['mtbe_c']} thousand in {v['y_c']}, and put most of it in the cities the rule covered.",
         f"Where gasoline carried much MTBE, the U.S. Geological Survey detected it in water {v['usgs_lo']} to "
-        f"{v['usgs_hi']} times as often as elsewhere, and {v['nbans']} states banned or limited it.",
+        f"{v['usgs_hi']} times as often as elsewhere, and {v['nbans']} states, half the country, banned or limited it.",
         "State bans and the end of the oxygen rule in 2006 moved refiners from MTBE to corn ethanol, which is now "
-        "about one gallon in ten of U.S. gasoline; a 2007 law did much of that work."])
+        "about one gallon in ten of U.S. gasoline; a 2007 law, not the MTBE episode, did much of the work of getting "
+        "it there."])
     claims(P, v)
     tree_fits()
     v["hero"] = hero(P, v)
