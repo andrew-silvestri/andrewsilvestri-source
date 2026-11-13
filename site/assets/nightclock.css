@@ -6,6 +6,8 @@
  * as each step card reaches the middle of the screen. Colours are style.css
  * tokens; no gradients. Same structure as chain.css (oxygen.html).
  *
+ * Rings, inside out: everyone 15+, day workers, night workers.
+ *
  * Two drawings ship: 680 x 600 and 350 x 350, each shown at the size it was
  * drawn, never scaled up, so their text stays at 12px. Live, on a screen
  * 1100px or wider, the clock sticks on the left and the step cards scroll on
@@ -26,6 +28,10 @@
 }
 .nc-key { font: var(--fs-2)/1.5 var(--mono); color: var(--dim); text-align: center; margin: 8px auto 0; max-width: 560px; }
 
+.nc-key .sw { display: inline-block; width: 10px; height: 10px; margin: 0 4px 0 8px; vertical-align: -1px; }
+.nc-key .sw-sl { background: var(--ink); }
+.nc-key .sw-wk { background: var(--acc); }
+.nc-key .sw-mel { background: var(--moss); }
 .nclock-fig .step { margin: 0 0 18px; background: var(--card); border: 1px solid var(--rule); padding: 14px 18px; }
 .nclock-fig .step > p:first-child { margin-top: 0; }
 .nclock-fig .step > p:last-child { margin-bottom: 0; }

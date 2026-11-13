@@ -205,9 +205,26 @@ def main():
         out_groups[g]["pop_awake_while_asleep"] = round(float((sw * (100 - pop_sleep)).sum() / sw.sum()), 1)
         kw = (wg[:, None] * K).sum(0)
         out_groups[g]["pop_asleep_while_working"] = round(float((kw * pop_sleep).sum() / kw.sum()), 1) if kw.sum() else None
-        ev = [slot(h) for h in (18, 19, 20, 21)]
-        busy = np.clip(S + K, 0, 1)[:, ev].mean(1)          # share of 18:00-22:00 slots asleep or working
-        out_groups[g]["evening_busy_pct"] = round(float((wg * busy).sum() / wg.sum() * 100), 1)
+        ev = list(range(slot(18), slot(22)))                 # the 24 ten-minute points 18:00 .. 21:50
+        busy = np.clip(S + K, 0, 1)[:, ev].mean(1)          # share of them asleep or at work
+        eb, eb_se = fay(lambda w: (w * mask * busy).sum() / (w * mask).sum() * 100, W, R)
+        out_groups[g]["evening_busy_pct"] = round(float(eb), 1)
+        out_groups[g]["evening_busy_se"] = round(float(eb_se), 1)
+        comp = m.TRTFAMILY.values + m.TRTFRIEND.values
+        cm, cm_se = fay(lambda w: (w * mask * comp).sum() / (w * mask).sum(), W, R)
+        out_groups[g]["company_min"] = round(float(cm), 1)
+        out_groups[g]["company_se"] = round(float(cm_se), 1)
+        awake_at = (100 - pop_sleep)                          # everyone's share awake, held fixed
+        per = (S * awake_at).sum(1) / np.maximum(S.sum(1), 1)  # each person's average over their sleep slots
+        wsl = S.sum(1)
+        pa, pa_se = fay(lambda w: (w * mask * wsl * per).sum() / (w * mask * wsl).sum(), W, R)
+        out_groups[g]["pop_awake_se"] = round(float(pa_se), 1)
+
+    # night workdays whose only work is the end of a shift begun the evening before (all work over by 12:00)
+    wk_end = act[WORK(act.TRCODE.values)].groupby("TUCASEID").TUCUMDUR24.max()
+    tail = m.TUCASEID.map(wk_end).fillna(0).values <= 8 * 60
+    nwm = groups["night_work"]
+    tail_pct = (W * nwm * tail).sum() / (W * nwm).sum() * 100
 
     # difference in workday sleep, night minus day, with its own replicate SE
     nw, dw = groups["night_work"], groups["day_work"]
@@ -282,6 +299,7 @@ def main():
         "groups": out_groups,
         "diff_sleep_min": round(float(dsl), 1), "diff_sleep_se": round(float(dsl_se), 1),
         "diff_company_min": round(float(dfa), 1), "diff_company_se": round(float(dfa_se), 1),
+        "tail_only_pct": round(float(tail_pct), 1), "tail_only_n": int((nwm & tail).sum()),
         "diff_company_off_min": round(float(dfo), 1), "diff_company_off_se": round(float(dfo_se), 1),
     }
 

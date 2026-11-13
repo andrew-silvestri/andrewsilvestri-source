@@ -96,17 +96,19 @@ def ring(cx, cy, r0, h, sleep, work, step, start):
 
 def clock(P, wide):
     if wide:          # 680 x 600: room either side for the 06:00 and 18:00 labels
-        W, H, hole, h, gap, arc_r, lab_r = 680, 600, 70, 54, 8, 266, 284
-        lab_side, lab_tb = 284, 284
+        W, H, hole, h, gap, arc_r, lab_r = 680, 600, 64, 54, 12, 268, 286
+        lab_side, lab_tb = 286, 286
     else:             # 350 x 350 for a phone; side labels sit inside the canvas edge
-        W, H, hole, h, gap, arc_r, lab_r = 350, 350, 28, 28, 4, 127, 141
-        lab_side, lab_tb = 140, 146
+        W, H, hole, h, gap, arc_r, lab_r = 350, 350, 28, 27, 5, 126, 141
+        lab_side, lab_tb = 141, 146
     cx, cy = W / 2, H / 2
     step = P["slot_min"]
     start = int(P["clock_start"][:2]) * 60
     G = P["groups"]
-    bands = [("night", G["night_work"]["clock"], 2), ("day", G["day_work"]["clock"], 1),
-             ("all", P["pop"], 0)]
+    # inside out: everyone, day workers, night workers (the outer ring is the longest, so the page's
+    # subject gets the most room)
+    bands = [("all", P["pop"], 0), ("day", G["day_work"]["clock"], 1),
+             ("night", G["night_work"]["clock"], 2)]
     out = [f'<svg class="nclock {"nclock-wide" if wide else "nclock-phone"}" viewBox="0 0 {W} {H}" width="{W}" '
            f'height="{H}" role="img" aria-labelledby="nclock-desc">']
     # ring outlines first, so an empty ring still reads as a ring
@@ -153,50 +155,49 @@ def clock(P, wide):
     out.append('<g class="eve" data-o="4">')
     out.append(f'<path d="{sector(cx, cy, hole, outer, EVENING[0], EVENING[1])}"/>')
     out.append("</g>")
-    out.append(f'<text class="mid" x="{cx}" y="{cy + 4}" text-anchor="middle">24 h</text>')
+    out.append(f'<text class="mid" x="{cx}" y="{cy + 4}" text-anchor="middle">{"24 hours" if wide else "24 h"}</text>')
     out.append("</svg>")
     return "".join(out)
 
 
 def hero(P, v):
     steps = [
-        (0, "Everyone aged 15 and over &middot; outer ring",
+        (0, "Everyone aged 15 and over &middot; inner ring",
          f"At 3 a.m. in 2025, {v['a3_03']} percent of Americans aged 15 and over were asleep; at noon, about "
-         f"{v['pop_noon']} percent. The outer ring shows the share asleep (dark) and at work (blue) at every ten "
-         "minutes of the day. The country keeps one clock, and it is easy to see."),
+         f"{v['pop_noon']} percent. The inner ring shows the share asleep (dark) and at work (blue) at every ten "
+         "minutes of the day, as a bar that grows outward from the ring's inner edge. The country keeps one clock."),
         (1, "Usual day workers, on days they worked &middot; middle ring",
          f"Day workers sleep inside the country's night and work inside its day. On workdays they report "
-         f"{v['day_sleep_h']} hours asleep, and only {v['day_two']} percent split that sleep into two or more "
-         f"blocks. While they sleep, {v['day_awake_pct']} percent of everyone else is awake."),
-        (2, "Usual night workers, on days they worked &middot; inner ring",
-         f"Night workers report {v['night_sleep_h']} hours asleep, about the same as day workers. The hours "
-         f"come in pieces: {v['night_two']} percent sleep in two or more blocks, and the longest block averages "
-         f"{v['night_long_h']} hours against {v['day_long_h']}. While they sleep, {v['night_awake_pct']} percent of "
-         "everyone else is awake, about two in three. Their shifts start at different hours, so no single "
-         "time sees them all at work."),
+         f"{v['day_sleep_h']} hours asleep, and {v['day_two']} percent split that sleep into two or more blocks. "
+         f"While they sleep, {v['day_awake_pct']} percent of everyone else is awake."),
+        (2, "Usual night workers, on days they worked &middot; outer ring",
+         f"Night workers report {v['night_sleep_h']} hours asleep, close to day workers' figure, though the diaries "
+         f"count time in bed as sleep. The hours come in pieces: {v['night_two']} percent sleep in two or more "
+         f"blocks, and the longest block averages {v['night_long_h']} hours against {v['day_long_h']}. While they "
+         f"sleep, {v['night_awake_pct']} percent of everyone else is awake. Their shifts start at different hours, "
+         "so no single time finds them all at work."),
         (3, "The body clock &middot; published averages, not diaries",
-         "The arc marks when melatonin, the hormone of the biological night, is high in day-active adults: from "
-         "about 20:50 to 08:20. The dot is the low point of body temperature, near 05:00, when people are "
-         "sleepiest. A night shift works through that low point and sleeps through the hours the body treats as "
-         "day. Few permanent night workers move this clock to fit the shift."),
+         "The arc marks when melatonin, the hormone of the biological night, is high in healthy adults on a "
+         "normal schedule: from about 20:50 to 08:20. The dot is the low point of body temperature, near 05:00. "
+         "A night worker is awake through that low point and in bed during hours the body treats as day. Few "
+         "permanent night workers move this clock to fit the shift."),
         (4, "The evening, 18:00 to 22:00 &middot; dashed sector",
          f"These are the hours when most people are awake and off work. On workdays, night workers are asleep or "
-         f"at work for {v['night_eve']} percent of them; day workers, {v['day_eve']} percent. Days off do not "
-         f"repay it: night workers spend {v['off_gap']} fewer minutes with family and friends than day workers "
-         "do on theirs."),
+         f"at work for {v['night_eve']} percent of them, about half; day workers, {v['day_eve']} percent."),
     ]
-    desc = (f"A 24-hour clock with midnight at the top and three rings. Outer ring: everyone aged 15 and over, "
+    desc = (f"A 24-hour clock with midnight at the top and three rings. Inner ring: everyone aged 15 and over, "
             f"mostly asleep from about 23:00 to 06:00. Middle ring: usual day workers on workdays, asleep at night "
-            f"and at work in the day. Inner ring: usual night workers on workdays, asleep for parts of the morning "
-            f"and early afternoon and at work across the night. An arc marks the melatonin night of day-active "
+            f"and at work in the day. Outer ring: usual night workers on workdays, asleep for parts of the morning "
+            f"and early afternoon and at work across the night. An arc marks the melatonin night of healthy "
             f"adults, about 20:50 to 08:20, with a dot at the body-temperature low near 05:00. A dashed sector "
             f"marks 18:00 to 22:00, when night workers are asleep or at work {v['night_eve']} percent of the time "
             f"and day workers {v['day_eve']} percent.")
     out = ['<figure class="nclock-fig wide" aria-label="Three 24-hour clocks">',
            '<div class="nc-fig">', f'<p id="nclock-desc" hidden>{E(desc)}</p>',
            clock(P, True), clock(P, False),
-           '<p class="nc-key">Outer ring: everyone 15 and over. Middle: day workers. Inner: night workers, on '
-           'days they worked. Dark: share asleep. Blue: share at work. Arc: body clock.</p>',
+           '<p class="nc-key">Rings, inside out: everyone 15 and over; day workers; night workers, on days they '
+           'worked. <span class="sw sw-sl"></span>share asleep <span class="sw sw-wk"></span>share at work '
+           '<span class="sw sw-mel"></span>body clock. A bar the full depth of its ring is 100 percent.</p>',
            '</div>', '<div class="nc-steps">']
     for k, head, text in steps:
         out.append(f'<div class="step" data-step="{k}"><p class="ev">{head}</p><p>{text}</p></div>')
@@ -208,25 +209,28 @@ def hero(P, v):
 def table_day(P):
     G = P["groups"]
     n, d = G["night_work"], G["day_work"]
+
+    def h2(x):
+        return f"{x / 60:.2f}"
     rows = [
-        ("Time reported asleep, hours", hours(n["sleep_min"]), hours(n["sleep_se"]), hours(d["sleep_min"]),
-         hours(d["sleep_se"])),
-        ("Longest single sleep, hours", hours(n["longest_sleep_min"]), hours(n["longest_sleep_se"]),
-         hours(d["longest_sleep_min"]), hours(d["longest_sleep_se"])),
+        ("Time reported asleep, hours", hours(n["sleep_min"]), h2(n["sleep_se"]), hours(d["sleep_min"]),
+         h2(d["sleep_se"])),
+        ("Longest single sleep, hours", hours(n["longest_sleep_min"]), h2(n["longest_sleep_se"]),
+         hours(d["longest_sleep_min"]), h2(d["longest_sleep_se"])),
         ("Sleep in two or more blocks of 30 minutes or more, percent", f"{n['two_sleeps_pct']:.0f}",
-         f"{n['two_sleeps_se']:.0f}", f"{d['two_sleeps_pct']:.0f}", f"{d['two_sleeps_se']:.0f}"),
-        ("Time at work, hours", hours(n["work_min"]), hours(n["work_se"]), hours(d["work_min"]),
-         hours(d["work_se"])),
-        ("Time with family or friends, hours", hours(n["family_min"] + n["friends_min"]), "",
-         hours(d["family_min"] + d["friends_min"]), ""),
-        ("18:00 to 22:00 spent asleep or at work, percent", f"{n['evening_busy_pct']:.0f}", "",
-         f"{d['evening_busy_pct']:.0f}", ""),
-        ("Others awake while they sleep, percent of everyone 15 and over", f"{n['pop_awake_while_asleep']:.0f}", "",
-         f"{d['pop_awake_while_asleep']:.0f}", ""),
+         f"{n['two_sleeps_se']:.1f}", f"{d['two_sleeps_pct']:.0f}", f"{d['two_sleeps_se']:.1f}"),
+        ("Time at work, hours", hours(n["work_min"]), h2(n["work_se"]), hours(d["work_min"]), h2(d["work_se"])),
+        ("Time with family or friends, hours", hours(n["company_min"]), h2(n["company_se"]),
+         hours(d["company_min"]), h2(d["company_se"])),
+        ("18:00 to 22:00 spent asleep or at work, percent", f"{n['evening_busy_pct']:.0f}",
+         f"{n['evening_busy_se']:.1f}", f"{d['evening_busy_pct']:.0f}", f"{d['evening_busy_se']:.1f}"),
+        ("Others awake while they sleep, percent of everyone 15 and over", f"{n['pop_awake_while_asleep']:.0f}",
+         f"{n['pop_awake_se']:.1f}", f"{d['pop_awake_while_asleep']:.0f}", f"{d['pop_awake_se']:.1f}"),
     ]
     out = ['<table class="nc-table">',
            f'<caption>One workday in the diaries, 2024 and 2025: usual night workers ({n["n"]} diaries) and usual '
-           f'day workers ({d["n"]:,} diaries). SE is the standard error.</caption>',
+           f'day workers ({d["n"]:,} diaries). SE is the standard error. Raw averages, not adjusted for age, sex '
+           f'or occupation.</caption>',
            '<thead><tr><th></th><th class="n">Night</th><th class="n">SE</th><th class="n">Day</th>'
            '<th class="n">SE</th></tr></thead><tbody>']
     for r in rows:
@@ -266,9 +270,11 @@ def claims(P):
          n["two_sleeps_pct"] - d["two_sleeps_pct"] > 3 * math.hypot(n["two_sleeps_se"], d["two_sleeps_se"])),
         ("'about an hour shorter' longest block: 45-80 min",
          45 <= d["longest_sleep_min"] - n["longest_sleep_min"] <= 80),
-        ("'nearly two hours' fewer on days off: 90-120 min and over 2 SE",
-         90 <= -P["diff_company_off_min"] <= 120 and -P["diff_company_off_min"] > 2 * P["diff_company_off_se"]),
-        ("'about half' the evening busy for night workers: 40-55%", 40 <= n["evening_busy_pct"] <= 55),
+        ("'fewer' minutes with family and friends on days off: gap over 2 SE",
+         -P["diff_company_off_min"] > 2 * P["diff_company_off_se"]),
+        ("'about a quarter' of night workdays hold only a shift's end: 20-30%", 20 <= P["tail_only_pct"] <= 30),
+        ("'about half' the evening busy for night workers: 45-58%", 45 <= n["evening_busy_pct"] <= 58),
+        ("'one in five' of the evening for day workers: 17-24%", 17 <= d["evening_busy_pct"] <= 24),
         ("'the largest group' prefer it: preference is the top reason",
          max(M["reasons"], key=M["reasons"].get) == "preference"),
         ("'nearly half of women' prefer: 40-50%", 40 <= M["reasons_by_sex"]["women"]["preference"] < 50),
@@ -311,6 +317,7 @@ def values(P):
         "night_awake_pct": f"{n['pop_awake_while_asleep']:.0f}", "day_awake_pct": f"{d['pop_awake_while_asleep']:.0f}",
         "night_eve": f"{n['evening_busy_pct']:.0f}", "day_eve": f"{d['evening_busy_pct']:.0f}",
         "off_gap": f"{-P['diff_company_off_min']:.0f}", "off_gap_se": f"{P['diff_company_off_se']:.0f}",
+        "n_doff": f"{G['day_off']['n']:,}", "tail_pct": f"{P['tail_only_pct']:.0f}",
         "off_sleep_h": hours(G["night_off"]["sleep_min"]), "doff_sleep_h": hours(G["day_off"]["sleep_min"]),
         "men_share": f"{M['men_share_night']:.0f}",
         "zip_kb": f"{round(os.path.getsize(ZIP) / 1024) if os.path.exists(ZIP) else 0:,}",
@@ -320,10 +327,10 @@ def values(P):
     v["takeaways"] = insight.takeaways([
         f"About {v['night_m']} million American wage and salary workers, {v['night_pct']} percent, usually work a "
         "night shift, and the most common reason they give is that they prefer it.",
-        f"In the government's time diaries, night workers on workdays report about as much sleep as day workers, "
-        f"but more often in pieces and at hours when about two in three people are awake.",
-        "Years of night work are associated with more heart disease and diabetes, the cancer evidence is "
-        "contested, and how much of the risk the shift itself causes is not settled."])
+        "In the government's time diaries, night workers sleep in broken blocks, at hours when about two in three "
+        "people are awake, and spend about half of each workday evening asleep or at work.",
+        "Years of night work are associated with modestly more heart disease and diabetes, the cancer evidence "
+        "is contested, and whether the shift itself causes the excess is not established."])
     v["hero"] = hero(P, v)
     v["table_day"] = table_day(P)
     v["table_reasons"] = table_reasons(P)
