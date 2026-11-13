@@ -21,6 +21,7 @@ Run:  python update_page.py            report only
 import argparse
 import html
 import json
+import math
 import os
 import re
 import sys
@@ -86,7 +87,7 @@ def hero(P, v):
         (f"<p><b>Under 3:00: {v['band_k']}, or {v['band_pct']} percent.</b> These are the runners who held the "
          f"schedule or ran the second half faster.</p>", {"t": 1, "k": 1, "s": 1}),
         (f"<p><b>3:00:00 to 3:04:59: {v['miss5']} percent.</b> More than a quarter of the group missed by under "
-         f"five minutes, less than 12 seconds a kilometre over the second half.</p>", {"t": 1, "k": 1, "s": 1, "n": 1}),
+         f"five minutes, under {math.ceil(300 / 21.0975)} seconds a kilometre over the second half.</p>", {"t": 1, "k": 1, "s": 1, "n": 1}),
         (f"<p><b>3:15 or slower: {v['over15']} percent.</b> About one runner in nine lost a quarter of an hour or "
          f"more. The median runner in the group finished in {v['band_med']}.</p>",
          {"t": 1, "k": 1, "s": 1, "n": 1, "f": 1}),
@@ -215,7 +216,7 @@ def values(P):
         "miss5": p0(B["miss5"]), "over15": p0(B["over15"]), "band_med": hms(B["median_final"]),
         "y24_n": f"{Y[2024]['n']:,}", "y25_n": f"{Y[2025]['n']:,}", "y24_pct": p0(Y[2024]["share"]),
         "y25_pct": p0(Y[2025]["share"]), "t24": f"{W[2024]['temp']:.1f}", "t25": f"{W[2025]['temp']:.1f}",
-        "dt": f"{W[2025]['temp'] - W[2024]['temp']:.0f}",
+        "dt": f"{W[2025]['temp'] - W[2024]['temp']:.0f}",  # 12.6 -> "about 13"
         "years_n": str(len(S["years"])), "years_less1": str(len(S["years"]) - 1), "first": str(S["first"]), "last": str(S["last"]), "rows": f"{S['rows']:,}",
         "all_n": f"{A['n']:,}", "all_pct": f"{A['share']:.1f}", "m_pct": f"{A['m_share']:.1f}", "w_pct": f"{A['w_share']:.1f}",
         "yr_lo": p0(lo["share"]), "yr_lo_y": str(lo["year"]), "yr_hi": p0(hi["share"]), "yr_hi_y": str(hi["year"]),
