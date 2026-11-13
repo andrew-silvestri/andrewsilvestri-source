@@ -1,0 +1,86 @@
+id,book,chapter,question,line_start,line_end,holders,opinion
+B3.1.1,3,1,What is the Milky Way?,5442,5444,some Pythagoreans,"When Phaethon set the world ablaze, a star fell from its place and, passing round that region, scorched it; the burnt track is the Milky Way."
+B3.1.2,3,1,What is the Milky Way?,5444,5445,unnamed,It is the path the sun originally travelled.
+B3.1.3,3,1,What is the Milky Way?,5445,5448,unnamed,"It is a mirror-like image formed when the sun's beams are reflected back toward the heavens, as happens in clouds and the rainbow."
+B3.1.4,3,1,What is the Milky Way?,5448,5449,Metrodorus,"It is simply the sun's course, the track of the sun moving in its own circle."
+B3.1.5,3,1,What is the Milky Way?,5449,5450,Parmenides,A mixture of dense and rare substance gives it a milk-like colour.
+B3.1.6,3,1,What is the Milky Way?,5450,5453,Anaxagoras,"When the sun passes beneath the earth, unable to light every region, the earth's shadow cast on that part of the sky forms the Milky Way."
+B3.1.7,3,1,What is the Milky Way?,5453,5455,Democritus,"It is the combined glow of many small bodies packed closely together, which light one another up."
+B3.1.8,3,1,What is the Milky Way?,5456,5458,Aristotle,"It is a burning of abundant, dry, cohering exhalations, a fiery trail lying below the ether and the planets."
+B3.1.9,3,1,What is the Milky Way?,5458,5459,Posidonius,"It is a concentration of fire, rarer than the stars' substance but denser than ordinary light."
+B3.2.1,3,2,"What are comets, shooting stars and beam-like meteors?",5469,5471,some Pythagoreans,A comet is a star that is not always visible; after completing a fixed course it rises and becomes visible to us.
+B3.2.2,3,2,"What are comets, shooting stars and beam-like meteors?",5471,5473,unnamed,"A comet is our sight reflected toward the sun, producing a comet-like image the way mirrors produce images."
+B3.2.3,3,2,"What are comets, shooting stars and beam-like meteors?",5474,5475,Anaxagoras; Democritus,A comet is two or more stars in conjunction whose combined light looks like one body.
+B3.2.4,3,2,"What are comets, shooting stars and beam-like meteors?",5475,5476,Aristotle,A comet is a fiery gathering-together of dry exhalations.
+B3.2.5,3,2,"What are comets, shooting stars and beam-like meteors?",5476,5478,Strato,"A comet is a star's light shining through a thick cloud surrounding it, like light through a lantern."
+B3.2.6,3,2,"What are comets, shooting stars and beam-like meteors?",5478,5484,Heraclides of Pontus; the Peripatetics,"A comet is a high cloud set alight by fire above; bearded comets, halos and beam-like meteors are cloud formations differing only in shape."
+B3.2.7,3,2,"What are comets, shooting stars and beam-like meteors?",5484,5486,Epigenes,A comet comes from a rising of wind mixed with earthy matter that then catches fire.
+B3.2.8,3,2,"What are comets, shooting stars and beam-like meteors?",5486,5487,Boethus,A comet is an appearance produced by air that has been set on fire.
+B3.2.9,3,2,"What are comets, shooting stars and beam-like meteors?",5487,5487,Diogenes,Comets are stars.
+B3.2.10,3,2,"What are comets, shooting stars and beam-like meteors?",5487,5489,Anaxagoras,"Shooting stars drop down from the ether like sparks, which is why they go out quickly."
+B3.2.11,3,2,"What are comets, shooting stars and beam-like meteors?",5489,5490,Metrodorus,Such fires arise when the sun's rays strike forcibly upon clouds and make them flash like fire.
+B3.2.12,3,2,"What are comets, shooting stars and beam-like meteors?",5491,5492,Xenophanes,All these fiery meteors are clusters of ignited clouds and their flashing movements.
+B3.3.1,3,3,"What causes lightning, thunder, thunderbolts, hurricanes and whirlwinds?",5503,5507,Anaximander,"All are caused by wind trapped in dense clouds; being fine and light it bursts out, the tearing makes the noise, and the rent against dark cloud shows as flame."
+B3.3.2,3,3,"What causes lightning, thunder, thunderbolts, hurricanes and whirlwinds?",5508,5513,Metrodorus,"Wind striking a dense cloud breaks it, making the noise and the flash; moving fast and heated by the sun it becomes a thunderbolt; a weakening thunderbolt becomes a storm."
+B3.3.3,3,3,"What causes lightning, thunder, thunderbolts, hurricanes and whirlwinds?",5513,5518,Anaxagoras,"Hot (ethereal) and cold (airy) parts meeting produce thunder; their colour against dark cloud is the flash; great brightness is lightning, denser fire a whirlwind, cloudy fire a hurricane."
+B3.3.4,3,3,"What causes lightning, thunder, thunderbolts, hurricanes and whirlwinds?",5518,5521,the Stoics,"Thunder is clouds crashing together; lightning is their ignition; a faster blaze is the thunderbolt; a weak, faint one the whirlwind."
+B3.3.5,3,3,"What causes lightning, thunder, thunderbolts, hurricanes and whirlwinds?",5521,5526,Aristotle,"All come from dry exhalations; trapped in moist vapour they break out, giving thunder, and ignite as lightning; hotter matter drawn in makes whirlwinds, duller matter storms."
+B3.4.1,3,4,"How are clouds, rain, snow and hail formed?",5536,5539,Anaximenes,Clouds form when air is strongly condensed; further compression squeezes out rain; water freezing as it falls is snow; frozen water enclosed in moist air is hail.
+B3.4.2,3,4,"How are clouds, rain, snow and hail formed?",5539,5540,Metrodorus,A cloud is made of watery vapour carried up to a higher region.
+B3.4.3,3,4,"How are clouds, rain, snow and hail formed?",5541,5543,Epicurus,Clouds are made of vapours; rain and hail become round because the surrounding air presses on them during their long fall.
+B3.5.1,3,5,What is the rainbow and how is it formed?,5559,5560,Plato,"People, marvelling at it, invented a descent for it from Thaumas, a name meaning wonder."
+B3.5.2,3,5,What is the rainbow and how is it formed?,5560,5563,Homer,Zeus colours the rainbow purple to draw the eyes of men.
+B3.5.3,3,5,What is the rainbow and how is it formed?,5565,5566,unnamed,The rainbow has a bull's head with which it drinks up rivers (told as a fable).
+B3.5.4,3,5,What is the rainbow and how is it formed?,5598,5600,Anaximenes,"It forms when the sun shines on a thick, dark, dense cloud whose surface its rays cannot pass through."
+B3.5.5,3,5,What is the rainbow and how is it formed?,5600,5604,Anaxagoras,"Sunlight reflected from a dense cloud directly opposite the sun forms the bow, as in a mirror; mock-suns seen in Pontus arise the same way."
+B3.5.6,3,5,What is the rainbow and how is it formed?,5605,5606,Metrodorus,"When sunlight passes through a cloud, the cloud contributes a blue colour and the light a red one."
+B3.6.1,3,6,What are rod-like meteors?,5616,5620,-,(no attributed opinion)
+B3.7.1,3,7,What are winds?,5630,5631,Anaximander,Wind is a flow of air produced when the sun sets in motion or melts its finest moist parts.
+B3.7.2,3,7,What are winds?,5631,5635,the Stoics,"All winds are flowing air, named after the region they come from: west, east, north or south."
+B3.7.3,3,7,What are winds?,5636,5637,Metrodorus,Moist vapours heated by the sun cause the force of violent winds.
+B3.7.4,3,7,What are winds?,5637,5640,Metrodorus,The Etesian winds blow hard after the Dog Star rises because air near the north pole is compacted and follows the sun returning from the summer solstice.
+B3.8.1,3,8,What causes winter and summer?,5650,5652,Empedocles; the Stoics,Winter comes when thick air dominates and rises upward; summer comes when fire dominates and moves downward.
+B3.9.1,3,9,What is the earth's nature and how many earths are there?,5667,5667,Thales and his followers,There is only one earth.
+B3.9.2,3,9,What is the earth's nature and how many earths are there?,5667,5669,Hicetes the Pythagorean,There are two earths: ours and a counter-earth opposite it.
+B3.9.3,3,9,What is the earth's nature and how many earths are there?,5669,5670,the Stoics,"The earth is one, and it is finite and bounded."
+B3.9.4,3,9,What is the earth's nature and how many earths are there?,5670,5672,Xenophanes,"The earth is compacted from fire and air, and its lower parts are rooted to an unlimited depth."
+B3.9.5,3,9,What is the earth's nature and how many earths are there?,5672,5673,Metrodorus,"The earth is the sediment or dregs of water, as the sun is of air."
+B3.10.1,3,10,What is the shape of the earth?,5683,5683,Thales; the Stoics,The earth is a sphere.
+B3.10.2,3,10,What is the shape of the earth?,5684,5684,Anaximander,The earth resembles a smooth stone column.
+B3.10.3,3,10,What is the shape of the earth?,5684,5685,Anaximenes,The earth is shaped like a flat table.
+B3.10.4,3,10,What is the shape of the earth?,5685,5685,Leucippus,The earth is shaped like a drum.
+B3.10.5,3,10,What is the shape of the earth?,5685,5686,Democritus,"The earth is like a discus in surface, hollow in the middle."
+B3.11.1,3,11,Where is the earth situated?,5696,5697,Thales and his followers,The earth is at the centre of the universe.
+B3.11.2,3,11,Where is the earth situated?,5697,5698,Xenophanes,"The earth comes first, being rooted in the infinite."
+B3.11.3,3,11,Where is the earth situated?,5698,5702,Philolaus,"A central fire, the hearth of the universe, holds the middle; next the counter-earth; third our earth, which circles opposite it, so the counter-earth's people are never seen."
+B3.11.4,3,11,Where is the earth situated?,5702,5704,Parmenides,He first restricted the inhabited world to the two temperate zones lying between the tropics and the polar regions.
+B3.12.1,3,12,Why does the earth incline?,5714,5717,Leucippus,The earth tilts southward because the south is thin and fine while the north is compacted by intense cold; the opposite regions are fiery.
+B3.12.2,3,12,Why does the earth incline?,5717,5722,Democritus,"As the earth grew it bent south, where the surrounding air is weaker; the south is evenly tempered and laden with produce, the north unevenly tempered."
+B3.13.1,3,13,Does the earth move?,5732,5733,unnamed,Most philosophers hold that the earth stays fixed in one place.
+B3.13.2,3,13,Does the earth move?,5733,5735,Philolaus,"The earth moves round the central fire in an oblique circle, as the sun and moon do."
+B3.13.3,3,13,Does the earth move?,5735,5738,Heraclides of Pontus; Ecphantus,"The earth does not travel but turns like a wheel on its own axis, rotating from west to east."
+B3.13.4,3,13,Does the earth move?,5738,5741,Democritus,When first formed the earth moved because its parts were small and light; later they condensed and its weight held it fixed.
+B3.14.1,3,14,Into how many zones is the earth divided?,5751,5757,Pythagoras,"Like the heavens, the earth has five zones: arctic, antarctic, two tropical-temperate, and a central torrid one; the temperate zones between tropic and pole are habitable."
+B3.15.1,3,15,What causes earthquakes?,5767,5767,Thales; Democritus,Earthquakes are caused by water.
+B3.15.2,3,15,What causes earthquakes?,5767,5769,the Stoics,Moist vapour enclosed in the earth breaking out into the air causes earthquakes.
+B3.15.3,3,15,What causes earthquakes?,5769,5772,Anaximenes,"The earth's dryness and porousness cause quakes; one is produced by severe drought, the other by excessive rain."
+B3.15.4,3,15,What causes earthquakes?,5772,5774,Anaxagoras,"Air trying to escape from inside the earth meets a dense surface, cannot get out, and so shakes the surrounding earth."
+B3.15.5,3,15,What causes earthquakes?,5774,5780,Aristotle,"Cold vapour surrounding the earth blocks vapours from escaping; dry exhalations trapped inside struggle to get out, swirl around, and shake the earth."
+B3.15.6,3,15,What causes earthquakes?,5780,5784,Metrodorus,"Nothing in its natural place moves unless pushed or pulled; the earth as a whole cannot shift, but its parts can move against one another."
+B3.15.7,3,15,What causes earthquakes?,5784,5787,Parmenides; Democritus,The earth is so evenly balanced that it has no reason to lean any way; it can be shaken but not displaced.
+B3.15.8,3,15,What causes earthquakes?,5787,5788,Anaximenes,"Because it is broad and flat, the earth rides on the air pressing up beneath it."
+B3.15.9,3,15,What causes earthquakes?,5788,5790,unnamed,The earth floats on water like flat boards and is moved for that reason.
+B3.15.10,3,15,What causes earthquakes?,5790,5796,Plato,"Of the six directions of motion none suits the earth, lying lowest with nothing to tilt it; yet some thin, rare parts of it can move."
+B3.15.11,3,15,What causes earthquakes?,5796,5800,Epicurus,"The earth may quake because thick watery air beneath pushes it, or because wind spreads through its many hollow passages and shakes it."
+B3.16.1,3,16,"What is the sea made of, and why is it bitter?",5811,5813,Anaximander,The sea is what remains of the original moisture; fire dried up most of it and the heat changed the quality of the rest.
+B3.16.2,3,16,"What is the sea made of, and why is it bitter?",5813,5816,Anaxagoras,"Water was at first a still pool; the sun's circling scorched it, drawing off the fatty part and leaving the remainder salty and bitter."
+B3.16.3,3,16,"What is the sea made of, and why is it bitter?",5817,5817,Empedocles,"The sea is the earth's sweat, produced as the sun heats it."
+B3.16.4,3,16,"What is the sea made of, and why is it bitter?",5818,5820,Antiphon,"Sweat from the hot part separated from the moist parts; boiled and seethed, it turned bitter as all sweat does."
+B3.16.5,3,16,"What is the sea made of, and why is it bitter?",5820,5822,Metrodorus,"Sea water was filtered through the earth and kept some of its density, as anything strained through ashes does."
+B3.16.6,3,16,"What is the sea made of, and why is it bitter?",5823,5825,the school of Plato,Water condensed by the cold air became sweet; the part exhaled from the earth and heated became brackish.
+B3.17.1,3,17,What causes the tides?,5835,5838,Aristotle; Heraclides,"The sun stirs up winds which press on the Atlantic, making it swell into the flood; when they slacken the sea draws back into the ebb."
+B3.17.2,3,17,What causes the tides?,5839,5840,Pytheas of Massalia,The waxing moon brings the flood tide and the waning moon the ebb.
+B3.17.3,3,17,What causes the tides?,5840,5842,Plato,"A swinging oscillation of the sea through a mouth or opening makes ebb and flood alternate, so seas rise in opposite directions."
+B3.17.4,3,17,What causes the tides?,5842,5847,Timaeus,Rivers from the mountains of Celtic Gaul rush into the Atlantic and push it into a flood; when their outflow slackens the ebb follows.
+B3.17.5,3,17,What causes the tides?,5847,5852,Seleucus the mathematician,"The earth moves; the moon on its circuit meets and pushes against it, and the wind caught between them strikes the Atlantic and stirs the sea."
+B3.18.1,3,18,What is a halo around a star?,5862,5868,-,(no attributed opinion)

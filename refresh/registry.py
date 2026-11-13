@@ -102,6 +102,17 @@ ENTRIES = [
         "why": "A finished policy chain, 1990-2006, stated on the page as not updated.",
     },
     {
+        # philosophy-physics lane, 2026-11-13. Disabled: an ancient text and graded tables; nothing
+        # upstream changes, and the page says its data does not update.
+        "page": "armchair",
+        "cwd": "armchair",
+        "fetch": [["python", "fetch_public.py"]],
+        "build": [["python", "analysis.py"]],
+        "keys": [],
+        "enabled": False,
+        "why": "An ancient handbook and graded case tables; stated on the page as not updated.",
+    },
+    {
         "page": "takeaway",
         "cwd": "takeaway",
         # R2 (2026-10-23): production only. The pipeline tracker carries

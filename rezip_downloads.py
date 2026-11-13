@@ -296,6 +296,12 @@ TARGETS = [
     # whose SHA-1 differs from the manifest.
     target("oxygen", "oxygen-code.zip", keep={"outputs"},
            skip=("data/raw", "data/raw/*", "outputs/*.png")),
+    # Philosophers' guesses about nature (philosophy-physics lane, 2026-11-13): the fetch and split
+    # scripts, the Placita cut with line numbers, the opinion tables and both raters' grades, the case
+    # tables, the analysis and payload, the page generator and the tests. Not data/raw: fetch_public.py
+    # re-downloads the Gutenberg volume.
+    target("armchair", "armchair-code.zip", keep={"outputs"},
+           skip=("data/raw", "data/raw/*")),
     # food-code.zip retired with its page on 2026-09-09: food.html was
     # unpublished at Andrew's request, for now, and the last build is
     # unpublished/downloads/food-code.zip. The TARGET goes with the page,
