@@ -59,15 +59,25 @@
 .bars .kept { fill: var(--acc); }
 .bars .eff { fill: var(--acc); }
 .ci .whisk { stroke: var(--dim); stroke-width: 2; }
-.ci .pt { fill: var(--dim); }
-.ci .whisk.dn { stroke: var(--moss); }
-.ci .pt.dn { fill: var(--moss); }
+.ci .pt { fill: var(--bg); stroke: var(--dim); stroke-width: 1.5; }
+.ci .whisk.dn { stroke: var(--ink); }
+.ci .pt.dn { fill: var(--ink); stroke: var(--ink); }
 
 .msg.is-live .dots [data-o] { transition: opacity .45s ease, transform .45s ease; }
 .msg.is-live .dots .off { opacity: 0; }
 .msg.is-live .dots .row.off { transform: translateX(-8px); }
 :root[data-motion="off"] .dots * { transition: none !important; }
 
-/* the kit: a table of text, read across */
+/* the kit: a table of text, read across; on a phone each row is a card, read down,
+   so no column hides off the right edge */
 table.kit td { vertical-align: top; text-align: left; font-variant-numeric: normal; }
 table.kit td:first-child { min-width: 16ch; }
+@media (max-width: 700px) {
+  table.kit { display: block; overflow: visible; }
+  table.kit thead { display: none; }
+  table.kit tbody, table.kit tr, table.kit td { display: block; width: auto; }
+  table.kit tr { padding: 12px 0; border-bottom: 1px solid var(--rule); }
+  table.kit td { padding: 2px 0; border: 0; min-width: 0; }
+  table.kit td::before { content: attr(data-label); display: block; font: var(--fs-2)/1.4 var(--mono); color: var(--dim); }
+  table.kit td:first-child::before { content: none; }
+}

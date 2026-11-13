@@ -1,7 +1,9 @@
 """Build messaging/outputs/payload.json from the tournament deposit and the transcribed tables.
 
 1. Field effects (data/effects.csv): for each study, the share making the low-carbon choice without and with
-   the change, in percent, as the paper prints it. The effect is the difference, in percentage points. The
+   the change, in percent. Where the paper prints both shares, they are its shares ("printed shares"); where it
+   prints only the starting share and an estimated effect, the second share is their sum ("baseline plus
+   estimate"). The effect is the difference, in percentage points. The
    build stops if that difference is more than 0.5 points from the effect the paper itself prints (a model
    estimate can differ a little from the raw difference of the two shares; a typing error cannot hide).
 2. Replication pairs (data/shrink.csv): a first or larger estimate and a later or smaller one, each in its
@@ -62,9 +64,13 @@ def field_effects():
         d = t - b
         if abs(d - pe) > EFFECT_TOL:
             raise SystemExit(f"effects.csv {r['id']}: {t} - {b} = {d:.2f} points, the paper prints {pe}")
+        if r["basis"] not in ("printed shares", "baseline plus estimate"):
+            raise SystemExit(f"effects.csv {r['id']}: basis {r['basis']!r}")
+        if r["basis"] == "baseline plus estimate" and abs(d - pe) > 0.05:
+            raise SystemExit(f"effects.csv {r['id']}: the filled dot must be the baseline plus the printed estimate")
         rows.append({"id": r["id"], "o": int(r["o"]), "group": r["group"], "label": r["label"], "short": r["short"],
                      "setting": r["setting"], "outcome": r["outcome"], "n": int(r["n"]), "n_unit": r["n_unit"],
-                     "design": r["design"], "measure": r["measure"], "baseline": b, "treated": t,
+                     "design": r["design"], "measure": r["measure"], "basis": r["basis"], "baseline": b, "treated": t,
                      "effect": pe, "cite": r["cite"], "where": r["where"]})
     return rows
 

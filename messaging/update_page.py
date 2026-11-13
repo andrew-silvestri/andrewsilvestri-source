@@ -109,22 +109,22 @@ def hero_svg(P, wide):
 def hero(P, v):
     steps = [
         (0, "Words &middot; field trials, real purchases",
-         f"Carbon labels in university and workplace cafeterias, a sign saying more people are eating less meat, "
-         f"and a better name for a meat-free breakfast. Each was tested on what people bought. The largest moved "
-         f"the share choosing the low-carbon meal by {v['w_hi']} percentage points; the preregistered sign in 22 "
-         f"restaurants moved it by nothing the trial could detect."),
+         f"Carbon labels in university and workplace cafeterias, screens telling diners that more and more "
+         f"customers choose the veggie options, and the best of three new names for a meat-free breakfast. Each "
+         f"was tested on what people bought. The largest moved the share choosing the low-carbon meal by "
+         f"{v['w_hi']} percentage points; the preregistered screens in 22 restaurants moved it by nothing the "
+         f"trial could detect."),
         (1, "Menus &middot; more of the low-carbon dish",
          f"Doubling the vegetarian dishes on offer, and leaving the meat dishes on the menu, raised the vegetarian "
          f"share by {v['menu_lo']} points in a Cambridge experiment and {v['menu_hi']} points in a Dijon "
          f"cafeteria."),
         (2, "Defaults &middot; food",
          f"Serving the plant-based dish unless diners asked for meat, making a restaurant's chef's menu vegetarian "
-         f"unless diners asked otherwise, or ticking the plant-based meal on an event form in advance, moved the "
+         f"unless diners asked otherwise, or checking the plant-based meal on an event form in advance, moved the "
          f"share by {v['food_lo']} to {v['food_hi']} points."),
         (3, "Defaults &middot; electricity",
          f"Pre-selecting a green tariff in a German supplier's online shop took green contracts from "
-         f"{v['eb_b']} to {v['eb_t']} percent of sales. Enrolling Sacramento households in time-of-use pricing "
-         f"unless they declined took the share on it from {v['fw_b']} to {v['fw_t']} percent. "
+         f"{v['eb_b']} to {v['eb_t']} percent of sales. "
          '<a href="#unit">How the rows compare</a>'),
         (4, "What the long bars measure",
          "One choice, at one counter, form or shop, at one time. Whether people ate less meat that day, or "
@@ -132,7 +132,7 @@ def hero(P, v):
          'thinner. <a href="#limits-default">What a default does not do</a>'),
     ]
     rows = "; ".join(f"{r['label']}, {f1(r['baseline'])} to {f1(r['treated'])} percent" for r in P["effects"])
-    desc = ("A dot chart of eleven field trials. Each row shows the share of people choosing the low-carbon "
+    desc = (f"A dot chart of {len(P['effects'])} field trials. Each row shows the share of people choosing the low-carbon "
             "option without and with a change, on a scale of 0 to 100 percent. " + rows + ".")
     out = ['<figure class="msg wide" aria-label="Field trials: the share choosing the low-carbon option, without '
            'and with each change">',
@@ -199,11 +199,11 @@ def shrink_svg(P, wide):
 def chart_shrink(P, v):
     cap = (f"Each bar is the later or larger-sample estimate as a share of the first. Nudge trials run by "
            f"government units kept about a sixth of the effect reported in journals, {v['nudge_later']} against "
-           f"{v['nudge_first']} percentage points. The one category that kept something after correction for "
-           f"publication bias changes the choice itself, from d {v['struct_first']} to {v['struct_later']}; "
-           f"nudges that add information fell to {v['info_later']}. Data: DellaVigna and Linos 2022; Allcott "
-           f"2015; Nisa et al. 2019; Bergquist et al. 2023; Maier et al. 2022, each as printed in the table or page "
-           f"the Method names.")
+           f"{v['nudge_first']} percentage points. Among nudge types, those that change the choice itself fell "
+           f"from d {v['struct_first']} to {v['struct_later']} after correction for publication bias, and those "
+           f"that add information fell to {v['info_later']}; d is Cohen's d, a difference in standard deviations. "
+           f"Data: DellaVigna and Linos 2022; Allcott 2015; Nisa et al. 2019; Bergquist et al. 2023; Maier et al. "
+           f"2022, each as printed in the table or page the build file names.")
     return figure(shrink_svg(P, True), shrink_svg(P, False),
                   "What is left of an effect when the sample grows or the bias is removed", cap,
                   "Bar chart: six effects, each later estimate as a percentage of the first")
@@ -224,7 +224,7 @@ def tour_svg(P, wide):
         c = "zero" if t == 0 else "grid"
         out.append(f'<line class="{c}" x1="{X(t):.1f}" y1="{top - 8}" x2="{X(t):.1f}" y2="{H - 2}"/>')
         a = "start" if (t == lo and not wide) else "end" if (t == hi and not wide) else "middle"
-        lab = f"{t:+.1f}".replace("+0.0", "0").replace("-", "−")
+        lab = f"{t:+.1f}".replace("+0.0", "0").replace("-", "−") + (" pages" if t == hi else "")
         out.append(f'<text class="ax" x="{X(t):.1f}" y="13" text-anchor="{a}">{lab}</text>')
     for i, a in enumerate(arms):
         y = top + i * rh
@@ -240,21 +240,24 @@ def tour_svg(P, wide):
 
 def chart_tournament(P, v):
     cap = (f"Pages of the tree-planting task completed, each message against the control group, with 95 percent "
-           f"intervals. The control group averaged {v['wept_ctrl']} of 8 pages. Brown: intervals entirely below "
-           f"zero. Data: Vlasceanu et al. 2024, participant data on Zenodo (record 10345806), {v['n_tour']} "
+           f"intervals. The control group averaged {v['wept_ctrl']} of 8 pages. Filled dark dots: intervals "
+           f"entirely below zero. Data: Vlasceanu et al. 2024, participant data on Zenodo (record 10345806), {v['n_tour']} "
            f"participants in {v['n_countries']} countries; this page's estimate, with country fixed effects and "
            f"errors clustered by country.")
     return figure(tour_svg(P, True), tour_svg(P, False),
-                  "Effect of eleven climate messages on an effortful task, in pages", cap,
-                  "Dot chart: eleven messages, none above zero, six below")
+                  "Effect of 11 climate messages on an effortful task, in pages", cap,
+                  "Dot chart: 11 messages, none above zero, six below")
 
 
 def kit_table(P):
     out = ['<table class="n kit" tabindex="0">',
-           "<thead><tr><th>Ask</th><th>What it moved</th><th>Evidence</th><th>Where it fails</th></tr></thead><tbody>"]
+           "<thead><tr><th>What was tested</th><th>What it moved</th><th>Evidence</th><th>Where it fails</th></tr></thead>"
+           "<tbody>"]
     for r in P["kit"]:
-        out.append(f'<tr><td><b>{E(r["item"])}.</b> <i>{E(r["example"])}</i></td><td>{E(r["effect"])}</td>'
-                   f'<td><b>{E(r["grade"])}</b> &middot; {E(r["evidence"])}</td><td>{E(r["fails"])}</td></tr>')
+        out.append(f'<tr><td data-label="Tested"><b>{E(r["item"])}.</b> <i>{E(r["example"])}</i></td>'
+                   f'<td data-label="Moved">{E(r["effect"])}</td>'
+                   f'<td data-label="Evidence"><b>{E(r["grade"])}</b> &middot; {E(r["evidence"])}</td>'
+                   f'<td data-label="Fails">{E(r["fails"])}</td></tr>')
     out.append("</tbody></table>")
     return "\n".join(out)
 
@@ -297,6 +300,14 @@ def claims(P, v):
         ("'none raised it': no tree-task interval entirely above zero", not any(a["lo"] > 0 for a in W.values())),
         ("'six lowered it'", sum(a["hi"] < 0 for a in W.values()) == 6),
         ("'the four largest drops 0.4 to 0.5 pages'", all(-0.55 < x < -0.35 for x in four)),
+        ("'about a tenth of the control average': largest drop 8-12% of it",
+         0.08 < -four[0] / P["tournament"]["wept"]["control_mean"] < 0.12),
+        ("'the negative-emotion message that did most for sharing did most harm to effort'",
+         max(P["tournament"]["share"]["arms"], key=lambda a: P["tournament"]["share"]["arms"][a]["est"])
+         == min(W, key=lambda a: W[a]["est"]) == "NegativeEmotions"),
+        ("'a near tie' for policy support: letter within 0.2 points of the top",
+         max(a["est"] for a in P["tournament"]["policy"]["arms"].values())
+         - P["tournament"]["policy"]["arms"]["LetterFutureGen"]["est"] < 0.2),
         ("'about a sixth' for nudge units", 0.12 < by["nudge"]["kept"] < 0.2),
         ("'the one category that kept something': structure above 0.1, information at 0",
          by["structure"]["later"] > 0.1 and by["info"]["later"] == 0),
@@ -328,7 +339,6 @@ def values(P):
         "food_lo": f"{min(food):.0f}", "food_hi": f"{max(food):.0f}",
         "eb_b": f1(fx["ebeling"]["baseline"]), "eb_t": f1(fx["ebeling"]["treated"]),
         "eb_pp": f1(fx["ebeling"]["effect"]), "eb_n": f"{fx['ebeling']['n']:,}",
-        "fw_b": f1(fx["fowlie"]["baseline"]), "fw_t": f1(fx["fowlie"]["treated"]),
         "d_hi": f"{max(r['effect'] for r in P['effects']):.0f}",
         "n_tour": f"{T['n']:,}", "n_countries": str(T["countries"]),
         "belief_top": top("belief")[0], "belief_name": top("belief")[1],
@@ -337,7 +347,6 @@ def values(P):
         "share_ctrl": f"{T['share']['control_mean']:.0f}",
         "wept_ctrl": f"{T['wept']['control_mean']:.1f}", "wept_any": f"{100 * T['wept_ctrl_any']:.0f}",
         "wept_lo": f"{-four[-1]:.2f}", "wept_hi": f"{-four[0]:.2f}",
-        "wept_pct": f"{-100 * four[0] / T['wept']['control_mean']:.0f}",
         "nudge_first": f"{sh['nudge']['first']:g}", "nudge_later": f"{sh['nudge']['later']:g}",
         "opower_first": f"{sh['opower']['first']:.2f}", "opower_later": f"{sh['opower']['later']:.2f}",
         "struct_first": f"{sh['structure']['first']:.2f}", "struct_later": f"{sh['structure']['later']:.2f}",
@@ -386,7 +395,7 @@ def render(P):
     if missing:
         raise SystemExit(f"template placeholders without a value: {missing}")
     unused = sorted(set(v) - set(re.findall(r"{{(\w+)}}", t)) - {"w_cap", "eb_n", "food_lo", "food_hi",
-                                                                  "fw_b", "fw_t", "nudge_first", "nudge_later",
+                                                                  "nudge_first", "nudge_later",
                                                                   "struct_first", "struct_later", "info_later",
                                                                   "menu_hi", "n_countries", "share_name"})
     if unused:

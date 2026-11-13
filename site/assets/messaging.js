@@ -9,7 +9,8 @@
  *
  * The page is complete without this file: every row shows. With motion on
  * (assets/motion.js), the section goes live: the figure sticks, and the step
- * whose card crosses the middle of the screen decides how many groups have
+ * whose card crosses a line 72 percent of the way down the screen, below the
+ * sticky chart, decides how many groups have
  * appeared. Rows of a later step get .off; the current step's rows get
  * .now. With motion off, or on "motionchange" to off, it tears down.
  */
@@ -30,7 +31,7 @@
       es.forEach(function (e) {
         if (e.isIntersecting) self.set(+e.target.getAttribute('data-step'));
       });
-    }, { rootMargin: '-50% 0px -49% 0px' });
+    }, { rootMargin: '-72% 0px -27% 0px' });   // below the sticky chart, so the card is in view
   }
   Msg.prototype.set = function (k) {
     this.cur = k;
@@ -48,7 +49,7 @@
     var io = this.io;
     this.steps.forEach(function (s) { io.observe(s); });
     // before any card reaches the middle, show what is above the reader
-    var mid = window.innerHeight / 2, k = 0;
+    var mid = window.innerHeight * 0.72, k = 0;
     this.steps.forEach(function (s) { if (s.getBoundingClientRect().top < mid) k = +s.getAttribute('data-step'); });
     this.set(k);
   };
