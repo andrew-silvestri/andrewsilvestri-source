@@ -740,7 +740,7 @@ PAGES = {
         ('when one microbe came to live inside another',
          'Roger, A. J., Mu&ntilde;oz-G&oacute;mez, S. A. &amp; Kamikawa, R. (2017). The origin and diversification of mitochondria. <i>Current Biology</i> 27, R1177&ndash;R1192, <a href="https://doi.org/10.1016/j.cub.2017.09.015">doi:10.1016/j.cub.2017.09.015</a>.',
          'A single origin of mitochondria and of the eukaryotic cell.'),
-        ('billion years old. The wait',
+        ('are from North China',
          'Miao, L. et al. (2024). 1.63-billion-year-old multicellular eukaryotes from the Chuanlinggou Formation in North China. <i>Science Advances</i> 10, eadk3208, <a href="https://doi.org/10.1126/sciadv.adk3208">doi:10.1126/sciadv.adk3208</a>; Betts, H. C. et al. (2018). Integrated genomic and fossil evidence illuminates life&rsquo;s early evolution and eukaryote origin. <i>Nature Ecology &amp; Evolution</i> 2, 1556&ndash;1562, <a href="https://doi.org/10.1038/s41559-018-0644-x">doi:10.1038/s41559-018-0644-x</a>.',
          'Eukaryote fossils about 1.635 billion years old; the last common ancestor of eukaryotes between 1.84 and 1.21 billion years ago.'),
         ('Large fossils appear',

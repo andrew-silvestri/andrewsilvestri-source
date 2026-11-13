@@ -166,8 +166,8 @@ def hero(P, v):
          f"{g1(X['goe_ga'])} billion years ago."),
         (3, f"Complex cell &middot; {g1(S.STEPS[2]['best'])} billion years ago &middot; once",
          "The cell with a nucleus and mitochondria, from which every plant, animal and fungus descends, arose once, "
-         f"when one microbe came to live inside another. The oldest accepted fossils are {g1(S.STEPS[2]['best'])} "
-         f"billion years old. The wait, about {w['cell']} billion years, is the longest in the chain. "
+         f"when one microbe came to live inside another. The oldest accepted fossils, {g1(S.STEPS[2]['best'])} "
+         f"billion years old, are from North China. The wait, about {w['cell']} billion years, is the longest in the chain. "
          '<a href="#once">Once, or many times?</a>'),
         (4, f"Complex multicellular life &middot; {ga_label(S.STEPS[3]['best'])} &middot; {S.STEPS[3]['count']} times",
          f"Large fossils appear {ga_label(S.STEPS[3]['best']).replace(' Ma', ' million years ago')}, about "
@@ -255,9 +255,9 @@ def hard_svg(P, wide):
     rows_ = [(f"{g1(m)} Gyr" if wide else g1(m), d) for m, d in zip(h["means"], h["dur"])]
     rows_.append(("Time left", h["left"]))
     if wide:
-        Wd, LR, X0, X1, RH, top, VMAX = 900, 170, 190, 790, 30, 40, 1.5
+        Wd, LR, X0, X1, RH, top, VMAX = 900, 170, 190, 820, 30, 40, 1.5
     else:
-        Wd, LR, X0, X1, RH, top, VMAX = 320, 70, 80, 262, 28, 40, 1.5
+        Wd, LR, X0, X1, RH, top, VMAX = 320, 70, 80, 280, 28, 40, 1.5
     H = top + len(rows_) * RH + 4
 
     def x(v):
@@ -274,7 +274,8 @@ def hard_svg(P, wide):
         last = i == len(rows_) - 1
         o.append(f'<text class="{"dim" if last else ""}" x="{LR}" y="{y + 4:.1f}" text-anchor="end">{E(lab if wide or not last else "Left")}</text>')
         o.append(f'<rect class="{"bar-left" if last else "bar"}" x="{X0}" y="{y - 7:.1f}" width="{x(d) - X0:.1f}" height="14"/>')
-        o.append(f'<text x="{x(d) + 6:.1f}" y="{y + 4:.1f}">{f"{d:.2f}"}</text>')
+        # values in their own column right of the axis, so the dashed line never crosses one
+        o.append(f'<text x="{X1 + (10 if wide else 6)}" y="{y + 4:.1f}">{f"{d:.2f}"}</text>')
     o.append("</svg>")
     return "".join(o)
 
@@ -297,16 +298,19 @@ def fig_hard(P, v):
                f"Five steps, each with an exponential waiting time; the left column gives each step's average wait "
                f"if it ran alone. Bars: the average wait over the {v['n_kept']} simulated histories in which all five "
                f"finish inside a {g1(h['T'])}-billion-year window. The dashed line is the window divided by "
-               f"{int(round(h['T'] / h['flat']))}, the number of hard steps plus one. Spread is wide: in any one "
-               f"history a hard step can take from almost nothing to over {g1(2 * h['flat'])} billion years. "
+               f"{int(round(h['T'] / h['flat']))}, the number of hard steps plus one. These are averages: in one history "
+               f"in twenty, the hardest step takes more than {h['p95'][-1]:.1f} billion years. "
                "Model after Carter 1983, Hanson 1998 and Watson 2008; this page's simulation.")
 
 
 def table_ahead():
-    o = ['<table class="gf-ahead">', '<thead><tr><th>Estimate</th><th class="n">Value</th><th>Kind, by whom</th>'
+    # Two columns, the kind and author under each estimate: three columns overflowed a 360px screen by 28px
+    # (test_invariants rule 4).
+    o = ['<table class="gf-ahead">', '<thead><tr><th>Estimate, and whose</th><th class="n">Value</th>'
          '</tr></thead>', '<tbody>']
     for what, val, kind, who, year, _src in S.AHEAD:
-        o.append(f'<tr><td>{E(what)}</td><td class="n">{E(val)}</td><td>{E(kind)}; {E(who)}, {year}</td></tr>')
+        o.append(f'<tr><td>{E(what)}<br><span class="dim">{E(kind)}; {E(who)}, {year}</span></td>'
+                 f'<td class="n">{E(val)}</td></tr>')
     o.append("</tbody></table>")
     return "\n".join(o)
 
@@ -339,7 +343,7 @@ def claims(P, v):
     once = [s for s in S.STEPS if s["count"] == 1]
     eyes = [o for o in S.ORIGINS if o[0] == "Eyes"][0]
     k = [
-        ("h1: 'five big steps', 'three happened only once'", len(S.STEPS) == 5 and len(once) == 3),
+        ("h1: 'Three of Earth's five steps ... happened only once'", len(S.STEPS) == 5 and len(once) == 3),
         ("'the longest wait ... from oxygen-making photosynthesis to the complex cell'", c["longest"] == "cell"),
         ("hard steps 'about {h_dur}': every step with mean > T within 10% of T/(n+1)",
          all(abs(d - h["flat"]) / h["flat"] < 0.10 for d, m in zip(h["dur"], h["means"]) if m > h["T"])),
@@ -363,7 +367,7 @@ def claims(P, v):
         ("'a trait that appeared 40 to 65 separate times, as eyes did'", eyes[1] == 40 and eyes[2] == "40-65"),
         ("'Six times' in card 4", S.STEPS[3]["count"] == 6),
         ("'less than 1 in a few billion' plain rejection vs sampler acceptance above 1%", h["accept"] > 0.01),
-        ("'a hard step can take ... over {2 flat}': sd comparable to mean", min(h["sd"][1:]) > 0.7 * h["flat"]),
+        ("'one history in twenty ... more than {p95}': p95 above twice the mean", h["p95"][-1] > 2 * h["flat"]),
     ]
     bad = [n for n, ok in k if not ok]
     if bad:
@@ -408,8 +412,8 @@ def values(P):
     life_wait = g1(c["rows"][0]["wait"])
     v["takeaways"] = insight.takeaways([
         f"Life appeared within {life_wait} billion years of the first water on Earth, but oxygen-making "
-        "photosynthesis, the complex cell and technology each arose only once, so if a Great Filter lies behind "
-        "us, it is most likely one of those three.",
+        "photosynthesis, the complex cell and technology each arose only once, so if a Great Filter lies in the "
+        "past, it is most likely one of those three.",
         f"The five waits between the big steps all lie between {v['w_min']} and {v['w_max']} billion years; a "
         "simple model shows that steps of very different difficulty look evenly spaced in hindsight, so the longest "
         "wait does not mark the hardest step.",

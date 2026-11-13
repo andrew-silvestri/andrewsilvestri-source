@@ -67,6 +67,7 @@ def hard_steps(means, T, n_target, seed):
     sd = w.std(0)
     return {"T": T, "means": means.tolist(), "dur": [round(float(x), 4) for x in mean],
             "sd": [round(float(x), 4) for x in sd], "left": round(float(left.mean()), 4),
+            "p95": [round(float(x), 4) for x in np.percentile(w, 95, axis=0)],
             "accept": round(len(w) / drawn, 5), "n": int(len(w)),
             "flat": round(T / (int((means > T).sum()) + 1), 4)}
 
