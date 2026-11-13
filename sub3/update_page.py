@@ -37,7 +37,6 @@ sys.path.insert(0, ROOT)
 E = html.escape
 
 # Constants the payload does not compute, each with its source (the page's Sources list carries them too).
-AGE_GRADE_60M = "2:26:34"   # Alan Jones road age-grading tables, 2025 edition (CC0): 3:00:00 at 60, men
 WR = 7170                   # Sabastian Sawe, London Marathon, 26 April 2026 (World Athletics, ratified)
 HERO_ONLY = {"band_k", "band_med", "miss5", "over15"}   # values only the hero's step text uses
 HOT = 18.0                  # race mornings at or above this mean temperature are drawn in the accent colour
@@ -51,6 +50,14 @@ def hms(s, h=True):
 def pace(sec_per_km, k=0):
     m, s = divmod(sec_per_km, 60)
     return f"{int(m)}:{s:0{3 + k if k else 2}.{k}f}"
+
+
+def mins(sec):
+    """A whole number of minutes in words, refused unless the value is within 5 s of it."""
+    m = round(sec / 60)
+    if abs(sec - 60 * m) > 5:
+        raise SystemExit(f"{sec} s is not a whole number of minutes")
+    return {4: "four minutes", 5: "five minutes", 6: "six minutes"}.get(m, f"{m} minutes")
 
 
 def p0(x):
@@ -79,17 +86,18 @@ def hero_spec(P):
 def hero(P, v):
     import insight
     B = P["band"]
+    mid = f"{100 * sum(b['n'] for b in B['bins'] if 185 <= b['a'] < 195) / B['n']:.0f}"
     steps = [
         (f"<p><b>{v['band_n']} runners, one plan.</b> Each passed halfway between 1:28:30 and 1:29:59: on schedule "
          f"for a finish between 2:57 and 3:00 if the second half matched the first. Each bar counts the runners who "
          f"finished in one minute. The bar on the left holds the {B['under']:,} who finished faster than 2:57.</p>",
          {"t": 1, "k": 1}),
-        (f"<p><b>Under 3:00: {v['band_k']}, or {v['band_pct']} percent.</b> These are the runners who held the "
-         f"schedule or ran the second half faster.</p>", {"t": 1, "k": 1, "s": 1}),
+        (f"<p><b>Under 3:00: {v['band_k']}, or {v['band_pct']} percent.</b> These runners slowed little or "
+         f"not at all in the second half.</p>", {"t": 1, "k": 1, "s": 1}),
         (f"<p><b>3:00:00 to 3:04:59: {v['miss5']} percent.</b> More than a quarter of the group missed by under "
-         f"five minutes, under {math.ceil(300 / 21.0975)} seconds a kilometre over the second half.</p>", {"t": 1, "k": 1, "s": 1, "n": 1}),
+         f"five minutes: under {math.ceil(300 / 21.0975)} seconds a kilometre slower than 3:00 pace over the second half.</p>", {"t": 1, "k": 1, "s": 1, "n": 1}),
         (f"<p><b>3:15 or slower: {v['over15']} percent.</b> About one runner in nine lost a quarter of an hour or "
-         f"more. The median runner in the group finished in {v['band_med']}.</p>",
+         f"more, and another {mid} percent finished between 3:05 and 3:14. The median runner in the group finished in {v['band_med']}.</p>",
          {"t": 1, "k": 1, "s": 1, "n": 1, "f": 1}),
     ]
     return insight.scrolly(hero_spec(P), steps, from_state={"t": 0})
@@ -182,8 +190,11 @@ def claims(P, v):
          all(seg(g, k) < P["ladder"][0]["pace_km"] for g in (made, missed) for k in (0.0, 5, 10))),
         ("'fast after 25 km': missed loses more after 25 than before",
          missed["behind_at"]["40km"] - missed["behind_at"]["25km"] > 3 * (missed["behind_at"]["25km"] - missed["behind_at"]["half"])),
-        ("'nearly all of the deficit came in the last 12 km'",
-         missed["behind_at"]["30km"] < 60 < missed["behind_at"]["40km"] and missed["behind_at"]["half"] < 0),
+        ("'nearly all of the deficit came after 25 km'; 'still ahead at 25 km'",
+         missed["behind_at"]["25km"] < 0 and missed["behind_at"]["final"] - missed["behind_at"]["25km"] >
+         0.9 * (missed["behind_at"]["final"] - missed["behind_at"]["half"])),
+        ("'the lowest rate ... came on a morning that was not hot'",
+         W[min(B["by_year"], key=lambda x: x["share"])["year"]]["temp"] < HOT),
         ("'heat': the warmest race morning is 2025", P["weather"]["hottest"] == 2025),
         ("'the warmer, the fewer' (negative slope and correlation)", P["weather"]["pearson"] < -0.3 and P["weather"]["slope_pts_per_c"] < 0),
         ("1:28 'about a coin flip'", 40 <= C[88] <= 55),
@@ -222,23 +233,23 @@ def values(P):
         "yr_lo": p0(lo["share"]), "yr_lo_y": str(lo["year"]), "yr_hi": p0(hi["share"]), "yr_hi_y": str(hi["year"]),
         "recent_pct": p0(B["recent"]["share"]),
         "near_n": f"{P['near']['n']:,}", "near_pct": p0(P["near"]["half_under_90"]),
-        "pace3": pace(L3["pace_km"], 1), "mile3": pace(L3["pace_km"] * 1.609344, 1), "split5": pace(L3["pace_km"] * 5),
+        "pace3": pace(L3["pace_km"]), "mile3": pace(L3["pace_km"] * 1.609344), "split5": pace(L3["pace_km"] * 5),
         "half3": hms(L3["half_eq"]),
         "miss_3540": pace(seg(missed, 35)), "made_3540": pace(seg(made, 35)),
         "made_n": f"{made['n']:,}", "missed_n": f"{missed['n']:,}",
         "ahead_half": p0(-missed["behind_at"]["half"]), "behind30": p0(missed["behind_at"]["30km"]),
-        "behind40": hms(missed["behind_at"]["40km"], h=False).replace(":", " minutes ", 1) + " seconds",
+        "behind40": mins(missed["behind_at"]["40km"]),
+        "ahead25": p0(-missed["behind_at"]["25km"]),
         "c89": p0(C[89]), "c88": p0(C[88]), "c87": p0(C[87]), "c85": p0(C[85]),
-        "s3_half": hms(P["sub3_runners"]["median_half"]), "s3_final": hms(P["sub3_runners"]["median_final"]),
         "slow_s3": f"{sl['under 3:00']['median_pct']:.1f}", "slow_330": f"{sl['3:00 to 3:29']['median_pct']:.1f}",
         "slow_5h": p0(sl["5:00 or more"]["median_pct"]),
         "slope": f"{-P['weather']['slope_pts_per_c']:.1f}", "r_temp": f"{P['weather']['pearson']:.2f}".replace("-", "−"),
         "rep_pct": p0(P["repeat"]["had"]["share"]), "rep_n": f"{P['repeat']['had']['n']:,}",
-        "ag60m": AGE_GRADE_60M, "wr_pace": pace(WR / 42.195),
+        "wr_pace": pace(WR / 42.195),
         "zip_kb": f"{round(os.path.getsize(ZIP) / 1024) if os.path.exists(ZIP) else 0:,}",
     }
     # the fade arithmetic in the margin section: a 1:29:30 half slowed by the sub-3 median
-    fade = 5370 * (2 + sl["under 3:00"]["median_pct"] / 100)
+    fade = 5370 * (2 + round(sl["under 3:00"]["median_pct"], 1) / 100)
     v["fade_finish"] = hms(fade)
     v["stamp"] = insight.stamp(live=False)
     v["takeaways"] = insight.takeaways([
@@ -246,8 +257,9 @@ def values(P):
         f"for a sub-3, {v['band_pct']} percent finished under three hours.",
         "The runners who missed ran the first 15 km at the same pace as those who made it; nearly all of the time "
         "they lost came after 25 km, not in the first half.",
-        f"Heat makes it worse: {v['y24_pct']} percent of the group made it on a {v['t24']} °C morning in 2024, and "
-        f"{v['y25_pct']} percent on a {v['t25']} °C morning in 2025."])
+        f"Heat makes it worse: {v['y24_pct']} percent of the group made it on an {v['t24']} °C morning in 2024 and "
+        f"{v['y25_pct']} percent on a {v['t25']} °C morning in 2025, and over all the races warmer mornings went with "
+        f"lower rates."])
     claims(P, v)
     v["hero"] = hero(P, v)
     v["chart_curve"] = chart_curve(P)
