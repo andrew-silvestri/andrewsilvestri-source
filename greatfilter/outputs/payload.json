@@ -15,13 +15,13 @@
    },
    {
     "key": "cell",
-    "best": 1.635,
-    "wait": 1.315
+    "best": 1.65,
+    "wait": 1.3
    },
    {
     "key": "multi",
     "best": 0.574,
-    "wait": 1.061
+    "wait": 1.076
    },
    {
     "key": "tech",
@@ -30,7 +30,7 @@
    }
   ],
   "wait_min": 0.53,
-  "wait_max": 1.315,
+  "wait_max": 1.3,
   "wait_mean": 0.879,
   "longest": "cell"
  },

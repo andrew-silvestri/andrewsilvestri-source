@@ -12,7 +12,7 @@ Three computations, each small enough to read:
    does the time left over at the end. Sampling: a history in which all steps finish inside T has every wait
    below T, so each wait is drawn from its exponential cut off at T (inverse-CDF), and a history is kept when
    the waits sum to T or less. This gives the same conditional distribution as plain rejection, which keeps
-   about 4 histories in a billion for these means. known_answers() checks the sampler on two cases with an
+   about 3 histories in a billion for these means. known_answers() checks the sampler on two cases with an
    exact answer.
 
 3. The Sandberg, Drexler & Ord (2018) prior. Draw every Drake factor from the paper's Table 1 ranges

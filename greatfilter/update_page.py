@@ -156,24 +156,23 @@ def hero(P, v):
          f"The oldest widely accepted fossils are {g1(S.STEPS[0]['best'])} billion years old; disputed traces "
          f"reach {g1(X['contested_life_ga'])}. A molecular clock puts the last common ancestor of all life near "
          f"{g1(S.STEPS[0]['early'])} billion years ago. So life took at most {w['life']} billion years after "
-         "the first water, and perhaps much less. Every living thing descends from one ancestor, but how many times "
-         "life began is unknown."),
+         "the first water, and perhaps much less."),
         (2, f"Oxygen-making photosynthesis &middot; by {g1(S.STEPS[1]['best'])} billion years ago &middot; once",
          "Every plant and alga that splits water to make oxygen uses machinery invented once, by the ancestors of "
-         f"cyanobacteria; plants and algae took it in whole. Rocks show oxygen being made by "
+         f"cyanobacteria. Rocks show oxygen being made by "
          f"{g1(S.STEPS[1]['best'])} billion years ago, about {w['photo']} billion years after the first fossils; "
-         f"one reading of the genes puts the origin later, near 2.5. Oxygen built up in the air from "
+         f"one reading of the genes puts the origin no earlier than about 2.6. Oxygen built up in the air from "
          f"{g1(X['goe_ga'])} billion years ago."),
         (3, f"Complex cell &middot; {g1(S.STEPS[2]['best'])} billion years ago &middot; once",
          "The cell with a nucleus and mitochondria, from which every plant, animal and fungus descends, arose once, "
-         f"when one microbe came to live inside another. The oldest accepted fossils, {g1(S.STEPS[2]['best'])} "
+         f"when one microbe came to live inside another, at a date still disputed. The oldest accepted fossils, {g1(S.STEPS[2]['best'])} "
          f"billion years old, are from North China. The wait, about {w['cell']} billion years, is the longest in the chain. "
          '<a href="#once">Once, or many times?</a>'),
         (4, f"Complex multicellular life &middot; {ga_label(S.STEPS[3]['best'])} &middot; {S.STEPS[3]['count']} times",
-         f"Large fossils appear {ga_label(S.STEPS[3]['best']).replace(' Ma', ' million years ago')}, about "
-         f"{w['multi']} billion years after the complex cell. But life with tissues and organs evolved "
-         f"{S.STEPS[3]['count']} separate times, in animals, plants, algae and fungi. A step that happened six times "
-         "is a poor candidate for a filter."),
+         f"Large Ediacaran fossils at Mistaken Point, among the oldest known, date to "
+         f"{ga_label(S.STEPS[3]['best']).replace(' Ma', ' million years ago')}, about "
+         f"{w['multi']} billion years after the complex cell. Life with specialized cells and tissues evolved "
+         f"{S.STEPS[3]['count']} separate times, so this step is a poor candidate for a filter."),
         (5, "Technology &middot; 3.3 million years ago to 1895 &middot; once",
          f"Stone tools are {ga_label(S.STEPS[4]['best']).replace(' Ma', ' million')} years old, Homo sapiens about "
          f"{X['sapiens_ka']} thousand, and radio dates from {X['radio_year']}. Many animals use tools; one lineage "
@@ -181,7 +180,7 @@ def hero(P, v):
          "years."),
         (6, "Time left &middot; about 1 billion years",
          f"The five waits lie between {g1(c['wait_min'])} and {g1(c['wait_max'])} billion years, and the time left is "
-         "about the same. A simple model predicts that pattern whatever the steps' difficulty. "
+         "about the same. "
          '<a href="#longest">Does the longest wait mark the hardest step?</a>'),
     ]
     desc = ("A timeline from 4.6 billion years ago to 1.5 billion years ahead. The habitable window runs from 4.4 "
@@ -193,8 +192,9 @@ def hero(P, v):
     out = ['<figure class="chain wide" aria-label="The chain of steps">',
            '<div class="chain-fig">', f'<p id="gf-desc" hidden>{E(desc)}</p>',
            timeline(P, True), timeline(P, False),
-           '<p class="chain-key">Dot: the oldest accepted evidence. Shaded box: the published range. Line: the wait '
-           'since the step before. Blue &ldquo;once&rdquo;: happened a single time on Earth.</p>', '</div>',
+           '<p class="chain-key">Ga: billions of years ago; Gyr: billions of years. Dot: the oldest accepted evidence. '
+           'Shaded box: the published range. Line: the wait since the step before. Dotted boxes: the uncertain '
+           'start and end of the window. Blue &ldquo;once&rdquo;: happened a single time on Earth.</p>', '</div>',
            '<div class="chain-steps">']
     for k, head, text in cards:
         out.append(f'<div class="step" data-step="{k}"><p class="ev">{head}</p><p>{text}</p></div>')
@@ -212,7 +212,7 @@ PHONE_TRAIT = {"CAM photosynthesis": "CAM plants", "C4 photosynthesis": "C4 plan
                "Simple multicellularity": "Simple multicell", "Farming, by humans": "Farming, human",
                "Farming, by insects": "Farming, insect", "Complex multicellularity": "Complex multicell",
                "Complex cognition": "Cognition", "Powered flight": "Flight",
-               "Oxygen-making photosynthesis": "O2 photosynth.", "Complex (eukaryotic) cell": "Complex cell",
+               "Oxygen-making photosynthesis": "O2 photosynth.", "Primary plastids": "Plastids", "Complex (eukaryotic) cell": "Complex cell",
                "Cumulative technology": "Technology"}
 
 
@@ -298,7 +298,7 @@ def fig_hard(P, v):
                f"Five steps, each with an exponential waiting time; the left column gives each step's average wait "
                f"if it ran alone. Bars: the average wait over the {v['n_kept']} simulated histories in which all five "
                f"finish inside a {g1(h['T'])}-billion-year window. The dashed line is the window divided by "
-               f"{int(round(h['T'] / h['flat']))}, the number of hard steps plus one. These are averages: in one history "
+               f"{int(round(h['T'] / h['flat']))}, the number of hard steps (all but the first) plus one. These are averages: in one history "
                f"in twenty, the hardest step takes more than {h['p95'][-1]:.1f} billion years. "
                "Model after Carter 1983, Hanson 1998 and Watson 2008; this page's simulation.")
 
@@ -345,7 +345,7 @@ def claims(P, v):
     k = [
         ("h1: 'Three of Earth's five steps ... happened only once'", len(S.STEPS) == 5 and len(once) == 3),
         ("'the longest wait ... from oxygen-making photosynthesis to the complex cell'", c["longest"] == "cell"),
-        ("hard steps 'about {h_dur}': every step with mean > T within 10% of T/(n+1)",
+        ("hard steps 'between {h_lo} and {h_hi}': every step with mean > T within 10% of T/(n+1)",
          all(abs(d - h["flat"]) / h["flat"] < 0.10 for d, m in zip(h["dur"], h["means"]) if m > h["T"])),
         ("'the time left over at the end is the same size'", abs(h["left"] - h["flat"]) / h["flat"] < 0.05),
         ("'a step a thousand times harder ... does not take longer': 1,000 Gyr and 10,000 Gyr steps within 2%",
@@ -354,7 +354,7 @@ def claims(P, v):
          abs(c["wait_mean"] - c["T"] / 6) / (c["T"] / 6) < 0.25),
         ("'about {left} billion years ... remain' is about the size of the waits",
          c["wait_min"] <= S.WINDOW["end_gyr"] <= c["wait_max"]),
-        ("'about four fifths' / used share 0.77-0.85", 0.77 <= c["used"] <= 0.85),
+        ("card 0 'about {used} percent has passed': used share 0.77-0.85", 0.77 <= c["used"] <= 0.85),
         ("'about {p_alone} percent': our reproduction within 1 point of the paper",
          abs(sdo["p_alone"] - S.SDO["paper_p_alone"]) < 0.01),
         ("'about a ninth of humanity's total energy supply': 0.10-0.125",
@@ -386,7 +386,10 @@ def values(P):
         "n_insect": {9: "nine"}.get(org["Farming, by insects"][1], str(org["Farming, by insects"][1])),
         "w_cell": g1([r for r in c["rows"] if r["key"] == "cell"][0]["wait"]),
         "n_hard": {5: "five"}[len(h["means"])], "h_min": g1(h["means"][0]), "h_max": f"{h['means'][-1]:,.0f}",
-        "T": g1(c["T"]), "h_dur": f"{h['flat']:.1f}", "h_left": f"{h['left']:.1f}",
+        "T": g1(c["T"]), "h_left": f"{h['left']:.1f}",
+        "h_lo": f"{min(d for d, m in zip(h['dur'], h['means']) if m > h['T']):.2f}",
+        "h_hi": f"{max(d for d, m in zip(h['dur'], h['means']) if m > h['T']):.2f}",
+        "n_ahead": {5: "five", 6: "six"}[len(S.AHEAD)], "bl_gbt": f"{K['bl_gbt']:,}",
         "w_min": g1(c["wait_min"]), "w_max": g1(c["wait_max"]), "w_mean": g1(c["wait_mean"]),
         "left": g1(S.WINDOW["end_gyr"]), "end_lo": g1(S.WINDOW["end_band"][0]), "end_hi": g1(S.WINDOW["end_band"][1]),
         "start": g1(S.WINDOW["start_ga"]), "earth": "4.5",
@@ -413,13 +416,13 @@ def values(P):
     v["takeaways"] = insight.takeaways([
         f"Life appeared within {life_wait} billion years of the first water on Earth, but oxygen-making "
         "photosynthesis, the complex cell and technology each arose only once, so if a Great Filter lies in the "
-        "past, it is most likely one of those three.",
-        f"The five waits between the big steps all lie between {v['w_min']} and {v['w_max']} billion years; a "
+        "past, those three are the leading candidates.",
+        f"The five waits between the big steps all lie between {v['w_min']} and {v['w_max']} billion years. A "
         "simple model shows that steps of very different difficulty look evenly spaced in hindsight, so the longest "
-        "wait does not mark the hardest step.",
-        "Searches rule out galaxies whose civilizations turn most starlight into heat, but radio searches have "
-        "covered a tiny fraction of the possible signals, and estimates of a filter ahead are judgements that "
-        "differ six-fold even within one survey."])
+        "wait need not mark the hardest step.",
+        "Searches rule out galaxies whose civilizations turn more than 85 percent of their starlight into heat, but radio searches have "
+        "covered a tiny fraction of the possible signals. Estimates of extinction risk ahead are judgments, and "
+        f"they differ {v['xpt_ratio']}-fold within one forecasting tournament."])
     v["hero"] = hero(P, v)
     v["fig_origins"] = fig_origins(v)
     v["fig_hard"] = fig_hard(P, v)

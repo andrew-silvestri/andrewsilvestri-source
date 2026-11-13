@@ -33,16 +33,16 @@ STEPS = [
     {"key": "photo", "name": "Oxygen-making photosynthesis", "short": "O2 photo",
      "best": 2.95, "band": (2.95, 2.5),
      "what": "oxygen being made by 2.95 Ga on manganese and molybdenum evidence; another reading puts the origin "
-             "near 2.5-2.6 Ga, just before oxygen built up in the air from 2.43 Ga",
+             "no earlier than about 2.5-2.6 Ga, just before oxygen built up in the air from 2.43 Ga",
      "count": 1, "count_word": "once",
      "refs": ["planavsky2014", "shih2017", "poulton2021"]},
     {"key": "cell", "name": "Complex (eukaryotic) cell", "short": "Cell",
-     "best": 1.635, "band": (1.65, 1.62),
-     "what": "oldest accepted eukaryote fossils; molecular clocks put the common ancestor of all eukaryotes "
+     "best": 1.65, "band": (1.67, 1.63),
+     "what": "oldest accepted eukaryote fossils, single cells from North China (Miao et al. 2024; band from Mills et al. 2025, Fig. 1); molecular clocks put the common ancestor of all eukaryotes "
              "between 1.84 and 1.21 Ga",
      "count": 1, "count_word": "once",
      "refs": ["miao2024", "betts2018"]},
-    {"key": "multi", "name": "Complex multicellular life", "short": "Animals",
+    {"key": "multi", "name": "Complex multicellular life", "short": "Multicell",
      "best": 0.574, "band": (0.5748, 0.5735),
      "what": "large Ediacaran fossils at Mistaken Point, 574 Ma; the Cambrian begins 538.8 Ma",
      "count": 6, "count_word": "6 times",
@@ -68,10 +68,10 @@ ORIGINS = [
     ("Farming, by humans", 11, "11+", False, "larson2014", "centres of plant and animal domestication"),
     ("Farming, by insects", 9, "9", False, "mueller2005", "ants once, termites once, beetles seven times"),
     ("Complex multicellularity", 6, "6", True, "knoll2011", "animals, land plants, red and brown algae, two fungi"),
-    ("Complex cognition", 5, "5+", False, "emery2004", "this page's tally of lineages; no formal count exists"),
+    ("Complex cognition", 5, "5+", False, "emery2004", "this page's tally: apes, whales and dolphins, crows, parrots, octopuses"),
     ("Powered flight", 4, "4", False, "dudley2007", "insects, pterosaurs, birds, bats"),
     ("Writing", 4, "4", False, "woods2010", "Egypt's independence is debated"),
-    ("Chloroplasts", 2, "2", False, "ponce2017", "primary endosymbiosis of a cyanobacterium"),
+    ("Primary plastids", 2, "2", False, "ponce2017", "primary endosymbiosis of a cyanobacterium"),
     ("Oxygen-making photosynthesis", 1, "1", True, "fischer2016", ""),
     ("Complex (eukaryotic) cell", 1, "1", True, "roger2017", ""),
     ("Cumulative technology", 1, "1", True, "tennie2009", "culture that builds on itself"),
@@ -93,7 +93,7 @@ SDO = {"R*": (1, 100), "fp": (0.1, 1), "ne": (0.1, 1), "fi": (0.001, 1), "fc": (
 # --------------------------------------------------------------- the searched sky ---
 SKY = {
     "ghat_galaxies": 100_000, "ghat_max_frac": 0.85,            # Griffith et al. 2015
-    "bl_stars": 1327, "bl_eirp_w": 2.1e12, "bl_frac": 0.0045,   # Price et al. 2020
+    "bl_stars": 1327, "bl_gbt": 882, "bl_eirp_w": 2.1e12, "bl_frac": 0.0045,   # Price et al. 2020: GBT L-band, 95%
     "haystack": 6.0e-18, "haystack_litres": 8000,               # Wright, Kanodia & Lubar 2018
     "k1_w": 4e12,                                               # Kardashev 1964, Type I (4e19 erg/s)
     "human_ej": 600.31, "human_year": 2025,                     # Energy Institute Statistical Review 2026
@@ -104,10 +104,9 @@ SKY = {
 # (what, value as printed, kind, who, year, source key)
 AHEAD = [
     ("Existential catastrophe this century", "about 1 in 6", "one person's estimate", "Toby Ord", 2020, "ord2020"),
-    ("of which from unaligned AI", "about 1 in 10", "one person's estimate", "Toby Ord", 2020, "ord2020"),
     ("Human extinction by 2100", "1%", "median of superforecasters", "XPT tournament", 2023, "karger2023"),
     ("Human extinction by 2100", "6%", "median of domain experts", "XPT tournament", 2023, "karger2023"),
-    ("Extremely bad outcome from advanced AI", "5%", "median of 2,778 AI researchers", "Grace et al.", 2024,
+    ("Extremely bad outcome from advanced AI", "5%", "median, survey of 2,778 AI researchers", "Grace et al.", 2024,
      "grace2024"),
     ("Extinction from natural causes, per year", "below 1 in 14,000", "bound from the human fossil record",
      "Snyder-Beattie, Ord & Bonsall", 2019, "sb2019"),
