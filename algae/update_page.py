@@ -70,14 +70,14 @@ def row_text(f, C):
         net = f"{n(f['held'][1])} t ({rng(f['held'])})"
     cost = {"plankton": "natural cycle, no cost",
             "kelp": "natural cycle, no cost",
-            "iron": f"under {usd(C['iron']['lo'])} to over {usd(C['iron']['hi'])} a t CO2",
-            "seaweed": f"{usd(C['seaweed']['lo'])} to {usd(C['seaweed']['hi'])} a t CO2",
+            "iron": f"under {usd(C['iron']['lo'])} to over {usd(C['iron']['hi'])} per t CO2, model",
+            "seaweed": f"{usd(C['seaweed']['lo'])} to {usd(C['seaweed']['hi'])} per t CO2, model",
             "pondfuel": "not a removal",
-            "pondburied": f"{usd(C['pondburied']['lo'])} to {usd(C['pondburied']['hi'])} a t CO2"}[k]
+            "pondburied": f"{usd(C['pondburied']['lo'])} to {usd(C['pondburied']['hi'])} per t CO2, model"}[k]
     return f["label"], (fixed, deep, net), cost
 
 
-ROW_H, TOP, AXIS_H = 74, 6, 34
+ROW_H, TOP, AXIS_H = 84, 6, 34
 
 
 def funnel_svg(P, W, cls):
@@ -115,7 +115,7 @@ def funnel_svg(P, W, cls):
             out.append(f'<path class="wh" data-o="2" d="M{x(lo)},{cy}H{x(hi)}M{x(lo)},{cy - 6}V{cy + 6}'
                        f'M{x(hi)},{cy - 6}V{cy + 6}"/>')
         out.append(f'<path class="zero" d="M{x(0)},{by - 3}V{by + 27}"/>')
-        out.append(f'<text class="cost" data-o="3" x="0" y="{by + 42}">{html.escape(cost)}</text>')
+        out.append(f'<text class="cost" data-o="3" x="0" y="{by + 40}">{html.escape(cost)}</text>')
         out.append('</g>')
     ya = TOP + ROW_H * len(F) - 4
     for v in (-50, 0, 50, 100):
@@ -144,9 +144,13 @@ def desc(P):
     parts = []
     for f in P["funnel"]:
         label, vals, cost = row_text(f, P["costs"])
-        d = "no global estimate" if f["deep"][1] is None else f"{n(f['deep'][1])} tonnes"
-        parts.append(f"{label}: of 100 tonnes of carbon fixed, {d} reach 1,000 meters or burial; "
-                     f"net held out of the air after 100 years {vals[2].replace(' t ', ' tonnes ')}; cost {cost}.")
+        if f["deep"][1] is None:
+            d = "no global estimate of the share that reaches 1,000 meters"
+        else:
+            k = round(f["deep"][1])
+            d = f"{n(k)} {'tonne reaches' if k == 1 else 'tonnes reach'} 1,000 meters or burial"
+        parts.append(f"{label}: of 100 tonnes of carbon fixed, {d}; net held out of the air after 100 years: "
+                     f"{vals[2].replace(' t ', ' tonnes ')}; cost: {cost}.")
     return " ".join(parts)
 
 
@@ -159,7 +163,8 @@ def hero(P, steps):
             f'<div class="funnel-fig">\n<p id="algae-desc" hidden>{html.escape(desc(P))}</p>\n'
             f'{funnel_svg(P, 900, "f-wide")}\n{funnel_svg(P, 320, "f-phone")}\n'
             f'<p class="funnel-key"><span class="k0"></span>fixed <span class="k1"></span>deep or buried '
-            f'<span class="k2"></span>net at 100 years</p>\n</div>\n'
+            f'<span class="k2"></span>net at 100 years <span class="k3"></span>natural gross flow '
+            f'<span class="k4"></span>net emission</p>\n</div>\n'
             f'<div class="funnel-steps">\n{cards}\n</div>\n</figure>')
 
 
@@ -185,7 +190,7 @@ def depth_svg(P, W, cls):
     out.append(f'<text class="ax" x="{(L + W - R) / 2}" y="{H - 4}" text-anchor="middle">'
                f'share still out of the air after 100 years</text>')
     for d, v in sorted(P["siegel"]["at100"].items(), key=lambda kv: int(kv[0])):
-        if int(d) in (208, 1022, 2100):
+        if int(d) in (208, 530, 1022, 2100):
             px, py = x(v), y(int(d))
             if v < .6:      # shallow: the curve runs right of the point, so the label sits above it
                 lab = f'<text class="lab" x="{px + 8}" y="{py - 6}" text-anchor="start">{round(100 * v)}%</text>'
@@ -215,7 +220,8 @@ def claims(P):
     best = max(P["funnel"], key=lambda f: f["held"][1])
     c = [
         ("'nearly half' of all NPP is ocean", .4 < N["ocean"] / (N["ocean"] + N["land"]) < .5),
-        ("'more than four times' fossil emissions", 4 < N["ocean"] / G["fossil"] < 5),
+        ("'about four times' fossil emissions, both NPP figures", 3.5 < N["sat"][0] / G["fossil"] and
+         N["ocean"] / G["fossil"] < 5),
         ("ocean sink is a small share of ocean NPP (under a tenth)", G["ocean10"] / N["ocean"] < .1),
         ("retention rises with depth", S["208"] < S["530"] < S["1022"] < S["2100"] < S["3083"]),
         ("'under a tenth' at 208 m", S["208"] < .1),
@@ -225,9 +231,15 @@ def claims(P):
         ("buried pond algae second", sorted(P["funnel"], key=lambda f: -f["held"][1])[1]["key"] == "pondburied"),
         ("fuel route is net negative in every case", F["pondfuel"]["held"][2] < 0),
         ("iron central is a few tonnes", 0 < F["iron"]["held"][1] < 5),
+        ("'Thirteen open-ocean experiments'", P["record"]["iron_experiments"] == 13),
+        ("iron: net central exceeds deep central (text explains why)", F["iron"]["held"][1] > F["iron"]["deep"][1]),
+        ("'about 1 to 2 tonnes of every 100' past 1,000 m", 1 <= round(100 * N["flux1000"][0] / N["ocean"]) and
+         round(100 * N["flux1000"][1] / N["ocean"]) == 2),
+        ("seaweed central air share below DeAngelo's 0.6 threshold for costs under $400",
+         F["seaweed"]["from_air"][1] < C["seaweed"]["below400_air"]),
+        ("'less than half a tonne of each 100' buried", 100 * N["burial"][1] / N["ocean"] < .5),
         ("seaweed sunk on a shelf keeps under 5 t", F["seaweed"]["shelf"] < 5),
-        ("'none of the engineered routes is cheaper in models than ... DAC paid' (seaweed best > CDR.fyi average)",
-         C["seaweed"]["best"] > C["cdrfyi_2024"]),
+        ("seaweed best case above the CDR.fyi average price", C["seaweed"]["best"] > C["cdrfyi_2024"]),
         ("'even the high case leaves a quarter on the table' (seaweed high < 75)", F["seaweed"]["held"][2] < 75),
     ]
     bad = [name for name, ok in c if not ok]
@@ -243,19 +255,25 @@ def values(P):
         "npp": f"{N['ocean']:g}", "npp_share": f"{100 * N['ocean'] / (N['ocean'] + N['land']):.0f}",
         "npp_macro": f"{N['macro']:g}", "npp_sat_lo": f"{N['sat'][0]:g}", "npp_sat_hi": f"{N['sat'][1]:g}",
         "fossil": f"{G['fossil']:.1f}", "gcb_year": str(G["last"]), "npp_x": f"{N['ocean'] / G['fossil']:.1f}",
+        "npp_x_lo": f"{N['sat'][0] / G['fossil']:.1f}", "npp_span_lo": f"{N['span'][0]:g}",
+        "npp_span_hi": f"{N['span'][1]:g}", "npp_round_lo": f"{round(N['sat'][0], -1):.0f}",
+        "npp_round_hi": f"{round(N['ocean'], -1):.0f}",
         "ocean_sink": f"{G['ocean10']:.1f}", "sink_from": str(G["from"]), "sink_to": str(G["last"]),
-        "export_lo": str(N["export"][0]), "export_hi": str(N["export"][1]), "flux1000": f"{N['flux1000']:g}",
+        "export_lo": str(N["export"][0]), "export_hi": str(N["export"][1]), "flux_lo": f"{N['flux1000'][0]:g}", "flux_hi": f"{N['flux1000'][1]:g}",
         "burial_lo": f"{N['burial'][0]:g}", "burial_hi": f"{N['burial'][1]:g}",
         "pl_deep": n(pl["deep"][1]), "pl_gross_r": rng(pl["gross"]),
         "kp_gross_r": rng(kp["gross"]),
         "r208": f"{100 * S['208']:.0f}", "r530": f"{100 * S['530']:.0f}", "r1022": f"{100 * S['1022']:.0f}",
         "r2100": f"{100 * S['2100']:.0f}", "s208_50": f"{100 * P['siegel']['check_208_50']:.0f}",
         "sw_air": f"{sw['from_air'][1]:.2f}", "sw_reach": f"{sw['reach'][1]:.2f}", "sw_ret": f"{sw['retained'][1]:.2f}",
-        "sw_air_lo": f"{sw['from_air'][0]:.2f}", "sw_air_hi": f"{sw['from_air'][2]:.2f}",
+        "sw_air_hi": f"{sw['from_air'][2]:.2f}",
         "sw_after_air": n(100 * sw["from_air"][1]), "sw_after_reach": f"{100 * sw['from_air'][1] * sw['reach'][1]:.1f}",
         "sw_held": n(sw["held"][1]), "sw_range": rng(sw["held"]), "sw_shelf": f"{sw['shelf']:.1f}",
-        "deangelo": f"{R['removal_fraction_deangelo']:.1f}",
-        "ir_held": n(ir["held"][1]), "ir_range": rng(ir["held"]), "ir_n": str(R["iron_experiments"]),
+        "dea_lo": f"{R['deangelo_range'][0]:.1f}", "dea_hi": f"{R['deangelo_range'][1]:g}",
+        "lit_lo": f"{R['lit_range'][0]:.1f}", "lit_hi": f"{R['lit_range'][1]:.2f}",
+        "c_below400": f"{C['seaweed']['below400_air']:.1f}", "berger_lo": f"{R['berger_with_feedback']:.2f}",
+        "ir_held": n(ir["held"][1]), "ir_range": rng(ir["held"]), "ir_export": n(ir["export"][1]),
+        "ir_ratio_hi": f"{ir['ratio'][2]:.2f}", "ir_n": str(R["iron_experiments"]),
         "ir_first": str(R["iron_first"]), "ir_last": str(R["iron_last"]), "eifex": str(R["eifex_year"]),
         "lohafex": str(R["lohafex_year"]), "lohafex_t": str(R["lohafex_iron_t"]), "haida": str(R["haida_year"]),
         "haida_t": str(R["haida_t"]),
@@ -278,26 +296,27 @@ def values(P):
         "zip_kb": f"{round(os.path.getsize(ZIP) / 1024) if os.path.exists(ZIP) else 0:,}",
     }
     v["takeaways"] = insight.takeaways([
-        f"Ocean algae fix about {v['npp']} billion tonnes of carbon a year, {v['npp_x']} times what fossil fuels "
-        f"emit, but that flow was in balance before industry and removes almost none of the added carbon.",
+        f"Ocean algae fix about {v['npp_round_lo']} to {v['npp_round_hi']} billion tonnes of carbon a year, about "
+        f"four times what fossil fuels emit, but that flow was in balance before industry and removes almost none "
+        f"of the added carbon.",
         f"Of 100 tonnes of carbon fixed by farmed seaweed and sunk in deep water, about {v['sw_held']} tonnes are "
         f"still out of the air after a century in the central case, against about {sw['shelf']:.1f} tonnes if "
-        f"the same crop is sunk on a continental shelf.",
+        f"the same crop is released at 208 meters.",
         f"Algae turned into fuel or feed remove nothing: the carbon goes back to the air, and the energy used "
         f"leaves a net emission."])
     steps = [
-        f"<b>Start with 100 tonnes.</b> Each row is one route. The grey bar is 100 tonnes of carbon fixed by "
+        f"<b>Start with 100 tonnes.</b> Each row is one route. The gray bar is 100 tonnes of carbon fixed by "
         f"photosynthesis, the same for every route.",
-        f"<b>How much goes deep.</b> The darker grey bar is the part that sinks below 1,000 meters or is buried. For natural "
+        f"<b>How much goes deep.</b> The darker gray bar is the part that sinks below 1,000 meters or is buried. For natural "
         f"plankton it is about {v['pl_deep']} tonnes. Sunk seaweed and buried pond algae send most of their carbon "
         f"down by design.",
         f"<b>How much stays out of the air.</b> The blue bar is the net carbon taken from the air and still out of it "
         f"100 years later; the whisker is the published range. Sunk seaweed keeps about {v['sw_held']} tonnes, buried "
-        f"pond algae about {v['pb_held']}, iron about {v['ir_held']}. Natural algae keep none net: their outlined "
-        f"gross flow is matched by carbon coming back up. Fuel ends below zero.",
-        f"<b>What it costs.</b> The bottom line of each row is the published cost estimate per tonne of CO2. All are "
-        f"model figures. For comparison, buyers of direct air capture through Frontier have paid {v['c_dac']} a "
-        f"tonne on average.",
+        f"pond algae about {v['pb_held']}, iron about {v['ir_held']}. Natural algae keep none net: their dashed "
+        f"gross flow is matched by carbon coming back up. Fuel ends below zero, a net emission.",
+        f"<b>What it costs.</b> The line under each bar is the published cost estimate per tonne of CO2, all from "
+        f"models. For comparison, Frontier lists an average contracted price of {v['c_dac']} a tonne for direct air "
+        f"capture, which stores carbon for thousands of years.",
     ]
     v["hero"] = hero(P, steps)
     claims(P)
@@ -320,13 +339,17 @@ def keep_from_shipped(text, shipped):
     return re.sub(r'(href|src|srcset)="([^"?]+\.(?:css|js|png))"', stamp, text)
 
 
+# values used only inside generated parts (takeaways, step cards), not as template placeholders
+INTERNAL = {"npp_round_lo", "npp_round_hi", "pl_deep", "ir_n", "ir_ratio_hi"}
+
+
 def render(P):
     t = open(TEMPLATE, encoding="utf-8").read()
     v = values(P)
     missing = sorted(set(re.findall(r"{{(\w+)}}", t)) - set(v) - {"nav"})
     if missing:
         raise SystemExit(f"template placeholders without a value: {missing}")
-    unused = sorted(set(v) - set(re.findall(r"{{(\w+)}}", t)))
+    unused = sorted(set(v) - set(re.findall(r"{{(\w+)}}", t)) - INTERNAL)
     if unused:
         raise SystemExit(f"values the template no longer uses: {unused}")
     for k, val in v.items():

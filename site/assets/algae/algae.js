@@ -9,7 +9,7 @@
  *   </figure>
  *
  * The page is complete without this file: every bar and the final values show. With motion on
- * (assets/motion.js) the figure goes live: it sticks, and the step whose card crosses a line 78 percent of
+ * (assets/motion.js) the figure goes live: it sticks, and the step whose card crosses a line 82 percent of
  * the way down the screen sets the stage: the drawing sticks at the top and covers the middle. Elements of a later stage get .off; the value text of the current
  * stage (the final one from stage 2 on) gets .on. With motion off, or on "motionchange" to off,
  * it tears down.
@@ -32,7 +32,7 @@
       es.forEach(function (e) {
         if (e.isIntersecting) self.set(+e.target.getAttribute('data-step'));
       });
-    }, { rootMargin: '-78% 0px -21% 0px' });
+    }, { rootMargin: '-82% 0px -17% 0px' });
   }
   Funnel.prototype.set = function (k) {
     this.cur = k;
@@ -49,7 +49,7 @@
     this.fig.classList.add('is-live');
     var io = this.io;
     this.steps.forEach(function (s) { io.observe(s); });
-    var mid = window.innerHeight * 0.78, k = 0;
+    var mid = window.innerHeight * 0.82, k = 0;
     this.steps.forEach(function (s) { if (s.getBoundingClientRect().top < mid) k = +s.getAttribute('data-step'); });
     this.set(k);
   };

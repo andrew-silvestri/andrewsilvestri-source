@@ -320,6 +320,21 @@
   {
    "key": "iron",
    "label": "Iron fertilization",
+   "export": [
+    0,
+    10,
+    50
+   ],
+   "ratio": [
+    0,
+    0.22,
+    0.51
+   ],
+   "n2o": [
+    0,
+    0.07,
+    0.03
+   ],
    "deep": [
     0,
     1,
@@ -327,11 +342,11 @@
    ],
    "held": [
     0,
-    2,
-    30
+    2.0,
+    24.7
    ],
    "gross": null,
-   "note": "Low: LOHAFEX and SOIREE, no extra export. High: EIFEX-like deep export with the model's best region.",
+   "note": "Low: LOHAFEX and SOIREE, no extra export. Central: extra export 10 percent of extra production (mean of six experiments, derived from de Baar et al. 2008 Table 3), of which at least 90 percent is respired above 1,000 m (so 1 t deep). High: EIFEX, at least half sinking below 1,000 m. Net = export x Oschlies ratio of extra ocean uptake from the air to extra export at 100 years (1-yr pulse 0.22; best region 0.51) x (1 - nitrous-oxide offset).",
    "src": "de Baar et al. 2005 and 2008; Smetacek et al. 2012; Oschlies et al. 2010 Tables 1-2 (0.22 of extra export becomes air uptake at 100 years; N2O offset 3-9 percent)"
   },
   {
@@ -440,6 +455,7 @@
    "best": 480,
    "nutrient": 830,
    "typ_lo": 1120,
+   "below400_air": 0.6,
    "text": "$480 in the best case; typical model runs $1,120 to $2,090 (DeAngelo et al. 2023)"
   },
   "seaweed_nasem": 100,
@@ -465,7 +481,15 @@
   "running_tide_year": 2023,
   "running_tide_shut": "June 2024",
   "brilliant_planet_admin": "November 2024",
-  "removal_fraction_deangelo": 0.5,
+  "berger_with_feedback": 0.58,
+  "deangelo_range": [
+   0.4,
+   1.0
+  ],
+  "lit_range": [
+   0.4,
+   0.75
+  ],
   "co2_per_dry_t": 1.83,
   "nrel_energy": 0.36,
   "oschlies_ratio": 0.22
@@ -478,11 +502,18 @@
    38.8,
    42.1
   ],
+  "span": [
+   32,
+   71
+  ],
   "export": [
    4,
    10
   ],
-  "flux1000": 0.65,
+  "flux1000": [
+   0.65,
+   0.95
+  ],
   "burial": [
    0.02,
    0.2

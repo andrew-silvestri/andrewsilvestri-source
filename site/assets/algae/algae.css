@@ -25,6 +25,8 @@
 .funnel-key .k0 { background: var(--faint); }
 .funnel-key .k1 { background: var(--rule); }
 .funnel-key .k2 { background: var(--acc); }
+.funnel-key .k3 { background: none; border: 1.5px dashed var(--dim); box-sizing: border-box; }
+.funnel-key .k4 { background: var(--moss); }
 
 .funnelfig .step { margin: 0 0 18px; background: var(--card); border: 1px solid var(--rule); padding: 14px 18px; }
 .funnelfig .step > p { margin: 0; }
@@ -46,7 +48,7 @@
 .funnel .b1 { fill: var(--rule); }
 .funnel .b2 { fill: var(--acc); }
 .funnel .b2.neg { fill: var(--moss); }
-.funnel .bg { fill: none; stroke: var(--moss); stroke-width: 1.5; stroke-dasharray: 4 3; }
+.funnel .bg { fill: none; stroke: var(--dim); stroke-width: 1.5; stroke-dasharray: 4 3; }
 .funnel .wh { fill: none; stroke: var(--ink); stroke-width: 1.25; }
 .funnel .zero { stroke: var(--dim); stroke-width: 1; }
 .funnel .tick { stroke: var(--dim); stroke-width: 1; }

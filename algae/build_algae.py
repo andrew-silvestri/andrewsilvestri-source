@@ -91,6 +91,8 @@ def funnels(S):
             f["retained"] = rd
             f["held"] = tuple(round(100 * a * b * c, 1) for a, b, c in zip(f["from_air"], f["reach"], rd))
             f["shelf"] = round(100 * f["from_air"][1] * f["reach"][1] * S["at100"][208], 1)
+        if f["key"] == "iron":
+            f["held"] = tuple(round(e * r * (1 - x), 1) for e, r, x in zip(f["export"], f["ratio"], f["n2o"]))
         if f["key"] == "pondburied":
             f["held"] = tuple(round(100 * h * a * t - e, 1)
                               for h, a, t, e in zip(f["harvest"], f["from_air"], f["tomb"], f["energy"]))
@@ -106,7 +108,7 @@ def main():
     S = siegel()
     F = funnels(S)
     P = {"gcb": G, "siegel": S, "funnel": F, "costs": PR.COSTS, "record": PR.RECORD,
-         "npp": {"ocean": PR.NPP_OCEAN, "macro": PR.NPP_MACRO, "land": PR.NPP_LAND, "sat": PR.NPP_SAT,
+         "npp": {"ocean": PR.NPP_OCEAN, "macro": PR.NPP_MACRO, "land": PR.NPP_LAND, "sat": PR.NPP_SAT, "span": PR.NPP_SPAN,
                  "export": PR.EXPORT_100M, "flux1000": PR.FLUX_1000M, "burial": PR.BURIAL}}
     os.makedirs(os.path.dirname(OUT), exist_ok=True)
     with open(OUT, "w", encoding="utf-8", newline="\n") as f:
