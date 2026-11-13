@@ -121,6 +121,7 @@ def placita():
         "low": dict(low), "high": dict(high),
         "kappa5": round(k5, 3), "agree5": round(po5, 3), "kappa2": round(k2, 3), "agree2": round(po2, 3),
         "q_scorable": len(q_scor), "q_with_strong": len(q_hit), "q_all_wrong": len(q_none),
+        "q_strong_with_rival": sum(1 for r in rivals if r > 0),
         "rivals_median": statistics.median(rivals) if rivals else 0,
         "rivals_mean": round(statistics.mean(rivals), 2) if rivals else 0,
         "by_book": by_book,

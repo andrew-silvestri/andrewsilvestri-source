@@ -95,6 +95,7 @@
   "q_scorable": 108,
   "q_with_strong": 28,
   "q_all_wrong": 22,
+  "q_strong_with_rival": 26,
   "rivals_median": 3.0,
   "rivals_mean": 3.57,
   "by_book": {

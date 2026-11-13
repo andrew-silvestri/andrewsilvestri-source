@@ -191,8 +191,8 @@ def timeline(P, v):
             f"event (square), sorted by the year of the idea and coloured by grade. The ancient lines cross about "
             f"two thousand years; the lines that start after 1600 are short.")
     cap = (f"Each line runs from a philosopher's idea to the event that confirmed or refuted it. The ancient "
-           f"hits waited a median of {v['gap_anc']} years; wrong ideas from after 1600 lasted a median of "
-           f"{v['gap_modmiss']}.")
+           f"hits waited a median of {v['gap_anc']} years; among ideas from 1400 on, wrong ones lasted a median of "
+           f"{v['gap_modmiss']} and right ones waited {v['gap_mod']}.")
     return "\n".join([
         '<figure class="wide tl-fig" aria-label="From idea to decisive event">',
         f'<p id="tl-desc" hidden>{E(desc)}</p>',
@@ -204,15 +204,18 @@ def timeline(P, v):
 
 
 def cases_table(P):
-    out = ['<details class="wide cases"><summary>All {} cases, with the event that decided each</summary>'
+    # Open, not in a <details>: test_invariants rule 5 must reach the scroller by Tab. A figure on the wide track: tests/test_layout.js allows one left edge for main's
+    # children, and a figure is a picture centred on the measure (oxygen's hero makes the same move).
+    out = ['<figure class="wide cases"><figcaption>All {} cases, with the event that decided each</figcaption>'
            .format(len(P["cases"]["rows"])),
-           '<table><thead><tr><th>Idea</th><th class="n">Year</th><th>Decisive event</th><th class="n">Year</th>'
+           '<p class="small dim" id="cases-cue">On a narrow screen the table scrolls sideways.</p>'
+           '<table tabindex="0" data-scroll-affordance="#cases-cue" aria-label="All cases"><thead><tr><th>Idea</th><th class="n">Year</th><th>Decisive event</th><th class="n">Year</th>'
            '<th class="n">Gap, years</th><th>Grade</th></tr></thead><tbody>']
     for r in P["cases"]["rows"]:
         out.append(f'<tr><td>{E(r["thinker"])}: {E(r["claim"])}</td><td class="n">{year(r["idea_year"])}</td>'
                    f'<td>{E(r["confirm_event"])}</td><td class="n">{year(r["confirm_year"])}</td>'
                    f'<td class="n">{r["gap"]:,}</td><td>{r["grade"].lower()}</td></tr>')
-    out.append("</tbody></table></details>")
+    out.append("</tbody></table></figure>")
     return "\n".join(out)
 
 
@@ -238,6 +241,7 @@ def values(P):
         "agree5": f"{100 * p['agree5']:.0f}", "kappa5": f"{p['kappa5']:.2f}", "kappa2": f"{p['kappa2']:.2f}",
         "agree2": f"{100 * p['agree2']:.0f}",
         "q_sc": str(p["q_scorable"]), "q_all_wrong": str(p["q_all_wrong"]),
+        "q_hit": str(p["q_with_strong"]), "q_rival": str(p["q_strong_with_rival"]),
         "riv_med": WORDS.get(int(p["rivals_median"]), str(p["rivals_median"])),
         "s_book2": str(p["by_book"]["2"]["STRONG"]),
         "dem_n": str(rec["Democritus"]["n"]), "dem_s": WORDS[rec["Democritus"]["STRONG"]],
@@ -258,10 +262,11 @@ def values(P):
         f"An ancient handbook lists the philosophers' answers to {v['q_sc']} checkable questions about nature; "
         f"graded against present science, {v['s_lo']} of its {v['n_sc']} checkable answers hold up in full and "
         f"{v['w_lo']} are wrong.",
-        f"The famous anticipations are real, but none stood alone: where a question drew a right answer, a median "
-        f"of {v['riv_med']} rival answers to it sat on the same page.",
-        f"Ancient hits waited a median of {v['gap_anc']} years, usually for an instrument; confident claims made "
-        f"after 1600 that proved wrong lasted a median of {v['gap_modmiss']} years before a measurement refuted them."])
+        f"The famous anticipations are real, but they seldom stood alone: of the {v['q_hit']} questions that drew a "
+        f"strong answer, {v['q_rival']} list rival answers beside it, a median of {v['riv_med']}.",
+        f"Ancient hits waited a median of {v['gap_anc']} years for confirmation; among ideas from 1400 on, wrong "
+        f"ones were refuted in a median of {v['gap_modmiss']} years, faster than right ones were confirmed (a median "
+        f"of {v['gap_mod']})."])
     claims(P, v, mw)
     v["hero"] = hero(P, v)
     v["timeline"] = timeline(P, v)
@@ -316,7 +321,7 @@ def render(P):
     missing = sorted(set(re.findall(r"{{(\w+)}}", t)) - set(v) - {"nav"})
     if missing:
         raise SystemExit(f"template placeholders without a value: {missing}")
-    unused = sorted(set(v) - set(re.findall(r"{{(\w+)}}", t)) - {"fam_s", "riv_n", "riv_w", "riv_med"})
+    unused = sorted(set(v) - set(re.findall(r"{{(\w+)}}", t)) - {"fam_s", "riv_n", "riv_w", "riv_med", "q_hit", "q_rival"})
     if unused:
         raise SystemExit(f"values the template no longer uses: {unused}")
     for k, val in v.items():
