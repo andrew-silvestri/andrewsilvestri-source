@@ -296,6 +296,12 @@ TARGETS = [
     # whose SHA-1 differs from the manifest.
     target("oxygen", "oxygen-code.zip", keep={"outputs"},
            skip=("data/raw", "data/raw/*", "outputs/*.png")),
+    # The gradient of life (origins-of-life lane, 2026-11-13): the comfort analysis, the MARHYS extraction,
+    # the payload builder and its checks, the page generator and the tests, with the derived tables, the
+    # timeline and the payload. Not data/raw: the ASHRAE database (Zenodo 4993952) and MARHYS 3.0
+    # (PANGAEA 958978) are free downloads, named with their SHA-1 in origins/README.md.
+    target("origins", "origins-code.zip", keep={"outputs"},
+           skip=("data/raw", "data/raw/*", "outputs/*.png")),
     # food-code.zip retired with its page on 2026-09-09: food.html was
     # unpublished at Andrew's request, for now, and the last build is
     # unpublished/downloads/food-code.zip. The TARGET goes with the page,
