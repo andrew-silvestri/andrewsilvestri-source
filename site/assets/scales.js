@@ -9,29 +9,45 @@
  *
  * The page is complete without this file: every layer shows. With motion on
  * (assets/motion.js), the figure sticks and the step whose card crosses the
- * middle of the screen decides how many layers show. Layers of a later step
- * get .off; the current step's layers get .now. With motion off, or on
- * "motionchange" to off, it tears down. The pattern is chain.js's (oxygen.html).
+ * screen below the stuck chart decides how many layers show: a card counts
+ * once its top passes a line just under the chart's bottom edge (the chart
+ * covers more than half a phone screen, so the middle of the screen, which
+ * chain.js uses, would sit inside it). The step is recomputed from every
+ * card's position on each scroll frame, so a jump scroll lands on the right
+ * step. Layers of a later step get .off; the current step's layers get .now.
+ * With motion off, or on "motionchange" to off, it tears down. The pattern is
+ * chain.js's (oxygen.html).
  */
 (function () {
   'use strict';
   var root = document.documentElement;
-  if (!('IntersectionObserver' in window)) return;
   function motionOn() { return root.dataset.motion !== 'off'; }
 
   function Ladder(sec) {
     var self = this;
     this.sec = sec;
+    this.fig = sec.querySelector('.ladder-fig');
     this.els = [].slice.call(sec.querySelectorAll('.plot [data-o]'));
     this.steps = [].slice.call(sec.querySelectorAll('.step[data-step]'));
     this.cur = 0;
     this.live = false;
-    this.io = new IntersectionObserver(function (es) {
-      es.forEach(function (e) {
-        if (e.isIntersecting) self.set(+e.target.getAttribute('data-step'));
-      });
-    }, { rootMargin: '-50% 0px -49% 0px' });
+    this.queued = false;
+    this.onScroll = function () {
+      if (self.queued) return;
+      self.queued = true;
+      window.requestAnimationFrame(function () { self.queued = false; self.update(); });
+    };
   }
+  // the line a card's top must pass: just under the stuck chart, kept between 55% and 90% of the screen
+  Ladder.prototype.line = function () {
+    var h = window.innerHeight, b = this.fig.getBoundingClientRect().bottom;
+    return Math.min(Math.max(b + 24, 0.55 * h), 0.9 * h);
+  };
+  Ladder.prototype.update = function () {
+    var line = this.line(), k = 0;
+    this.steps.forEach(function (s) { if (s.getBoundingClientRect().top < line) k = +s.getAttribute('data-step'); });
+    if (k !== this.cur || !this.seeded) { this.seeded = true; this.set(k); }
+  };
   Ladder.prototype.set = function (k) {
     this.cur = k;
     if (!this.live) return;
@@ -44,18 +60,17 @@
   Ladder.prototype.start = function () {
     if (this.live) return;
     this.live = true;
+    this.seeded = false;
     this.sec.classList.add('is-live');
-    var io = this.io;
-    this.steps.forEach(function (s) { io.observe(s); });
-    // before any card reaches the middle, show what is above the reader
-    var mid = window.innerHeight / 2, k = 0;
-    this.steps.forEach(function (s) { if (s.getBoundingClientRect().top < mid) k = +s.getAttribute('data-step'); });
-    this.set(k);
+    window.addEventListener('scroll', this.onScroll, { passive: true });
+    window.addEventListener('resize', this.onScroll);
+    this.update();
   };
   Ladder.prototype.stop = function () {
     if (!this.live) return;
     this.live = false;
-    this.io.disconnect();
+    window.removeEventListener('scroll', this.onScroll);
+    window.removeEventListener('resize', this.onScroll);
     this.sec.classList.remove('is-live');
     this.els.forEach(function (el) { el.classList.remove('off', 'now'); });
   };

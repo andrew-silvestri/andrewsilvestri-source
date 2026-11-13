@@ -5,7 +5,8 @@ metabolism()        Hatton et al. (2019) Data/Metabolism.csv as a list of dicts 
 stars()             Eker et al. (2018) table1: [(name, mass Msun, radius Rsun, Teff K, remark)], all 586 rows.
 energy_per_capita() OWID primary energy per person: {entity: {year: kWh a year}}.
 owid_meta()         the OWID metadata dict (titles, sources, last update).
-county_gdp(year)    BEA CAGDP1 line 1 (GDP, thousand current dollars): {5-digit county FIPS: value}.
+county_gdp(year)    BEA CAGDP1 line 3 (current-dollar GDP, thousands; line 1 is real GDP in chained dollars,
+                    which do not add across counties): {5-digit county FIPS: value}.
 county_names()      {county FIPS: Census name}.
 county_combos()     BEA's combined county areas: {BEA FIPS: (state, [part names])}.
 msa_population(year) Census CBSA estimates: ({CBSA: (name, population)} for metropolitan areas,
@@ -82,7 +83,7 @@ def county_gdp(year):
     col = head.index(str(year))
     out = {}
     for r in rows:
-        if len(r) <= col or r[4].strip() != "1":
+        if len(r) <= col or r[4].strip() != "3":
             continue
         fips = r[0].strip(' "')
         if fips.isdigit() and not fips.endswith("000"):
@@ -121,7 +122,8 @@ def county_combos():
         text = z.read(name).decode("latin-1")
     out = {}
     for r in csv.reader(io.StringIO(text)):
-        if len(r) > 4 and r[4].strip() == "1" and "+" in r[1]:
+        if len(r) > 4 and r[4].strip() == "3" and "+" in r[1]:
             nm, st = r[1].rstrip("*").rsplit(", ", 1)
-            out[r[0].strip(' "')] = (st, [x.strip() for x in nm.split("+")])
+            # "Augusta, Staunton + Waynesboro": the county, then its independent cities
+            out[r[0].strip(' "')] = (st, [x.strip() for x in re.split(r"[,+]", nm)])
     return out

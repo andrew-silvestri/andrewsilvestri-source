@@ -178,7 +178,8 @@ def cities(year=2023):
     for bfips, (st, parts) in S.county_combos().items():
         for j, part in enumerate(parts):
             # BEA names the county first and the independent cities after it ("Roanoke + Salem")
-            want = (part + " County", part + " County and city") if j == 0 else (part + " city",)
+            city = part[:-5] if part.endswith(" City") else part        # "Fairfax City" is "Fairfax city"
+            want = (part + " County", part + " County and city") if j == 0 else (city + " city",)
             if st == "HI":
                 want = (part + " County",)
             hits = [f for f, n in names.items() if n.endswith(", " + st) and n[:-len(st) - 2] in want]
@@ -227,6 +228,9 @@ def main():
     span = P["life"]["euk_lx_span"]
     # a single 3/4-power law over the eukaryote mass span would spread W/kg by this factor
     P["life"]["kleiber_spread"] = 10 ** (0.25 * (span[1] - span[0]))
+    # ... and at the groups' typical (mean log) masses, which is what the group averages should be compared with
+    mids = [g["lx_mid"] for k, g in P["life"]["groups"].items() if k != "bacteria"]
+    P["life"]["kleiber_spread_groups"] = 10 ** (0.25 * (max(mids) - min(mids)))
     P["life"]["band_ratio"] = P["life"]["band_hi"] / P["life"]["band_lo"]
     # the same band with the cold-blooded groups corrected to 37 C, body temperature, instead of Hatton's 20 C
     L37 = life(37.0)
@@ -243,7 +247,7 @@ def main():
           f"[{L['euk_ci'][0]:.3f}, {L['euk_ci'][1]:.3f}]; within groups {L['within_min']:.2f}-{L['within_max']:.2f}; "
           f"group means {L['band_lo']:.2f}-{L['band_hi']:.2f} W/kg (x{L['band_ratio']:.0f}); "
           f"at 37 C {L['band37']['lo']:.2f}-{L['band37']['hi']:.2f} (x{L['band37']['ratio']:.0f}, slope {L['band37']['euk_slope']:.3f}); "
-          f"species 1-99% {L['sp_p01']:.3f}-{L['sp_p99']:.1f}; 3/4 spread x{L['kleiber_spread']:.2e}")
+          f"3/4 spread at group masses x{L['kleiber_spread_groups']:.0f}; species 1-99% {L['sp_p01']:.3f}-{L['sp_p99']:.1f}; 3/4 spread x{L['kleiber_spread']:.2e}")
     for k, g in L["groups"].items():
         print(f"  {k:14s} n={g['n']:5d} gmean {g['gmean_wkg']:.3g} W/kg slope {g['slope']:.3f} "
               f"mass 10^{g['lx_lo']:.1f}-10^{g['lx_hi']:.1f} kg")
@@ -287,7 +291,7 @@ def check(P):
     # published US fits of GDP or wages on metro population run 1.12-1.16 (Bettencourt et al. 2007, Table 1); our
     # first fit (2026-11-07) read Metropolitan Divisions as if they were whole MSAs (New York at 11.9 million);
     # the 387 MSAs are now read alone, and New York must come out near 19.5 million people
-    if not (1.05 < C["slope"] < 1.22 and 340 < C["n"] <= 387):
+    if not (1.05 < C["slope"] < 1.22 and 375 < C["n"] <= 387):
         errs.append(f"city GDP slope {C['slope']:.3f} on {C['n']} MSAs")
     if not 18e6 < C["big"]["pop"] < 21e6:
         errs.append(f"largest MSA {C['big']['name']} {C['big']['pop']:.0f} people")

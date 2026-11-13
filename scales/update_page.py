@@ -56,7 +56,7 @@ X0, X1, Y0, Y1 = -17, 33, -6, 3       # log10 kg, log10 W/kg
 def frame(wide):
     if wide:
         return dict(W=900, H=500, L=60, R=14, T=12, B=48, xt=range(-16, 33, 8), yt=range(-6, 4))
-    return dict(W=320, H=440, L=44, R=8, T=12, B=44, xt=range(-16, 33, 16), yt=range(-6, 4, 1))
+    return dict(W=320, H=440, L=56, R=8, T=12, B=44, xt=range(-16, 33, 16), yt=range(-6, 4, 1))
 
 
 def scaler(f):
@@ -93,7 +93,7 @@ def axes(f, sx, sy, xlab, ylab, xticks, yticks, xfmt, yfmt, cls):
         out.append(f'<text class="tick" x="{x:.1f}" y="{y_hi + 19:.1f}" text-anchor="middle">{xfmt(t)}</text>')
     out.append(f'<path class="ax" d="M{x_lo:.1f} {y_lo:.1f}V{y_hi:.1f}H{x_hi:.1f}"/>')
     out.append(f'<text class="axt" x="{(x_lo + x_hi) / 2:.1f}" y="{f["H"] - 6:.1f}" text-anchor="middle">{E(xlab)}</text>')
-    out.append(f'<text class="axt" transform="translate(12 {(y_lo + y_hi) / 2:.1f}) rotate(-90)" '
+    out.append(f'<text class="axt" transform="translate(11 {(y_lo + y_hi) / 2:.1f}) rotate(-90)" '
                f'text-anchor="middle">{E(ylab)}</text>')
     return out
 
@@ -140,15 +140,16 @@ def hero_svg(P, wide):
     out.append(f'<path class="law" d="M{sx(x_top):.1f} {sy(Y1):.1f}L{sx(x_end):.1f} '
                f'{sy(ym - 0.25 * (x_end - m["lx_mid"])):.1f}"/>')
     if wide:
-        lab(x_top + 0.6, 2.62, "One 3/4-power law for all life")
+        lab(x_top - 0.5, 2.2, "One 3/4-power law for all life", "end")
         lab(4.6, lo - 0.08, f"Group averages, {sig(L['band_lo'], 1)} to {sig(L['band_hi'], 1)} W/kg")
     else:
-        lab(x_top + 1.5, 2.62, "One 3/4 law")
         lab(5.0, lo - 0.12, f"Band {sig(L['band_lo'], 1)}–{sig(L['band_hi'], 1)} W/kg")
     out.append("</g>")
     # step 2: the fitted tilt inside each group
     out.append('<g data-o="2">')
     for k, g in L["groups"].items():
+        if k == "bacteria":          # not a tilt: prokaryotes fit above 1, mostly starved cells
+            continue
         a, b = g["icpt"], g["slope"] - 1
         out.append(f'<path class="fit" d="M{sx(g["lx_lo"]):.1f} {sy(a + b * g["lx_lo"]):.1f}'
                    f'L{sx(g["lx_hi"]):.1f} {sy(a + b * g["lx_hi"]):.1f}"/>')
@@ -158,7 +159,7 @@ def hero_svg(P, wide):
     out.append('<g data-o="3">')
     out.append(f'<circle class="me" cx="{sx(hx):.1f}" cy="{sy(hy):.1f}" r="{5 if wide else 4}"/>')
     if wide:
-        lab(hx + 0.7, hy - 0.08, f"A resting adult, {sig(L['human']['wkg'])} W/kg")
+        lab(hx + 1.0, hy - 0.08, f"A resting adult, {sig(L['human']['wkg'])} W/kg")
     else:
         lab(hx + 1.6, hy - 0.08, "You, resting")
     out.append("</g>")
@@ -171,7 +172,7 @@ def hero_svg(P, wide):
         y = math.log10(F[k]["wkg"])
         out.append(f'<circle class="me" cx="{sx(hx):.1f}" cy="{sy(y):.1f}" r="{4 if wide else 3}"/>')
         if wide:
-            lab(hx + 0.7, y - 0.08, f"{name} with fuel, {sig(F[k]['wkg'])} W/kg")
+            lab(hx + 1.0, y - 0.08, f"{name} with fuel, {sig(F[k]['wkg'])} W/kg")
         else:
             lab(hx + 1.6, y - 0.1, f"{short} {sig(F[k]['wkg'])}")
     out.append("</g>")
@@ -197,18 +198,19 @@ def hero_svg(P, wide):
 
 def hero(P, v):
     steps = [
-        (0, "Life &middot; fitted law",
-         f"Each square is one or more of {v['n_species']} species in Hatton and colleagues' 2019 table: resting "
-         f"power divided by body mass. The masses run from {v['bact_lo']} for the smallest bacterium to "
-         f"{v['eleph_kg']} kg for an Asian elephant, more than {v['life_decades']} orders of magnitude."),
+        (0, "Life &middot; measured",
+         f"Each square marks one or more species, or plant samples, in Hatton and colleagues' 2019 table: resting "
+         f"power divided by body mass. The masses run from {v['bact_lo']} for the smallest bacterium to about "
+         f"{v['tree_kg']} kg for a tree; the heaviest animal is an Asian elephant of {v['eleph_kg']} kg."),
         (1, "One law for all? &middot; it fails",
-         f"If a single three-quarter-power law ran from the smallest protist to the elephant, power per kilogram "
-         f"would fall about {v['kspread']}-fold along the dashed line. Instead the average of every major group "
-         f"lies between {v['band_lo']} and {v['band_hi']} W/kg, a range of only about {v['band_ratio']} times."),
+         f"If one three-quarter-power law joined the groups, power per kilogram would fall along the dashed line, "
+         f"about {v['kspread_g']}-fold between the groups' typical masses. Instead the average of every major group "
+         f"of plants, animals and protists lies between {v['band_lo']} and {v['band_hi']} W/kg, a range of about "
+         f"{v['band_ratio']} times. Bacteria, at {v['g_bact']} W/kg, fall inside it too."),
         (2, "Inside each group &middot; fitted law",
-         f"Within each group, bigger species do run slower per kilogram. The fitted exponents run from "
-         f"{v['within_lo']} to {v['within_hi']}, so the familiar 3/4 is a typical tilt inside a group, not one "
-         "line for all of life."),
+         f"Within each group of plants, animals and protists, bigger species do run slower per kilogram. The black "
+         f"lines are the fits; their exponents run from {v['within_lo']} to {v['within_hi']}, so the familiar 3/4 "
+         "is a typical tilt inside a group, not one line for all of life."),
         (3, "One person &middot; measured",
          f"A resting 70 kg adult gives off about {v['h_w']} W, or {v['h_wkg']} W/kg, inside the band. This is the "
          "page's reference unit."),
@@ -220,8 +222,8 @@ def hero(P, v):
          f"Main-sequence stars put out more power per kilogram the heavier they are, roughly as mass to the power "
          f"{v['star_slope']}. The Sun gives off {v['sun_wkg']} W/kg, about {v['sun_x']} times less than a resting body."),
     ]
-    desc = (f"A log-log chart of power per kilogram against mass. Living things, from bacteria to an elephant, form "
-            f"a flat cloud between about 0.04 and 23 W/kg; the averages of the major groups lie between "
+    desc = (f"A log-log chart of power per kilogram against mass. Living things, from bacteria to trees and an "
+            f"elephant, form a flat cloud between about {v['sp_lo']} and {v['sp_hi']} W/kg; the averages of the major groups lie between "
             f"{v['band_lo']} and {v['band_hi']} W/kg, while a single three-quarter-power law would fall steeply. "
             f"Inside each group, short fitted lines tilt down. A resting human sits at {v['h_wkg']} W/kg; with "
             f"their share of fuel, the world average is {v['world_wkg']} and the United States {v['us_wkg']} W/kg. "
@@ -241,7 +243,7 @@ def hero(P, v):
 # ------------------------------------------------------------ city chart ---
 def city_svg(P, wide):
     C = P["cities"]
-    f = dict(W=720, H=380, L=74, R=16, T=14, B=48) if wide else dict(W=320, H=320, L=58, R=10, T=14, B=48)
+    f = dict(W=720, H=380, L=64, R=40, T=14, B=48) if wide else dict(W=320, H=320, L=54, R=22, T=14, B=48)
     xs = [p[0] for p in C["pts"]]
     ys = [p[1] for p in C["pts"]]
     x0, x1 = math.floor(min(xs) * 2) / 2, math.ceil(max(xs) * 2) / 2
@@ -253,8 +255,8 @@ def city_svg(P, wide):
     xt = [t for t in (5, 5.5, 6, 6.5, 7, 7.5) if x0 <= t <= x1] if wide else [t for t in (5, 6, 7) if x0 <= t <= x1]
     yv = [t for t in (30000, 50000, 100000, 200000) if y0 <= math.log10(t) <= y1]
     pops = {5: "100,000", 5.5: "300,000", 6: "1 million", 6.5: "3 million", 7: "10 million", 7.5: "30 million"}
-    out += axes(f, sx, sy, "Metro population, " + str(C["year"]), "GDP per person ($)", xt,
-                [math.log10(t) for t in yv], lambda t: pops[t], lambda t: f"{round(10 ** t):,}", "")
+    out += axes(f, sx, sy, "Metro population, " + str(C["year"]), "GDP per person (US$)", xt,
+                [math.log10(t) for t in yv], lambda t: pops[t], lambda t: f"{round(10 ** t / 1000)}k", "")
     r = 2.6 if wide else 2.2
     out.append("".join(f'<circle class="pt" cx="{sx(x):.1f}" cy="{sy(y):.1f}" r="{r}"/>' for x, y in C["pts"]))
     a, b = C["icpt"], C["slope"] - 1
@@ -263,10 +265,10 @@ def city_svg(P, wide):
     ym = sum(ys) / len(ys)
     out.append(f'<path class="flat" d="M{sx(x0):.1f} {sy(ym):.1f}L{sx(x1):.1f} {sy(ym):.1f}"/>')
     tx = x1 - 0.05
-    out.append(f'<text x="{sx(tx):.1f}" y="{sy(a + b * tx) - 10:.1f}" text-anchor="end">'
-               f'Fitted: exponent {C["slope"]:.2f}</text>')
-    out.append(f'<text class="lab-dim" x="{sx(tx):.1f}" y="{sy(ym) + 20:.1f}" text-anchor="end">'
-               f'{"Exponent 1: no gain" if not wide else "Exponent 1: output grows only with people"}</text>')
+    out.append(f'<text x="{sx(tx):.1f}" y="{sy(y0) - 26:.1f}" text-anchor="end">'
+               f'Solid: fitted exponent {C["slope"]:.2f}</text>')
+    out.append(f'<text class="lab-dim" x="{sx(tx):.1f}" y="{sy(y0) - 8:.1f}" text-anchor="end">'
+               f'{"Dashed: exponent 1" if not wide else "Dashed: exponent 1, no gain per person"}</text>')
     out.append("</svg>")
     return "".join(out)
 
@@ -284,8 +286,12 @@ def city_chart(P, v):
 def claims(P, v):
     L, F, St, C = P["life"], P["fuel"], P["stars"], P["cities"]
     bad = []
-    if not L["kleiber_spread"] > 100 * L["band_ratio"]:
+    if not (L["kleiber_spread"] > 100 * L["band_ratio"] and L["kleiber_spread_groups"] > 10 * L["band_ratio"]):
         bad.append("the band is not far narrower than a single 3/4 law would give")
+    if not L["band_lo"] < L["groups"]["bacteria"]["gmean_wkg"] < L["band_hi"]:
+        bad.append("bacteria's average is not inside the band ('fall inside it too')")
+    if not L["groups"]["bacteria"]["slope"] > 1:
+        bad.append("bacteria now tilt like the other groups; the hero leaves their fit line out on purpose")
     if not (L["within_max"] < 1 and L["within_min"] > 0.5):
         bad.append("within-group exponents are not all between 1/2 and 1")
     if not L["band_lo"] < L["human"]["wkg"] < L["band_hi"]:
@@ -319,10 +325,13 @@ def values(P):
         "within_lo": f"{L['within_min']:.2f}", "within_hi": f"{L['within_max']:.2f}",
         "band_lo": sig(L["band_lo"], 1), "band_hi": sig(L["band_hi"], 1),
         "band_ratio": sig(L["band_ratio"], 1), "kspread": sig(L["kleiber_spread"], 1),
-        "b37_lo": sig(L["band37"]["lo"], 1), "b37_hi": sig(L["band37"]["hi"], 2), "b37_ratio": sig(L["band37"]["ratio"], 1),
+        "b37_lo": sig(L["band37"]["lo"], 1), "b37_hi": sig(L["band37"]["hi"], 2), "b37_ratio": sig(L["band37"]["ratio"], 2),
         "sp_lo": sig(L["sp_p01"], 1), "sp_hi": sig(L["sp_p99"], 2),
-        "g_birds": sig(g["birds"]["gmean_wkg"]), "g_mammals": sig(g["mammals"]["gmean_wkg"]),
-        "g_cold": sig(g["coldvert"]["gmean_wkg"]), "g_plants": sig(g["plants"]["gmean_wkg"]),
+        "g_birds": sig(g["birds"]["gmean_wkg"]), "g_cold": sig(g["coldvert"]["gmean_wkg"]),
+        "g_bact": sig(g["bacteria"]["gmean_wkg"]),
+        "tree_kg": f"{round(L['heaviest_kg']['plants'], -2):,.0f}",
+        "kspread_g": sig(L["kleiber_spread_groups"], 1),
+        "tilt_lo": f"{10 ** L['within_min']:.0f}", "tilt_hi": f"{10 ** L['within_max']:.0f}",
         "h_w": f"{L['human']['w']:.0f}", "h_wkg": sig(L["human"]["wkg"]),
         "f_year": str(F["world"]["year"]),
         "world_w": sig(F["world"]["w"]), "world_wkg": sig(F["world"]["wkg"]), "world_x": f"{F['world']['x_body']:.0f}",
@@ -333,7 +342,7 @@ def values(P):
         "m_lo": f"{St['m_lo']:.2f}", "m_hi": f"{St['m_hi']:.0f}",
         "star_slope": f"{St['wkg_slope']:.0f}", "mlr": f"{St['mlr_slope']:.0f}",
         "star_hi": sig(St["wkg_hi"]), "star_lo": sig(St["wkg_lo"], 1),
-        "sun_wkg": f"{St['sun_wkg']:.5f}".rstrip("0"), "sun_x": sig(P["sun_vs_human"]),
+        "sun_wkg": f"{St['sun_wkg']:.5f}".rstrip("0"), "sun_x": sig(P["sun_vs_human"], 1),
         "L_N": "3.828 &times; 10<sup>26</sup>", "msun": f"{St['msun'] / 1e30:.3f} &times; 10<sup>30</sup>",
         "sun_sci": f"{St['sun_wkg'] / 1e-4:.2f} &times; 10<sup>−4</sup>",
         "c_year": str(C["year"]), "c_n": str(C["n"]), "c_msa": str(C["n_msa"]),
@@ -346,11 +355,12 @@ def values(P):
     v["takeaways"] = insight.takeaways([
         f"Across {v['n_species']} species, from bacteria to an elephant, the resting power of each major group "
         f"averages between {v['band_lo']} and {v['band_hi']} watts per kilogram, where one three-quarter-power law "
-        f"would spread them about {v['kspread']}-fold.",
+        f"would spread the averages about {v['kspread_g']}-fold.",
         f"A resting human body gives off about {v['sun_x']} times more power per kilogram than the Sun, and "
         "heavier stars give off more per kilogram, the opposite of the tilt in animals.",
         f"Fuel lifts the average person to about {v['world_x']} times the power of their own body, and larger US "
-        "metros produce more per person while, in published fits, using about the same energy per person."])
+        "metros produce more per person while, in published fits, using about the same household electricity "
+        "per person."])
     claims(P, v)
     v["hero"] = hero(P, v)
     v["chart_cities"] = city_chart(P, v)
@@ -380,7 +390,8 @@ def render(P):
     if missing:
         raise SystemExit(f"template placeholders without a value: {missing}")
     used_in_code = {"bact_lo", "eleph_kg", "life_decades", "within_lo", "within_hi", "world_wkg", "us_wkg",
-                    "star_slope", "sun_wkg", "c_n", "c_lo", "c_hi"}
+                    "star_slope", "sun_wkg", "c_n", "c_lo", "c_hi", "g_bact", "tree_kg", "kspread_g", "sp_lo",
+                    "sp_hi"}
     unused = sorted(set(v) - set(re.findall(r"{{(\w+)}}", t)) - used_in_code)
     if unused:
         raise SystemExit(f"values the template no longer uses: {unused}")
