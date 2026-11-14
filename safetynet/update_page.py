@@ -405,7 +405,6 @@ def values(P):
         "repro_us1": str(P["repro"]["us_years"][1]), "repro_st0": str(P["repro"]["state_years"][0]),
         "repro_st1": str(P["repro"]["state_years"][1]),
         "n_months": {11: "eleven", 10: "ten", 12: "twelve"}[12 - len(P["missing_months_last"])],
-        "zip_kb": f"{round(os.path.getsize(ZIP) / 1024) if os.path.exists(ZIP) else 0:,}",
     }
     v.update({k: L[k] for k in ("bls_applied", "bls_received", "bls_inelig", "cn_elig", "cn_drop", "cn_weeks",
                                 "cn_mix", "solv_now", "solv_2020", "nc_from", "nc_to", "nc_wba0", "nc_wba1",

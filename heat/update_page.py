@@ -264,7 +264,6 @@ def values(P, S):
         "fom_e": f"{100 * d['fom_e']:.0f}", "fom_g": f"{100 * d['fom_g']:.0f}",
         "nonfuel": f"{nonfuel:.2f}", "hc_lo": str(s["heat_content_years"][0]), "hc_hi": str(s["heat_content_years"][1]),
         "gas_cov": f"{min(covs):.0f} to {max(covs):.0f}",
-        "zip_kb": f"{round(os.path.getsize(ZIP) / 1024) if os.path.exists(ZIP) else 0:,}",
     }
     return v
 

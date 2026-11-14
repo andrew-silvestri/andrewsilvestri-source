@@ -320,7 +320,6 @@ def values(P):
         "n_doff": f"{G['day_off']['n']:,}", "tail_pct": f"{P['tail_only_pct']:.0f}",
         "off_sleep_h": hours(G["night_off"]["sleep_min"]), "doff_sleep_h": hours(G["day_off"]["sleep_min"]),
         "men_share": f"{M['men_share_night']:.0f}",
-        "zip_kb": f"{round(os.path.getsize(ZIP) / 1024) if os.path.exists(ZIP) else 0:,}",
     }
     claims(P)
     v["stamp"] = insight.stamp(through=P["through"], live=False)

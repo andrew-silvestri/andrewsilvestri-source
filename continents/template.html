@@ -135,15 +135,9 @@
 
 <hr>
 
-<h2>The code</h2>
-<p><code>fetch_ngl.py</code>, <code>fetch_static.py</code>, <code>fetch_osf.py</code> and <code>fetch_gplates.py</code> get the data and pin it. <code>otis_grid.py</code> and <code>plates.py</code> hold the readers and the gates. <code>break_b1.py</code> is the experiment that broke the first version of one of them. <code>build_continents.py</code> computes and gates everything and writes the payload. <code>fig_continents.py</code> draws the six figures. <code>test_continents.py</code> checks the failure modes.</p>
-<p>The archive is larger than the others on this site, and deliberately so. Most of it is three files: the {{stations_mb}} station table, {{land_mb}} of reconstructed coastlines for the viewer, and {{masks_kb}} of packed scenario masks. With those files, a reader rebuilds everything here without a new fetch. A new fetch would need seven megabytes of velocities, nearly five hundred reconstructed frames and a scenario archive that unpacks to about four hundred megabytes. That is the difference between an archive that documents the build and one that reproduces it.</p>
-<p><a class="btn" href="downloads/continents-code.zip">Download source and data</a>
-<a class="btn ghost" href="code.html">All code</a></p>
-
 <footer>
 <p><a href="about.html">Andrew Silvestri</a></p>
-<p><a href="code.html">Built with Python, Julia, JavaScript and public data.</a></p>
+<p>Built with Python, Julia, JavaScript and public data.</p>
 </footer>
 </main>
 <script src="assets/motion.js"></script>

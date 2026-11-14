@@ -309,9 +309,6 @@ def values(P):
         "break_deg": f"{br['movable_deg_myr']:.3f}",
         "break_pct": f"{br['share_of_rate_pct']:.0f}",
         "b1c_tol": f"{br['station_check_mm_yr']:.1f}",
-        "stations_mb": f"{os.path.getsize(os.path.join(HERE, 'data', 'stations.csv')) / 1048576:.1f} MB",
-        "masks_kb": f"{os.path.getsize(os.path.join(HERE, 'data', 'future_masks.npz')) / 1024:.0f} KB",
-        "land_mb": f"{os.path.getsize(os.path.join(HERE, 'data', 'land.json')) / 1048576:.1f} MB",
     }
 
 

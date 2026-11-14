@@ -407,7 +407,6 @@ def values(P):
         "sl_logit": f(A["slope_pref_logit"]["v"], 2), "sl_logit_lo": f(A["slope_pref_logit"]["lo"], 2),
         "sl_logit_hi": f(A["slope_pref_logit"]["hi"], 2),
         "min_n": str(A["min_n"]), "bin_lo": f(A["bin_lo"]), "bin_hi": f(A["bin_hi"]),
-        "zip_kb": f"{round(os.path.getsize(ZIP) / 1024) if os.path.exists(ZIP) else 0:,}",
     }
     v["stamp"] = insight.stamp(live=False)
     v["takeaways"] = insight.takeaways([

@@ -5,6 +5,18 @@ nothing here ships. Each entry: what it was, when it came off, why. There
 was no note here before 2026-09-05; the list lived in HANDOFF.md section 2,
 which still carries the one-line version.
 
+- **Code** - `code.html` (the archive table), the "The code" section on every
+  article, the footer's link to code.html (the line stays, unlinked), the
+  `Code` item in the bar, About's sentence pointing at the page, and every
+  `downloads/*-code.zip`. Removed 2026-11-14 at Andrew's request: *"remove all
+  sections of articles 'The code', including the download code button and
+  such, and the tab on the header 'Code'/the code webpage"*. The archives are
+  still built into `site/downloads/` by `rezip_downloads.py`; `publish.sh`
+  deletes `downloads/` from the mirror so they do not ship. The templates and
+  page generators lost the section and the values only it used
+  (`zip_kb`, continents' three archive sizes); `sync_code_rows.py` reports
+  nothing to do and its `tests/test_generators.py` entry is commented. The
+  live URLs 404 from the publish that followed.
 - **Running** - `shoes.html`, `economy.html`, `assets/shoes_f1_measurements.png`
   through `shoes_f4_time.png` (four), `assets/economy_fig1_elasticity.png`
   through `economy_fig4_drift.png` (four), and `downloads/shoes-code.zip`,

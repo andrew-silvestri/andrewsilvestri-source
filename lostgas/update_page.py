@@ -222,8 +222,6 @@ def values(P):
         "m_tbias": f"{tb:.1f}", "m_shared": f"{P['clip']['shared_temp_pct']:.1f}",
         "m_systems": "200,000", "m_scale": f"{float(mk):g}",
         "grid_rows": grid_rows(I),
-        "zip_kb": f"{round(os.path.getsize(ZIP) / 1024) if os.path.exists(ZIP) else 0:,}",
-        "meter_zip_kb": f"{round(os.path.getsize(METER_ZIP) / 1024) if os.path.exists(METER_ZIP) else 0:,}",
     }
     for st in ("TX", "OK"):
         x = D[st]

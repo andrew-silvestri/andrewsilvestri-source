@@ -39,7 +39,7 @@ const http = require('http');
 const pw = require('playwright');
 
 const SITE = path.join(__dirname, '..', 'site');
-const PAGES = ['index', 'about', 'code', 'heat', 'storage', 'climate-cost',
+const PAGES = ['index', 'about', 'heat', 'storage', 'climate-cost',
                'longevity', 'skyline', 'continents', 'beauty', 'lostgas', 'takeaway', 'uri', 'ethane', 'safetynet', 'lead', 'oxygen', 'perfidy', 'nightshift', 'space-depression', 'greatfilter', 'origins', 'sub3', 'scales', 'algae', 'messaging', 'dissonance', 'armchair', 'aiweb', 'lowcarbon-shoe'];
 const MATRIX = process.argv.includes('--matrix');
 const VIEWPORTS = MATRIX

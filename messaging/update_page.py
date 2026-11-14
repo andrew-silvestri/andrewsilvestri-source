@@ -353,7 +353,6 @@ def values(P):
         "info_later": f"{sh['info']['later']:.2f}",
         "berg_first": f"{sh['bergquist']['first']:.2f}", "berg_later": f"{sh['bergquist']['later']:.2f}",
         "lit_through": "%s %s" % (MONTHS[int(P["literature_through"][5:]) - 1], P["literature_through"][:4]),
-        "zip_kb": f"{round(os.path.getsize(ZIP) / 1024) if os.path.exists(ZIP) else 0:,}",
     }
     v["stamp"] = insight.stamp(live=False)
     v["takeaways"] = insight.takeaways([

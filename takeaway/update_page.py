@@ -318,7 +318,6 @@ def values(P):
         "rec_max": f"{P['reconcile']['max']:.2f}",
         "cap_rows": cap_rows(P), "pre_rows": pre_rows(S),
         "unsettled_word": WORDS[fl["unsettled_months"]], "event_min": f"{EVENT_MIN_BCFD:g}",
-        "zip_kb": f"{round(os.path.getsize(ZIP) / 1024) if os.path.exists(ZIP) else 0:,}",
     }
 
 

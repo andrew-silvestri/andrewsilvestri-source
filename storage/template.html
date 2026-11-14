@@ -80,15 +80,9 @@
 
 <p>The ownership cost above is NREL's capital and fixed operations cost for a four-hour battery, with the capital spread over twenty years at an assumed eight percent. NREL gives these batteries a 15-year life, and over 15 years the same arithmetic gives about ${{atb15}}. Either figure is a cost reference, not a verdict, because a real battery has other income. This is an explainer, not investment advice.</p>
 
-<h2 id="code">The code</h2>
-
-<p>Python: the fetch script, which records where and when each ERCOT file came from; the price reader; the dispatch model; the payload builder; the page generator; and the tests. The archive carries the payload but not ERCOT's price files, which the fetch script downloads again. It also holds the Julia and Octave ports of the dispatch and a workbook of the same arithmetic. {{zip_kb}} KB.</p>
-<p><a class="btn" href="downloads/storage-code.zip">Download source</a>
-<a class="btn ghost" href="code.html">All code</a></p>
-
 <footer>
 <p><a href="about.html">Andrew Silvestri</a></p>
-<p><a href="code.html">Built with Python, Julia, JavaScript and public data.</a></p>
+<p>Built with Python, Julia, JavaScript and public data.</p>
 </footer>
 </main>
 <script src="assets/motion.js"></script>

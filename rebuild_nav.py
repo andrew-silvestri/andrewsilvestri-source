@@ -292,12 +292,14 @@ NAV = [
         # Andrew's choice (2026-11-14). Label is the page's <title>.
         ("The web after AI", "aiweb.html"),
     ]),
-    ("Code", "code.html"),
+    # "Code" (code.html) stood here until 2026-11-14: Andrew took the Code page,
+    # every article's "The code" section and the source downloads off the site.
+    # The page is in unpublished/code.html.
     # LAST, AND IT HAS TO STAY LAST. style.css pins this one right with
     # margin-left:auto on a flex item, which eats the free space BEFORE it -
     # so anything appended after this line would sit right of About and the
     # bar would read as having two right-hand items. Add new entries above
-    # "Code", not below this.
+    # "About", not below it.
     ("About", "about.html"),
 ]
 

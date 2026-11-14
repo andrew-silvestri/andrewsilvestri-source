@@ -120,7 +120,7 @@ function serve(sheet) {
 
 /* page, viewport, a selector for the element, whether to hover it, the rule
    that must govern it, and which properties that rule must actually deliver.
-   `lostgas.html` is inside Gas and `code.html` is a top-level item, so
+   `lostgas.html` is inside Gas and `about.html` is a top-level item, so
    between them every state exists.
 
    This was `food.html` until 2026-09-09, when food.html was unpublished and
@@ -140,9 +140,10 @@ function serve(sheet) {
    four states reported ELEMENT NOT FOUND against a nav that worked (trap
    35). `meter.html` was in Gas with takeaway until R3 replaced it with
    `lostgas.html` (2026-10-23), in the same place. If Gas ever drops to one item,
-   pick another menu of two or more. */
+   pick another menu of two or more. `about.html` replaced `code.html` as the
+   top-level page on 2026-11-14, when the Code page came off the site. */
 const STATES = [
-  { name: 'top bar, current page',   page: 'code.html', vp: 1728, sel: 'nav.top > a.on', hover: false,
+  { name: 'top bar, current page',   page: 'about.html', vp: 1728, sel: 'nav.top > a.on', hover: false,
     rule: 'nav.top a.on', props: ['color'] },
   /* 2026-10-28: Gas is ON HOLD (rebuild_nav.HOLD) - its items are struck
      <span class="off">, not links - so the menu-item states are measured in
@@ -168,7 +169,7 @@ const STATES = [
     rule: 'nav.top .ddmenu a', props: ['padding-left'], media: 620 },
   { name: 'phone menu item, current', page: 'longevity.html', vp: 390, sel: 'DD .ddmenu a.on', hover: false,
     rule: 'nav.top .ddmenu a.on', props: ['color'] },
-  { name: 'phone top bar, current',  page: 'code.html', vp: 390, sel: 'nav.top > a.on', hover: false,
+  { name: 'phone top bar, current',  page: 'about.html', vp: 390, sel: 'nav.top > a.on', hover: false,
     rule: 'nav.top a.on', props: ['color'] },
   /* THE COLLAPSE CONTROL IS A NAV STATE, and it was introduced into a nav whose
      entire rule set names anchors. A <summary> is not an anchor, so it matched
@@ -187,9 +188,9 @@ const STATES = [
      declared value for those two properties and no others. padding-top is
      equally wrong when it is wrong and equally unassertable here; the full
      twenty-property comparison lives in the commit that fixed this. */
-  { name: 'phone control',           page: 'code.html', vp: 390, sel: 'nav.top > details.navmore > summary', hover: false,
+  { name: 'phone control',           page: 'about.html', vp: 390, sel: 'nav.top > details.navmore > summary', hover: false,
     rule: 'nav.top > .navmore > summary', props: ['color', 'padding-left'], media: 620 },
-  { name: 'phone control, hovered',  page: 'code.html', vp: 390, sel: 'nav.top > details.navmore > summary', hover: true,
+  { name: 'phone control, hovered',  page: 'about.html', vp: 390, sel: 'nav.top > details.navmore > summary', hover: true,
     rule: 'nav.top > .navmore > summary:hover', props: ['color'], media: 620 },
 ];
 

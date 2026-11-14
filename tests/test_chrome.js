@@ -177,7 +177,7 @@ const http = require('http');
 const pw = require('playwright');
 
 const SITE = path.join(__dirname, '..', 'site');
-const PAGES = ['index', 'about', 'code', 'heat', 'storage', 'climate-cost',
+const PAGES = ['index', 'about', 'heat', 'storage', 'climate-cost',
                'longevity', 'skyline', 'continents', 'beauty', 'lostgas', 'takeaway', 'uri', 'ethane', 'safetynet', 'lead', 'oxygen', 'perfidy', 'nightshift', 'space-depression', 'greatfilter', 'origins', 'sub3', 'scales', 'algae', 'messaging', 'dissonance', 'armchair', 'aiweb', 'lowcarbon-shoe',
                '_fixture/kit'];
 /* The insight kit's fixture (R1, 2026-10-23): tests/fixtures/kit.html, served
@@ -261,8 +261,8 @@ async function openState(page) {
   /* TOP LEVEL, not every anchor in the bar. The first version counted
      nav.top a, which is 15 - it includes the links inside each dropdown, and
      those are display:none until their own .dd:focus-within opens them, a
-     mechanism this change does not touch. Nine is what the collapsed bar owes
-     the reader: Home, six groups or links, Code, About. */
+     mechanism this change does not touch. Eight is what the collapsed bar owes
+     the reader: Home, six groups or links, About (Code left 2026-11-14). */
   const declared = await page.evaluate(() =>
     document.querySelectorAll('nav.top > a:not(.navmore), nav.top > .dd > a').length);
   /* Destinations only. The control is excluded because above the breakpoint it
@@ -583,7 +583,7 @@ function d01Label(ver, r) {
            set. BREAK_MODE 'contents' un-hides one to prove this fires. */
         if (BREAK_MODE === 'contents') {
           await page.evaluate(() => {
-            const a = document.querySelector('nav.top > a[href="code.html"]');
+            const a = document.querySelector('nav.top > a[href="about.html"]');
             if (a) a.style.setProperty('display', 'block', 'important');
           });
           await page.waitForTimeout(40);
