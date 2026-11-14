@@ -48,7 +48,8 @@
 
 <p>The survey's wording does not always match the review's options. Where the survey item is weaker than an option, the build takes the smaller saving. &ldquo;Regularly use alternatives to the car&rdquo; is matched to a shift to public transport, cycling or car sharing ({{car_t}} tonnes), not to living without a car (about 2 tonnes). &ldquo;Buy and eat less meat&rdquo; is matched to eating fewer animal products ({{meat_t}}), not to a vegetarian diet. &ldquo;Consider the carbon footprint of travel and sometimes adapt&rdquo; is matched to flying less ({{travel_t}}), not to one fewer long-haul flight. For a greener electricity supplier, the build uses the two estimates that the review labels EU or Europe ({{green_t}}). The method below says why.</p>
 
-<table class="n" tabindex="0">
+<p class="small dim" id="actions-cue">On a narrow screen the table scrolls sideways.</p>
+<table class="n" tabindex="0" data-scroll-affordance="#actions-cue" aria-label="Climate actions: share who say each applies, and median saving">
 <thead><tr><th>Action (survey item, paraphrased)</th><th>Say it applies, %</th><th>Median saving, t a year</th><th>Middle half</th><th>Estimates</th><th>Match</th></tr></thead>
 <tbody>
 {{action_rows}}
@@ -64,7 +65,8 @@
 
 <p>A second reason is that the large actions need things that many people do not have. The Meta and Yale climate survey of 2023 asked the same questions in {{my_countries}} higher-income countries. On average, {{ev_done}} percent had owned or leased an electric car, and {{ev_want}} percent had not but wanted to. For rooftop solar, the figures were {{solar_done}} and {{solar_want}} percent. Those who had not acted were asked what made it difficult:</p>
 
-<table class="n" tabindex="0">
+<p class="small dim" id="barriers-cue">On a narrow screen the table scrolls sideways.</p>
+<table class="n" tabindex="0" data-scroll-affordance="#barriers-cue" aria-label="Most named difficulties for each action">
 <thead><tr><th>Action</th><th>Most named difficulty</th><th>%</th><th>Second</th><th>%</th></tr></thead>
 <tbody>
 {{barrier_rows}}
