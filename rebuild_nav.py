@@ -265,6 +265,9 @@ NAV = [
         # sub3-marathon lane, 2026-11-13: what a sub-3-hour marathon takes, from Berlin results. Other:
         # not an energy page (lane DECISIONS D3).
         ("The sub-3 marathon", "sub3.html"),
+        # scales lane, 2026-11-13: power per kilogram from bacteria to stars, and which cross-scale laws
+        # hold. In Other: no tab holds biology or astronomy (lane DECISIONS D4).
+        ("Scales", "scales.html"),
     ]),
     ("Code", "code.html"),
     # LAST, AND IT HAS TO STAY LAST. style.css pins this one right with

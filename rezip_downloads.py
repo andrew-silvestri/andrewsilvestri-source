@@ -321,6 +321,12 @@ TARGETS = [
     # 113 MB and holds runners' names; fetch_public.py downloads it from Zenodo and checks its MD5.
     target("sub3", "sub3-code.zip", keep={"outputs"},
            skip=("data/raw", "data/raw/*", "outputs/*.png")),
+    # Watts per kilogram, bacteria to stars (scales lane, 2026-11-13): the fetch script, readers, payload
+    # builder and checks, the page generator with the chart, and the tests, with the payload and
+    # data/fetched.json. Not data/raw: the fetch script re-downloads the files and the readers refuse one
+    # whose SHA-1 differs from the manifest.
+    target("scales", "scales-code.zip", keep={"outputs"},
+           skip=("data/raw", "data/raw/*", "outputs/*.png")),
     # food-code.zip retired with its page on 2026-09-09: food.html was
     # unpublished at Andrew's request, for now, and the last build is
     # unpublished/downloads/food-code.zip. The TARGET goes with the page,
