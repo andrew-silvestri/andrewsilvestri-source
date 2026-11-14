@@ -1,0 +1,20 @@
+{
+ "berlin_1999_2025.csv": {
+  "bytes": 112849590,
+  "fetched": "2026-11-13",
+  "md5": "7f6be8bb8f0f8d002ed952cf084e6bae",
+  "record": "https://doi.org/10.5281/zenodo.19342683",
+  "sha1": "cb301741fbb865c57f9a82bfc89c121269cd375d",
+  "url": "https://zenodo.org/api/records/19342683/files/Dataset_Berlin_Marathon_1999-2025_original.csv/content",
+  "via": "already on disk"
+ },
+ "stundenwerte_TU_00433_19510101_20251231_hist.zip": {
+  "bytes": 3091672,
+  "fetched": "2026-11-13",
+  "md5": null,
+  "record": "https://opendata.dwd.de/climate_environment/CDC/observations_germany/climate/hourly/air_temperature/historical/",
+  "sha1": "7e56e0672ffbc61b84cc08a25768cf1230de7c15",
+  "url": "https://opendata.dwd.de/climate_environment/CDC/observations_germany/climate/hourly/air_temperature/historical/stundenwerte_TU_00433_19510101_20251231_hist.zip",
+  "via": "urllib"
+ }
+}

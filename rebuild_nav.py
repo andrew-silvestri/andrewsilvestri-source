@@ -262,6 +262,9 @@ NAV = [
         # origins-of-life lane, 2026-11-13: membrane gradients from the origin of life to pain and set points.
         # Other: not an energy-industry page. Label is the page's <title>.
         ("The gradient of life", "origins.html"),
+        # sub3-marathon lane, 2026-11-13: what a sub-3-hour marathon takes, from Berlin results. Other:
+        # not an energy page (lane DECISIONS D3).
+        ("The sub-3 marathon", "sub3.html"),
     ]),
     ("Code", "code.html"),
     # LAST, AND IT HAS TO STAY LAST. style.css pins this one right with

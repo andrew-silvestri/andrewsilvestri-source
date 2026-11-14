@@ -102,6 +102,17 @@ ENTRIES = [
         "why": "A finished policy chain, 1990-2006, stated on the page as not updated.",
     },
     {
+        # sub3-marathon lane, 2026-11-13. Disabled: the Berlin results are a published Zenodo file that
+        # ends with 2025, and the page says its data does not update; a new edition is a reviewed change.
+        "page": "sub3",
+        "cwd": "sub3",
+        "fetch": [["python", "fetch_public.py"]],
+        "build": [["python", "build_sub3.py"]],
+        "keys": [],
+        "enabled": False,
+        "why": "A published results file, 1999-2025, stated on the page as not updated.",
+    },
+    {
         # origins-of-life lane, 2026-11-13. Disabled: the page reads two fixed database versions
         # (ASHRAE II v2.1.0, MARHYS 3.0) and says its data does not update; build_origins.checks()
         # would stop a rebuild that contradicts the page's words.

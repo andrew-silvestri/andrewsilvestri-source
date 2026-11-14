@@ -152,6 +152,10 @@ GENERATORS = [
     # origins-of-life, 2026-11-13.
     ("origins page: origins/update_page.py --apply",
      ["update_page.py", "--apply"], "origins", "site"),
+    # sub3/update_page.py writes site/sub3.html from sub3/outputs/payload.json alone (sub3-marathon
+    # lane, 2026-11-13); the raw results are read only by build_sub3.py.
+    ("sub3 page: sub3/update_page.py --apply",
+     ["update_page.py", "--apply"], "sub3", "site"),
     # storage/update_page.py writes site/storage.html from storage/outputs/payload.json
     # (build_storage.py, which needs ERCOT's files under storage/data/raw, gitignored) and
     # storage/data/imm.json. R4, 2026-10-23.
