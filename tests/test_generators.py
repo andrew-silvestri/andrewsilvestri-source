@@ -139,6 +139,10 @@ GENERATORS = [
     # night-shift lane, batch 2, 2026-11-13.
     ("nightshift page: nightshift/update_page.py --apply",
      ["update_page.py", "--apply"], "nightshift", "site"),
+    # space-depression/update_page.py writes site/space-depression.html from its outputs/payload.json alone
+    # (every quoted figure was matched in its source by the build) (space-depression lane, 2026-11-13).
+    ("space-depression page: space-depression/update_page.py --apply",
+     ["update_page.py", "--apply"], "space-depression", "site"),
     # storage/update_page.py writes site/storage.html from storage/outputs/payload.json
     # (build_storage.py, which needs ERCOT's files under storage/data/raw, gitignored) and
     # storage/data/imm.json. R4, 2026-10-23.

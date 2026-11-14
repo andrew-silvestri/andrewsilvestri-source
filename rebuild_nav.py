@@ -248,6 +248,9 @@ NAV = [
         # chain-reactions lane, 2026-11-07: one clause of the 1990 Clean Air Act through three orders of
         # effects. In Other, not Gas (natural gas pages) or Climate (heading held): lane DECISIONS D1.
         ("Oxygenated gasoline", "oxygen.html"),
+        # space-depression lane, 2026-11-13: where the evidence on mood in spaceflight comes from. Other: a
+        # health topic, not an energy one. Label is the page's <title>.
+        ("Depression in space", "space-depression.html"),
         # page/perfidy, 2026-11-07: the Perfidy type family. Label is the page's <title>.
         ("Perfidy", "perfidy.html"),
         # night-shift lane (batch 2), 2026-11-13: night workers' day in the ATUS diaries against everyone

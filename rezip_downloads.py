@@ -301,6 +301,11 @@ TARGETS = [
     # and data/fetched.json. Not data/raw: the BLS files are public and the fetch script re-downloads them.
     target("nightshift", "nightshift-code.zip", keep={"outputs"},
            skip=("data/raw", "data/raw/*", "outputs/*.png")),
+    # Depression in space (space-depression lane, 2026-11-13): the fetch script, readers, payload builder and
+    # gates, the page generator with the evidence map, and the tests, with the payload and data/fetched.json.
+    # Not data/raw: the fetch script re-downloads the files and the readers refuse one whose SHA-1 differs.
+    target("space-depression", "space-depression-code.zip", keep={"outputs"},
+           skip=("data/raw", "data/raw/*", "outputs/*.png")),
     # food-code.zip retired with its page on 2026-09-09: food.html was
     # unpublished at Andrew's request, for now, and the last build is
     # unpublished/downloads/food-code.zip. The TARGET goes with the page,

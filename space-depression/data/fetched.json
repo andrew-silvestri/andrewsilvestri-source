@@ -1,0 +1,149 @@
+{
+ "arch2025.pdf": {
+  "bytes": 13228980,
+  "fetched": "2026-11-13",
+  "sha1": "21bbd57739452bcb069b3903a57dd9d64dfc3423",
+  "url": "https://www.nasa.gov/wp-content/uploads/2025/12/2025-architecture-update-for-publication.pdf",
+  "via": "urllib"
+ },
+ "barger2014.html": {
+  "bytes": 197566,
+  "fetched": "2026-11-13",
+  "sha1": "84ec6a87f23097f3e4ed424c2df49bdf33cb5340",
+  "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC4188436/",
+  "via": "urllib"
+ },
+ "basner2013.html": {
+  "bytes": 203176,
+  "fetched": "2026-11-13",
+  "sha1": "9f6761b6409c900739c4e63f5dd6f102a5361f59",
+  "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC3574912/",
+  "via": "urllib"
+ },
+ "basner2014.xml": {
+  "bytes": 106920,
+  "fetched": "2026-11-13",
+  "sha1": "21cb19114b0a94f3ddb75d600d4ab9c89299a945",
+  "url": "https://journals.plos.org/plosone/article/file?id=10.1371/journal.pone.0093298&type=manuscript",
+  "via": "urllib"
+ },
+ "bell2019.xml": {
+  "bytes": 191791,
+  "fetched": "2026-11-13",
+  "sha1": "e5b3d1402ca9a46ffded9b850f3c479ed9fac7fd",
+  "url": "https://www.ebi.ac.uk/europepmc/webservices/rest/PMC6530432/fullTextXML",
+  "via": "urllib"
+ },
+ "bmed_er.txt": {
+  "bytes": 833697,
+  "fetched": "2026-11-13",
+  "sha1": "490a147a844bb580281eb639e65c51d12ed3e5c0",
+  "url": "https://ntrs.nasa.gov/api/citations/20250001454/downloads/BMed%20Evidence%20Report%20final%202-10-25.docx.txt",
+  "via": "urllib"
+ },
+ "chapea.html": {
+  "bytes": 328016,
+  "fetched": "2026-11-13",
+  "sha1": "6f10688bc769ebdcba5828a2de63507dccc05c27",
+  "url": "https://www.nasa.gov/humans-in-space/chapea/",
+  "via": "urllib"
+ },
+ "dra5.pdf": {
+  "bytes": 3881119,
+  "fetched": "2026-11-13",
+  "sha1": "e5690e130c666bf1ef2ed6963f35a781f00638c7",
+  "url": "https://www.nasa.gov/wp-content/uploads/2015/09/373665main_nasa-sp-2009-566.pdf",
+  "via": "urllib"
+ },
+ "horizons_mars.txt": {
+  "bytes": 114280,
+  "fetched": "2026-11-13",
+  "sha1": "7568223803866d7cbacf3b074319dca7563f119d",
+  "url": "https://ssd.jpl.nasa.gov/api/horizons.api?format=text&COMMAND=%27499%27&OBJ_DATA=%27NO%27&MAKE_EPHEM=%27YES%27&EPHEM_TYPE=%27OBSERVER%27&CENTER=%27500%40399%27&START_TIME=%272033-01-01%27&STOP_TIME=%272036-06-30%27&STEP_SIZE=%271d%27&QUANTITIES=%2720%2C21%2C23%27&CSV_FORMAT=%27YES%27",
+  "via": "urllib"
+ },
+ "horizons_moon.txt": {
+  "bytes": 740919,
+  "fetched": "2026-11-13",
+  "sha1": "37ec657f076e20ba2deec03285028ba098b223cc",
+  "url": "https://ssd.jpl.nasa.gov/api/horizons.api?format=text&COMMAND=%27301%27&OBJ_DATA=%27NO%27&MAKE_EPHEM=%27YES%27&EPHEM_TYPE=%27OBSERVER%27&CENTER=%27500%40399%27&START_TIME=%272033-01-01%27&STOP_TIME=%272033-12-31%27&STEP_SIZE=%271h%27&QUANTITIES=%2720%2C21%2C23%27&CSV_FORMAT=%27YES%27",
+  "via": "urllib"
+ },
+ "hsrb_rr.pdf": {
+  "bytes": 11165277,
+  "fetched": "2026-11-13",
+  "sha1": "d77c6dab77f3e4764b85910b89721e0d49dfa6e9",
+  "url": "https://www.nasa.gov/wp-content/uploads/2025/09/hsrb-behavioral-health-risk-record-rev-d-1-web.pdf",
+  "via": "urllib"
+ },
+ "ihle2006.txt": {
+  "bytes": 1824,
+  "fetched": "2026-11-13",
+  "sha1": "acaecde9bd49c01e1c7c97051f5e9ba6641ae0fb",
+  "url": "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/efetch.fcgi?db=pubmed&rettype=abstract&retmode=text&id=16491575",
+  "via": "urllib"
+ },
+ "kanas2001.txt": {
+  "bytes": 2147,
+  "fetched": "2026-11-13",
+  "sha1": "1e8bf9336b7ebe3be7abfa02f8d0bfd025546cec",
+  "url": "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/efetch.fcgi?db=pubmed&rettype=abstract&retmode=text&id=11865867",
+  "via": "urllib"
+ },
+ "kanas2007.txt": {
+  "bytes": 2063,
+  "fetched": "2026-11-13",
+  "sha1": "ae2663e9f58b8b047f90208e5080f181259a7bd6",
+  "url": "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/efetch.fcgi?db=pubmed&rettype=abstract&retmode=text&id=17571662",
+  "via": "urllib"
+ },
+ "mars_comm.pdf": {
+  "bytes": 1075626,
+  "fetched": "2026-11-13",
+  "sha1": "ce6595fee205f1e4c3a0ec37e6ed73ae6e0b4f58",
+  "url": "https://www.nasa.gov/wp-content/uploads/2024/01/mars-communications-disruption-and-delay.pdf",
+  "via": "urllib"
+ },
+ "mcd_missions.tsv": {
+  "bytes": 59504,
+  "fetched": "2026-11-13",
+  "sha1": "36401b273eb779286f071a3735a0de6ea7db550f",
+  "url": "https://planet4589.org/space/astro/tsv/missions.tsv",
+  "via": "urllib"
+ },
+ "mcd_rides.tsv": {
+  "bytes": 259101,
+  "fetched": "2026-11-13",
+  "sha1": "38bff62c5ad1614bce6339cb187659077ab19880",
+  "url": "https://planet4589.org/space/astro/tsv/rides.tsv",
+  "via": "urllib"
+ },
+ "nsduh2025.pdf": {
+  "bytes": 3270818,
+  "fetched": "2026-11-13",
+  "sha1": "6d376b543e53c010f51b59601b127ca1379ef0ea",
+  "url": "https://www.samhsa.gov/data/sites/default/files/reports/rpt57150/2025-nsduh-annual-national-report.pdf",
+  "via": "urllib"
+ },
+ "palinkas2004.txt": {
+  "bytes": 2180,
+  "fetched": "2026-11-13",
+  "sha1": "c3a0d0dc403494b796c7f8e30548b10ebf7f4170",
+  "url": "https://eutils.ncbi.nlm.nih.gov/entrez/eutils/efetch.fcgi?db=pubmed&rettype=abstract&retmode=text&id=15253482",
+  "via": "urllib"
+ },
+ "rosenberg2022.html": {
+  "bytes": 827996,
+  "fetched": "2026-11-13",
+  "sha1": "9dd8b882d41c4c116d847bc381a5cce79f3efbb9",
+  "url": "https://www.frontiersin.org/journals/physiology/articles/10.3389/fphys.2022.898841/full",
+  "via": "urllib"
+ },
+ "sandal2018.html": {
+  "bytes": 720258,
+  "fetched": "2026-11-13",
+  "sha1": "baf9a9c6c88614bed20f4be9e7fe70f07ddb69b5",
+  "url": "https://www.frontiersin.org/journals/psychology/articles/10.3389/fpsyg.2018.02235/full",
+  "via": "urllib"
+ }
+}
