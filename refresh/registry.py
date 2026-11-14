@@ -90,6 +90,18 @@ ENTRIES = [
         "why": "A published 2015 estimate and closed historical series; the page says it does not update.",
     },
     {
+        # climate-dissonance lane, 2026-11-13. Disabled: one survey wave (Special Eurobarometer 565, 2025)
+        # and a published review; the page says it does not update. A new wave changes the action list
+        # and is a reviewed change, not a refresh.
+        "page": "dissonance",
+        "cwd": "dissonance",
+        "fetch": [],
+        "build": [["python", "build_dissonance.py"]],
+        "keys": [],
+        "enabled": False,
+        "why": "One survey wave and a published review; the page says it does not update.",
+    },
+    {
         # chain-reactions lane, 2026-11-07. Disabled: the page traces a finished policy chain
         # (1990-2006) and says its data does not update; a refresh would move its numbers under
         # prose written against them. update_page.claims() would stop a rebuild that contradicts it.
