@@ -153,7 +153,6 @@ def values(P):
         "gap_anc": f"{c['gap_med_ancient_hit']:,.0f}", "gap_mod": f"{c['gap_med_modern_hit']:,.0f}",
         "gap_modmiss": f"{c['gap_med_modern_miss']:,.0f}",
         "gap_kant": str(rows["E10"]["gap"]), "gap_epr": str(rows["R09"]["gap"]),
-        "zip_kb": f"{round(os.path.getsize(ZIP) / 1024) if os.path.exists(ZIP) else 0:,}",
     }
     v["stamp"] = insight.stamp(live=False)
     v["takeaways"] = insight.takeaways([

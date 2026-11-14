@@ -261,7 +261,6 @@ def values(P):
         "s2010r": f"{100 * A['2010']['share']:.0f}", "s2015r": f"{100 * A['2015']['share']:.0f}",
         "y2018": f"{A['2018']['eth'] / 1000:.2f}", "y_rec1": y[64785],
         "y_28052": art(P, "eia_tie_28052.html")[0][:4],
-        "zip_kb": f"{round(os.path.getsize(ZIP) / 1024) if os.path.exists(ZIP) else 0:,}",
     }
     v.update(quotes())
     claims(P, v)

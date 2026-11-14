@@ -410,7 +410,6 @@ def values():
         "chain_alt": chain_alt(),
         "slaughter_share": f"{100 * slaughter:.0f}",
         "hide_share": f"{100 * next(x['share'] for x in PRODUCTS['leather_shoes']['stages'] if x['id'] == 'hide'):.1f}",
-        "zip_kb": f"{zip_kb:,}",
     }
     facts = dict(b=b, car_km=car_km, enteric=enteric, land=land, after=after,
                  fr=fr, banana_air=banana_air, tan=tan, hide=hide,

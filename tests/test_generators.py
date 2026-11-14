@@ -280,7 +280,9 @@ GENERATORS = [
     # generator reads site/downloads/*.zip, which are gitignored build output,
     # so this entry is only meaningful on a tree whose archives are current;
     # sync_code_rows.py errors rather than rewriting if any are absent.
-    ("code rows: sync_code_rows.py", ["sync_code_rows.py", "--apply"], ".", "site"),
+    # code.html was unpublished on 2026-11-14 (unpublished/RETIRED.md), so this
+    # generator no longer owns a shipped file. Put the entry back with the page.
+    # ("code rows: sync_code_rows.py", ["sync_code_rows.py", "--apply"], ".", "site"),
     ("image dims: sync_img_dims.py", ["sync_img_dims.py"], ".", "site"),
     ("cache stamps: bust_cache.py", ["bust_cache.py"], ".", "site"),
 ]

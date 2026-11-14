@@ -308,7 +308,6 @@ def values(P):
                   f'Siegel and colleagues (2021); route figures from papers published 1998 to 2026. '
                   f'This page does not update.</p>'),
         "depth_chart": depth_chart(P),
-        "zip_kb": f"{round(os.path.getsize(ZIP) / 1024) if os.path.exists(ZIP) else 0:,}",
     }
     v["takeaways"] = insight.takeaways([
         f"Ocean algae fix about {v['npp_round_lo']} to {v['npp_round_hi']} billion tonnes of carbon a year, about "

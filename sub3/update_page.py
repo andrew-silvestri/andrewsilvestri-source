@@ -246,7 +246,6 @@ def values(P):
         "slope": f"{-P['weather']['slope_pts_per_c']:.1f}", "r_temp": f"{P['weather']['pearson']:.2f}".replace("-", "−"),
         "rep_pct": p0(P["repeat"]["had"]["share"]), "rep_n": f"{P['repeat']['had']['n']:,}",
         "wr_pace": pace(WR / 42.195),
-        "zip_kb": f"{round(os.path.getsize(ZIP) / 1024) if os.path.exists(ZIP) else 0:,}",
     }
     # the fade arithmetic in the margin section: a 1:29:30 half slowed by the sub-3 median
     fade = 5370 * (2 + round(sl["under 3:00"]["median_pct"], 1) / 100)

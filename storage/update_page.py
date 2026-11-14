@@ -302,7 +302,6 @@ def values(P, I):
         "z1_lo": usd(z[zy[0]][zlo(zy[0])]), "z1_lo_name": zlo(zy[0]), "z1_hi": usd(z[zy[0]][zhi(zy[0])]), "z1_hi_name": zhi(zy[0]),
         "z2_lo": usd(z[zy[-1]][zlo(zy[-1])]), "z2_lo_name": zlo(zy[-1]), "z2_hi": usd(z[zy[-1]][zhi(zy[-1])]), "z2_hi_name": zhi(zy[-1]),
         "ac_hours": f"{4 * eta:.2f}", "atb": usd(M.annualized_storage_cost_per_kw_yr()), "atb15": usd(atb_over(15)),
-        "zip_kb": f"{round(os.path.getsize(ZIP) / 1024) if os.path.exists(ZIP) else 0:,}",
     }
     return v
 

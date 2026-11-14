@@ -227,7 +227,6 @@ def values(P):
                   f"{B['last']['end']}; the world estimate for 2019. This page does not update."),
         "cohort_rows": cohort_rows(P), "blood_rows": blood_rows(P), "curve_rows": curve_rows(P),
         "region_rows": region_rows(P),
-        "zip_kb": f"{round(os.path.getsize(ZIP) / 1024) if os.path.exists(ZIP) else 0:,}",
     }
     v["takeaways"] = insight.takeaways([
         f"By the estimate of McFarland and colleagues, Americans born from 1966 to 1970 lost {v['peak5']} IQ points "

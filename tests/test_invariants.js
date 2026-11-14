@@ -69,7 +69,7 @@ const pw = require('playwright');
 const ROOT = path.join(__dirname, '..');
 const SITE = path.join(ROOT, 'site');
 const FIX = path.join(__dirname, 'fixtures');
-const PAGES = ['index', 'about', 'code', 'heat', 'storage', 'climate-cost',
+const PAGES = ['index', 'about', 'heat', 'storage', 'climate-cost',
                'longevity', 'skyline', 'continents', 'beauty', 'lostgas', 'takeaway', 'uri', 'ethane', 'safetynet', 'lead', 'oxygen', 'perfidy', 'nightshift', 'space-depression', 'greatfilter', 'origins', 'sub3', 'scales', 'algae', 'messaging', 'dissonance', 'armchair', 'aiweb', 'lowcarbon-shoe',
                '_fixture/kit'];
 /* The insight kit's fixture (R1, 2026-10-23): tests/fixtures/kit.html, served

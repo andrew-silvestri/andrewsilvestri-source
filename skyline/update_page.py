@@ -306,7 +306,6 @@ def values(P, R):
         "mode_rows": "\n".join(modes),
         "fetched": day(P["sources"]["wikidataFetched"]),
         "osm_fetched": day(P["sources"]["osmFetched"]),
-        "zip_kb": f"{round(os.path.getsize(ZIP) / 1024) if os.path.exists(ZIP) else 0:,}",
     }
     return v, T
 

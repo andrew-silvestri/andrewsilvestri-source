@@ -115,7 +115,8 @@ def main(brk=None):
         t = t.replace("bats come to 2.4", "bats come to 2.5", 1)
     ec_s = s["effort_check"]
     runs = (s["headline"], ec_s["corrected"], ec_s["dropped"])
-    lim = t[t.index("<h2>Limits</h2>"):t.index("<h2>The code</h2>")]
+    # Limits runs to Sources since "The code" left the page (2026-11-14).
+    lim = t[t.index("<h2>Limits</h2>"):t.index("<h2>Sources</h2>")]
     cells = re.findall(r"<tr><td>([^<]+)</td><td>([^<]+)</td><td>([^<]+)"
                        r"</td><td>([^<]+)</td></tr>", lim)
     cell = {a.split(" (")[0]: (b, d, f) for a, b, d, f in cells}

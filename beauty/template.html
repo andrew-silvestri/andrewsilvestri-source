@@ -293,37 +293,9 @@ are treated.</p>
 rated-attractiveness dataset, and the class figure stops at vertebrates because
 the Red List has assessments for few species outside them. Mammals, with a public h-index dataset of their own, are the obvious next class. That model is not built.</p>
 
-<h2 id="code">The code</h2>
-<p>The archive holds the fetch scripts, one for each source and each
-resumable, along with the build (which joins, fits and bootstraps), the figure
-script and the page renderer. Each input whose license allows it is in the
-archive: AVONET and the attractiveness scores (CC BY 4.0), the Wikipedia and
-OpenAlex counts (CC0) and the Red List summary table (a cited aggregate). The
-Red List column is not. The IUCN Red List's terms (version 3.1) bar
-redistribution of Red List data "in their original format" (section 4), but
-they also place "no restrictions on use of the IUCN Red List Categories associated with
-each named taxonomic entity" (section 3). The archive takes the cautious
-reading. <code>fetch_iucn.py</code> gets the column with a free personal
-token, and <code>manifest.json</code> carries the SHA-256 of the {{cat_rows}}
-species and categories that this page used, <code>{{cat_sha_short}}</code>, so
-that <code>build_beauty.py
---verify-categories</code> can tell a reader whether their fetch matches.
-One shipped file, <code>data/lc_matched.csv</code>, lists {{lc_matched_n}}
-species that are all Least Concern, and so shows that category for them.
-Whether it continues to ship is an open decision.</p>
-
-<p>Since February 2026, OpenAlex meters its API. The record-type counts cost
-${{types_cost}} to fetch for {{types_cost_n}} species. A reader who trusts the
-shipped counts pays nothing; a reader who fetches them again needs a key and
-{{types_days}} days of a free account's allowance, or about
-${{types_cost_round}} of credit. That is about a tenth of a cent a bird.</p>
-
-<p><a class="btn" href="downloads/beauty-code.zip">Download source · {{zip_kb}} KB</a>
-<a class="btn ghost" href="code.html">All code</a></p>
-
 <footer>
 <p><a href="about.html">Andrew Silvestri</a></p>
-<p><a href="code.html">Built with Python, Julia, JavaScript and public data.</a></p>
+<p>Built with Python, Julia, JavaScript and public data.</p>
 </footer>
 </main>
 <script src="assets/motion.js"></script>

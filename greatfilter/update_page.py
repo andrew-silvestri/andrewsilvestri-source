@@ -407,7 +407,6 @@ def values(P):
         "xpt_ratio": {6: "six"}[round(S.AHEAD_NUM["xpt_ex"] / S.AHEAD_NUM["xpt_sf"])],
         "accept_inv": f"{round(1 / h['accept']):,}", "n_kept": f"{h['n']:,}",
         "used": f"{100 * c['used']:.0f}",
-        "zip_kb": f"{round(os.path.getsize(ZIP) / 1024) if os.path.exists(ZIP) else 0:,}",
     }
     claims(P, v)
     fits()

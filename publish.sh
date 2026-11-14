@@ -146,6 +146,11 @@ cp -a "$SITE/." "$REPO/"
 # served locally beside the site so they can use its assets, and it must
 # never be published. Removed here rather than trusted to be absent.
 rm -rf "$REPO/_preview"
+# site/downloads/ holds the per-project source archives rezip_downloads.py
+# builds (gitignored). Since 2026-11-14 the site publishes no code: the Code
+# page, every "The code" section and the archives came off at Andrew's
+# request. The archives are still built locally; they never ship.
+rm -rf "$REPO/downloads"
 [ -n "$license_tmp" ] && cp "$license_tmp" "$REPO/LICENSE" && rm -f "$license_tmp"
 
 [ -f "$REPO/index.html" ] || die "index.html did not land at the repository root. Nothing pushed."

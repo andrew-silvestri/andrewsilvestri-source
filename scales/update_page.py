@@ -349,7 +349,6 @@ def values(P):
         "c_slope": f"{C['slope']:.2f}", "c_lo": f"{C['ci'][0]:.2f}", "c_hi": f"{C['ci'][1]:.2f}",
         "c_r2": f"{C['r2']:.2f}", "c_x10": f"{100 * (C['x10'] - 1):.0f}",
         "c_dropped": str(C["dropped"]),
-        "zip_kb": f"{round(os.path.getsize(ZIP) / 1024) if os.path.exists(ZIP) else 0:,}",
     }
     v["stamp"] = insight.stamp(live=False)
     v["takeaways"] = insight.takeaways([

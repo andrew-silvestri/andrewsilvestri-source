@@ -287,7 +287,6 @@ def values(P):
         "ong_a_alloc0": f"{100 * H['ONG-A']['alloc']:.2f}%", "ong_a_alloc1": f"{100 * H['ONG-A']['alloc_latest']:.2f}%",
         "onga_check": r10(H["ONG-A"]["term_check"]), "ongb_check": r10(H["ONG-B"]["term_check"]),
         "suo_check": r10(H["SUO"]["term_check"]),
-        "zip_kb": f"{round(os.path.getsize(ZIP) / 1024) if os.path.exists(ZIP) else 0:,}",
     }
     for k in ("ong", "suo"):
         x = ok[k]

@@ -346,7 +346,6 @@ def values(P):
         "eia2006": str(d["eia2006_kbd"]),
         "corn_last": f"{P['corn']['last_final']}/{str(int(P['corn']['last_final']) + 1)[2:]}",
         "chk_1997": f"{A['1997']['mtbe']:.0f}", "eth_share": pct(A[last]["eth_share"]), "y_last": last,
-        "zip_kb": f"{round(os.path.getsize(ZIP) / 1024) if os.path.exists(ZIP) else 0:,}",
         "ncomplete": {7: "seven"}.get(P["bans"]["complete"], str(P["bans"]["complete"])),
         "y_lastban": P["bans"]["last"][:4], "cross": "late " + P["cross"][:4] if int(P["cross"][5:]) >= 9 else str(P["cross"]), "mtbe_last": str(int(P["mtbe_last"][:4])),
         "y_tenth": "2011",

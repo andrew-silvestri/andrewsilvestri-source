@@ -69,6 +69,12 @@ def human(nbytes):
 
 
 def main(apply=False):
+    if not os.path.exists(PAGE):
+        # code.html was unpublished on 2026-11-14 (unpublished/RETIRED.md).
+        # The ordering rule still names this step; with no page it has
+        # nothing to keep honest.
+        print("  site/code.html is unpublished; nothing to sync")
+        return 0
     text = open(PAGE, encoding="utf-8").read()
     out, changed, missing = [], [], []
     pos = 0

@@ -196,7 +196,6 @@ def values(P):
         "t1_kwh": f"{P['inputs']['t1_kwh']:.1f}",
         "grid": f"{round(1000 * P['inputs']['grid'])}",
         "script": H.SCRIPT,
-        "zip_kb": f"{round(os.path.getsize(ZIP) / 1024) if os.path.exists(ZIP) else 0:,}",
     }
     claims(P, v)
     return v

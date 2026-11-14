@@ -65,15 +65,9 @@
 
 <p>EIA's electricity price is an average over all industrial customers, large and small, and a big plant on a negotiated contract pays less; for this reason, the model uses wholesale prices for the second boiler. EIA's gas price covers only part of the industrial gas sold in Texas, about {{gas_cov}} percent of deliveries in recent years, and it is a monthly average set against an hourly power price. The charges are estimates from two utilities' published tariffs and the market monitor's figures, not a quote, and they leave out each connection's fixed monthly charges and any grid connection work. The capital costs are LBNL's ranges, read from its chart, not vendor prices. The emissions use annual rates and do not include methane that leaks before the gas reaches the plant; with a 70 percent gas boiler, the multiples are {{e70_avg}} and {{e70_marg}}. This page is an explainer and teaching tool, not a design study or an investment case.</p>
 
-<h2 id="code">The code</h2>
-
-<p>Python: the EIA fetch script (the key is read from the environment, never stored), the model, the payload builder, the page generator and the tests; Julia and Octave ports of the levelised-cost arithmetic and the formula workbook. {{zip_kb}} KB.</p>
-<p><a class="btn" href="downloads/heat-code.zip">Download source</a>
-<a class="btn ghost" href="code.html">All code</a></p>
-
 <footer>
 <p><a href="about.html">Andrew Silvestri</a></p>
-<p><a href="code.html">Built with Python, Julia, JavaScript and public data.</a></p>
+<p>Built with Python, Julia, JavaScript and public data.</p>
 </footer>
 </main>
 <script src="assets/motion.js"></script>

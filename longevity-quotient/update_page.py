@@ -824,17 +824,6 @@ def limits_section(summary, table=()):
         "still in the table twice and counted twice in its groups.</p>\n")
 
 
-def code_section():
-    kb = os.path.getsize(ZIP) / 1024 if os.path.exists(ZIP) else None
-    size = ("" if kb is None else f" ({kb:,.0f} KB)" if kb < 1024
-            else f" ({kb / 1024:.1f} MB)")
-    return ("<h2>The code</h2>\n\n"
-            "<p>The merge of the six lifespan databases, the fits, the "
-            "study-effort check behind Limits, the species and group tables, "
-            "and the visualiser: "
-            f'<a href="downloads/longevity-code.zip">longevity-code.zip</a>'
-            f"{size}.</p>\n")
-
 
 def main(apply=False):
     summary, report, rows = load()
@@ -965,8 +954,7 @@ def main(apply=False):
             ("<h2>The arithmetic, written out</h2>",
              lambda: arithmetic_section(summary, rows), "arithmetic section"),
             ("<h2>Limits</h2>", lambda: limits_section(summary, table0),
-             "limits section"),
-            ("<h2>The code</h2>", code_section, "code section")):
+             "limits section")):
         block = builder()
         if marker in t:
             t = re.sub(re.escape(marker) + r".*?(?=<h2>)", block + "\n", t,

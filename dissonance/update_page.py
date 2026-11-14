@@ -143,7 +143,6 @@ def values(P):
         "action_rows": action_rows(P), "barrier_rows": barrier_rows(P),
         "stamp": ("Data: Special Eurobarometer 565, interviews in February and March 2025; savings from the studies "
                   "collected by Ivanova and colleagues (2020). This page does not update."),
-        "zip_kb": f"{round(os.path.getsize(ZIP) / 1024) if os.path.exists(ZIP) else 0:,}",
     }
     for key, code in [("rec", "QD6_13"), ("disp", "QD6_14"), ("app", "QD6_6"), ("ev", "QD6_2"), ("hp", "QD6_8"),
                       ("home", "QD6_5"), ("car", "QD6_3"), ("meat", "QD6_12"), ("travel", "QD6_11"),

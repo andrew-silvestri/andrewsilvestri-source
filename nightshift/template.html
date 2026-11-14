@@ -91,15 +91,9 @@
 
 <p>The night sample is {{n_night}} people, {{n_work}} of them on a workday and {{n_off}} on a day off, so the night figures carry standard errors of several points. They are averages over shifts that start at different hours. A night shift crosses the diary's 04:00 boundary, so about {{tail_pct}} percent of night workdays hold only the end of a shift that began the evening before, and a day off that follows a shift would show work before dawn, so the days off are mostly second or later days off. One diary day per person shows a typical day, not a person's week. The comparisons with day workers are raw averages, not adjusted for age, sex or occupation. Reported sleep includes time in bed. The health evidence comes from observational studies, mostly of rotating shifts among nurses, and it cannot fully separate the shift from the people who take it. This page summarizes evidence and is not medical advice.</p>
 
-<h2 id="code">The code</h2>
-
-<p>Python: the fetch script, which records where and when each BLS file came from; the payload builder, which joins the diaries to the module, reproduces BLS's printed figures and computes every number in the clock and the tables; the page generator with the clock; and the tests. The archive carries the payload, not the BLS files. {{zip_kb}} KB.</p>
-<p><a class="btn" href="downloads/nightshift-code.zip">Download source</a>
-<a class="btn ghost" href="code.html">All code</a></p>
-
 <footer>
 <p><a href="about.html">Andrew Silvestri</a></p>
-<p><a href="code.html">Built with Python, Julia, JavaScript and public data.</a></p>
+<p>Built with Python, Julia, JavaScript and public data.</p>
 </footer>
 </main>
 <script src="assets/motion.js"></script>
