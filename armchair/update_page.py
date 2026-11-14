@@ -6,14 +6,12 @@ the nav (rebuild_nav.py), the citation markers and Sources list (add_citations.p
 the ?v= stamps (bust_cache.py) - are kept as the shipped page has them, so tests/test_generators.py can run
 this on the shipped tree and expect no change. The idiom is oxygen/update_page.py's.
 
-The hero is the handbook's crowd: every checkable answer in the Placita as one square, grouped by question,
-coloured by its consensus grade, drawn twice (a 900px drawing and a 320px one). Squares carry data-o: 0 for
-six answers that histories of science cite, 1 for the other answers to those same six questions, 2 for the
-rest. site/assets/chain.js (oxygen's, used unchanged) reveals them in that order as the step cards scroll.
-The timeline is a static drawing: one line per case from the year of the idea to the year of the event.
+The hero is the timeline, a static drawing: one line per case from the year of the idea to the year of the
+event, drawn twice (900px and 340px). D-105 (2026-11-14): the page no longer shows the AI-graded base rate of
+the Placita (the crowd grid, its counts and the rater agreement); analysis.py still builds that part of the
+payload, and the download keeps it, but nothing on the page reads it.
 
-claims() asserts every proportion the template's words commit to ("about one in", "between six and eight",
-"the only one close to right"); if a rebuild moves one, the generator stops.
+claims() asserts every ordering the template's words commit to; if a rebuild moves one, the generator stops.
 
 Run:  python update_page.py            report only
       python update_page.py --apply
@@ -38,89 +36,11 @@ import insight  # noqa: E402
 
 E = html.escape
 GRADES = ["STRONG", "PARTIAL", "LOOSE", "WRONG"]
-# The six answers that popular histories cite: the Moon's borrowed light, the solar eclipse, a spherical Earth,
-# the Milky Way as stars, atoms, and a moving Earth. Fixed by id; the build checks each is in the table.
-FAMOUS = ["B2.28.3", "B2.24.1", "B3.10.1", "B3.1.7", "B1.3.8", "B3.13.2"]
 WORDS = {1: "one", 2: "two", 3: "three", 4: "four", 5: "five", 6: "six", 7: "seven", 8: "eight", 9: "nine"}
 
 
 def year(y):
     return f"{-y} BCE" if y < 0 else f"AD {y}" if y < 1000 else str(y)
-
-
-# ------------------------------------------------------------------ hero ---
-def crowd(T, width, sq, gap, ggap, cls):
-    """Squares in reading order, one group per question, a group never split across lines."""
-    groups = []
-    for t in T:
-        if t["consensus"] is None:
-            continue
-        key = (t["book"], t["chapter"])
-        if not groups or groups[-1][0] != key:
-            groups.append((key, []))
-        groups[-1][1].append(t)
-    fam_q = {(t["book"], t["chapter"]) for t in T if t["id"] in FAMOUS}
-    x = y = 0
-    step = sq + gap
-    cells = []
-    for key, rows in groups:
-        w = len(rows) * step - gap
-        if x and x + w > width:
-            x, y = 0, y + step
-        for i, t in enumerate(rows):
-            o = 0 if t["id"] in FAMOUS else 1 if key in fam_q else 2
-            fam = " fam" if t["id"] in FAMOUS else ""
-            cells.append(f'<rect class="g-{t["consensus"].lower()}{fam}" data-o="{o}" '
-                         f'x="{x + i * step}" y="{y}" width="{sq}" height="{sq}"/>')
-        x += w + ggap
-    h = y + sq
-    pad = 3
-    return (f'<svg class="tree crowd {cls}" viewBox="{-pad} {-pad} {width + 2 * pad} {h + 2 * pad}" '
-            f'width="{width + 2 * pad}" height="{h + 2 * pad}" role="img" aria-labelledby="crowd-desc">'
-            + "".join(cells) + "</svg>")
-
-
-def hero(P, v):
-    T = P["placita"]["table"]
-    fam = [t for t in T if t["id"] in FAMOUS]
-    assert len(fam) == len(FAMOUS)
-    fq = {(t["book"], t["chapter"]) for t in fam}
-    riv = [t for t in T if (t["book"], t["chapter"]) in fq and t["id"] not in FAMOUS and t["consensus"]]
-    riv_w = sum(t["consensus"] == "WRONG" for t in riv)
-    fam_s = sum(t["consensus"] == "STRONG" for t in fam)
-    v.update(fam_s=str(fam_s), riv_n=str(len(riv)), riv_w=str(riv_w))
-    steps = [
-        (0, "Six famous answers",
-         "Six answers in this handbook appear in most histories of science: the Moon shines by the Sun's light, an "
-         "eclipse of the Sun is the Moon in front of it, the Earth is a sphere, the Milky Way is many stars, matter "
-         f"is atoms, and the Earth moves. Graded against present science, {WORDS.get(fam_s, fam_s)} of the six are strong; "
-         "the other three are partial."),
-        (1, "Their rivals",
-         f"Each was one answer among several to the same question. The handbook gives {len(riv)} other checkable "
-         f"answers to these six questions, and {riv_w} of them are wrong: the Moon has its own light, the Earth is a "
-         "drum or a table, the Milky Way is the old path of the Sun."),
-        (2, "The whole handbook",
-         f"All {v['n_sc']} checkable answers to {v['q_sc']} questions. {v['s_lo']} are strong and {v['w_lo']} are "
-         f"wrong. Where a question drew a strong answer, a median of {v['riv_med']} other answers stood beside it. "
-         '<a href="#crowd">The count</a>'),
-    ]
-    desc = (f"A grid of {v['n_sc']} squares, one for each checkable answer in the Placita, grouped by question in "
-            f"the handbook's order and coloured by grade: {v['s_lo']} strong, {v['p_lo']} partial, {v['l_lo']} "
-            f"loose, {v['w_lo']} wrong. Six famous answers are outlined; most squares are wrong.")
-    key = ('<p class="chain-key crowd-key">'
-           '<span class="sw g-strong"></span>strong &middot; <span class="sw g-partial"></span>partial &middot; '
-           '<span class="sw g-loose"></span>loose &middot; <span class="sw g-wrong"></span>wrong. '
-           'One square is one answer; squares side by side answer the same question. Outlined: the six famous '
-           'answers.</p>')
-    out = ['<figure class="chain wide" aria-label="Every checkable answer in the handbook">',
-           '<div class="chain-fig">', f'<p id="crowd-desc" hidden>{E(desc)}</p>',
-           crowd(P["placita"]["table"], 880, 14, 3, 9, "tree-wide"),
-           crowd(P["placita"]["table"], 314, 12, 2, 7, "tree-phone"),
-           key, '</div>', '<div class="chain-steps">']
-    for k, head, text in steps:
-        out.append(f'<div class="step" data-step="{k}"><p class="ev">{head}</p><p>{text}</p></div>')
-    out.append("</div>\n</figure>")
-    return "\n".join(out)
 
 
 # -------------------------------------------------------------- timeline ---
@@ -225,75 +145,37 @@ def pct(a, b):
 
 
 def values(P):
-    p, c = P["placita"], P["cases"]
-    lo, hi = p["low"], p["high"]
-    T = p["table"]
-    rec = p["record"]
+    c = P["cases"]
     rows = {r["id"]: r for r in c["rows"]}
-    mw = [t for t in T if (t["book"], t["chapter"]) == (3, 1) and t["consensus"]]
     v = {
-        "n_op": str(p["n_opinions"]), "n_ch": str(p["n_chapters"]), "n_sc": str(p["n_scorable"]),
-        "s_lo": str(lo["STRONG"]), "p_lo": str(lo["PARTIAL"]), "l_lo": str(lo["LOOSE"]), "w_lo": str(lo["WRONG"]),
-        "s_hi": str(hi["STRONG"]), "w_hi": str(hi["WRONG"]),
-        "s_lo_pct": pct(lo["STRONG"], p["n_scorable"]), "w_lo_pct": pct(lo["WRONG"], p["n_scorable"]),
-        "one_in": str(round(p["n_scorable"] / lo["STRONG"])),
-        "ratio_lo": WORDS[round(lo["WRONG"] / lo["STRONG"])], "ratio_hi": WORDS[round(hi["WRONG"] / hi["STRONG"])],
-        "agree5": f"{100 * p['agree5']:.0f}", "kappa5": f"{p['kappa5']:.2f}", "kappa2": f"{p['kappa2']:.2f}",
-        "agree2": f"{100 * p['agree2']:.0f}",
-        "q_sc": str(p["q_scorable"]), "q_all_wrong": str(p["q_all_wrong"]),
-        "q_hit": str(p["q_with_strong"]), "q_rival": str(p["q_strong_with_rival"]),
-        "riv_med": WORDS.get(int(p["rivals_median"]), str(p["rivals_median"])),
-        "s_book2": str(p["by_book"]["2"]["STRONG"]),
-        "dem_n": str(rec["Democritus"]["n"]), "dem_s": WORDS[rec["Democritus"]["STRONG"]],
-        "dem_p": str(rec["Democritus"]["PARTIAL"]), "dem_w": str(rec["Democritus"]["WRONG"]),
-        "sto_n": str(rec["the Stoics"]["n"]), "sto_s": str(rec["the Stoics"]["STRONG"]),
-        "sto_w": str(rec["the Stoics"]["WRONG"]),
-        "mw_n": WORDS.get(len(mw), str(len(mw))),
         "c_n": str(c["n"]), "c_s": WORDS.get(c["tally"]["STRONG"], str(c["tally"]["STRONG"])),
         "c_p": str(c["tally"]["PARTIAL"]), "c_l": str(c["tally"]["LOOSE"]), "c_w": str(c["tally"]["WRONG"]),
         "gap_anc": f"{c['gap_med_ancient_hit']:,.0f}", "gap_mod": f"{c['gap_med_modern_hit']:,.0f}",
         "gap_modmiss": f"{c['gap_med_modern_miss']:,.0f}",
         "gap_kant": str(rows["E10"]["gap"]), "gap_epr": str(rows["R09"]["gap"]),
-        "line_a": f"{min(t['line_start'] for t in T):,}", "line_b": f"{max(t['line_end'] for t in T):,}",
         "zip_kb": f"{round(os.path.getsize(ZIP) / 1024) if os.path.exists(ZIP) else 0:,}",
     }
     v["stamp"] = insight.stamp(live=False)
     v["takeaways"] = insight.takeaways([
-        f"An ancient handbook lists the philosophers' answers to {v['q_sc']} checkable questions about nature; "
-        f"graded against present science, {v['s_lo']} of its {v['n_sc']} checkable answers hold up in full and "
-        f"{v['w_lo']} are wrong.",
-        f"The famous anticipations are real, but they seldom stood alone: of the {v['q_hit']} questions that drew a "
-        f"strong answer, {v['q_rival']} list rival answers beside it, a median of {v['riv_med']}.",
-        f"Ancient hits waited a median of {v['gap_anc']} years for confirmation; among ideas from 1400 on, wrong "
-        f"ones were refuted in a median of {v['gap_modmiss']} years, faster than right ones were confirmed (a median "
-        f"of {v['gap_mod']})."])
-    claims(P, v, mw)
-    v["hero"] = hero(P, v)
-    v["timeline"] = timeline(P, v)
+        f"Followed from the year each was written to the dated event that settled it, right guesses about "
+        f"nature from antiquity waited a median of {v['gap_anc']} years, mostly for an instrument to be built.",
+        f"Among ideas from 1400 on, wrong ones were refuted in a median of {v['gap_modmiss']} years, faster than "
+        f"right ones were confirmed (a median of {v['gap_mod']}).",
+        f"Of the {v['c_n']} ideas, {v['c_s']} are strong matches to present science and {v['c_w']} are wrong; the "
+        f"cases are the ones histories cite, so they show waiting times, not how often guesses were right."])
+    claims(P, v)
+    v["hero"] = timeline(P, v)
     v["cases_table"] = cases_table(P)
     return v
 
 
-def claims(P, v, mw):
-    p, c = P["placita"], P["cases"]
-    lo, hi = p["low"], p["high"]
+def claims(P, v):
+    c = P["cases"]
     bad = []
-    if not 2 <= round(hi["WRONG"] / hi["STRONG"]) < round(lo["WRONG"] / lo["STRONG"]) <= 9:
-        bad.append("'between {ratio_hi} and {ratio_lo} wrong ones' per strong answer (rounded, distinct)")
-    if not hi["STRONG"] > lo["STRONG"] and hi["WRONG"] < lo["WRONG"]:
-        bad.append("'strong answers rise ... wrong ones fall'")
-    if p["by_book"]["2"]["STRONG"] * 2 <= lo["STRONG"]:
-        bad.append("most strong answers in the book on the heavens")
-    mwg = {t["id"]: t["consensus"] for t in mw}
-    if mwg.get("B3.1.7") != "PARTIAL" or any(g != "WRONG" for i, g in mwg.items() if i != "B3.1.7"):
-        bad.append("Milky Way: Democritus's is the only one close to right")
-    rec = p["record"]
-    if max(rec, key=lambda k: rec[k]["STRONG"]) != "the Stoics":
-        bad.append("Stoics have the most strong answers")
-    if rec["Democritus"]["STRONG"] != 1:
-        bad.append("Democritus: 'one strong'")
     if c["gap_med_ancient_hit"] < 1000 or c["gap_med_modern_miss"] > c["gap_med_modern_hit"]:
         bad.append("ancient hits wait millennia; modern misses die faster than modern hits wait")
+    if c["tally"]["WRONG"] <= c["tally"]["STRONG"]:
+        bad.append("takeaway pairs strong and wrong counts; check the wording still reads right")
     if bad:
         raise SystemExit("prose contradicted by payload: " + "; ".join(bad))
 
@@ -321,7 +203,7 @@ def render(P):
     missing = sorted(set(re.findall(r"{{(\w+)}}", t)) - set(v) - {"nav"})
     if missing:
         raise SystemExit(f"template placeholders without a value: {missing}")
-    unused = sorted(set(v) - set(re.findall(r"{{(\w+)}}", t)) - {"fam_s", "riv_n", "riv_w", "riv_med", "q_hit", "q_rival"})
+    unused = sorted(set(v) - set(re.findall(r"{{(\w+)}}", t)))
     if unused:
         raise SystemExit(f"values the template no longer uses: {unused}")
     for k, val in v.items():
