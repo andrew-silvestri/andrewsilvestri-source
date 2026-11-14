@@ -2216,7 +2216,7 @@ PAGES = {
         ('TollBit, which sells licensing tools',
          'Digiday, reporting TollBit data, 11 February 2026, <a href="https://digiday.com/media/in-graphic-detail-ai-licensing-deals-protection-measures-arent-slowing-web-scraping/">digiday.com</a>.',
          'About 30 percent of AI bot scrapes in Q4 2025 bypassed explicit robots.txt permissions.'),
-        ('copyright suits had been filed',
+        ('copyright suits against AI companies',
          'ChatGPT Is Eating the World, &ldquo;Latest map of U.S. copyright suits v. AI companies: total 157&rdquo;, 29 October 2026, <a href="https://chatgptiseatingtheworld.com/2026/10/29/latest-map-of-u-s-copyright-suits-v-ai-companies-total-157/">chatgptiseatingtheworld.com</a>.',
          '157 US copyright suits against AI companies.'),
         ('settlement with book authors',
