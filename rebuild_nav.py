@@ -165,6 +165,16 @@ NAV = [
     # page's own title.
     ("Climate", [
         ("Food footprints", "climate-cost.html"),
+        # algae lane, 2026-11-13: carbon fixed by algae against carbon kept out of the air; a
+        # climate question (carbon removal), so Climate.
+        ("Algae carbon", "algae.html"),
+        # sustainable-messaging lane, 2026-11-13: what moved people toward lower-carbon choices, and by how much.
+        ("Climate messaging", "messaging.html"),
+        # climate-dissonance lane, 2026-11-13: what Europeans say they do against climate change, set
+        # beside the tonnes each action saves. Label is the page's <title>.
+        ("Climate effort", "dissonance.html"),
+        # eco-shoe lane, 2026-11-07: a running shoe's footprint and the LC-1 prototype (Climate tab, BRIEF).
+        ("Running-shoe footprint", "lowcarbon-shoe.html"),
     ]),
     # RUNNING WAS RETIRED 2026-09-09, at Andrew's request - "hide the two
     # running pages... I'll republish later, but retire for now". It held
@@ -235,11 +245,27 @@ NAV = [
     # Longevity relisted 2026-10-24 by R5 (D-28: amphibians scored on the
     # global fit as the page says; the study-effort correction printed beside
     # the pooled figures), first, in its old place, under its takeaway's name.
-    ("Other", [
+    # OTHER SPLIT IN THREE, 2026-11-14, Andrew's decision (DECISIONS D-95 b): Science, Society & Health
+    # and Other, so the seven November pages did not take Other from 8 entries to 15. index.html's
+    # sections follow the same split. Group labels are not pages (see the note above NAV).
+    ("Science", [
         ("Longevity quotient", "longevity.html"),
         ("Endangered-bird research", "beauty.html"),
-        ("Skyline sonification", "skyline.html"),
         ("Plate motion", "continents.html"),
+        # great-filter lane, 2026-11-13: the chain of steps from chemistry to radio and which could be
+        # the Great Filter. Other: not an energy page. Label is the page's <title>.
+        ("The Great Filter", "greatfilter.html"),
+        # origins-of-life lane, 2026-11-13: membrane gradients from the origin of life to pain and set points.
+        # Other: not an energy-industry page. Label is the page's <title>.
+        ("The gradient of life", "origins.html"),
+        # scales lane, 2026-11-13: power per kilogram from bacteria to stars, and which cross-scale laws
+        # hold. In Other: no tab holds biology or astronomy (lane DECISIONS D4).
+        ("Scales", "scales.html"),
+        # philosophy-physics lane, 2026-11-13: the Placita scored against present science, and
+        # the gap from idea to decisive event. Not about energy: Other.
+        ("Philosophers' guesses about nature", "armchair.html"),
+    ]),
+    ("Society &amp; Health", [
         # safety-nets lane, 2026-11-07: unemployment insurance's reach (non-energy pages go in Other).
         ("Unemployment insurance", "safetynet.html"),
         # Lane lost-einsteins, 2026-11-07: the IQ cost of lead from gasoline. Other, not Gas:
@@ -248,6 +274,18 @@ NAV = [
         # chain-reactions lane, 2026-11-07: one clause of the 1990 Clean Air Act through three orders of
         # effects. In Other, not Gas (natural gas pages) or Climate (heading held): lane DECISIONS D1.
         ("Oxygenated gasoline", "oxygen.html"),
+        # space-depression lane, 2026-11-13: where the evidence on mood in spaceflight comes from. Other: a
+        # health topic, not an energy one. Label is the page's <title>.
+        ("Depression in space", "space-depression.html"),
+        # night-shift lane (batch 2), 2026-11-13: night workers' day in the ATUS diaries against everyone
+        # else's and the body clock. Other: a health and work page, not energy.
+        ("Night work", "nightshift.html"),
+        # sub3-marathon lane, 2026-11-13: what a sub-3-hour marathon takes, from Berlin results. Other:
+        # not an energy page (lane DECISIONS D3).
+        ("The sub-3 marathon", "sub3.html"),
+    ]),
+    ("Other", [
+        ("Skyline sonification", "skyline.html"),
         # page/perfidy, 2026-11-07: the Perfidy type family. Label is the page's <title>.
         ("Perfidy", "perfidy.html"),
     ]),

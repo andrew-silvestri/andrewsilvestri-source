@@ -1,0 +1,174 @@
+{
+ "target_peak_N": 932.0,
+ "model": "Gibson-Ashby open-cell elastomer (materials.lattice_stress), C1 = 1, n = 2",
+ "rows": [
+  {
+   "Es_MPa": 8.0,
+   "n": 2.0,
+   "C1": 1.0,
+   "scan": [
+    {
+     "phi": 0.1,
+     "drop_peak_N": null,
+     "within_15pct": false
+    },
+    {
+     "phi": 0.15,
+     "drop_peak_N": null,
+     "within_15pct": false
+    },
+    {
+     "phi": 0.2,
+     "drop_peak_N": null,
+     "within_15pct": false
+    },
+    {
+     "phi": 0.25,
+     "drop_peak_N": 1224.0,
+     "within_15pct": false
+    },
+    {
+     "phi": 0.3,
+     "drop_peak_N": 843.0,
+     "within_15pct": true
+    },
+    {
+     "phi": 0.35,
+     "drop_peak_N": 824.0,
+     "within_15pct": true
+    },
+    {
+     "phi": 0.4,
+     "drop_peak_N": 1086.0,
+     "within_15pct": false
+    },
+    {
+     "phi": 0.45,
+     "drop_peak_N": 1297.0,
+     "within_15pct": false
+    },
+    {
+     "phi": 0.5,
+     "drop_peak_N": 1551.0,
+     "within_15pct": false
+    }
+   ],
+   "phi_within_15pct": [
+    0.3,
+    0.35
+   ]
+  },
+  {
+   "Es_MPa": 14.5,
+   "n": 2.0,
+   "C1": 1.0,
+   "scan": [
+    {
+     "phi": 0.1,
+     "drop_peak_N": null,
+     "within_15pct": false
+    },
+    {
+     "phi": 0.15,
+     "drop_peak_N": null,
+     "within_15pct": false
+    },
+    {
+     "phi": 0.2,
+     "drop_peak_N": 641.0,
+     "within_15pct": false
+    },
+    {
+     "phi": 0.25,
+     "drop_peak_N": 842.0,
+     "within_15pct": true
+    },
+    {
+     "phi": 0.3,
+     "drop_peak_N": 972.0,
+     "within_15pct": true
+    },
+    {
+     "phi": 0.35,
+     "drop_peak_N": 884.0,
+     "within_15pct": true
+    },
+    {
+     "phi": 0.4,
+     "drop_peak_N": 1074.0,
+     "within_15pct": false
+    },
+    {
+     "phi": 0.45,
+     "drop_peak_N": 1254.0,
+     "within_15pct": false
+    },
+    {
+     "phi": 0.5,
+     "drop_peak_N": 1503.0,
+     "within_15pct": false
+    }
+   ],
+   "phi_within_15pct": [
+    0.25,
+    0.35
+   ]
+  },
+  {
+   "Es_MPa": 30.0,
+   "n": 2.0,
+   "C1": 1.0,
+   "scan": [
+    {
+     "phi": 0.1,
+     "drop_peak_N": null,
+     "within_15pct": false
+    },
+    {
+     "phi": 0.15,
+     "drop_peak_N": 665.0,
+     "within_15pct": false
+    },
+    {
+     "phi": 0.2,
+     "drop_peak_N": 722.0,
+     "within_15pct": false
+    },
+    {
+     "phi": 0.25,
+     "drop_peak_N": 757.0,
+     "within_15pct": false
+    },
+    {
+     "phi": 0.3,
+     "drop_peak_N": 888.0,
+     "within_15pct": true
+    },
+    {
+     "phi": 0.35,
+     "drop_peak_N": 1101.0,
+     "within_15pct": false
+    },
+    {
+     "phi": 0.4,
+     "drop_peak_N": 1331.0,
+     "within_15pct": false
+    },
+    {
+     "phi": 0.45,
+     "drop_peak_N": 1510.0,
+     "within_15pct": false
+    },
+    {
+     "phi": 0.5,
+     "drop_peak_N": 1749.0,
+     "within_15pct": false
+    }
+   ],
+   "phi_within_15pct": [
+    0.3,
+    0.3
+   ]
+  }
+ ]
+}

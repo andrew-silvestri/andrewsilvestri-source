@@ -90,6 +90,18 @@ ENTRIES = [
         "why": "A published 2015 estimate and closed historical series; the page says it does not update.",
     },
     {
+        # climate-dissonance lane, 2026-11-13. Disabled: one survey wave (Special Eurobarometer 565, 2025)
+        # and a published review; the page says it does not update. A new wave changes the action list
+        # and is a reviewed change, not a refresh.
+        "page": "dissonance",
+        "cwd": "dissonance",
+        "fetch": [],
+        "build": [["python", "build_dissonance.py"]],
+        "keys": [],
+        "enabled": False,
+        "why": "One survey wave and a published review; the page says it does not update.",
+    },
+    {
         # chain-reactions lane, 2026-11-07. Disabled: the page traces a finished policy chain
         # (1990-2006) and says its data does not update; a refresh would move its numbers under
         # prose written against them. update_page.claims() would stop a rebuild that contradicts it.
@@ -100,6 +112,86 @@ ENTRIES = [
         "keys": [],
         "enabled": False,
         "why": "A finished policy chain, 1990-2006, stated on the page as not updated.",
+    },
+    {
+        # sustainable-messaging lane, 2026-11-13. Disabled: the page is a review of published trials and
+        # says its data does not update; the one fetched file is a fixed Zenodo deposit.
+        "page": "messaging",
+        "cwd": "messaging",
+        "fetch": [["python", "fetch_public.py"]],
+        "build": [["python", "build_messaging.py"]],
+        "keys": [],
+        "enabled": False,
+        "why": "A review of published trials, stated on the page as not updated.",
+    },
+    {
+        # scales lane, 2026-11-13. Disabled: published datasets (2018, 2019) and one year of city data;
+        # the page says its data does not update, and update_page.claims() stops a rebuild that would
+        # contradict its words.
+        "page": "scales",
+        "cwd": "scales",
+        "fetch": [["python", "fetch_public.py"]],
+        "build": [["python", "build_scales.py"]],
+        "keys": [],
+        "enabled": False,
+        "why": "Published datasets and one year of city data, stated on the page as not updated.",
+    },
+    {
+        # sub3-marathon lane, 2026-11-13. Disabled: the Berlin results are a published Zenodo file that
+        # ends with 2025, and the page says its data does not update; a new edition is a reviewed change.
+        "page": "sub3",
+        "cwd": "sub3",
+        "fetch": [["python", "fetch_public.py"]],
+        "build": [["python", "build_sub3.py"]],
+        "keys": [],
+        "enabled": False,
+        "why": "A published results file, 1999-2025, stated on the page as not updated.",
+    },
+    {
+        # origins-of-life lane, 2026-11-13. Disabled: the page reads two fixed database versions
+        # (ASHRAE II v2.1.0, MARHYS 3.0) and says its data does not update; build_origins.checks()
+        # would stop a rebuild that contradicts the page's words.
+        "page": "origins",
+        "cwd": "origins",
+        "fetch": [["python", "fetch_public.py"]],
+        "build": [["python", "analyse_ashrae.py"], ["python", "build_origins.py"]],
+        "keys": [],
+        "enabled": False,
+        "why": "Fixed database versions, stated on the page as not updated.",
+    },
+    {
+        # great-filter lane, 2026-11-13. Disabled: no fetched data; every figure is a published
+        # value in sources.py, and the page says its data does not update.
+        "page": "greatfilter",
+        "cwd": "greatfilter",
+        "fetch": [],
+        "build": [["python", "build_greatfilter.py"]],
+        "keys": [],
+        "enabled": False,
+        "why": "Published dates, counts and estimates with no data feed; stated on the page as not updated.",
+    },
+    {
+        # night-shift lane (batch 2), 2026-11-13. Disabled: the Leave and Job Flexibilities Module is a
+        # one-off 2024-25 supplement, and the page joins it to the 2024 and 2025 diaries; the page says
+        # its data does not update. update_page.claims() would stop a rebuild that contradicts the prose.
+        "page": "nightshift",
+        "cwd": "nightshift",
+        "fetch": [["python", "fetch_public.py"]],
+        "build": [["python", "build_nightshift.py"]],
+        "keys": [],
+        "enabled": False,
+        "why": "A one-off 2024-25 survey module joined to the 2024 and 2025 diaries, stated on the page as not updated.",
+    },
+    {
+        # philosophy-physics lane, 2026-11-13. Disabled: an ancient text and graded tables; nothing
+        # upstream changes, and the page says its data does not update.
+        "page": "armchair",
+        "cwd": "armchair",
+        "fetch": [["python", "fetch_public.py"]],
+        "build": [["python", "analysis.py"]],
+        "keys": [],
+        "enabled": False,
+        "why": "An ancient handbook and graded case tables; stated on the page as not updated.",
     },
     {
         "page": "takeaway",

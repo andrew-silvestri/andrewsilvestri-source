@@ -1,0 +1,37 @@
+{
+ "method": "T7: outsole wear life >= baseline. Wear depth per 100 km for rubber outsoles\n    from Ohno et al. 2024 (23 pairs, forefoot hot spot: median 0.14, range\n    0.07-0.56 mm/100 km; research/w2-04). TPU wears at a fraction r of rubber's\n    volume rate, r from ISO 4649 volume loss: moulded TPU 25-40 mm3 against\n    shoe-sole SBR 157 mm3 (r 0.16-0.25), widened to 0.6 for the recycled share\n    (property loss on remelting, research/w2-05). ISO 4649 states it is for\n    comparison only, so r is a ranking, not a prediction.",
+ "assumptions": {
+  "baseline_tread_mm": 3.0,
+  "lc1_skin_mm": 1.5,
+  "rate_mm_per_100km": "lognormal, median 0.14, clipped 0.07-0.56",
+  "tpu_to_rubber_ratio": "triangular 0.16 / 0.25 / 0.60",
+  "printed_ratio": "triangular 0.41 / 0.52 / 1.2 (FDM TPU 64-82 mm3, research/w2-04)"
+ },
+ "wear_through_km": {
+  "baseline": {
+   "5": 1027,
+   "50": 2146,
+   "95": 4286
+  },
+  "lc1": {
+   "5": 1380,
+   "50": 3329,
+   "95": 7433
+  },
+  "home_printed": {
+   "5": 667,
+   "50": 1557,
+   "95": 3400
+  }
+ },
+ "p_lc1_at_least_baseline": 0.936,
+ "p_printed_at_least_baseline": 0.096,
+ "particle_loss_g_per_100km_pair": {
+  "baseline": 3.5,
+  "lc1": 0.91,
+  "note": "baseline: Manabe et al. 2025, running shoes, 35 mg/km per pair (measured); LC-1 scaled by r = 0.25 and density 1.20/1.15 (calculated)"
+ },
+ "target": "LC-1 wear-through distance >= baseline (median, same runner)",
+ "passed": true,
+ "caveat": "Wet grip of a TPU outsole is untested; BASF rates standard TPU wet grip 'average' against rubber. A physical slip test is required (BUILD.md)."
+}

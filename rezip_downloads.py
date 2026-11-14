@@ -281,6 +281,11 @@ TARGETS = [
     # the tests, with the payload and data/fetched.json. Not data/raw: the fetch script re-downloads.
     target("safetynet", "safetynet-code.zip", keep={"outputs"},
            skip=("data/raw", "data/raw/*", "outputs/*.png")),
+    # A lower-carbon running shoe (eco-shoe lane, 2026-11-07): the CAD scripts and their STEP/STL/DXF/SVG
+    # outputs, the LCA engine with its factor table and results, the simulated tests, the design notes,
+    # the payload builder, the page generator and the tests.
+    target("lowcarbon-shoe", "lowcarbon-shoe-code.zip", keep={"outputs"},
+           skip=("data/raw", "data/raw/*")),
     target("ethane", "ethane-code.zip", keep={"outputs"},
            skip=("data/raw", "data/raw/*", "outputs/*.png")),
     # Leaded gasoline and lost IQ (lane lost-einsteins, 2026-11-07): the fetch script, the readers,
@@ -296,6 +301,61 @@ TARGETS = [
     # whose SHA-1 differs from the manifest.
     target("oxygen", "oxygen-code.zip", keep={"outputs"},
            skip=("data/raw", "data/raw/*", "outputs/*.png")),
+    # Night work (night-shift lane, batch 2, 2026-11-13): the fetch script, the payload builder with its
+    # checks against BLS's printed tables, the page generator with the clock, and the tests, with the payload
+    # and data/fetched.json. Not data/raw: the BLS files are public and the fetch script re-downloads them.
+    target("nightshift", "nightshift-code.zip", keep={"outputs"},
+           skip=("data/raw", "data/raw/*", "outputs/*.png")),
+    # Depression in space (space-depression lane, 2026-11-13): the fetch script, readers, payload builder and
+    # gates, the page generator with the evidence map, and the tests, with the payload and data/fetched.json.
+    # Not data/raw: the fetch script re-downloads the files and the readers refuse one whose SHA-1 differs.
+    target("space-depression", "space-depression-code.zip", keep={"outputs"},
+           skip=("data/raw", "data/raw/*", "outputs/*.png")),
+    # The Great Filter (great-filter lane, 2026-11-13): the table of published dates and counts with a
+    # source a row, the model script (hard-steps simulation, Drake ranges), the page generator and the
+    # tests, with the payload. No downloaded data: every figure is from a paper named in sources.py.
+    target("greatfilter", "greatfilter-code.zip", keep={"outputs"}),
+    # The gradient of life (origins-of-life lane, 2026-11-13): the comfort analysis, the MARHYS extraction,
+    # the payload builder and its checks, the page generator and the tests, with the derived tables, the
+    # timeline and the payload. Not data/raw: the ASHRAE database (Zenodo 4993952) and MARHYS 3.0
+    # (PANGAEA 958978) are free downloads, named with their SHA-1 in origins/README.md.
+    target("origins", "origins-code.zip", keep={"outputs"},
+           skip=("data/raw", "data/raw/*", "outputs/*.png")),
+    # The sub-3 marathon (sub3-marathon lane, 2026-11-13): the fetch script, the build, the page generator
+    # and template, and the tests, with the payload and data/fetched.json. Not data/raw: the Berlin file is
+    # 113 MB and holds runners' names; fetch_public.py downloads it from Zenodo and checks its MD5.
+    target("sub3", "sub3-code.zip", keep={"outputs"},
+           skip=("data/raw", "data/raw/*", "outputs/*.png")),
+    # Watts per kilogram, bacteria to stars (scales lane, 2026-11-13): the fetch script, readers, payload
+    # builder and checks, the page generator with the chart, and the tests, with the payload and
+    # data/fetched.json. Not data/raw: the fetch script re-downloads the files and the readers refuse one
+    # whose SHA-1 differs from the manifest.
+    target("scales", "scales-code.zip", keep={"outputs"},
+           skip=("data/raw", "data/raw/*", "outputs/*.png")),
+    # Algae carbon (algae-carbon lane, 2026-11-13): the fetch script, the ocean-model retention reader,
+    # the published parameters, the payload builder with its checks, the page generator and the tests,
+    # with the payload, data/fetched.json and the retention table. Not data/raw: the Global Carbon
+    # Budget file is re-downloadable and the reader refuses one whose SHA-1 differs from the manifest;
+    # the cached model rows are 20 MB taken from a 3.3 GB public file the script reads by range.
+    target("algae", "algae-code.zip", keep={"outputs"},
+           skip=("data/raw", "data/raw/*", "outputs/*.png")),
+    # What moved people toward lower-carbon choices (sustainable-messaging lane, 2026-11-13): the fetch script,
+    # reader, payload builder and checks, the page generator with its three charts, the tests, the transcribed
+    # tables in data/*.csv, data/fetched.json and the payload. Not data/raw: the tournament data (CC BY 4.0,
+    # 9 MB) are re-downloaded by fetch_public.py, which checks them against Zenodo's published MD5.
+    target("messaging", "messaging-code.zip", keep={"outputs"},
+           skip=("data/raw", "data/raw/*")),
+    # Climate effort (climate-dissonance lane, 2026-11-13): the step that trims the downloaded survey,
+    # review and OWID files, the build with its checks against the review's printed medians, the page
+    # generator and the tests, with the trimmed tables in data/ and the payload.
+    target("dissonance", "dissonance-code.zip", keep={"outputs"},
+           skip=("outputs/*.png",)),
+    # Philosophers' guesses about nature (philosophy-physics lane, 2026-11-13): the fetch and split
+    # scripts, the Placita cut with line numbers, the opinion tables and both raters' grades, the case
+    # tables, the analysis and payload, the page generator and the tests. Not data/raw: fetch_public.py
+    # re-downloads the Gutenberg volume.
+    target("armchair", "armchair-code.zip", keep={"outputs"},
+           skip=("data/raw", "data/raw/*")),
     # food-code.zip retired with its page on 2026-09-09: food.html was
     # unpublished at Andrew's request, for now, and the last build is
     # unpublished/downloads/food-code.zip. The TARGET goes with the page,

@@ -1,0 +1,107 @@
+id,book,chapter,question,line_start,line_end,holders,opinion
+B5.1.1,5,1,What is divination?,6469,6473,Plato; the Stoics,"Divination is a divine inspiration, knowledge from the gods entering a soul that is itself divine; dream interpretation works the same way; they accept many branches of divination."
+B5.1.2,5,1,What is divination?,6473,6474,Xenophanes; Epicurus,There is no art of foretelling future events at all; they reject divination entirely.
+B5.1.3,5,1,What is divination?,6475,6475,Pythagoras,Rejects every kind of divination performed through sacrifices.
+B5.1.4,5,1,What is divination?,6475,6479,Aristotle; Dicaearchus,Only two kinds are genuine: divinely inspired frenzy and dreams; they deny the soul is immortal yet hold the human mind shares in something divine.
+B5.2.1,5,2,Where do dreams come from?,6489,6490,Democritus,Dreams are formed by images that enter the sleeper from outside.
+B5.2.2,5,2,Where do dreams come from?,6490,6491,Strato,In sleep the irrational part of the soul becomes more sensitive and is moved by the rational part.
+B5.2.3,5,2,Where do dreams come from?,6491,6499,Herophilus,"God-sent dreams arise by necessity; natural ones from the soul forming images of what suits it and will happen; mixed ones from chance impact of images, as of desired things."
+B5.3.1,5,3,What is the nature of generative seed?,6509,6511,Aristotle,Seed is what contains a power of motion that lets it produce a being like the one it came from.
+B5.3.2,5,3,What is the nature of generative seed?,6511,6513,Pythagoras,"Seed is the residue of nourishment, the foam of the purest blood, of the same nature as blood and marrow."
+B5.3.3,5,3,What is the nature of generative seed?,6513,6514,Alcmaeon,Seed is a portion of the brain.
+B5.3.4,5,3,What is the nature of generative seed?,6514,6515,Plato,Seed is an outflow from the spinal marrow.
+B5.3.5,5,3,What is the nature of generative seed?,6515,6515,Epicurus,Seed is a fragment torn away from both body and soul.
+B5.3.6,5,3,What is the nature of generative seed?,6516,6517,Democritus,"Seed comes from every part of the body, chiefly from the principal parts such as flesh and muscles."
+B5.4.1,5,4,Is seed a body?,6527,6528,Leucippus; Zeno,Seed is a body and a fragment of the soul.
+B5.4.2,5,4,Is seed a body?,6528,6530,Pythagoras; Plato; Aristotle,"The seminal power is incorporeal, like the mind that moves the body, while the emitted matter is corporeal."
+B5.4.3,5,4,Is seed a body?,6530,6531,Strato; Democritus,"The seminal power itself is a body, since it is breath-like (like spirit)."
+B5.5.1,5,5,Do women emit seed as men do?,6541,6543,Pythagoras; Epicurus; Democritus,"Women emit seed, but their seminal vessels are turned inward; this is what gives them sexual appetite."
+B5.5.2,5,5,Do women emit seed as men do?,6543,6545,Aristotle; Plato,"Women emit a material moisture, like sweat from exertion, but it has no generative power."
+B5.5.3,5,5,Do women emit seed as men do?,6545,6548,Hippo,"Women emit seed, but unlike men's it contributes nothing to generation because it falls outside the womb; so some women, especially widows, emit it without intercourse."
+B5.5.4,5,5,Do women emit seed as men do?,6548,6549,Hippo,"In the offspring, the bones come from the father and the flesh from the mother."
+B5.6.1,5,6,How does conception happen?,6559,6564,Aristotle,"Conception occurs when menstrual purging draws the womb forward and attracts pure blood, which meets the male seed; impure or swollen womb, fear, grief, or either partner's weakness prevent it."
+B5.7.1,5,7,How are males and females generated?,6574,6577,Empedocles,"Heat and cold decide sex; hence the first males arose from earth in the east and south, the first females in the north."
+B5.7.2,5,7,How are males and females generated?,6578,6580,Parmenides,"The reverse: the first men sprang from northern earth, their bodies being denser; women from southern earth, theirs being rarer and finer."
+B5.7.3,5,7,How are males and females generated?,6581,6582,Hippo,Sex is decided by whether the seed is thicker and stronger or more fluid and weaker.
+B5.7.4,5,7,How are males and females generated?,6582,6586,Anaxagoras; Parmenides,"Seed passes from the man's right side into the womb's right side, or left into left; when this course is altered, females are produced."
+B5.7.5,5,7,How are males and females generated?,6586,6587,Cleophanes,"Males are generated from the right testicle, females from the left."
+B5.7.6,5,7,How are males and females generated?,6588,6590,Leucippus,Sex follows from the difference of the genital parts (penis versus womb); he gives no further cause.
+B5.7.7,5,7,How are males and females generated?,6590,6592,Democritus,Parts common to both sexes come from either parent indifferently; the sex-specific parts come from whichever parent's seed prevails.
+B5.7.8,5,7,How are males and females generated?,6592,6594,Hippo,"If the seminal power prevails a male results; if the nourishing material prevails, a female."
+B5.8.1,5,8,How are monstrous births produced?,6604,6608,Empedocles,"Monsters result from too much or too little seed, its division into superfluous parts, a disturbance in its motion, or its falling into the wrong receptacle."
+B5.8.2,5,8,How are monstrous births produced?,6608,6610,Strato,"Monsters come from addition, subtraction or transposition of the seed, or from distension or swelling of the womb."
+B5.8.3,5,8,How are monstrous births produced?,6610,6611,physicians (some),The womb becomes distorted when it is distended with wind.
+B5.9.1,5,9,Why does too-frequent intercourse hinder a woman's conception?,6622,6626,Diocles,"Either no seed is emitted, or too little, or it lacks fertility, or hot, cold, moist and dry are out of proportion, or the genitals are slackened."
+B5.9.2,5,9,Why does too-frequent intercourse hinder a woman's conception?,6626,6629,the Stoics,"Sterility comes from a crooked penis that cannot ejaculate properly, or mismatched size of the parts, the womb being too narrow to receive."
+B5.9.3,5,9,Why does too-frequent intercourse hinder a woman's conception?,6630,6631,Erasistratus,"The womb is harder, fleshier, thinner or smaller than nature requires."
+B5.10.1,5,10,Why does one birth sometimes yield two or three children?,6641,6642,Empedocles,An excess of seed that becomes divided produces two or three infants.
+B5.10.2,5,10,Why does one birth sometimes yield two or three children?,6642,6645,Asclepiades,"Seed of excellent quality, like a barley root sending up two or three stalks; such seed is the most fertile."
+B5.10.3,5,10,Why does one birth sometimes yield two or three children?,6645,6648,Erasistratus,"Women can conceive again while pregnant, as animals do; a well-purged, clean womb permits several births."
+B5.10.4,5,10,Why does one birth sometimes yield two or three children?,6648,6651,the Stoics,"The womb has several compartments; when seed falls into the first and second at once, successive conceptions yield two or three infants."
+B5.11.1,5,11,Why do children resemble their parents and ancestors?,6661,6664,Empedocles,Likeness to parents comes from the vigour of the generating seed; unlikeness from the evaporation of the seed's natural heat.
+B5.11.2,5,11,Why do children resemble their parents and ancestors?,6664,6666,Parmenides,"Seed descending from the right side of the womb gives likeness to the father; from the left, to the mother."
+B5.11.3,5,11,Why do children resemble their parents and ancestors?,6666,6672,the Stoics,"Seed comes from the whole body and soul, so children copy parents' form and character as a painter copies; women also emit seed, and the predominant seed decides the resemblance."
+B5.12.1,5,12,Why do children sometimes resemble strangers more than their parents?,6683,6685,physicians (most),"It happens by chance: when the seed of both man and woman is too much chilled, children are unlike their parents."
+B5.12.2,5,12,Why do children sometimes resemble strangers more than their parents?,6686,6689,Empedocles,The mother's imagination at conception stamps a shape on the child; women enamoured of statues have borne children resembling them.
+B5.12.3,5,12,Why do children sometimes resemble strangers more than their parents?,6689,6691,the Stoics,"Resemblances flow from sympathy of minds through inflowing effluvia and rays, not from images or pictures."
+B5.13.1,5,13,What causes barrenness in women and impotence in men?,6701,6706,physicians,"Female sterility comes from the womb being too dense, spongy, hard, callous or fleshy, or from low spirits, wasting, bodily disease, or a twisted shape."
+B5.13.2,5,13,What causes barrenness in women and impotence in men?,6706,6711,Diocles,"Male sterility: inability to emit seed, too little seed, seed lacking generative power, slack genitals, or a crooked penis."
+B5.13.3,5,13,What causes barrenness in women and impotence in men?,6711,6716,the Stoics,"Sterility comes from incompatible qualities in the partners; if separated and each paired with a suitable temperament, natural mixing occurs and a child is formed."
+B5.14.1,5,14,Why are mules barren?,6726,6729,Alcmaeon,Male mules are barren because their seed is thin and too cold; female mules because the mouth of the womb does not open.
+B5.14.2,5,14,Why are mules barren?,6729,6735,Empedocles; Diocles,"The mule's womb is too small, low, narrow and turned against the belly to receive or hold seed; Diocles cites dissections and suggests some barren women alike."
+B5.15.1,5,15,Is the embryo in the womb an animal?,6745,6746,Plato,"The embryo is an animal, since it receives motion and nourishment within the womb."
+B5.15.2,5,15,Is the embryo in the womb an animal?,6746,6750,the Stoics,"The embryo is not an animal but part of the mother's belly, as unripe fruit is part of the tree until it falls."
+B5.15.3,5,15,Is the embryo in the womb an animal?,6750,6755,Empedocles,"Not an animal, though it breathes in the womb; its first animal breath comes at birth, when moisture departs and outside air enters the emptied vessels."
+B5.15.4,5,15,Is the embryo in the womb an animal?,6755,6758,Diogenes,Embryos are lifeless but have natural heat; at birth this heat draws air into the lungs and the infant becomes an animal.
+B5.15.5,5,15,Is the embryo in the womb an animal?,6758,6762,Herophilus,"Embryos have natural but not respiratory movement, caused by the nerves; they become animals when, newly born, they first draw in air."
+B5.16.1,5,16,How is the embryo nourished in the womb?,6773,6777,Democritus; Epicurus,"Embryos feed through the mouth from small teats inside the womb, as shown by newborns seeking the breast at once."
+B5.16.2,5,16,How is the embryo nourished in the womb?,6777,6780,the Stoics,Embryos are fed through the afterbirth and navel; hence the midwife ties the navel and opens the mouth for new food.
+B5.16.3,5,16,How is the embryo nourished in the womb?,6780,6782,Alcmaeon,"Embryos absorb nourishment through the whole body, as a sponge soaks up water."
+B5.17.1,5,17,Which part of the body is formed first in the womb?,6792,6792,the Stoics,Most parts are formed at the same time.
+B5.17.2,5,17,Which part of the body is formed first in the womb?,6793,6794,Aristotle,"The loins are formed first, like the keel of a ship."
+B5.17.3,5,17,Which part of the body is formed first in the womb?,6794,6795,Alcmaeon,"The head is formed first, being the ruling and principal part."
+B5.17.4,5,17,Which part of the body is formed first in the womb?,6795,6796,physicians,"The heart is formed first, containing the veins and arteries."
+B5.17.5,5,17,Which part of the body is formed first in the womb?,6796,6796,unnamed,The big toe is formed first.
+B5.17.6,5,17,Which part of the body is formed first in the womb?,6796,6797,unnamed,The navel is formed first.
+B5.18.1,5,18,Why do infants born in the seventh month survive?,6807,6814,Empedocles,"When humans first arose the sun moved so slowly that one day equalled ten present months, later seven; so seven- and ten-month infants live, maturing as in one day."
+B5.18.2,5,18,Why do infants born in the seventh month survive?,6814,6818,Timaeus,"Pregnancy is reckoned from the stopping of menses, so nine months not ten; a 'seven-month' birth may be shorter, since some women bleed after conceiving."
+B5.18.3,5,18,Why do infants born in the seventh month survive?,6818,6823,Polybus; Diocles; the Empirics,"Eighth-month births can live but are feeble and many die of weakness; though many grow up, nobody is willing to rear them."
+B5.18.4,5,18,Why do infants born in the seventh month survive?,6825,6830,Aristotle; Hippocrates,If the womb is filled by seven months the child drops out alive; if poorly nourished through a navel weakened by the burden it fails; nine-month births are complete.
+B5.18.5,5,18,Why do infants born in the seventh month survive?,6830,6838,Polybus,"182.5 days, six months (sun's passage tropic to tropic), suffice; surplus days count as a seventh month; eighth-month infants die because the nourishing navel is overstretched."
+B5.18.6,5,18,Why do infants born in the seventh month survive?,6838,6849,the astrologers,"The eighth month is hostile to birth, the seventh friendly; zodiac signs eight apart (Ram and Scorpion, etc.) are enemies, so eighth-month infants die, seventh- or tenth-month live."
+B5.19.1,5,19,"How are animals generated, and are they perishable?",6860,6862,unnamed,Those who hold that the world had a beginning say all animals are generated and perishable.
+B5.19.2,5,19,"How are animals generated, and are they perishable?",6862,6868,the Epicureans; Anaxagoras; Euripides,"The world is eternal; animals arise from parts of the world interchanging among themselves; nothing dies, things only change form."
+B5.19.3,5,19,"How are animals generated, and are they perishable?",6870,6874,Anaximander,"The first animals were born in moisture, enclosed in thorny bark; later they came onto dry land, the bark broke off, and they lived briefly."
+B5.19.4,5,19,"How are animals generated, and are they perishable?",6874,6883,Empedocles,"Four stages: separate unjoined parts; parts joined as image-like forms; parts generating one another; finally animals breeding together, through thickened nourishment or sexual attraction."
+B5.19.5,5,19,"How are animals generated, and are they perishable?",6883,6888,Empedocles,"Animals are sorted by temperament: watery ones seek water, fiery ones the air, heavier ones the earth; evenly balanced ones suit every place."
+B5.20.1,5,20,How many kinds of animals; do all have sense and reason?,6899,6902,Aristotle,"Animals are of four kinds: land, water, winged and heavenly; the stars and the world are animals, and God is a rational immortal animal."
+B5.20.2,5,20,How many kinds of animals; do all have sense and reason?,6902,6904,Democritus; Epicurus,All the animals that dwell in the heavens are rational.
+B5.20.3,5,20,How many kinds of animals; do all have sense and reason?,6904,6906,Anaxagoras,"Animals have operative reason but lack the other kind, which interprets the mind and resembles mind itself."
+B5.20.4,5,20,How many kinds of animals; do all have sense and reason?,6906,6910,Pythagoras; Plato,"The souls of so-called brutes are rational, but bad bodily constitution and lack of speech stop them acting rationally; apes and dogs have voice, not speech."
+B5.20.5,5,20,How many kinds of animals; do all have sense and reason?,6910,6915,Diogenes,"Such animals share in intelligence and air, but density in some parts and excess moisture in others deprive them of understanding and sense, like madmen."
+B5.21.1,5,21,How long do the parts of an embryo take to form?,6925,6926,Empedocles,Human limbs begin forming on the 36th day and the shape is complete by the 49th.
+B5.21.2,5,21,How long do the parts of an embryo take to form?,6927,6933,Asclepiades,"Males, being hotter, begin forming joints by day 26 and finish by day 50; females articulate in two months, complete in four; animals vary by elemental mixture."
+B5.22.1,5,22,Which elements compose each part of the human body?,6943,6949,Empedocles,"Flesh: blend of four elements; sinews: earth and fire with double water; nails: sinews chilled by air; bones: two water, two air, four fire, four earth; sweat, tears from melting."
+B5.23.1,5,23,What causes sleep and death?,6959,6961,Alcmaeon,"Sleep comes when blood withdraws into the large veins, waking when it spreads out again, and death when it withdraws completely."
+B5.23.2,5,23,What causes sleep and death?,6962,6963,Empedocles,Moderate cooling of the blood causes sleep; complete loss of heat from the blood causes death.
+B5.23.3,5,23,What causes sleep and death?,6963,6968,Diogenes,"Sleep comes when blood fills the veins and drives their air toward back and belly, heating the chest; death when all air leaves the veins."
+B5.23.4,5,23,What causes sleep and death?,6968,6973,Plato; the Stoics,"Sleep is a partial slackening of the sensory spirit, which circulates around the ruling part's seat near the brows; complete slackening brings death."
+B5.24.1,5,24,When and from what does a man's maturity begin?,6983,6989,Heraclitus; the Stoics,"Man becomes complete in his second seven-year period, when seed is first emitted, as trees mature when they bear seed; then he can learn good and evil."
+B5.25.1,5,25,Do sleep and death belong to the soul or the body?,6999,7004,Aristotle,"Both soul and body sleep, from chest moisture rising as vapour to the head and food heat cooled at the heart; death, total chilling, touches body only; soul is immortal."
+B5.25.2,5,25,Do sleep and death belong to the soul or the body?,7004,7007,Anaxagoras,Sleep stops the body's activity and is a bodily affection not touching the soul; death is the separation of soul from body.
+B5.25.3,5,25,Do sleep and death belong to the soul or the body?,7007,7010,Leucippus,"Sleep belongs to the body only; death occurs when fine particles cause excessive evaporation of the soul's heat; both are bodily, not of the soul."
+B5.25.4,5,25,Do sleep and death belong to the soul or the body?,7010,7013,Empedocles,"Death is the separation of the fiery parts composing a man, so body and soul both die; sleep is a lesser separation of the fiery parts."
+B5.26.1,5,26,"How do plants grow, and are they animals?",7023,7028,Plato; Empedocles,"Plants are animals with souls, as shown by their swaying, spreading branches, springing back after being bent, and lifting weights placed on them."
+B5.26.2,5,26,"How do plants grow, and are they animals?",7028,7030,Aristotle,"Plants live but are not animals, since animals have appetite, sense and reason."
+B5.26.3,5,26,"How do plants grow, and are they animals?",7030,7032,the Stoics; the Epicureans,"Plants have no soul: animals have sense, appetite or reason, while plants move by chance, not through a soul."
+B5.26.4,5,26,"How do plants grow, and are they animals?",7033,7039,Empedocles,"Trees were the first living things, sprouting before the sun and before day and night; they combine male and female and grow by earth's heat, as embryos within the womb."
+B5.26.5,5,26,"How do plants grow, and are they animals?",7039,7048,Empedocles,"Fruits arise from water and fire; plants short of water shed leaves in summer, well-watered ones keep them; differing nourishing particles make wine quality depend on soil."
+B5.27.1,5,27,How do nourishment and growth happen?,7058,7063,Empedocles,Animals are nourished by retaining what is akin to their nature and grow by heat; lack of either causes decline; present humans are infants beside the first humans.
+B5.28.1,5,28,Why do animals have appetites and pleasures?,7073,7075,Empedocles,Appetite arises from a lack of the elements composing an animal; pleasures arise from moisture.
+B5.29.1,5,29,"What causes fever, and does it follow a prior affection?",7086,7095,Erasistratus,"Fever is a rapid involuntary rush of blood into the vessels of the vital spirit, like wind-stirred sea, heating the whole body; he holds fever follows a prior affection."
+B5.29.2,5,29,"What causes fever, and does it follow a prior affection?",7095,7099,Diocles,"Hidden internal states show themselves through external signs; fever clearly follows outward affections such as wounds, inflamed swellings and groin abscesses."
+B5.30.1,5,30,"What are health, sickness and old age?",7109,7115,Alcmaeon,"Health is an equal balance of hot, moist, cold, dry, bitter, sweet and other qualities; dominance of one causes disease, via excess heat or cold, in blood or brain."
+B5.30.2,5,30,"What are health, sickness and old age?",7115,7118,Diocles,"Sickness mostly comes from an irregular disposition of the elements in the body, producing a bad constitution."
+B5.30.3,5,30,"What are health, sickness and old age?",7118,7121,Erasistratus,"Sickness comes from excess food, indigestion and corruption; health is a moderate diet of what is suitable and sufficient."
+B5.30.4,5,30,"What are health, sickness and old age?",7121,7123,the Stoics,Old age comes from lack of heat; people with more heat live longer.
+B5.30.5,5,30,"What are health, sickness and old age?",7123,7131,Asclepiades,Ethiopians age by thirty because the sun overheats and loosens their bodies; Britons live to 120 because cold condenses their bodies and keeps their fire within.

@@ -1,0 +1,571 @@
+{
+ "pair": {
+  "baseline": 4.461,
+  "lc1_design_only": 3.494,
+  "lc1": 2.174,
+  "baseline_clean": 3.025
+ },
+ "stages": {
+  "baseline": {
+   "materials": 1.81,
+   "part_making": 0.433,
+   "assembly": 1.404,
+   "packaging": 0.217,
+   "transport": 0.339,
+   "end_of_life": 0.258
+  },
+  "lc1_design_only": {
+   "materials": 1.022,
+   "part_making": 0.506,
+   "assembly": 1.404,
+   "packaging": 0.086,
+   "transport": 0.258,
+   "end_of_life": 0.217
+  },
+  "lc1": {
+   "materials": 1.022,
+   "part_making": 0.37,
+   "assembly": 0.221,
+   "packaging": 0.086,
+   "transport": 0.258,
+   "end_of_life": 0.217
+  }
+ },
+ "groups": {
+  "baseline": {
+   "upper": 0.9282,
+   "sock": 0.1789,
+   "mid": 0.3636,
+   "out": 0.3395,
+   "factory": 1.837,
+   "rest": 0.814
+  },
+  "lc1_design_only": {
+   "upper": 0.2842,
+   "sock": 0.0308,
+   "mid": 0.5655,
+   "out": 0.142,
+   "factory": 1.91,
+   "rest": 0.561
+  },
+  "lc1": {
+   "upper": 0.2842,
+   "sock": 0.0308,
+   "mid": 0.5655,
+   "out": 0.142,
+   "factory": 0.591,
+   "rest": 0.561
+  },
+  "baseline_clean": {
+   "upper": 0.9281,
+   "sock": 0.1789,
+   "mid": 0.3636,
+   "out": 0.3395,
+   "factory": 0.401,
+   "rest": 0.8136
+  }
+ },
+ "mass_g": {
+  "baseline": {
+   "product_g": 484.3,
+   "fossil_virgin_g": 466.3,
+   "polymer_g": 484.3,
+   "recycled_g": 0.0
+  },
+  "lc1": {
+   "product_g": 459.8,
+   "fossil_virgin_g": 198.2,
+   "polymer_g": 459.8,
+   "recycled_g": 261.6
+  }
+ },
+ "pack_g": {
+  "baseline": 278.0,
+  "lc1": 120.0
+ },
+ "life_km": 550.0,
+ "per100": {
+  "design_only": 0.635,
+  "lc1": 0.395,
+  "lc1_resole": 0.325,
+  "design_box": 0.672
+ },
+ "base_per100": 0.811,
+ "base_clean_per100": 0.55,
+ "scenarios": {
+  "design_only": 21.7,
+  "lc1": 51.3,
+  "lc1_resole": 59.9,
+  "lc1_resole_informed": 65.2,
+  "baseline_clean_power": 32.2,
+  "lc1_tpu_stress": 45.0,
+  "lc1_cff_5050": 43.2,
+  "lc1_sole_making_in_t1": 49.6,
+  "lc1_made_in_china": 53.0,
+  "lc1_made_in_indonesia": 56.7,
+  "design_with_box": 17.2
+ },
+ "mc": {
+  "n": 10000,
+  "seed": 20261107,
+  "distribution": "triangular(low, central, high) per input; upper lives uniform 1-2 in lc1_resole_U",
+  "reduction_pct": {
+   "design_only": {
+    "5": 15.803,
+    "25": 21.335,
+    "50": 24.908,
+    "75": 28.539,
+    "95": 33.354
+   },
+   "lc1": {
+    "5": 39.446,
+    "25": 44.468,
+    "50": 47.569,
+    "75": 50.403,
+    "95": 54.228
+   },
+   "lc1_resole_U": {
+    "5": 44.545,
+    "25": 49.985,
+    "50": 53.427,
+    "75": 56.366,
+    "95": 59.991
+   }
+  },
+  "p_lc1_ge_50": 0.282,
+  "p_design_only_ge_50": 0.0,
+  "p_lc1_resole_U_ge_50": 0.749,
+  "p_lc1_lower": 1.0,
+  "base_per100": {
+   "5": 0.617,
+   "25": 0.711,
+   "50": 0.797,
+   "75": 0.886,
+   "95": 1.028
+  },
+  "lc1_per100": {
+   "5": 0.324,
+   "25": 0.373,
+   "50": 0.418,
+   "75": 0.465,
+   "95": 0.541
+  }
+ },
+ "tornado": [
+  {
+   "input": "P.t1_kwh",
+   "low": 1.17,
+   "high": 3.32,
+   "red_at_low": 43.08,
+   "red_at_high": 52.92,
+   "span": 9.83
+  },
+  {
+   "input": "F.rPET_FIBRE",
+   "low": 0.8,
+   "high": 2.14,
+   "red_at_low": 53.64,
+   "red_at_high": 46.71,
+   "span": 6.93
+  },
+  {
+   "input": "M.lc1.Upper mesh and lining (recycled PET)",
+   "low": 31,
+   "high": 66,
+   "red_at_low": 53.91,
+   "red_at_high": 47.73,
+   "span": 6.18
+  },
+  {
+   "input": "P.etpu_density",
+   "low": 190.0,
+   "high": 240.0,
+   "red_at_low": 52.27,
+   "red_at_high": 47.21,
+   "span": 5.06
+  },
+  {
+   "input": "P.etpu_bead_kwh_kg",
+   "low": 0.5,
+   "high": 3.0,
+   "red_at_low": 53.07,
+   "red_at_high": 48.54,
+   "span": 4.53
+  },
+  {
+   "input": "F.TPU",
+   "low": 3.0,
+   "high": 4.09,
+   "red_at_low": 52.12,
+   "red_at_high": 47.72,
+   "span": 4.4
+  }
+ ],
+ "fea": {
+  "base_N": 932.0,
+  "lc1_N": 897.0,
+  "diff_pct": -3.8,
+  "published": [
+   809,
+   1259
+  ],
+  "heel_ratio": 1.63,
+  "sweep": [
+   {
+    "rate": 1.0,
+    "etpu_density": 200.0,
+    "baseline_N": 862.0,
+    "lc1_N": 930.0,
+    "diff_pct": 7.9
+   },
+   {
+    "rate": 1.5,
+    "etpu_density": 200.0,
+    "baseline_N": 933.0,
+    "lc1_N": 896.0,
+    "diff_pct": -3.9
+   },
+   {
+    "rate": 2.0,
+    "etpu_density": 200.0,
+    "baseline_N": 1032.0,
+    "lc1_N": 922.0,
+    "diff_pct": -10.7
+   },
+   {
+    "rate": 3.7,
+    "etpu_density": 200.0,
+    "baseline_N": 1348.0,
+    "lc1_N": 1083.0,
+    "diff_pct": -19.7
+   },
+   {
+    "rate": 5.0,
+    "etpu_density": 200.0,
+    "baseline_N": 1548.0,
+    "lc1_N": 1214.0,
+    "diff_pct": -21.6
+   }
+  ],
+  "rate": 1.5
+ },
+ "lattice": {
+  "target_peak_N": 932.0,
+  "model": "Gibson-Ashby open-cell elastomer (materials.lattice_stress), C1 = 1, n = 2",
+  "rows": [
+   {
+    "Es_MPa": 8.0,
+    "n": 2.0,
+    "C1": 1.0,
+    "scan": [
+     {
+      "phi": 0.1,
+      "drop_peak_N": null,
+      "within_15pct": false
+     },
+     {
+      "phi": 0.15,
+      "drop_peak_N": null,
+      "within_15pct": false
+     },
+     {
+      "phi": 0.2,
+      "drop_peak_N": null,
+      "within_15pct": false
+     },
+     {
+      "phi": 0.25,
+      "drop_peak_N": 1224.0,
+      "within_15pct": false
+     },
+     {
+      "phi": 0.3,
+      "drop_peak_N": 843.0,
+      "within_15pct": true
+     },
+     {
+      "phi": 0.35,
+      "drop_peak_N": 824.0,
+      "within_15pct": true
+     },
+     {
+      "phi": 0.4,
+      "drop_peak_N": 1086.0,
+      "within_15pct": false
+     },
+     {
+      "phi": 0.45,
+      "drop_peak_N": 1297.0,
+      "within_15pct": false
+     },
+     {
+      "phi": 0.5,
+      "drop_peak_N": 1551.0,
+      "within_15pct": false
+     }
+    ],
+    "phi_within_15pct": [
+     0.3,
+     0.35
+    ]
+   },
+   {
+    "Es_MPa": 14.5,
+    "n": 2.0,
+    "C1": 1.0,
+    "scan": [
+     {
+      "phi": 0.1,
+      "drop_peak_N": null,
+      "within_15pct": false
+     },
+     {
+      "phi": 0.15,
+      "drop_peak_N": null,
+      "within_15pct": false
+     },
+     {
+      "phi": 0.2,
+      "drop_peak_N": 641.0,
+      "within_15pct": false
+     },
+     {
+      "phi": 0.25,
+      "drop_peak_N": 842.0,
+      "within_15pct": true
+     },
+     {
+      "phi": 0.3,
+      "drop_peak_N": 972.0,
+      "within_15pct": true
+     },
+     {
+      "phi": 0.35,
+      "drop_peak_N": 884.0,
+      "within_15pct": true
+     },
+     {
+      "phi": 0.4,
+      "drop_peak_N": 1074.0,
+      "within_15pct": false
+     },
+     {
+      "phi": 0.45,
+      "drop_peak_N": 1254.0,
+      "within_15pct": false
+     },
+     {
+      "phi": 0.5,
+      "drop_peak_N": 1503.0,
+      "within_15pct": false
+     }
+    ],
+    "phi_within_15pct": [
+     0.25,
+     0.35
+    ]
+   },
+   {
+    "Es_MPa": 30.0,
+    "n": 2.0,
+    "C1": 1.0,
+    "scan": [
+     {
+      "phi": 0.1,
+      "drop_peak_N": null,
+      "within_15pct": false
+     },
+     {
+      "phi": 0.15,
+      "drop_peak_N": 665.0,
+      "within_15pct": false
+     },
+     {
+      "phi": 0.2,
+      "drop_peak_N": 722.0,
+      "within_15pct": false
+     },
+     {
+      "phi": 0.25,
+      "drop_peak_N": 757.0,
+      "within_15pct": false
+     },
+     {
+      "phi": 0.3,
+      "drop_peak_N": 888.0,
+      "within_15pct": true
+     },
+     {
+      "phi": 0.35,
+      "drop_peak_N": 1101.0,
+      "within_15pct": false
+     },
+     {
+      "phi": 0.4,
+      "drop_peak_N": 1331.0,
+      "within_15pct": false
+     },
+     {
+      "phi": 0.45,
+      "drop_peak_N": 1510.0,
+      "within_15pct": false
+     },
+     {
+      "phi": 0.5,
+      "drop_peak_N": 1749.0,
+      "within_15pct": false
+     }
+    ],
+    "phi_within_15pct": [
+     0.3,
+     0.3
+    ]
+   }
+  ]
+ },
+ "energy_return": {
+  "base": 65.5,
+  "lc1": 75.9
+ },
+ "wear_km": {
+  "base": 2146,
+  "lc1": 3329
+ },
+ "particles": {
+  "baseline": 3.5,
+  "lc1": 0.91,
+  "note": "baseline: Manabe et al. 2025, running shoes, 35 mg/km per pair (measured); LC-1 scaled by r = 0.25 and density 1.20/1.15 (calculated)"
+ },
+ "shoe_g": {
+  "lc1": 229.9,
+  "base": 242.1
+ },
+ "volumes": {
+  "outsole": 29.07,
+  "rim": 14.75,
+  "midsole": 418.41,
+  "sockliner": 77.53
+ },
+ "dims": {
+  "size_us_men": 9.0,
+  "sole_length_mm": 282.5,
+  "heel_midsole_mm": 26.0,
+  "forefoot_midsole_mm": 17.0,
+  "outsole_mm": 1.5,
+  "sockliner_mm": 4.0,
+  "rim_width_mm": 3.0,
+  "rim_height_mm": 8.0,
+  "heel_stack_mm": 31.5,
+  "forefoot_stack_mm": 22.5,
+  "ball_width_mm": 100.1,
+  "heel_width_mm": 77.3,
+  "plantar_area_cm2": 217.9
+ },
+ "cheah": {
+  "electricity": 4.4,
+  "coal": 5.48,
+  "total": 9.88,
+  "paper_total": 9.4,
+  "note": "factor check only; not a validation of the model"
+ },
+ "inputs": {
+  "tpu": 3.21,
+  "t1_kwh": 2.88,
+  "grid": 0.459,
+  "tpu_stress": 4.79,
+  "pet_fibre": 3.19,
+  "rpet_fibre": 1.26
+ },
+ "claims": {
+  "bio_eva": -1.08
+ },
+ "per100_steps": [
+  [
+   "Typical trainer",
+   0.811,
+   "level"
+  ],
+  [
+   "Materials, no glue",
+   0.139,
+   "step"
+  ],
+  [
+   "No shoebox",
+   0.037,
+   "step"
+  ],
+  [
+   "Renewable power, two factories",
+   0.24,
+   "step"
+  ],
+  [
+   "LC-1 as specified",
+   0.395,
+   "level"
+  ],
+  [
+   "Upper kept for a second sole",
+   0.07,
+   "step"
+  ],
+  [
+   "LC-1, two soles per upper",
+   0.325,
+   "level"
+  ]
+ ],
+ "known_answers": [
+  {
+   "check": "lca recompute",
+   "ok": true,
+   "detail": "51.26 % from the shipped code vs 51.3 stored"
+  },
+  {
+   "check": "lca pair totals",
+   "ok": true,
+   "detail": "4.461 / 2.174 kg"
+  },
+  {
+   "check": "groups sum baseline",
+   "ok": true,
+   "detail": "4.461 vs 4.461"
+  },
+  {
+   "check": "groups sum baseline_clean",
+   "ok": true,
+   "detail": "3.025 vs 3.025"
+  },
+  {
+   "check": "groups sum lc1_design_only",
+   "ok": true,
+   "detail": "3.494 vs 3.494"
+  },
+  {
+   "check": "groups sum lc1",
+   "ok": true,
+   "detail": "2.175 vs 2.174"
+  },
+  {
+   "check": "fea 1-D column",
+   "ok": true,
+   "detail": "worst error 0.0 %"
+  },
+  {
+   "check": "fea baseline in published F1976 range",
+   "ok": true,
+   "detail": "932.0 N in 809-1259 N"
+  },
+  {
+   "check": "fea stiffer foam raises the peak",
+   "ok": true,
+   "detail": "1227.0 > 932.0 N"
+  },
+  {
+   "check": "coal factor vs Cheah",
+   "ok": true,
+   "detail": "9.88 vs 9.4 kg (factor check only)"
+  }
+ ]
+}

@@ -1,0 +1,16 @@
+{
+ "data63.xlsx": {
+  "bytes": 9447198,
+  "fetched": "2026-11-13",
+  "sha1": "86535449b9bbc7fd5b5e7a99defc2900b40ae0c9",
+  "url": "https://zenodo.org/records/10345806/files/data63.xlsx?download=1",
+  "via": "urllib"
+ },
+ "zenodo_10345806.json": {
+  "bytes": 3538,
+  "fetched": "2026-11-13",
+  "sha1": "e1172ed0e52f380cd7b0f8e42ba353138e3045ea",
+  "url": "https://zenodo.org/api/records/10345806",
+  "via": "urllib"
+ }
+}

@@ -1,0 +1,522 @@
+{
+ "gcb": {
+  "last": 2024,
+  "fossil": 10.53,
+  "ocean10": 3.22,
+  "ocean_last": 3.39,
+  "atm_last": 7.92,
+  "from": 2015,
+  "fetched": "2026-11-13",
+  "printed": 3.2
+ },
+ "siegel": {
+  "curve": [
+   {
+    "depth": 5,
+    "mean": 0.0,
+    "p10": 0.0,
+    "p90": 0.0
+   },
+   {
+    "depth": 15,
+    "mean": 0.0,
+    "p10": -0.0,
+    "p90": 0.0
+   },
+   {
+    "depth": 25,
+    "mean": 0.0,
+    "p10": -0.0,
+    "p90": 0.0
+   },
+   {
+    "depth": 36,
+    "mean": 0.0,
+    "p10": -0.0,
+    "p90": 0.0
+   },
+   {
+    "depth": 48,
+    "mean": 0.001,
+    "p10": -0.0,
+    "p90": 0.001
+   },
+   {
+    "depth": 61,
+    "mean": 0.003,
+    "p10": -0.0,
+    "p90": 0.004
+   },
+   {
+    "depth": 75,
+    "mean": 0.008,
+    "p10": -0.0,
+    "p90": 0.018
+   },
+   {
+    "depth": 91,
+    "mean": 0.014,
+    "p10": -0.0,
+    "p90": 0.038
+   },
+   {
+    "depth": 109,
+    "mean": 0.022,
+    "p10": -0.0,
+    "p90": 0.062
+   },
+   {
+    "depth": 130,
+    "mean": 0.031,
+    "p10": -0.0,
+    "p90": 0.085
+   },
+   {
+    "depth": 153,
+    "mean": 0.041,
+    "p10": 0.0,
+    "p90": 0.111
+   },
+   {
+    "depth": 179,
+    "mean": 0.053,
+    "p10": 0.001,
+    "p90": 0.133
+   },
+   {
+    "depth": 209,
+    "mean": 0.07,
+    "p10": 0.003,
+    "p90": 0.159
+   },
+   {
+    "depth": 242,
+    "mean": 0.094,
+    "p10": 0.008,
+    "p90": 0.205
+   },
+   {
+    "depth": 279,
+    "mean": 0.12,
+    "p10": 0.013,
+    "p90": 0.266
+   },
+   {
+    "depth": 320,
+    "mean": 0.147,
+    "p10": 0.02,
+    "p90": 0.323
+   },
+   {
+    "depth": 365,
+    "mean": 0.178,
+    "p10": 0.031,
+    "p90": 0.398
+   },
+   {
+    "depth": 415,
+    "mean": 0.215,
+    "p10": 0.044,
+    "p90": 0.457
+   },
+   {
+    "depth": 470,
+    "mean": 0.254,
+    "p10": 0.059,
+    "p90": 0.522
+   },
+   {
+    "depth": 531,
+    "mean": 0.298,
+    "p10": 0.079,
+    "p90": 0.571
+   },
+   {
+    "depth": 597,
+    "mean": 0.353,
+    "p10": 0.099,
+    "p90": 0.668
+   },
+   {
+    "depth": 669,
+    "mean": 0.418,
+    "p10": 0.127,
+    "p90": 0.746
+   },
+   {
+    "depth": 747,
+    "mean": 0.482,
+    "p10": 0.172,
+    "p90": 0.8
+   },
+   {
+    "depth": 832,
+    "mean": 0.547,
+    "p10": 0.268,
+    "p90": 0.824
+   },
+   {
+    "depth": 923,
+    "mean": 0.615,
+    "p10": 0.332,
+    "p90": 0.889
+   },
+   {
+    "depth": 1022,
+    "mean": 0.676,
+    "p10": 0.385,
+    "p90": 0.931
+   },
+   {
+    "depth": 1128,
+    "mean": 0.721,
+    "p10": 0.425,
+    "p90": 0.949
+   },
+   {
+    "depth": 1241,
+    "mean": 0.761,
+    "p10": 0.468,
+    "p90": 0.967
+   },
+   {
+    "depth": 1363,
+    "mean": 0.792,
+    "p10": 0.511,
+    "p90": 0.973
+   },
+   {
+    "depth": 1493,
+    "mean": 0.817,
+    "p10": 0.553,
+    "p90": 0.977
+   },
+   {
+    "depth": 1631,
+    "mean": 0.837,
+    "p10": 0.584,
+    "p90": 0.984
+   },
+   {
+    "depth": 1778,
+    "mean": 0.854,
+    "p10": 0.616,
+    "p90": 0.992
+   },
+   {
+    "depth": 1935,
+    "mean": 0.871,
+    "p10": 0.649,
+    "p90": 0.997
+   },
+   {
+    "depth": 2101,
+    "mean": 0.888,
+    "p10": 0.688,
+    "p90": 0.999
+   },
+   {
+    "depth": 2276,
+    "mean": 0.902,
+    "p10": 0.725,
+    "p90": 0.999
+   },
+   {
+    "depth": 2462,
+    "mean": 0.916,
+    "p10": 0.761,
+    "p90": 0.999
+   },
+   {
+    "depth": 2658,
+    "mean": 0.927,
+    "p10": 0.791,
+    "p90": 0.999
+   },
+   {
+    "depth": 2865,
+    "mean": 0.937,
+    "p10": 0.819,
+    "p90": 1.0
+   },
+   {
+    "depth": 3083,
+    "mean": 0.946,
+    "p10": 0.839,
+    "p90": 1.0
+   },
+   {
+    "depth": 3312,
+    "mean": 0.954,
+    "p10": 0.862,
+    "p90": 1.0
+   },
+   {
+    "depth": 3552,
+    "mean": 0.963,
+    "p10": 0.883,
+    "p90": 1.0
+   },
+   {
+    "depth": 3804,
+    "mean": 0.974,
+    "p10": 0.922,
+    "p90": 1.0
+   }
+  ],
+  "at100": {
+   "208": 0.07,
+   "530": 0.298,
+   "1022": 0.676,
+   "2100": 0.888,
+   "3083": 0.946
+  },
+  "check_208_50": 0.142,
+  "printed_208_50": 0.15
+ },
+ "funnel": [
+  {
+   "key": "plankton",
+   "label": "Natural plankton",
+   "deep": [
+    1.2,
+    2.0,
+    2.7
+   ],
+   "held": [
+    0,
+    0,
+    0
+   ],
+   "gross": [
+    1.8,
+    3.75,
+    5.4
+   ],
+   "note": "Natural cycle, in balance before industry: the gross flow out is matched by a return flow.",
+   "src": "Doney 2024 Table 5 (flux at 1,000 m over NPP); Ricour 2023 and Siegel 2021 (25 t of each 100 t exported still out at 100 years, x 15 t exported); IPCC AR6 WG1 Cross-Chapter Box 5.3"
+  },
+  {
+   "key": "kelp",
+   "label": "Natural seaweed",
+   "deep": [
+    null,
+    null,
+    null
+   ],
+   "held": [
+    0,
+    0,
+    0
+   ],
+   "gross": [
+    1.3,
+    6.0,
+    13.9
+   ],
+   "note": "Natural cycle; no global estimate of the share that reaches 1,000 m.",
+   "src": "Filbee-Dexter et al. 2024, Nature Geoscience: 4 to 44 Tg C a year of 317 Tg C brown-forest NPP"
+  },
+  {
+   "key": "iron",
+   "label": "Iron fertilization",
+   "export": [
+    0,
+    10,
+    50
+   ],
+   "ratio": [
+    0,
+    0.22,
+    0.51
+   ],
+   "n2o": [
+    0,
+    0.07,
+    0.03
+   ],
+   "deep": [
+    0,
+    1,
+    50
+   ],
+   "held": [
+    0,
+    2.0,
+    24.7
+   ],
+   "gross": null,
+   "note": "Low: LOHAFEX and SOIREE, no extra export. Central: extra export 10 percent of extra production (mean of six experiments, derived from de Baar et al. 2008 Table 3), of which at least 90 percent is respired above 1,000 m (so 1 t deep). High: EIFEX, at least half sinking below 1,000 m. Net = export x Oschlies ratio of extra ocean uptake from the air to extra export at 100 years (1-yr pulse 0.22; best region 0.51) x (1 - nitrous-oxide offset).",
+   "src": "de Baar et al. 2005 and 2008; Smetacek et al. 2012; Oschlies et al. 2010 Tables 1-2 (0.22 of extra export becomes air uptake at 100 years; N2O offset 3-9 percent)"
+  },
+  {
+   "key": "seaweed",
+   "label": "Farmed seaweed, sunk",
+   "from_air": [
+    0.4,
+    0.55,
+    0.79
+   ],
+   "reach": [
+    0.8,
+    0.9,
+    0.98
+   ],
+   "ret_depth": [
+    1000,
+    2100,
+    null
+   ],
+   "ret_high": 0.95,
+   "deep": [
+    80,
+    90,
+    98
+   ],
+   "held": [
+    21.6,
+    44.0,
+    73.5
+   ],
+   "gross": null,
+   "note": "Product of three fractions: drawn from the air, reaching 1,000 m, retained there 100 years.",
+   "src": "DeAngelo et al. 2023, Nature Plants 9:45, Table 1; Berger et al. 2023, Environ. Res. Lett.; Bach et al. 2021, Nature Communications; retention from Siegel et al. 2021 (high case ASSUMED 0.95 below 3,000 m)",
+   "retained": [
+    0.676,
+    0.888,
+    0.95
+   ],
+   "shelf": 3.5
+  },
+  {
+   "key": "pondfuel",
+   "label": "Pond algae to fuel",
+   "deep": [
+    0,
+    0,
+    0
+   ],
+   "held": [
+    -67,
+    -36,
+    -5
+   ],
+   "gross": null,
+   "note": "The carbon returns to the air when fuel burns or feed is eaten; the energy used is a net emission.",
+   "src": "Davis et al. 2016, NREL/TP-5100-64772, Table 21 (0.36 t CO2 emitted per t fixed); IPCC AR6 WG3 Cross-Chapter Box 8; Hepburn et al. 2019, Nature 575:87"
+  },
+  {
+   "key": "pondburied",
+   "label": "Pond algae, buried",
+   "harvest": [
+    0.85,
+    0.92,
+    0.96
+   ],
+   "from_air": [
+    0.5,
+    0.75,
+    1.0
+   ],
+   "tomb": [
+    0.8,
+    0.95,
+    0.99
+   ],
+   "energy": [
+    26,
+    28,
+    13
+   ],
+   "deep": [
+    85,
+    92,
+    96
+   ],
+   "held": [
+    8.0,
+    37.5,
+    82.0
+   ],
+   "gross": null,
+   "note": "Harvested x drawn from the air x kept in the burial pit, less the energy and materials used.",
+   "src": "Leonard et al. 2026, Environ. Sci. Technol. (energy and embodied emissions); Davis et al. 2016 (harvest losses); tomb retention ASSUMED"
+  }
+ ],
+ "costs": {
+  "iron": {
+   "lo": 50,
+   "hi": 1000,
+   "text": "under $50 (NASEM 2022) to over $1,000 offshore (Bach et al. 2023)"
+  },
+  "seaweed": {
+   "lo": 480,
+   "hi": 2090,
+   "best": 480,
+   "nutrient": 830,
+   "typ_lo": 1120,
+   "below400_air": 0.6,
+   "text": "$480 in the best case; typical model runs $1,120 to $2,090 (DeAngelo et al. 2023)"
+  },
+  "seaweed_nasem": 100,
+  "pondburied": {
+   "lo": 181,
+   "hi": 661,
+   "text": "$181 optimistic to $661 realistic (Leonard et al. 2026)"
+  },
+  "dac_paid": 646,
+  "cdrfyi_2024": 320
+ },
+ "record": {
+  "iron_experiments": 13,
+  "iron_first": 1993,
+  "iron_last": 2009,
+  "eifex_year": 2004,
+  "eifex_deep_share": 0.5,
+  "lohafex_year": 2009,
+  "lohafex_iron_t": 4,
+  "haida_year": 2012,
+  "haida_t": 100,
+  "running_tide_t": 19000,
+  "running_tide_year": 2023,
+  "running_tide_shut": "June 2024",
+  "brilliant_planet_admin": "November 2024",
+  "berger_with_feedback": 0.58,
+  "deangelo_range": [
+   0.4,
+   1.0
+  ],
+  "lit_range": [
+   0.4,
+   0.75
+  ],
+  "co2_per_dry_t": 1.83,
+  "nrel_energy": 0.36,
+  "oschlies_ratio": 0.22
+ },
+ "npp": {
+  "ocean": 48.5,
+  "macro": 1.0,
+  "land": 56.4,
+  "sat": [
+   38.8,
+   42.1
+  ],
+  "span": [
+   32,
+   71
+  ],
+  "export": [
+   4,
+   10
+  ],
+  "flux1000": [
+   0.65,
+   0.95
+  ],
+  "burial": [
+   0.02,
+   0.2
+  ]
+ }
+}

@@ -1,0 +1,353 @@
+{
+ "items": [
+  {
+   "code": "QD6_13",
+   "label": "Reduce waste and recycle",
+   "text": "You try to reduce your waste and you regularly separate it for recycling",
+   "pct": 64,
+   "pct_calc": 64.37,
+   "t": 0.21,
+   "p25": null,
+   "p75": null,
+   "n": 1,
+   "n_sources": 1,
+   "match": "loose",
+   "option": "Wynes and Nicholas (2017), recycling for a year"
+  },
+  {
+   "code": "QD6_14",
+   "label": "Cut down on disposable items",
+   "text": "You try to cut down on your consumption of disposable items whenever possible (e.g. plastic bags from the supermarket, excess packaging, plastic cutlery etc.)",
+   "pct": 49,
+   "pct_calc": 48.98,
+   "t": 0.161,
+   "p25": 0.1327,
+   "p75": 0.1884,
+   "n": 4,
+   "n_sources": 2,
+   "match": "loose",
+   "option": "less packaging"
+  },
+  {
+   "code": "QD6_6",
+   "label": "Weigh energy use of appliances",
+   "text": "When buying a new household appliance (e.g. washing machine, fridge or TV), lower energy consumption is an important factor in your choice",
+   "pct": 34,
+   "pct_calc": 33.98,
+   "t": 0.0597,
+   "p25": 0.0381,
+   "p75": 0.1451,
+   "n": 10,
+   "n_sources": 5,
+   "match": "close",
+   "option": "more efficient appliances"
+  },
+  {
+   "code": "QD6_3",
+   "label": "Use alternatives to the car",
+   "text": "You regularly use environmentally-friendly alternatives to your private car such as walking, cycling, taking public transport or car-sharing",
+   "pct": 26,
+   "pct_calc": 25.56,
+   "t": 0.594,
+   "p25": 0.336,
+   "p75": 1.1825,
+   "n": 45,
+   "n_sources": 12,
+   "match": "loose",
+   "option": "shift to public transport, walking and cycling, or car sharing"
+  },
+  {
+   "code": "QD6_12",
+   "label": "Eat less meat",
+   "text": "You buy and eat less meat",
+   "pct": 25,
+   "pct_calc": 25.1,
+   "t": 0.1558,
+   "p25": 0.0289,
+   "p75": 0.2829,
+   "n": 36,
+   "n_sources": 13,
+   "match": "loose",
+   "option": "fewer animal products"
+  },
+  {
+   "code": "QD6_4",
+   "label": "Insulated the home",
+   "text": "You have insulated your home better to reduce your energy consumption",
+   "pct": 14,
+   "pct_calc": 14.43,
+   "t": 0.1871,
+   "p25": 0.157,
+   "p75": 0.2068,
+   "n": 4,
+   "n_sources": 3,
+   "match": "close",
+   "option": "better thermal insulation"
+  },
+  {
+   "code": "QD6_11",
+   "label": "Adapt long-distance travel",
+   "text": "You consider the carbon footprint of your transport when planning your holiday and other longer distance travel and sometimes adapt your plans accordingly",
+   "pct": 10,
+   "pct_calc": 10.3,
+   "t": 0.4374,
+   "p25": 0.2275,
+   "p75": 1.2523,
+   "n": 20,
+   "n_sources": 8,
+   "match": "loose",
+   "option": "less air travel"
+  },
+  {
+   "code": "QD6_7",
+   "label": "Switched to a greener supplier",
+   "text": "You have switched to an energy supplier which offers a greater share of energy from renewable sources than your previous one",
+   "pct": 9,
+   "pct_calc": 8.82,
+   "t": 0.3264,
+   "p25": 0.319,
+   "p75": 0.3337,
+   "n": 2,
+   "n_sources": 2,
+   "match": "loose",
+   "option": "renewable electricity, European estimates only"
+  },
+  {
+   "code": "QD6_9",
+   "label": "Installed energy controls",
+   "text": "You have installed equipment in your home to control and reduce your energy consumption (e.g. smart meter)",
+   "pct": 8,
+   "pct_calc": 8.29,
+   "t": 0.099,
+   "p25": 0.0442,
+   "p75": 0.291,
+   "n": 21,
+   "n_sources": 2,
+   "match": "close",
+   "option": "smart metering"
+  },
+  {
+   "code": "QD6_10",
+   "label": "Installed solar panels",
+   "text": "You have installed solar panels in your home",
+   "pct": 8,
+   "pct_calc": 7.89,
+   "t": 0.575,
+   "p25": 0.1549,
+   "p75": 2.4575,
+   "n": 16,
+   "n_sources": 3,
+   "match": "close",
+   "option": "produce renewable electricity"
+  },
+  {
+   "code": "QD6_1",
+   "label": "New car chosen for low fuel use",
+   "text": "You have bought a new car and its low fuel consumption was an important factor in your choice",
+   "pct": 6,
+   "pct_calc": 5.89,
+   "t": 0.3035,
+   "p25": 0.112,
+   "p75": 0.6137,
+   "n": 4,
+   "n_sources": 2,
+   "match": "loose",
+   "option": "shift to a smaller car"
+  },
+  {
+   "code": "QD6_8",
+   "label": "Installed a heat pump",
+   "text": "You have installed a heat pump to reduce your energy bill and carbon footprint",
+   "pct": 5,
+   "pct_calc": 4.76,
+   "t": 0.7928,
+   "p25": 0.6289,
+   "p75": 0.9443,
+   "n": 6,
+   "n_sources": 4,
+   "match": "close",
+   "option": "heat pump"
+  },
+  {
+   "code": "QD6_2",
+   "label": "Bought an electric car",
+   "text": "You have bought an electric car",
+   "pct": 3,
+   "pct_calc": 3.45,
+   "t": 1.95,
+   "p25": 0.5075,
+   "p75": 3.5625,
+   "n": 55,
+   "n_sources": 10,
+   "match": "close",
+   "option": "shift to a battery electric car"
+  },
+  {
+   "code": "QD6_5",
+   "label": "Bought a low-energy home",
+   "text": "You have bought a low-energy home",
+   "pct": 3,
+   "pct_calc": 3.13,
+   "t": 0.597,
+   "p25": 0.355,
+   "p75": 0.7499,
+   "n": 3,
+   "n_sources": 3,
+   "match": "close",
+   "option": "passive house"
+  }
+ ],
+ "eb": {
+  "very_serious": 37.0,
+  "fairly_serious": 48.0,
+  "serious": 85.0,
+  "acted_6m": 59.0,
+  "at_least_one": 91.0,
+  "none": 8.0,
+  "recycle_2023": 70.0,
+  "acted_6m_2023": 63.0,
+  "n": 26319,
+  "best_gov": 66,
+  "best_you": 28,
+  "top3": [
+   "QD6_13",
+   "QD6_14",
+   "QD6_6"
+  ],
+  "bot3": [
+   "QD6_8",
+   "QD6_2",
+   "QD6_5"
+  ],
+  "top3_t": 0.14356666666666665,
+  "bot3_t": 1.1132666666666666,
+  "ratio": 7.7543533782215,
+  "top3_t_hi": 0.18116666666666667,
+  "bot3_t_lo": 0.49713333333333337,
+  "ratio_adverse": 2.744066237350506,
+  "spearman": -0.6439560439560439,
+  "weighted_t": 0.27221792791092664,
+  "unweighted_t": 0.4606214285714286,
+  "top_by_t": [
+   "QD6_2",
+   "QD6_8",
+   "QD6_5"
+  ],
+  "over_half": [
+   "QD6_3",
+   "QD6_10",
+   "QD6_8",
+   "QD6_2",
+   "QD6_5"
+  ],
+  "over_half_max_pct": 26,
+  "under_quarter_pct": [
+   "QD6_13",
+   "QD6_14",
+   "QD6_6",
+   "QD6_12",
+   "QD6_4",
+   "QD6_9"
+  ],
+  "ivanova_rows": 771,
+  "paper_checks": 8
+ },
+ "metayale": {
+  "countries": 37,
+  "adoption": {
+   "food": {
+    "done": 66.3140945945946,
+    "want": 7.350794594594593,
+    "na": 8.304935135135135
+   },
+   "meat": {
+    "done": 38.93092162162162,
+    "want": 6.890705405405405,
+    "na": 8.924643243243244
+   },
+   "solar": {
+    "done": 8.672637837837838,
+    "want": 17.250778378378374,
+    "na": 18.589500000000005
+   },
+   "heatpump": {
+    "done": 12.080783783783783,
+    "want": 8.566689189189189,
+    "na": 22.201389189189186
+   },
+   "ev": {
+    "done": 7.293491891891891,
+    "want": 8.798691891891892,
+    "na": 13.428948648648646
+   },
+   "offsets": {
+    "done": 15.581013513513511,
+    "want": 7.719783783783782,
+    "na": 16.360078378378375
+   }
+  },
+  "barriers": {
+   "ev": [
+    {
+     "reason": "It's too expensive",
+     "pct": 43.323699999999995
+    },
+    {
+     "reason": "I'm not interested in doing this",
+     "pct": 23.06972162162162
+    },
+    {
+     "reason": "Electric cars or trucks can't travel far enough without having to recharge",
+     "pct": 20.89207837837838
+    }
+   ],
+   "heatpump": [
+    {
+     "reason": "I don't own my home",
+     "pct": 26.472389189189187
+    },
+    {
+     "reason": "It's too expensive",
+     "pct": 26.154116216216217
+    },
+    {
+     "reason": "My home is not suitable",
+     "pct": 17.585654054054054
+    }
+   ],
+   "solar": [
+    {
+     "reason": "It's too expensive",
+     "pct": 38.14077567567567
+    },
+    {
+     "reason": "I don't own my home",
+     "pct": 30.297518918918918
+    },
+    {
+     "reason": "My home is not suitable",
+     "pct": 19.70738108108108
+    }
+   ],
+   "meat": [
+    {
+     "reason": "I like eating meat",
+     "pct": 54.42823783783784
+    },
+    {
+     "reason": "I've never thought about eating less meat",
+     "pct": 30.218251351351352
+    },
+    {
+     "reason": "I'm not interested in doing this",
+     "pct": 27.65954054054054
+    }
+   ]
+  }
+ },
+ "eu": {
+  "year": 2023,
+  "consumption_t": 7.328,
+  "territorial_t": 5.514
+ }
+}

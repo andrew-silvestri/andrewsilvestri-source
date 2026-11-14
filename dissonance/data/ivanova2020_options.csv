@@ -1,0 +1,772 @@
+ID,Authors,Publication year,Original consumption options,Aggregated consumption options,Consumption domain,Absolute carbon mitigation potential (tCO2eq/cap per year),Absolute Unit,Geographical context
+D14,Salemdeeb et al,2017,A partial reduction of avoidable waste (60% reduction in food waste),Partial shift to dairy/plants/fish,Food,0.07658077827114168,tCO2eq per cap-year ,UK
+D14,Salemdeeb et al,2017,A total reduction of avoidable waste (77% reduction in food waste),Food waste reduction,Food,0.0971903361628087,tCO2eq per cap-year ,UK
+D14,Salemdeeb et al,2017,Food waste reduction (high range),Food waste reduction,Food,0.47727397222807844,tCO2eq per cap-year ,UK
+D14,Salemdeeb et al,2017,Food waste reduction (low range),Food waste reduction,Food,0.08677708585965063,tCO2eq per cap-year ,UK
+DI1,Wynes and Nicholas,2017,Avoid medium flights,Less transport by air,Transport,0.3,per passenger roundtrip medium flight,Global
+DI1,Wynes and Nicholas,2017,Avoid medium flights,One less flight (medium return),Transport,0.74,per passenger roundtrip medium flight,Global
+DI1,Wynes and Nicholas,2017,Avoid medium flights (one return - 1697 km each way),One less flight (medium return),Transport,1.0,per passenger roundtrip medium flight,Global
+DI1,Wynes and Nicholas,2017,Avoid medium flights (one return - 1697 km each way),One less flight (medium return),Transport,0.69,per passenger roundtrip medium flight,Global
+DI1,Wynes and Nicholas,2017,Avoid medium flights (one return - 1697 km each way),One less flight (medium return),Transport,0.63,per passenger roundtrip medium flight,Global
+DI1,Wynes and Nicholas,2017,Avoid medium flights (one return - 1697 km each way),One less flight (medium return),Transport,0.61,per passenger roundtrip medium flight,Global
+DI1,Wynes and Nicholas,2017,Avoid medium flights (one return - 1697 km each way),One less flight (medium return),Transport,0.54,per passenger roundtrip medium flight,Global
+DI1,Wynes and Nicholas,2017,Avoid medium flights (one return - 1697 km each way),One less flight (medium return),Transport,0.45,per passenger roundtrip medium flight,Global
+DI1,Wynes and Nicholas,2017,Avoid medium flights (one return - 1697 km each way),One less flight (medium return),Transport,0.41,per passenger roundtrip medium flight,Global
+DI1,Wynes and Nicholas,2017,Avoid medium flights (one return - 1697 km each way),One less flight (medium return),Transport,0.38,per passenger roundtrip medium flight,Global
+DI1,Wynes and Nicholas,2017,Avoid medium flights (one return - 1697 km each way),One less flight (medium return),Transport,0.36,per passenger roundtrip medium flight,Global
+DI1,Wynes and Nicholas,2017,Avoid transatlantic flights (return),One less flight (long return),Transport,2.8,per passenger roundtrip transatlantic flight,Global
+DI1,Wynes and Nicholas,2017,Avoid transatlantic flights (return),One less flight (long return),Transport,2.43,per passenger roundtrip transatlantic flight,Global
+DI1,Wynes and Nicholas,2017,Avoid transatlantic flights (return),One less flight (long return),Transport,2.06,per passenger roundtrip transatlantic flight,Global
+DI1,Wynes and Nicholas,2017,Avoid transatlantic flights (return),One less flight (long return),Transport,1.83,per passenger roundtrip transatlantic flight,Global
+DI1,Wynes and Nicholas,2017,Avoid transatlantic flights (return),One less flight (long return),Transport,1.68,per passenger roundtrip transatlantic flight,Global
+DI1,Wynes and Nicholas,2017,Avoid transatlantic flights (return),One less flight (long return),Transport,1.53,per passenger roundtrip transatlantic flight,Global
+DI1,Wynes and Nicholas,2017,Avoid transatlantic flights (return),One less flight (long return),Transport,1.41,per passenger roundtrip transatlantic flight,Global
+DI1,Wynes and Nicholas,2017,Avoid transatlantic flights (return),One less flight (long return),Transport,1.37,per passenger roundtrip transatlantic flight,Global
+DI1,Wynes and Nicholas,2017,Avoid transatlantic flights (return),One less flight (long return),Transport,1.17,per passenger roundtrip transatlantic flight,Global
+DI1,Wynes and Nicholas,2017,Avoid transatlantic flights (return),One less flight (long return),Transport,1.16,per passenger roundtrip transatlantic flight,Global
+DI1,Wynes and Nicholas,2017,Avoid transatlantic flights (return),One less flight (long return),Transport,1.06,per passenger roundtrip transatlantic flight,Global
+DI1,Wynes and Nicholas,2017,Avoid transatlantic flights (return),One less flight (long return),Transport,0.73,per passenger roundtrip transatlantic flight,Global
+DI1,Wynes and Nicholas,2017,Buy green energy,Renewable electricity,Housing,2.51,tCO2eq per cap-year ,Canada
+DI1,Wynes and Nicholas,2017,Buy green energy,Renewable electricity,Housing,2.2,tCO2eq per cap-year ,Australia
+DI1,Wynes and Nicholas,2017,Buy green energy,Renewable electricity,Housing,1.4,tCO2eq per cap-year ,USA
+DI1,Wynes and Nicholas,2017,Buy green energy,Renewable electricity,Housing,1.27,tCO2eq per cap-year ,UK
+DI1,Wynes and Nicholas,2017,Changing lightbulbs,More efficient appliances,Housing,0.17,tCO2eq per cap-year ,USA
+DI1,Wynes and Nicholas,2017,Changing lightbulbs,More efficient appliances,Housing,0.037,tCO2eq per cap-year ,UK
+DI1,Wynes and Nicholas,2017,Comprehensive recycling ,Recycle,Other consumption,0.2125,tCO2eq per cap-year ,USA
+DI1,Wynes and Nicholas,2017,Give up hybrid,Live car-free,Transport,2.0,tCO2eq per cap-year ,UK
+DI1,Wynes and Nicholas,2017,Give up SUV,Live car-free,Transport,3.6,tCO2eq per cap-year ,USA
+DI1,Wynes and Nicholas,2017,Hang drying clothing,Less energy use (clothing),Housing,0.215,tCO2eq per cap-year ,UK
+DI1,Wynes and Nicholas,2017,Hang drying clothing,Less energy use (clothing),Housing,0.21,tCO2eq per cap-year ,USA
+DI1,Wynes and Nicholas,2017,Increase fuel economy (buy more efficient car),Energy and material efficiency,Transport,1.19,tCO2eq per cap-year ,USA
+DI1,Wynes and Nicholas,2017,Living car-free,Live car-free,Transport,3.08,tCO2eq per cap-year ,USA
+DI1,Wynes and Nicholas,2017,Living car-free,Live car-free,Transport,3.04,tCO2eq per cap-year ,Australia
+DI1,Wynes and Nicholas,2017,Living car-free,Live car-free,Transport,2.2,tCO2eq per cap-year ,Canada
+DI1,Wynes and Nicholas,2017,Living car-free,Live car-free,Transport,2.1,tCO2eq per cap-year ,Belgium
+DI1,Wynes and Nicholas,2017,Living car-free,Live car-free,Transport,2.04,tCO2eq per cap-year ,EU/Europe
+DI1,Wynes and Nicholas,2017,Living car-free,Live car-free,Transport,1.44,tCO2eq per cap-year ,UK
+DI1,Wynes and Nicholas,2017,Not owning a dog,No pets,Other consumption,2.3,tCO2eq per cap-year ,USA
+DI1,Wynes and Nicholas,2017,Not owning a dog,No pets,Other consumption,1.6,tCO2eq per cap-year ,USA
+DI1,Wynes and Nicholas,2017,Not owning a dog,No pets,Other consumption,0.6,tCO2eq per cap-year ,USA
+DI1,Wynes and Nicholas,2017,Not owning a dog,No pets,Other consumption,0.09,tCO2eq per cap-year ,Australia
+DI1,Wynes and Nicholas,2017,Not owning a dog,No pets,Other consumption,0.06,tCO2eq per cap-year ,Australia
+DI1,Wynes and Nicholas,2017,Not owning a dog,No pets,Other consumption,0.02,tCO2eq per cap-year ,Australia
+DI1,Wynes and Nicholas,2017,Omnivore to vegan,Vegan diet,Food,1.57,tCO2eq per cap-year ,UK
+DI1,Wynes and Nicholas,2017,Omnivore to vegan,Vegan diet,Food,1.13,tCO2eq per cap-year ,New Zealand
+DI1,Wynes and Nicholas,2017,Omnivore to vegan,Vegan diet,Food,1.09,tCO2eq per cap-year ,Germany
+DI1,Wynes and Nicholas,2017,Omnivore to vegan,Vegan diet,Food,1.0,tCO2eq per cap-year ,UK
+DI1,Wynes and Nicholas,2017,Omnivore to vegan,Vegan diet,Food,0.68,tCO2eq per cap-year ,UK
+DI1,Wynes and Nicholas,2017,Omnivore to vegan,Vegan diet,Food,0.65,tCO2eq per cap-year ,UK
+DI1,Wynes and Nicholas,2017,Omnivore to vegan,Vegan diet,Food,0.63,tCO2eq per cap-year ,UK
+DI1,Wynes and Nicholas,2017,Omnivore to vegan,Vegan diet,Food,0.55,tCO2eq per cap-year ,Netherlands
+DI1,Wynes and Nicholas,2017,Omnivore to vegetarian,Vegetarian diet,Food,1.49,tCO2eq per cap-year ,USA
+DI1,Wynes and Nicholas,2017,Omnivore to vegetarian,Vegetarian diet,Food,1.27,tCO2eq per cap-year ,New Zealand
+DI1,Wynes and Nicholas,2017,Omnivore to vegetarian,Vegetarian diet,Food,1.23,tCO2eq per cap-year ,UK
+DI1,Wynes and Nicholas,2017,Omnivore to vegetarian,Vegetarian diet,Food,1.11,tCO2eq per cap-year ,UK
+DI1,Wynes and Nicholas,2017,Omnivore to vegetarian,Vegetarian diet,Food,0.74,tCO2eq per cap-year ,New Zealand
+DI1,Wynes and Nicholas,2017,Omnivore to vegetarian,Vegetarian diet,Food,0.68,tCO2eq per cap-year ,UK
+DI1,Wynes and Nicholas,2017,Omnivore to vegetarian,Vegetarian diet,Food,0.66,tCO2eq per cap-year ,UK
+DI1,Wynes and Nicholas,2017,Omnivore to vegetarian,Vegetarian diet,Food,0.49,tCO2eq per cap-year ,UK
+DI1,Wynes and Nicholas,2017,Omnivore to vegetarian,Vegetarian diet,Food,0.49,tCO2eq per cap-year ,Germany
+DI1,Wynes and Nicholas,2017,Omnivore to vegetarian,Vegetarian diet,Food,0.33,tCO2eq per cap-year ,Netherlands
+DI1,Wynes and Nicholas,2017,Omnivore to vegetarian,Vegetarian diet,Food,0.32,tCO2eq per cap-year ,UK
+DI1,Wynes and Nicholas,2017,Omnivore to vegetarian,Vegetarian diet,Food,0.32,tCO2eq per cap-year ,USA
+DI1,Wynes and Nicholas,2017,Omnivore to vegetarian,Vegetarian diet,Food,0.11,tCO2eq per cap-year ,India
+DI1,Wynes and Nicholas,2017,Switch electric car to car-free,Live car-free,Transport,2.84,tCO2eq per cap-year ,Australia
+DI1,Wynes and Nicholas,2017,Switch electric car to car-free,Live car-free,Transport,2.21,tCO2eq per cap-year ,USA
+DI1,Wynes and Nicholas,2017,Switch electric car to car-free,Live car-free,Transport,1.2,tCO2eq per cap-year ,UK
+DI1,Wynes and Nicholas,2017,Switch electric car to car-free,Live car-free,Transport,1.05,tCO2eq per cap-year ,EU/Europe
+DI1,Wynes and Nicholas,2017,Switch electric car to car-free,Live car-free,Transport,0.6,tCO2eq per cap-year ,Belgium
+DI1,Wynes and Nicholas,2017,Washing clothes in cold water,Less energy use (clothing),Housing,0.247,tCO2eq per cap-year ,USA
+DI10,Heller and Keoleian,2014,Reduce avidable consumer-level food losses (sum of all products) ,Food waste reduction,Food,0.8686999999999999,tCO2eq per cap-year ,USA
+DI10,Heller and Keoleian,2014,Reduce avidable consumer-level food losses (sum of all products) ,Food waste reduction,Food,0.8584799999999999,tCO2eq per cap-year ,USA
+DI10,Heller and Keoleian,2014,Reduce avidable consumer-level food losses (sum of all products) - average,Food waste reduction,Food,0.5109999999999999,tCO2eq per cap-year ,USA
+DI10,Heller and Keoleian,2014,Reduce avidable consumer-level food losses (sum of all products) - maximum,Food waste reduction,Food,0.9402399999999999,tCO2eq per cap-year ,USA
+DI10,Heller and Keoleian,2014,Reduce avidable consumer-level food losses (sum of all products) - minimum,Food waste reduction,Food,0.25549999999999995,tCO2eq per cap-year ,USA
+DI10,Heller and Keoleian,2014,Reduce avoidable food waste,Food waste reduction,Food,0.368,tCO2eq per cap-year ,USA
+DI10,Heller and Keoleian,2014,"Shift to 2000 calorie dietary guideline (higher consumption of fruits and veggies, seafood and dairy, and lower consumption of meats, eggs, nuts, seeds, oils, solid fats and added sugar)",Nutrition guidelines diet,Food,0.013272727272727325,tCO2eq per cap-year ,USA
+DI10,Heller and Keoleian,2014,Shift to 2000 calorie lacto-ovo vegetarian diet,Vegetarian diet,Food,0.4512727272727274,tCO2eq per cap-year ,USA
+DI10,Heller and Keoleian,2014,Shift to 2000 calorie vegan diet,Vegan diet,Food,0.7067727272727273,tCO2eq per cap-year ,USA
+DI11,Malmodin and Coroama,2016,Smart metering ,Smart metering,Housing,1.0636199178899401,tCO2eq per cap-year ,USA
+DI11,Malmodin and Coroama,2016,Smart metering ,Smart metering,Housing,0.2592867367630512,tCO2eq per cap-year ,Global
+DI11,Malmodin and Coroama,2016,Smart metering - HRS,Smart metering,Housing,0.782,tCO2eq per cap-year ,USA
+DI11,Malmodin and Coroama,2016,Smart metering - HRS,Smart metering,Housing,0.707,tCO2eq per cap-year ,USA
+DI11,Malmodin and Coroama,2016,Smart metering - HRS,Smart metering,Housing,0.291,tCO2eq per cap-year ,EU/Europe
+DI11,Malmodin and Coroama,2016,Smart metering - HRS,Smart metering,Housing,0.231,tCO2eq per cap-year ,EU/Europe
+DI11,Malmodin and Coroama,2016,Smart metering - HRS,Smart metering,Housing,0.099,tCO2eq per cap-year ,Sweden
+DI11,Malmodin and Coroama,2016,Smart metering - HRS,Smart metering,Housing,0.083,tCO2eq per cap-year ,Sweden
+DI11,Malmodin and Coroama,2016,Smart metering - LRS,Smart metering,Housing,0.17,tCO2eq per cap-year ,USA
+DI11,Malmodin and Coroama,2016,Smart metering - LRS,Smart metering,Housing,0.095,tCO2eq per cap-year ,USA
+DI11,Malmodin and Coroama,2016,Smart metering - LRS,Smart metering,Housing,0.051,tCO2eq per cap-year ,EU/Europe
+DI11,Malmodin and Coroama,2016,Smart metering - LRS,Smart metering,Housing,0.015,tCO2eq per cap-year ,Sweden
+DI11,Malmodin and Coroama,2016,Smart metering - LRS,Smart metering,Housing,-0.001,tCO2eq per cap-year ,Sweden
+DI11,Malmodin and Coroama,2016,Smart metering - LRS,Smart metering,Housing,-0.009,tCO2eq per cap-year ,EU/Europe
+DI11,Malmodin and Coroama,2016,Smart metering - MRS,Smart metering,Housing,0.374,tCO2eq per cap-year ,USA
+DI11,Malmodin and Coroama,2016,Smart metering - MRS,Smart metering,Housing,0.299,tCO2eq per cap-year ,USA
+DI11,Malmodin and Coroama,2016,Smart metering - MRS,Smart metering,Housing,0.131,tCO2eq per cap-year ,EU/Europe
+DI11,Malmodin and Coroama,2016,Smart metering - MRS,Smart metering,Housing,0.071,tCO2eq per cap-year ,EU/Europe
+DI11,Malmodin and Coroama,2016,Smart metering - MRS,Smart metering,Housing,0.043,tCO2eq per cap-year ,Sweden
+DI11,Malmodin and Coroama,2016,Smart metering - MRS,Smart metering,Housing,0.027,tCO2eq per cap-year ,Sweden
+DI12,Usubiaga et al,2017,Halving avoidable and possibly avoidable consumer food waste,Food waste reduction,Food,0.25576340637904277,tCO2eq per cap-year ,EU/Europe
+DI12,Usubiaga et al,2017,Halving avoidable and possibly avoidable consumer food waste,Food waste reduction,Food,0.1598521289869017,tCO2eq per cap-year ,EU/Europe
+DI12,Usubiaga et al,2017,Halving avoidable and possibly avoidable consumer food waste,Food waste reduction,Food,0.031970425797380346,tCO2eq per cap-year ,EU/Europe
+DI12,Usubiaga et al,2017,Reducing avoidable and possibly avoidable food waste,Food waste reduction,Food,0.3197042579738034,tCO2eq per cap-year ,EU/Europe
+DI13,Farchi et al,2016,Shift from beef-intensive to mediterranean diet,Mediterranean and similar,Food,0.42025984000000005,tCO2eq per cap-year ,Italy
+DI13,Farchi et al,2016,Shift from beef-intensive to mediterranean diet,Mediterranean and similar,Food,0.35423232,tCO2eq per cap-year ,Italy
+DI13,Farchi et al,2016,Shift from beef-intensive to mediterranean diet,Mediterranean and similar,Food,0.29632512000000005,tCO2eq per cap-year ,Italy
+DI13,Farchi et al,2016,Shift from beef-intensive to mediterranean diet,Mediterranean and similar,Food,0.2489344,tCO2eq per cap-year ,Italy
+DI13,Farchi et al,2016,Shift from beef-intensive to mediterranean diet and higher quality meat (better cuts) - from baseline high quality to mediterranean low quality,Mediterranean and similar,Food,0.37425024000000007,tCO2eq per cap-year ,Italy
+DI13,Farchi et al,2016,Shift from beef-intensive to mediterranean diet and higher quality meat (better cuts) - from baseline low quality to mediterranean high quality,Mediterranean and similar,Food,1.2534412800000003,tCO2eq per cap-year ,Italy
+DI15,Bellarby et al ,2013,Anaerobic digestion of unavoidable foodwaste,Food waste management,Food,0.044534412955465584,tCO2eq per cap-year ,EU/Europe
+DI15,Bellarby et al ,2013,Anaerobic digestion of unavoidable foodwaste,Food waste management,Food,0.02834008097165992,tCO2eq per cap-year ,EU/Europe
+DI15,Bellarby et al ,2013,Eat no beef from South America,Less animal products,Food,0.06275303643724696,tCO2eq per cap-year ,EU/Europe
+DI15,Bellarby et al ,2013,Eat no beef from South America,Less animal products,Food,0.044534412955465584,tCO2eq per cap-year ,EU/Europe
+DI15,Bellarby et al ,2013,Eat no meat from European beef suckler herd,Less animal products,Food,0.1902834008097166,tCO2eq per cap-year ,EU/Europe
+DI15,Bellarby et al ,2013,Eat no meat from European beef suckler herd,Less animal products,Food,0.13562753036437247,tCO2eq per cap-year ,EU/Europe
+DI15,Bellarby et al ,2013,One less serving of milk or 20g less cheese (per week),Less animal products,Food,0.038461538461538464,tCO2eq per cap-year ,EU/Europe
+DI15,Bellarby et al ,2013,One less serving of milk or 20g less cheese (per week),Less animal products,Food,0.030364372469635626,tCO2eq per cap-year ,EU/Europe
+DI15,Bellarby et al ,2013,Waste minimization (waste rate of 2.4-3.9%),Food waste reduction,Food,0.23279352226720648,tCO2eq per cap-year ,EU/Europe
+DI15,Bellarby et al ,2013,Waste minimization (waste rate of 2.4-3.9%),Food waste reduction,Food,0.11336032388663968,tCO2eq per cap-year ,EU/Europe
+DI16,Brunelle et al ,2016,Mediterranean diet,Mediterranean and similar,Food,0.19999999999999996,tCO2eq per cap-year ,USA
+DI16,Brunelle et al ,2016,Reduced protein diet,Less animal products,Food,0.5999999999999999,tCO2eq per cap-year ,USA
+DI16,Brunelle et al ,2016,Reduction in beef-related calories from 94 kcal to 25 kcal per day,Less animal products,Food,0.4999999999999999,tCO2eq per cap-year ,USA
+DI16,Brunelle et al ,2016,Shift one third of the beef calories to either pork or poultry,Shift to lower carbon meats,Food,1.2,tCO2eq per cap-year ,USA
+DI16,Brunelle et al ,2016,Shift one third of the beef calories to legumes,Partial shift to dairy/plants/fish,Food,1.5,tCO2eq per cap-year ,USA
+DI16,Brunelle et al ,2016,Vegetarian diet,Vegetarian diet,Food,0.7999999999999999,tCO2eq per cap-year ,USA
+DI17,Clune et al,2017,Alternative plant and fish diet,Mediterranean and similar,Food,0.9138999999999999,tCO2eq per cap-year ,Global
+DI17,Clune et al,2017,Alternative plant and fish diet,Mediterranean and similar,Food,0.77818,tCO2eq per cap-year ,Global
+DI17,Clune et al,2017,Alternative plant and fish diet,Mediterranean and similar,Food,0.66222,tCO2eq per cap-year ,Global
+DI17,Clune et al,2017,"Substitute meats with alternative (lower carbon) meats in a ""like for like"" manner",Shift to lower carbon meats,Food,0.5372899999999999,tCO2eq per cap-year ,Global
+DI17,Clune et al,2017,"Substitute meats with alternative (lower carbon) meats in a ""like for like"" manner",Shift to lower carbon meats,Food,0.44706999999999997,tCO2eq per cap-year ,Global
+DI17,Clune et al,2017,"Substitute meats with alternative (lower carbon) meats in a ""like for like"" manner",Shift to lower carbon meats,Food,0.40313,tCO2eq per cap-year ,Global
+DI18,Lekve Bjelle et al,2018,Appliances and other,Fewer appliances,Housing,0.07837837837837837,tCO2eq per cap-year ,Norway
+DI18,Lekve Bjelle et al,2018,Average of changing 6 pieces of furtniture,Fewer purchases/durable items,Other consumption,0.04324324324324324,tCO2eq per cap-year ,Norway
+DI18,Lekve Bjelle et al,2018,Buy furniture with 20% recycled MDF (medium density fibre),Recycled materials,Other consumption,0.03288288288288288,tCO2eq per cap-year ,Norway
+DI18,Lekve Bjelle et al,2018,Car-pooling for work under 10 km,Car-pooling/sharing,Transport,0.04639639639639639,tCO2eq per cap-year ,Norway
+DI18,Lekve Bjelle et al,2018,Clean clothing less,Less energy use (clothing),Housing,0.016216216216216214,tCO2eq per cap-year ,Norway
+DI18,Lekve Bjelle et al,2018,Design for durability,Fewer purchases/durable items,Other consumption,0.04819819819819819,tCO2eq per cap-year ,Norway
+DI18,Lekve Bjelle et al,2018,Dispose less - recycle more,Recycle,Other consumption,0.003153153153153153,tCO2eq per cap-year ,Norway
+DI18,Lekve Bjelle et al,2018,Dispose less - reuse more,Fewer purchases/durable items,Other consumption,0.004504504504504504,tCO2eq per cap-year ,Norway
+DI18,Lekve Bjelle et al,2018,Eco-efficiency across supply chain,Energy and material efficiency,Other consumption,0.025675675675675674,tCO2eq per cap-year ,Norway
+DI18,Lekve Bjelle et al,2018,Eliminate food waste,Food waste reduction,Food,0.45945945945945943,tCO2eq per cap-year ,Norway
+DI18,Lekve Bjelle et al,2018,Eliminate long-distance flight for vacations,One less flight (long return),Transport,1.1842342342342342,tCO2eq per cap-year ,Norway
+DI18,Lekve Bjelle et al,2018,Eliminating unsolicited mail,Less paper,Other consumption,0.017567567567567565,tCO2eq per cap-year ,Norway
+DI18,Lekve Bjelle et al,2018,e-papers and e-books,Less paper,Other consumption,0.011711711711711712,tCO2eq per cap-year ,Norway
+DI18,Lekve Bjelle et al,2018,Green diet,Less animal products,Food,0.8351351351351352,tCO2eq per cap-year ,Norway
+DI18,Lekve Bjelle et al,2018,Increase lifetime by 20%,Fewer purchases/durable items,Other consumption,0.052252252252252246,tCO2eq per cap-year ,Norway
+DI18,Lekve Bjelle et al,2018,Increase size of washing and drying loads,Less energy use (clothing),Housing,0.009009009009009007,tCO2eq per cap-year ,Norway
+DI18,Lekve Bjelle et al,2018,No trips by car under 3 km,Less car transport,Transport,0.06756756756756757,tCO2eq per cap-year ,Norway
+DI18,Lekve Bjelle et al,2018,Only bus transport,Shift to public transport,Transport,2.1905405405405403,tCO2eq per cap-year ,Norway
+DI18,Lekve Bjelle et al,2018,Only train transport,Shift to public transport,Transport,2.2400900900900895,tCO2eq per cap-year ,Norway
+DI18,Lekve Bjelle et al,2018,Organic green diet,Organic food,Food,0.9184684684684684,tCO2eq per cap-year ,Norway
+DI18,Lekve Bjelle et al,2018,"Other measures (organic, local, composting)",Regional/local food,Food,0.31306306306306303,tCO2eq per cap-year ,Norway
+DI18,Lekve Bjelle et al,2018,Reduce business flights (one per month),Less transport by air,Transport,1.4018018018018017,tCO2eq per cap-year ,Norway
+DI18,Lekve Bjelle et al,2018,Reduce clothing purchases by 20%,Less textiles,Other consumption,0.12567567567567567,tCO2eq per cap-year ,Norway
+DI18,Lekve Bjelle et al,2018,Reduce printing,Less paper,Other consumption,0.007657657657657657,tCO2eq per cap-year ,Norway
+DI18,Lekve Bjelle et al,2018,Reducing indoor temperature by 1C,Lower room temperature,Housing,0.04144144144144144,tCO2eq per cap-year ,Norway
+DI18,Lekve Bjelle et al,2018,Reducing plastic waste by 30%,Bio-plastics/Less plastic/chemicals,Other consumption,0.006306306306306306,tCO2eq per cap-year ,Norway
+DI18,Lekve Bjelle et al,2018,Space and water heating,Hot water saving ,Housing,0.6004504504504504,tCO2eq per cap-year ,Norway
+DI18,Lekve Bjelle et al,2018,Start closed loop recycling of synthetic fibres,Recycle,Other consumption,0.005855855855855856,tCO2eq per cap-year ,Norway
+DI18,Lekve Bjelle et al,2018,Switch to budget electric car,Shift to BEV,Transport,1.65990990990991,tCO2eq per cap-year ,Norway
+DI18,Lekve Bjelle et al,2018,Switch to the top of the line electric car,Shift to BEV,Transport,1.2432432432432432,tCO2eq per cap-year ,Norway
+DI18,Lekve Bjelle et al,2018,Use the thumble dryer less ,Less energy use (clothing),Housing,0.006756756756756756,tCO2eq per cap-year ,Norway
+DI18,Lekve Bjelle et al,2018,Walk instead of train (9.4km),Walk instead of bus,Transport,0.08243243243243242,tCO2eq per cap-year ,Norway
+DI18,Lekve Bjelle et al,2018,Wash at lower temperatures,Less energy use (clothing),Housing,0.009009009009009007,tCO2eq per cap-year ,Norway
+DI19,Xu et al ,2015,Switching from a traditional three-stone cook stove to improved compustion stoves,Improved cooking equipment,Food,0.5223880597014925,tCO2eq per household-year ,Kenya
+DI19,Xu et al ,2015,Switching from an open fire to an improved cookstove for exclusive fuel-wood users,Improved cooking equipment,Food,0.8743589743589744,tCO2eq per household-year ,Mexico
+DI19,Xu et al ,2015,Switching from an open fire to an improved cookstove for exclusive fuel-wood users,Improved cooking equipment,Food,0.8179487179487179,tCO2eq per household-year ,Mexico
+DI19,Xu et al ,2015,Switching from an open fire to an improved cookstove for mixed wood/LPG (liquified petroleum gas) users,Improved cooking equipment,Food,0.6948717948717948,tCO2eq per household-year ,Mexico
+DI19,Xu et al ,2015,Switching from an open fire to an improved cookstove for mixed wood/LPG (liquified petroleum gas) users,Improved cooking equipment,Food,0.6487179487179486,tCO2eq per household-year ,Mexico
+DI2,Moran et al,2018,Avoid mailshot,Less paper,Other consumption,0.006923457446494185,tCO2eq per cap-year ,EU/Europe
+DI2,Moran et al,2018,Avoid or reduce tumble drying frequency,Less energy use (clothing),Housing,0.03524717370866316,tCO2eq per cap-year ,EU/Europe
+DI2,Moran et al,2018,better loading of the appliances,Less energy use (clothing),Housing,0.03524717370866316,tCO2eq per cap-year ,EU/Europe
+DI2,Moran et al,2018,Buy a lighter car ?? (lighter materials might be more carbon intensive or not so durable),Energy and material efficiency,Transport,0.005859714069768378,tCO2eq per cap-year ,EU/Europe
+DI2,Moran et al,2018,Buy a smaller car,Shift to a smaller car,Transport,0.03596736141487239,tCO2eq per cap-year ,EU/Europe
+DI2,Moran et al,2018,Buy car with recycled material content,Energy and material efficiency,Transport,0.017978500972247503,tCO2eq per cap-year ,EU/Europe
+DI2,Moran et al,2018,Buy energy efficient electrical and household appliances,More efficient appliances,Housing,0.07049434741732633,tCO2eq per cap-year ,EU/Europe
+DI2,Moran et al,2018,Buy more durable garments and textiles with high yarn quality to increase lifetime,Less textiles,Other consumption,0.021555013728510552,tCO2eq per cap-year ,EU/Europe
+DI2,Moran et al,2018,Buy more efficient ICT equipments (devices and infrastructure),More efficient appliances,Housing,0.06561056900384125,tCO2eq per cap-year ,EU/Europe
+DI2,Moran et al,2018,Buy recycled toilet paper,Recycled materials,Other consumption,0.013983007813819314,tCO2eq per cap-year ,EU/Europe
+DI2,Moran et al,2018,Buy recycled writing paper ,Recycled materials,Other consumption,0.007764938268283755,tCO2eq per cap-year ,EU/Europe
+DI2,Moran et al,2018,Car pooling,Car-pooling/sharing,Transport,0.11328216545495966,tCO2eq per cap-year ,EU/Europe
+DI2,Moran et al,2018,Car sharing,Car-pooling/sharing,Transport,0.19774809144505873,tCO2eq per cap-year ,EU/Europe
+DI2,Moran et al,2018,Choice of lower carbon intensive alternative within the same product group e.g. Changing from GHG-intensive meats (ruminants) to less intensive meats (pork and poultry),Shift to lower carbon meats,Food,0.1262474909920246,tCO2eq per cap-year ,EU/Europe
+DI2,Moran et al,2018,"Choice of lower carbon intensive alternative within the same product group e.g. Changing from GHG-intensive meats (ruminants) to less intensive meats (pork and poultry), excluding direct hh purchases",Shift to lower carbon meats,Food,0.013050740038933164,tCO2eq per cap-year ,EU/Europe
+DI2,Moran et al,2018,Choosing a location with job close to home,Telecommuting,Transport,0.11328216545495966,tCO2eq per cap-year ,EU/Europe
+DI2,Moran et al,2018,Cloud computing- server-based computing in combination with thin clients (SBCTC) instead of a typical desktop PC,Energy and material efficiency,Other consumption,0.027489074893297504,tCO2eq per cap-year ,EU/Europe
+DI2,Moran et al,2018,Co- Housing (shared spaces),Less living space/co-housing,Housing,0.0071638294096888445,tCO2eq per cap-year ,EU/Europe
+DI2,Moran et al,2018,"Consume fewer foods with low nutritional value e.g. alcohol, tea, coffee, chocolate",Less processed food/ alcohol,Food,0.08716513043960564,tCO2eq per cap-year ,EU/Europe
+DI2,Moran et al,2018,Consumption of regional food,Regional/local food,Food,0.008154022119927369,tCO2eq per cap-year ,EU/Europe
+DI2,Moran et al,2018,Donate furniture to charity,Fewer purchases/durable items,Other consumption,0.009563572798449571,tCO2eq per cap-year ,EU/Europe
+DI2,Moran et al,2018,Eat no more than needed to maintain a healthy body,Food sufficiency,Food,0.08249196312661755,tCO2eq per cap-year ,EU/Europe
+DI2,Moran et al,2018,Extend the life of clothing and textiles through repairs,Less textiles,Other consumption,0.021555013728510552,tCO2eq per cap-year ,EU/Europe
+DI2,Moran et al,2018,Extending the life time of the car,Energy and material efficiency,Transport,0.018549951225635172,tCO2eq per cap-year ,EU/Europe
+DI2,Moran et al,2018,Facade and roof greening,Green roofs,Housing,0.011299356335310217,tCO2eq per cap-year ,EU/Europe
+DI2,Moran et al,2018,Fuel efficient driving style,Fuel efficient driving,Transport,0.11954537774954291,tCO2eq per cap-year ,EU/Europe
+DI2,Moran et al,2018,Household small scale refurbishment and renovation of residential buildings,Refurbishment and renovation,Housing,0.13740240665560183,tCO2eq per cap-year ,EU/Europe
+DI2,Moran et al,2018,Major refurbishment and renovation of residential and commercial buildings,Refurbishment and renovation,Housing,0.015985451354877826,tCO2eq per cap-year ,EU/Europe
+DI2,Moran et al,2018,"Manage unavoidable food waste properly (use for animal feed, as fertilizer, compost, or to recover energy from anaerobic digestion)",Food waste management,Food,0.031463843211500316,tCO2eq per cap-year ,EU/Europe
+DI2,Moran et al,2018,More efficient use of chemicals,Bio-plastics/Less plastic/chemicals,Other consumption,0.017414625639113,tCO2eq per cap-year ,EU/Europe
+DI2,Moran et al,2018,Only print what is really needed,Less paper,Other consumption,0.010990764860562423,tCO2eq per cap-year ,EU/Europe
+DI2,Moran et al,2018,People share left over/ food surplus via online food communities or give it  to charity,Food waste reduction,Food,0.1649839262532351,tCO2eq per cap-year ,EU/Europe
+DI2,Moran et al,2018,"Reduce consumption of  diary products (milk, cheese)",Less animal products,Food,0.02443122196098383,tCO2eq per cap-year ,EU/Europe
+DI2,Moran et al,2018,Reduce number of cars per household,Car-pooling/sharing,Transport,0.037099902451270345,tCO2eq per cap-year ,EU/Europe
+DI2,Moran et al,2018,Reduce number of washes through,Less energy use (clothing),Housing,0.007049434741732631,tCO2eq per cap-year ,EU/Europe
+DI2,Moran et al,2018,Reduce over-purchasing and avoidable food waste,Food waste reduction,Food,0.49281109685700686,tCO2eq per cap-year ,EU/Europe
+DI2,Moran et al,2018,Reduce rate of acquisition of new TVs and PCs,Fewer appliances,Housing,0.006774955972496707,tCO2eq per cap-year ,EU/Europe
+DI2,Moran et al,2018,Reduce the number of plastic items,Bio-plastics/Less plastic/chemicals,Other consumption,0.019367547057446814,tCO2eq per cap-year ,EU/Europe
+DI2,Moran et al,2018,Reduction of living space p.c.,Less living space/co-housing,Housing,0.11686408802576487,tCO2eq per cap-year ,EU/Europe
+DI2,Moran et al,2018,Reduction of room temperature by 2°C,Lower room temperature,Housing,0.05649679150900209,tCO2eq per cap-year ,EU/Europe
+DI2,Moran et al,2018,Reuse textiles for a different purpose,Less textiles,Other consumption,0.021555013728510552,tCO2eq per cap-year ,EU/Europe
+DI2,Moran et al,2018,Reuse/redesign furniture components ,Fewer purchases/durable items,Other consumption,0.019127145596899143,tCO2eq per cap-year ,EU/Europe
+DI2,Moran et al,2018,Reusing/refurbishing/re-manufacturing desks and office chairs  and domestic furniture (sofas and dinning tables)- WRAP,Fewer purchases/durable items,Other consumption,0.019127145596899143,tCO2eq per cap-year ,EU/Europe
+DI2,Moran et al,2018,"Share, rent and lease of ICT equipment (options to replace the sale)",Fewer appliances,Housing,0.0267465281935061,tCO2eq per cap-year ,EU/Europe
+DI2,Moran et al,2018,"Shift from meat towards lower-carbon food product categories (vegetarian, vegan or flexi (low meat) diet )",Partial shift to dairy/plants/fish,Food,0.25854547903362074,tCO2eq per cap-year ,EU/Europe
+DI2,Moran et al,2018,"Shift from meat towards lower-carbon food product categories (vegetarian, vegan or flexi (low meat) diet ), excluding direct hh purchases",Partial shift to dairy/plants/fish,Food,0.021357224144122257,tCO2eq per cap-year ,EU/Europe
+DI2,Moran et al,2018,"Shift to public transport, cycling or walking",Shift to active transport,Transport,0.10564020755084845,tCO2eq per cap-year ,EU/Europe
+DI2,Moran et al,2018,teleworking,Telecommuting,Transport,0.060820002225870265,tCO2eq per cap-year ,EU/Europe
+DI2,Moran et al,2018,"Thermal insulation of houses ( New sealings to reduce ventilation, additional façade insulation, additional roof insulation, replacement of windows)",Better thermal insulation,Housing,0.11299356335310216,tCO2eq per cap-year ,EU/Europe
+DI2,Moran et al,2018,Timber floors and floor systems in houses and other,Low-carbon construction,Housing,0.022174595796051015,tCO2eq per cap-year ,EU/Europe
+DI2,Moran et al,2018,Turn off devices instead of using standby,Better use of appliances,Housing,0.03524717370866316,tCO2eq per cap-year ,EU/Europe
+DI2,Moran et al,2018,Two-sided printing and copying ,Less paper,Other consumption,0.006923457446494185,tCO2eq per cap-year ,EU/Europe
+DI2,Moran et al,2018,"Use  construction material with recycled content (aluminium, stainless steel)",Low-carbon construction,Housing,0.012866283258105743,tCO2eq per cap-year ,EU/Europe
+DI2,Moran et al,2018,"Use carbon lighter construction materials e.g. breeze concrete, sandlime, cored brick, reinforced concrete.",Low-carbon construction,Housing,0.01511620762443451,tCO2eq per cap-year ,EU/Europe
+DI2,Moran et al,2018,"Use energy efficient washing machines, tumble dryers and irons",More efficient appliances,Housing,0.03524717370866316,tCO2eq per cap-year ,EU/Europe
+DI2,Moran et al,2018,Use less fuel by driving a smaller car,Shift to a smaller car,Transport,0.13740240665560183,tCO2eq per cap-year ,EU/Europe
+DI2,Moran et al,2018,"Use renewable building materials , e.g. wood, straw bale, hemp, clay",Low-carbon construction,Housing,0.00997220552917853,tCO2eq per cap-year ,EU/Europe
+DI2,Moran et al,2018,Use timber-frame constructions instead of concrete or steel framed constructions,Low-carbon construction,Housing,0.024323595952298493,tCO2eq per cap-year ,EU/Europe
+DI2,Moran et al,2018,Wash at lower temperatures,Less energy use (clothing),Housing,0.03524717370866316,tCO2eq per cap-year ,EU/Europe
+DI2,Moran et al,2018,Zero-emission  houses/passive houses,Passive house,Housing,0.11299356335310216,tCO2eq per cap-year ,EU/Europe
+DI20,Werner et al,2014,Switch from average dairy scenario to non-dairy,Less animal products,Food,0.369015,tCO2eq per cap-year ,Denmark
+DI20,Werner et al,2014,Switch from average dairy scenario to vegan,Vegan diet,Food,0.809205,tCO2eq per cap-year ,Denmark
+DI20,Werner et al,2014,Switch from average dairy scenario to vegetarian,Vegetarian diet,Food,0.57232,tCO2eq per cap-year ,Denmark
+DI21,Tainio et al,2016,All car trips from <1 to <8 miles long to be replaced with cycling,Shift to active transport,Transport,0.30994152046783624,tCO2eq per cap-year ,England
+DI21,Tainio et al,2016,All car trips from <1 to <8 miles long to be replaced with cycling,Shift to active transport,Transport,0.005847953216374269,tCO2eq per cap-year ,England
+DI22,Song et al ,2017,Shift according to the WHO guidelines (reduction in meat and dairy products),Nutrition guidelines diet,Food,0.6132,tCO2eq per cap-year ,UK
+DI22,Song et al ,2017,Shift according to the WHO guidelines (reduction in meat and dairy products),Nutrition guidelines diet,Food,0.3358,tCO2eq per cap-year ,UK
+DI22,Song et al ,2017,Shift according to the WHO guidelines (reduction in meat and dairy products),Nutrition guidelines diet,Food,0.19345,tCO2eq per cap-year ,UK
+DI22,Song et al ,2017,Shift according to the WHO guidelines (reduction in meat and dairy products),Nutrition guidelines diet,Food,0.1533,tCO2eq per cap-year ,UK
+DI22,Song et al ,2017,Shift to a dairy-constrained diet,Less animal products,Food,0.32777,tCO2eq per cap-year ,China
+DI22,Song et al ,2017,Shift to a dairy-constrained diet,Less animal products,Food,0.26791,tCO2eq per cap-year ,China
+DI22,Song et al ,2017,Shift to a dairy-constrained diet,Less animal products,Food,0.24382,tCO2eq per cap-year ,China
+DI22,Song et al ,2017,Shift to a dairy-constrained diet,Less animal products,Food,0.23944,tCO2eq per cap-year ,China
+DI22,Song et al ,2017,Shift to a dairy-constrained diet,Less animal products,Food,0.221555,tCO2eq per cap-year ,China
+DI22,Song et al ,2017,Shift to a dairy-constrained diet,Less animal products,Food,0.08541,tCO2eq per cap-year ,China
+DI22,Song et al ,2017,"Shift to dietary recommendation (UK): 60% reduction in meat, no apparent change in dairy",Nutrition guidelines diet,Food,0.4891,tCO2eq per cap-year ,UK
+DI22,Song et al ,2017,"Shift to Food Circle of Matcirkeln&SNO (12% reduction in meat, fish and eggs; 18% reduction in milk and cheese; increase in legumes)",Nutrition guidelines diet,Food,0.523045,tCO2eq per cap-year ,Sweden
+DI22,Song et al ,2017,"Shift to food-based dietary guidelines (reduction in meat, fish and eggs (35%), increase in dairy products and legumes)",Nutrition guidelines diet,Food,0.317185,tCO2eq per cap-year ,France
+DI22,Song et al ,2017,"Shift to mediterranean diet (30% reduction in meat and dairy products, increase in legumes)",Mediterranean and similar,Food,0.380695,tCO2eq per cap-year ,Spain
+DI22,Song et al ,2017,Shift to nutritionally optimized diet (National Food-Nutrition Plan NPFN 2020 in China ),Nutrition guidelines diet,Food,0.191625,tCO2eq per cap-year ,China
+DI22,Song et al ,2017,Shift to nutritionally optimized diet (National Food-Nutrition Plan NPFN 2020 in China ),Nutrition guidelines diet,Food,0.10074,tCO2eq per cap-year ,China
+DI23,Shafiee-Joo and Cai,2016,Remove avoidable and possibly avoidable waste,Food waste reduction,Food,0.428,tCO2eq per cap-year ,UK
+DI23,Shafiee-Joo and Cai,2016,Remove avoidable and possibly avoidable waste,Food waste reduction,Food,0.368,tCO2eq per cap-year ,USA
+DI23,Shafiee-Joo and Cai,2016,Remove avoidable and possibly avoidable waste,Food waste reduction,Food,0.04,tCO2eq per cap-year ,China
+DI24,Naja et al,2018,Shift from Western to Lebanese-Mediterranean diet,Mediterranean and similar,Food,0.02190000000000002,tCO2eq per cap-year ,Lebanon
+DI25,Hallstrom et al,2015,Balanced energy intake,Food sufficiency,Food,0.16,tCO2eq per cap-year ,Europe
+DI25,Hallstrom et al,2015,Balanced energy intake,Food sufficiency,Food,0.1,tCO2eq per cap-year ,Europe
+DI25,Hallstrom et al,2015,Balanced energy intake,Food sufficiency,Food,0.04,tCO2eq per cap-year ,Europe
+DI25,Hallstrom et al,2015,Balanced indian vegetarian diet,Vegetarian diet,Food,0.2,tCO2eq per cap-year ,India
+DI25,Hallstrom et al,2015,"Balancing energy intake and expenditure, assuming low physical activity",Food sufficiency,Food,0.19999999999999996,tCO2eq per cap-year ,France
+DI25,Hallstrom et al,2015,"Balancing energy intake and expenditure, assuming moderate physical activity",Food sufficiency,Food,0.0,tCO2eq per cap-year ,France
+DI25,Hallstrom et al,2015,"Doubled proportion of vegetarians, low consumption of red and processed meat in remaining population",Partial shift to dairy/plants/fish,Food,0.09999999999999987,tCO2eq per cap-year ,UK
+DI25,Hallstrom et al,2015,Healthy and sustainable diet,Sustainable diet (unspecified),Food,0.4999999999999999,tCO2eq per cap-year ,UK
+DI25,Hallstrom et al,2015,Healthy diet,Nutrition guidelines diet,Food,0.49,tCO2eq per cap-year ,EU/Europe
+DI25,Hallstrom et al,2015,Healthy diet,Nutrition guidelines diet,Food,0.30000000000000004,tCO2eq per cap-year ,Austria
+DI25,Hallstrom et al,2015,Healthy diet,Nutrition guidelines diet,Food,0.30000000000000004,tCO2eq per cap-year ,Finland
+DI25,Hallstrom et al,2015,Healthy diet,Nutrition guidelines diet,Food,0.21,tCO2eq per cap-year ,EU/Europe
+DI25,Hallstrom et al,2015,Healthy diet,Nutrition guidelines diet,Food,0.04,tCO2eq per cap-year ,EU/Europe
+DI25,Hallstrom et al,2015,Healthy diet according to D-A-C-H,Nutrition guidelines diet,Food,0.30000000000000004,tCO2eq per cap-year ,Germany
+DI25,Hallstrom et al,2015,Healthy diet according to Dutch Dietary Guidelines,Nutrition guidelines diet,Food,0.19999999999999996,tCO2eq per cap-year ,Netherlands
+DI25,Hallstrom et al,2015,Healthy diet according to NNR,Nutrition guidelines diet,Food,0.09999999999999987,tCO2eq per cap-year ,Denmark
+DI25,Hallstrom et al,2015,Healthy diet according to OPUS,Nutrition guidelines diet,Food,0.09999999999999987,tCO2eq per cap-year ,Denmark
+DI25,Hallstrom et al,2015,Healthy diet according to UGB,Nutrition guidelines diet,Food,0.30000000000000004,tCO2eq per cap-year ,Germany
+DI25,Hallstrom et al,2015,Healthy diet with 50% of meat replaced by plant-based food,Partial shift to dairy/plants/fish,Food,0.30000000000000004,tCO2eq per cap-year ,Netherlands
+DI25,Hallstrom et al,2015,Healthy diet with less than 300 g red meat per week and avoidance of processed meat,Nutrition guidelines diet,Food,0.20000000000000018,tCO2eq per cap-year ,EU27
+DI25,Hallstrom et al,2015,Healthy Mediterranean diet,Mediterranean and similar,Food,0.30000000000000004,tCO2eq per cap-year ,Netherlands
+DI25,Hallstrom et al,2015,Healthy vegan diet,Vegan diet,Food,0.7000000000000002,tCO2eq per cap-year ,UK
+DI25,Hallstrom et al,2015,Healthy vegetarian diet,Vegetarian diet,Food,1.1,tCO2eq per cap-year ,UK
+DI25,Hallstrom et al,2015,Healthy vegetarian diet,Vegetarian diet,Food,0.7000000000000002,tCO2eq per cap-year ,UK
+DI25,Hallstrom et al,2015,Locto-ovo vegetarian diet,Vegetarian diet,Food,0.5,tCO2eq per cap-year ,Germany
+DI25,Hallstrom et al,2015,Meat partially replaced by plant-based food/dairy/mixed food,Partial shift to dairy/plants/fish,Food,0.11,tCO2eq per cap-year ,EU/Europe
+DI25,Hallstrom et al,2015,Meat partially replaced by plant-based food/dairy/mixed food,Partial shift to dairy/plants/fish,Food,0.08,tCO2eq per cap-year ,EU/Europe
+DI25,Hallstrom et al,2015,Meat partially replaced by plant-based food/dairy/mixed food,Partial shift to dairy/plants/fish,Food,0.04,tCO2eq per cap-year ,EU/Europe
+DI25,Hallstrom et al,2015,Meat partially replaced by plant-based food/dairy/mixed food,Partial shift to dairy/plants/fish,Food,0.03,tCO2eq per cap-year ,EU/Europe
+DI25,Hallstrom et al,2015,Meat replaced by dairy products,Partial shift to dairy/plants/fish,Food,0.6000000000000001,tCO2eq per cap-year ,UK
+DI25,Hallstrom et al,2015,Mediterranean diet with reduced intake of red meat,Mediterranean and similar,Food,0.20000000000000018,tCO2eq per cap-year ,EU/Europe
+DI25,Hallstrom et al,2015,"No dairy products, ruminant meat replaced by pork and poultry",Shift to lower carbon meats,Food,0.5999999999999999,tCO2eq per cap-year ,Finland
+DI25,Hallstrom et al,2015,Reduced meat intake to 50 g/d and removal of deli meat replaced by self-selected dairy products,Partial shift to dairy/plants/fish,Food,0.10000000000000009,tCO2eq per cap-year ,France
+DI25,Hallstrom et al,2015,Reduced meat intake to 50 g/d and removal of deli meat replaced by self-selected mixed foods,Partial shift to dairy/plants/fish,Food,0.10000000000000009,tCO2eq per cap-year ,France
+DI25,Hallstrom et al,2015,Ruminant meat replaced by pork and poultry,Shift to lower carbon meats,Food,0.6000000000000001,tCO2eq per cap-year ,UK
+DI25,Hallstrom et al,2015,Ruminants replaced by monogastric meat,Shift to lower carbon meats,Food,0.56,tCO2eq per cap-year ,EU/Europe
+DI25,Hallstrom et al,2015,Self-reported vegan diet,Vegan diet,Food,0.6000000000000001,tCO2eq per cap-year ,UK
+DI25,Hallstrom et al,2015,Self-reported vegetarian diet,Vegetarian diet,Food,0.5,tCO2eq per cap-year ,UK
+DI25,Hallstrom et al,2015,Shift to a vegan diet,Vegan diet,Food,1.09,tCO2eq per cap-year ,EU/Europe
+DI25,Hallstrom et al,2015,Shift to a vegan diet,Vegan diet,Food,0.76,tCO2eq per cap-year ,EU/Europe
+DI25,Hallstrom et al,2015,Shift to a vegan diet,Vegan diet,Food,0.52,tCO2eq per cap-year ,EU/Europe
+DI25,Hallstrom et al,2015,Shift to a vegetarian diet,Vegetarian diet,Food,1.11,tCO2eq per cap-year ,EU/Europe
+DI25,Hallstrom et al,2015,Shift to a vegetarian diet,Vegetarian diet,Food,0.54,tCO2eq per cap-year ,EU/Europe
+DI25,Hallstrom et al,2015,Shift to a vegetarian diet,Vegetarian diet,Food,0.11,tCO2eq per cap-year ,EU/Europe
+DI25,Hallstrom et al,2015,Vegan diet,Vegan diet,Food,1.1,tCO2eq per cap-year ,Germany
+DI25,Hallstrom et al,2015,Vegan diet,Vegan diet,Food,0.7999999999999999,tCO2eq per cap-year ,Finland
+DI25,Hallstrom et al,2015,Vegan diet,Vegan diet,Food,0.5,tCO2eq per cap-year ,Netherlands
+DI25,Hallstrom et al,2015,"Vegan diet, no health considerations",Vegan diet,Food,0.8000000000000003,tCO2eq per cap-year ,Finland
+DI25,Hallstrom et al,2015,Vegetarian diet,Vegetarian diet,Food,0.30000000000000004,tCO2eq per cap-year ,UK
+DI26,Heller et al,2018,Remove all consumer losses,Food waste reduction,Food,0.32485,tCO2eq per cap-year ,USA
+DI27,Lacour et al,2018,Shift from provegetarian Q1 to Q5,Partial shift to dairy/plants/fish,Food,0.4745,tCO2eq per cap-year ,France
+DI29,Martin et al,2016,Reduced protein - from 51% to 25% (vegetable-based protein also increased),Partial shift to dairy/plants/fish,Food,1.2550607287449393,tCO2eq per cap-year ,EU/Europe
+DI29,Martin et al,2016,Reduced protein - from 51% to 35% (vegetable-based protein also increased),Partial shift to dairy/plants/fish,Food,0.728744939271255,tCO2eq per cap-year ,EU/Europe
+DI29,Martin et al,2016,Reducing food waste in retail and household,Food waste reduction,Food,0.20242914979757085,tCO2eq per cap-year ,EU/Europe
+DI29,Martin et al,2016,Shift protein consumption from pork and bovine to poultry,Shift to lower carbon meats,Food,0.3643724696356275,tCO2eq per cap-year ,EU/Europe
+DI3,Girod et al ,2014,Bike and ebike instead of taking the car,Shift to active transport,Transport,1.3845,,Global
+DI3,Girod et al ,2014,Renewable electric car ,Shift to BEV,Transport,1.0075,,Global
+DI3,Girod et al ,2014,Shift from airplane to renewable train,Less transport by air,Transport,0.78,,Global
+DI3,Girod et al ,2014,Shift from dairy to Protein rich veg for the relevant share of calories (19% kcal),Less animal products,Food,0.14011759999999995,,Global
+DI3,Girod et al ,2014,Shift from dairy to vegetal for the relevant share of calories (19% kcal),Less animal products,Food,0.08006719999999999,,Global
+DI3,Girod et al ,2014,Shift from food transported by air or produced in a heated greenhouse to average food (10% kcal),Regional/local food,Food,1.0742,tCO2eq per cap-year ,Global
+DI3,Girod et al ,2014,Shift from fossil car to renewable train,Shift to public transport,Transport,1.3845,,Global
+DI3,Girod et al ,2014,Shift from fossil fuel bus/train to renewable train,Shift to public transport,Transport,0.676,,Global
+DI3,Girod et al ,2014,Shift from non-ruminants to dairy for the relevant share of calories (19% kcal),Partial shift to dairy/plants/fish,Food,0.0300252,tCO2eq per cap-year ,Global
+DI3,Girod et al ,2014,Shift from non-ruminants to Protein rich veg for the relevant share of calories (19% kcal),Partial shift to dairy/plants/fish,Food,0.17014279999999996,,Global
+DI3,Girod et al ,2014,Shift from non-ruminants to vegetal for the relevant share of calories (19% kcal),Partial shift to dairy/plants/fish,Food,0.11009239999999998,,Global
+DI3,Girod et al ,2014,Shift from old to a new housing,Refurbishment and renovation,Housing,0.945,tCO2eq per cap-year ,Global
+DI3,Girod et al ,2014,Shift from old to new efficient housing,Refurbishment and renovation,Housing,1.386,tCO2eq per cap-year ,Global
+DI3,Girod et al ,2014,Shift from old to new efficient housing with renewable electricity,Refurbishment and renovation,Housing,1.785,tCO2eq per cap-year ,Global
+DI3,Girod et al ,2014,Shift from old to retrofitted efficient housing,Refurbishment and renovation,Housing,1.533,tCO2eq per cap-year ,Global
+DI3,Girod et al ,2014,Shift from old to retrofitted efficient housing with renewable electricity,Refurbishment and renovation,Housing,1.932,tCO2eq per cap-year ,Global
+DI3,Girod et al ,2014,Shift from ruminants to dairy for the relevant share of calories (19% kcal),Partial shift to dairy/plants/fish,Food,1.2610583999999996,,Global
+DI3,Girod et al ,2014,Shift from ruminants to non-ruminants (19% kcal),Shift to lower carbon meats,Food,1.2310332,tCO2eq per cap-year ,Global
+DI3,Girod et al ,2014,Shift from ruminants to Protein rich veg for the relevant share of calories (19% kcal),Partial shift to dairy/plants/fish,Food,1.4011759999999998,tCO2eq per cap-year ,Global
+DI3,Girod et al ,2014,Shift from ruminants to vegetal for the relevant share of calories (19% kcal),Partial shift to dairy/plants/fish,Food,1.3411255999999996,tCO2eq per cap-year ,Global
+DI30,González-García et al,2018,Atlantic diet,Mediterranean and similar,Food,1.78485,tCO2eq per cap-year ,Spain
+DI30,González-García et al,2018,Atlantic diet,Mediterranean and similar,Food,0.7300000000000001,tCO2eq per cap-year ,Spain
+DI30,González-García et al,2018,Atlantic diet,Mediterranean and similar,Food,0.58765,tCO2eq per cap-year ,Spain
+DI30,González-García et al,2018,Healthy diet,Nutrition guidelines diet,Food,0.5839999999999999,tCO2eq per cap-year ,Netherlands
+DI30,González-García et al,2018,Healthy diet,Nutrition guidelines diet,Food,0.50005,tCO2eq per cap-year ,Sweden
+DI30,González-García et al,2018,Healthy diet,Nutrition guidelines diet,Food,0.2993000000000001,tCO2eq per cap-year ,Netherlands
+DI30,González-García et al,2018,Healthy diet,Nutrition guidelines diet,Food,0.24090000000000006,tCO2eq per cap-year ,Germany
+DI30,González-García et al,2018,Healthy diet,Nutrition guidelines diet,Food,0.22994999999999996,tCO2eq per cap-year ,Germany
+DI30,González-García et al,2018,Healthy diet,Nutrition guidelines diet,Food,0.17519999999999983,tCO2eq per cap-year ,Netherlands
+DI30,González-García et al,2018,Healthy diet,Nutrition guidelines diet,Food,0.16425000000000006,tCO2eq per cap-year ,Netherlands
+DI30,González-García et al,2018,Healthy diet,Nutrition guidelines diet,Food,0.13869999999999996,tCO2eq per cap-year ,Denmark
+DI30,González-García et al,2018,Healthy diet,Nutrition guidelines diet,Food,0.06204999999999997,tCO2eq per cap-year ,Italy
+DI30,González-García et al,2018,Mediterranean diet,Mediterranean and similar,Food,2.0002,tCO2eq per cap-year ,Spain
+DI30,González-García et al,2018,Mediterranean diet,Mediterranean and similar,Food,1.7556500000000002,tCO2eq per cap-year ,Spain
+DI30,González-García et al,2018,Mediterranean diet,Mediterranean and similar,Food,0.9453500000000001,tCO2eq per cap-year ,Spain
+DI30,González-García et al,2018,Mediterranean diet,Mediterranean and similar,Food,0.8029999999999999,tCO2eq per cap-year ,Spain
+DI30,González-García et al,2018,Mediterranean diet,Mediterranean and similar,Food,0.7008000000000002,tCO2eq per cap-year ,Spain
+DI30,González-García et al,2018,Mediterranean diet,Mediterranean and similar,Food,0.5584499999999999,tCO2eq per cap-year ,Spain
+DI30,González-García et al,2018,Mediterranean diet,Mediterranean and similar,Food,0.2481999999999999,tCO2eq per cap-year ,Netherlands
+DI30,González-García et al,2018,Mediterranean diet,Mediterranean and similar,Food,0.1423499999999999,tCO2eq per cap-year ,Italy
+DI30,González-García et al,2018,Mediterranean diet,Mediterranean and similar,Food,0.10219999999999993,tCO2eq per cap-year ,Netherlands
+DI30,González-García et al,2018,Modified diet,Sustainable diet (unspecified),Food,0.6022500000000001,tCO2eq per cap-year ,Finland
+DI30,González-García et al,2018,New Nordic diet,Mediterranean and similar,Food,0.24089999999999973,tCO2eq per cap-year ,Denmark
+DI30,González-García et al,2018,New Nordic diet,Mediterranean and similar,Food,-0.10949999999999993,tCO2eq per cap-year ,Netherlands
+DI30,González-García et al,2018,Semi-vegetarian diet,Partial shift to dairy/plants/fish,Food,0.2554999999999999,tCO2eq per cap-year ,Netherlands
+DI30,González-García et al,2018,Sustainable diet,Sustainable diet (unspecified),Food,0.05110000000000004,tCO2eq per cap-year ,Sweden
+DI30,González-García et al,2018,Vegan diet,Vegan diet,Food,2.1206499999999995,tCO2eq per cap-year ,Spain
+DI30,González-García et al,2018,Vegan diet,Vegan diet,Food,1.09135,tCO2eq per cap-year ,Germany
+DI30,González-García et al,2018,Vegan diet,Vegan diet,Food,1.0657999999999999,tCO2eq per cap-year ,Spain
+DI30,González-García et al,2018,Vegan diet,Vegan diet,Food,0.9234499999999998,tCO2eq per cap-year ,Spain
+DI30,González-García et al,2018,Vegan diet,Vegan diet,Food,0.79935,tCO2eq per cap-year ,Germany
+DI30,González-García et al,2018,Vegan diet,Vegan diet,Food,0.5292499999999999,tCO2eq per cap-year ,Finland
+DI30,González-García et al,2018,Vegan diet (from fish eating),Vegan diet,Food,0.3723,tCO2eq per cap-year ,UK
+DI30,González-García et al,2018,Vegan diet (from low meat eating),Vegan diet,Food,0.6496999999999999,tCO2eq per cap-year ,UK
+DI30,González-García et al,2018,Vegan diet (from medium meat eating),Vegan diet,Food,1.0001,tCO2eq per cap-year ,UK
+DI30,González-García et al,2018,Vegetarian diet,Vegetarian diet,Food,0.4927500000000002,tCO2eq per cap-year ,Germany
+DI30,González-García et al,2018,Vegetarian diet,Vegetarian diet,Food,0.32849999999999985,tCO2eq per cap-year ,EU/Europe
+DI30,González-García et al,2018,Vegetarian diet,Vegetarian diet,Food,0.2627999999999999,tCO2eq per cap-year ,Netherlands
+DI30,González-García et al,2018,Vegetarian diet - compared to non-vegetarian diet,Vegetarian diet,Food,0.16425000000000003,tCO2eq per cap-year ,India
+DI30,González-García et al,2018,Vegetarian diet - compared to non-vegetarian diet,Vegetarian diet,Food,0.13505,tCO2eq per cap-year ,India
+DI30,González-García et al,2018,Vegetarian diet - compared to non-vegetarian diet,Vegetarian diet,Food,0.11315000000000001,tCO2eq per cap-year ,India
+DI30,González-García et al,2018,Vegetarian diet - compared to non-vegetarian diet,Vegetarian diet,Food,0.03650000000000003,tCO2eq per cap-year ,India
+DI30,González-García et al,2018,Vegetarian diet - compared to non-vegetarian diet,Vegetarian diet,Food,0.007300000000000006,tCO2eq per cap-year ,India
+DI30,González-García et al,2018,Vegetarian diet (from fish eating),Vegetarian diet,Food,0.03650000000000003,tCO2eq per cap-year ,UK
+DI30,González-García et al,2018,Vegetarian diet (from low meat eating),Vegetarian diet,Food,0.31389999999999996,tCO2eq per cap-year ,UK
+DI30,González-García et al,2018,Vegetarian diet (from medium meat eating),Vegetarian diet,Food,0.6643,tCO2eq per cap-year ,UK
+DI31,Ivanova et al,2018,Electric/gas heat pump instead of electricity-based SH,Heat pump,Housing,1.2710894976999998,tCO2eq per cap-year ,EU/Europe
+DI31,Ivanova et al,2018,Electric/gas heat pump instead of oil and gas-based SH,Heat pump,Housing,0.9590849609499998,tCO2eq per cap-year ,EU/Europe
+DI31,Ivanova et al,2018,One less domestic-haul return flight (less than 800 km),One less flight (medium return),Transport,0.208,tCO2eq per cap-year ,EU/Europe
+DI31,Ivanova et al,2018,One less long-haul return flight ,One less flight (long return),Transport,4.462,tCO2eq per cap-year ,EU/Europe
+DI31,Ivanova et al,2018,One less long-haul return flight ,One less flight (long return),Transport,2.00456,tCO2eq per cap-year ,EU/Europe
+DI31,Ivanova et al,2018,One less long-haul return flight ,One less flight (long return),Transport,1.702,tCO2eq per cap-year ,EU/Europe
+DI31,Ivanova et al,2018,One less medium-haul return flight (between 2000 and 7400 km),One less flight (medium return),Transport,1.48,tCO2eq per cap-year ,EU/Europe
+DI31,Ivanova et al,2018,One less medium-haul return flight (between 2000 and 7400 km),One less flight (medium return),Transport,0.4,tCO2eq per cap-year ,EU/Europe
+DI31,Ivanova et al,2018,One less short return flight,One less flight (medium return),Transport,0.7015,tCO2eq per cap-year ,EU/Europe
+DI31,Ivanova et al,2018,One less short-haul return flight (between 800 and 2000 km),One less flight (medium return),Transport,0.72,tCO2eq per cap-year ,EU/Europe
+DI31,Ivanova et al,2018,Reduce space-heating as a result of dwelling size (living space) reduction (10%),Less living space/co-housing,Housing,0.99,tCO2eq per cap-year ,EU/Europe
+DI31,Ivanova et al,2018,Renewable-based heating instead of electricity-based SH,Renewable-based heating,Housing,1.26837009805,tCO2eq per cap-year ,EU/Europe
+DI31,Ivanova et al,2018,Renewable-based heating instead of oil and gas-based SH,Renewable-based heating,Housing,0.9563655612999999,tCO2eq per cap-year ,EU/Europe
+DI31,Ivanova et al,2018,Shift all car travel to bus,Shift to public transport,Transport,0.363,tCO2eq per cap-year ,EU/Europe
+DI31,Ivanova et al,2018,Shift all car travel to electric,Shift to BEV,Transport,0.26400000000000007,tCO2eq per cap-year ,EU/Europe
+DI31,Ivanova et al,2018,Shift all car travel to metro/tram or regional train,Shift to public transport,Transport,1.0065,tCO2eq per cap-year ,EU/Europe
+DI31,Ivanova et al,2018,Shift all car travel to metro/tram or regional train,Shift to public transport,Transport,0.9845000000000002,tCO2eq per cap-year ,EU/Europe
+DI31,Ivanova et al,2018,Shift all car travel to walk/bike,Shift to active transport,Transport,1.0615,tCO2eq per cap-year ,EU/Europe
+DI31,Ivanova et al,2018,Shift all diesel car travel to bus,Shift to public transport,Transport,0.539,tCO2eq per cap-year ,EU/Europe
+DI31,Ivanova et al,2018,Shift all diesel car travel to electric,Shift to BEV,Transport,0.4400000000000001,tCO2eq per cap-year ,EU/Europe
+DI31,Ivanova et al,2018,Shift all diesel car travel to hybrid,Shift to PHEV/HEV,Transport,0.165,tCO2eq per cap-year ,EU/Europe
+DI31,Ivanova et al,2018,Shift all diesel car travel to metro/tram or regional train,Shift to public transport,Transport,1.1825000000000003,tCO2eq per cap-year ,EU/Europe
+DI31,Ivanova et al,2018,Shift all diesel car travel to metro/tram or regional train,Shift to public transport,Transport,1.1605000000000003,tCO2eq per cap-year ,EU/Europe
+DI31,Ivanova et al,2018,Shift all diesel car travel to walk/bike,Shift to active transport,Transport,1.2375,tCO2eq per cap-year ,EU/Europe
+DI31,Ivanova et al,2018,Shift all petrol car travel to bus,Shift to public transport,Transport,0.5939999999999999,tCO2eq per cap-year ,EU/Europe
+DI31,Ivanova et al,2018,Shift all petrol car travel to electric,Shift to BEV,Transport,0.495,tCO2eq per cap-year ,EU/Europe
+DI31,Ivanova et al,2018,Shift all petrol car travel to hybrid,Shift to PHEV/HEV,Transport,0.2199999999999999,tCO2eq per cap-year ,EU/Europe
+DI31,Ivanova et al,2018,Shift all petrol car travel to metro/tram or regional train,Shift to public transport,Transport,1.2374999999999998,tCO2eq per cap-year ,EU/Europe
+DI31,Ivanova et al,2018,Shift all petrol car travel to metro/tram or regional train,Shift to public transport,Transport,1.2155,tCO2eq per cap-year ,EU/Europe
+DI31,Ivanova et al,2018,Shift all petrol car travel to walk/bike,Shift to active transport,Transport,1.2925,tCO2eq per cap-year ,EU/Europe
+DI31,Ivanova et al,2018,Shift short-haul air travel to train travel instead,Less transport by air,Transport,1.2892879999999998,tCO2eq per cap-year ,EU/Europe
+DI32,Barrett and Scott,2012,Dietary changes (reduction in animal-based food products),Less animal products,Food,0.33840000000000003,tCO2eq per cap-year ,
+DI32,Barrett and Scott,2012,Goods to services (reduction in the ownership of goods delivered instead by a service),Service/sharing economy,Other consumption,0.20800000000000002,tCO2eq per cap-year ,
+DI32,Barrett and Scott,2012,Lifetime optimisation (using products till the end of their lifecycle),Fewer purchases/durable items,Other consumption,0.32,tCO2eq per cap-year ,
+DI32,Barrett and Scott,2012,Reducing food waste ,Food waste reduction,Food,0.18239999999999998,tCO2eq per cap-year ,
+DI32,Barrett and Scott,2012,Restorative economy (building/purchasing products that last longer),Fewer purchases/durable items,Other consumption,0.32,tCO2eq per cap-year ,
+DI33,Tran et al,2012,Shift to BEV,Shift to BEV,Transport,2.445,tCO2eq per cap-year ,
+DI33,Tran et al,2012,Shift to BEV,Shift to BEV,Transport,1.935,tCO2eq per cap-year ,
+DI33,Tran et al,2012,Shift to BEV,Shift to BEV,Transport,0.945,tCO2eq per cap-year ,
+DI33,Tran et al,2012,Shift to BEV,Shift to BEV,Transport,0.54,tCO2eq per cap-year ,
+DI33,Tran et al,2012,Shift to BEV,Shift to BEV,Transport,0.435,tCO2eq per cap-year ,
+DI33,Tran et al,2012,Shift to BEV,Shift to BEV,Transport,-0.96,tCO2eq per cap-year ,
+DI34,Chen Kwan et al,2017,Shift from passenger car/motorcycle to mass rapid transit system,Shift to public transport,Transport,0.42412683819923497,tCO2eq per cap-year ,
+DI35,Irz et al,2018,Reduce all meat (5%),Less animal products,Food,0.02364839371029064,tCO2eq per cap-year ,
+DI35,Irz et al,2018,Reduce all meat (5%),Less animal products,Food,0.023219001221939695,tCO2eq per cap-year ,
+DI35,Irz et al,2018,Reduce all meat (5%),Less animal products,Food,0.006648483065482572,tCO2eq per cap-year ,
+DI35,Irz et al,2018,Reduce all meat (5%),Less animal products,Food,0.006463802980330278,tCO2eq per cap-year ,
+DI35,Irz et al,2018,Reduce red meat (5%),Less animal products,Food,0.014185855541075485,tCO2eq per cap-year ,
+DI35,Irz et al,2018,Reduce red meat (5%),Less animal products,Food,0.014090434988108611,tCO2eq per cap-year ,
+DI35,Irz et al,2018,Reduce red meat (5%),Less animal products,Food,0.008125923746700922,tCO2eq per cap-year ,
+DI35,Irz et al,2018,Reduce red meat (5%),Less animal products,Food,0.008125923746700922,tCO2eq per cap-year ,
+DI35,Irz et al,2018,Shift to fish (5%),Partial shift to dairy/plants/fish,Food,0.006361370197791698,tCO2eq per cap-year ,
+DI35,Irz et al,2018,Shift to fish (5%),Partial shift to dairy/plants/fish,Food,0.006043301687902113,tCO2eq per cap-year ,
+DI35,Irz et al,2018,Shift to fish (5%),Partial shift to dairy/plants/fish,Food,0.0025855211921321113,tCO2eq per cap-year ,
+DI35,Irz et al,2018,Shift to fish (5%),Partial shift to dairy/plants/fish,Food,0.0024008411069798173,tCO2eq per cap-year ,
+DI36,Smith et al,2019,Shift to organic crops (crops and lifestock) - without considering LUC,Organic food,Food,0.04282193099502752,tCO2eq per cap-year ,
+DI37,Hao et al ,2018,Shift to BEV compared to diesel,Shift to FCV,Transport,-0.41529999999999995,tCO2eq per cap-year ,
+DI37,Hao et al ,2018,Shift to FCV (by-product H2 via chlor-alkali industry-GH2 by pipeline-off-site HRS2-DHFCV) compared to diesel,Shift to FCV,Transport,0.22820000000000007,tCO2eq per cap-year ,
+DI37,Hao et al ,2018,Shift to FCV (by-product H2 via chlor-alkali industry-GH2 by tube trailer-off-site HRS1-DHFCV) compared to diesel,Shift to FCV,Transport,0.33010000000000006,tCO2eq per cap-year ,
+DI37,Hao et al ,2018,Shift to FCV (by-product H2 via chlor-alkali industry-LH2 by tank-off-site HRS2-DHFCV) compared to diesel,Shift to FCV,Transport,-0.4093,tCO2eq per cap-year ,
+DI37,Hao et al ,2018,Shift to FCV (H2 via coal gasification-GH2 by pipeline-off-site HRS2-DHFCV) compared to diesel,Shift to FCV,Transport,-1.6663000000000001,tCO2eq per cap-year ,
+DI37,Hao et al ,2018,Shift to FCV (H2 via coal gasification-GH2 by tube trailer-off-site HRS2-DHFCV) compared to diesel,Shift to FCV,Transport,-1.5636,tCO2eq per cap-year ,
+DI37,Hao et al ,2018,Shift to FCV (H2 via coal gasification-LH2 by tank-off-site HRS2-DHFCV) compared to diesel,Shift to FCV,Transport,-2.3038000000000003,tCO2eq per cap-year ,
+DI37,Hao et al ,2018,Shift to FCV (H2 via NG reforming-GH2 by pipeline-off-site HRS2-DHFCV) compared to diesel,Shift to FCV,Transport,-0.8162999999999999,tCO2eq per cap-year ,
+DI37,Hao et al ,2018,Shift to FCV (H2 via NG reforming-GH2 by tube trailer-off-site HRS2-DHFCV) compared to diesel,Shift to FCV,Transport,-0.7135999999999999,tCO2eq per cap-year ,
+DI37,Hao et al ,2018,Shift to FCV (H2 via NG reforming-LH2 by tank-off-site HRS2-DHFCV) compared to diesel,Shift to FCV,Transport,-1.4538000000000002,tCO2eq per cap-year ,
+DI37,Hao et al ,2018,Shift to FCV (H2 via water electrolysis(G-Ele)-GH2 by pipeline-off-site HRS2-DHFCV) compared to diesel,Shift to FCV,Transport,-2.7908999999999997,tCO2eq per cap-year ,
+DI37,Hao et al ,2018,Shift to FCV (H2 via water electrolysis(G-Ele)-GH2 by tube trailer-off-site HRS1-DHFCV) compared to diesel,Shift to FCV,Transport,-2.6881999999999997,tCO2eq per cap-year ,
+DI37,Hao et al ,2018,Shift to FCV (H2 via water electrolysis(G-Ele)-LH2 by tank-off-site HRS2-DHFCV) compared to diesel,Shift to FCV,Transport,-3.4284,tCO2eq per cap-year ,
+DI37,Hao et al ,2018,Shift to FCV (H2 via water electrolysis(W-Ele)-GH2 by pipeline-off-site HRS2-DHFCV) compared to diesel,Shift to FCV,Transport,0.30710000000000004,tCO2eq per cap-year ,
+DI37,Hao et al ,2018,Shift to FCV (H2 via water electrolysis(W-Ele)-GH2 by tube trailer-off-site HRS1-DHFCV) compared to diesel,Shift to FCV,Transport,0.40980000000000005,tCO2eq per cap-year ,
+DI37,Hao et al ,2018,Shift to FCV (H2 via water electrolysis(W-Ele)-LH2 by tank-off-site HRS2-DHFCV) compared to diesel,Shift to FCV,Transport,-0.3304,tCO2eq per cap-year ,
+DI37,Hao et al ,2018,Shift to FCV (H2 water-based) compared to diesel,Shift to FCV,Transport,0.7635000000000001,tCO2eq per cap-year ,
+DI37,Hao et al ,2018,Shift to FCV (H2 water-based) compared to diesel,Shift to FCV,Transport,0.5635000000000001,tCO2eq per cap-year ,
+DI37,Hao et al ,2018,Shift to FCV (H2 water-based) compared to diesel,Shift to FCV,Transport,-0.8865,tCO2eq per cap-year ,
+DI37,Hao et al ,2018,Shift to FCV (H2 water-based) compared to diesel,Shift to FCV,Transport,-1.1364999999999998,tCO2eq per cap-year ,
+DI37,Hao et al ,2018,Shift to FCV (H2 water-based) compared to diesel,Shift to FCV,Transport,-1.3864999999999998,tCO2eq per cap-year ,
+DI37,Hao et al ,2018,Shift to FCV (methanol via coal liquid methanol by tank MRS IMFCV) compared to diesel,Shift to FCV,Transport,-0.28935,tCO2eq per cap-year ,
+DI37,Hao et al ,2018,Shift to FCV (NG production-CNG by tank-on-site HRS via NG gasification-DHFCV) compared to diesel,Shift to FCV,Transport,-0.5917999999999999,tCO2eq per cap-year ,
+DI37,Hao et al ,2018,Shift to FCV (NG production-LNG by tank-on-site HRS via NG gasification-DHFCV) compared to diesel,Shift to FCV,Transport,-0.6132,tCO2eq per cap-year ,
+DI37,Hao et al ,2018,Shift to FCV (on-site HRS via water electrolysis-DHFCV) compared to diesel,Shift to FCV,Transport,-2.6224,tCO2eq per cap-year ,
+DI38,Nelson et al,2016,Acceptability constraints ,Sustainable diet (unspecified),Food,0.53655,tCO2eq per cap-year ,
+DI38,Nelson et al,2016,Adherence by DASH score of 8 food groups,Nutrition guidelines diet,Food,0.07647619047619053,tCO2eq per cap-year ,
+DI38,Nelson et al,2016,Combination of low red and processed meat and vegetarian,Less animal products,Food,0.17154999999999998,tCO2eq per cap-year ,
+DI38,Nelson et al,2016,DACH recommendations,Nutrition guidelines diet,Food,0.22999999999999976,tCO2eq per cap-year ,
+DI38,Nelson et al,2016,foundation diet (recommended dietary pattern that meets the minimum nutrient and energy needs requirements for the population),Food sufficiency,Food,1.3139999999999998,tCO2eq per cap-year ,
+DI38,Nelson et al,2016,"Meat substitution with potatoes, pasta, rice and couscousl vegetables, fruit, nuts and seeds; milk-based desserts, fish or cheese",Partial shift to dairy/plants/fish,Food,1.1169,tCO2eq per cap-year ,
+DI38,Nelson et al,2016,"Meat substitution with potatoes, pasta, rice and couscousl vegetables, fruit, nuts and seeds; milk-based desserts, fish or cheese",Partial shift to dairy/plants/fish,Food,0.8249000000000001,tCO2eq per cap-year ,
+DI38,Nelson et al,2016,"Meat substitution with potatoes, pasta, rice and couscousl vegetables, fruit, nuts and seeds; milk-based desserts, fish or cheese",Partial shift to dairy/plants/fish,Food,0.6278,tCO2eq per cap-year ,
+DI38,Nelson et al,2016,"Shift to MDP pyramid (lower in meat and higher in fish, fruit, vegetables, plant oils)",Partial shift to dairy/plants/fish,Food,0.22264999999999996,tCO2eq per cap-year ,
+DI38,Nelson et al,2016,Shift to semi-vegetarian from average diet,Less animal products,Food,0.22264999999999996,tCO2eq per cap-year ,
+DI38,Nelson et al,2016,Shift to semivegetarian from non-vegetarian,Less animal products,Food,0.2408999999999999,tCO2eq per cap-year ,
+DI38,Nelson et al,2016,Shift to vegan from average diet,Vegan diet,Food,0.47814999999999985,tCO2eq per cap-year ,
+DI38,Nelson et al,2016,Shift to vegetarian from average diet,Vegetarian diet,Food,0.29564999999999986,tCO2eq per cap-year ,
+DI38,Nelson et al,2016,Shift to vegetarian from non-vegetarian,Vegetarian diet,Food,0.3248499999999999,tCO2eq per cap-year ,
+DI38,Nelson et al,2016,Sustainable diet,Nutrition guidelines diet,Food,1.2811499999999998,tCO2eq per cap-year ,
+DI38,Nelson et al,2016,UGB recommendations,Nutrition guidelines diet,Food,0.23999999999999977,tCO2eq per cap-year ,
+DI38,Nelson et al,2016,Vegan diet,Vegan diet,Food,1.0899999999999999,tCO2eq per cap-year ,
+DI38,Nelson et al,2016,Vegetarian diet,Vegetarian diet,Food,0.48999999999999977,tCO2eq per cap-year ,
+DI39,Garcia and Freire,2017,Increased penetration of PHEV (and a decrease in the carbon intensity of electricity mix),Shift to PHEV/HEV,Transport,0.12227113067449193,tCO2eq per cap-year ,
+DI39,Garcia and Freire,2017,Increased penetration of PHEV (and a decrease in the carbon intensity of electricity mix),Shift to PHEV/HEV,Transport,0.001667333600106709,tCO2eq per cap-year ,
+DI4,Vita et al ,2019,Community services,Service/sharing economy,Other consumption,0.3278730396973783,tCO2eq per cap-year ,EU/Europe
+DI4,Vita et al ,2019,Durable appliances,Fewer purchases/durable items,Other consumption,0.16387265640686494,tCO2eq per cap-year ,EU/Europe
+DI4,Vita et al ,2019,Durable fashion,Less textiles,Other consumption,0.1897707710723306,tCO2eq per cap-year ,EU/Europe
+DI4,Vita et al ,2019,Food sufficiency,Food sufficiency,Food,0.5284273424499248,tCO2eq per cap-year ,EU/Europe
+DI4,Vita et al ,2019,Healthy vegan diet,Vegan diet,Food,1.6800120090595072,tCO2eq per cap-year ,EU/Europe
+DI4,Vita et al ,2019,High tech ecovillage,Refurbishment and renovation,Housing,0.841229851939054,tCO2eq per cap-year ,EU/Europe
+DI4,Vita et al ,2019,Less cars (50%) (more collective),Car-pooling/sharing,Transport,0.9528090998629932,tCO2eq per cap-year ,EU/Europe
+DI4,Vita et al ,2019,Less chemicals and plastics,Bio-plastics/Less plastic/chemicals,Other consumption,0.4184940313796928,tCO2eq per cap-year ,EU/Europe
+DI4,Vita et al ,2019,Less food waste,Food waste reduction,Food,0.2239582964166095,tCO2eq per cap-year ,EU/Europe
+DI4,Vita et al ,2019,Less media and equipment,Fewer purchases/durable items,Other consumption,0.15815490334753501,tCO2eq per cap-year ,EU/Europe
+DI4,Vita et al ,2019,Less transport (50%),Less car transport,Transport,1.5504698441385467,tCO2eq per cap-year ,EU/Europe
+DI4,Vita et al ,2019,Local clothing,Energy and material efficiency,Other consumption,0.051244388128676335,tCO2eq per cap-year ,EU/Europe
+DI4,Vita et al ,2019,Local food,Regional/local food,Food,0.06297485182745459,tCO2eq per cap-year ,EU/Europe
+DI4,Vita et al ,2019,Local services,Service/sharing economy,Other consumption,0.5708453999760538,tCO2eq per cap-year ,EU/Europe
+DI4,Vita et al ,2019,Mediterrenean diet,Mediterranean and similar,Food,0.2923357118338309,tCO2eq per cap-year ,EU/Europe
+DI4,Vita et al ,2019,Minimum construction,Low-carbon construction,Housing,0.19290880818752493,tCO2eq per cap-year ,EU/Europe
+DI4,Vita et al ,2019,Natural materials purchase,Low-carbon construction,Housing,0.04925253321034889,tCO2eq per cap-year ,EU/Europe
+DI4,Vita et al ,2019,No flying,Less transport by air,Transport,0.24602973456083713,tCO2eq per cap-year ,EU/Europe
+DI4,Vita et al ,2019,Non-market services,Service/sharing economy,Other consumption,1.9028275567983397,tCO2eq per cap-year ,EU/Europe
+DI4,Vita et al ,2019,Only bike and walk,Shift to active transport,Transport,2.785583625428716,tCO2eq per cap-year ,EU/Europe
+DI4,Vita et al ,2019,Organic food,Organic food,Food,0.187816042428137,tCO2eq per cap-year ,EU/Europe
+DI4,Vita et al ,2019,Passive house,Passive house,Housing,0.5969600636937689,tCO2eq per cap-year ,EU/Europe
+DI4,Vita et al ,2019,Renewable electricity,Renewable electricity,Housing,0.31165609951871853,tCO2eq per cap-year ,EU/Europe
+DI4,Vita et al ,2019,Renewable fuels,Energy and material efficiency,Transport,1.2929727159551456,tCO2eq per cap-year ,EU/Europe
+DI4,Vita et al ,2019,Seasonal food,Seasonal/ fresh food,Food,0.006035464718919656,tCO2eq per cap-year ,EU/Europe
+DI4,Vita et al ,2019,Share Repair,Service/sharing economy,Other consumption,0.45824269909318316,tCO2eq per cap-year ,EU/Europe
+DI4,Vita et al ,2019,Vegan diet,Vegan diet,Food,1.491900253480514,tCO2eq per cap-year ,EU/Europe
+DI4,Vita et al ,2019,Vegetarian diet,Vegetarian diet,Food,0.6889861214739907,tCO2eq per cap-year ,EU/Europe
+DI4,Vita et al ,2019,Water off grid,Service/sharing economy,Other consumption,0.05048018130100583,tCO2eq per cap-year ,EU/Europe
+DI4,Vita et al ,2019,Work from home (50%),Telecommuting,Transport,1.39279181271436,tCO2eq per cap-year ,EU/Europe
+DI4,Vita et al ,2019,Work from home (50%),Telecommuting,Transport,0.9489000041033729,tCO2eq per cap-year ,EU/Europe
+DI40,Cornell,2017,Shift to electric vehicle from ICE (25.4 mpg) at 100%RE,Shift to BEV,Transport,5.399384000000001,tCO2eq per cap-year ,
+DI40,Cornell,2017,Shift to electric vehicle from ICE (25.4 mpg) at 13.3%RE,Shift to BEV,Transport,3.3743903999999993,tCO2eq per cap-year ,
+DI40,Cornell,2017,Shift to electric vehicle from ICE (80 mpg) at 100%RE,Shift to BEV,Transport,1.5461464,tCO2eq per cap-year ,
+DI40,Cornell,2017,Shift to electric vehicle from ICE (80 mpg) at 13.3%RE,Shift to BEV,Transport,-0.4797456,tCO2eq per cap-year ,
+DI40,Cornell,2017,Shift to electric vehicle powered by 100% rooftop photovoltaics from ICE (25.4 mpg),Shift to BEV,Transport,5.2206024,tCO2eq per cap-year ,
+DI40,Cornell,2017,Shift to electric vehicle powered by 100% rooftop photovoltaics from ICE (80 mpg),Shift to BEV,Transport,1.1894816000000001,tCO2eq per cap-year ,
+DI41,Institute for Global Environmental Strategies Aalto University and D-mat ltd.,2019,Car free private traveling (public transport),Shift to public transport,Transport,1.56,tCO2eq per cap-year ,Finland
+DI41,Institute for Global Environmental Strategies Aalto University and D-mat ltd.,2019,Car-free commuting (electric bike),Shift to active transport,Transport,0.395592,tCO2eq per cap-year ,Finland
+DI41,Institute for Global Environmental Strategies Aalto University and D-mat ltd.,2019,Car-free commuting (public transport),Shift to public transport,Transport,0.37,tCO2eq per cap-year ,Finland
+DI41,Institute for Global Environmental Strategies Aalto University and D-mat ltd.,2019,Car-free commuting (public transport),Shift to public transport,Transport,0.22,tCO2eq per cap-year ,Japan
+DI41,Institute for Global Environmental Strategies Aalto University and D-mat ltd.,2019,Car-free private travelling (public transport),Shift to public transport,Transport,0.72,tCO2eq per cap-year ,Japan
+DI41,Institute for Global Environmental Strategies Aalto University and D-mat ltd.,2019,Closer weekend leisure (20% distance),Less car transport,Transport,0.29,tCO2eq per cap-year ,Japan
+DI41,Institute for Global Environmental Strategies Aalto University and D-mat ltd.,2019,Efficiency improvement (home appliance),More efficient appliances,Housing,0.38,tCO2eq per cap-year ,Japan
+DI41,Institute for Global Environmental Strategies Aalto University and D-mat ltd.,2019,Efficiency improvement (home appliance),More efficient appliances,Housing,0.0412075,tCO2eq per cap-year ,Finland
+DI41,Institute for Global Environmental Strategies Aalto University and D-mat ltd.,2019,Efficiency improvement of buildings,Refurbishment and renovation,Housing,0.576905,tCO2eq per cap-year ,Finland
+DI41,Institute for Global Environmental Strategies Aalto University and D-mat ltd.,2019,Electric car,Shift to BEV,Transport,1.06,tCO2eq per cap-year ,Finland
+DI41,Institute for Global Environmental Strategies Aalto University and D-mat ltd.,2019,Electric car,Shift to BEV,Transport,0.52,tCO2eq per cap-year ,Japan
+DI41,Institute for Global Environmental Strategies Aalto University and D-mat ltd.,2019,Food loss reduction (supply and household side),Food waste reduction,Food,0.11,tCO2eq per cap-year ,Japan
+DI41,Institute for Global Environmental Strategies Aalto University and D-mat ltd.,2019,Food loss reduction (supply and household side),Food waste reduction,Food,0.09,tCO2eq per cap-year ,Finland
+DI41,Institute for Global Environmental Strategies Aalto University and D-mat ltd.,2019,Food production efficiency improvement,Improved cooking equipment,Food,0.1846152,tCO2eq per cap-year ,Japan
+DI41,Institute for Global Environmental Strategies Aalto University and D-mat ltd.,2019,Food production efficiency improvement,Improved cooking equipment,Food,0.13,tCO2eq per cap-year ,Finland
+DI41,Institute for Global Environmental Strategies Aalto University and D-mat ltd.,2019,Heat pump for room heating,Heat pump,Housing,0.61,tCO2eq per cap-year ,Finland
+DI41,Institute for Global Environmental Strategies Aalto University and D-mat ltd.,2019,Heat pump for room heating,Heat pump,Housing,0.09,tCO2eq per cap-year ,Japan
+DI41,Institute for Global Environmental Strategies Aalto University and D-mat ltd.,2019,Hybrid car,Shift to PHEV/HEV,Transport,0.81,tCO2eq per cap-year ,Finland
+DI41,Institute for Global Environmental Strategies Aalto University and D-mat ltd.,2019,Hybrid car,Shift to PHEV/HEV,Transport,0.3,tCO2eq per cap-year ,Japan
+DI41,Institute for Global Environmental Strategies Aalto University and D-mat ltd.,2019,Insulation of housing,Better thermal insulation,Housing,0.22,tCO2eq per cap-year ,Japan
+DI41,Institute for Global Environmental Strategies Aalto University and D-mat ltd.,2019,Live closer to workplace (20% distance),Telecommuting,Transport,0.41,tCO2eq per cap-year ,Finland
+DI41,Institute for Global Environmental Strategies Aalto University and D-mat ltd.,2019,Live closer to workplace (20% distance) ,Telecommuting,Transport,0.34,tCO2eq per cap-year ,Japan
+DI41,Institute for Global Environmental Strategies Aalto University and D-mat ltd.,2019,Low-carbon protein instead of red meat,Shift to lower carbon meats,Food,0.36262600000000006,tCO2eq per cap-year ,Finland
+DI41,Institute for Global Environmental Strategies Aalto University and D-mat ltd.,2019,Low-carbon protein instead of red meat,Shift to lower carbon meats,Food,0.21,tCO2eq per cap-year ,Japan
+DI41,Institute for Global Environmental Strategies Aalto University and D-mat ltd.,2019,Lowering temperature at home (by 2 degrees C),Lower room temperature,Housing,0.131864,tCO2eq per cap-year ,Finland
+DI41,Institute for Global Environmental Strategies Aalto University and D-mat ltd.,2019,On-site renewable energy,Produce renewable electricity,Housing,0.4,tCO2eq per cap-year ,Japan
+DI41,Institute for Global Environmental Strategies Aalto University and D-mat ltd.,2019,Plant-based instead of dairy products,Less animal products,Food,0.445041,tCO2eq per cap-year ,Finland
+DI41,Institute for Global Environmental Strategies Aalto University and D-mat ltd.,2019,Plant-based instead of dairy products,Less animal products,Food,0.131868,tCO2eq per cap-year ,Japan
+DI41,Institute for Global Environmental Strategies Aalto University and D-mat ltd.,2019,Reduction of flights (domestic and international),Less transport by air,Transport,0.37,tCO2eq per cap-year ,Finland
+DI41,Institute for Global Environmental Strategies Aalto University and D-mat ltd.,2019,Reduction of flights (domestic),Less transport by air,Transport,0.05274720000000001,tCO2eq per cap-year ,Japan
+DI41,Institute for Global Environmental Strategies Aalto University and D-mat ltd.,2019,Reduction of flights (international),Less transport by air,Transport,0.065934,tCO2eq per cap-year ,Japan
+DI41,Institute for Global Environmental Strategies Aalto University and D-mat ltd.,2019,Reduction of sweets and alcohol,Less processed food/ alcohol,Food,0.131864,tCO2eq per cap-year ,Finland
+DI41,Institute for Global Environmental Strategies Aalto University and D-mat ltd.,2019,Reduction of sweets and alcohol,Less processed food/ alcohol,Food,0.0791208,tCO2eq per cap-year ,Japan
+DI41,Institute for Global Environmental Strategies Aalto University and D-mat ltd.,2019,Renewable based heating,Renewable-based heating,Housing,0.68,tCO2eq per cap-year ,Finland
+DI41,Institute for Global Environmental Strategies Aalto University and D-mat ltd.,2019,Renewable grid electricity,Renewable electricity,Housing,1.25,tCO2eq per cap-year ,Japan
+DI41,Institute for Global Environmental Strategies Aalto University and D-mat ltd.,2019,Renewable off-grid energy,Produce renewable electricity,Housing,0.79,tCO2eq per cap-year ,Finland
+DI41,Institute for Global Environmental Strategies Aalto University and D-mat ltd.,2019,Renewable wind-based grid electricity,Renewable electricity,Housing,0.56,tCO2eq per cap-year ,Finland
+DI41,Institute for Global Environmental Strategies Aalto University and D-mat ltd.,2019,Rent out a guest room (23 m2 for 27 weeks),Less living space/co-housing,Housing,0.54,tCO2eq per cap-year ,Finland
+DI41,Institute for Global Environmental Strategies Aalto University and D-mat ltd.,2019,Ride-sharing (2 persons in a car),Car-pooling/sharing,Transport,0.43,tCO2eq per cap-year ,Japan
+DI41,Institute for Global Environmental Strategies Aalto University and D-mat ltd.,2019,Ride-sharing (2 persons in a car),Car-pooling/sharing,Transport,0.34,tCO2eq per cap-year ,Finland
+DI41,Institute for Global Environmental Strategies Aalto University and D-mat ltd.,2019,Saving of hot water,Hot water saving ,Housing,0.1582416,tCO2eq per cap-year ,Japan
+DI41,Institute for Global Environmental Strategies Aalto University and D-mat ltd.,2019,Saving of hot water,Hot water saving ,Housing,0.14,tCO2eq per cap-year ,Finland
+DI41,Institute for Global Environmental Strategies Aalto University and D-mat ltd.,2019,Shift to vegan diet,Vegan diet,Food,1.12,tCO2eq per cap-year ,Finland
+DI41,Institute for Global Environmental Strategies Aalto University and D-mat ltd.,2019,Shift to vegetarian diet (lacto-ovo),Vegetarian diet,Food,0.89,tCO2eq per cap-year ,Finland
+DI41,Institute for Global Environmental Strategies Aalto University and D-mat ltd.,2019,Smaller living space (approximately 10% reduction),Less living space/co-housing,Housing,0.22,tCO2eq per cap-year ,Finland
+DI41,Institute for Global Environmental Strategies Aalto University and D-mat ltd.,2019,Smaller living space (average size of apartment),Less living space/co-housing,Housing,0.32967,tCO2eq per cap-year ,Japan
+DI41,Institute for Global Environmental Strategies Aalto University and D-mat ltd.,2019,Telework (white collar workers),Telecommuting,Transport,0.230762,tCO2eq per cap-year ,Finland
+DI41,Institute for Global Environmental Strategies Aalto University and D-mat ltd.,2019,Telework (white collar workers),Telecommuting,Transport,0.16,tCO2eq per cap-year ,Japan
+DI41,Institute for Global Environmental Strategies Aalto University and D-mat ltd.,2019,Vegetarian diet (lacto-ovo),Vegetarian diet,Food,0.34,tCO2eq per cap-year ,Japan
+DI41,Institute for Global Environmental Strategies Aalto University and D-mat ltd.,2019,Vehicle fuel efficiency improvement,Energy and material efficiency,Transport,0.7,tCO2eq per cap-year ,Finland
+DI41,Institute for Global Environmental Strategies Aalto University and D-mat ltd.,2019,Vehicle fuel efficiency improvement,Energy and material efficiency,Transport,0.38,tCO2eq per cap-year ,Japan
+DI42,Lacroix,2018,20% flight reduction - higher income hhld (average of 2.24 flights per hhld per year),Less transport by air,Transport,1.24,tCO2eq per cap-year ,
+DI42,Lacroix,2018,20% flight reduction - lower income hhld (average of 2.24 flights per hhld per year),Less transport by air,Transport,0.08399999999999999,tCO2eq per cap-year ,
+DI42,Lacroix,2018,20% flight reduction (average of 2.24 flights per hhld per year),Less transport by air,Transport,0.172,tCO2eq per cap-year ,
+DI42,Lacroix,2018,40% flight reduction - higher income hhld (average of 2.24 flights per hhld per year),Less transport by air,Transport,2.48,tCO2eq per cap-year ,
+DI42,Lacroix,2018,40% flight reduction - lower income hhld (average of 2.24 flights per hhld per year),Less transport by air,Transport,0.16799999999999998,tCO2eq per cap-year ,
+DI42,Lacroix,2018,40% flight reduction (average of 2.24 flights per hhld per year),Less transport by air,Transport,0.344,tCO2eq per cap-year ,
+DI42,Lacroix,2018,60% flight reduction - higher income hhld (average of 2.24 flights per hhld per year),Less transport by air,Transport,3.876,tCO2eq per cap-year ,
+DI42,Lacroix,2018,60% flight reduction - lower income hhld (average of 2.24 flights per hhld per year),Less transport by air,Transport,0.252,tCO2eq per cap-year ,
+DI42,Lacroix,2018,60% flight reduction (average of 2.24 flights per hhld per year),Less transport by air,Transport,0.516,tCO2eq per cap-year ,
+DI42,Lacroix,2018,Eco-driving,Fuel efficient driving,Transport,0.52,tCO2eq per cap-year ,
+DI42,Lacroix,2018,Fuel efficient vehicle,Energy and material efficiency,Transport,0.64,tCO2eq per cap-year ,
+DI42,Lacroix,2018,Line-dry,Less energy use (clothing),Housing,0.05600000000000001,tCO2eq per cap-year ,
+DI42,Lacroix,2018,Small change in diet,Sustainable diet (unspecified),Food,0.6799999999999999,tCO2eq per cap-year ,
+DI42,Lacroix,2018,Teleworking,Telecommuting,Transport,0.344,tCO2eq per cap-year ,
+DI42,Lacroix,2018,Turn down thermostat,Lower room temperature,Housing,0.4,tCO2eq per cap-year ,
+DI43,Wood et al,2017,Energy efficient washing machines,More efficient appliances,Housing,0.027530862810062777,tCO2eq per cap-year ,EU/Europe
+DI43,Wood et al,2017,"Shift to cotton, wool and/or silk",Energy and material efficiency,Other consumption,0.0009832451003593849,tCO2eq per cap-year ,EU/Europe
+DI43,Wood et al,2017,Shift to low-carbon meat,Shift to lower carbon meats,Food,0.08652556883162588,tCO2eq per cap-year ,EU/Europe
+DI43,Wood et al,2017,Shift to vegetarian diet,Vegetarian diet,Food,0.2753086281006278,tCO2eq per cap-year ,EU/Europe
+DI43,Wood et al,2017,Textile reduction,Less textiles,Other consumption,0.02359788240862524,tCO2eq per cap-year ,EU/Europe
+DI44,Andwari et al ,2017,Shift to BEV from ICE diesel,Shift to BEV,Transport,2.414016,tCO2eq per cap-year ,
+DI44,Andwari et al ,2017,Shift to BEV from ICE gasoline,Shift to BEV,Transport,3.1382208,tCO2eq per cap-year ,
+DI44,Andwari et al ,2017,Shift to FCEV (fuel cell electric vehicle) from ICE diesel,Shift to FCV,Transport,0.9656064,tCO2eq per cap-year ,
+DI44,Andwari et al ,2017,Shift to FCEV (fuel cell electric vehicle) from ICE gasoline ,Shift to FCV,Transport,1.6898111999999998,tCO2eq per cap-year ,
+DI44,Andwari et al ,2017,Shift to PHEV (Plug-in Hybrid Electric Vehicle) from ICE diesel,Shift to PHEV/HEV,Transport,0.2414016,tCO2eq per cap-year ,
+DI44,Andwari et al ,2017,Shift to PHEV (Plug-in Hybrid Electric Vehicle) from ICE gasoline,Shift to PHEV/HEV,Transport,3.1382208,tCO2eq per cap-year ,
+DI44,Andwari et al ,2017,Shift to PHEV (Plug-in Hybrid Electric Vehicle)from ICE gasoline,Shift to PHEV/HEV,Transport,0.9656064,tCO2eq per cap-year ,
+DI44,Andwari et al ,2017,Shift to PHEV(Plug-in Hybrid Electric Vehicle) from ICE diesel,Shift to FCV,Transport,2.414016,tCO2eq per cap-year ,
+DI45,Helmers et al,2012,Shift to a HEV instead of ICEV,Shift to PHEV/HEV,Transport,1.35,tCO2eq per cap-year ,
+DI45,Helmers et al,2012,Shift to a new diesel/petrol car,Energy and material efficiency,Transport,1.455,tCO2eq per cap-year ,
+DI45,Helmers et al,2012,Shift to a PHEV instead of ICEV,Shift to PHEV/HEV,Transport,1.8,tCO2eq per cap-year ,
+DI45,Helmers et al,2012,Shift to BEV instead of ICEV,Shift to BEV,Transport,2.79,tCO2eq per cap-year ,
+DI45,Helmers et al,2012,Shift to BEV instead of ICEV,Shift to BEV,Transport,2.355,tCO2eq per cap-year ,
+DI45,Helmers et al,2012,Shift to BEV instead of ICEV,Shift to BEV,Transport,0.076,tCO2eq per cap-year ,
+DI45,Helmers et al,2012,Shift to BEV instead of ICEV,Shift to BEV,Transport,0.055,tCO2eq per cap-year ,
+DI45,Helmers et al,2012,Shift to BEV instead of ICEV operated with chinese coal-to-liquid (CtL) production fuel,Shift to BEV,Transport,0.593,tCO2eq per cap-year ,
+DI45,Helmers et al,2012,Shift to BEV instead of ICEV operated with chinese coal-to-liquid (CtL) production fuel,Shift to BEV,Transport,0.572,tCO2eq per cap-year ,
+DI45,Helmers et al,2012,Shift to BEV smart (electricity of renewable origin) instead of ICEV,Shift to BEV,Transport,3.6,tCO2eq per cap-year ,
+DI45,Helmers et al,2012,Shift to BEV smart instead of ICEV,Shift to BEV,Transport,3.105,tCO2eq per cap-year ,
+DI45,Helmers et al,2012,Shift to FCV (biomass in a steam methane reforming process of gasified wood) instead of ICEV,Shift to FCV,Transport,2.475,tCO2eq per cap-year ,
+DI45,Helmers et al,2012,Shift to FCV (biomass in a steam methane reforming process of gasified wood) instead of ICEV,Shift to FCV,Transport,2.475,tCO2eq per cap-year ,
+DI45,Helmers et al,2012,Shift to FCV (H2 electrolysis powered with European grid electricity) instead of ICEV,Shift to FCV,Transport,-0.75,tCO2eq per cap-year ,
+DI45,Helmers et al,2012,Shift to FCV (H2 electrolysis powered with Swiss grid electricity) instead of ICEV,Shift to FCV,Transport,2.85,tCO2eq per cap-year ,
+DI45,Helmers et al,2012,Shift to FCV (H2 produced with North American natural gas) instead of ICEV,Shift to FCV,Transport,0.96,tCO2eq per cap-year ,
+DI45,Helmers et al,2012,Shift to FCV (H2 produced with wind energy) instead of ICEV,Shift to FCV,Transport,5.76,tCO2eq per cap-year ,
+DI45,Helmers et al,2012,Shift to FCV (steam methane reforming from natural gas) instead of ICEV,Shift to FCV,Transport,1.8,tCO2eq per cap-year ,
+DI45,Helmers et al,2012,Shift to FCV instead of ICEV,Shift to FCV,Transport,2.832,tCO2eq per cap-year ,
+DI45,Helmers et al,2012,Shift to FCV instead of ICEV,Shift to FCV,Transport,0.124,tCO2eq per cap-year ,
+DI46,Woodcock et al,2012,Shift all private vehicle travel to active travel,Shift to active transport,Transport,1.759992,tCO2eq per cap-year ,UK
+DI46,Woodcock et al,2012,Shift all urban car travel to active travel,Shift to active transport,Transport,0.380952,tCO2eq per cap-year ,UK
+DI46,Woodcock et al,2012,Shift to active travel - vision 1 ,Shift to active transport,Transport,0.2740603583681761,tCO2eq per cap-year ,UK
+DI46,Woodcock et al,2012,Shift to active travel - vision 2,Shift to active transport,Transport,0.7536659855124843,tCO2eq per cap-year ,UK
+DI46,Woodcock et al,2012,Shift to active travel - vision 3,Shift to active transport,Transport,0.8564386199005504,tCO2eq per cap-year ,UK
+DI47,Wolfram and Wiedmanm,2017,Shift to BEV from ICEV-diesel,Shift to BEV,Transport,-0.72,tCO2eq per cap-year ,Austria
+DI47,Wolfram and Wiedmanm,2017,Shift to BEV from ICEV-diesel,Shift to BEV,Transport,-1.095,tCO2eq per cap-year ,Austria
+DI47,Wolfram and Wiedmanm,2017,Shift to BEV from ICEV-gasoline,Shift to BEV,Transport,-0.3,tCO2eq per cap-year ,Austria
+DI47,Wolfram and Wiedmanm,2017,Shift to BEV from ICEV-gasoline,Shift to BEV,Transport,-0.84,tCO2eq per cap-year ,Austria
+DI47,Wolfram and Wiedmanm,2017,Shift to HEV from ICEV-diesel,Shift to PHEV/HEV,Transport,1.29,tCO2eq per cap-year ,Austria
+DI47,Wolfram and Wiedmanm,2017,Shift to HEV from ICEV-diesel,Shift to PHEV/HEV,Transport,0.75,tCO2eq per cap-year ,Austria
+DI47,Wolfram and Wiedmanm,2017,Shift to HEV from ICEV-gasoline,Shift to PHEV/HEV,Transport,1.545,tCO2eq per cap-year ,Austria
+DI47,Wolfram and Wiedmanm,2017,Shift to HEV from ICEV-gasoline,Shift to PHEV/HEV,Transport,1.17,tCO2eq per cap-year ,Austria
+DI47,Wolfram and Wiedmanm,2017,Shift to PHEV from ICEV-diesel,Shift to PHEV/HEV,Transport,-0.045,tCO2eq per cap-year ,Austria
+DI47,Wolfram and Wiedmanm,2017,Shift to PHEV from ICEV-diesel,Shift to PHEV/HEV,Transport,-0.21,tCO2eq per cap-year ,Austria
+DI47,Wolfram and Wiedmanm,2017,Shift to PHEV from ICEV-gasoline,Shift to PHEV/HEV,Transport,0.375,tCO2eq per cap-year ,Austria
+DI47,Wolfram and Wiedmanm,2017,Shift to PHEV from ICEV-gasoline,Shift to PHEV/HEV,Transport,0.045,tCO2eq per cap-year ,Austria
+DI48,Wadud et al,2016,Become a member of a car-club,Car-pooling/sharing,Transport,0.33599999999999997,tCO2eq per cap-year ,USA
+DI5,Creutzig et al,2016,Behavioral dietary change,Less animal products,Food,1.104628503894167,,
+DI50 ,Speth et al ,2014,Shift to higher-octane (higher-RON) gasoline,Energy and material efficiency,Transport,0.13448771310166524,tCO2eq per cap-year ,USA
+DI50 ,Speth et al ,2014,Shift to higher-octane (higher-RON) gasoline,Energy and material efficiency,Transport,0.10697886269450645,tCO2eq per cap-year ,USA
+DI50 ,Speth et al ,2014,Shift to higher-octane (higher-RON) gasoline,Energy and material efficiency,Transport,0.0825265512214764,tCO2eq per cap-year ,USA
+DI50 ,Speth et al ,2014,Shift to higher-octane (higher-RON) gasoline,Energy and material efficiency,Transport,0.05807423974844635,tCO2eq per cap-year ,USA
+DI52,Rojas-Rueda et al,2011,Shift to bike instead of diesel,Shift to active transport,Transport,0.32783205,tCO2eq per cap-year ,Spain
+DI52,Rojas-Rueda et al,2011,Shift to bike instead of petrol,Shift to active transport,Transport,0.385833105,tCO2eq per cap-year ,Spain
+DI53,Marmiroli et al,2018,Shift to electric,Shift to BEV,Transport,4.605,tCO2eq per cap-year ,
+DI53,Marmiroli et al,2018,Shift to electric,Shift to BEV,Transport,4.5,tCO2eq per cap-year ,
+DI53,Marmiroli et al,2018,Shift to electric,Shift to BEV,Transport,4.3215,tCO2eq per cap-year ,
+DI53,Marmiroli et al,2018,Shift to electric,Shift to BEV,Transport,4.305,tCO2eq per cap-year ,
+DI53,Marmiroli et al,2018,Shift to electric,Shift to BEV,Transport,3.9225,tCO2eq per cap-year ,
+DI53,Marmiroli et al,2018,Shift to electric,Shift to BEV,Transport,3.66975,tCO2eq per cap-year ,
+DI53,Marmiroli et al,2018,Shift to electric,Shift to BEV,Transport,3.525,tCO2eq per cap-year ,
+DI53,Marmiroli et al,2018,Shift to electric,Shift to BEV,Transport,2.565,tCO2eq per cap-year ,
+DI53,Marmiroli et al,2018,Shift to electric,Shift to BEV,Transport,2.55,tCO2eq per cap-year ,
+DI53,Marmiroli et al,2018,Shift to electric,Shift to BEV,Transport,2.535,tCO2eq per cap-year ,
+DI53,Marmiroli et al,2018,Shift to electric,Shift to BEV,Transport,1.86,tCO2eq per cap-year ,
+DI53,Marmiroli et al,2018,Shift to electric,Shift to BEV,Transport,-0.24,tCO2eq per cap-year ,
+DI53,Marmiroli et al,2018,Shift to electric,Shift to BEV,Transport,-1.905,tCO2eq per cap-year ,
+DI53,Marmiroli et al,2018,Shift to electric ,Shift to BEV,Transport,4.017,tCO2eq per cap-year ,
+DI53,Marmiroli et al,2018,Shift to electric ,Shift to BEV,Transport,3.507,tCO2eq per cap-year ,
+DI53,Marmiroli et al,2018,Shift to electric - compact BEV,Shift to BEV,Transport,4.575,tCO2eq per cap-year ,
+DI53,Marmiroli et al,2018,Shift to electric - compact BEV,Shift to BEV,Transport,1.95,tCO2eq per cap-year ,
+DI53,Marmiroli et al,2018,Shift to electric - subcompact BEV,Shift to BEV,Transport,2.925,tCO2eq per cap-year ,
+DI53,Marmiroli et al,2018,Shift to electric- subcompact BEV,Shift to BEV,Transport,4.725,tCO2eq per cap-year ,
+DI53,Marmiroli et al,2018,Shift to electric- subcompact BEV,Shift to BEV,Transport,4.269,tCO2eq per cap-year ,
+DI53,Marmiroli et al,2018,Shift to electric- subcompact BEV,Shift to BEV,Transport,4.185,tCO2eq per cap-year ,
+DI54,Cherry et al,2018,Share more (product sharing),Service/sharing economy,Other consumption,0.0993321203683706,tCO2eq per cap-year ,UK
+DI54,Cherry et al,2018,Shift to efficient products,Energy and material efficiency,Other consumption,0.19486330599917534,tCO2eq per cap-year ,UK
+DI54,Cherry et al,2018,Shift to more durable products/reuse/extend lifetimes of products,Fewer purchases/durable items,Other consumption,0.2071894141967067,tCO2eq per cap-year ,UK
+DI56,Amponsah et al,2014,Shift to dedicated biomass,Renewable-based heating,Housing,0.63664,tCO2eq per cap-year ,Global
+DI56,Amponsah et al,2014,Shift to dedicated biomass,Renewable-based heating,Housing,0.5704,tCO2eq per cap-year ,Global
+DI56,Amponsah et al,2014,Shift to geothermal electricity,Renewable electricity,Housing,1.7081,tCO2eq per cap-year ,Global
+DI56,Amponsah et al,2014,Shift to geothermal electricity,Renewable electricity,Housing,1.5138,tCO2eq per cap-year ,Global
+DI56,Amponsah et al,2014,Shift to heat pump,Heat pump,Housing,0.9,tCO2eq per cap-year ,Global
+DI56,Amponsah et al,2014,Shift to hydro electricity,Renewable electricity,Housing,1.7342,tCO2eq per cap-year ,Global
+DI56,Amponsah et al,2014,Shift to hydro electricity,Renewable electricity,Housing,1.52279,tCO2eq per cap-year ,Global
+DI56,Amponsah et al,2014,Shift to offshore wind electricity,Renewable electricity,Housing,1.7246300000000003,tCO2eq per cap-year ,Global
+DI56,Amponsah et al,2014,Shift to offshore wind electricity,Renewable electricity,Housing,1.7139,tCO2eq per cap-year ,Global
+DI56,Amponsah et al,2014,Shift to onshore wind electricity,Renewable electricity,Housing,1.7197,tCO2eq per cap-year ,Global
+DI56,Amponsah et al,2014,Shift to onshore wind electricity,Renewable electricity,Housing,1.38127,tCO2eq per cap-year ,Global
+DI56,Amponsah et al,2014,Shift to photovoltaic electricity,Renewable electricity,Housing,1.71274,tCO2eq per cap-year ,Global
+DI56,Amponsah et al,2014,Shift to photovoltaic electricity,Renewable electricity,Housing,0.87,tCO2eq per cap-year ,Global
+DI56,Amponsah et al,2014,Shift to solar thermal electricity,Renewable electricity,Housing,1.6994,tCO2eq per cap-year ,Global
+DI56,Amponsah et al,2014,Shift to solar thermal electricity,Renewable electricity,Housing,1.305,tCO2eq per cap-year ,Global
+DI56,Amponsah et al,2014,Shift to solar thermal heating,Renewable-based heating,Housing,0.63664,tCO2eq per cap-year ,Global
+DI56,Amponsah et al,2014,Shift to tidal electricity,Renewable electricity,Housing,1.711,tCO2eq per cap-year ,Global
+DI56,Amponsah et al,2014,Shift to tidal electricity,Renewable electricity,Housing,1.595,tCO2eq per cap-year ,Global
+DI56,Amponsah et al,2014,Shift to wave electricity,Renewable electricity,Housing,1.7052,tCO2eq per cap-year ,Global
+DI56,Amponsah et al,2014,Shift to wave electricity,Renewable electricity,Housing,1.595,tCO2eq per cap-year ,Global
+DI57,Spierling et al,2018,Shift to bio-plastics,Bio-plastics/Less plastic/chemicals,Other consumption,0.04096730440856209,tCO2eq per consumption unit-year ,Global
+DI57,Spierling et al,2018,Shift to bio-plastics,Bio-plastics/Less plastic/chemicals,Other consumption,0.031244051779947667,tCO2eq per consumption unit-year ,Global
+DI6,Zheng and Suh,2019,Recycle plastics,Recycle,Other consumption,0.008686105681562216,tCO2eq per cap-year ,Global
+DI6,Zheng and Suh,2019,Substitute conventional plastics with bio-plastics,Bio-plastics/Less plastic/chemicals,Other consumption,0.04096730440856209,tCO2eq per cap-year ,Global
+DI6,Zheng and Suh,2019,Substitute conventional plastics with bio-plastics,Bio-plastics/Less plastic/chemicals,Other consumption,0.03124405177994767,tCO2eq per cap-year ,Global
+DI7,Skold et al,2018,"C1.1 Buy 30% fewer clothes  (repair, wait until damaged before changing)",Less textiles,Other consumption,0.0619499999999999,tCO2eq per consumption unit-year ,EU/Europe
+DI7,Skold et al,2018,C1.2 Buy 30% of your clothes second hand,Less textiles,Other consumption,0.0539375,tCO2eq per consumption unit-year ,EU/Europe
+DI7,Skold et al,2018,C1.3 Buy 30% more ecological clothing (eco- and organic labelled),Energy and material efficiency,Other consumption,0.03086249999999995,tCO2eq per consumption unit-year ,EU/Europe
+DI7,Skold et al,2018,C2.1 Buy 30% less cosmetic products (or create them yourself),Fewer purchases/durable items,Other consumption,0.0701978399999999,tCO2eq per consumption unit-year ,EU/Europe
+DI7,Skold et al,2018,C2.2 Buy 30% more ecological cosmetics (eco- and organic labeled),Energy and material efficiency,Other consumption,0.0368387999999999,tCO2eq per consumption unit-year ,EU/Europe
+DI7,Skold et al,2018,C2.3 Reduce your cosmetic and hygiene product consumption to the maximum,Fewer purchases/durable items,Other consumption,0.14039568,tCO2eq per consumption unit-year ,EU/Europe
+DI7,Skold et al,2018,"C3.1 Limit your use of internet (energy of servers, datacenters)",Fewer purchases/durable items,Other consumption,0.1,tCO2eq per consumption unit-year ,EU/Europe
+DI7,Skold et al,2018,C3.2 Buy 30% fewer digital devices (give up or buy less),Fewer purchases/durable items,Other consumption,0.16272,tCO2eq per consumption unit-year ,EU/Europe
+DI7,Skold et al,2018,C3.3 Buy more energy efficient devices,Energy and material efficiency,Other consumption,0.151572097169601,tCO2eq per consumption unit-year ,EU/Europe
+DI7,Skold et al,2018,C4.1 Buy 30% less furniture and reduce your renovations by 50%,Fewer purchases/durable items,Other consumption,0.06542499999999996,tCO2eq per consumption unit-year ,EU/Europe
+DI7,Skold et al,2018,C4.2 Buy 30% more second hand furniture or build30% of furniture yourself,Fewer purchases/durable items,Other consumption,0.022,tCO2eq per consumption unit-year ,EU/Europe
+DI7,Skold et al,2018,C4.3 Buy 30% more eco-friendly furniture (eco-and organic labeled),Energy and material efficiency,Other consumption,0.01072467,tCO2eq per consumption unit-year ,EU/Europe
+DI7,Skold et al,2018,"C5.1 Reduce your local leisure (cinema, theater, concerts) by 30%",Fewer purchases/durable items,Other consumption,0.0214493399999999,tCO2eq per consumption unit-year ,EU/Europe
+DI7,Skold et al,2018,C5.2 Choose 30% more eco-labeled holidays,Energy and material efficiency,Other consumption,0.0511612499999999,tCO2eq per consumption unit-year ,EU/Europe
+DI7,Skold et al,2018,C5.3 Reduce your holidays activities by 30%,Fewer purchases/durable items,Other consumption,0.107834999999999,tCO2eq per consumption unit-year ,EU/Europe
+DI7,Skold et al,2018,"F1.1 Buy mainly fresh products, and give up deep frozen and canned produce",Seasonal/ fresh food,Food,0.40428296075000003,tCO2eq per consumption unit-year ,EU/Europe
+DI7,Skold et al,2018,F1.2 Buy at least 30% more locally produced food,Regional/local food,Food,0.403502194,tCO2eq per consumption unit-year ,EU/Europe
+DI7,Skold et al,2018,F1.3 Buy at least 60% more locally produced food,Regional/local food,Food,0.804053274,tCO2eq per consumption unit-year ,EU/Europe
+DI7,Skold et al,2018,F1.4 Buy at least 30% more organic food products,Organic food,Food,0.402026637,tCO2eq per consumption unit-year ,EU/Europe
+DI7,Skold et al,2018,F1.5 Buy at least 60% more organic food products,Organic food,Food,0.804053274,tCO2eq per consumption unit-year ,EU/Europe
+DI7,Skold et al,2018,F2.1 Eat 30% more vegetarian food (eat less meat and fish),Less animal products,Food,0.25884521,tCO2eq per consumption unit-year ,EU/Europe
+DI7,Skold et al,2018,F2.2 Eat 60% more vegetarian food (eat less meat and fish),Less animal products,Food,0.5190676399999999,tCO2eq per consumption unit-year ,EU/Europe
+DI7,Skold et al,2018,F2.3 Become a vegetarian (stop eating meat and fish),Vegetarian diet,Food,0.8353227999999995,tCO2eq per consumption unit-year ,EU/Europe
+DI7,Skold et al,2018,F3.1 Gradually give up ready-made meals,Less processed food/ alcohol,Food,0.0898092,tCO2eq per consumption unit-year ,EU/Europe
+DI7,Skold et al,2018,F3.2 Eat more eco-friendly food in restaurants and canteens,Eat out eco-friendly,Food,0.311219999999999,tCO2eq per consumption unit-year ,EU/Europe
+DI7,Skold et al,2018,F3.3 Produce your own food,Produce own food,Food,0.36435649999999903,tCO2eq per consumption unit-year ,EU/Europe
+DI7,Skold et al,2018,F4.1 Recycle 30% more of your waste,Less packaging,Food,0.26325333,tCO2eq per consumption unit-year ,EU/Europe
+DI7,Skold et al,2018,F4.2 Buy products with less or greener packaging,Less packaging,Food,0.055115000000000004,tCO2eq per consumption unit-year ,EU/Europe
+DI7,Skold et al,2018,F4.3 Stop buying plastic and canned beverages,Less packaging,Food,0.158496,tCO2eq per consumption unit-year ,EU/Europe
+DI7,Skold et al,2018,F4.4 Compost or recycle organic waste ,Food waste management,Food,0.00375803999999999,tCO2eq per consumption unit-year ,EU/Europe
+DI7,Skold et al,2018,H1.1 Insulate your roof / attic,Better thermal insulation,Housing,0.202400426666666,tCO2eq per consumption unit-year ,EU/Europe
+DI7,Skold et al,2018,H1.2 Insulate your walls,Better thermal insulation,Housing,0.171717387629989,tCO2eq per consumption unit-year ,EU/Europe
+DI7,Skold et al,2018,H1.3 Improve your windows,Refurbishment and renovation,Housing,0.141735127731669,tCO2eq per consumption unit-year ,EU/Europe
+DI7,Skold et al,2018,H2.1 Install an hourly thermostats,Smart metering,Housing,0.0442121642666666,tCO2eq per consumption unit-year ,EU/Europe
+DI7,Skold et al,2018,H2.2 Lower inhouse temperature by 1°C,Lower room temperature,Housing,0.0525114314666666,tCO2eq per consumption unit-year ,EU/Europe
+DI7,Skold et al,2018,H2.3 Lower indoor temperature by 3°C,Lower room temperature,Housing,0.156333547365404,tCO2eq per consumption unit-year ,EU/Europe
+DI7,Skold et al,2018,H3.1 Shift to energy efficient heat pump,Heat pump,Housing,0.68562111954158,tCO2eq per consumption unit-year ,EU/Europe
+DI7,Skold et al,2018,H3.3 Shift to thermal solar collector for hot water,Renewable-based heating,Housing,0.0725071522935779,tCO2eq per consumption unit-year ,EU/Europe
+DI7,Skold et al,2018,H3.4 Shift to thermal solar collector for heating and hot water,Renewable-based heating,Housing,0.466457358275229,tCO2eq per consumption unit-year ,EU/Europe
+DI7,Skold et al,2018,H3.5 Shift to wood/ pellet boiler as main heating source,Renewable-based heating,Housing,0.832973950747986,tCO2eq per consumption unit-year ,EU/Europe
+DI7,Skold et al,2018,H3.7 Improve the energy efficiency of your heating systems,More efficient appliances,Housing,0.19235382937577047,tCO2eq per consumption unit-year ,EU/Europe
+DI7,Skold et al,2018,H4.1 Produce your own electricity (photovoltaic or wind mill system),Produce renewable electricity,Housing,0.7499523779999995,tCO2eq per consumption unit-year ,EU/Europe
+DI7,Skold et al,2018,H4.2 Shift to a green electricity provider,Renewable electricity,Housing,0.34106864274570897,tCO2eq per consumption unit-year ,EU/Europe
+DI7,Skold et al,2018,H5.1 Use fewer devices and maintain them better,Fewer appliances,Housing,0.0363,tCO2eq per consumption unit-year ,EU/Europe
+DI7,Skold et al,2018,H5.2 Upgrade all of your home appliances to A +++,More efficient appliances,Housing,0.053759999999999995,tCO2eq per consumption unit-year ,EU/Europe
+DI7,Skold et al,2018,H5.3 Give up some of your appliances or share them with others,Fewer appliances,Housing,0.0318385647425897,tCO2eq per consumption unit-year ,EU/Europe
+DI7,Skold et al,2018,H6.1 Collective living: share your house with others,Less living space/co-housing,Housing,0.3594271497231445,tCO2eq per consumption unit-year ,EU/Europe
+DI7,Skold et al,2018,H6.2 Use more public transportation as a result of moving to the city center,Less car transport,Transport,1.19092956009999,tCO2eq per consumption unit-year ,EU/Europe
+DI7,Skold et al,2018,H6.3 Buy and move to a low energy house (e.g. passive house),Passive house,Housing,0.902742507814872,tCO2eq per consumption unit-year ,EU/Europe
+DI7,Skold et al,2018,H6.4 Buy and move to a smaller house/apartment,Less living space/co-housing,Housing,0.1948640795579815,tCO2eq per consumption unit-year ,EU/Europe
+DI7,Skold et al,2018,M1.1 Shift significantly (more than 30%) from car to public transport,Shift to public transport,Transport,0.83472095944,tCO2eq per consumption unit-year ,EU/Europe
+DI7,Skold et al,2018,"M1.2 Shift to non motorized modes of transport (walk, bike…) instead of public transport",Shift to active transport,Transport,0.08537999999999996,tCO2eq per consumption unit-year ,EU/Europe
+DI7,Skold et al,2018,M1.3 Use carpooling /car sharing for at least 30% of your current  car mobility,Car-pooling/sharing,Transport,0.4027237824,tCO2eq per consumption unit-year ,EU/Europe
+DI7,Skold et al,2018,M2.1 Eco-driving,Fuel efficient driving,Transport,0.21187952214,tCO2eq per consumption unit-year ,EU/Europe
+DI7,Skold et al,2018,"M2.2 Decrease your travels with cars, public transports and other motorized vehicles by 30%",Less car transport,Transport,0.767175989205,tCO2eq per consumption unit-year ,EU/Europe
+DI7,Skold et al,2018,M2.3 Give up your car(s) and other motorized vehicle(s),Live car-free,Transport,1.972813335472,tCO2eq per consumption unit-year ,EU/Europe
+DI7,Skold et al,2018,M3.1 Change to a smaller car (new or second hand),Shift to a smaller car,Transport,0.46954236396,tCO2eq per consumption unit-year ,EU/Europe
+DI7,Skold et al,2018,"M3.2 Change to a more eco-friendly car (hybrid, biogas, bioethanol, or electric)",Shift to PHEV/HEV,Transport,0.53134376595,tCO2eq per consumption unit-year ,EU/Europe
+DI7,Skold et al,2018,M3.3 Change to a smaller AND more eco-friendly car ,Shift to a smaller car,Transport,1.046129941314,tCO2eq per consumption unit-year ,EU/Europe
+DI7,Skold et al,2018,"M4.1 Reduce your domestic and intereuropean flights by 50% (substitute with train, boat, or car)",Less transport by air,Transport,0.504877797702073,tCO2eq per consumption unit-year ,EU/Europe
+DI7,Skold et al,2018,M4.2 Reduce your domestic and intereuropean flights by 90%,Less transport by air,Transport,0.903465532730025,tCO2eq per consumption unit-year ,EU/Europe
+DI7,Skold et al,2018,M4.3 Reduce your intercontinental flights by 50%,Less transport by air,Transport,1.61575450801721,tCO2eq per consumption unit-year ,EU/Europe
+DI7,Skold et al,2018,M4.4 Reduce your intercontinental flights by 90% ,One less flight (long return),Transport,3.52914800435338,tCO2eq per consumption unit-year ,EU/Europe
+DI8,O'Rourke and Seepersad,2015,Install small-scale residential solar photovoltaic (PV),Produce renewable electricity,Housing,4.833333333333333,tCO2eq per PV panel year ,USA
+DI8,O'Rourke and Seepersad,2015,Install small-scale residential solar photovoltaic (PV),Produce renewable electricity,Housing,3.69,tCO2eq per PV panel year ,USA
+DI8,O'Rourke and Seepersad,2015,Install small-scale residential solar photovoltaic (PV),Produce renewable electricity,Housing,3.1433333333333335,tCO2eq per PV panel year ,USA
+DI8,O'Rourke and Seepersad,2015,Install small-scale residential solar photovoltaic (PV),Produce renewable electricity,Housing,2.89,tCO2eq per PV panel year ,USA
+DI8,O'Rourke and Seepersad,2015,Install small-scale residential solar photovoltaic (PV),Produce renewable electricity,Housing,2.3133333333333335,tCO2eq per PV panel year ,USA
+DI8,O'Rourke and Seepersad,2015,Install small-scale residential solar photovoltaic (PV),Produce renewable electricity,Housing,1.357,tCO2eq per PV panel year ,USA
+DI8,O'Rourke and Seepersad,2015,Install small-scale residential solar photovoltaic (PV),Produce renewable electricity,Housing,0.2832,tCO2eq per PV panel year ,USA
+DI8,O'Rourke and Seepersad,2015,Install small-scale residential solar photovoltaic (PV),Produce renewable electricity,Housing,0.22433333333333333,tCO2eq per PV panel year ,USA
+DI8,O'Rourke and Seepersad,2015,Install small-scale residential solar photovoltaic (PV),Produce renewable electricity,Housing,0.15933333333333335,tCO2eq per PV panel year ,USA
+DI8,O'Rourke and Seepersad,2015,Install small-scale residential solar photovoltaic (PV),Produce renewable electricity,Housing,0.14166666666666666,tCO2eq per PV panel year ,USA
+DI8,O'Rourke and Seepersad,2015,Install small-scale residential solar photovoltaic (PV),Produce renewable electricity,Housing,0.07066666666666667,tCO2eq per PV panel year ,USA
+DI8,O'Rourke and Seepersad,2015,Install small-scale residential solar photovoltaic (PV),Produce renewable electricity,Housing,0.07066666666666667,tCO2eq per PV panel year ,USA
+DI8,O'Rourke and Seepersad,2015,Install small-scale residential solar photovoltaic (PV),Produce renewable electricity,Housing,0.0649,tCO2eq per PV panel year ,USA
+DI9,Xu et al ,2015,Shift from PET-bottled natural mineral water to tap water,Less packaging,Food,0.1635,tCO2eq per cap-year ,Italy

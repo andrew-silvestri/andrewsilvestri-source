@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<link rel="preload" href="assets/perfidy/PerfidyText-Regular.woff2" as="font" type="font/woff2" crossorigin>
+<title>Climate effort — Andrew Silvestri</title>
+<meta name="description" content="Europeans most often name the climate actions that save the least. Fourteen actions from the 2025 Eurobarometer, set beside the tonnes each saves in a review of published estimates, and the evidence on why the order runs that way.">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="alternate icon" href="favicon.png">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<meta name="theme-color" content="#F2F0EF">
+<link rel="canonical" href="https://andrewsilvestri.com/dissonance.html">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Climate effort — Andrew Silvestri">
+<meta property="og:description" content="The three climate actions Europeans name most often save about {{top3_t}} tonnes of greenhouse gas per person a year; the three they name least often save about {{bot3_t}}.">
+<meta property="og:url" content="https://andrewsilvestri.com/dissonance.html">
+<script>try{document.documentElement.dataset.motion=matchMedia('(prefers-reduced-motion: reduce)').matches?'off':'on';}catch(e){document.documentElement.dataset.motion='on';}</script>
+<link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="assets/scrolly.css">
+</head><body>
+{{nav}}
+<main>
+<h1>The climate actions Europeans name most save the least</h1>
+<p class="dim">In 2025, {{serious}} percent of people in the European Union aged 15 and over called climate change a serious problem, and {{atleast}} percent said that at least one of fourteen listed climate actions applied to them. The difference is in which actions they name. The three named most often save about {{top3_t}} tonnes of greenhouse gas per person a year on average, and the three named least often about {{bot3_t}} tonnes. Even at the least favourable ends of the middle half of the estimates, the second group saves {{ratio_adv}} times as much.</p>
+<p class="stamp">{{stamp}}</p>
+{{takeaways}}
+
+<h2>Two lists of the same fourteen actions</h2>
+
+<p>Picture a flat in a European city: glass and paper in separate bins, a shopping bag folded for the next trip, a fridge chosen partly for its energy label. Each of these habits is on the list that the European Commission's survey shows to {{eb_n}} people, and each is common: {{rec_pct}} percent say they reduce their waste and separate it for recycling, {{disp_pct}} percent that they cut down on disposable items, {{app_pct}} percent that energy use counts when they buy an appliance. The list also names an electric car, a heat pump and a low-energy home. These are rare: {{ev_pct}}, {{hp_pct}} and {{home_pct}} percent.</p>
+
+<p>Surveys of this kind are often read as a measure of how engaged a country is with climate change. Read against the tonnes, they measure something narrower. The survey does not ask how much each action saves. For that, the page uses a review by Diana Ivanova and colleagues, who collected {{iva_rows}} published estimates of what single household actions save, in tonnes of carbon dioxide equivalent (CO<sub>2</sub>e) per person per year. The chart below shows the survey's order. It then re-sorts the same fourteen actions by the median of those estimates.</p>
+
+{{hero}}
+
+<p class="small">Bars: share of people in the EU aged 15 and over who say each action applies to them (Special Eurobarometer 565, fieldwork February and March 2025, question QD6), then the median saving per person per year of the matched action in Ivanova and colleagues (2020); recycling from Wynes and Nicholas (2017). Each measure has its own scale. Colour: the three actions named most often (blue) and least often (brown).</p>
+
+<h2>The arithmetic, once</h2>
+
+<p>The three actions named most often are recycling ({{rec_t}} tonnes a year), fewer disposable items ({{disp_t}}) and energy-efficient appliances ({{app_t}}). Their mean is {{top3_t}} tonnes. The three named least often are a heat pump ({{hp_t}}), an electric car ({{ev_t}}) and a low-energy home ({{home_t}}), with a mean of {{bot3_t}} tonnes. The second is {{ratio}} times the first. For scale, consumption in the EU caused about {{eu_t}} tonnes of CO<sub>2</sub> per person in {{eu_year}}. Recycling for a year is worth about {{rec_share_eu}} percent of that, and replacing a petrol or diesel car with an electric one about {{ev_share_eu}} percent. The other greenhouse gases would add to the per-person total and make both shares smaller.</p>
+
+<p>A second test weights each action by the number of people who name it. If the ticks were spread evenly over the fourteen actions, the average tick would be worth {{unweighted_t}} tonnes. Weighted by how often people name each action, it is worth {{weighted_t}} tonnes. Of the {{n_over_half}} actions that save half a tonne or more, none is named by more than {{over_half_max_pct}} percent of people.</p>
+
+<p>None of this means the common actions are useless. Recycling saves something, and it costs little. The finding is about proportion: the effort that people report is concentrated where the tonnes are few.</p>
+
+<h2>How do we know what an action saves?</h2>
+
+<p>Ivanova and colleagues took each estimate from its own study, converted it to tonnes per person per year, and grouped it with similar estimates. Beside each median, the table gives the middle half of the estimates (25th to 75th percentile) and the number of estimates.</p>
+
+<p>The survey's wording does not always match the review's options. Where the survey item is weaker than an option, the build takes the smaller saving. &ldquo;Regularly use alternatives to the car&rdquo; is matched to a shift to public transport, cycling or car sharing ({{car_t}} tonnes), not to living without a car (about 2 tonnes). &ldquo;Buy and eat less meat&rdquo; is matched to eating fewer animal products ({{meat_t}}), not to a vegetarian diet. &ldquo;Consider the carbon footprint of travel and sometimes adapt&rdquo; is matched to flying less ({{travel_t}}), not to one fewer long-haul flight. For a greener electricity supplier, the build uses the two estimates that the review labels EU or Europe ({{green_t}}). The method below says why.</p>
+
+<p class="small dim" id="actions-cue">On a narrow screen the table scrolls sideways.</p>
+<table class="n" tabindex="0" data-scroll-affordance="#actions-cue" aria-label="Climate actions: share who say each applies, and median saving">
+<thead><tr><th>Action (survey item, paraphrased)</th><th>Say it applies, %</th><th>Median saving, t a year</th><th>Middle half</th><th>Estimates</th><th>Match</th></tr></thead>
+<tbody>
+{{action_rows}}
+</tbody>
+</table>
+<p class="small">Survey: Special Eurobarometer 565, EU27, {{eb_n}} interviews. Savings: Ivanova and colleagues (2020), supplementary data, sheet &ldquo;options&rdquo;; recycling: Wynes and Nicholas (2017), table 1, one value. &ldquo;Loose&rdquo; means the survey item and the review's option differ in scope. For every loose item except recycling, the build takes the lower option; for recycling it takes the higher value (see Method).</p>
+
+<h2>Why the small actions come first</h2>
+
+<p>One reason is that people misjudge the sizes. In a survey of 505 Americans in 2009, Shahzeen Attari and colleagues asked for the energy that common actions use or save. The answers rose more slowly than the true values: on a log scale the slope of perceived against actual was 0.28, where perfect judgement gives 1. Asked for the most effective thing they could do to conserve energy, 55.2 percent named a form of curtailment, such as turning off lights, and 11.7 percent named an efficiency measure, such as insulation or a better car. In 2021, Ipsos asked 21,011 people in 30 markets which three of nine actions would most reduce the emissions of a person in one of the world's richer countries. Recycling was named by 59 percent, more than any other action. Not having a car was named by 17 percent and avoiding one long-haul flight by 21 percent. The study that Ipsos takes its tonnes from puts these at 2.4 tonnes a year and 1.6 tonnes per return transatlantic flight, against about 0.2 tonnes a year for recycling.</p>
+
+<p>Advice points the same way. Seth Wynes and Kimberly Nicholas read ten Canadian high-school science textbooks and found 216 recommended actions, of which 8 were what they classed as high-impact.</p>
+
+<p>A second reason is that the large actions need things that many people do not have. The Meta and Yale climate survey of 2023 asked the same questions in {{my_countries}} higher-income countries. On average, {{ev_done}} percent had owned or leased an electric car, and {{ev_want}} percent had not but wanted to. For rooftop solar, the figures were {{solar_done}} and {{solar_want}} percent. Those who had not acted were asked what made it difficult:</p>
+
+<p class="small dim" id="barriers-cue">On a narrow screen the table scrolls sideways.</p>
+<table class="n" tabindex="0" data-scroll-affordance="#barriers-cue" aria-label="Most named difficulties for each action">
+<thead><tr><th>Action</th><th>Most named difficulty</th><th>%</th><th>Second</th><th>%</th></tr></thead>
+<tbody>
+{{barrier_rows}}
+</tbody>
+</table>
+<p class="small">Meta and Yale Program on Climate Change Communication, Climate Change Opinion Survey 2023, country aggregates, respondents in {{my_countries}} higher-income countries who had not done the action; select all that apply. Unweighted mean of the country percentages, calculated by this page.</p>
+
+<p>For the heat pump and solar panels, the main answers are cost, not owning the home and an unsuitable building; for the electric car, cost; for diet, preference. A study that let households choose shows the same pattern. In the first, voluntary round of the HOPE project, 308 households in four European cities chose from a menu of actions with their savings shown. Of the households each action was open to, 38 percent chose to eat 30 percent more vegetarian food and 4 percent to become vegetarian; 34 percent chose a cleaner car and 4 percent to give up the car.</p>
+
+<p>Robert Gifford listed 29 &ldquo;dragons of inaction&rdquo;, from limited knowledge to the sense that one's own act makes no difference. Elke Weber described a single-action bias, in which one act to reduce a risk lowers the felt need for more. The evidence that one green act licenses a less green one is weaker. A meta-analysis by Alexander Maki and colleagues found almost no spillover from one environmental behaviour to the next, and a small positive effect on intentions.</p>
+
+<h2>What the chart does not show</h2>
+
+<p><b>What people do.</b> The survey records what people say applies to them, not what they do. A meta-analysis by Christine Kormos and Robert Gifford, as summarised by the North American Association for Environmental Education, put the correlation between self-reported and measured environmental behaviour at 0.46. Every EU country is required to collect paper, metal, plastic and glass separately, so a tick on the recycling line is not always a climate choice.</p>
+
+<p><b>Habits and purchases.</b> Recycling is a habit that anyone can report in any year. A car, a heat pump or a home is bought once in many years, and the survey's share is of everyone, not of those who made such a purchase recently. Part of the gap is opportunity, not choice.</p>
+
+<p><b>The order in the middle.</b> The ends of the two lists are robust; the middle is not. Take the top of the middle half of the estimates for the three most named actions and the bottom for the three least named: the second group still saves {{ratio_adv}} times as much. The rank correlation over all fourteen actions ({{spearman}}) depends on which match the build takes for each loose item, and the page does not rely on it.</p>
+
+<p><b>How much one person controls.</b> The consultancy Carbone 4 estimated in 2019 that the average French person, with a footprint of 10.8 tonnes of CO<sub>2</sub>e, could cut it by about 25 percent through everyday behaviour if everyone did every action, and by 5 to 10 percent under realistic assumptions. With investment in the home and the car, the maximum rose to about 45 percent. The Intergovernmental Panel on Climate Change (IPCC) puts the potential of changes in demand at 40 to 70 percent of end-use emissions by 2050, much of it dependent on infrastructure and technology. For behaviour change alone, with policy support, the panel gives a quick cut of at least 5 percent, and more by 2050 with better infrastructure. Europeans look elsewhere first: asked in 2025 who is best placed to tackle climate change, {{gov_best}} percent named national governments and {{you_best}} percent themselves.</p>
+
+<p>The Eurobarometer, read with the other surveys on this page, does not show a continent that says one thing and does nothing. It shows many people doing small things, evidence from other surveys that people misjudge their size, and large actions that are expensive, out of reach or, in most people's view, a job for governments first.</p>
+
+<h2 id="method">Method</h2>
+
+<p><b>The survey.</b> The shares are the published EU27 figures for question QD6 of Special Eurobarometer 565 (&ldquo;Which of the following actions, if any, apply to you?&rdquo;). The survey interviewed people aged 15 and over, face to face, from 18 February to 16 March 2025. The base is all respondents. Respondents see the list and can give more than one answer. The chart sorts by the unrounded share, which the build calculates from the weighted counts in the survey's Volume A tables. The page prints the published whole percent. Seriousness is question QD2 (&ldquo;very&rdquo; plus &ldquo;fairly serious&rdquo;).</p>
+
+<p><b>The savings.</b> For each survey item, the build selects the rows of the matching option in the review's supplementary data. It takes the median, 25th and 75th percentiles of the column &ldquo;absolute carbon mitigation potential&rdquo;, in tonnes of CO<sub>2</sub>e per person per year. Each row counts as one estimate. The build reproduces {{paper_checks}} medians and means that the paper prints, and it stops if one of them differs from the printed value. The alternatives to the car combine three options. The greener supplier uses only the rows marked EU or Europe. Most of the review's other estimates describe a change in how a country makes its power. Its four estimates for buying green power, all from Wynes and Nicholas, are left out. Three are for Canada, Australia and the United States (1.4 to 2.5 tonnes), grids outside Europe that Wynes and Nicholas describe as carbon-based. The fourth, for the United Kingdom, is entered in the review as 1.27 tonnes, but Wynes and Nicholas's own figure is 0.04 tonnes, which they attribute to double counting of green power in several European countries. The review has no usable option for recycling: its &ldquo;Recycle&rdquo; option holds three narrow cases and the Wynes and Nicholas row. So the build uses Wynes and Nicholas's 210 kilograms a year for recycling comprehensively. This value is the larger of the two, and it narrows the gap the page reports. All savings are for the person who acts, as the studies estimated them; none is a measured change in total emissions.</p>
+
+<p><b>The comparisons.</b> The means of three are plain arithmetic means of the medians. The weighted figure is the sum of share times saving, divided by the sum of the shares. The scale figure is the consumption-based CO<sub>2</sub> per person for the EU27 in {{eu_year}}, from the Global Carbon Budget as published by Our World in Data. It covers CO<sub>2</sub> only, so the percentages are approximate.</p>
+
+<h2 id="limits">Limits</h2>
+
+<p>The savings are medians of estimates made for different countries, years and baselines. What an electric car or a heat pump saves depends on the electricity grid and on what it replaces, and some estimates for electric cars are negative. The survey items do not say how much of an action a person does: a household that separates some of its waste and one that separates all of it tick the same box. Some items describe a purchase made at any time in the past. The survey covers the EU only, and the Meta and Yale figures are unweighted means of countries, not of people. None of the sources measures what any one respondent saved.</p>
+
+<h2 id="code">The code</h2>
+
+<p>Python: the step that trims the downloaded survey and review files to the rows the page uses, the build that matches each action and checks the review's printed medians, the page generator and the tests. The archive carries the trimmed tables. {{zip_kb}} KB.</p>
+<p><a class="btn" href="downloads/dissonance-code.zip">Download source</a>
+<a class="btn ghost" href="code.html">All code</a></p>
+
+<footer>
+<p><a href="about.html">Andrew Silvestri</a></p>
+<p><a href="code.html">Built with Python, Julia, JavaScript and public data.</a></p>
+</footer>
+</main>
+<script src="assets/motion.js"></script>
+<script src="assets/lightbox.js"></script>
+<script src="assets/nav.js"></script>
+<script src="assets/charts.js"></script>
+<script src="assets/scrolly.js"></script>
+</body></html>

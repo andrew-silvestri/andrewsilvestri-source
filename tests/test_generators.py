@@ -130,10 +130,56 @@ GENERATORS = [
     # from lead/data/raw (gitignored) at render time (lane lost-einsteins, 2026-11-07).
     ("lead page: lead/update_page.py --apply",
      ["update_page.py", "--apply"], "lead", "site"),
+    # dissonance/update_page.py writes site/dissonance.html from dissonance/outputs/payload.json; every
+    # input is a committed table in dissonance/data (climate-dissonance lane, 2026-11-13).
+    ("dissonance page: dissonance/update_page.py --apply",
+     ["update_page.py", "--apply"], "dissonance", "site"),
     # oxygen/update_page.py writes site/oxygen.html from oxygen/outputs/payload.json, reading its
     # quotations from oxygen/data/raw (gitignored) at render time (chain-reactions lane, 2026-11-07).
     ("oxygen page: oxygen/update_page.py --apply",
      ["update_page.py", "--apply"], "oxygen", "site"),
+    # nightshift/update_page.py writes site/nightshift.html from nightshift/outputs/payload.json
+    # (build_nightshift.py, which needs the BLS ATUS files in nightshift/data/raw, gitignored);
+    # night-shift lane, batch 2, 2026-11-13.
+    ("nightshift page: nightshift/update_page.py --apply",
+     ["update_page.py", "--apply"], "nightshift", "site"),
+    # space-depression/update_page.py writes site/space-depression.html from its outputs/payload.json alone
+    # (every quoted figure was matched in its source by the build) (space-depression lane, 2026-11-13).
+    ("space-depression page: space-depression/update_page.py --apply",
+     ["update_page.py", "--apply"], "space-depression", "site"),
+    # greatfilter/update_page.py writes site/greatfilter.html from greatfilter/sources.py and
+    # outputs/payload.json (great-filter lane, 2026-11-13).
+    ("greatfilter page: greatfilter/update_page.py --apply",
+     ["update_page.py", "--apply"], "greatfilter", "site"),
+    # origins/update_page.py writes site/origins.html from origins/outputs/payload.json
+    # (build_origins.py; the raw databases under origins/data/raw are gitignored). Lane
+    # origins-of-life, 2026-11-13.
+    ("origins page: origins/update_page.py --apply",
+     ["update_page.py", "--apply"], "origins", "site"),
+    # sub3/update_page.py writes site/sub3.html from sub3/outputs/payload.json alone (sub3-marathon
+    # lane, 2026-11-13); the raw results are read only by build_sub3.py.
+    ("sub3 page: sub3/update_page.py --apply",
+     ["update_page.py", "--apply"], "sub3", "site"),
+    # scales/update_page.py writes site/scales.html from scales/outputs/payload.json alone; it reads no
+    # raw file at render time (scales lane, 2026-11-13).
+    ("scales page: scales/update_page.py --apply",
+     ["update_page.py", "--apply"], "scales", "site"),
+    # algae/update_page.py writes site/algae.html from algae/outputs/payload.json; it reads no raw
+    # file at render time (algae-carbon lane, 2026-11-13).
+    ("algae page: algae/update_page.py --apply",
+     ["update_page.py", "--apply"], "algae", "site"),
+    # messaging/update_page.py writes site/messaging.html from messaging/outputs/payload.json
+    # (sustainable-messaging lane, 2026-11-13).
+    ("messaging page: messaging/update_page.py --apply",
+     ["update_page.py", "--apply"], "messaging", "site"),
+    # armchair/update_page.py writes site/armchair.html from armchair/outputs/payload.json (analysis.py,
+    # from the tracked tables in armchair/data) (philosophy-physics lane, 2026-11-13).
+    ("armchair page: armchair/update_page.py --apply",
+     ["update_page.py", "--apply"], "armchair", "site"),
+    # lowcarbon-shoe/update_page.py writes site/lowcarbon-shoe.html from lowcarbon-shoe/outputs/payload.json
+    # (eco-shoe lane, 2026-11-07); it reads nothing gitignored.
+    ("lowcarbon-shoe page: lowcarbon-shoe/update_page.py --apply",
+     ["update_page.py", "--apply"], "lowcarbon-shoe", "site"),
     # storage/update_page.py writes site/storage.html from storage/outputs/payload.json
     # (build_storage.py, which needs ERCOT's files under storage/data/raw, gitignored) and
     # storage/data/imm.json. R4, 2026-10-23.

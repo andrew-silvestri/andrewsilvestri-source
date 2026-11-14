@@ -32,6 +32,17 @@ OPTIONAL = [
     "python safetynet/test_safetynet.py",
     "python lead/test_lead.py",
     "python oxygen/test_oxygen.py",
+    "python nightshift/test_nightshift.py",
+    "python space-depression/test_space_depression.py",
+    "python greatfilter/test_greatfilter.py",
+    "python origins/test_origins.py",
+    "python sub3/test_sub3.py",
+    "python scales/test_scales.py",
+    "python algae/test_algae.py",
+    "python messaging/test_messaging.py",
+    "python dissonance/test_dissonance.py",
+    "python armchair/test_armchair.py",
+    "python lowcarbon-shoe/test_lowcarbon_shoe.py",
     "node tests/test_kit.js", "python tests/test_refresh.py",
 ]
 # test files in tests/ that are not suites in their own right

@@ -1,0 +1,86 @@
+id,book,chapter,question,line_start,line_end,holders,opinion
+B4.1.1,4,1,Why does the Nile flood?,5887,5890,Thales,"Strong seasonal north (Etesian) winds blow against Egypt and the sea pushing into the river mouth blocks its outflow, so the Nile rises."
+B4.1.2,4,1,Why does the Nile flood?,5890,5892,Euthymenes of Massalia,"The Nile is filled from the outer ocean beyond it, whose water is naturally fresh."
+B4.1.3,4,1,Why does the Nile flood?,5892,5893,Anaxagoras,"Snow in Ethiopia that freezes in winter melts in summer, and the meltwater causes the flood."
+B4.1.4,4,1,Why does the Nile flood?,5893,5899,Democritus,"Northern snows melt at the summer solstice; their vapour forms clouds that the Etesian winds drive south to Egypt, where heavy rains fill the marshes and the river."
+B4.1.5,4,1,Why does the Nile flood?,5899,5903,Herodotus,The Nile's source supplies equal water in winter and summer; it looks lower in winter because the nearer sun evaporates Egypt's rivers then.
+B4.1.6,4,1,Why does the Nile flood?,5903,5906,Ephorus,"In summer the whole land of Egypt seems to melt and sweat out water, helped by the thin sandy soils of Arabia and Libya."
+B4.1.7,4,1,Why does the Nile flood?,5906,5911,Eudoxus; the Egyptian priests,"Seasons are reversed between the northern and southern tropics, so when it is summer in the north, southern winter rains fall and make the Nile overflow."
+B4.2.1,4,2,What is the soul?,5921,5922,Thales,"The soul is that which is always in motion, or which moves itself."
+B4.2.2,4,2,What is the soul?,5923,5924,Pythagoras,"The soul is a self-moving number, number being taken as the same as mind."
+B4.2.3,4,2,What is the soul?,5924,5925,Plato,"The soul is an intelligent substance that moves itself, with a motion arranged in numerical harmony."
+B4.2.4,4,2,What is the soul?,5925,5928,Aristotle,The soul is the first actuality (entelechy) of a natural organic body that potentially has life; that actuality is understood as activity.
+B4.2.5,4,2,What is the soul?,5928,5929,Dicaearchus,The soul is a harmony (attunement) of the four elements.
+B4.2.6,4,2,What is the soul?,5929,5930,Asclepiades,The soul is the combined working together of the senses.
+B4.3.1,4,3,"Is the soul a body, and what is its nature?",5940,5943,Thales; Pythagoras; Plato; Aristotle,"The soul is incorporeal, ever-moving by its own nature, an intelligent substance, and the actuality of a living organic body."
+B4.3.2,4,3,"Is the soul a body, and what is its nature?",5943,5944,the followers of Anaxagoras,The soul is made of air and is a body.
+B4.3.3,4,3,"Is the soul a body, and what is its nature?",5944,5944,the Stoics,The soul is a hot breath (pneuma).
+B4.3.4,4,3,"Is the soul a body, and what is its nature?",5944,5947,Democritus,"The soul is a body: a fiery compound of tiny spherical particles, grasped only by reason, which lack any burning power."
+B4.3.5,4,3,"Is the soul a body, and what is its nature?",5947,5950,Epicurus,"The soul is a blend of four components: fiery, airy, breath-like, and a nameless fourth that provides sensation."
+B4.3.6,4,3,"Is the soul a body, and what is its nature?",5950,5953,Heraclitus,The world's soul is the exhalation rising from its moist parts; animal souls come from outer and inner exhalations and are of the same kind.
+B4.4.1,4,4,What are the parts of the soul?,5963,5966,Plato; Pythagoras,"Broadly the soul has two parts, rational and irrational; more precisely three, the irrational splitting into appetitive and spirited parts."
+B4.4.2,4,4,What are the parts of the soul?,5966,5972,the Stoics,"The soul has eight parts: the five senses, speech, reproduction, and a ruling part that directs the others like an octopus's arms."
+B4.4.3,4,4,What are the parts of the soul?,5972,5975,Democritus; Epicurus,The soul has two parts: a rational part lodged in the chest and an irrational part spread through the whole body.
+B4.4.4,4,4,What are the parts of the soul?,5975,5977,Democritus,"Something of soul belongs to everything, even corpses, which keep some warmth and sensation after most of both has left them."
+B4.5.1,4,5,"What is the soul's ruling part, and where in the body?",5988,5988,Plato; Democritus,The ruling part of the soul resides in the whole head.
+B4.5.2,4,5,"What is the soul's ruling part, and where in the body?",5988,5989,Strato,"It resides in the forehead, at the spot between the eyebrows."
+B4.5.3,4,5,"What is the soul's ruling part, and where in the body?",5990,5990,Erasistratus,It resides in the membrane that surrounds the brain.
+B4.5.4,4,5,"What is the soul's ruling part, and where in the body?",5991,5991,Herophilus,It resides in the cavity (ventricle) at the base of the brain.
+B4.5.5,4,5,"What is the soul's ruling part, and where in the body?",5992,5992,Parmenides; Epicurus,It resides throughout the whole chest.
+B4.5.6,4,5,"What is the soul's ruling part, and where in the body?",5993,5994,the Stoics,"It resides throughout the heart, or in the breath (pneuma) surrounding the heart."
+B4.5.7,4,5,"What is the soul's ruling part, and where in the body?",5994,5996,Diogenes,"It resides in the arterial ventricle of the heart, which is filled with vital breath."
+B4.5.8,4,5,"What is the soul's ruling part, and where in the body?",5996,5996,Empedocles,It resides in the mass of the blood.
+B4.5.9,4,5,"What is the soul's ruling part, and where in the body?",5996,5997,unnamed,It resides in the neck (upper part) of the heart.
+B4.5.10,4,5,"What is the soul's ruling part, and where in the body?",5997,5997,unnamed,"It resides in the pericardium, the sac around the heart."
+B4.5.11,4,5,"What is the soul's ruling part, and where in the body?",5997,5998,unnamed,It resides in the diaphragm.
+B4.5.12,4,5,"What is the soul's ruling part, and where in the body?",5998,5999,unnamed,It extends from the head down to the diaphragm.
+B4.5.13,4,5,"What is the soul's ruling part, and where in the body?",5999,6000,Pythagoras,The animal (life) part of the soul is in the heart; the intellectual part is in the head.
+B4.6.1,4,6,How does the soul move?,6010,6011,Plato,"The soul is always in motion, but the mind does not move from place to place."
+B4.6.2,4,6,How does the soul move?,6011,6013,Aristotle,"The soul is not moved by its own nature; it moves only incidentally, as the forms of bodies do."
+B4.7.1,4,7,Is the soul immortal?,6023,6025,Plato; Pythagoras,"The soul is immortal; on leaving the body it returns to the world-soul, which is of the same nature."
+B4.7.2,4,7,Is the soul immortal?,6025,6028,the Stoics,"Departed souls go to different places: those of the untaught sink into earthly mixtures, while the learned and strong survive until the universal conflagration."
+B4.7.3,4,7,Is the soul immortal?,6028,6029,Epicurus; Democritus,The soul is mortal and perishes together with the body.
+B4.7.4,4,7,Is the soul immortal?,6029,6032,Plato; Pythagoras,"The rational part of the soul is eternal, being the work of an eternal god though not itself a god; the irrational part dies."
+B4.8.1,4,8,What are the senses and their objects?,6042,6048,the Stoics,"Sensation is grasping an object through a sense organ, via intelligent breaths that stretch from the ruling part of the soul to the organs."
+B4.8.2,4,8,What are the senses and their objects?,6049,6052,Epicurus,"Sense is a faculty, and what is perceived is its product; so 'sense' means both the faculty and the perception it yields."
+B4.8.3,4,8,What are the senses and their objects?,6052,6056,Plato,"Sensation is the dealings of soul and body with outside things: the power comes from the soul, the organ from the body, both acting through impressions."
+B4.8.4,4,8,What are the senses and their objects?,6056,6058,Leucippus; Democritus,Sensation and thought both arise from images coming from outside; neither can occur unless such an image strikes us.
+B4.9.1,4,9,Are sense perceptions and impressions true or false?,6068,6069,the Stoics,What the senses report is true; impressions (imaginings) are partly true and partly false.
+B4.9.2,4,9,Are sense perceptions and impressions true or false?,6069,6074,Epicurus,"Every sense impression and imagining is true, while opinions are partly true and partly false; imagination can mislead about both sensible and intellectual things."
+B4.9.3,4,9,Are sense perceptions and impressions true or false?,6075,6077,Empedocles; Heraclides,Perception occurs when each object fits the pores of its proper sense organ; every perceptible thing is matched to its own organ.
+B4.10.1,4,10,How many senses are there?,6087,6088,the Stoics,"There are five senses properly so called: sight, hearing, smell, taste and touch."
+B4.10.2,4,10,How many senses are there?,6088,6093,Aristotle,"There is no sixth sense, but a common sense that judges composite objects such as shape and motion, receiving reports from each individual sense."
+B4.10.3,4,10,How many senses are there?,6093,6095,Democritus,"There are more kinds of senses than one set, belonging respectively to irrational animals, to the gods, and to wise men."
+B4.11.1,4,11,"How are perceptions, concepts and reason formed?",6106,6129,the Stoics,"The ruling part starts like blank paper; sensations leave memories, many alike make experience; natural prenotions and taught notions follow, and reason is completed by about age seven."
+B4.12.1,4,12,"How do impression, impressor, imaginary and phantasm differ?",6140,6174,Chrysippus,An impression reveals itself and its cause; the impressor is that cause; an imagining is an empty pull with no real cause; a phantasm is what that pull presents.
+B4.13.1,4,13,How do we see?,6184,6186,Democritus; Epicurus,"Sight occurs when small images enter the eye, together with rays that return to the eye after striking the object."
+B4.13.2,4,13,How do we see?,6186,6188,Empedocles,Images from objects mix with rays from the eye; he calls the result rays of images.
+B4.13.3,4,13,How do we see?,6188,6191,Hipparchus,"Visual rays reach out from both eyes to the surfaces of bodies and grasp them, the way a hand touching a body's edge feels it."
+B4.13.4,4,13,How do we see?,6192,6197,Plato,Light from the eyes passes into kindred air and meets light coming from bodies; their union in the intervening air produces sight.
+B4.14.1,4,14,How are images in mirrors formed?,6207,6210,Empedocles,"Effluences meet and settle on the mirror's surface and are completed by fire given off by the mirror, which also alters the surrounding air."
+B4.14.2,4,14,How are images in mirrors formed?,6210,6213,Democritus; Epicurus,"Images flowing from our eyes land on the mirror and stay there, while light bounces back to the eye."
+B4.14.3,4,14,How are images in mirrors formed?,6213,6219,the Pythagoreans,"Sight stretches out to the bronze mirror, meets its smooth dense surface, and is bent back on itself, like an outstretched arm drawn back."
+B4.15.1,4,15,Can darkness be seen?,6229,6231,the Stoics,"Darkness is seen: light issues from our eyes into it, and the eyes genuinely perceive that darkness is present."
+B4.15.2,4,15,Can darkness be seen?,6231,6237,Chrysippus,"Visual breath from the ruling part strikes the air before the eye, which presses cone-wise on the surrounding air; since these rays are not dark, darkness is seen."
+B4.16.1,4,16,How does hearing work?,6247,6249,Empedocles,Hearing occurs when air strikes a spiral structure that hangs inside the ear like a bell.
+B4.16.2,4,16,How does hearing work?,6249,6251,Alcmaeon,"Hearing comes from the empty space inside the ear: air resounds in the hollow, since every hollow rings."
+B4.16.3,4,16,How does hearing work?,6251,6253,Diogenes,Hearing occurs when the air inside the head is struck by the voice.
+B4.16.4,4,16,How does hearing work?,6253,6255,Plato and his followers,"Air in the head is struck and the impact is carried to the ruling part of the soul, producing hearing."
+B4.17.1,4,17,How does smell work?,6265,6266,Alcmaeon,"The ruling part of the soul, located in the brain, draws odours to itself through breathing."
+B4.17.2,4,17,How does smell work?,6266,6270,Empedocles,"Odours enter with the breathing of the lungs; when breathing is laboured, as with a head cold, smells are not perceived."
+B4.18.1,4,18,How does taste work?,6280,6281,Alcmaeon,The moist warmth of the tongue together with its softness lets it distinguish tastes.
+B4.18.2,4,18,How does taste work?,6281,6285,Diogenes,"Tastes spread through the soft, spongy tongue, where the body's veins meet, and are drawn from it to the sense and the ruling part like liquid from a sponge."
+B4.19.1,4,19,What is voice?,6295,6301,Plato,"Voice is breath driven by the mind through the mouth, a blow on the air passed via ears, brain and blood to the soul; strictly, only articulate sound."
+B4.19.2,4,19,What is voice?,6301,6307,Epicurus,"Voice is an outflow from sounding things that breaks into fragments of matching shapes, round with round, angular with angular; these strike the ears to produce hearing."
+B4.19.3,4,19,What is voice?,6309,6317,Democritus,"Air is broken into bodies of similar shape that travel with the fragments of the voice, like sorting with like, as pebbles on a beach or grains in a sieve."
+B4.19.4,4,19,What is voice?,6319,6324,the Stoics,"Air is continuous with no void; struck by breath it moves in endless circular waves, like ripples from a stone in a pond, but spreading spherically."
+B4.19.5,4,19,What is voice?,6324,6326,Anaxagoras,Voice forms when breath strikes solid (dense) air and rebounds to the ears; echo is produced the same way.
+B4.20.1,4,20,"Is voice incorporeal, and what produces an echo?",6336,6342,Pythagoras; Plato; Aristotle,"Voice is incorporeal: it is not the air but the shape or surface enclosing the struck air, and a surface in itself has no body."
+B4.20.2,4,20,"Is voice incorporeal, and what produces an echo?",6342,6351,the Stoics,"Voice is a body, since it acts, impresses the ear like a seal on wax, pleases or pains, and moves; echo is voice rebounding from smooth surfaces like a ball."
+B4.21.1,4,21,"How does the soul perceive, and what is its ruling part?",6362,6379,the Stoics,"The ruling part causes sense, impression, assent and desire; seven breath-parts extend from it to sense organs, reproductive organs and speech organs; it sits in the head."
+B4.22.1,4,22,How does breathing work?,6389,6401,Empedocles,"First breath came when fetal moisture drained and air entered the vessels; now blood surging outward and back expels and draws in air, like a water-clock."
+B4.22.2,4,22,How does breathing work?,6403,6412,Asclepiades,"The lungs act like a funnel: fine air inside the chest draws in coarser outside air, which is pushed back and drawn again, like cupping glasses."
+B4.22.3,4,22,How does breathing work?,6414,6435,Herophilus,"Nerves, arteries and muscles move the body, but the lungs have a natural urge to expand and contract, passing air between outside, lungs and chest in four motions."
+B4.23.1,4,23,Where are bodily affections felt; does the soul share them?,6446,6448,the Stoics,"Bodily affections are located in the parts affected, while the sensations reside in the ruling part of the soul."
+B4.23.2,4,23,Where are bodily affections felt; does the soul share them?,6448,6450,Epicurus,Both affections and sensations are in the affected parts; the ruling part of the soul is subject to no affection.
+B4.23.3,4,23,Where are bodily affections felt; does the soul share them?,6450,6454,Strato,"All affections and sensations are in the ruling part, not in the affected places; endurance resides there too, as seen in fear, pain, cowardice and courage."

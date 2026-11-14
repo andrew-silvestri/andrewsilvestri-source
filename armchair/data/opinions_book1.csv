@@ -1,0 +1,120 @@
+id,book,chapter,question,line_start,line_end,holders,opinion
+B1.0.1,1,0,How is philosophy divided? (preface),3738,3748,the Stoics,"Wisdom is knowledge of divine and human things; philosophy is practice of the art serving it, virtue; philosophy has three parts: physics, ethics and logic."
+B1.0.2,1,0,How is philosophy divided? (preface),3749,3765,Aristotle; Theophrastus; the Peripatetics,"The complete person must both contemplate what exists and practise what is fitting, so philosophy divides into a theoretical part and a practical, moral part."
+B1.1.1,1,1,What is nature?,3778,3792,Aristotle,"Nature is the source of motion and rest in a thing in which it belongs primarily and not incidentally; natural things like elements, plants and animals have such an origin."
+B1.2.1,1,2,How does a principle differ from an element?,3802,3815,the Aristotelians; the Platonists,"Elements and principles differ: elements (earth, water, air, fire) are compounds, while principles are uncompounded and prior to them, namely formless matter, form (actuality) and privation."
+B1.2.2,1,2,How does a principle differ from an element?,3803,3816,Thales,A principle and an element are one and the same thing; water is both the element and the principle.
+B1.3.1,1,3,What are the principles of things?,3826,3840,Thales,"Water is the source of everything and everything dissolves back into it; reasons: seed is moist, plants live on moisture, and sun and stars feed on watery vapours."
+B1.3.2,1,3,What are the principles of things?,3845,3851,Anaximander,"The principle is the Infinite (boundless): all things come from it and perish back into it, and endless worlds arise from it and dissolve again."
+B1.3.3,1,3,What are the principles of things?,3859,3863,Anaximenes,"Air is the principle of everything; all things arise from air and return to it; the soul is air, and breath and air hold the whole world together."
+B1.3.4,1,3,What are the principles of things?,3873,3895,Anaxagoras,"Principles are homoeomeries, tiny like-parts: food already holds particles of blood, bone and flesh, seen only by reason; these form matter, and Mind ordered the original mixture."
+B1.3.5,1,3,What are the principles of things?,3897,3899,Archelaus,"Everything comes from infinite air that is rarefied or condensed: rarefied air becomes fire, condensed air becomes water."
+B1.3.6,1,3,What are the principles of things?,3906,3956,Pythagoras,"Principles are numbers and their ratios (harmonies); unity is active Mind or God, the indefinite dyad passive matter; number culminates in ten, its power in four."
+B1.3.7,1,3,What are the principles of things?,3958,3968,Heraclitus; Hippasus,"Fire is the principle: the world formed as fire was quenched, densest part becoming earth, earth loosened into water, water vaporised into air; all ends in conflagration."
+B1.3.8,1,3,What are the principles of things?,3970,3980,Epicurus; Democritus,"Principles are atoms: solid, uncreated, indestructible, unalterable bodies known only by reason, infinite in number, moving forever through an infinite void."
+B1.3.9,1,3,What are the principles of things?,3980,3981,Democritus,Atoms have just two properties: size and shape.
+B1.3.10,1,3,What are the principles of things?,3981,3993,Epicurus,"Atoms have three properties, shape, size and weight; weight is what makes them move; their shapes are limited in variety and none are hooked or ring-shaped."
+B1.3.11,1,3,What are the principles of things?,3995,4007,Empedocles,"There are four elements, fire, air, earth and water, and two governing powers, Love which unites things and Strife which separates them."
+B1.3.12,1,3,What are the principles of things?,4009,4015,Socrates; Plato,"There are three principles: God (the universal mind), matter (the first substrate of coming-to-be and perishing), and the idea (an incorporeal essence in God's thought)."
+B1.3.13,1,3,What are the principles of things?,4017,4020,Aristotle,"There are three principles, form (entelechy), matter and privation; there are four elements plus a fifth, unchanging ethereal body."
+B1.3.14,1,3,What are the principles of things?,4022,4024,Zeno of Citium,"The principles are God, the active cause, and matter, the passive recipient; he also accepts the four elements."
+B1.4.1,1,4,How was the world put into its present order?,4034,4069,unnamed,"Atoms in random motion collided; heavy ones sank to form earth, light ones were driven upward forming heaven, stars, fire and air; winds squeezed water from earth."
+B1.5.1,1,5,Is the universe one?,4079,4080,the Stoics,"The world is one, and it is identical with the universe, which is a body."
+B1.5.2,1,5,Is the universe one?,4082,4084,Empedocles,"The world is one, but it is not the whole universe; it is a small portion of it, and the rest is inert matter."
+B1.5.3,1,5,Is the universe one?,4086,4093,Plato,"There is one world and it is the universe: otherwise it would not be complete, would not resemble its unique model, and could be destroyed by something outside it."
+B1.5.4,1,5,Is the universe one?,4102,4108,Metrodorus,"One world in infinite space is as absurd as a single stalk in a big field; since causes are infinite, the worlds produced must be infinite too."
+B1.6.1,1,6,How did people come to know that gods exist?,4119,4157,the Stoics,"God is intelligent fiery breath, shapeless and turning into anything; people inferred gods from the world's beauty (spherical form, colour, size, stars) and the regular return of heavenly bodies."
+B1.6.2,1,6,How did people come to know that gods exist?,4157,4205,the Stoics,"Belief in gods was handed down through nature (philosophers), myth (poets) and law (states), giving seven kinds: heavenly bodies, helpers, harmers, passions, abstractions, poets' gods, deified benefactors."
+B1.7.1,1,7,What is God?,4215,4225,Diagoras of Melos; Theodorus of Cyrene; Euhemerus,There are no gods at all.
+B1.7.2,1,7,What is God?,4225,4243,Euripides,"Speaking through his character Sisyphus: wise lawgivers invented an all-seeing god so that people would fear to commit crimes in secret, where laws could not reach."
+B1.7.3,1,7,What is God?,4245,4248,Callimachus,Whoever believes in a god must take that god to be all-powerful.
+B1.7.4,1,7,What is God?,4252,4253,Plato,God shaped the world in his own image.
+B1.7.5,1,7,What is God?,4258,4260,Anaxagoras,"Bodies existed from eternity in a mixture, and the divine Mind arranged them in order and so brought all things into being."
+B1.7.6,1,7,What is God?,4260,4263,Plato,"The primary bodies were not at rest but moving in disorder; God, judging order better than disorder, arranged them in the best way."
+B1.7.7,1,7,What is God?,4299,4299,Thales,God is the mind of the world.
+B1.7.8,1,7,What is God?,4301,4301,Anaximander,The stars are heavenly gods.
+B1.7.9,1,7,What is God?,4303,4304,Democritus,God is mind residing in a spherical fire and is the soul of the world.
+B1.7.10,1,7,What is God?,4306,4310,Pythagoras,"Unity is God, the good and mind; the indefinite dyad is a daemon and evil, the source of material multiplicity and the visible world."
+B1.7.11,1,7,What is God?,4312,4317,Socrates; Plato,"God is the One, self-generated, unique and wholly good; God is mind, a separate form entirely free of matter and of passion."
+B1.7.12,1,7,What is God?,4319,4327,Aristotle,"The highest God is a separate form seated on the outer sphere, made of ether (fifth element); each sphere is a living being whose unmoved rational soul causes its rotation."
+B1.7.13,1,7,What is God?,4329,4335,the Stoics,"God is a craftsmanlike fire that methodically makes the world, holding all seed-principles; this breath pervades everything, so the world, stars, earth and highest mind are God."
+B1.7.14,1,7,What is God?,4337,4340,Epicurus,"The gods have human form but are grasped only by reason, being made of particles so fine they give no bodily image."
+B1.7.15,1,7,What is God?,4341,4344,Epicurus,"Besides the gods there are four other imperishable natures: atoms, the void, the infinite, and the like-parts (homoeomeries), also called elements."
+B1.8.1,1,8,On daemons and heroes,4355,4359,Thales; Pythagoras; Plato; the Stoics,"Daemons are beings endowed with soul; heroes are souls separated from their bodies, good or bad according to whether their souls are good or bad."
+B1.8.2,1,8,On daemons and heroes,4359,4360,Epicurus,Rejects all of this: there are no daemons or heroes in that sense.
+B1.9.1,1,9,On matter,4373,4375,the followers of Thales; the Pythagoreans; the Stoics,"Matter is wholly changeable, alterable and convertible, flowing through everything."
+B1.9.2,1,9,On matter,4377,4379,the followers of Democritus,"The first realities are the void, the atom and the incorporeal, and they are not subject to being acted upon."
+B1.9.3,1,9,On matter,4381,4384,Aristotle; Plato,"Matter is bodily but lacks all form, shape and quality, yet can take on every form, serving as nurse and mother of all other things."
+B1.9.4,1,9,On matter,4384,4386,unnamed,"Those who take water, earth, air and fire as matter hold that matter cannot exist without form and is a body."
+B1.9.5,1,9,On matter,4386,4387,unnamed,Those who take atoms and indivisible particles as matter hold that matter is formless.
+B1.10.1,1,10,On ideas,4401,4403,Socrates; Plato,"Ideas are real beings separate from matter, existing in the thoughts and imagination of God, that is, of mind."
+B1.10.2,1,10,On ideas,4405,4406,Aristotle,Accepts forms but holds they are not separate from matter and are not models of what God has made.
+B1.10.3,1,10,On ideas,4408,4409,the Stoics (school of Zeno of Citium),Ideas are nothing but concepts in our own minds.
+B1.11.1,1,11,On causes,4422,4424,Plato,"Causes are of three kinds, material, efficient and final; the chief cause is the efficient one, which is mind or intellect."
+B1.11.2,1,11,On causes,4426,4428,Pythagoras; Aristotle,"The first causes are incorporeal; things that are causes incidentally or by participation are bodies, and in this way the world is bodily."
+B1.11.3,1,11,On causes,4430,4431,the Stoics,"All causes are bodies, since they are breath (pneuma)."
+B1.12.1,1,12,On bodies,4445,4447,Plato,"A body is neither heavy nor light in itself when in its own place; displaced into another's place, it acquires a tendency toward heaviness or lightness."
+B1.12.2,1,12,On bodies,4449,4451,Aristotle,"Taken simply, only earth is heavy and only fire light; air and water are heavy in some circumstances and light in others."
+B1.12.3,1,12,On bodies,4453,4457,the Stoics,"Fire and air are light, earth and water heavy; light things naturally move away from the centre, heavy things toward it; the centre itself is not heavy."
+B1.12.4,1,12,On bodies,4459,4463,Epicurus,"Bodies are unlimited in number; all simple first bodies and their compounds have weight; atoms move some straight down, some obliquely, some upward by collision or vibration."
+B1.13.1,1,13,What are the smallest things in nature?,4473,4475,Empedocles,"Before the four elements there are minimal bodies resembling elements, existing earlier, made of like parts and round in shape."
+B1.13.2,1,13,What are the smallest things in nature?,4477,4477,Heraclitus,The smallest things are tiny indivisible fragments.
+B1.14.1,1,14,On shapes,4490,4492,the Pythagoreans,"The bodies of the four elements are spherical, except fire, at the top, whose shape is a cone."
+B1.15.1,1,15,On colours,4504,4504,the Pythagoreans,Colour is the outer surface of a body.
+B1.15.2,1,15,On colours,4505,4505,Empedocles,Colour is whatever fits the pores (passages) of the eye.
+B1.15.3,1,15,On colours,4506,4507,Plato,"Colours are flames given off by bodies, whose particles are proportioned to the sense of sight."
+B1.15.4,1,15,On colours,4507,4508,Zeno of Citium,Colours are the first configurations of matter.
+B1.15.5,1,15,On colours,4508,4511,the Pythagoreans,"There are four colours, white, black, red and pale; variety arises from mixing of elements, and in animals also from their food and the air they live in."
+B1.16.1,1,16,On the division of bodies,4521,4522,the followers of Thales; the Pythagoreans,All bodies can be acted upon and are divisible without limit.
+B1.16.2,1,16,On the division of bodies,4522,4524,unnamed,"Division stops at atoms, indivisible parts that cannot be divided further."
+B1.16.3,1,16,On the division of bodies,4524,4525,Aristotle,All bodies are infinitely divisible potentially but not actually.
+B1.17.1,1,17,How are bodies mixed with one another?,4535,4536,unnamed (the older philosophers),Elements mix by a change in their qualities.
+B1.17.2,1,17,How are bodies mixed with one another?,4536,4537,the followers of Anaxagoras; the followers of Democritus,"Mixing happens by juxtaposition, particles simply set side by side."
+B1.17.3,1,17,How are bodies mixed with one another?,4537,4539,Empedocles,"The elements are themselves composed of still smaller masses, the elements of the elements."
+B1.17.4,1,17,How are bodies mixed with one another?,4539,4542,Plato,"Air, fire and water (not strictly elements) can change into one another, but earth cannot change into any of them."
+B1.18.1,1,18,On the void,4552,4552,the natural philosophers from Thales to Plato,There is no void.
+B1.18.2,1,18,On the void,4553,4554,Empedocles,Nature contains no void and nothing in excess.
+B1.18.3,1,18,On the void,4554,4556,Leucippus; Democritus; Demetrius; Metrodorus; Epicurus,Atoms are infinite in number and the void is infinite in extent.
+B1.18.4,1,18,On the void,4556,4557,the Stoics,"There is no void inside the world, but beyond it the void is infinite."
+B1.18.5,1,18,On the void,4558,4559,Aristotle,"The void outside the world is just large enough for the heaven to breathe into it, since the heaven is fiery."
+B1.19.1,1,19,On place,4569,4571,Plato,"Place is what receives forms and ideas into itself, meaning matter, the nurse or receptacle of things."
+B1.19.2,1,19,On place,4571,4573,Aristotle,"Place is the innermost boundary surface of the surrounding body, in contact with what it surrounds."
+B1.20.1,1,20,On space,4583,4586,the Stoics; the Epicureans,"Void, place and space differ: void contains no body, place is occupied by body, and space is partly occupied, like a partly filled cask."
+B1.21.1,1,21,On time,4596,4597,Pythagoras,Time is the sphere that encloses the world.
+B1.21.2,1,21,On time,4597,4598,Plato,"Time is a moving image of eternity, or the interval of the world's motion."
+B1.21.3,1,21,On time,4598,4599,Eratosthenes,Time is the motion of the sun.
+B1.22.1,1,22,On the essence and nature of time,4609,4609,Plato,Time is the motion of the heavens.
+B1.22.2,1,22,On the essence and nature of time,4609,4610,most of the Stoics,Time is motion itself.
+B1.22.3,1,22,On the essence and nature of time,4610,4611,unnamed (most philosophers),Time had no beginning.
+B1.22.4,1,22,On the essence and nature of time,4611,4611,Plato,"Time had a beginning only in thought, not in fact."
+B1.23.1,1,23,On motion,4621,4622,Plato; Pythagoras,Motion is a change or alteration in matter.
+B1.23.2,1,23,On motion,4622,4623,Aristotle,Motion is the actualisation of what is capable of being moved.
+B1.23.3,1,23,On motion,4623,4624,Democritus,"There is only one kind of motion, a vibrating (oscillating) one."
+B1.23.4,1,23,On motion,4624,4625,Epicurus,"There are two kinds of motion, straight downward and oblique (swerving)."
+B1.23.5,1,23,On motion,4625,4626,Herophilus,"One kind of motion is perceptible only to reason, the other to the senses."
+B1.23.6,1,23,On motion,4626,4630,Heraclitus,"Nothing in nature is at rest, rest belongs to the dead; eternal things have eternal motion, perishable things perishable motion."
+B1.24.1,1,24,On coming-to-be and passing away,4640,4642,Parmenides; Melissus; Zeno of Elea,"Coming-to-be and passing away do not exist, because the universe is unmoving."
+B1.24.2,1,24,On coming-to-be and passing away,4642,4647,Empedocles; Epicurus; unnamed (others who build the world from small particles),"There is no true coming-to-be or perishing, only combining and separating of particles, a change of quantity and arrangement, not of quality."
+B1.24.3,1,24,On coming-to-be and passing away,4647,4651,Pythagoras; unnamed (all who hold matter changeable),"Coming-to-be and passing away are real, brought about by alteration, transformation and dissolution of the elements."
+B1.25.1,1,25,On necessity,4661,4662,Thales,Necessity is all-powerful and rules over everything.
+B1.25.2,1,25,On necessity,4662,4663,Pythagoras,Necessity surrounds (encloses) the world.
+B1.25.3,1,25,On necessity,4663,4666,Parmenides; Democritus,"Everything in the world happens by necessity, which is also called fate, justice, providence and the world's maker."
+B1.26.1,1,26,On the nature of necessity,4676,4677,Plato,Some things are due to providence and others to necessity.
+B1.26.2,1,26,On the nature of necessity,4677,4678,Empedocles,Necessity is the cause that puts the principles and elements to use.
+B1.26.3,1,26,On the nature of necessity,4678,4679,Democritus,"Necessity is the resistance, impact and force of matter."
+B1.26.4,1,26,On the nature of necessity,4679,4681,Plato,"Necessity is sometimes matter itself, sometimes the relation of the efficient cause to matter."
+B1.27.1,1,27,On destiny or fate,4691,4692,Heraclitus,"Everything happens by fate, and fate is the same as necessity."
+B1.27.2,1,27,On destiny or fate,4692,4694,Plato,"Necessity operates in human minds and actions, but there is also a cause that comes from ourselves."
+B1.27.3,1,27,On destiny or fate,4694,4698,the Stoics,"Necessity is an invincible, compelling cause; fate is an ordered web of causes that includes our own choices, so some things are fated and others not."
+B1.28.1,1,28,On the nature of fate,4708,4711,Heraclitus,Fate's essence is a reason pervading the substance of everything; it is an ethereal body holding the seed from which every being originates.
+B1.28.2,1,28,On the nature of fate,4711,4712,Plato,Fate is the eternal reason and eternal law of the nature of the universe.
+B1.28.3,1,28,On the nature of fate,4712,4714,Chrysippus,Fate is a power of breath (pneuma) that governs the universe in due order.
+B1.28.4,1,28,On the nature of fate,4714,4718,Chrysippus,"In his Definitions: fate is the world's reason, or the law by which providence governs everything, or the reason by which past, present and future events occur."
+B1.28.5,1,28,On the nature of fate,4718,4720,the Stoics,"Fate is a chain of causes, an order and connection of causes that cannot be resisted."
+B1.28.6,1,28,On the nature of fate,4720,4722,Posidonius,"Fate is third in rank after Zeus: first Zeus, second nature, third fate."
+B1.29.1,1,29,On fortune,4732,4733,Plato,"Fortune is an incidental cause, a chance by-product, in matters arising from human choice and deliberation."
+B1.29.2,1,29,On fortune,4734,4742,Aristotle,"Fortune is an incidental, unstable cause in purposive actions; it differs from chance: fortune belongs to rational agents, chance also to irrational and lifeless things."
+B1.29.3,1,29,On fortune,4742,4743,Epicurus,"Fortune is an inconstant cause that varies with persons, times and circumstances."
+B1.29.4,1,29,On fortune,4743,4746,Anaxagoras; the Stoics,"Fortune is a cause hidden from human reasoning; events come variously from necessity, fate, choice, fortune and chance."
+B1.30.1,1,30,On nature,4756,4763,Empedocles,Nature is nothing but the mixing and separating of the elements; there is no birth or death beyond that.
+B1.30.2,1,30,On nature,4765,4766,Anaxagoras,"Nature is combination and separation, that is, coming-to-be and passing away."

@@ -1,0 +1,163 @@
+Sample-ID,Vent-ID,Vent site (small scale),Vent area (large scale),Date of sample collection,Author (primary),Year of publication (primary),Source ID (primary),"Sample type [(HF,EM,SW,STD)]",Depth [mbsl],Tsample [°C],Tmax [°C],Tcalc [°C],T [°C],pHmeas [[]],pHmin [[]],pHcalc [[]],pH [[]],Mg [mmol/kg],H2 [µmol/kg],CH4 [µmol/kg]
+LC-BH,Poseidon Beehive,Lost City Hydrothermal Field,Lost City Hydrothermal Field,2003,Proskurovski et al.,2006,Doi: 10.1016/j.chemgeo.2005.11.005,EM,760,90,,,90,,,,,0,8970,1030
+LC-BH,Poseidon Beehive,Lost City Hydrothermal Field,Lost City Hydrothermal Field,2003,Proskurovski et al.,2006,Doi: 10.1016/j.chemgeo.2005.11.005,EM,760,90,,,90,,,,,0,9220,1070
+LC-IF,Marker IF,Lost City Hydrothermal Field,Lost City Hydrothermal Field,2003,Proskurovski et al.,2006,Doi: 10.1016/j.chemgeo.2005.11.005,EM,780,55,,,55,,,,,0,3690,1210
+LC-IF,Marker IF,Lost City Hydrothermal Field,Lost City Hydrothermal Field,2003,Proskurovski et al.,2006,Doi: 10.1016/j.chemgeo.2005.11.005,EM,780,55,,,55,,,,,0,3350,1140
+LC-IF,Marker IF,Lost City Hydrothermal Field,Lost City Hydrothermal Field,2003,Proskurovski et al.,2006,Doi: 10.1016/j.chemgeo.2005.11.005,EM,780,55,,,55,,,,,0,3770,1280
+LC-6,Marker 6,Lost City Hydrothermal Field,Lost City Hydrothermal Field,2003,Proskurovski et al.,2006,Doi: 10.1016/j.chemgeo.2005.11.005,EM,790,67,,,67,,,,,0,14140,1610
+LC-6,Marker 6,Lost City Hydrothermal Field,Lost City Hydrothermal Field,2003,Proskurovski et al.,2006,Doi: 10.1016/j.chemgeo.2005.11.005,EM,790,62,,,62,,,,,0,14190,1550
+LC-7,Marker 7,Lost City Hydrothermal Field,Lost City Hydrothermal Field,2003,Proskurovski et al.,2006,Doi: 10.1016/j.chemgeo.2005.11.005,EM,810,28,,,28,,,,,0,5540,1290
+LC-7,Marker 7,Lost City Hydrothermal Field,Lost City Hydrothermal Field,2003,Proskurovski et al.,2006,Doi: 10.1016/j.chemgeo.2005.11.005,EM,810,28,,,28,,,,,0,5430,1310
+LC-8,Marker 8,Lost City Hydrothermal Field,Lost City Hydrothermal Field,2003,Proskurovski et al.,2006,Doi: 10.1016/j.chemgeo.2005.11.005,EM,800,43,,,43,,,,,0,4200,1840
+LC-8,Marker 8,Lost City Hydrothermal Field,Lost City Hydrothermal Field,2003,Proskurovski et al.,2006,Doi: 10.1016/j.chemgeo.2005.11.005,EM,800,43,,,43,,,,,0,4100,1790
+LC-C,Marker C,Lost City Hydrothermal Field,Lost City Hydrothermal Field,2003,Proskurovski et al.,2006,Doi: 10.1016/j.chemgeo.2005.11.005,EM,760,62,,,62,,,,,0,7900,1070
+LC-C,Marker C,Lost City Hydrothermal Field,Lost City Hydrothermal Field,2003,Proskurovski et al.,2006,Doi: 10.1016/j.chemgeo.2005.11.005,EM,760,70,,,70,,,,,0,14380,1980
+LC-H,Marker H,Lost City Hydrothermal Field,Lost City Hydrothermal Field,2003,Proskurovski et al.,2006,Doi: 10.1016/j.chemgeo.2005.11.005,EM,860,60,,,60,,,,,0,2210,1440
+LC-H,Marker H,Lost City Hydrothermal Field,Lost City Hydrothermal Field,2003,Proskurovski et al.,2006,Doi: 10.1016/j.chemgeo.2005.11.005,EM,860,60,,,60,,,,,0,900,1340
+LC-3,Marker 3,Lost City Hydrothermal Field,Lost City Hydrothermal Field,2003,Proskurovski et al.,2006,Doi: 10.1016/j.chemgeo.2005.11.005,EM,760,61,,,61,,,,,0,11580,1260
+LC-3,Marker 3,Lost City Hydrothermal Field,Lost City Hydrothermal Field,2003,Proskurovski et al.,2006,Doi: 10.1016/j.chemgeo.2005.11.005,EM,760,71,,,71,,,,,0,13260,1550
+LC-3,Marker 3,Lost City Hydrothermal Field,Lost City Hydrothermal Field,2003,Proskurovski et al.,2006,Doi: 10.1016/j.chemgeo.2005.11.005,EM,760,73,,,73,,,,,0,11940,1300
+Lost City -Composite A,not given,Lost City Hydrothermal Field,Lost City Hydrothermal Field,not given,Charlou et al.,2010,Doi: 10.1029/2008GM000752,EM,780,,,,94,,,,,0,7570,870
+Lost City -Composite B,not given,Lost City Hydrothermal Field,Lost City Hydrothermal Field,not given,Charlou et al.,2010,Doi: 10.1029/2008GM000752,EM,780,,,,94,,,,,0,7570,870
+Exo-D17-Ti4,not given,Lost City Hydrothermal Field,Lost City Hydrothermal Field,2006,Charlou et al.,2010,Doi: 10.1029/2008GM000752,EM,780,,94,,94,,,,12.1,0,7570,870
+3877m23,Marker H,Lost City Hydrothermal Field,Lost City Hydrothermal Field,not given,Lang et al.,2010,Doi: 10.1016/j.gca.2009.10.045,EM,860,,,,,,,,9.5,,1300,
+3870b8,Marker IF,Lost City Hydrothermal Field,Lost City Hydrothermal Field,not given,Lang et al.,2010,Doi: 10.1016/j.gca.2009.10.045,EM,780,,,,,,,,10.9,,3700,
+3870p23,Marker 8,Lost City Hydrothermal Field,Lost City Hydrothermal Field,not given,Lang et al.,2010,Doi: 10.1016/j.gca.2009.10.045,EM,800,,,,,,,,9.7,29.1,4200,
+3874pf23,Poseidon Beehive,Lost City Hydrothermal Field,Lost City Hydrothermal Field,not given,Lang et al.,2010,Doi: 10.1016/j.gca.2009.10.045,EM,760,,,,,,,,10.7,,9100,
+3874bf14,Marker C,Lost City Hydrothermal Field,Lost City Hydrothermal Field,not given,Lang et al.,2010,Doi: 10.1016/j.gca.2009.10.045,EM,760,,,,,,,,10,,11200,
+3863m24,Marker 3,Lost City Hydrothermal Field,Lost City Hydrothermal Field,not given,Lang et al.,2010,Doi: 10.1016/j.gca.2009.10.045,EM,760,,,,,,,,10.8,,12300,
+Lost City-Marker 6-2008,Marker 6,Lost City Hydrothermal Field,Lost City Hydrothermal Field,2008,Seyfried et al.,2015,Doi: 10.1016/j.gca.2015.04.040,EM,790,,53,,53,,,,10.5,1.3,9900,1200
+Lost City-Poseidon Beehive-2008,Poseidon Beehive,Lost City Hydrothermal Field,Lost City Hydrothermal Field,2008,Seyfried et al.,2015,Doi: 10.1016/j.gca.2015.04.040,EM,760,,116,,116,,,,10.6,0,10800,1260
+Lost City-Poseidon Beehive-2018,Poseidon Beehive,Lost City Hydrothermal Field,Lost City Hydrothermal Field,8th September - 1st October 2018,Aquinio et al.,2022,Doi: 10.1016/j.gca.2022.06.027,EM,743,,95.7,,95.7,,,,,0.1,9500,1100
+Lost City-Camel humps-2018,Camel Humps,Lost City Hydrothermal Field,Lost City Hydrothermal Field,8th September - 1st October 2018,Aquinio et al.,2022,Doi: 10.1016/j.gca.2022.06.027,EM,732,,85,,85,,,,,0.7,9800,1100
+Lost City-Marker 6-2018,Marker 6,Lost City Hydrothermal Field,Lost City Hydrothermal Field,8th September - 1st October 2018,Aquinio et al.,2022,Doi: 10.1016/j.gca.2022.06.027,EM,777,,65.8,,65.8,,,,,3.7,13000,1500
+Lost City-Sombrero-2018,Sombrero,Lost City Hydrothermal Field,Lost City Hydrothermal Field,8th September - 1st October 2018,Aquinio et al.,2022,Doi: 10.1016/j.gca.2022.06.027,EM,762,,61.6,,61.6,,,,,3.7,9700,1400
+Lost City-Marker C-2018,Marker C,Lost City Hydrothermal Field,Lost City Hydrothermal Field,8th September - 1st October 2018,Aquinio et al.,2022,Doi: 10.1016/j.gca.2022.06.027,EM,780,,80.6,,80.6,,,,,0,7200,1000
+Lost City-Marker 3-2018,Marker 3,Lost City Hydrothermal Field,Lost City Hydrothermal Field,8th September - 1st October 2018,Aquinio et al.,2022,Doi: 10.1016/j.gca.2022.06.027,EM,730,,55.1,,55.1,,,,,2.5,4100,800
+Lost City-Marker 2-2018,Marker 2,Lost City Hydrothermal Field,Lost City Hydrothermal Field,8th September - 1st October 2018,Aquinio et al.,2022,Doi: 10.1016/j.gca.2022.06.027,EM,763,,63.9,,63.9,,,,,0.3,3400,1200
+Lost City-Marker 8-2018,Marker 8,Lost City Hydrothermal Field,Lost City Hydrothermal Field,8th September - 1st October 2018,Aquinio et al.,2022,Doi: 10.1016/j.gca.2022.06.027,EM,801,,53.8,,53.8,,,,,0.7,2600,1300
+Lost City-Calypso-2018,Calypso,Lost City Hydrothermal Field,Lost City Hydrothermal Field,8th September - 1st October 2018,Aquinio et al.,2022,Doi: 10.1016/j.gca.2022.06.027,EM,798,,32.9,,32.9,,,,,5.8,,
+Lost City-Vein on wall NE of Marker 7-2018,Vein on wall NE of Marker 7,Lost City Hydrothermal Field,Lost City Hydrothermal Field,8th September - 1st October 2018,Aquinio et al.,2022,Doi: 10.1016/j.gca.2022.06.027,EM,864,,22,,22,,,,,6.8,,
+Lost City; 30°N MAR,not given,Lost City Hydrothermal Field,Lost City Hydrothermal Field,not given,Kelley et al.,2001,Doi: 10.1038/35084000,HF,760,,,,57.5,,,,9.4,14,340,205
+3651-1013,not given,Lost City Hydrothermal Field,Lost City Hydrothermal Field,not given,Früh-Green et al.,2003,Doi: 10.1126/science.1085582,HF,731,,,,75,,,,,,,
+3651-1201A,not given,Lost City Hydrothermal Field,Lost City Hydrothermal Field,not given,Früh-Green et al.,2003,Doi: 10.1126/science.1085582,HF,792,,,,55,,,,,,,
+3651-1201B,not given,Lost City Hydrothermal Field,Lost City Hydrothermal Field,not given,Früh-Green et al.,2003,Doi: 10.1126/science.1085582,HF,792,,,,55,,,,,,,
+3862m11,Marker 3,Lost City Hydrothermal Field,Lost City Hydrothermal Field,2000 & 2003,Ludwig et al.,2006,Doi: 10.1016/j.gca.2006.04.016,HF,730,,,,59,,,,10.2,8.130000000000003,,
+3863m11,Marker 3,Lost City Hydrothermal Field,Lost City Hydrothermal Field,2000 & 2003,Ludwig et al.,2006,Doi: 10.1016/j.gca.2006.04.016,HF,731,,81,,81,,,,10.67,3.02,,
+3864m23,Imax Flange,Lost City Hydrothermal Field,Lost City Hydrothermal Field,2000 & 2003,Ludwig et al.,2006,Doi: 10.1016/j.gca.2006.04.016,HF,764,,,,62,,,,10.97,2.32,,
+3866p23,Marker 7,Lost City Hydrothermal Field,Lost City Hydrothermal Field,2000 & 2003,Ludwig et al.,2006,Doi: 10.1016/j.gca.2006.04.016,HF,801,,,,47,,,,8.7,35.44,,
+3866b16,Near Marker 7,Lost City Hydrothermal Field,Lost City Hydrothermal Field,2000 & 2003,Ludwig et al.,2006,Doi: 10.1016/j.gca.2006.04.016,HF,801,,,,51,,,,9.33,24.9,,
+3870bf17,Marker 8,Lost City Hydrothermal Field,Lost City Hydrothermal Field,2000 & 2003,Ludwig et al.,2006,Doi: 10.1016/j.gca.2006.04.016,HF,802,,,,51,,,,9.96,7.05,,
+3874b9,Marker C,Lost City Hydrothermal Field,Lost City Hydrothermal Field,2000 & 2003,Ludwig et al.,2006,Doi: 10.1016/j.gca.2006.04.016,HF,780,,,,73,,,,10.06,12.02,,
+3874b18,Beehive,Lost City Hydrothermal Field,Lost City Hydrothermal Field,2000 & 2003,Ludwig et al.,2006,Doi: 10.1016/j.gca.2006.04.016,HF,743,,,,91,,,,10.71,0.91,,
+3880m24,Marker H,Lost City Hydrothermal Field,Lost City Hydrothermal Field,2000 & 2003,Ludwig et al.,2006,Doi: 10.1016/j.gca.2006.04.016,HF,845,,,,30,,,,9.76,24.09,,
+3879-GT10,Marker H,Lost City Hydrothermal Field,Lost City Hydrothermal Field,not given,Proskurovski et al. B,2008,Doi: 10.1029/2007jb005467,HF,860,,,,,,,,,,,
+3881-GT10,Marker H,Lost City Hydrothermal Field,Lost City Hydrothermal Field,not given,Proskurovski et al. B,2008,Doi: 10.1029/2007jb005467,HF,860,,,,,,,,,,,
+H04-IGT8,Marker H,Lost City Hydrothermal Field,Lost City Hydrothermal Field,not given,Proskurovski et al. B,2008,Doi: 10.1029/2007jb005467,HF,860,,,,,,,,,,,
+3865-GT7,Marker IF,Lost City Hydrothermal Field,Lost City Hydrothermal Field,not given,Proskurovski et al. B,2008,Doi: 10.1029/2007jb005467,HF,780,,,,,,,,,,,
+H05-IGT7,Marker IF,Lost City Hydrothermal Field,Lost City Hydrothermal Field,not given,Proskurovski et al. B,2008,Doi: 10.1029/2007jb005467,HF,780,,,,,,,,,,,
+3871-GT15,Marker 8,Lost City Hydrothermal Field,Lost City Hydrothermal Field,not given,Proskurovski et al. B,2008,Doi: 10.1029/2007jb005467,HF,800,,,,,,,,,,,
+3866-GT9,Marker 7,Lost City Hydrothermal Field,Lost City Hydrothermal Field,not given,Proskurovski et al. B,2008,Doi: 10.1029/2007jb005467,HF,810,,,,,,,,,,,
+3871-GT9,Marker C,Lost City Hydrothermal Field,Lost City Hydrothermal Field,not given,Proskurovski et al. B,2008,Doi: 10.1029/2007jb005467,HF,760,,,,,,,,,,,
+3876-GT7,Poseidon Beehive,Lost City Hydrothermal Field,Lost City Hydrothermal Field,not given,Proskurovski et al. B,2008,Doi: 10.1029/2007jb005467,HF,760,,,,,,,,,,,
+H06-IGT8,Poseidon Beehive,Lost City Hydrothermal Field,Lost City Hydrothermal Field,not given,Proskurovski et al. B,2008,Doi: 10.1029/2007jb005467,HF,760,,,,,,,,,,,
+3863-GT7,Marker 3,Lost City Hydrothermal Field,Lost City Hydrothermal Field,not given,Proskurovski et al. B,2008,Doi: 10.1029/2007jb005467,HF,760,,,,,,,,,,,
+H03-IGT7,Marker 3,Lost City Hydrothermal Field,Lost City Hydrothermal Field,not given,Proskurovski et al. B,2008,Doi: 10.1029/2007jb005467,HF,760,,,,,,,,,,,
+3872-GT10,Marker 6,Lost City Hydrothermal Field,Lost City Hydrothermal Field,not given,Proskurovski et al. B,2008,Doi: 10.1029/2007jb005467,HF,790,,,,,,,,,,,
+H07-IGT7,Marker 6,Lost City Hydrothermal Field,Lost City Hydrothermal Field,not given,Proskurovski et al. B,2008,Doi: 10.1029/2007jb005467,HF,790,,,,,,,,,,,
+Exo-D17-Ti4,not given,Lost City Hydrothermal Field,Lost City Hydrothermal Field,2006,Charlou et al.,2010,Doi: 10.1029/2008GM000752,HF,780,,,,93,,,,,,,
+3870p23,Marker 8,Lost City Hydrothermal Field,Lost City Hydrothermal Field,not given,Lang et al.,2010,Doi: 10.1016/j.gca.2009.10.045,HF,800,,39.5,,39.5,,,,,31.6,,
+3877m23,Marker H,Lost City Hydrothermal Field,Lost City Hydrothermal Field,not given,Lang et al.,2010,Doi: 10.1016/j.gca.2009.10.045,HF,860,,,,,,,,,43.8,,
+3878b8,Marker H,Lost City Hydrothermal Field,Lost City Hydrothermal Field,not given,Lang et al.,2010,Doi: 10.1016/j.gca.2009.10.045,HF,860,,31.2,,31.2,,,,,34.2,,
+3878b9,Marker H,Lost City Hydrothermal Field,Lost City Hydrothermal Field,not given,Lang et al.,2010,Doi: 10.1016/j.gca.2009.10.045,HF,860,,24,,24,,,,,41.4,,
+3878bf11,Marker H,Lost City Hydrothermal Field,Lost City Hydrothermal Field,not given,Lang et al.,2010,Doi: 10.1016/j.gca.2009.10.045,HF,860,,46.9,,46.9,,,,,28.3,,
+3870b8,Marker IF,Lost City Hydrothermal Field,Lost City Hydrothermal Field,not given,Lang et al.,2010,Doi: 10.1016/j.gca.2009.10.045,HF,780,,56.5,,56.5,,,,,12.9,,
+3874bf14,Marker C,Lost City Hydrothermal Field,Lost City Hydrothermal Field,not given,Lang et al.,2010,Doi: 10.1016/j.gca.2009.10.045,HF,760,,67.5,,67.5,,,,,15.1,,
+3874p22,Marker C,Lost City Hydrothermal Field,Lost City Hydrothermal Field,not given,Lang et al.,2010,Doi: 10.1016/j.gca.2009.10.045,HF,760,,68.7,,68.7,,,,,13,,
+3874pf23,Poseidon Beehive,Lost City Hydrothermal Field,Lost City Hydrothermal Field,not given,Lang et al.,2010,Doi: 10.1016/j.gca.2009.10.045,HF,760,,90.9,,90.9,,,,,2.1,,
+3874pf24,Poseidon Beehive,Lost City Hydrothermal Field,Lost City Hydrothermal Field,not given,Lang et al.,2010,Doi: 10.1016/j.gca.2009.10.045,HF,760,,91,,91,,,,,3.4,,
+3876m23,Poseidon Beehive,Lost City Hydrothermal Field,Lost City Hydrothermal Field,not given,Lang et al.,2010,Doi: 10.1016/j.gca.2009.10.045,HF,760,,90.7,,90.7,,,,,2.3,,
+3876m24,Poseidon Beehive,Lost City Hydrothermal Field,Lost City Hydrothermal Field,not given,Lang et al.,2010,Doi: 10.1016/j.gca.2009.10.045,HF,760,,90.7,,90.7,,,,,0.6,,
+3876m14,Poseidon Beehive,Lost City Hydrothermal Field,Lost City Hydrothermal Field,not given,Lang et al.,2010,Doi: 10.1016/j.gca.2009.10.045,HF,760,,90.7,,90.7,,,,,1.2,,
+3876m4,Poseidon Beehive,Lost City Hydrothermal Field,Lost City Hydrothermal Field,not given,Lang et al.,2010,Doi: 10.1016/j.gca.2009.10.045,HF,760,,90.7,,90.7,,,,,0.9,,
+3863m24,Marker 3,Lost City Hydrothermal Field,Lost City Hydrothermal Field,not given,Lang et al.,2010,Doi: 10.1016/j.gca.2009.10.045,HF,760,,81,,81,,,,,34.5,,
+3878p4,Marker 3,Lost City Hydrothermal Field,Lost City Hydrothermal Field,not given,Lang et al.,2010,Doi: 10.1016/j.gca.2009.10.045,HF,760,,37.1,,37.1,,,,,37.9,,
+3878b18,Marker 3,Lost City Hydrothermal Field,Lost City Hydrothermal Field,not given,Lang et al.,2010,Doi: 10.1016/j.gca.2009.10.045,HF,760,,50.8,,50.8,,,,,30.6,,
+3878pf24,Marker 3,Lost City Hydrothermal Field,Lost City Hydrothermal Field,not given,Lang et al.,2010,Doi: 10.1016/j.gca.2009.10.045,HF,760,,73.2,,73.2,,,,,16.9,,
+J2-361-CGT-B,Poseidon Beehive,Lost City Hydrothermal Field,Lost City Hydrothermal Field,2008,Reeves et al.,2014,Doi: 10.1073/pnas.1400643111,HF,760,,94,,94,,,,10.2,6.5,8830,903
+J2-361-IGT-5,Poseidon Beehive,Lost City Hydrothermal Field,Lost City Hydrothermal Field,2008,Reeves et al.,2014,Doi: 10.1073/pnas.1400643111,HF,760,,94,,94,,,,10.5,1.4,9810,1030
+J2-362-IGT-4,Marker 6,Lost City Hydrothermal Field,Lost City Hydrothermal Field,2008,Reeves et al.,2014,Doi: 10.1073/pnas.1400643111,HF,790,,96,,96,,,,10.5,1.23,10000.00014,1070
+J2-361-IGT8,Marker 6,Lost City Hydrothermal Field,Lost City Hydrothermal Field,2008,Seyfried et al.,2015,Doi: 10.1016/j.gca.2015.04.040,HF,790,,53,,53,,,,7.57,52.8,,
+J2-362-IGT2,Marker 6,Lost City Hydrothermal Field,Lost City Hydrothermal Field,2008,Seyfried et al.,2015,Doi: 10.1016/j.gca.2015.04.040,HF,790,,75,,75,,,,10.5,1.6,10400,1220
+J2-362-IGT4,Marker 6,Lost City Hydrothermal Field,Lost City Hydrothermal Field,2008,Seyfried et al.,2015,Doi: 10.1016/j.gca.2015.04.040,HF,790,,78,,78,,,,10.5,1.3,9900,1180
+J2-360-IGT2,Poseidon Beehive,Lost City Hydrothermal Field,Lost City Hydrothermal Field,2008,Seyfried et al.,2015,Doi: 10.1016/j.gca.2015.04.040,HF,760,,116,,116,,,,10.4,1.9,11500,1320
+J2-360-IGT6,Poseidon Beehive,Lost City Hydrothermal Field,Lost City Hydrothermal Field,2008,Seyfried et al.,2015,Doi: 10.1016/j.gca.2015.04.040,HF,760,,90,,90,,,,10.6,0.1,,
+J2-360-CGTR,Poseidon Beehive,Lost City Hydrothermal Field,Lost City Hydrothermal Field,2008,Seyfried et al.,2015,Doi: 10.1016/j.gca.2015.04.040,HF,760,,96,,96,,,,10.1,3.6,12000,1360
+J2-361-IGT5,Poseidon Beehive,Lost City Hydrothermal Field,Lost City Hydrothermal Field,2008,Seyfried et al.,2015,Doi: 10.1016/j.gca.2015.04.040,HF,760,,90,,90,,,,10.5,1.4,10500,1230
+J2-361-IGT6,Poseidon Beehive,Lost City Hydrothermal Field,Lost City Hydrothermal Field,2008,Seyfried et al.,2015,Doi: 10.1016/j.gca.2015.04.040,HF,760,,90,,90,,,,10.6,1.1,,
+J2-361-CGTB,Poseidon Beehive,Lost City Hydrothermal Field,Lost City Hydrothermal Field,2008,Seyfried et al.,2015,Doi: 10.1016/j.gca.2015.04.040,HF,760,,85,,85,,,,10.2,6.6,9400,1110
+J2-361-CGT-W,Poseidon Beehive,Lost City Hydrothermal Field,Lost City Hydrothermal Field,2008,Seyfried et al.,2015,Doi: 10.1016/j.gca.2015.04.040,HF,760,,94,,94,,,,10.5,2.4,10500,1250
+H06_GT_15/16,Poseidon Beehive,Lost City Hydrothermal Field,Lost City Hydrothermal Field,2005,Labidi et al.,2020,Doi: 10.1016/j.gca.2020.08.013,HF,743,,,,,,,,,,,
+j1107 GT,Marker 2,Lost City Hydrothermal Field,Lost City Hydrothermal Field,8th September - 1st October 2018,Labidi et al.,2020,Doi: 10.1016/j.gca.2020.08.013,HF,763,,,,,,,,,,,
+J1111 titan,Marker 2,Lost City Hydrothermal Field,Lost City Hydrothermal Field,8th September - 1st October 2018,Labidi et al.,2020,Doi: 10.1016/j.gca.2020.08.013,HF,763,,,,,,,,,,,
+J_1107_C6,Marker 2,Lost City Hydrothermal Field,Lost City Hydrothermal Field,8th September - 1st October 2018,Lang & Benitez-Nelson,2021,Doi: 10.1016/j.dsr.2021.103529,HF,775,61.2,63.9,,61.2,,,,10.3,3.01,,
+J_1108_C1,Beehive,Lost City Hydrothermal Field,Lost City Hydrothermal Field,8th September - 1st October 2018,Lang & Benitez-Nelson,2021,Doi: 10.1016/j.dsr.2021.103529,HF,775,95,95.7,,95,,,,10.6,1.84,,
+J_1110_C2,Marker C,Lost City Hydrothermal Field,Lost City Hydrothermal Field,8th September - 1st October 2018,Lang & Benitez-Nelson,2021,Doi: 10.1016/j.dsr.2021.103529,HF,775,78.4,80,,78.4,,,,10,10.8,,
+J_1110_C4,Marker 8,Lost City Hydrothermal Field,Lost City Hydrothermal Field,8th September - 1st October 2018,Lang & Benitez-Nelson,2021,Doi: 10.1016/j.dsr.2021.103529,HF,775,46.7,53.8,,46.7,,,,10,11.7,,
+J_1111_C3,Sombrero,Lost City Hydrothermal Field,Lost City Hydrothermal Field,8th September - 1st October 2018,Lang & Benitez-Nelson,2021,Doi: 10.1016/j.dsr.2021.103529,HF,775,46.6,58.5,,46.6,,,,9.3,21.164966,,
+J_1111_C5,Marker 3,Lost City Hydrothermal Field,Lost City Hydrothermal Field,8th September - 1st October 2018,Lang & Benitez-Nelson,2021,Doi: 10.1016/j.dsr.2021.103529,HF,775,,85,,85,,,,9.8,13,,
+J_1111_C6,Vein on wall,Lost City Hydrothermal Field,Lost City Hydrothermal Field,8th September - 1st October 2018,Lang & Benitez-Nelson,2021,Doi: 10.1016/j.dsr.2021.103529,HF,775,,22,,22,,,,9.1,35.533842,,
+1108-0606,Poseidon Beehive,Lost City Hydrothermal Field,Lost City Hydrothermal Field,8th September - 1st October 2018,Aquinio et al.,2022,Doi: 10.1016/j.gca.2022.06.027,HF,743,,95.7,,95.7,,,,10.8,0.1,,
+1108-0536,Poseidon Beehive,Lost City Hydrothermal Field,Lost City Hydrothermal Field,8th September - 1st October 2018,Aquinio et al.,2022,Doi: 10.1016/j.gca.2022.06.027,HF,743,,95.7,,95.7,,,,10.7,1.9,,
+1108-0546,Poseidon Beehive,Lost City Hydrothermal Field,Lost City Hydrothermal Field,8th September - 1st October 2018,Aquinio et al.,2022,Doi: 10.1016/j.gca.2022.06.027,HF,743,,95.4,,95.4,,,,10.8,0.9,,
+1108-0556,Poseidon Beehive,Lost City Hydrothermal Field,Lost City Hydrothermal Field,8th September - 1st October 2018,Aquinio et al.,2022,Doi: 10.1016/j.gca.2022.06.027,HF,743,,95.6,,95.6,,,,10.8,0.4,,
+1108-GT17,Poseidon Beehive,Lost City Hydrothermal Field,Lost City Hydrothermal Field,8th September - 1st October 2018,Aquinio et al.,2022,Doi: 10.1016/j.gca.2022.06.027,HF,743,,95.7,,95.7,,,,,1.4,9400,1100
+1111-0440,Camel humps,Lost City Hydrothermal Field,Lost City Hydrothermal Field,8th September - 1st October 2018,Aquinio et al.,2022,Doi: 10.1016/j.gca.2022.06.027,HF,732,,85,,85,,,,9,26.6,,
+1111-0449,Camel humps,Lost City Hydrothermal Field,Lost City Hydrothermal Field,8th September - 1st October 2018,Aquinio et al.,2022,Doi: 10.1016/j.gca.2022.06.027,HF,732,,85,,85,,,,9.8,13.4,,
+1111-GT11,Camel humps,Lost City Hydrothermal Field,Lost City Hydrothermal Field,8th September - 1st October 2018,Aquinio et al.,2022,Doi: 10.1016/j.gca.2022.06.027,HF,732,,85,,85,,,,,43.8,2000,200
+1112-Major 1,Marker 6,Lost City Hydrothermal Field,Lost City Hydrothermal Field,8th September - 1st October 2018,Aquinio et al.,2022,Doi: 10.1016/j.gca.2022.06.027,HF,777,,65.8,,65.8,,,,10.6,4.8,,
+1112-Major 2,Marker 6,Lost City Hydrothermal Field,Lost City Hydrothermal Field,8th September - 1st October 2018,Aquinio et al.,2022,Doi: 10.1016/j.gca.2022.06.027,HF,777,,65.8,,65.8,,,,10.2,13,,
+1112-GT16,Marker 6,Lost City Hydrothermal Field,Lost City Hydrothermal Field,8th September - 1st October 2018,Aquinio et al.,2022,Doi: 10.1016/j.gca.2022.06.027,HF,777,,65.8,,65.8,,,,,28.4,6600,800
+1112-GT5,Marker 6,Lost City Hydrothermal Field,Lost City Hydrothermal Field,8th September - 1st October 2018,Aquinio et al.,2022,Doi: 10.1016/j.gca.2022.06.027,HF,777,,65.8,,65.8,,,,,45.5,2300,300
+1112-GT17,Marker 6,Lost City Hydrothermal Field,Lost City Hydrothermal Field,8th September - 1st October 2018,Aquinio et al.,2022,Doi: 10.1016/j.gca.2022.06.027,HF,777,,65.8,,65.8,,,,,44.9,1900,200
+1111-2334,Sombrero,Lost City Hydrothermal Field,Lost City Hydrothermal Field,8th September - 1st October 2018,Aquinio et al.,2022,Doi: 10.1016/j.gca.2022.06.027,HF,762,,61.6,,61.6,,,,9.1,25.7,,
+1111-2306,Sombrero,Lost City Hydrothermal Field,Lost City Hydrothermal Field,8th September - 1st October 2018,Aquinio et al.,2022,Doi: 10.1016/j.gca.2022.06.027,HF,762,,56.8,,56.8,,,,9.1,25.2,,
+1111-2315,Sombrero,Lost City Hydrothermal Field,Lost City Hydrothermal Field,8th September - 1st October 2018,Aquinio et al.,2022,Doi: 10.1016/j.gca.2022.06.027,HF,762,,56.7,,56.7,,,,9.2,24.1,,
+1111-2325,Sombrero,Lost City Hydrothermal Field,Lost City Hydrothermal Field,8th September - 1st October 2018,Aquinio et al.,2022,Doi: 10.1016/j.gca.2022.06.027,HF,762,,58.5,,58.5,,,,9.3,21.8,,
+1109-GT16,Sombrero,Lost City Hydrothermal Field,Lost City Hydrothermal Field,8th September - 1st October 2018,Aquinio et al.,2022,Doi: 10.1016/j.gca.2022.06.027,HF,762,,61.6,,61.6,,,,,47.8,1100,200
+1109-GT10,Sombrero,Lost City Hydrothermal Field,Lost City Hydrothermal Field,8th September - 1st October 2018,Aquinio et al.,2022,Doi: 10.1016/j.gca.2022.06.027,HF,762,,61.6,,61.6,,,,,51.9,200,
+1110-2212,Marker C,Lost City Hydrothermal Field,Lost City Hydrothermal Field,8th September - 1st October 2018,Aquinio et al.,2022,Doi: 10.1016/j.gca.2022.06.027,HF,780,,79.7,,79.7,,,,10.1,5.9,,
+1110-2140,Marker C,Lost City Hydrothermal Field,Lost City Hydrothermal Field,8th September - 1st October 2018,Aquinio et al.,2022,Doi: 10.1016/j.gca.2022.06.027,HF,780,,80.6,,80.6,,,,10.1,6.3,,
+1110-2152,Marker C,Lost City Hydrothermal Field,Lost City Hydrothermal Field,8th September - 1st October 2018,Aquinio et al.,2022,Doi: 10.1016/j.gca.2022.06.027,HF,780,,80,,80,,,,10,11.1,,
+1110-2202,Marker C,Lost City Hydrothermal Field,Lost City Hydrothermal Field,8th September - 1st October 2018,Aquinio et al.,2022,Doi: 10.1016/j.gca.2022.06.027,HF,780,,79.6,,79.6,,,,10,9.3,,
+1110-GT18,Marker C,Lost City Hydrothermal Field,Lost City Hydrothermal Field,8th September - 1st October 2018,Aquinio et al.,2022,Doi: 10.1016/j.gca.2022.06.027,HF,780,,80.6,,80.6,,,,,8.4,6900,1000
+1110-TGT,Marker C,Lost City Hydrothermal Field,Lost City Hydrothermal Field,8th September - 1st October 2018,Aquinio et al.,2022,Doi: 10.1016/j.gca.2022.06.027,HF,780,,80.6,,80.6,,,,,22.2,2900,400
+1107-1330,Marker 3,Lost City Hydrothermal Field,Lost City Hydrothermal Field,8th September - 1st October 2018,Aquinio et al.,2022,Doi: 10.1016/j.gca.2022.06.027,HF,730,,45,,45,,,,9.4,29.7,,
+1107-1344,Marker 3,Lost City Hydrothermal Field,Lost City Hydrothermal Field,8th September - 1st October 2018,Aquinio et al.,2022,Doi: 10.1016/j.gca.2022.06.027,HF,730,,44.5,,44.5,,,,9.2,32.5,,
+1107-1357,Marker 3,Lost City Hydrothermal Field,Lost City Hydrothermal Field,8th September - 1st October 2018,Aquinio et al.,2022,Doi: 10.1016/j.gca.2022.06.027,HF,730,,55.1,,55.1,,,,9.3,28.2,,
+1107-GT11,Marker 3,Lost City Hydrothermal Field,Lost City Hydrothermal Field,8th September - 1st October 2018,Aquinio et al.,2022,Doi: 10.1016/j.gca.2022.06.027,HF,730,,55.1,,55.1,,,,,38.4,1200,200
+1107-1951,Marker 2,Lost City Hydrothermal Field,Lost City Hydrothermal Field,8th September - 1st October 2018,Aquinio et al.,2022,Doi: 10.1016/j.gca.2022.06.027,HF,763,,61.5,,61.5,,,,10,23.4,,
+1107-2006,Marker 2,Lost City Hydrothermal Field,Lost City Hydrothermal Field,8th September - 1st October 2018,Aquinio et al.,2022,Doi: 10.1016/j.gca.2022.06.027,HF,763,,62.4,,62.4,,,,10.2,5.7,,
+1107-2016,Marker 2,Lost City Hydrothermal Field,Lost City Hydrothermal Field,8th September - 1st October 2018,Aquinio et al.,2022,Doi: 10.1016/j.gca.2022.06.027,HF,763,,63.9,,63.9,,,,10.2,3.1,,
+1107-2025,Marker 2,Lost City Hydrothermal Field,Lost City Hydrothermal Field,8th September - 1st October 2018,Aquinio et al.,2022,Doi: 10.1016/j.gca.2022.06.027,HF,763,,58.3,,58.3,,,,10.1,21.8,,
+1107-GT12,Marker 2,Lost City Hydrothermal Field,Lost City Hydrothermal Field,8th September - 1st October 2018,Aquinio et al.,2022,Doi: 10.1016/j.gca.2022.06.027,HF,763,,63.9,,63.9,,,,,22.5,2100,800
+1111-GT12,Marker 2,Lost City Hydrothermal Field,Lost City Hydrothermal Field,8th September - 1st October 2018,Aquinio et al.,2022,Doi: 10.1016/j.gca.2022.06.027,HF,763,,63.9,,63.9,,,,,0.7,3100,1100
+1107-GT9,Marker 2,Lost City Hydrothermal Field,Lost City Hydrothermal Field,8th September - 1st October 2018,Aquinio et al.,2022,Doi: 10.1016/j.gca.2022.06.027,HF,763,,63.9,,63.9,,,,,4.6,3300,1200
+1110-0312,Marker 8,Lost City Hydrothermal Field,Lost City Hydrothermal Field,8th September - 1st October 2018,Aquinio et al.,2022,Doi: 10.1016/j.gca.2022.06.027,HF,801,,53.8,,53.8,,,,10,12,,
+1110-0336,Marker 8,Lost City Hydrothermal Field,Lost City Hydrothermal Field,8th September - 1st October 2018,Aquinio et al.,2022,Doi: 10.1016/j.gca.2022.06.027,HF,801,,52.6,,52.6,,,,,14.5,,
+1110-GT9,Marker 8,Lost City Hydrothermal Field,Lost City Hydrothermal Field,8th September - 1st October 2018,Aquinio et al.,2022,Doi: 10.1016/j.gca.2022.06.027,HF,801,,53.8,,53.8,,,,,25.6,1500,800
+1110-GT17,Marker 8,Lost City Hydrothermal Field,Lost City Hydrothermal Field,8th September - 1st October 2018,Aquinio et al.,2022,Doi: 10.1016/j.gca.2022.06.027,HF,801,,53.8,,53.8,,,,,37.3,800,400
+1108-1853,Calypso,Lost City Hydrothermal Field,Lost City Hydrothermal Field,8th September - 1st October 2018,Aquinio et al.,2022,Doi: 10.1016/j.gca.2022.06.027,HF,798,,31.8,,31.8,,,,9.3,33.3,,
+1108-1813,Calypso,Lost City Hydrothermal Field,Lost City Hydrothermal Field,8th September - 1st October 2018,Aquinio et al.,2022,Doi: 10.1016/j.gca.2022.06.027,HF,798,,26.2,,26.2,,,,9.3,36.3,,
+1108-1822,Calypso,Lost City Hydrothermal Field,Lost City Hydrothermal Field,8th September - 1st October 2018,Aquinio et al.,2022,Doi: 10.1016/j.gca.2022.06.027,HF,798,,26.2,,26.2,,,,9.3,34.3,,
+1108-1834,Calypso,Lost City Hydrothermal Field,Lost City Hydrothermal Field,8th September - 1st October 2018,Aquinio et al.,2022,Doi: 10.1016/j.gca.2022.06.027,HF,798,,31.8,,31.8,,,,9.3,35.3,,
+1108-1843,Calypso,Lost City Hydrothermal Field,Lost City Hydrothermal Field,8th September - 1st October 2018,Aquinio et al.,2022,Doi: 10.1016/j.gca.2022.06.027,HF,798,,32.9,,32.9,,,,9.4,31.4,,
+1109-0938,Vein on carbonate cap,Lost City Hydrothermal Field,Lost City Hydrothermal Field,8th September - 1st October 2018,Aquinio et al.,2022,Doi: 10.1016/j.gca.2022.06.027,HF,741,,10.7,,10.7,,,,8,53.5,,
+1111-1143,Vein on wall NE of Marker 7,Lost City Hydrothermal Field,Lost City Hydrothermal Field,8th September - 1st October 2018,Aquinio et al.,2022,Doi: 10.1016/j.gca.2022.06.027,HF,864,,22,,22,,,,9.1,36.6,,
+SW-Lost City-?,not applicable,not given,not given,not given,Kelley et al.,2001,Doi: 10.1038/35084000,SW,,,,,7,,,,8,54,0.4,0.0004
+Seawater_3870b19,not applicable,Lost City Hydrothermal Field,Lost City Hydrothermal Field,2000 & 2003,Ludwig et al.,2006,Doi: 10.1016/j.gca.2006.04.016,SW,789,,,,10,,,,7.98,53.12,,
+Seawater_3882m23,not applicable,Lost City Hydrothermal Field,Lost City Hydrothermal Field,2000 & 2003,Ludwig et al.,2006,Doi: 10.1016/j.gca.2006.04.016,SW,3680,,,,,,,,,54.29,,
+3865m23,not applicable,Lost City Hydrothermal Field,Lost City Hydrothermal Field,not given,Lang et al.,2010,Doi: 10.1016/j.gca.2009.10.045,SW,,,,,,,,,,54.1,,
+SW-Lost City-2008,not applicable,not given,Lost City Hydrothermal Field,2008,Seyfried et al.,2015,Doi: 10.1016/j.gca.2015.04.040,SW,800,,2,,2,,,,8,53.3,,
+1109-1915,not applicable,Lost City Hydrothermal Field,Lost City Hydrothermal Field,8th September - 1st October 2018,Aquinio et al.,2022,Doi: 10.1016/j.gca.2022.06.027,SW,849,,11,,11,,,,,53.7,,
+1109-1922,not applicable,Lost City Hydrothermal Field,Lost City Hydrothermal Field,8th September - 1st October 2018,Aquinio et al.,2022,Doi: 10.1016/j.gca.2022.06.027,SW,849,,11,,11,,,,,53.8,,

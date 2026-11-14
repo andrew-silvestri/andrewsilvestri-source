@@ -99,7 +99,11 @@ function canon(svgText) {
                  // R4: days states cross every key (reveal, lit, the blend between years, and the
                  // blend's midpoint where the lit set and the labels switch year)
                  days: [{ t: 0 }, { t: 0.37 }, { t: 1 }, { t: 1, lit: 1 }, { t: 1, lit: 0.5, mix: 0.49 },
-                        { t: 1, lit: 0.5, mix: 0.51 }, { t: 1, mix: 1 }, { t: 1, mix: 1, lit: 1 }] };
+                        { t: 1, lit: 0.5, mix: 0.51 }, { t: 1, mix: 1 }, { t: 1, mix: 1, lit: 1 }],
+                 // rank (dissonance.html, 2026-11-13): the re-sort, both sides of the switch of value
+                 // labels and header at m = 0.5, and the fade of the dim rows (f)
+                 rank: [{ m: 0 }, { m: 0.2 }, { m: 0.49 }, { m: 0.51 }, { m: 0.8 }, { m: 1 }, { m: 1, f: 1 },
+                        { m: 0.5, f: 0.4 }] };
   let pairs = 0, bad = [];
   // One document for the whole sweep, re-filled per pair. R4 found unclosed windows ran node out of memory
   // and closed them; closed windows are still retained: with ethane.html's spec (Q11, 2026-10-25) the heap

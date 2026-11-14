@@ -1,0 +1,264 @@
+id,grade,reason
+B1.0.1,UNSCORABLE,Classification of philosophy; no physical claim.
+B1.0.2,UNSCORABLE,Classification of philosophy; no physical claim.
+B1.1.1,UNSCORABLE,Definition of nature; no physical claim.
+B1.2.1,UNSCORABLE,"Metaphysical principles (form, privation); not physically checkable."
+B1.2.2,WRONG,"Water is a compound of hydrogen and oxygen, not an element."
+B1.3.1,WRONG,Matter is not made of water; ~118 chemical elements.
+B1.3.2,LOOSE,Boundless source and many worlds resemble multiverse ideas only verbally.
+B1.3.3,WRONG,Matter is not made of air; air is a mixture of gases.
+B1.3.4,PARTIAL,"Matter is invisible particles reused from food, but not preformed like-parts."
+B1.3.5,WRONG,Condensing air does not yield water or fire generally.
+B1.3.6,LOOSE,"Mathematical laws describe nature, but numbers are not matter."
+B1.3.7,WRONG,"Fire is a reaction, not a primary substance; no cyclic conflagration."
+B1.3.8,PARTIAL,Matter is atoms moving in mostly empty space; atoms are divisible and alterable.
+B1.3.9,WRONG,"Atoms have mass, charge, structure, not just size and shape."
+B1.3.10,PARTIAL,Atoms have mass; weight does not drive their motion.
+B1.3.11,WRONG,"Fire, air, earth, water are not elements."
+B1.3.12,UNSCORABLE,God and Ideas as principles are theological/metaphysical.
+B1.3.13,WRONG,No four elements or unchanging ether.
+B1.3.14,WRONG,Four-element theory is false; rest theological.
+B1.4.1,LOOSE,"Random collisions and accretion form bodies, but light matter did not rise to make stars."
+B1.5.1,UNSCORABLE,Whether other universes exist is unsettled; partly definitional.
+B1.5.2,PARTIAL,Our ordered cosmos is a tiny part of the universe; rest not inert.
+B1.5.3,UNSCORABLE,Teleological argument about one universe; unsettled and definitional.
+B1.5.4,PARTIAL,Many planetary systems exist; infinite number unverified.
+B1.6.1,UNSCORABLE,Theology: origin of belief in gods.
+B1.6.2,UNSCORABLE,Theology: kinds of gods.
+B1.7.1,UNSCORABLE,Existence of gods is not a physical question.
+B1.7.2,UNSCORABLE,Theology and political origin of religion.
+B1.7.3,UNSCORABLE,Theology.
+B1.7.4,UNSCORABLE,Theology.
+B1.7.5,UNSCORABLE,Divine Mind ordering matter is theological.
+B1.7.6,UNSCORABLE,Theology.
+B1.7.7,UNSCORABLE,Theology.
+B1.7.8,UNSCORABLE,Claim stars are gods is theological.
+B1.7.9,UNSCORABLE,Theology.
+B1.7.10,UNSCORABLE,Theology and numerology.
+B1.7.11,UNSCORABLE,Theology.
+B1.7.12,UNSCORABLE,Theology of the unmoved mover and ensouled spheres.
+B1.7.13,UNSCORABLE,Theology (pantheism).
+B1.7.14,UNSCORABLE,Theology.
+B1.7.15,WRONG,Atoms are not imperishable; they can be split and transmuted.
+B1.8.1,UNSCORABLE,Daemons and heroes are not physical claims.
+B1.8.2,UNSCORABLE,Daemons and heroes are not physical claims.
+B1.9.1,LOOSE,"Matter transforms (reactions, transmutation), but vague flux claim."
+B1.9.2,WRONG,"Atoms are acted upon: excited, ionised, split."
+B1.9.3,UNSCORABLE,Formless substrate is metaphysical.
+B1.9.4,UNSCORABLE,Definitional report of a school position.
+B1.9.5,UNSCORABLE,Definitional report of a school position.
+B1.10.1,UNSCORABLE,Theory of Forms is metaphysics.
+B1.10.2,UNSCORABLE,Theory of Forms is metaphysics.
+B1.10.3,UNSCORABLE,Status of ideas is epistemology.
+B1.11.1,UNSCORABLE,Classification of causes is metaphysics.
+B1.11.2,UNSCORABLE,Incorporeal causes is metaphysics.
+B1.11.3,UNSCORABLE,Corporeality of causes is metaphysics.
+B1.12.1,LOOSE,Resembles neutral buoyancy in own medium; weight does not depend on place.
+B1.12.2,WRONG,"All matter has weight; lightness is buoyancy, relative."
+B1.12.3,WRONG,Air and fire products have weight; rise only by buoyancy.
+B1.12.4,PARTIAL,All matter has mass and weight; no absolute downward motion.
+B1.13.1,LOOSE,Subatomic particles exist but are not round element-like minima.
+B1.13.2,PARTIAL,Matter is particulate down to elementary particles; ultimate indivisibility unconfirmed.
+B1.14.1,WRONG,Elements have no such shapes; fire is not a cone-shaped body.
+B1.15.1,LOOSE,"Colour arises from surface reflection of wavelengths, not the surface itself."
+B1.15.2,LOOSE,Cones respond to wavelengths; no fitting into eye pores.
+B1.15.3,PARTIAL,Colour is light from bodies matched to eye receptors; not flames.
+B1.15.4,LOOSE,"Structural colour exists, but claim too vague."
+B1.15.5,PARTIAL,Diet affects animal colour; four basic colours is wrong.
+B1.16.1,WRONG,Matter is not divisible without limit; it is particulate.
+B1.16.2,PARTIAL,Division ends at elementary particles; chemical atoms are divisible.
+B1.16.3,WRONG,Matter is particulate; bodies not infinitely divisible.
+B1.17.1,LOOSE,"Chemical compounds have new properties; mechanism is bonding, not quality change."
+B1.17.2,PARTIAL,Physical mixtures are juxtaposed particles; compounds involve bonding.
+B1.17.3,PARTIAL,"Fire, air, water, earth are made of smaller particles; not elements."
+B1.17.4,WRONG,"Air, water, fire do not interconvert as elements; earth not special."
+B1.18.1,WRONG,Vacuum exists; space is mostly empty.
+B1.18.2,WRONG,Vacuum exists; space is mostly empty.
+B1.18.3,PARTIAL,Matter is particles in mostly empty space; infinitude unknown.
+B1.18.4,WRONG,Empty space exists within the cosmos; no finite world in void.
+B1.18.5,WRONG,Heaven does not breathe; no bounded world with void outside.
+B1.19.1,UNSCORABLE,Definition of place; metaphysical.
+B1.19.2,UNSCORABLE,Definition of place.
+B1.20.1,UNSCORABLE,"Definitions of void, place and space."
+B1.21.1,UNSCORABLE,Too unclear to judge; metaphorical definition of time.
+B1.21.2,LOOSE,Time linked to motion only metaphorically; time is a spacetime dimension.
+B1.21.3,WRONG,Time is not the sun's motion; sun is merely a clock.
+B1.22.1,WRONG,Time is not the motion of the heavens.
+B1.22.2,LOOSE,Relational views tie time to change; time is not motion itself.
+B1.22.3,WRONG,"Standard cosmology dates time from the Big Bang, ~13.8 Gyr."
+B1.22.4,WRONG,Standard cosmology gives time a real beginning at the Big Bang.
+B1.23.1,UNSCORABLE,Definition of motion.
+B1.23.2,UNSCORABLE,Definition of motion.
+B1.23.3,LOOSE,"Atoms vibrate thermally, but motion is not only vibration."
+B1.23.4,WRONG,No absolute downward motion or random swerve.
+B1.23.5,LOOSE,"Molecular motion is invisible, but classification is vague."
+B1.23.6,PARTIAL,"Nothing is truly at rest (thermal, cosmic motion); rest of claim vague."
+B1.24.1,WRONG,Change and motion are real.
+B1.24.2,PARTIAL,Matter conserved and rearranged in chemistry; particles can be created/annihilated.
+B1.24.3,LOOSE,"Nuclear transmutation exists, but claim is vague elemental alteration."
+B1.25.1,UNSCORABLE,Necessity as ruling power is metaphysics.
+B1.25.2,UNSCORABLE,Metaphorical metaphysics.
+B1.25.3,UNSCORABLE,Determinism mixed with providence; interpretation-dependent.
+B1.26.1,UNSCORABLE,Providence is theological.
+B1.26.2,UNSCORABLE,Metaphysics of necessity.
+B1.26.3,LOOSE,Mechanical causation by forces resembles physics only loosely.
+B1.26.4,UNSCORABLE,Metaphysics of necessity.
+B1.27.1,UNSCORABLE,Fate and determinism; metaphysics.
+B1.27.2,UNSCORABLE,Free will; ethics/metaphysics.
+B1.27.3,UNSCORABLE,Fate and free will; metaphysics.
+B1.28.1,UNSCORABLE,Fate as cosmic reason is metaphysics.
+B1.28.2,UNSCORABLE,Fate as law is metaphysics.
+B1.28.3,UNSCORABLE,Fate as pneuma is metaphysics.
+B1.28.4,UNSCORABLE,Definitions of fate.
+B1.28.5,UNSCORABLE,Fate as causal chain is metaphysics.
+B1.28.6,UNSCORABLE,Theology.
+B1.29.1,UNSCORABLE,Definition of fortune.
+B1.29.2,UNSCORABLE,Definition of fortune.
+B1.29.3,UNSCORABLE,Definition of fortune.
+B1.29.4,UNSCORABLE,Definition of fortune.
+B1.30.1,PARTIAL,Matter conserved and rearranged in chemistry; particles can be created/annihilated.
+B1.30.2,PARTIAL,Matter conserved and rearranged in chemistry; particles can be created/annihilated.
+B2.1.1,UNSCORABLE,Whether other universes exist is unsettled; partly definitional.
+B2.1.2,PARTIAL,Many planetary systems exist; infinite number unverified.
+B2.1.3,WRONG,Sun's path is not the edge of the cosmos.
+B2.1.4,PARTIAL,Universe has no edge; infinite extent unknown.
+B2.1.5,PARTIAL,Universe may be infinite; bound systems finite; infinitude unknown.
+B2.1.6,WRONG,No finite world surrounded by void; matter fills space homogeneously.
+B2.2.1,LOOSE,Cosmos has no spherical outer shell; observable universe spherical only by definition.
+B2.2.2,WRONG,Cosmos is not cone-shaped.
+B2.2.3,WRONG,Cosmos is not egg-shaped.
+B2.2.4,UNSCORABLE,Non-committal; no claim to check.
+B2.3.1,UNSCORABLE,Providence and cosmic reason are theological.
+B2.3.2,UNSCORABLE,World soul and providence are theological.
+B2.3.3,WRONG,No living heavenly spheres exist.
+B2.4.1,UNSCORABLE,Divine preservation of the world is theological.
+B2.4.2,STRONG,Solar system formed ~4.6 Gyr ago and will end.
+B2.4.3,WRONG,Earth and solar system formed and will end.
+B2.4.4,PARTIAL,Earthly things decay; true but nearly trivial as written.
+B2.5.1,WRONG,Cosmos is not eternal; stars consume fuel.
+B2.5.2,LOOSE,"Matter is recycled, but cosmos is not self-feeding."
+B2.5.3,WRONG,No fire from sky or moon-water feeding the world.
+B2.6.1,WRONG,Cosmos did not form from earth at a centre.
+B2.6.2,WRONG,No fifth element; cosmos did not begin from fire.
+B2.6.3,WRONG,Elemental separation sequence is false.
+B2.6.4,UNSCORABLE,World soul and intelligible model are theological.
+B2.6.5,WRONG,Elements are not Platonic solids.
+B2.7.1,WRONG,No concentric bands or solid outer shell.
+B2.7.2,WRONG,No enclosing membrane around the cosmos.
+B2.7.3,LOOSE,"Planetary systems differ, but no boundaries; vague."
+B2.7.4,WRONG,No elemental layering of the cosmos.
+B2.7.5,WRONG,No ether; elements not layered by nature.
+B2.7.6,LOOSE,"Matter moves and mixes, but no elemental place-swapping."
+B2.8.1,WRONG,"Axial tilt from early impacts, not spontaneous after animals."
+B2.8.2,WRONG,Sun's rays did not tilt the pole.
+B2.9.1,LOOSE,"Space beyond is near-empty, but the cosmos does not breathe."
+B2.9.2,WRONG,No cosmic conflagration into outer void.
+B2.9.3,WRONG,No finite void sized for conflagration.
+B2.9.4,WRONG,Vacuum exists.
+B2.9.5,WRONG,Vacuum exists.
+B2.10.1,UNSCORABLE,Right and left of the world is convention.
+B2.10.2,UNSCORABLE,Right and left of the world is convention.
+B2.11.1,UNSCORABLE,Too unclear to judge.
+B2.11.2,WRONG,No solid crystalline heaven.
+B2.11.3,WRONG,No fifth body forming the heavens.
+B2.12.1,STRONG,"Celestial equator, tropics, polar circles; ecliptic is oblique."
+B2.13.1,WRONG,"Stars are plasma spheres powered by fusion, not burning earth."
+B2.13.2,PARTIAL,Stars are hot glowing bodies; origin account wrong.
+B2.13.3,WRONG,Stars are not stones torn from earth.
+B2.13.4,PARTIAL,Meteorites do fall; stars are not pumice vents.
+B2.13.5,WRONG,No crystalline sphere holding the fixed stars.
+B2.13.6,PARTIAL,"Stars are hot plasma, broadly fire-like; glue blend wrong."
+B2.13.7,WRONG,Stars are not clouds relit nightly.
+B2.13.8,LOOSE,"Stars host planets, but stars are not worlds with earth and air."
+B2.13.9,UNSCORABLE,Non-committal; no claim to check.
+B2.14.1,STRONG,"Stars, sun and moon are spheres."
+B2.14.2,WRONG,Stars are not cone-shaped.
+B2.14.3,WRONG,Stars are not fixed in a vault.
+B2.14.4,WRONG,Stars are not flat leaves.
+B2.15.1,WRONG,Stars lie at vastly different distances.
+B2.15.2,STRONG,Stars lie at different distances.
+B2.15.3,PARTIAL,Stars farthest and moon nearest correct; geocentric order otherwise off.
+B2.15.4,PARTIAL,Outer planet order and moon nearest correct; sun not below Mercury.
+B2.15.5,PARTIAL,Sun is central to planets; phrase may mean middle of geocentric order.
+B2.15.6,WRONG,Stars are far beyond sun and moon.
+B2.16.1,PARTIAL,"Daily east-west motion is apparent, from Earth's rotation."
+B2.16.2,STRONG,Planets move eastward against the stars (prograde).
+B2.16.3,WRONG,No rotating spheres or circles carry stars.
+B2.16.4,PARTIAL,Stars appear to circle Earth daily; motion is apparent.
+B2.16.5,STRONG,Venus and Mercury share the sun's mean geocentric period of a year.
+B2.17.1,WRONG,Stars are suns with their own light.
+B2.17.2,WRONG,"Stars are powered by fusion, not exhalations."
+B2.17.3,WRONG,Stars consume fuel and die.
+B2.17.4,WRONG,Stars are powered by their own fusion.
+B2.18.1,WRONG,"St Elmo's fire is electrical corona discharge, not clouds."
+B2.18.2,WRONG,St Elmo's fire is a real electrical discharge.
+B2.19.1,PARTIAL,"Star risings mark seasons, but the sun alone causes them."
+B2.19.2,STRONG,Seasons are caused by the sun (insolation via axial tilt).
+B2.19.3,WRONG,Stars do not foretell events; seasons come from the sun.
+B2.20.1,WRONG,"Sun is a plasma sphere, not a fire-filled ring."
+B2.20.2,WRONG,Sun is not a cloud or gathered exhalation.
+B2.20.3,WRONG,Sun does not arise from the sea.
+B2.20.4,PARTIAL,"Sun is hot plasma, broadly fire-like; not combustion."
+B2.20.5,PARTIAL,Sun is a hot glowing mass; not a stone.
+B2.20.6,WRONG,No fifth body; sun is hydrogen-helium plasma.
+B2.20.7,WRONG,Sun emits its own light; it is not a reflector.
+B2.20.8,WRONG,Only one sun; it is not a reflection.
+B2.20.9,WRONG,Sun is not a porous earthy mass.
+B2.21.1,WRONG,Sun is ~109 times Earth's diameter.
+B2.21.2,PARTIAL,Sun is vastly larger than the Peloponnese; bound understated.
+B2.21.3,WRONG,Sun is ~1.4 million km across.
+B2.21.4,WRONG,Sun is vastly larger than it appears.
+B2.22.1,WRONG,Sun is spherical.
+B2.22.2,WRONG,Sun is spherical.
+B2.22.3,STRONG,Sun is spherical.
+B2.22.4,UNSCORABLE,Non-committal; no claim to check.
+B2.23.1,WRONG,"Solstices result from axial tilt, not air resistance."
+B2.23.2,WRONG,"Solstices result from axial tilt, not air resistance."
+B2.23.3,WRONG,No spherical carrier or tropic circles restrain the sun.
+B2.23.4,WRONG,Sun is not quenched at solstices.
+B2.23.5,WRONG,Sun is not nourished by exhalations.
+B2.23.6,STRONG,Solstices follow from the ecliptic's obliquity to the equator.
+B2.24.1,STRONG,Solar eclipse: Moon passes between Sun and Earth.
+B2.24.2,WRONG,Solar eclipse is the Moon blocking the Sun.
+B2.24.3,WRONG,Solar eclipse is the Moon blocking the Sun.
+B2.24.4,WRONG,Sun does not go out; Moon blocks it.
+B2.24.5,WRONG,"Solar eclipse is the Moon, not clouds."
+B2.24.6,PARTIAL,Earth orbits the Sun; eclipse mechanism by Earth's tilt wrong.
+B2.24.7,WRONG,One sun; eclipse is the Moon blocking it.
+B2.24.8,WRONG,"Sun's daily circle is Earth's rotation, not distance illusion."
+B2.25.1,WRONG,"Moon is a rocky sphere, not a fire-filled ring."
+B2.25.2,WRONG,"Moon is rock, not cloud."
+B2.25.3,WRONG,"Moon is rock, not fire and air."
+B2.25.4,STRONG,"Moon is a rocky, earth-like body."
+B2.25.5,PARTIAL,Moon has plains and mountains; it is not fiery.
+B2.25.6,PARTIAL,"Moon is rocky, but has no cloud envelope."
+B2.25.7,PARTIAL,"Moon reflects sunlight, but diffusely, not like a mirror."
+B2.26.1,WRONG,Moon is about a quarter of Earth's diameter.
+B2.26.2,PARTIAL,Moon lit by Sun right; Sun ~400 times larger.
+B2.27.1,STRONG,Moon is spherical.
+B2.27.2,WRONG,Moon is spherical.
+B2.27.3,WRONG,Moon is spherical.
+B2.27.4,WRONG,Moon is spherical.
+B2.28.1,WRONG,Moon shines by reflected sunlight.
+B2.28.2,WRONG,Moon shines by reflected sunlight.
+B2.28.3,STRONG,Moon shines by reflected sunlight.
+B2.28.4,WRONG,Moon shines by reflected sunlight; not exhalations.
+B2.29.1,WRONG,Lunar eclipse is Earth's shadow on the Moon.
+B2.29.2,WRONG,Lunar eclipse is Earth's shadow on the Moon.
+B2.29.3,WRONG,Lunar eclipse is Earth's shadow on the Moon.
+B2.29.4,WRONG,No counter-earth; Earth's shadow eclipses the Moon.
+B2.29.5,WRONG,Moon does not burn; phases are illumination geometry.
+B2.29.6,STRONG,Lunar eclipse: Earth between Sun and Moon casts shadow.
+B2.30.1,WRONG,Moon is airless and lifeless.
+B2.30.2,PARTIAL,Markings from compositional differences (maria vs highlands); not fiery matter.
+B2.30.3,WRONG,Moon is not decaying because of mixed substance.
+B2.31.1,WRONG,Sun is ~400 times farther than the Moon.
+B2.31.2,WRONG,"Sun is ~400 times farther than the Moon, not 18."
+B2.31.3,WRONG,"Sun is ~150 million km away, far beyond 780,000 stades."
+B2.32.1,STRONG,"Saturn 29.5 yr, Jupiter 11.9, Mars 1.9, Moon 29.5 days."
+B2.32.2,PARTIAL,"8 years approximate 99 lunar months, off ~1.5 days."
+B2.32.3,STRONG,19 years equal 235 lunar months closely (Metonic cycle).
+B2.32.4,PARTIAL,"59 years near-commensurates Moon, Saturn, Jupiter; approximate."
+B2.32.5,WRONG,"No 18,000-year cosmic cycle; precession ~25,800 years."
+B2.32.6,WRONG,No such cosmic cycle exists.
+B2.32.7,WRONG,No such cosmic cycle exists.
