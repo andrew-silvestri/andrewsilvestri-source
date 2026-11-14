@@ -194,6 +194,17 @@ ENTRIES = [
         "why": "An ancient handbook and graded case tables; stated on the page as not updated.",
     },
     {
+        # ai-web lane, 2026-11-14. Disabled: figures copied from published reports with dates; nothing to
+        # fetch, and the page says its data does not update.
+        "page": "aiweb",
+        "cwd": "aiweb",
+        "fetch": [],
+        "build": [["python", "build_aiweb.py"]],
+        "keys": [],
+        "enabled": False,
+        "why": "Figures copied from dated reports, surveys and filings; stated on the page as not updated.",
+    },
+    {
         "page": "takeaway",
         "cwd": "takeaway",
         # R2 (2026-10-23): production only. The pipeline tracker carries

@@ -356,6 +356,9 @@ TARGETS = [
     # re-downloads the Gutenberg volume.
     target("armchair", "armchair-code.zip", keep={"outputs"},
            skip=("data/raw", "data/raw/*")),
+    # The web after AI (ai-web lane, 2026-11-14): the table of published figures with a source for each,
+    # the build that computes the ratios and writes the payload, the page generator and the tests.
+    target("aiweb", "aiweb-code.zip", keep={"outputs"}),
     # food-code.zip retired with its page on 2026-09-09: food.html was
     # unpublished at Andrew's request, for now, and the last build is
     # unpublished/downloads/food-code.zip. The TARGET goes with the page,
