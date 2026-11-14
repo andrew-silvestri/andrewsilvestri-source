@@ -1,0 +1,28 @@
+{
+ "method": "T6: mass per shoe <= 300 g. LC-1 sole parts = CAD volume x density; upper\n    rows from prototype/lca/params.py. Baseline = the BOM in params.py (research/w2-03).",
+ "lc1_parts_g": {
+  "Midsole (expanded TPU)": 83.7,
+  "Outsole skin (TPU, recycled share)": 34.9,
+  "Stitch rim (TPU, recycled share)": 17.7,
+  "Sockliner (recycled PET spacer)": 11.6,
+  "Upper mesh and lining (recycled PET)": 46,
+  "Collar padding (recycled PET spacer)": 8,
+  "Strobel sock (recycled PET)": 10,
+  "Heel counter (recycled TPU)": 9,
+  "Laces (recycled PET)": 5,
+  "Stitchdown thread (recycled PET)": 3,
+  "Label (recycled PET)": 1
+ },
+ "lc1_g": 229.9,
+ "lc1_range_g": [
+  196.2,
+  289.6
+ ],
+ "baseline_g": 242.1297,
+ "daily_trainer_range_g": [
+  212,
+  282
+ ],
+ "target_g": 300,
+ "passed": true
+}

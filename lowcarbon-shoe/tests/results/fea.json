@@ -1,0 +1,330 @@
+{
+ "method": "Simulated midsole compression by finite element analysis (scikit-fem).",
+ "body_mass_kg": 70.0,
+ "rate_factor": 1.5,
+ "self_check_1d": [
+  {
+   "delta_mm": 4.0,
+   "fe_N": 184.7,
+   "column_N": 184.7,
+   "err_pct": -0.0
+  },
+  {
+   "delta_mm": 8.0,
+   "fe_N": 344.9,
+   "column_N": 344.9,
+   "err_pct": 0.0
+  },
+  {
+   "delta_mm": 12.0,
+   "fe_N": 661.6,
+   "column_N": 661.6,
+   "err_pct": 0.0
+  }
+ ],
+ "cases": {
+  "baseline": {
+   "label": "Baseline: EVA foam midsole, carbon-rubber outsole",
+   "drop_5J": {
+    "peak_force_N": 932.0,
+    "peak_g": 11.2,
+    "deflection_mm": 13.73
+   },
+   "heel_1p12BW": {
+    "load_N": 772.0,
+    "deflection_mm": 8.91,
+    "max_foam_strain": 0.683,
+    "max_foam_vonmises_MPa": 0.792,
+    "max_outsole_vonmises_MPa": 0.281
+   },
+   "forefoot_1p75BW": {
+    "load_N": 1199.0,
+    "deflection_mm": 5.33,
+    "max_foam_strain": 0.598,
+    "max_foam_vonmises_MPa": 0.469
+   },
+   "curve": {
+    "delta_mm": [
+     0.0,
+     1.0,
+     2.0,
+     3.0,
+     4.0,
+     5.0,
+     6.0,
+     7.0,
+     8.0,
+     9.0,
+     10.0,
+     11.0,
+     12.0,
+     13.0,
+     14.0,
+     15.0,
+     16.0,
+     17.0,
+     18.0,
+     19.0,
+     20.0,
+     21.0,
+     22.0,
+     23.0,
+     24.0
+    ],
+    "force_N": [
+     0.0,
+     61.9,
+     124.1,
+     187.6,
+     253.8,
+     320.7,
+     387.2,
+     452.2,
+     517.3,
+     583.4,
+     648.3,
+     716.2,
+     794.4,
+     869.2,
+     955.3,
+     1052.0,
+     1169.0,
+     1300.8,
+     1464.9,
+     1676.0,
+     1939.1,
+     2213.8,
+     2564.6,
+     2919.6,
+     3518.4
+    ]
+   }
+  },
+  "lc1": {
+   "label": "LC-1: expanded-TPU midsole at 200 kg/m3, 1.5 mm solid TPU outsole skin",
+   "drop_5J": {
+    "peak_force_N": 897.0,
+    "peak_g": 10.8,
+    "deflection_mm": 18.44
+   },
+   "heel_1p12BW": {
+    "load_N": 768.0,
+    "deflection_mm": 14.55,
+    "max_foam_strain": 0.847,
+    "max_foam_vonmises_MPa": 0.959,
+    "max_outsole_vonmises_MPa": 0.299
+   },
+   "forefoot_1p75BW": {
+    "load_N": 1199.0,
+    "deflection_mm": 9.14,
+    "max_foam_strain": 0.745,
+    "max_foam_vonmises_MPa": 0.589
+   },
+   "curve": {
+    "delta_mm": [
+     0.0,
+     1.0,
+     2.0,
+     3.0,
+     4.0,
+     5.0,
+     6.0,
+     7.0,
+     8.0,
+     9.0,
+     10.0,
+     11.0,
+     12.0,
+     13.0,
+     14.0,
+     15.0,
+     16.0,
+     17.0,
+     18.0,
+     19.0,
+     20.0,
+     21.0,
+     22.0,
+     23.0,
+     24.0
+    ],
+    "force_N": [
+     0.0,
+     26.9,
+     54.2,
+     84.2,
+     120.7,
+     159.6,
+     198.1,
+     235.7,
+     273.5,
+     312.0,
+     351.2,
+     393.0,
+     438.5,
+     488.6,
+     543.2,
+     605.4,
+     676.5,
+     755.1,
+     847.5,
+     960.3,
+     1092.8,
+     1238.2,
+     1452.1,
+     1675.9,
+     1943.1
+    ]
+   }
+  }
+ },
+ "lc1_vs_baseline_drop_pct": -3.8,
+ "check_stiffer_foam_peak_N": 1227.0,
+ "t4_sweep": [
+  {
+   "rate": 1.0,
+   "etpu_density": 190.0,
+   "baseline_N": 862.0,
+   "lc1_N": 948.0,
+   "diff_pct": 9.9
+  },
+  {
+   "rate": 1.0,
+   "etpu_density": 200.0,
+   "baseline_N": 862.0,
+   "lc1_N": 930.0,
+   "diff_pct": 7.9
+  },
+  {
+   "rate": 1.0,
+   "etpu_density": 220.0,
+   "baseline_N": 862.0,
+   "lc1_N": 902.0,
+   "diff_pct": 4.6
+  },
+  {
+   "rate": 1.0,
+   "etpu_density": 240.0,
+   "baseline_N": 862.0,
+   "lc1_N": 895.0,
+   "diff_pct": 3.9
+  },
+  {
+   "rate": 1.5,
+   "etpu_density": 190.0,
+   "baseline_N": 933.0,
+   "lc1_N": 894.0,
+   "diff_pct": -4.1
+  },
+  {
+   "rate": 1.5,
+   "etpu_density": 200.0,
+   "baseline_N": 933.0,
+   "lc1_N": 896.0,
+   "diff_pct": -3.9
+  },
+  {
+   "rate": 1.5,
+   "etpu_density": 220.0,
+   "baseline_N": 933.0,
+   "lc1_N": 909.0,
+   "diff_pct": -2.6
+  },
+  {
+   "rate": 1.5,
+   "etpu_density": 240.0,
+   "baseline_N": 933.0,
+   "lc1_N": 934.0,
+   "diff_pct": 0.1
+  },
+  {
+   "rate": 2.0,
+   "etpu_density": 190.0,
+   "baseline_N": 1032.0,
+   "lc1_N": 908.0,
+   "diff_pct": -12.0
+  },
+  {
+   "rate": 2.0,
+   "etpu_density": 200.0,
+   "baseline_N": 1032.0,
+   "lc1_N": 922.0,
+   "diff_pct": -10.7
+  },
+  {
+   "rate": 2.0,
+   "etpu_density": 220.0,
+   "baseline_N": 1032.0,
+   "lc1_N": 956.0,
+   "diff_pct": -7.4
+  },
+  {
+   "rate": 2.0,
+   "etpu_density": 240.0,
+   "baseline_N": 1032.0,
+   "lc1_N": 1000.0,
+   "diff_pct": -3.1
+  },
+  {
+   "rate": 3.7,
+   "etpu_density": 190.0,
+   "baseline_N": 1348.0,
+   "lc1_N": 1047.0,
+   "diff_pct": -22.4
+  },
+  {
+   "rate": 3.7,
+   "etpu_density": 200.0,
+   "baseline_N": 1348.0,
+   "lc1_N": 1083.0,
+   "diff_pct": -19.7
+  },
+  {
+   "rate": 3.7,
+   "etpu_density": 220.0,
+   "baseline_N": 1348.0,
+   "lc1_N": 1161.0,
+   "diff_pct": -13.9
+  },
+  {
+   "rate": 3.7,
+   "etpu_density": 240.0,
+   "baseline_N": 1348.0,
+   "lc1_N": 1246.0,
+   "diff_pct": -7.6
+  },
+  {
+   "rate": 5.0,
+   "etpu_density": 190.0,
+   "baseline_N": 1548.0,
+   "lc1_N": 1165.0,
+   "diff_pct": -24.8
+  },
+  {
+   "rate": 5.0,
+   "etpu_density": 200.0,
+   "baseline_N": 1548.0,
+   "lc1_N": 1214.0,
+   "diff_pct": -21.6
+  },
+  {
+   "rate": 5.0,
+   "etpu_density": 220.0,
+   "baseline_N": 1548.0,
+   "lc1_N": 1316.0,
+   "diff_pct": -15.0
+  },
+  {
+   "rate": 5.0,
+   "etpu_density": 240.0,
+   "baseline_N": 1548.0,
+   "lc1_N": 1420.0,
+   "diff_pct": -8.3
+  }
+ ],
+ "published_F1976_5J_range_N": [
+  809,
+  1259
+ ],
+ "published_F1976_source": "Pisciotta & Shorten, F1976 at 5 J, 9.7-15.1 g, as reported by Fuss 2025; research/w2-08-fea-inputs.md item 8"
+}

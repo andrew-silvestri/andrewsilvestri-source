@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Running-shoe footprint — Andrew Silvestri</title>
+<meta name="description" content="Where a running shoe's greenhouse gas comes from, and what a redesigned shoe, LC-1, can cut per 100 km run: a life-cycle model from public data, a simulated prototype, and the files to build it.">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="alternate icon" href="favicon.png">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<meta name="theme-color" content="#F2F0EF">
+<link rel="canonical" href="https://andrewsilvestri.com/lowcarbon-shoe.html">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Running-shoe footprint — Andrew Silvestri">
+<meta property="og:description" content="In a model built from public data, {{factory_pct}} percent of a running shoe's greenhouse gas is factory energy. A redesigned shoe cuts {{red_design}} percent per 100 km; with renewable power at the factory, {{red_lc1}} percent.">
+<meta property="og:url" content="https://andrewsilvestri.com/lowcarbon-shoe.html">
+<script>try{document.documentElement.dataset.motion=matchMedia('(prefers-reduced-motion: reduce)').matches?'off':'on';}catch(e){document.documentElement.dataset.motion='on';}</script>
+<link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="assets/scrolly.css">
+</head><body>
+{{nav}}
+<main>
+<h1>A running shoe&rsquo;s carbon comes as much from the factory as from the plastic</h1>
+<p class="dim">Imagine two pairs of the same daily trainer, one made on grid power and the other with renewable electricity at the two factories that mould its sole and assemble it. Nothing about the shoe differs, yet the second pair carries about a third less greenhouse gas. Efforts to make running shoes greener usually start with the plastic, but in a life-cycle model built for this page from public data, the electricity and fuel of the factories account for {{factory_pct}} percent of a typical trainer&rsquo;s greenhouse gas, slightly more than its materials. A redesigned shoe, LC-1, cuts the footprint by about a fifth; with renewable electricity as well, by just over half in the central case.</p>
+<p class="stamp">Model results from public data, current to November 2026. LC-1 is a design tested only by simulation; nobody has built or run in one. This page does not update.</p>
+{{takeaways}}
+
+<h2>Where does a shoe&rsquo;s carbon come from?</h2>
+
+<p>A running shoe is a stack of plastics: a foam midsole, a rubber outsole, a polyester upper and many smaller pieces, about 65 parts in all, glued and stitched together. So the plastic looks like the obvious place to cut. But a life-cycle model counts a product stage by stage, and this one follows a pair from the plastics plants to the bin and finds that the plastics are less than half the story. Scroll through the shoe, part by part.</p>
+
+{{hero}}
+
+<p class="dim">Kg CO2e per pair, central case, men&rsquo;s US size 9. Each part carries its materials, including cutting and moulding waste. Factory energy is the electricity and fuel for making the parts and assembling the shoe, and it is larger than any single part.</p>
+
+<p>The model&rsquo;s total, {{base_pair}} kg a pair, is lower than the two published studies of a whole running shoe found for this page: 6.7 kg in an industry report of 2025, and 14 kg in an MIT study of a factory in 2010. Why lower? The industry report&rsquo;s example sends part of its shoes by air where this model ships by sea, and the MIT factory burned coal and drew on a more carbon-intensive grid. The model also leaves out dyeing and finishing, for which no open data were found. The shares matter more here than the total.</p>
+
+<h2>The largest cut is the electricity</h2>
+
+<p>LC-1 changes three things: its materials and construction (recycled polyester, a sole of one plastic, no glue), its packaging (no shoebox), and its factories (renewable electricity at final assembly and at the sole moulder), and the chart separates them.</p>
+
+{{waterfall}}
+
+<p>Per 100 km run, the typical trainer emits {{b100}} kg CO2e and LC-1 {{l100}} kg, a cut of just over half ({{red_lc1}} percent in the central case). Materials and construction cut {{red_designbox}} percent and dropping the shoebox a little more, but the largest step is the electricity, and the same renewable electricity would cut the typical trainer&rsquo;s own emissions by {{red_baseclean}} percent. It is a choice open to any factory, not a feature of the design.</p>
+
+<p>The model retires both shoes after {{life}} km (about {{life_mi}} miles), inside the usual rule of thumb of 300 to 500 miles but towards its low end, and the rule itself has no clear origin in research. Because the distance divides both shoes alike, the cuts are the same per pair and per 100 km. Would a tougher shoe be kept longer? In one laboratory fatigue test, LC-1&rsquo;s kind of foam kept more of its cushioning than EVA foams, mostly because it lost less in the first few dozen kilometres. But in another study runners did not notice the loss of heel cushioning even after 640 km, so there is little reason to expect them to keep a tougher shoe longer, and the model gives LC-1 no extra distance. Distance matters in one case only: if the upper outlasts its first sole and a cobbler stitches on a second, LC-1&rsquo;s cut is {{red_resole}} percent.</p>
+
+<p>These figures are estimates, so how firm is the cut? In 10,000 model runs with every uncertain input drawn from its range, LC-1&rsquo;s cut had a median of {{mc_med}} percent; 90 percent of runs fell between {{mc_lo}} and {{mc_hi}} percent, and {{mc_p}} percent reached half. With the upper kept for between one and two soles, the median was {{mc_rmed}} percent, and {{mc_rp}} percent of runs reached half. The target of halving emissions that LC-1 was designed for is judged on the median of these runs, not on the central case. The central case passes half but the median does not, so as a shoe with one sole LC-1 does not meet its target.</p>
+
+<h2>A shoe held together by thread</h2>
+
+<p>LC-1 (low-carbon design 1) exists only as drawings and calculations: two parts held together by thread. The sole unit is one family of plastic, thermoplastic polyurethane (TPU): a midsole of expanded-TPU foam beads, moulded together with a 1.5 mm outsole skin and a rim of solid TPU. The upper is recycled polyester, with a heel counter of recycled TPU, and it is stitched through the rim, a construction used on boots that cobblers resole. There is no adhesive, so cutting the thread separates the polyester upper from the TPU sole, and a new sole unit can go onto a sound upper.</p>
+
+<p>Each choice was weighed against the alternatives. A sugarcane-based foam was rejected. Its maker reports a footprint of {{bio_eva_claim}} kg CO2e per kg, a manufacturer&rsquo;s claim that relies on a credit for carbon taken up by the crop, which this model does not give. A 3-D printed lattice midsole was rejected for production: printers use roughly 11 to 140 kWh of electricity per kilogram of plastic they print. In this model, recycled polyester fibre has {{rpet_pct}} percent of the footprint of new polyester fibre. Knitting an upper to shape avoids cutting waste but uses more electricity, and with the knitting mill on grid power the two roughly cancel, so LC-1&rsquo;s upper is cut from recycled mesh. The expanded-TPU midsole is the design&rsquo;s largest cost: it is denser than EVA and its plastic has a higher footprint per kilogram, so LC-1&rsquo;s midsole emits more than the typical trainer&rsquo;s. It was kept because it can be fused to the TPU skin in the mould without glue, and because it held its cushioning better in that fatigue test.</p>
+
+<h2>Still a plastic shoe, with less new plastic</h2>
+
+<p>LC-1 is still a plastic shoe: {{poly_lc1}} g of polymer per pair against {{poly_base}} g. What changes is how much of it is new plastic made from oil or gas, {{fossil_lc1}} g against {{fossil_base}} g, less than half; the rest is recycled polyester and recycled TPU. The model assumes that three quarters of the TPU in the outsole skin, rim and heel counter is recycled factory scrap.</p>
+
+<p>Recycling at the end is the weaker part. Fewer than 5 percent of used shoes are recycled, by one estimate, and a well-known take-back scheme grinds the shoes it collects into material for sports surfaces. TPU makers already sell grades recycled from factory scrap, and LC-1&rsquo;s sole is a single plastic of that kind, but no scheme open to a runner recycles a worn TPU sole back into plastic today. The model assumes that both shoes go to landfill or incineration in the usual US proportions.</p>
+
+<p>Soles also wear away into small particles. A German study estimated about 109 g a person a year from shoe soles, under a tenth of the 1,229 g or so from vehicle tyres. In a study of shoes walked and jogged on asphalt, running shoes lost about {{part_base}} g a pair per 100 km. TPU loses less volume than shoe-sole rubber in laboratory abrasion tests, so LC-1 should shed less: about {{part_lc1}} g, scaled by those tests. Abrasion tests rank materials and do not predict wear, so this is an estimate.</p>
+
+<h2>Does it still work as a running shoe?</h2>
+
+<p>LC-1 was checked by simulation against the typical trainer. In a simulated version of the standard drop test for running-shoe cushioning (8.5 kg, 5 joules, on the heel), the typical trainer&rsquo;s heel gave a peak force of {{drop_base}} N, inside the range of 809 to 1,259 N derived from tests of five running shoes. LC-1&rsquo;s gave {{drop_lc1}} N, {{drop_diff}} percent less. In a published laboratory comparison, a shoe with an expanded-TPU midsole returned {{er_lc1}} percent of the energy of an impact, against {{er_base}} percent for an EVA racing shoe. LC-1&rsquo;s calculated mass is {{shoe_lc1}} g per shoe, against {{shoe_base}} g for the typical trainer, whose midsole has the same shape in EVA. Its outsole should last longer: a calculated median of {{wear_lc1}} km to wear through, against {{wear_base}} km, an estimate from the same abrasion tests.</p>
+
+<p>The simulations also show what needs a real test. Under a running heel, LC-1&rsquo;s foam compresses about {{heel_ratio}} times as much as the trainer&rsquo;s, so it should feel softer and may be less stable. A TPU outsole may grip worse than rubber on wet roads; no open data were found to say by how much. The stitch rim carries every step&rsquo;s push and pull, and this study found no published data on how long such a joint lasts in a running shoe. The download includes a guide to building a test shoe at home and a simple physical test for each of these.</p>
+
+<h2>What would change the answer?</h2>
+
+<p>The table shows the inputs that move LC-1&rsquo;s cut the most when each is set to the low and the high end of its range, one at a time.</p>
+
+<table>
+<thead><tr><th>Input</th><th>Range</th><th class="n">Cut at low, %</th><th class="n">Cut at high, %</th></tr></thead>
+<tbody>
+{{tornado_rows}}
+</tbody>
+</table>
+
+<p>Two choices of method also matter. This study found no published footprint from a TPU producer, so the model builds one from TPU&rsquo;s raw materials: {{tpu_factor}} kg CO2e per kg. The raw materials of real TPU may have larger footprints than the ones in that build-up. Built instead from the highest open figure for each raw material, TPU comes to {{tpu_stress_factor}} kg, and with that value for both shoes, LC-1&rsquo;s cut falls to {{tpu_stress}} percent. The model also gives recycled plastic only the burden of recycling it; splitting the burden equally between the first and the second use gives {{cff}} percent. Both are choices, not measurements.</p>
+
+<h2 id="method">Method</h2>
+
+<p><b>Scope.</b> The functional unit is one pair of men&rsquo;s US size 9 shoes per 100 km run, cradle to grave. The stages are materials (with manufacturing waste), part making, final assembly, packaging, freight from Viet Nam to the United States, and end of life. Retail, travel to the shop, washing and capital goods are outside both systems, and the impact is greenhouse gas as CO2 equivalent over 100 years. Recycled inputs carry only the burden of recycling; there is no credit for recycling or for energy recovered at the end.</p>
+
+<p><b>Inventory.</b> The typical trainer&rsquo;s main parts follow the part shares in the MIT study; the remaining part masses are assumed, each with a range. Packaging and waste rates follow the EU footwear rules. The trainer&rsquo;s midsole has the same shape as LC-1&rsquo;s. LC-1&rsquo;s sole masses come from its CAD model. Final-assembly electricity, {{t1_kwh}} kWh a pair, and fuels are derived from the 2025 industry report, which surveyed 33 footwear factories in China and Viet Nam. The grid factor is {{grid}} g CO2e per kWh for Viet Nam in 2025. Plastics factors come from industry eco-profiles, a US industry study of resins and polyurethane raw materials, and published studies. The model uses published totals only, and none of its factors is a dataset from the licensed ecoinvent database or a total calculated with that database. The industry eco-profiles were calculated by their publishers with another commercial background database, and no open alternative of similar quality was found. The model assumes some inputs because there is no public data: the energy to foam and mould expanded TPU (set higher than for EVA), the share of recycled TPU (75 percent), and the distance to retirement.</p>
+
+<p><b>Uncertainty.</b> Every uncertain input has a low, central and high value, and the model draws 10,000 sets from triangular distributions, with the same draw for both shoes, and also changes one input at a time.</p>
+
+<p><b>Simulated tests.</b> A finite element model compresses each shoe&rsquo;s heel (outsole, 26 mm midsole, 4 mm sockliner) under a 45 mm flat striker, the striker of the older ASTM F1614 test; the public summary of F1976 does not give its striker size. Each foam follows its published stress-strain curve from the same laboratory test; LC-1&rsquo;s curve is scaled to its lower density. One factor for the speed of impact is set so that the model reproduces a published measurement on a new EVA trainer. The model reproduces an exact one-dimensional result as a check. Energy return, outsole wear and mass are calculated from published data.</p>
+
+<h2 id="limits">Limits</h2>
+
+<p>This is a screening study: it covers one impact, climate change, and no independent panel has reviewed it, which the international standard for comparisons requires. The typical trainer is a model built from part shares, not a measured shoe, and the comparison is not a statement about any brand. The largest gaps are the footprint of TPU, the energy to make expanded-TPU foam, and how long an upper lasts. No producer publishes a footprint for TPU, so its value here is built from its raw materials, and the stress case uses open figures for related materials as proxies. The figures for new and recycled polyester come from US industry data of 2011. Renewable electricity counts only if a factory has it on site or buys it under contract; the model assumes that it does. Nobody has built or run in an LC-1.</p>
+
+<h2 id="code">The code</h2>
+
+<p>Python: the CAD model of the sole and the upper pattern (STEP, STL, DXF and SVG files, size as a parameter), the life-cycle model with its factor table and Monte Carlo, the finite element and calculated tests, the design notes and the building guide, the page generator and its tests. {{zip_kb}} KB.</p>
+<p><a class="btn" href="downloads/lowcarbon-shoe-code.zip">Download source</a>
+<a class="btn ghost" href="code.html">All code</a></p>
+
+<footer>
+<p><a href="about.html">Andrew Silvestri</a></p>
+<p><a href="code.html">Built with Python, Julia, JavaScript and public data.</a></p>
+</footer>
+</main>
+<script src="assets/motion.js"></script>
+<script src="assets/lightbox.js"></script>
+<script src="assets/nav.js"></script>
+{{script}}
+</body></html>

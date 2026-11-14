@@ -42,6 +42,7 @@ OPTIONAL = [
     "python messaging/test_messaging.py",
     "python dissonance/test_dissonance.py",
     "python armchair/test_armchair.py",
+    "python lowcarbon-shoe/test_lowcarbon_shoe.py",
     "node tests/test_kit.js", "python tests/test_refresh.py",
 ]
 # test files in tests/ that are not suites in their own right

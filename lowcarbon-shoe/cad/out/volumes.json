@@ -1,0 +1,24 @@
+{
+ "dims": {
+  "size_us_men": 9.0,
+  "sole_length_mm": 282.5,
+  "heel_midsole_mm": 26.0,
+  "forefoot_midsole_mm": 17.0,
+  "outsole_mm": 1.5,
+  "sockliner_mm": 4.0,
+  "rim_width_mm": 3.0,
+  "rim_height_mm": 8.0,
+  "heel_stack_mm": 31.5,
+  "forefoot_stack_mm": 22.5,
+  "ball_width_mm": 100.1,
+  "heel_width_mm": 77.3,
+  "plantar_area_cm2": 217.9
+ },
+ "volumes_cm3": {
+  "outsole": 29.07,
+  "rim": 14.75,
+  "midsole": 418.41,
+  "sockliner": 77.53
+ },
+ "note": "Volumes are of the CAD solids; masses = volume x density in tests/mass.py"
+}

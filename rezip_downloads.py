@@ -281,6 +281,11 @@ TARGETS = [
     # the tests, with the payload and data/fetched.json. Not data/raw: the fetch script re-downloads.
     target("safetynet", "safetynet-code.zip", keep={"outputs"},
            skip=("data/raw", "data/raw/*", "outputs/*.png")),
+    # A lower-carbon running shoe (eco-shoe lane, 2026-11-07): the CAD scripts and their STEP/STL/DXF/SVG
+    # outputs, the LCA engine with its factor table and results, the simulated tests, the design notes,
+    # the payload builder, the page generator and the tests.
+    target("lowcarbon-shoe", "lowcarbon-shoe-code.zip", keep={"outputs"},
+           skip=("data/raw", "data/raw/*")),
     target("ethane", "ethane-code.zip", keep={"outputs"},
            skip=("data/raw", "data/raw/*", "outputs/*.png")),
     # Leaded gasoline and lost IQ (lane lost-einsteins, 2026-11-07): the fetch script, the readers,

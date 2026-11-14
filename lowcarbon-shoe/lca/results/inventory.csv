@@ -1,0 +1,33 @@
+shoe,component,module,factor,g_per_shoe,low,high,basis
+baseline,Midsole,sole,EVA,71.1,,,CAD volume x EVA density (BOM 100 g for reference)
+baseline,Outsole,sole,SBR,45,30,60,"derived, Cheah part shares; 20 % natural rubber assumed"
+baseline,Shank,sole,TPU,4,0,30,assumed
+baseline,Sockliner,sole,PU_FOAM,22,15,30,"derived, Cheah part shares"
+baseline,Strobel board,upper,PET_FIBRE,10,6,15,assumed
+baseline,Upper mesh,upper,PET_FIBRE,36,25,50,assumed
+baseline,Lining,upper,PET_FIBRE,10,6,16,assumed
+baseline,Collar padding,upper,PU_FOAM,8,4,14,assumed
+baseline,Overlays,upper,TPU,8,3,15,assumed
+baseline,Heel counter,upper,TPU,9,5,15,assumed
+baseline,Toe puff,upper,TPU,3,0,6,assumed
+baseline,Laces,upper,PET_FIBRE,5,4,8,published (research/w2-03)
+baseline,Thread,upper,PET_FIBRE,2,1,3,published (research/w2-03)
+baseline,Adhesive and primer,upper,ADHESIVE,7,4,12,published dry film (research/w2-03)
+baseline,Labels,upper,PET_FIBRE,2,1,4,assumed
+lc1,Midsole (expanded TPU),sole,TPU,83.7,,,CAD volume x density
+lc1,"Outsole skin (TPU, recycled share)",sole,rTPU_BLEND,34.9,,,CAD volume x density
+lc1,"Stitch rim (TPU, recycled share)",sole,rTPU_BLEND,17.7,,,CAD volume x density
+lc1,Sockliner (recycled PET spacer),sole,rPET_FIBRE,11.6,,,CAD volume x density
+lc1,Upper mesh and lining (recycled PET),upper,rPET_FIBRE,46,31,66,as baseline mesh + lining (36 + 10 g)
+lc1,Collar padding (recycled PET spacer),upper,rPET_FIBRE,8,4,14,as baseline padding mass; PET spacer in place of PU foam
+lc1,Strobel sock (recycled PET),upper,rPET_FIBRE,10,6,15,as baseline strobel
+lc1,Heel counter (recycled TPU),upper,rTPU_BLEND,9,5,15,as baseline
+lc1,Laces (recycled PET),upper,rPET_FIBRE,5,4,8,as baseline
+lc1,Stitchdown thread (recycled PET),upper,rPET_FIBRE,3,2,5,assumed: stitchdown uses more thread
+lc1,Label (recycled PET),upper,rPET_FIBRE,1,0.5,2,assumed
+baseline,Shoebox,packaging (per pair),PAPERBOARD,180,,,published (PEFCR footwear default 200 g; research/w2-03)
+baseline,Tissue,packaging (per pair),PAPERBOARD,26,,,published
+baseline,Polybag and tags,packaging (per pair),LDPE,12,,,published
+baseline,Shipping carton share,packaging (per pair),PAPERBOARD,60,,,published (PEFCR default)
+lc1,Paper sleeve (no shoebox),packaging (per pair),PAPERBOARD,60,,,assumed design choice
+lc1,Shipping carton share,packaging (per pair),PAPERBOARD,60,,,published (PEFCR default)
