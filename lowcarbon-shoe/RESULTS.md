@@ -17,7 +17,7 @@ found errors in a first version; the numbers below are after their corrections
 
 | ID | Target | Result | Pass/fail | Evidence |
 |---|---|---|---|---|
-| T1 | GHG per 100 km at most 50 % of baseline (Monte Carlo median) | Single life, renewable power at assembly and sole moulder: 0.40 against 0.79 kg CO2e per 100 km, **49.8 % lower** central; Monte Carlo median 47.1 % (5-95 %: 38.6-54.1), P(>= 50 %) = 0.26. With the upper kept for a second sole unit: **58.8 %** central; median 53.0 % with upper lives drawn between 1 and 2, P = 0.72. Design alone, grid power: 19.6 %. | **FAIL** as a single-life shoe (by the median rule); PASS only if the upper serves a second sole | `lca/results/lca_results.json` |
+| T1 | GHG per 100 km at most 50 % of baseline (Monte Carlo median) | Single life, renewable power at assembly and sole moulder: 0.40 against 0.81 kg CO2e per 100 km, **51.3 % lower** central; Monte Carlo median 47.6 % (5-95 %: 39.4-54.2), P(>= 50 %) = 0.28. With the upper kept for a second sole unit: **59.9 %** central; median 53.4 % with upper lives drawn between 1 and 2, P = 0.75. Design alone, grid power: 21.7 %. (Open emission factors, D-106, 2026-11-14: the central case moved from 49.8 % to 51.3 %; the median did not reach 50 %.) | **FAIL** as a single-life shoe (by the median rule, although the central case passes); PASS only if the upper serves a second sole | `lca/results/lca_results.json` |
 | T2 | Virgin fossil plastic at most 50 % of baseline | 198 g against 466 g per pair (42 %) | PASS | same, `pair.*.mass` |
 | T3a | 90 % of mass separable by hand into single-polymer streams | 100 %: TPU sole unit (eTPU + TPU) and PET upper; the rTPU heel counter slides out of its pocket | PASS by design; needs a physical cut test | DESIGN.md section 3 |
 | T3b | An operating post-consumer recycling route for the TPU sole | None open to an individual today | FAIL | `research/w2-06-eol-routes.md` |
@@ -84,10 +84,10 @@ worn soles are returned and recycled.
 
 ## Biggest uncertainties (largest first, one at a time)
 
-1. Final-assembly electricity per pair (1.17-3.32 kWh): LC-1's cut moves 41-52 %.
-2. Whether renewable electricity is really supplied (without it, 20 %).
-3. The recycled-PET fibre factor (0.55-2.32 kg CO2e/kg): 45-54 %.
+1. Final-assembly electricity per pair (1.17-3.32 kWh): LC-1's cut moves 43-53 %.
+2. Whether renewable electricity is really supplied (without it, 22 %).
+3. The recycled-PET fibre factor (0.80-2.14 kg CO2e/kg): 47-54 %.
 4. Upper mesh mass, eTPU density, bead-foaming energy (no data), the TPU factor
-   (no producer publishes one; at 6.96 kg CO2e/kg from an ecoinvent-based EPD, 35 %).
+   (no producer publishes one; built from the highest open raw-material figures, 4.79 kg CO2e/kg, 45 %).
 5. Allocation of recycled content: 50:50 instead of cut-off gives 43 %.
 6. How far shoes are run (held equal for both shoes) and how long the upper lasts.

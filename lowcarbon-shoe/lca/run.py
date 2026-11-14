@@ -23,7 +23,7 @@ SCENARIOS = {
     "lc1_resole": (dict(upper_lives=2, clean_lc1=True, life_mult=1.0), {}),
     "lc1_resole_informed": (dict(upper_lives=2, clean_lc1=True, life_mult=1.15), {}),
     "baseline_clean_power": (dict(upper_lives=1, clean_lc1=True, clean_base=True, life_mult=1.0), {}),
-    "lc1_tpu_stress": (dict(upper_lives=1, clean_lc1=True, life_mult=1.0, tpu_override=6.96), {}),
+    "lc1_tpu_stress": (dict(upper_lives=1, clean_lc1=True, life_mult=1.0, tpu_override=PR.P["tpu_factor_stress"][0]), {}),  # D-106
     "lc1_cff_5050": (dict(upper_lives=1, clean_lc1=True, life_mult=1.0, cff=True), {}),
     "lc1_sole_making_in_t1": (dict(upper_lives=1, clean_lc1=True, life_mult=1.0), SOLE_IN_T1),
     "lc1_made_in_china": (dict(upper_lives=1, clean_lc1=True, life_mult=1.0, country="E.GRID_CN"), {}),
@@ -35,7 +35,7 @@ LABELS = {
     "lc1_resole": "LC-1, upper kept for a second sole unit",
     "lc1_resole_informed": "LC-1, second sole unit, and soles run 15 % further (eTPU fatigue, Aimar 2024)",
     "baseline_clean_power": "Reference: the BASELINE shoe with renewable electricity at assembly and the sole maker, against the baseline on grid power",
-    "lc1_tpu_stress": "Stress case: TPU at 6.96 kg CO2e/kg (ecoinvent-based EPD), both shoes",
+    "lc1_tpu_stress": f"Stress case: TPU at {PR.P['tpu_factor_stress'][0]} kg CO2e/kg (build-up from the highest open raw-material figures), both shoes",
     "lc1_cff_5050": "Allocation sensitivity: recycled content carries half the virgin burden",
     "lc1_sole_making_in_t1": "If final-assembly energy already includes sole making: no separate sole-making energy for either shoe",
     "lc1_made_in_china": "Both shoes made in China (grid 528 g/kWh)",

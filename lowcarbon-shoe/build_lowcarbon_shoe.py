@@ -74,7 +74,10 @@ def build():
         shoe_g=dict(lc1=mass["lc1_g"], base=round(mass["baseline_g"], 1)),
         volumes=vol["volumes_cm3"], dims=vol["dims"],
         cheah=R["cheah_check"],
-        inputs={k: lca.central()[v] for k, v in (("tpu", "F.TPU"), ("t1_kwh", "P.t1_kwh"), ("grid", "E.GRID"))},
+        inputs={k: lca.central()[v] for k, v in (("tpu", "F.TPU"), ("t1_kwh", "P.t1_kwh"), ("grid", "E.GRID"),
+                                                  ("tpu_stress", "P.tpu_factor_stress"), ("pet_fibre", "F.PET_FIBRE"),
+                                                  ("rpet_fibre", "F.rPET_FIBRE"))},
+        claims={k: v[0] for k, v in lca.PR.CLAIMS.items()},  # quoted on the page as claims, not used in the model
     )
     x, vol = lca.central(), lca.load_volumes()
     rb = lca.evaluate(x, vol, upper_lives=1, clean_lc1=True, clean_base=True)

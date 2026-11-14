@@ -98,7 +98,7 @@ def main():
     bc = round(100 * (1 - rb["baseline"]["total"] / r["baseline"]["total"]))
     phrases = [f"{fac} percent of it is factory energy", f"the LC-1 redesign alone cuts {red} percent",
                f"cuts that by {bc} percent", f"emits {r['baseline']['total']:.1f} kg of greenhouse gas per pair",
-               f"a cut of just under half ({round(r['reduction_pct'])} percent in the central case)"]
+               f"a cut of just over half ({round(r['reduction_pct'])} percent in the central case)"]
     miss = [p for p in phrases if p not in T]
     check("4 numbers", not miss, "takeaways and standfirst carry the re-run numbers" + (f"; missing {miss}" if miss else ""))
     # 5 page ------------------------------------------------------------------------

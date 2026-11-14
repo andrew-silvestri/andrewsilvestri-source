@@ -100,7 +100,12 @@ def claims(P, v):
         ("factory energy is slightly more than materials",
          st["part_making"] + st["assembly"] > st["materials"] and (st["part_making"] + st["assembly"]) / st["materials"] < 1.25),
         ("the redesign delivers less than half of the cut", s["design_only"] < s["lc1"] / 2 + 1e-9),
-        ("just under half: central between 45 and 50", 45 <= s["lc1"] < 50),
+        ("just over half: central between 50 and 55", 50 <= s["lc1"] < 55),  # D-106 open factors: 49.8 -> 51.3
+        ("the central case passes half but the Monte Carlo median does not", s["lc1"] >= 50 > P["mc"]["reduction_pct"]["lc1"]["50"]),
+        ("the claimed bio-EVA footprint is negative", P["claims"]["bio_eva"] < 0),
+        ("recycled polyester fibre below new", P["inputs"]["rpet_fibre"] < P["inputs"]["pet_fibre"]),
+        ("the TPU stress case is above the central factor and lowers the cut",
+         P["inputs"]["tpu_stress"] > P["inputs"]["tpu"] and s["lc1_tpu_stress"] < s["lc1"]),
         ("renewable power alone is about a third", 28 <= s["baseline_clean_power"] <= 38),
         ("the redesign is about a fifth", 15 <= s["design_only"] <= 25),
         ("materials-and-construction step is most of the design step", s["design_with_box"] > s["design_only"] / 2),
@@ -149,7 +154,7 @@ def values(P):
             f"In this model a typical trainer emits {P['pair']['baseline']:.1f} kg of greenhouse gas per pair, and "
             f"{pc(100 * fac / P['pair']['baseline'])} percent of it is factory energy rather than material.",
             f"Renewable electricity at final assembly and at the sole maker cuts that by {pc(s['baseline_clean_power'])} percent; "
-            f"the LC-1 redesign alone cuts {pc(s['design_only'])} percent, and the two together just under half.",
+            f"the LC-1 redesign alone cuts {pc(s['design_only'])} percent, and the two together just over half in the central case.",
             "LC-1 needs less than half as much new fossil plastic, but no scheme open to a runner recycles its sole back "
             "into plastic today.",
         ]),
@@ -184,6 +189,9 @@ def values(P):
         "tornado_rows": tornado_rows(P),
         "tpu_factor": f"{P['inputs']['tpu']:.1f}",
         "tpu_stress": pc(s["lc1_tpu_stress"]),
+        "tpu_stress_factor": f"{P['inputs']['tpu_stress']:.1f}",
+        "rpet_pct": pc(100 * P["inputs"]["rpet_fibre"] / P["inputs"]["pet_fibre"]),
+        "bio_eva_claim": f"&minus;{abs(P['claims']['bio_eva']):.2f}",
         "cff": pc(s["lc1_cff_5050"]),
         "t1_kwh": f"{P['inputs']['t1_kwh']:.1f}",
         "grid": f"{round(1000 * P['inputs']['grid'])}",

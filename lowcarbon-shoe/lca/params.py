@@ -4,30 +4,57 @@ basis: published = read from the cited document; derived = arithmetic on
 published numbers (shown in the source note); assumed = a modelling choice with
 no direct source, stated as such and swept in the Monte Carlo and the tornado.
 Per-shoe masses are men's US 9. Factors are cradle-to-gate GWP100, kg CO2e/kg,
-fossil GHG only (no biogenic uptake credit). ecoinvent is not used anywhere.
-Full research trail: research/w2-01, w2-02, w2-03, w2-09 and research/data/*.csv.
+fossil GHG only (no biogenic uptake credit). No factor is an ecoinvent dataset or a
+published total computed on an ecoinvent background (D-106, 2026-11-14: those were replaced
+by open sources; the public industry eco-profiles, computed by their publishers on Sphera/GaBi
+background data, are kept because no open alternative of similar quality exists).
+Full research trail: research/w2-01, w2-02, w2-03, w2-09, v-factors-2026-11-14 and research/data/*.csv.
 """
 
 R = "research/data/"
 PE = "PlasticsEurope / ISOPA eco-profiles"
 
+# Open US industry data (D-106, 2026-11-14), Franklin Associates (ERG); background U.S. LCI and
+# Franklin's own database, IPCC 2007 GWP100; neither report names ecoinvent.
+# ACC 2011: "Cradle-to-gate life cycle inventory of nine plastic resins and four polyurethane
+#   precursors", Aug 2011, americanchemistry.com/content/download/10116 (opened 2026-11-14).
+# APR 2011: "Life cycle inventory of 100% postconsumer HDPE and PET recycled resin from postconsumer
+#   containers and packaging", revised final report, 19 Jan 2011, americanchemistry.com/content/download/8064
+#   (opened 2026-11-14). Cut-off method, weight-based collection.
+PET_RESIN_ACC = 2.733      # ACC 2011 Table 6-5, PET resin, kg CO2e/kg
+POLYOL_ACC = 4.035         # ACC 2011 Table 12-5, polyether polyol (flexible foam), kg CO2e/kg
+RPET_FLAKE_APR = 0.804     # APR 2011 Table 3-5, recycled PET flake, cut-off, IPCC 2007
+RPET_PELLET_APR = 1.230    # APR 2011 Table 3-5, recycled PET pellet, cut-off, volume-based collection (the higher case)
+REPROCESS_APR = 0.906      # APR 2011 Tables 3-5/3-6: mean of recycled PET pellet 1.180 and HDPE pellet 0.633;
+                           # the same figure Zheng & Suh 2019 use as "recycling process". Used as the
+                           # heaviest fibre-processing and polymerisation step, as before.
+
 # ---------------------------------------------------------------- factors
 F = {
     # id: (central, low, high, unit, basis, source)
-    "EVA": (2.30, 2.16, 3.42, "kg CO2e/kg", "derived",
-            "LDPE 2.16 (PlasticsEurope PE eco-profile 2026) + vinyl-acetate share; high end ADEME Base Carbone generic plastic. factors_polymers.csv"),
+    # D-106, 2026-11-14: high 3.42 (the fossil comparator implied by Braskem's claim, computed on ecoinvent,
+    # second-hand) -> 2.44, the build-up's own high (research/w2-01 s2): VA share at ADEME Base Carbone
+    # "other acids" 3.30 (open licence) + PE polymerisation step 0.34.
+    "EVA": (2.30, 2.16, 2.44, "kg CO2e/kg", "derived",
+            "LDPE 2.16 (PlasticsEurope PE eco-profile 2026) + vinyl-acetate share; high = VA at ADEME Base Carbone 'other acids' 3.30 + PE polymerisation step. factors_polymers.csv"),
     "TPU": (3.21, 3.00, 4.09, "kg CO2e/kg", "derived",
             "Stoichiometric build-up: MDI 2.76 (ISOPA 2021), polyether polyol 2.93 (ISOPA 2021), 1,4-butanediol assumed. No producer figure is published. factors_polymers.csv"),
     "rTPU": (0.55, 0.48, 0.91, "kg CO2e/kg", "derived",
-             "Mechanical regrind + re-extrusion of post-industrial TPU; proxy ADEME Base Carbone PET recycling to granules (ids 34488, 34490). Cut-off: no burden from first life."),
+             "Mechanical regrind + re-extrusion of post-industrial TPU; proxy ADEME Base Carbone PET recycling to granules (ids 34488, 34490; source SRP 2021); high 0.906 = Franklin Associates 2011 mean reprocessing. Cut-off: no burden from first life."),
     "SBR": (3.11, 2.32, 5.55, "kg CO2e/kg", "derived",
             "Outsole rubber compound proxy: SBR build-up from butadiene 1.95 and styrene 2.09 (PlasticsEurope); carbon black 3.25 (EPD-IES-0025254) is in the same range. factors_polymers.csv"),
     "PU_FOAM": (3.66, 3.16, 3.79, "kg CO2e/kg", "published",
                 "Moulded flexible PU foam 3.66 (Euromoulders eco-profile); slabstock 3.16-3.79 (EUROPUR 2024)"),
-    "PET_FIBRE": (2.64, 2.19, 3.10, "kg CO2e/kg", "derived",
-                  "PET resin (CPME/PlasticsEurope 2017) + fibre processing (Zheng & Suh 2019 method). factors_polymers.csv"),
-    "rPET_FIBRE": (1.32, 0.55, 2.32, "kg CO2e/kg", "derived",
-                   "Mechanically recycled PET fibre: 25-75 % below virgin (Shen, Worrell & Patel 2010, Resour. Conserv. Recycl. 55:34-52)"),
+    # D-106, 2026-11-14: resin 2.19 (CPME/PlasticsEurope 2017, upstream ecoinvent 3.3) -> 2.733 (ACC 2011, open);
+    # fibre-processing proxy unchanged in form (0 to REPROCESS_APR, mid half of it).
+    "PET_FIBRE": (round(PET_RESIN_ACC + REPROCESS_APR / 2, 2), round(PET_RESIN_ACC, 2), round(PET_RESIN_ACC + REPROCESS_APR, 2),
+                  "kg CO2e/kg", "derived",
+                  "PET resin 2.733 (Franklin Associates for ACC 2011, Table 6-5, US) + fibre processing 0-0.906 (Franklin Associates 2011 recycled-resin report, mean PET/HDPE reprocessing)"),
+    # D-106, 2026-11-14: Shen et al. 2010 savings (25-75 %) applied to the ecoinvent-based virgin band -> open
+    # Franklin 2011 cut-off recycled PET (flake low/central, pellet high) + the same fibre-processing step as virgin.
+    "rPET_FIBRE": (round(RPET_FLAKE_APR + REPROCESS_APR / 2, 2), round(RPET_FLAKE_APR, 2), round(RPET_PELLET_APR + REPROCESS_APR, 2),
+                   "kg CO2e/kg", "derived",
+                   "Recycled PET flake 0.804 (pellet 1.230 high), cut-off, collection to reprocessing (Franklin Associates 2011 for ACC/APR/NAPCOR, Table 3-5) + fibre processing 0-0.906 as for virgin fibre"),
     "ADHESIVE": (4.79, 0.88, 8.05, "kg CO2e/kg", "published",
                  "PU reactive adhesive, FEICA model EPD EPD-FEI-20220021-IBG2-EN (construction product used as proxy)"),
     "PAPERBOARD": (0.718, 0.531, 0.718, "kg CO2e/kg", "published",
@@ -48,6 +75,13 @@ E = {
     "COAL": (0.0953, 0.0902, 0.1004, "kg CO2e/MJ", "published", "IPCC 2006 Vol 2 Table 2.2, other bituminous coal"),
     "SHIP": (0.0198, 0.0161, 0.0198, "kg CO2e/t-km", "published", "DESNZ 2025 conversion factors, container ship average, incl. well-to-tank"),
     "TRUCK": (0.125, 0.102, 0.125, "kg CO2e/t-km", "published", "DESNZ 2025, HGV all diesel average laden"),
+}
+
+# manufacturer's claims quoted on the page, NOT used in the model (D-106 (c), 2026-11-14)
+CLAIMS = {
+    "bio_eva": (-1.08, "kg CO2e/kg", "manufacturer's claim",
+                "Braskem, I'm green bio-based brochure p.12 (ERM review, 2025): sugarcane-based EVA, cradle to gate, "
+                "carbon taken up by the cane credited; grade not named. research/w2-01 (DECISIONS eco-shoe-D2)"),
 }
 
 # incineration: fossil CO2 per kg burned (carbon content x 44/12; IPCC 2006 Vol 5 Ch 5 Eq 5.2)
@@ -98,8 +132,12 @@ P = {
     "eva_density": (170.0, 150.0, 250.0, "kg/m3", "published", "Midsole EVA 150-250 kg/m3 (Verdejo 2004 thesis); Aimar 2024 F1 170"),
     "etpu_density": (200.0, 190.0, 240.0, "kg/m3", "derived", "Design density of the eTPU midsole. tests/fea_heel.py (calibrated rate 1.5) puts 200 kg/m3 within 4 % of the EVA baseline's 5 J drop peak; Aimar 2024 tested 240, Meuchelboeck 2024 250; BASF lists current bead grades at 110-140 g/L bulk."),
     "rtpu_share": (0.75, 0.5, 1.0, "fraction", "assumed", "Post-industrial recycled TPU share in the outsole skin, rim and heel counter. Recycled TPU grades on the market are post-industrial (research/w2-06)."),
-    "tpu_factor_stress": (6.96, 6.96, 6.96, "kg CO2e/kg", "published",
-                          "Stress case only: finished TPU sealing-ring EPD (EPD-IES-0032224, ecoinvent background) - counter-evidence, not used centrally (DECISIONS.md)"),
+    # D-106, 2026-11-14: 6.96 (finished TPU sealing-ring EPD EPD-IES-0032224, ecoinvent 3.11 background) -> the
+    # TPU build-up with the highest open figure for each raw material. No producer publishes a TPU footprint.
+    "tpu_factor_stress": (round(0.629 * POLYOL_ACC + 0.315 * 3.37 + 0.057 * 5.0 + REPROCESS_APR, 2),) * 3 + ("kg CO2e/kg", "derived",
+                          "Stress case only, an open proxy: 62.9 % polyether polyol at 4.035 (ACC 2011, US, the highest open polyol figure), "
+                          "31.5 % MDI at 3.37 (ISOPA 2021, price allocation), 5.7 % BDO at 5.0 (assumed, top of the band), "
+                          "polymerisation and compounding 0.906 (Franklin Associates 2011). Not used centrally."),
 }
 
 # ---------------------------------------------------------------- inventories (g per SHOE)

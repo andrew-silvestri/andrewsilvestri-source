@@ -42,7 +42,10 @@ Run: `python run.py` (numpy, matplotlib). Results: `results/lca_results.json`,
   direct power purchase agreement with retired certificates); the model does not
   verify any.
 - **Data quality requirements (4.2.3.6).** Public, free sources only; ecoinvent,
-  ICE, Idemat, Higg MSI and EF 3.1 secondary datasets excluded. Every value is
+  ICE, Idemat, Higg MSI and EF 3.1 secondary datasets excluded, and so are published
+  totals computed on an ecoinvent background (D-106, 2026-11-14: PET resin, the
+  recycled-PET fibre band, the EVA high end and the TPU stress case were moved to open
+  sources). Public industry eco-profiles computed on Sphera/GaBi background are kept. Every value is
   labelled published, derived or assumed in `params.py`; precursors 2014-2026,
   grid 2025, process energy 2006-2023.
 
@@ -66,15 +69,15 @@ Run: `python run.py` (numpy, matplotlib). Results: `results/lca_results.json`,
 
 | Stage | Baseline | LC-1 design, grid power | LC-1 as specified |
 |---|---|---|---|
-| Materials | 1.71 | 1.04 | 1.04 |
+| Materials | 1.81 | 1.02 | 1.02 |
 | Part making | 0.43 | 0.51 | 0.37 |
 | Final assembly | 1.40 | 1.40 | 0.22 |
 | Packaging | 0.22 | 0.09 | 0.09 |
 | Transport | 0.34 | 0.26 | 0.26 |
 | End of life | 0.26 | 0.22 | 0.22 |
-| **Per pair** | **4.36** | **3.51** | **2.19** |
-| **Per 100 km** | **0.79** | **0.64** | **0.40** |
-| Reduction per 100 km | | 19.6 % | 49.8 % |
+| **Per pair** | **4.46** | **3.49** | **2.17** |
+| **Per 100 km** | **0.81** | **0.64** | **0.40** |
+| Reduction per 100 km | | 21.7 % | 51.3 % |
 
 Context, not inputs: published per-pair totals for running shoes run from 6.7 kg
 (Footwear Innovation Foundation 2025, a budget shoe) to 14 kg (Cheah et al. 2012,
@@ -85,24 +88,25 @@ a validation: both its inputs are worked back from the paper's own results.
 
 ## 4. Interpretation
 
-- **Scenarios** (`results/lca_results.json`, "scenarios"): design only 19.6 %; LC-1
-  as specified 49.8 %; with the upper kept for a second sole unit 58.8 %; with that
-  and 15 % longer sole life 64.2 %. The BASELINE shoe moved to renewable electricity
-  at the same two sites cuts 32.9 %. Allocation 50:50: 43.2 %. No separate
-  sole-making energy (if final assembly already includes it): 48.0 %. Made in China:
-  51.7 %; in Indonesia: 55.6 %. TPU at 6.96 kg CO2e/kg: 35.0 %.
+- **Scenarios** (`results/lca_results.json`, "scenarios"): design only 21.7 %; LC-1
+  as specified 51.3 %; with the upper kept for a second sole unit 59.9 %; with that
+  and 15 % longer sole life 65.2 %. The BASELINE shoe moved to renewable electricity
+  at the same two sites cuts 32.2 %. Allocation 50:50: 43.2 %. No separate
+  sole-making energy (if final assembly already includes it): 49.6 %. Made in China:
+  53.0 %; in Indonesia: 56.7 %. TPU at 4.79 kg CO2e/kg (built from the highest open
+  raw-material figures; no producer publishes one): 45.0 %.
 - **Monte Carlo** (10,000 draws, triangular on every swept input, the same draw for
-  both shoes, grid held to Viet Nam): LC-1 as specified, median 47.1 %, 5-95 %
-  38.6-54.1 %, P(>= 50 %) = 0.26. With upper lives uniform between 1 and 2 sole
-  units: median 53.0 %, P = 0.72. Design only: median 24.3 %, never 50 %.
+  both shoes, grid held to Viet Nam): LC-1 as specified, median 47.6 %, 5-95 %
+  39.4-54.2 %, P(>= 50 %) = 0.28. With upper lives uniform between 1 and 2 sole
+  units: median 53.4 %, P = 0.75. Design only: median 24.9 %, never 50 %.
 - **Sensitivity** (one at a time, `tornado`): final-assembly electricity per pair
-  (41-52 %), the recycled-PET fibre factor (45-54 %), upper mesh mass, eTPU density,
+  (43-53 %), the recycled-PET fibre factor (47-54 %), upper mesh mass, eTPU density,
   bead-foaming energy, the TPU factor, the EVA density, the recycled-TPU share.
 - **Consistency check (4.5.3.4).** Both shoes use the same factors, grid, freight,
   disposal shares, life and midsole shape; LC-1 gets no assembly discount and
   carries bead-foaming energy set above EVA moulding. Asymmetries that remain and
-  favour LC-1: no shoebox (equal packaging gives 45.2 %, 4.6 points less), cut-off
-  allocation of recycled content (6.6 points; scenario above).
+  favour LC-1: no shoebox (equal packaging gives 46.8 %, 4.5 points less), cut-off
+  allocation of recycled content (8.1 points; scenario above).
 - **Completeness check.** Dyeing and finishing are missing from both; for polyester
   textiles they can be large, and they would add the same order of emissions to
   both uppers.
