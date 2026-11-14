@@ -168,6 +168,8 @@ NAV = [
         # algae lane, 2026-11-13: carbon fixed by algae against carbon kept out of the air; a
         # climate question (carbon removal), so Climate.
         ("Algae carbon", "algae.html"),
+        # sustainable-messaging lane, 2026-11-13: what moved people toward lower-carbon choices, and by how much.
+        ("Climate messaging", "messaging.html"),
     ]),
     # RUNNING WAS RETIRED 2026-09-09, at Andrew's request - "hide the two
     # running pages... I'll republish later, but retire for now". It held

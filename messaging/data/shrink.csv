@@ -1,0 +1,7 @@
+id,label,first_label,first,later_label,later,unit,cite,where
+nudge,Nudge trials,in academic journals,8.7,run by government nudge units,1.4,percentage points,"DellaVigna and Linos 2022, Econometrica","p. 2 and abstract (26 academic trials; 126 nudge-unit trials, over 23 million people)"
+opower,Home energy reports,first 10 sites,1.707,all 111 sites,1.31,percent of electricity use,"Allcott 2015, Quarterly Journal of Economics (NBER working paper 18373)","Working paper p. 20 (1.707), p. 16 (1.31)"
+nisa,Household climate trials,small samples,0.335,large samples,0.028,Cohen's d,"Nisa et al. 2019, Nature Communications","Table 1 (100 or fewer per arm, k = 82; 500 or more per arm, k = 17)"
+bergquist,Climate field interventions,after bias correction,0.18,32 well-powered studies,0.04,Cohen's d,"Bergquist et al. 2023, PNAS","Results, Overall effect; Methods, Publication bias (studies over 9,000 people)"
+structure,"Nudges that change the choice (defaults, menus)",before bias correction,0.58,after,0.12,Cohen's d,"Maier et al. 2022, PNAS","Table 1 (evidence undecided)"
+info,"Nudges that add information (labels, facts)",before bias correction,0.25,after,0.00,Cohen's d,"Maier et al. 2022, PNAS","Table 1"
