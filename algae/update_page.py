@@ -78,10 +78,24 @@ def row_text(f, C):
 
 
 ROW_H, TOP, AXIS_H = 84, 6, 34
+# Phone geometry (D-102, 2026-11-14): in live mode the drawing sticks under the nav, and at 84 px a row the
+# 320px drawing was about 610 px tall with its key, leaving the step cards the bottom quarter of a 390x844
+# screen. Rows of 60 px with a 18 px bar keep every label, value and cost line at 12-13 px.
+GEOM = {"wide": dict(rh=84, lab=14, bar=22, bh=24, cost=40),
+        "phone": dict(rh=60, lab=13, bar=18, bh=18, cost=33)}
+
+
+def nf(v):
+    """One decimal, no trailing .0, so the 900px drawing keeps the integers it always had."""
+    r = round(v, 1)
+    return int(r) if r == int(r) else r
 
 
 def funnel_svg(P, W, cls):
     F, C = P["funnel"], P["costs"]
+    g = GEOM["phone" if W < 600 else "wide"]
+    ROW_H, bh = g["rh"], g["bh"]
+    k_ = bh / 24                                       # scale of the inner bars against the wide drawing
     H = TOP + ROW_H * len(F) + AXIS_H
     x = lambda v: round(W * (v - LO) / (HI - LO), 1)
     out = [f'<svg class="{cls} funnel" viewBox="0 0 {W} {H}" width="{W}" height="{H}" role="img" '
@@ -89,33 +103,34 @@ def funnel_svg(P, W, cls):
     for i, f in enumerate(F):
         y0 = TOP + i * ROW_H
         label, vals, cost = row_text(f, C)
-        by = y0 + 22                                   # bar band: by .. by+24
+        by = y0 + g["bar"]                             # bar band: by .. by+bh
         out.append(f'<g class="row r-{f["key"]}">')
-        out.append(f'<text class="lab" x="0" y="{y0 + 14}">{html.escape(label)}</text>')
+        out.append(f'<text class="lab" x="0" y="{y0 + g["lab"]}">{html.escape(label)}</text>')
         for k, v in enumerate(vals):
             only = "" if k == 2 else f' data-only="{k}"'
-            out.append(f'<text class="val v{k}"{only} x="{W}" y="{y0 + 14}" text-anchor="end">{html.escape(v)}</text>')
+            out.append(f'<text class="val v{k}"{only} x="{W}" y="{y0 + g["lab"]}" text-anchor="end">{html.escape(v)}</text>')
         # stage 0: 100 t fixed
-        out.append(f'<rect class="b0" data-o="0" x="{x(0)}" y="{by}" width="{x(100) - x(0)}" height="24"/>')
+        out.append(f'<rect class="b0" data-o="0" x="{x(0)}" y="{by}" width="{x(100) - x(0)}" height="{bh}"/>')
         # stage 1: deep or buried
         if f["deep"][1] is not None and f["deep"][1] > 0:
-            out.append(f'<rect class="b1" data-o="1" x="{x(0)}" y="{by + 4}" '
-                       f'width="{max(x(f["deep"][1]) - x(0), 1.5)}" height="16"/>')
+            out.append(f'<rect class="b1" data-o="1" x="{x(0)}" y="{by + nf(4 * k_)}" '
+                       f'width="{max(x(f["deep"][1]) - x(0), 1.5)}" height="{nf(16 * k_)}"/>')
         # stage 2: net held at 100 years, with its range
         lo, c, hi = f["held"]
         if f["gross"]:
-            g = f["gross"][1]
-            out.append(f'<rect class="bg" data-o="2" x="{x(0)}" y="{by + 7}" width="{x(g) - x(0)}" height="10"/>')
+            gr = f["gross"][1]
+            out.append(f'<rect class="bg" data-o="2" x="{x(0)}" y="{by + nf(7 * k_)}" '
+                       f'width="{x(gr) - x(0)}" height="{nf(10 * k_)}"/>')
         elif c != 0:
             a, b = sorted((x(0), x(c)))
-            out.append(f'<rect class="b2{" neg" if c < 0 else ""}" data-o="2" x="{a}" y="{by + 7}" '
-                       f'width="{round(b - a, 1)}" height="10"/>')
+            out.append(f'<rect class="b2{" neg" if c < 0 else ""}" data-o="2" x="{a}" y="{by + nf(7 * k_)}" '
+                       f'width="{round(b - a, 1)}" height="{nf(10 * k_)}"/>')
         if hi != lo:
-            cy = by + 12
-            out.append(f'<path class="wh" data-o="2" d="M{x(lo)},{cy}H{x(hi)}M{x(lo)},{cy - 6}V{cy + 6}'
-                       f'M{x(hi)},{cy - 6}V{cy + 6}"/>')
-        out.append(f'<path class="zero" d="M{x(0)},{by - 3}V{by + 27}"/>')
-        out.append(f'<text class="cost" data-o="3" x="0" y="{by + 40}">{html.escape(cost)}</text>')
+            cy, t6 = nf(by + bh / 2), nf(6 * k_)
+            out.append(f'<path class="wh" data-o="2" d="M{x(lo)},{cy}H{x(hi)}M{x(lo)},{cy - t6}V{cy + t6}'
+                       f'M{x(hi)},{cy - t6}V{cy + t6}"/>')
+        out.append(f'<path class="zero" d="M{x(0)},{by - 3}V{by + bh + 3}"/>')
+        out.append(f'<text class="cost" data-o="3" x="0" y="{by + g["cost"]}">{html.escape(cost)}</text>')
         out.append('</g>')
     ya = TOP + ROW_H * len(F) - 4
     for v in (-50, 0, 50, 100):
@@ -162,9 +177,9 @@ def hero(P, steps):
     return (f'<figure class="funnelfig wide" aria-label="Carbon funnel, per 100 tonnes fixed">\n'
             f'<div class="funnel-fig">\n<p id="algae-desc" hidden>{html.escape(desc(P))}</p>\n'
             f'{funnel_svg(P, 900, "f-wide")}\n{funnel_svg(P, 320, "f-phone")}\n'
-            f'<p class="funnel-key"><span class="k0"></span>fixed <span class="k1"></span>deep or buried '
-            f'<span class="k2"></span>net at 100 years <span class="k3"></span>natural gross flow '
-            f'<span class="k4"></span>net emission</p>\n</div>\n'
+            f'<p class="funnel-key"><i class="ki"><span class="k0"></span>fixed</i> <i class="ki"><span class="k1"></span>deep or buried</i> '
+            f'<i class="ki"><span class="k2"></span>net at 100 years</i> <i class="ki"><span class="k3"></span>natural gross flow</i> '
+            f'<i class="ki"><span class="k4"></span>net emission</i></p>\n</div>\n'
             f'<div class="funnel-steps">\n{cards}\n</div>\n</figure>')
 
 

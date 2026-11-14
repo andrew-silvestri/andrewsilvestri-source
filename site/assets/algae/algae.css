@@ -22,6 +22,7 @@
 }
 .funnel-key { font: var(--fs-2)/1.6 var(--mono); color: var(--dim); text-align: center; margin: 8px 0 0; }
 .funnel-key span { display: inline-block; width: 14px; height: 10px; margin: 0 5px 0 12px; vertical-align: baseline; }
+.funnel-key .ki { font-style: normal; white-space: nowrap; }
 .funnel-key .k0 { background: var(--faint); }
 .funnel-key .k1 { background: var(--rule); }
 .funnel-key .k2 { background: var(--acc); }
