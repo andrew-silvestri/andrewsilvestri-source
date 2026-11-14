@@ -7,8 +7,8 @@ the nav (rebuild_nav.py), the citation markers and Sources list (add_citations.p
 the ?v= stamps (bust_cache.py) - are kept as the shipped page has them, so tests/test_generators.py can run
 this on the shipped tree and expect no change. The idiom is armchair/update_page.py's.
 
-The hero is a map drawn twice (900px and 340px): who reads the web across, who writes it up, both from people
-(0) to machines (100). The four futures are placed by this page's judgement; today's markers are measured. The
+The hero is a map drawn twice (900px and 340px): the share of web requests made by software across, the share
+of what readers are shown that machines wrote up, both 0 to 100 percent. The four futures are placed by this page's judgement; today's markers are measured. The
 fifth future, the closing web, is a strip under the map with two measured points.
 
 claims() asserts every comparison the template's words commit to ("only", "about as many", "lower", "fastest");
@@ -46,6 +46,14 @@ def num(v):
     return f"{v:,}"
 
 
+WORDS = {2: "two", 3: "three", 4: "four", 5: "five", 6: "six", 7: "seven", 8: "eight", 9: "nine"}
+
+
+def half_up(r):
+    """Round half up, as a reader would (Python's round() sends 76.5 to 76)."""
+    return int(r + 0.5)
+
+
 def times(r):
     """A ratio in words, for the comparisons the prose makes."""
     if 1.75 <= r < 2.25:
@@ -53,16 +61,17 @@ def times(r):
     if 3.25 <= r < 3.75:
         return "three and a half times"
     if r >= 10:
-        return f"about {round(r):,} times"
+        return f"about {half_up(r):,} times"
     return f"about {r:.1f} times"
 
 
 # ------------------------------------------------------------------- hero ---
 def map_svg(P, W, H, pad, cls, fs):
-    """The map: x = who reads (people to machines), y = who writes (people to machines)."""
+    """The map: x = share of requests made by software, y = share of what readers are shown that machines wrote."""
     f = P["fig"]
     x0, x1 = pad["l"], W - pad["r"]
     y0, y1 = pad["t"], H - pad["b"]
+    phone = W < 600
 
     def X(v):
         return x0 + (x1 - x0) * v / 100
@@ -75,39 +84,41 @@ def map_svg(P, W, H, pad, cls, fs):
     for v in (25, 50, 75):
         out.append(f'<line class="grid" x1="{X(v):.1f}" y1="{y0}" x2="{X(v):.1f}" y2="{y1}"/>'
                    f'<line class="grid" x1="{x0}" y1="{Y(v):.1f}" x2="{x1}" y2="{Y(v):.1f}"/>')
-    # axis words
-    out.append(f'<text class="ax" x="{x0}" y="{y1 + fs + 6}">people read</text>'
-               f'<text class="ax" x="{x1}" y="{y1 + fs + 6}" text-anchor="end">machines read</text>'
-               f'<text class="ax" x="{x0 - 8}" y="{y1}" text-anchor="end">people</text>'
-               f'<text class="ax" x="{x0 - 8}" y="{y1 + fs}" text-anchor="end">write</text>'
-               f'<text class="ax" x="{x0 - 8}" y="{y0 + fs - 2}" text-anchor="end">machines</text>'
-               f'<text class="ax" x="{x0 - 8}" y="{y0 + 2 * fs - 2}" text-anchor="end">write</text>')
-    # the corner no one has measured
-    out.append(f'<text class="corner" x="{x1 - 6}" y="{y0 + fs + 4}" text-anchor="end">&#8220;dead internet&#8221;</text>')
+    # ticks at 0, 50 and 100 percent, and the two axis titles
+    for v, a in ((0, "start"), (50, "middle"), (100, "end")):
+        out.append(f'<text class="ax" x="{X(v):.1f}" y="{y1 + fs + 4}" text-anchor="{a}">{v}</text>')
+        out.append(f'<text class="ax" x="{x0 - 6}" y="{Y(v) + fs * 0.35 + (fs * 0.4 if v == 0 else 0):.1f}" '
+                   f'text-anchor="end">{v}</text>')
+    xt = "percent of requests made by software" if phone else "across: percent of web requests made by software"
+    out.append(f'<text class="ax" x="{(x0 + x1) / 2:.1f}" y="{y1 + 2 * fs + 12}" text-anchor="middle">{xt}</text>')
+    yt = ("percent of what readers are shown, machine-written" if not phone
+          else "percent shown, machine-written")
+    yc = (y0 + y1) / 2
+    out.append(f'<text class="ax" x="{x0 - 30}" y="{yc:.1f}" text-anchor="middle" '
+               f'transform="rotate(-90 {x0 - 30} {yc:.1f})">{yt}</text>')
     # futures (judgement)
-    phone = W < 600
     for s in P["scenarios"]:
         cx, cy = X(s["x"]), Y(s["y"])
         if phone and s["x"] > 60:
-            # on a phone the right-hand labels sit under their circle, clear of today's line
-            lx, ly, anchor = cx, cy + fs + 10, "middle"
+            # on a phone the right-hand labels sit under their circle, kept inside the frame
+            lx, ly, anchor = min(cx, x1 - 4), cy + fs + 10, "middle" if cx < x1 - 40 else "end"
         else:
             anchor = "end" if s["x"] > 60 else "start"
             lx, ly = cx + (-12 if anchor == "end" else 12), cy + fs * 0.35
         out.append(f'<g class="fut f-{s["key"]}"><circle cx="{cx:.1f}" cy="{cy:.1f}" r="7"/>'
                    f'<text class="flab" x="{lx:.1f}" y="{ly:.1f}" text-anchor="{anchor}">'
                    f'{E(s["name"])}</text></g>')
-    # today (measured): one x, two y values joined by a line
+    # today (measured): one x, and two y values from two different samples, not joined
     tx = f[P["today"]["x"]]["value"]
     yp = f[P["today"]["y_published"]]["value"]
     ys = f[P["today"]["y_shown"]]["value"]
-    out.append(f'<g class="today"><line x1="{X(tx):.1f}" y1="{Y(yp):.1f}" x2="{X(tx):.1f}" y2="{Y(ys):.1f}"/>'
-               f'<rect x="{X(tx) - 5:.1f}" y="{Y(yp) - 5:.1f}" width="10" height="10"/>'
+    out.append(f'<g class="today">'
                f'<rect x="{X(tx) - 5:.1f}" y="{Y(ys) - 5:.1f}" width="10" height="10"/>'
-               f'<text class="tlab" x="{X(tx) - 10:.1f}" y="{Y(yp) + fs * 0.35:.1f}" text-anchor="end">'
-               f'{"published" if phone else "today, published"}</text>'
+               f'<rect class="alt" x="{X(tx) - 4:.1f}" y="{Y(yp) - 4:.1f}" width="8" height="8"/>'
                f'<text class="tlab" x="{X(tx) - 10:.1f}" y="{Y(ys) + fs * 0.35:.1f}" text-anchor="end">'
-               f'{"shown" if phone else "today, shown by Google"}</text></g>')
+               f'{"today" if phone else "today, shown by Google"}</text>'
+               f'<text class="tlab" x="{X(tx) - 10:.1f}" y="{Y(yp) + fs * 0.35:.1f}" text-anchor="end">'
+               f'{"published" if phone else "today, new articles"}</text></g>')
     out.append("</svg>")
     return "".join(out)
 
@@ -137,26 +148,28 @@ def strip_svg(P, W, cls, fs):
 
 def hero(P, v):
     f = P["fig"]
-    desc = (f"A square map. Across: the share of the web read by machines, from people (left) to machines "
-            f"(right). Up: the share written by machines. Four predicted futures are placed by judgement: "
+    desc = (f"A square map. Across: the percent of web requests made by software, from 0 to 100. Up: the percent "
+            f"of what readers are shown that machines wrote. Four predicted futures are placed by judgment: "
             + "; ".join(f"{s['name']}, {s['line']}" for s in P["scenarios"])
-            + f". Two measured markers for today sit at {v['bot_share']} percent across, at {v['graphite_articles']} "
-            f"percent up for what is published and {v['graphite_serp']} percent up for what Google shows.")
-    sdesc = ("A strip from open to closed. " + "; ".join(f"{num(f[k]['value'])} percent of {label}"
-                                                      for k, label in P["strip"]) + ".")
+            + f". Today is measured at {v['bot_share']} percent across and {v['graphite_serp']} percent up (what "
+            f"Google shows); a second marker at {v['graphite_articles']} percent up is the share of new articles.")
+    sdesc = ("A strip from open to closed, with two different measures. "
+             + "; ".join(f"{num(f[k]['value'])} percent of {label}" for k, label in P["strip"]) + ".")
     key = ('<p class="aikey"><i class="ki"><span class="sw fut"></span>a predicted future, placed by this '
            'page</i> <i class="ki"><span class="sw today"></span>today, measured</i></p>')
     return "\n".join([
         '<figure class="wide aimapfig" aria-label="Five futures for the web">',
         f'<p id="aimap-desc" hidden>{E(desc)}</p>',
-        map_svg(P, 900, 470, {"l": 96, "r": 24, "t": 12, "b": 36}, "m-wide", 13),
-        map_svg(P, 340, 400, {"l": 70, "r": 8, "t": 12, "b": 36}, "m-phone", 12),
+        map_svg(P, 900, 490, {"l": 104, "r": 24, "t": 12, "b": 56}, "m-wide", 13),
+        map_svg(P, 340, 420, {"l": 64, "r": 8, "t": 12, "b": 52}, "m-phone", 12),
         key,
         '<p class="aistrip-h">The fifth future, a closing web: sites that block AI training crawlers</p>',
         f'<p id="aistrip-desc" hidden>{E(sdesc)}</p>',
         strip_svg(P, 900, "s-wide", 13), strip_svg(P, 340, "s-phone", 12),
-        "<figcaption>Across: who reads the web. Up: who writes it. The futures are placed by this page; the "
-        "squares for today are measured (Imperva 2025; Graphite 2025-2026). The strip shows two measured samples "
+        "<figcaption>Across: the share of web requests made by software (Imperva, 2025). Up: the share of what "
+        "readers are shown that machines wrote; today's large square is Google's results (Graphite, mid-2025), "
+        "the small one new English articles (Graphite, early 2026), two samples from different dates. The futures "
+        "are placed by this page; the squares are measured. The strip's two samples measure different things "
         "(Bouchaud and Ramaciotti, September 2025; BuzzStream, late 2025).</figcaption>",
         "</figure>"])
 
@@ -169,7 +182,7 @@ def scorecard(P, v):
     return "\n".join([
         '<p class="small dim" id="score-cue">On a narrow screen the table scrolls sideways.</p>',
         '<table class="n" tabindex="0" data-scroll-affordance="#score-cue" aria-label="Forecasts against what '
-        'was measured"><thead><tr><th>Forecast</th><th>By</th><th>Measured since</th><th>So far</th></tr></thead>'
+        'was measured"><thead><tr><th>Forecast</th><th>By</th><th>Measured</th><th>So far</th></tr></thead>'
         '<tbody>', *rows, "</tbody></table>"])
 
 
@@ -179,9 +192,10 @@ def values(P):
     v = {k: num(x["value"]) for k, x in f.items()}
     v.update({k: num(x) for k, x in d.items()})
     v["goog_growth"] = f"{d['goog_growth']:.0f}"
-    v["g_c_ratio"] = f"{round(d['g_c_ratio']):,}"
+    v["g_c_ratio"] = f"{half_up(d['g_c_ratio']):,}"
     v["pub_shown_words"] = times(d["pub_shown_ratio"])
-    v["ng_ratio"] = f"{round(d['ng_ratio']):,}"
+    v["ng_ratio"] = f"{half_up(d['ng_ratio']):,}"
+    v["graphite_flat_words"] = WORDS[f["graphite_flat"]["value"]]
     y, m, dd = P["as_of"].split("-")
     v["as_of_words"] = f"{int(dd)} {MONTHS[int(m) - 1]} {y}"
     v["zip_kb"] = f"{round(os.path.getsize(ZIP) / 1024) if os.path.exists(ZIP) else 0:,}"
@@ -189,10 +203,10 @@ def values(P):
     v["takeaways"] = insight.takeaways([
         f"The best-known forecast missed: Google's search volume did not fall {v['gartner_drop']} percent by "
         f"2026, and its search revenue grew {v['goog_growth']} percent in a year.",
-        f"What is shrinking is the visit after the search: people clicked a result on {v['pew_click_ai']} percent "
-        f"of searches with an AI summary against {v['pew_click_no']} percent without one.",
-        f"Machines now make about {v['bot_share']} percent of web traffic and write about half of new English "
-        f"articles, but only {v['graphite_serp']} percent of what Google shows is AI-written."])
+        f"What is shrinking is the share of searches that end on a website: people clicked a result on "
+        f"{v['pew_click_ai']} percent of searches with an AI summary against {v['pew_click_no']} percent without one.",
+        f"Bots make about {v['bot_share']} percent of web traffic, most of it old-fashioned automation; AI writes "
+        f"about half of new English articles but only {v['graphite_serp']} percent of what Google shows."])
     claims(P, v)
     v["hero"] = hero(P, v)
     v["scorecard"] = scorecard(P, v)
@@ -213,8 +227,8 @@ def claims(P, v):
         bad.append("'only' a smaller share of what Google shows")
     if abs(g["cf_ai_bots"] - g["cf_googlebot"]) > 1:
         bad.append("AI crawlers 'about as many' as Googlebot")
-    if d["cf_machine_html"] != g["bot_share"]:
-        bad.append("Cloudflare 'the same' share as Imperva")
+    if abs(d["cf_machine_html"] - g["bot_share"]) > 2:
+        bad.append("Cloudflare 'a similar' share to Imperva")
     if not g["agent_checkout"] < 5 < g["agent_browse"]:
         bad.append("agents browse, rarely check out")
     if not g["graphite_traffic"] < g["chartbeat_drop"]:
@@ -223,14 +237,21 @@ def claims(P, v):
         bad.append("small sites lost more than large")
     if not (g["crawl_google"] < g["crawl_openai"] < g["crawl_anthropic"]):
         bad.append("crawl ratios ordered Google < OpenAI < Anthropic")
-    if not g["statcounter"] > g["meta_thresh"]:
-        bad.append("Metaculus 'as forecast'")
+    if not g["graphite_top10"] > 0:
+        bad.append("the ten largest sites 'up'")
+    if not g["zero_datos"] < 30 < 60 < g["zero_2026"]:
+        bad.append("zero-click range 'about a quarter to about two-thirds'")
+    for sc in P["scenarios"]:
+        if sc["x"] < g["bot_share"] or sc["y"] < g["graphite_serp"]:
+            bad.append(f"future {sc['key']} placed left of or below today")
     if not g["europol"] > g["graphite_articles"] + 20:
         bad.append("Europol 'not met'")
     if not g["ri_ai_2026"] > g["ri_ai_2025"]:
         bad.append("weekly AI use rose")
     if not g["elon_mixed"] > max(g["elon_better"], g["elon_worse"]):
-        bad.append("forecasters 'mostly' mixed")
+        bad.append("'equal measure' the largest answer")
+    if not g["pew_exp"] > 50 > g["pew_pub"]:
+        bad.append("experts and public 'divided'")
     if g["ai_ref_share"] > 1:
         bad.append("AI referrals 'under 1 percent'")
     if bad:

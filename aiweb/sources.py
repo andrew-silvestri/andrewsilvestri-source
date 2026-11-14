@@ -21,6 +21,7 @@ FIG = {
     "pew_click_in":     (1, "percent of searches with a summary that led to a click inside it", "March 2025", "pew2025_clicks"),
     "zero_2026":        (68.01, "percent of US Google searches ending without a click", "Jan-Apr 2026", "sparktoro2026"),
     "zero_2024":        (60.45, "same", "2024", "sparktoro2026"),
+    "zero_datos":       (27.2, "percent of US desktop Google searches ending without a click (Datos panel)", "March 2025", "datos_2025"),
     "chartbeat_sites":  (2500, "news sites in the Chartbeat sample (more than)", "2025", "reuters_trends_2026"),
     "chartbeat_drop":   (33, "percent fall in Google search traffic to publishers, worldwide", "Nov 2024 to Nov 2025", "reuters_trends_2026"),
     "chartbeat_us":     (38, "same, United States", "Nov 2024 to Nov 2025", "reuters_trends_2026"),
@@ -32,11 +33,12 @@ FIG = {
     "crawl_anthropic":  (38066, "same, Anthropic", "July 2025", "cloudflare_crawl_2025"),
     "graphite_sites":   (40000, "US sites in the sample (more than)", "2025", "graphite_seo_2026"),
     "graphite_traffic": (2.5, "percent fall in organic Google traffic", "2025 vs 2024", "graphite_seo_2026"),
-    "wiki_drop":        (8, "percent fall in human page views (about)", "2025 vs 2024", "wikimedia2025"),
+    "graphite_top10":   (1.6, "percent average rise in organic Google traffic, ten largest sites", "2025 vs 2024", "graphite_seo_2026"),
+    "wiki_drop":        (8, "percent fall in human page views (about)", "recent months of 2025 vs the same months of 2024", "wikimedia2025"),
     # --- agentic web
     "bot_share":        (53, "percent of traffic from automated software", "2025", "imperva2026"),
     "bot_share_prev":   (51, "same", "2024", "imperva2026"),
-    "cf_human_html":    (47, "percent of HTML requests made by humans", "Jan-Dec 2025", "cloudflare_yir_2025"),
+    "cf_human_html":    (47, "percent of HTML requests made by humans", "snapshot, 2 Dec 2025", "cloudflare_yir_2025"),
     "cf_ai_bots":       (4.2, "percent of HTML requests from declared AI bots (average)", "Jan-Dec 2025", "cloudflare_yir_2025"),
     "cf_googlebot":     (4.5, "percent of HTML requests from Googlebot (average)", "Jan-Dec 2025", "cloudflare_yir_2025"),
     "mcp_servers":      (10000, "active public MCP servers (more than)", "Dec 2025", "anthropic_mcp_2025"),
@@ -52,7 +54,7 @@ FIG = {
     "dpi_head_lo":      (20, "percent of tokens from the most important domains, low", "April 2024", "longpre2024"),
     "dpi_head_hi":      (33, "same, high", "April 2024", "longpre2024"),
     "news_block":       (79, "percent of top US and UK news sites blocking at least one AI training bot (about)", "late 2025", "buzzstream2025"),
-    "top1m_block":      (10.6, "percent of top-1M sites with a robots.txt that fully block GPTBot", "Sept 2025", "bouchaud2025"),
+    "top1m_block":      (10.6, "percent of the top one million websites that fully block GPTBot", "Sept 2025", "bouchaud2025"),
     "deals":            (91, "publicly announced AI content-licensing deals", "Jan 2023 to June 2026", "kelly2026"),
     "newscorp":         (250, "USD million over five years, News Corp and OpenAI (reported)", "May 2024", "newscorp_openai"),
     "nyt_lo":           (20, "USD million a year, Amazon and The New York Times, low (reported)", "July 2025", "nyt_amazon"),
@@ -67,14 +69,14 @@ FIG = {
     "graphite_flat":    (5, "quarters the share has stayed near half", "to Q1 2026", "graphite_ai_2026"),
     "graphite_serp":    (14, "percent of Google results AI-generated", "June 2025", "graphite_serp_2025"),
     "graphite_top":     (7, "percent of first results AI-generated", "June 2025", "graphite_serp_2025"),
-    "ng_2023":          (49, "AI content-farm news sites tracked", "May 2023", "newsguard"),
+    "ng_2023":          (49, "AI content-farm news sites identified", "early May 2023", "newsguard_2023"),
     "ng_2026":          (3749, "same", "June 2026", "newsguard"),
     # --- adaptation
-    "g_visits":         (86.6, "billion visits a month, google.com", "Aug 2026", "similarweb2026"),
-    "c_visits":         (5.6, "billion visits a month, chatgpt.com", "Aug 2026", "similarweb2026"),
+    "g_visits":         (88.4, "billion visits a month, google.com", "Oct 2026", "similarweb2026"),
+    "c_visits":         (6.0, "billion visits a month, chatgpt.com", "Oct 2026", "similarweb2026"),
     "ri_ai_2025":       (34, "percent of online adults using standalone generative AI weekly (six-country average)", "2025", "reuters_genai_2026"),
     "ri_ai_2026":       (51, "same", "2026", "reuters_genai_2026"),
-    "ri_saw":           (57, "percent who saw AI answers in a search engine in the last week", "2026", "reuters_genai_2026"),
+    "ri_saw":           (57, "percent who saw AI answers in a search engine in the last week (nine-country figure)", "2026", "reuters_genai_2026"),
     # --- forecasters
     "elon_n":           (301, "experts canvassed", "Dec 2024 to Feb 2025", "elon2025"),
     "elon_better":      (16, "percent: mostly better", "by 2035", "elon2025"),
@@ -82,11 +84,9 @@ FIG = {
     "elon_mixed":       (50, "percent: equal measure", "by 2035", "elon2025"),
     "pew_exp":          (56, "percent of AI experts expecting a positive impact on the US over 20 years", "2024", "pew2025_experts"),
     "pew_pub":          (17, "percent of the US public", "2024", "pew2025_experts"),
-    "meta_pct":         (1, "percent community forecast that Google's share falls below the threshold in 2025", "2025", "metaculus_google"),
-    "meta_thresh":      (85, "percent search share threshold", "2025", "metaculus_google"),
-    "statcounter":      (91.05, "percent of search-engine page views, Google", "Oct 2026", "statcounter2026"),
     "ri_pub_drop":      (43, "percent fall in search traffic expected by news executives within three years", "Jan 2026", "reuters_trends_2026"),
     "ri_pub_n":         (280, "news executives surveyed", "late 2025", "reuters_trends_2026"),
+    "ri_pub_answered":  (268, "of them answering the search-traffic question", "late 2025", "reuters_trends_2026"),
 }
 
 # Where each source lives. Cited on the page through add_citations.PAGES["aiweb.html"]; listed here so the
@@ -100,6 +100,7 @@ REFS = {
     "chartbeat_q1_2026": "https://lp.chartbeat.com/hubfs/Chartbeat-Report-2026Q1.pdf",
     "cloudflare_crawl_2025": "https://blog.cloudflare.com/crawlers-click-ai-bots-training/",
     "graphite_seo_2026": "https://graphite.io/five-percent/debunking-the-myth-that-seo-traffic-has-dramatically-declined",
+    "datos_2025": "https://searchengineland.com/zero-click-searches-up-organic-clicks-down-456660",
     "wikimedia2025": "https://diff.wikimedia.org/2025/10/17/new-user-trends-on-wikipedia/",
     "imperva2026": "https://www.imperva.com/blog/bad-bot-report-2026-bots-agentic-age/",
     "cloudflare_yir_2025": "https://blog.cloudflare.com/radar-2025-year-in-review",
@@ -123,31 +124,35 @@ REFS = {
     "graphite_ai_2026": "https://graphite.io/five-percent/research/ai-now-writes-as-many-online-articles-as-humans-do",
     "graphite_serp_2025": "https://graphite.io/five-percent/ai-content-in-search-and-llms",
     "newsguard": "https://www.newsguardtech.com/special-reports/ai-tracking-center/",
+    "newsguard_2023": "https://www.newsguardtech.com/press/newsguard-now-identifies-125-news-and-information-websites-generated-by-ai-develops-framework-for-defining-unreliable-ai-generated-news-and-information-sources/",
     "shumailov2024": "https://pmc.ncbi.nlm.nih.gov/articles/PMC11269175/",
     "similarweb2026": "https://www.similarweb.com/blog/research/market-research/most-visited-websites/",
     "reuters_genai_2026": "https://reutersinstitute.politics.ox.ac.uk/generative-ai-and-news-report-2026-standalone-tools-information-infrastructure",
     "elon2025": "https://imaginingthedigitalfuture.org/reports-and-publications/being-human-in-2035/being-human-in-2035-research-methodologies-and-topline-findings/",
     "pew2025_experts": "https://www.pewresearch.org/internet/2025/04/03/how-the-us-public-and-ai-experts-view-artificial-intelligence/",
-    "metaculus_google": "https://www.metaculus.com/questions/31258/googles-search-market-share-below-85-in-2025",
-    "statcounter2026": "https://gs.statcounter.com/search-engine-market-share",
+    "google_clicks_2025": "https://blog.google/products-and-platforms/products/search/ai-search-driving-more-queries-higher-quality-clicks/",
 }
 
-# The map. Positions are this page's judgement (0-100 on each axis), not measurements.
+# The map. Positions are this page's judgement (0-100 on each axis), not measurements. Across: the share of requests
+# made by software, which today's 53 percent measures. Up: the share of what readers are shown that machines wrote,
+# which Graphite's 14 percent of Google results measures. Each future is placed against today, so none sits to the
+# left of or below it: no forecast has machine traffic or machine-written results falling.
 SCENARIOS = [
-    {"key": "adapt",  "name": "Adaptation",      "x": 22, "y": 20, "section": "adapt",
+    {"key": "adapt",  "name": "Adaptation",      "x": 60, "y": 22, "section": "adapt",
      "line": "the web absorbs AI as it absorbed search and phones"},
-    {"key": "hollow", "name": "Hollowed web",    "x": 70, "y": 22, "section": "hollow",
+    {"key": "hollow", "name": "Hollowed web",    "x": 72, "y": 40, "section": "hollow",
      "line": "AI answers replace the visit"},
-    {"key": "agent",  "name": "Agentic web",     "x": 86, "y": 52, "section": "agents",
+    {"key": "agent",  "name": "Agentic web",     "x": 88, "y": 55, "section": "agents",
      "line": "agents browse and buy for people"},
-    {"key": "flood",  "name": "Synthetic flood", "x": 26, "y": 80, "section": "flood",
-     "line": "machines write most of what is published"},
+    {"key": "flood",  "name": "Synthetic flood", "x": 62, "y": 85, "section": "flood",
+     "line": "machines write most of what is published and shown"},
 ]
-# Today, measured: x from the automated share of traffic; y from the AI share of what is published and of what
-# Google shows. Keys into FIG.
+# Today, measured: x from the automated share of traffic; y from the AI share of what Google shows (the axis) and,
+# as a second marker, of what is published. Keys into FIG.
 TODAY = {"x": "bot_share", "y_published": "graphite_articles", "y_shown": "graphite_serp"}
-# The closing-web strip: two measured points on a 0-100 scale of sites blocking AI training crawlers.
-STRIP = [("top1m_block", "the million most-visited sites, blocking OpenAI's crawler"),
+# The closing-web strip: two measured points on a 0-100 scale. Two different measures (one crawler fully blocked
+# across all top sites; at least one crawler blocked by news sites), so the gap is partly definitional.
+STRIP = [("top1m_block", "the million most-visited sites, fully blocking OpenAI's crawler"),
          ("news_block", "top US and UK news sites, blocking at least one AI training crawler")]
 
 # Forecasts set against what has been measured since (the scorecard table).
@@ -158,14 +163,10 @@ SCORECARD = [
      "verdict": "Not met"},
     {"forecast": "As much as {europol} percent of online content synthetic by 2026",
      "by": "Europol report, 2022, citing one author",
-     "measured": "About {graphite_articles} percent of new English articles; {graphite_serp} percent of Google results",
+     "measured": "{graphite_articles} percent of new English articles (early 2026); {graphite_serp} percent of Google results (mid-2025)",
      "verdict": "Not met, and no data behind it"},
-    {"forecast": "Google's share of search below {meta_thresh} percent in 2025: {meta_pct} percent likely",
-     "by": "Metaculus forecasters, 2025",
-     "measured": "{statcounter} percent in October 2026 (StatCounter)",
-     "verdict": "As forecast"},
     {"forecast": "Search traffic to news sites falls {ri_pub_drop} percent within three years",
-     "by": "{ri_pub_n} news executives, January 2026",
-     "measured": "Down {chartbeat_drop} percent in the year to November 2025 (Chartbeat)",
+     "by": "News executives, January 2026 ({ri_pub_answered} of {ri_pub_n} answering)",
+     "measured": "Already down {chartbeat_drop} percent in the year to November 2025, before the forecast was made (Chartbeat)",
      "verdict": "Too early to judge"},
 ]

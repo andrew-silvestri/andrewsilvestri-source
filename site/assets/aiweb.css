@@ -1,7 +1,7 @@
 /* aiweb.css - the scenario map and the closing-web strip on aiweb.html.
  *
  * Two drawings ship for each figure, each shown at its drawn size and never scaled up, so SVG text stays at
- * 12px or more: the map at 900x470 and 340x400, the strip at 900 and 340. Colours are style.css tokens; no
+ * 12px or more: the map at 900x490 and 340x420, the strip at 900 and 340. Colors are style.css tokens; no
  * gradients. Futures (placed by the page) are open circles; today's markers (measured) are filled squares.
  */
 .aimapfig { margin: 28px 0; container-type: inline-size; }
@@ -16,13 +16,13 @@
 .aimap .ax, .aistrip .ax { font-family: var(--mono); font-size: 12px; fill: var(--dim); }
 .aimap .frame { fill: none; stroke: var(--rule); stroke-width: 1; }
 .aimap .grid { stroke: var(--faint); stroke-width: 1; }
-.aimap .corner { font-style: italic; fill: var(--dim); }
 .aimap .fut circle { fill: var(--bg); stroke: var(--ink); stroke-width: 1.5; }
-.aimap .today line { stroke: var(--acc); stroke-width: 2; }
+.aimap .today rect.alt { fill: var(--bg); stroke: var(--acc); stroke-width: 2; }
 .aimap .today rect, .aistrip .gate rect { fill: var(--acc); }
 .aimap .tlab, .aistrip .tlab { fill: var(--acc); }
 .aistrip .bar { stroke: var(--rule); stroke-width: 2; }
 .aikey, .aistrip-h { font: var(--fs-2)/1.6 var(--mono); color: var(--dim); text-align: center; margin: 8px 0 0; }
+@container (max-width: 899px) { .aikey { text-align: left; } .aikey .ki { display: block; } .aikey .sw { margin-left: 0; } }
 .aistrip-h { margin-top: 22px; }
 .aikey .sw { display: inline-block; width: 11px; height: 11px; margin: 0 5px 0 10px; vertical-align: baseline; }
 .aikey .sw.fut { border: 1.5px solid var(--ink); border-radius: 50%; box-sizing: border-box; }

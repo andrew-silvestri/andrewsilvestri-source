@@ -3,7 +3,7 @@
  "derived": {
   "anthropic_vs_google": 7049,
   "cf_machine_html": 53,
-  "g_c_ratio": 15.5,
+  "g_c_ratio": 14.7,
   "goog_growth": 12.0,
   "ng_ratio": 76.5,
   "openai_vs_google": 202,
@@ -48,10 +48,10 @@
    "value": 51
   },
   "c_visits": {
-   "period": "Aug 2026",
+   "period": "Oct 2026",
    "source": "similarweb2026",
    "unit": "billion visits a month, chatgpt.com",
-   "value": 5.6
+   "value": 6.0
   },
   "cf_ai_bots": {
    "period": "Jan-Dec 2025",
@@ -66,7 +66,7 @@
    "value": 4.5
   },
   "cf_human_html": {
-   "period": "Jan-Dec 2025",
+   "period": "snapshot, 2 Dec 2025",
    "source": "cloudflare_yir_2025",
    "unit": "percent of HTML requests made by humans",
    "value": 47
@@ -192,10 +192,10 @@
    "value": 24
   },
   "g_visits": {
-   "period": "Aug 2026",
+   "period": "Oct 2026",
    "source": "similarweb2026",
    "unit": "billion visits a month, google.com",
-   "value": 86.6
+   "value": 88.4
   },
   "gartner_drop": {
    "period": "by 2026",
@@ -245,6 +245,12 @@
    "unit": "percent of first results AI-generated",
    "value": 7
   },
+  "graphite_top10": {
+   "period": "2025 vs 2024",
+   "source": "graphite_seo_2026",
+   "unit": "percent average rise in organic Google traffic, ten largest sites",
+   "value": 1.6
+  },
   "graphite_traffic": {
    "period": "2025 vs 2024",
    "source": "graphite_seo_2026",
@@ -275,18 +281,6 @@
    "unit": "active public MCP servers (more than)",
    "value": 10000
   },
-  "meta_pct": {
-   "period": "2025",
-   "source": "metaculus_google",
-   "unit": "percent community forecast that Google's share falls below the threshold in 2025",
-   "value": 1
-  },
-  "meta_thresh": {
-   "period": "2025",
-   "source": "metaculus_google",
-   "unit": "percent search share threshold",
-   "value": 85
-  },
   "news_block": {
    "period": "late 2025",
    "source": "buzzstream2025",
@@ -300,9 +294,9 @@
    "value": 250
   },
   "ng_2023": {
-   "period": "May 2023",
-   "source": "newsguard",
-   "unit": "AI content-farm news sites tracked",
+   "period": "early May 2023",
+   "source": "newsguard_2023",
+   "unit": "AI content-farm news sites identified",
    "value": 49
   },
   "ng_2026": {
@@ -383,6 +377,12 @@
    "unit": "same",
    "value": 51
   },
+  "ri_pub_answered": {
+   "period": "late 2025",
+   "source": "reuters_trends_2026",
+   "unit": "of them answering the search-traffic question",
+   "value": 268
+  },
   "ri_pub_drop": {
    "period": "Jan 2026",
    "source": "reuters_trends_2026",
@@ -398,14 +398,8 @@
   "ri_saw": {
    "period": "2026",
    "source": "reuters_genai_2026",
-   "unit": "percent who saw AI answers in a search engine in the last week",
+   "unit": "percent who saw AI answers in a search engine in the last week (nine-country figure)",
    "value": 57
-  },
-  "statcounter": {
-   "period": "Oct 2026",
-   "source": "statcounter2026",
-   "unit": "percent of search-engine page views, Google",
-   "value": 91.05
   },
   "tollbit": {
    "period": "Q4 2025",
@@ -416,11 +410,11 @@
   "top1m_block": {
    "period": "Sept 2025",
    "source": "bouchaud2025",
-   "unit": "percent of top-1M sites with a robots.txt that fully block GPTBot",
+   "unit": "percent of the top one million websites that fully block GPTBot",
    "value": 10.6
   },
   "wiki_drop": {
-   "period": "2025 vs 2024",
+   "period": "recent months of 2025 vs the same months of 2024",
    "source": "wikimedia2025",
    "unit": "percent fall in human page views (about)",
    "value": 8
@@ -436,6 +430,12 @@
    "source": "sparktoro2026",
    "unit": "percent of US Google searches ending without a click",
    "value": 68.01
+  },
+  "zero_datos": {
+   "period": "March 2025",
+   "source": "datos_2025",
+   "unit": "percent of US desktop Google searches ending without a click (Datos panel)",
+   "value": 27.2
   }
  },
  "refs": {
@@ -447,11 +447,13 @@
   "chartbeat_q1_2026": "https://lp.chartbeat.com/hubfs/Chartbeat-Report-2026Q1.pdf",
   "cloudflare_crawl_2025": "https://blog.cloudflare.com/crawlers-click-ai-bots-training/",
   "cloudflare_yir_2025": "https://blog.cloudflare.com/radar-2025-year-in-review",
+  "datos_2025": "https://searchengineland.com/zero-click-searches-up-organic-clicks-down-456660",
   "elon2025": "https://imaginingthedigitalfuture.org/reports-and-publications/being-human-in-2035/being-human-in-2035-research-methodologies-and-topline-findings/",
   "europol2022": "https://www.europol.europa.eu/publications-events/publications/facing-reality-law-enforcement-and-challenge-of-deepfakes",
   "forrester2025": "https://www.forrester.com/report/many-us-consumers-believe-in-agentic-commerce-but-few-trust-it-to-make-purchases/RES188737",
   "gartner2024": "https://www.gartner.com/en/newsroom/press-releases/2024-02-19-gartner-predicts-search-engine-volume-will-drop-25-percent-by-2026-due-to-ai-chatbots-and-other-virtual-agents",
   "google_ap2": "https://cloud.google.com/blog/products/ai-machine-learning/announcing-agents-to-payments-ap2-protocol",
+  "google_clicks_2025": "https://blog.google/products-and-platforms/products/search/ai-search-driving-more-queries-higher-quality-clicks/",
   "graphite_ai_2026": "https://graphite.io/five-percent/research/ai-now-writes-as-many-online-articles-as-humans-do",
   "graphite_seo_2026": "https://graphite.io/five-percent/debunking-the-myth-that-seo-traffic-has-dramatically-declined",
   "graphite_serp_2025": "https://graphite.io/five-percent/ai-content-in-search-and-llms",
@@ -460,10 +462,10 @@
   "kelly2026": "https://mediaandthemachine.substack.com/p/ai-content-licensing-deals-june-2026",
   "longpre2024": "https://arxiv.org/abs/2407.14933",
   "mckinsey2025": "https://www.mckinsey.com/capabilities/quantumblack/our-insights/europes-agentic-commerce-moment-decision-influence-is-here-execution-is-coming",
-  "metaculus_google": "https://www.metaculus.com/questions/31258/googles-search-market-share-below-85-in-2025",
   "ms_build_2025": "https://blogs.microsoft.com/blog/2025/05/19/microsoft-build-2025-the-age-of-ai-agents-and-building-the-open-agentic-web/",
   "newscorp_openai": "https://www.engadget.com/openai-will-reportedly-pay-250-million-to-put-news-corps-journalism-in-chatgpt-214615249.html",
   "newsguard": "https://www.newsguardtech.com/special-reports/ai-tracking-center/",
+  "newsguard_2023": "https://www.newsguardtech.com/press/newsguard-now-identifies-125-news-and-information-websites-generated-by-ai-develops-framework-for-defining-unreliable-ai-generated-news-and-information-sources/",
   "nyt_amazon": "https://www.engadget.com/ai/the-new-york-times-and-amazons-ai-licensing-deal-is-reportedly-worth-up-to-25-million-per-year-135523853/",
   "openai_checkout": "https://openai.com/index/buy-it-in-chatgpt/",
   "pew2025_clicks": "https://www.pewresearch.org/short-reads/2025/07/22/google-users-are-less-likely-to-click-on-links-when-an-ai-summary-appears-in-the-results/",
@@ -473,7 +475,6 @@
   "shumailov2024": "https://pmc.ncbi.nlm.nih.gov/articles/PMC11269175/",
   "similarweb2026": "https://www.similarweb.com/blog/research/market-research/most-visited-websites/",
   "sparktoro2026": "https://sparktoro.com/blog/in-2026-less-than-one-third-of-google-searches-still-send-a-click/",
-  "statcounter2026": "https://gs.statcounter.com/search-engine-market-share",
   "suits2026": "https://chatgptiseatingtheworld.com/2026/10/29/latest-map-of-u-s-copyright-suits-v-ai-companies-total-157/",
   "tollbit2026": "https://digiday.com/media/in-graphic-detail-ai-licensing-deals-protection-measures-arent-slowing-web-scraping/",
   "wikimedia2025": "https://diff.wikimedia.org/2025/10/17/new-user-trends-on-wikipedia/"
@@ -484,32 +485,32 @@
    "line": "the web absorbs AI as it absorbed search and phones",
    "name": "Adaptation",
    "section": "adapt",
-   "x": 22,
-   "y": 20
+   "x": 60,
+   "y": 22
   },
   {
    "key": "hollow",
    "line": "AI answers replace the visit",
    "name": "Hollowed web",
    "section": "hollow",
-   "x": 70,
-   "y": 22
+   "x": 72,
+   "y": 40
   },
   {
    "key": "agent",
    "line": "agents browse and buy for people",
    "name": "Agentic web",
    "section": "agents",
-   "x": 86,
-   "y": 52
+   "x": 88,
+   "y": 55
   },
   {
    "key": "flood",
-   "line": "machines write most of what is published",
+   "line": "machines write most of what is published and shown",
    "name": "Synthetic flood",
    "section": "flood",
-   "x": 26,
-   "y": 80
+   "x": 62,
+   "y": 85
   }
  ],
  "scorecard": [
@@ -522,26 +523,20 @@
   {
    "by": "Europol report, 2022, citing one author",
    "forecast": "As much as {europol} percent of online content synthetic by 2026",
-   "measured": "About {graphite_articles} percent of new English articles; {graphite_serp} percent of Google results",
+   "measured": "{graphite_articles} percent of new English articles (early 2026); {graphite_serp} percent of Google results (mid-2025)",
    "verdict": "Not met, and no data behind it"
   },
   {
-   "by": "Metaculus forecasters, 2025",
-   "forecast": "Google's share of search below {meta_thresh} percent in 2025: {meta_pct} percent likely",
-   "measured": "{statcounter} percent in October 2026 (StatCounter)",
-   "verdict": "As forecast"
-  },
-  {
-   "by": "{ri_pub_n} news executives, January 2026",
+   "by": "News executives, January 2026 ({ri_pub_answered} of {ri_pub_n} answering)",
    "forecast": "Search traffic to news sites falls {ri_pub_drop} percent within three years",
-   "measured": "Down {chartbeat_drop} percent in the year to November 2025 (Chartbeat)",
+   "measured": "Already down {chartbeat_drop} percent in the year to November 2025, before the forecast was made (Chartbeat)",
    "verdict": "Too early to judge"
   }
  ],
  "strip": [
   [
    "top1m_block",
-   "the million most-visited sites, blocking OpenAI's crawler"
+   "the million most-visited sites, fully blocking OpenAI's crawler"
   ],
   [
    "news_block",
