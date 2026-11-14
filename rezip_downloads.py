@@ -327,6 +327,13 @@ TARGETS = [
     # whose SHA-1 differs from the manifest.
     target("scales", "scales-code.zip", keep={"outputs"},
            skip=("data/raw", "data/raw/*", "outputs/*.png")),
+    # Algae carbon (algae-carbon lane, 2026-11-13): the fetch script, the ocean-model retention reader,
+    # the published parameters, the payload builder with its checks, the page generator and the tests,
+    # with the payload, data/fetched.json and the retention table. Not data/raw: the Global Carbon
+    # Budget file is re-downloadable and the reader refuses one whose SHA-1 differs from the manifest;
+    # the cached model rows are 20 MB taken from a 3.3 GB public file the script reads by range.
+    target("algae", "algae-code.zip", keep={"outputs"},
+           skip=("data/raw", "data/raw/*", "outputs/*.png")),
     # food-code.zip retired with its page on 2026-09-09: food.html was
     # unpublished at Andrew's request, for now, and the last build is
     # unpublished/downloads/food-code.zip. The TARGET goes with the page,

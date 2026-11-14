@@ -160,6 +160,10 @@ GENERATORS = [
     # raw file at render time (scales lane, 2026-11-13).
     ("scales page: scales/update_page.py --apply",
      ["update_page.py", "--apply"], "scales", "site"),
+    # algae/update_page.py writes site/algae.html from algae/outputs/payload.json; it reads no raw
+    # file at render time (algae-carbon lane, 2026-11-13).
+    ("algae page: algae/update_page.py --apply",
+     ["update_page.py", "--apply"], "algae", "site"),
     # storage/update_page.py writes site/storage.html from storage/outputs/payload.json
     # (build_storage.py, which needs ERCOT's files under storage/data/raw, gitignored) and
     # storage/data/imm.json. R4, 2026-10-23.

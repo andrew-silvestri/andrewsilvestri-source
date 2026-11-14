@@ -1735,6 +1735,105 @@ PAGES = {
          'E. Arcaute and others, &ldquo;Constructing cities, deconstructing scaling laws&rdquo;, <i>Journal of the Royal Society Interface</i> 12:20140745 (2015), <a href="https://doi.org/10.1098/rsif.2014.0745">doi:10.1098/rsif.2014.0745</a>.',
          'Scaling exponents of cities in England and Wales under thousands of boundary definitions.'),
     ],
+    # Lane algae-carbon, 2026-11-13: the algae page (algae/update_page.py applies this table itself).
+    "algae.html": [
+        ("Anchor phrase", "Source", "What it supports"),
+        ("in the estimate of Field and colleagues",
+         'Field CB, Behrenfeld MJ, Randerson JT, Falkowski P. &ldquo;Primary production of the biosphere: integrating '
+         'terrestrial and oceanic components&rdquo;. <i>Science</i> 281(5374):237&ndash;240, 1998.',
+         'Ocean net primary production 48.5 Pg C a year, 1.0 of it macroalgae; land 56.4 (Table 1).'),
+        ("One newer satellite model gives a lower total",
+         'Kulk G, Platt T, Dingle J, et al. &ldquo;Primary production, an index of climate change in the ocean: '
+         'satellite-based estimates over two decades&rdquo;. <i>Remote Sensing</i> 12(5):826, 2020.',
+         'Phytoplankton primary production 38.8 to 42.1 Pg C a year, 1998&ndash;2018, one model; published satellite estimates about 32 to 70.7.'),
+        ("according to the Global Carbon Budget",
+         'Friedlingstein P, et al. &ldquo;Global Carbon Budget 2025&rdquo;. <i>Earth System Science Data</i> '
+         '18:3211&ndash;3288, 2026. Data: Global_Carbon_Budget_2025_v1.0.xlsx, ICOS Carbon Portal. CC BY 4.0.',
+         'Fossil and cement emissions in 2024; the ocean sink, 2015&ndash;2024 mean.'),
+        ("2021 assessment attributes that uptake",
+         'Canadell JG, Monteiro PMS, et al. &ldquo;Global Carbon and other Biogeochemical Cycles and '
+         'Feedbacks&rdquo;. In <i>Climate Change 2021: The Physical Science Basis</i>, IPCC AR6 WG1, Chapter 5, '
+         'Section 5.2.1.3, Figure 5.12 and Cross-Chapter Box 5.3, 2021.',
+         'The ocean sink is mainly physical and chemical; the biological pump&rsquo;s role in it is assessed as minimal (Box 5.3); the natural cycle drawn in balance (Figure 5.12).'),
+        ("Satellite-based estimates of this export range",
+         'Siegel DA, DeVries T, Cetini&cacute; I, Bisson KM. &ldquo;Quantifying the ocean&rsquo;s biological '
+         'pump and its carbon cycle impacts on global scales&rdquo;. <i>Annual Review of Marine Science</i> '
+         '15:329&ndash;356, 2023.',
+         'Satellite-based export below about 100 m of 4 to 10 Pg C a year (Table 1); sediment burial 0.02 to 0.2 Pg C a year (p. 330).'),
+        ("The RECCAP2 synthesis",
+         'Doney SC, Mitchell KA, Henson SA, et al. &ldquo;Observational and numerical modeling constraints on the '
+         'global ocean biological carbon pump&rdquo;. <i>Global Biogeochemical Cycles</i> 38, e2024GB008156, 2024.',
+         'Flux at 1,000 m: model mean 0.65, observation-based mean 0.95 Pg C a year (Table 5).'),
+        ("Karen Filbee-Dexter and colleagues",
+         'Filbee-Dexter K, Pessarrodona A, Pedersen MF, et al. &ldquo;Carbon export from seaweed forests to deep '
+         'ocean sinks&rdquo;. <i>Nature Geoscience</i> 17:552&ndash;559, 2024.',
+         '4 to 44 Tg C a year from brown-seaweed forests held for 100 years, of 317 Tg C a year production.'),
+        ("the oceanographer David Siegel",
+         'Siegel DA, DeVries T, Doney SC, Bell T. &ldquo;Assessing the sequestration time scales of some ocean-based '
+         'carbon dioxide reduction strategies&rdquo;. <i>Environmental Research Letters</i> 16:104003, 2021. Data: '
+         '&ldquo;CO2 sequestration fractions&rdquo;, figshare 15228690, CC0.',
+         'The fraction of CO2 released at each depth that stays out of the air over time; the 208 m check.'),
+        ("DeAngelo and colleagues sampled this removal fraction",
+         'DeAngelo J, Saenz BT, Arzeno-Soltero IB, et al. &ldquo;Economic and biophysical limits to seaweed farming '
+         'for climate change mitigation&rdquo;. <i>Nature Plants</i> 9:45&ndash;57, 2023.',
+         'Removal fraction sampled from 0.4 to 1, literature values 0.4 to 0.75 (Table 1); costs of $480, $830 and typical runs of $1,120 to $2,090 a tonne of CO2; costs below $400 only above a fraction of 0.6.'),
+        ("ocean-model runs by Berger and colleagues",
+         'Berger M, Kwiatkowski L, Ho DT, Bopp L. &ldquo;Ocean dynamics and biological feedbacks limit the potential '
+         'of macroalgae carbon dioxide removal&rdquo;. <i>Environmental Research Letters</i> 18:024039, 2023.',
+         'Air-sea removal efficiency of macroalgae farming, 0.58 with and 0.79 without nutrient feedbacks.'),
+        ("Bach and colleagues showed in 2021",
+         'Bach LT, Tamsitt V, Gower J, et al. &ldquo;Testing the climate intervention potential of ocean '
+         'afforestation using the Great Atlantic Sargassum Belt&rdquo;. <i>Nature Communications</i> 12:2556, 2021.',
+         'Nutrient reallocation and calcification by epibionts reduce the CO2 removal of sinking seaweed.'),
+        ("a company in Portland, Maine",
+         'Simson A, Rabinowitz R. &ldquo;Under the sea: Running Tide&rsquo;s ill-fated adventure in ocean carbon '
+         'removal&rdquo;. <i>Canary Media</i>, 19 September 2024; Running Tide press release, 19 March 2024; RÚV reporting of about 19,000 tonnes, via <i>Portland Press Herald</i>, 17 June 2024.',
+         'Alkaline-coated wood sunk off Iceland in 2023, buyers, in-house verification, closure in June 2024.'),
+        ("the EIFEX experiment",
+         'Smetacek V, Klaas C, Strass VH, et al. &ldquo;Deep carbon export from a Southern Ocean iron-fertilized '
+         'diatom bloom&rdquo;. <i>Nature</i> 487:313&ndash;319, 2012. Experiment record: Yoon JE, et al. '
+         '<i>Biogeosciences</i> 15:5847&ndash;5889, 2018.',
+         'At least half of the bloom biomass sank below 1,000 m; thirteen artificial iron experiments, 1993&ndash;2009.'),
+        ("The LOHAFEX experiment",
+         'Martin P, van der Loeff MR, Cassar N, et al. &ldquo;Iron fertilization enhanced net community production '
+         'but not downward particle flux during the Southern Ocean iron fertilization experiment LOHAFEX&rdquo;. '
+         '<i>Global Biogeochemical Cycles</i> 27:871&ndash;881, 2013.',
+         'Production doubled; export was no higher than outside the patch; silicate limitation and grazing.'),
+        ("a 2010 study by Andreas Oschlies",
+         'Oschlies A, Koeve W, Rickels W, Rehdanz K. &ldquo;Side effects and accounting aspects of hypothetical '
+         'large-scale Southern Ocean iron fertilization&rdquo;. <i>Biogeosciences</i> 7:4017&ndash;4035, 2010.',
+         'Extra ocean uptake from the air per unit of extra export at 100 years, 0.22 for a one-year pulse (Table 1) and 0.51 in the best region (Table 2); nitrous oxide offset.'),
+        ("Under the London Protocol",
+         'London Convention and London Protocol, Resolution LC-LP.1 (2008) on the regulation of ocean '
+         'fertilization.',
+         'Ocean fertilization other than legitimate scientific research not to be allowed.'),
+        ("2022 mitigation report states",
+         'IPCC. <i>Climate Change 2022: Mitigation of Climate Change</i>, AR6 WG3, Chapter 12, Cross-Chapter Box 8, '
+         '2022; Hepburn C, et al. &ldquo;The technological and economic prospects for CO2 utilization and '
+         'removal&rdquo;. <i>Nature</i> 575:87&ndash;97, 2019.',
+         'Using captured fossil CO2 in products does not remove CO2 from the atmosphere.'),
+        ("2016 design case, capturing the CO2",
+         'Davis R, Markham J, Kinchin C, et al. <i>Process Design and Economics for the Production of Algal Biomass</i>. '
+         'NREL/TP-5100-64772, 2016.',
+         'Emissions per tonne of algae, about 0.36 t CO2 per t CO2 fixed, from flue-gas capture, electricity and fertilizer (Tables 20&ndash;21); no drying in the design.'),
+        ("Brilliant Planet, a London company",
+         'Companies House, Brilliant Planet Limited (company 08491368), insolvency filings, 2024&ndash;2025.',
+         'Administration from 14 November 2024.'),
+        ("An independent 2026 analysis by Leonard and colleagues",
+         'Leonard W, McClure DD, Ng KS, Yang A. &ldquo;Potential of Microalgal Biomass Production in Coastal Deserts for '
+         'Carbon Dioxide Removal&rdquo;. <i>Environmental Science &amp; Technology</i> 60(33):23231&ndash;23244, 2026, '
+         'doi:10.1021/acs.est.6c08729.',
+         'Net removal and cost of desert algae burial, $181 to $661 a tonne of CO2.'),
+        ("The National Academies judged that seaweed cultivation",
+         'National Academies of Sciences, Engineering, and Medicine. <i>A Research Strategy for Ocean-based Carbon '
+         'Dioxide Removal and Sequestration</i>. Washington, DC, 2022. doi:10.17226/26278.',
+         'Seaweed cultivation appears to be a compelling strategy (Ch. 9); cost near $100 a tonne before monitoring; iron '
+         'fertilization under $50.'),
+        ("across publicly priced carbon-removal orders in 2024",
+         'CDR.fyi, 2024 year in review (public summary); Frontier, direct air capture pathway page '
+         '(frontierclimate.com), as listed on 13 November 2026.',
+         'Weighted average price per tonne of publicly priced orders, $320 in 2024; Frontier&rsquo;s average contracted price for direct air capture, $646.'),
+    ],
 }
 
 

@@ -38,6 +38,7 @@ OPTIONAL = [
     "python origins/test_origins.py",
     "python sub3/test_sub3.py",
     "python scales/test_scales.py",
+    "python algae/test_algae.py",
     "node tests/test_kit.js", "python tests/test_refresh.py",
 ]
 # test files in tests/ that are not suites in their own right
