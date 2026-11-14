@@ -102,6 +102,18 @@ ENTRIES = [
         "why": "A finished policy chain, 1990-2006, stated on the page as not updated.",
     },
     {
+        # night-shift lane (batch 2), 2026-11-13. Disabled: the Leave and Job Flexibilities Module is a
+        # one-off 2024-25 supplement, and the page joins it to the 2024 and 2025 diaries; the page says
+        # its data does not update. update_page.claims() would stop a rebuild that contradicts the prose.
+        "page": "nightshift",
+        "cwd": "nightshift",
+        "fetch": [["python", "fetch_public.py"]],
+        "build": [["python", "build_nightshift.py"]],
+        "keys": [],
+        "enabled": False,
+        "why": "A one-off 2024-25 survey module joined to the 2024 and 2025 diaries, stated on the page as not updated.",
+    },
+    {
         "page": "takeaway",
         "cwd": "takeaway",
         # R2 (2026-10-23): production only. The pipeline tracker carries

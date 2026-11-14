@@ -1,0 +1,128 @@
+{
+ "a3-2025.htm": {
+  "bytes": 168539,
+  "fetched": "2026-11-07",
+  "sha1": "69ac2768651a9a4534888e043c3add28163204f4",
+  "url": "https://www.bls.gov/tus/tables/a3-2025.htm",
+  "via": "urllib"
+ },
+ "atusact-2024.zip": {
+  "bytes": 2241574,
+  "fetched": "2026-11-07",
+  "sha1": "ec66fe2d878d2f608ee840123e4b6fd0d5fd55c1",
+  "url": "https://www.bls.gov/tus/datafiles/atusact-2024.zip",
+  "via": "urllib"
+ },
+ "atusact-2025.zip": {
+  "bytes": 1882541,
+  "fetched": "2026-11-07",
+  "sha1": "c1cd34ec4b6c52a07879a1af1f7e679692852b95",
+  "url": "https://www.bls.gov/tus/datafiles/atusact-2025.zip",
+  "via": "urllib"
+ },
+ "atusintcodebk24.pdf": {
+  "bytes": 1686700,
+  "fetched": "2026-11-07",
+  "sha1": "b3808fa03deafc7015491f47825883182b3ef12d",
+  "url": "https://www.bls.gov/tus/dictionaries/atusintcodebk24.pdf",
+  "via": "urllib"
+ },
+ "atusintcodebk25.pdf": {
+  "bytes": 466369,
+  "fetched": "2026-11-07",
+  "sha1": "6973b746f90d08133e9bd56be0d6488757571859",
+  "url": "https://www.bls.gov/tus/dictionaries/atusintcodebk25.pdf",
+  "via": "urllib"
+ },
+ "atusresp-2024.zip": {
+  "bytes": 517204,
+  "fetched": "2026-11-07",
+  "sha1": "4ba2d57aef75ea090af8b1c5062488be6230a637",
+  "url": "https://www.bls.gov/tus/datafiles/atusresp-2024.zip",
+  "via": "urllib"
+ },
+ "atusresp-2025.zip": {
+  "bytes": 429058,
+  "fetched": "2026-11-07",
+  "sha1": "a7e46e16e79edabaf2275044d4d1b87649d9b088",
+  "url": "https://www.bls.gov/tus/datafiles/atusresp-2025.zip",
+  "via": "urllib"
+ },
+ "atusrost-2024.zip": {
+  "bytes": 95302,
+  "fetched": "2026-11-07",
+  "sha1": "f7b768ad8a6bca75d98016a436d478418c0a858a",
+  "url": "https://www.bls.gov/tus/datafiles/atusrost-2024.zip",
+  "via": "urllib"
+ },
+ "atusrost-2025.zip": {
+  "bytes": 78890,
+  "fetched": "2026-11-07",
+  "sha1": "06636f0d4b0ebe1e49c46a02e89b903bbb4cdb78",
+  "url": "https://www.bls.gov/tus/datafiles/atusrost-2025.zip",
+  "via": "urllib"
+ },
+ "atussum-2024.zip": {
+  "bytes": 463411,
+  "fetched": "2026-11-07",
+  "sha1": "ef0646608ac710f7b2dae80a0c04fded8419f18c",
+  "url": "https://www.bls.gov/tus/datafiles/atussum-2024.zip",
+  "via": "urllib"
+ },
+ "atussum-2025.zip": {
+  "bytes": 383733,
+  "fetched": "2026-11-07",
+  "sha1": "4a94973ab8df3af0e43b67d8595a0b5862d2bb03",
+  "url": "https://www.bls.gov/tus/datafiles/atussum-2025.zip",
+  "via": "urllib"
+ },
+ "atuswho-2024.zip": {
+  "bytes": 460115,
+  "fetched": "2026-11-07",
+  "sha1": "ebb6cb708a19bd493391ffe3ec45a5c7ecb8bc71",
+  "url": "https://www.bls.gov/tus/datafiles/atuswho-2024.zip",
+  "via": "urllib"
+ },
+ "atuswho-2025.zip": {
+  "bytes": 446835,
+  "fetched": "2026-11-07",
+  "sha1": "fd072c0e415e917a05ac412b05f7d83ced40c956",
+  "url": "https://www.bls.gov/tus/datafiles/atuswho-2025.zip",
+  "via": "urllib"
+ },
+ "flex-2425.htm": {
+  "bytes": 362856,
+  "fetched": "2026-11-07",
+  "sha1": "eef1246f8e11cd0425bcae3cd5b6b1a38b562e05",
+  "url": "https://www.bls.gov/news.release/flex2.htm",
+  "via": "urllib"
+ },
+ "lexiconwex2024.pdf": {
+  "bytes": 95063,
+  "fetched": "2026-11-07",
+  "sha1": "79545c2bce6f77258e374cccfbce1b94ef728bb7",
+  "url": "https://www.bls.gov/tus/dictionaries/lexiconwex2024.pdf",
+  "via": "urllib"
+ },
+ "lvmintcodebk2425.pdf": {
+  "bytes": 430857,
+  "fetched": "2026-11-07",
+  "sha1": "b8cfe1bef8bf8e4508ffc00e161ac5b7d6f4c3df",
+  "url": "https://www.bls.gov/tus/dictionaries/lvmintcodebk2425.pdf",
+  "via": "urllib"
+ },
+ "lvresp-2425.zip": {
+  "bytes": 277892,
+  "fetched": "2026-11-07",
+  "sha1": "a802da7831e4b2e2b749eeedbad06951e1628636",
+  "url": "https://www.bls.gov/tus/datafiles/lvresp-2425.zip",
+  "via": "urllib"
+ },
+ "lvwgts-2425.zip": {
+  "bytes": 8051351,
+  "fetched": "2026-11-07",
+  "sha1": "1270c735bd54fe33c8487ee1e8084a38028475ce",
+  "url": "https://www.bls.gov/tus/datafiles/lvwgts-2425.zip",
+  "via": "urllib"
+ }
+}

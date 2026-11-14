@@ -134,6 +134,11 @@ GENERATORS = [
     # quotations from oxygen/data/raw (gitignored) at render time (chain-reactions lane, 2026-11-07).
     ("oxygen page: oxygen/update_page.py --apply",
      ["update_page.py", "--apply"], "oxygen", "site"),
+    # nightshift/update_page.py writes site/nightshift.html from nightshift/outputs/payload.json
+    # (build_nightshift.py, which needs the BLS ATUS files in nightshift/data/raw, gitignored);
+    # night-shift lane, batch 2, 2026-11-13.
+    ("nightshift page: nightshift/update_page.py --apply",
+     ["update_page.py", "--apply"], "nightshift", "site"),
     # storage/update_page.py writes site/storage.html from storage/outputs/payload.json
     # (build_storage.py, which needs ERCOT's files under storage/data/raw, gitignored) and
     # storage/data/imm.json. R4, 2026-10-23.
