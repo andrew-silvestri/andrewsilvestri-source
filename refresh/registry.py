@@ -183,6 +183,17 @@ ENTRIES = [
         "why": "A one-off 2024-25 survey module joined to the 2024 and 2025 diaries, stated on the page as not updated.",
     },
     {
+        # philosophy-physics lane, 2026-11-13. Disabled: an ancient text and graded tables; nothing
+        # upstream changes, and the page says its data does not update.
+        "page": "armchair",
+        "cwd": "armchair",
+        "fetch": [["python", "fetch_public.py"]],
+        "build": [["python", "analysis.py"]],
+        "keys": [],
+        "enabled": False,
+        "why": "An ancient handbook and graded case tables; stated on the page as not updated.",
+    },
+    {
         "page": "takeaway",
         "cwd": "takeaway",
         # R2 (2026-10-23): production only. The pipeline tracker carries

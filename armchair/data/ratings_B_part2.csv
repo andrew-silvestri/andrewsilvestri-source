@@ -1,0 +1,277 @@
+id,grade,reason
+B3.1.1,WRONG,Milky Way is our galaxy disc: myriad distant stars
+B3.1.2,WRONG,Milky Way is our galaxy disc: myriad distant stars
+B3.1.3,WRONG,Milky Way is our galaxy disc: myriad distant stars
+B3.1.4,WRONG,Milky Way is our galaxy disc: myriad distant stars
+B3.1.5,WRONG,Milky Way is our galaxy disc: myriad distant stars
+B3.1.6,WRONG,Milky Way is our galaxy disc: myriad distant stars; not earth shadow
+B3.1.7,PARTIAL,"Many faint stars, yes; they do not light one another"
+B3.1.8,WRONG,Milky Way is our galaxy disc: myriad distant stars; not atmospheric
+B3.1.9,WRONG,Milky Way is our galaxy disc: myriad distant stars
+B3.2.1,PARTIAL,Comets follow periodic orbits; they are not stars
+B3.2.2,WRONG,Comets are icy bodies on solar orbits; coma lit by sunlight
+B3.2.3,WRONG,Comets are icy bodies on solar orbits; coma lit by sunlight; not star conjunctions
+B3.2.4,WRONG,Comets are icy bodies on solar orbits; coma lit by sunlight; not atmospheric
+B3.2.5,PARTIAL,Comet is a body wrapped in a gas cloud; light is reflected
+B3.2.6,WRONG,Comets are icy bodies on solar orbits; coma lit by sunlight; not clouds
+B3.2.7,WRONG,Comets are icy bodies on solar orbits; coma lit by sunlight
+B3.2.8,WRONG,Comets are icy bodies on solar orbits; coma lit by sunlight
+B3.2.9,PARTIAL,"Comets are celestial bodies, but not stars"
+B3.2.10,PARTIAL,Meteors are space debris burning up; not sparks of ether
+B3.2.11,WRONG,Meteors are space debris burning in the atmosphere
+B3.2.12,WRONG,"Meteors are space debris, not ignited clouds"
+B3.3.1,WRONG,Lightning is electrical discharge; thunder is air expanding from heating
+B3.3.2,WRONG,Lightning is electrical discharge; thunder is air expanding from heating
+B3.3.3,LOOSE,Lightning is electrical discharge; thunder is air expanding from heating; hot/cold link is metaphor
+B3.3.4,WRONG,Lightning is electrical discharge; thunder is air expanding from heating
+B3.3.5,WRONG,Lightning is electrical discharge; thunder is air expanding from heating
+B3.4.1,PARTIAL,"Clouds and rain from condensation, right; snow forms by deposition"
+B3.4.2,STRONG,Clouds form from water vapour lifted and condensed aloft
+B3.4.3,PARTIAL,Clouds from vapour right; drop roundness is surface tension
+B3.5.1,UNSCORABLE,"Mythological etymology, no physical claim"
+B3.5.2,UNSCORABLE,Theological claim
+B3.5.3,UNSCORABLE,Told as fable
+B3.5.4,PARTIAL,Rainbow needs sun on rain opposite; light refracts through drops
+B3.5.5,PARTIAL,"Bow opposite sun involves reflection, but also refraction in drops"
+B3.5.6,PARTIAL,"Light passes through drops; colours come from dispersion, not cloud"
+B3.6.1,UNSCORABLE,No attributed opinion
+B3.7.1,PARTIAL,Wind is air moved by solar heating; no melting
+B3.7.2,STRONG,Wind is moving air
+B3.7.3,PARTIAL,Solar heating and moisture drive winds and storms
+B3.7.4,LOOSE,Etesians from pressure gradient to thermal low; resemblance needs retrofitting
+B3.8.1,WRONG,Seasons come from axial tilt changing insolation
+B3.9.1,PARTIAL,"No counter-earth, but many Earth-like planets exist"
+B3.9.2,WRONG,No counter-earth exists
+B3.9.3,STRONG,Earth is a single finite body
+B3.9.4,WRONG,"Earth is finite rock and metal, not rooted infinitely"
+B3.9.5,WRONG,Earth accreted from dust and planetesimals
+B3.10.1,STRONG,Earth is very nearly spherical
+B3.10.2,WRONG,Earth is spherical
+B3.10.3,WRONG,Earth is spherical
+B3.10.4,WRONG,Earth is spherical
+B3.10.5,WRONG,Earth is spherical
+B3.11.1,WRONG,Earth orbits the Sun; universe has no centre
+B3.11.2,WRONG,Earth is a finite planet orbiting the Sun
+B3.11.3,PARTIAL,"Earth is not central and orbits; central fire, counter-earth wrong"
+B3.11.4,WRONG,Tropics and southern lands are inhabited
+B3.12.1,WRONG,"Axial tilt fixed by formation dynamics, not regional density"
+B3.12.2,WRONG,Axial tilt fixed by formation dynamics
+B3.13.1,WRONG,Earth rotates and orbits the Sun
+B3.13.2,PARTIAL,"Earth orbits on inclined path, but around the Sun"
+B3.13.3,PARTIAL,Earth rotates west to east; but it also orbits the Sun
+B3.13.4,WRONG,Earth still moves: rotates and orbits
+B3.14.1,STRONG,"Five climate zones: two polar, two temperate, one torrid"
+B3.15.1,WRONG,Earthquakes are slip on faults from tectonic stress
+B3.15.2,WRONG,Earthquakes are tectonic fault slip
+B3.15.3,WRONG,Earthquakes are tectonic fault slip
+B3.15.4,WRONG,"Earthquakes are tectonic fault slip, not trapped air"
+B3.15.5,WRONG,Earthquakes are tectonic fault slip
+B3.15.6,PARTIAL,Quakes are crustal blocks slipping against each other; natural place wrong
+B3.15.7,WRONG,Earth is not held still by balance; it orbits
+B3.15.8,WRONG,Earth is not supported on air
+B3.15.9,WRONG,Earth does not float on water
+B3.15.10,WRONG,Earthquakes are tectonic fault slip
+B3.15.11,WRONG,Earthquakes are tectonic fault slip
+B3.16.1,WRONG,"Sea salt comes from rock weathering and vents, not heating"
+B3.16.2,PARTIAL,Evaporation concentrates salt; salt itself comes from rocks
+B3.16.3,WRONG,Sea salt from rock weathering; sea is not sweat
+B3.16.4,WRONG,Sea salt from rock weathering
+B3.16.5,PARTIAL,Sea salts leached from land rock; sea not filtered water
+B3.16.6,WRONG,Sea salt from rock weathering and vents
+B3.17.1,WRONG,Tides are caused by lunar and solar gravity
+B3.17.2,PARTIAL,"Moon drives tides; phase link wrong, springs at new and full"
+B3.17.3,LOOSE,Tides are lunar gravity; resonance only a loose echo
+B3.17.4,WRONG,Tides are caused by lunar and solar gravity
+B3.17.5,PARTIAL,"Moon causes tides, by gravity not wind"
+B3.18.1,UNSCORABLE,No attributed opinion
+B4.1.1,WRONG,Nile flood comes from summer monsoon rain on Ethiopian highlands
+B4.1.2,WRONG,Nile flood comes from Ethiopian monsoon rain
+B4.1.3,PARTIAL,"Flood source is Ethiopia in summer, but rain not snowmelt"
+B4.1.4,PARTIAL,Summer rains upstream cause flood; moisture is not northern snow
+B4.1.5,WRONG,Nile discharge varies strongly by season
+B4.1.6,WRONG,Nile flood comes from Ethiopian monsoon rain
+B4.1.7,PARTIAL,"Upstream rains cause flood, but they are northern summer rains"
+B4.2.1,UNSCORABLE,No physical answer: claims about the soul
+B4.2.2,UNSCORABLE,No physical answer: claims about the soul
+B4.2.3,UNSCORABLE,No physical answer: claims about the soul
+B4.2.4,UNSCORABLE,No physical answer: claims about the soul
+B4.2.5,UNSCORABLE,No physical answer: claims about the soul
+B4.2.6,UNSCORABLE,No physical answer: claims about the soul
+B4.3.1,UNSCORABLE,No physical answer: claims about the soul
+B4.3.2,UNSCORABLE,No physical answer: claims about the soul
+B4.3.3,UNSCORABLE,No physical answer: claims about the soul
+B4.3.4,UNSCORABLE,No physical answer: claims about the soul
+B4.3.5,UNSCORABLE,No physical answer: claims about the soul
+B4.3.6,UNSCORABLE,No physical answer: claims about the soul
+B4.4.1,UNSCORABLE,No physical answer: claims about the soul
+B4.4.2,UNSCORABLE,No physical answer: claims about the soul
+B4.4.3,UNSCORABLE,No physical answer: claims about the soul
+B4.4.4,UNSCORABLE,No physical answer: claims about the soul
+B4.5.1,STRONG,Cognition and perception are seated in the brain
+B4.5.2,PARTIAL,Cognition and perception are seated in the brain; not one spot
+B4.5.3,PARTIAL,Cognition and perception are seated in the brain; not the meninges
+B4.5.4,PARTIAL,Cognition and perception are seated in the brain; ventricles hold fluid
+B4.5.5,WRONG,Cognition and perception are seated in the brain
+B4.5.6,WRONG,"Cognition and perception are seated in the brain, not heart"
+B4.5.7,WRONG,"Cognition and perception are seated in the brain, not heart"
+B4.5.8,WRONG,"Cognition and perception are seated in the brain, not blood"
+B4.5.9,WRONG,"Cognition and perception are seated in the brain, not heart"
+B4.5.10,WRONG,"Cognition and perception are seated in the brain, not pericardium"
+B4.5.11,WRONG,"Cognition and perception are seated in the brain, not diaphragm"
+B4.5.12,PARTIAL,Cognition and perception are seated in the brain; chest not included
+B4.5.13,PARTIAL,"Intellect in brain, right; heart does not house life functions"
+B4.6.1,UNSCORABLE,No physical answer: claims about the soul
+B4.6.2,UNSCORABLE,No physical answer: claims about the soul
+B4.7.1,UNSCORABLE,"Soul immortality, no physical answer"
+B4.7.2,UNSCORABLE,"Soul immortality, no physical answer"
+B4.7.3,UNSCORABLE,"Soul immortality, no physical answer"
+B4.7.4,UNSCORABLE,"Soul immortality, no physical answer"
+B4.8.1,PARTIAL,Nerves link sense organs to the brain; not breaths
+B4.8.2,UNSCORABLE,Definition of terms
+B4.8.3,UNSCORABLE,"Philosophical framing, no checkable claim"
+B4.8.4,PARTIAL,Perception needs external stimulus; thought does not need images
+B4.9.1,UNSCORABLE,"Epistemology, no physical answer"
+B4.9.2,UNSCORABLE,"Epistemology, no physical answer"
+B4.9.3,PARTIAL,Sense receptors are stimulus-specific; not pores
+B4.10.1,PARTIAL,"Humans have more than five senses (balance, proprioception, etc.)"
+B4.10.2,PARTIAL,Brain integrates senses; but more than five senses exist
+B4.10.3,PARTIAL,Animals have extra senses; gods and sages uncheckable
+B4.11.1,PARTIAL,"Learning from experience, some innate structure; reasoning matures into adulthood"
+B4.12.1,UNSCORABLE,Terminology
+B4.13.1,PARTIAL,Light from objects enters the eye; not images
+B4.13.2,PARTIAL,Light from objects enters eye; eyes emit no rays
+B4.13.3,WRONG,Eyes emit no rays; vision is light entering eye
+B4.13.4,PARTIAL,Light from objects enters eye; eyes emit no light
+B4.14.1,WRONG,"Mirror images are reflected light, not settled effluences"
+B4.14.2,PARTIAL,Light reflects back to eye; nothing settles on mirror
+B4.14.3,PARTIAL,"Smooth surface reflects; but light, not sight, is reflected"
+B4.15.1,WRONG,Eyes emit no light; darkness is absence of stimulus
+B4.15.2,WRONG,Eyes emit no visual breath or rays
+B4.16.1,PARTIAL,"Sound reaches spiral cochlea, via eardrum and ossicles"
+B4.16.2,PARTIAL,"Ear cavities resonate, but hearing is cochlear transduction"
+B4.16.3,WRONG,"Sound acts via eardrum and cochlea, not air in head"
+B4.16.4,PARTIAL,Sound signal is carried to the brain; not air in head
+B4.17.1,PARTIAL,Inhaled odorants reach olfactory nerve to brain; brain does not draw
+B4.17.2,STRONG,Odorants arrive with inhaled air; congestion reduces smell
+B4.18.1,PARTIAL,Saliva dissolves tastants; taste buds do the sensing
+B4.18.2,PARTIAL,"Tongue signals reach brain via nerves, not veins"
+B4.19.1,PARTIAL,Voice is exhaled air vibrating; not via blood to soul
+B4.19.2,WRONG,"Sound is a pressure wave, not shaped fragments"
+B4.19.3,WRONG,"Sound is a pressure wave, not shaped bodies"
+B4.19.4,STRONG,Sound propagates as spherical pressure waves in air
+B4.19.5,PARTIAL,Echo is reflected sound; voice is vocal-fold vibration
+B4.20.1,LOOSE,Sound is a wave pattern in air; surface talk is metaphor
+B4.20.2,PARTIAL,Echo is reflection from surfaces; sound is a wave not a body
+B4.21.1,PARTIAL,"Brain in head links to organs via nerves, not breaths"
+B4.22.1,PARTIAL,First breath clears fetal lung fluid; blood does not pump air
+B4.22.2,PARTIAL,"Inhalation driven by negative pressure; created by diaphragm, not fine air"
+B4.22.3,PARTIAL,"Muscles move body; lungs are passive, moved by diaphragm"
+B4.23.1,STRONG,Injury is local; pain is perceived in the brain
+B4.23.2,WRONG,Sensation is processed centrally in the brain
+B4.23.3,PARTIAL,"Perception central, right; tissue damage is local"
+B5.1.1,UNSCORABLE,Theology of divination
+B5.1.2,UNSCORABLE,Claim about divination
+B5.1.3,UNSCORABLE,Claim about divination
+B5.1.4,UNSCORABLE,Theology of divination
+B5.2.1,WRONG,Dreams are generated within the brain
+B5.2.2,UNSCORABLE,No physical answer: claims about the soul
+B5.2.3,UNSCORABLE,Mixes divine dreams with soul theory
+B5.3.1,PARTIAL,Gametes carry heritable information producing like offspring; vague
+B5.3.2,WRONG,"Semen is sperm in gland fluid, not blood foam"
+B5.3.3,WRONG,"Sperm made in testes, not brain"
+B5.3.4,WRONG,"Sperm made in testes, not spinal marrow"
+B5.3.5,LOOSE,Sperm are body cells; soul part uncheckable
+B5.3.6,WRONG,Sperm made in testes; pangenesis is false
+B5.4.1,UNSCORABLE,Mixes body with soul fragment
+B5.4.2,WRONG,Heredity is carried by material DNA
+B5.4.3,PARTIAL,"Heredity is material (DNA), not breath"
+B5.5.1,PARTIAL,Women contribute ova; inward vessels and appetite link wrong
+B5.5.2,WRONG,"Women contribute the ovum, half the genome"
+B5.5.3,WRONG,Women contribute the ovum to generation
+B5.5.4,WRONG,Both parents contribute to all tissues
+B5.6.1,PARTIAL,"Conception is cycle-timed union with male seed; ovum, not blood"
+B5.7.1,WRONG,Human sex set by X/Y chromosomes
+B5.7.2,WRONG,Human sex set by X/Y chromosomes
+B5.7.3,WRONG,Human sex set by X/Y chromosomes
+B5.7.4,WRONG,Human sex set by X/Y chromosomes
+B5.7.5,WRONG,Both testes make X and Y sperm
+B5.7.6,UNSCORABLE,"Tautology, no cause given"
+B5.7.7,PARTIAL,Both parents contribute traits; sex set by sperm X/Y
+B5.7.8,WRONG,Human sex set by X/Y chromosomes
+B5.8.1,PARTIAL,Gamete/embryo errors and incomplete twinning cause malformations; vague
+B5.8.2,PARTIAL,"Duplications, deletions, translocations cause defects; via retrofit of seed"
+B5.8.3,WRONG,Uterus is not distended by wind
+B5.9.1,PARTIAL,Low or poor sperm causes infertility; humoral imbalance wrong
+B5.9.2,PARTIAL,Anatomy can impair fertility; womb narrowness not a cause
+B5.9.3,PARTIAL,Uterine anomalies cause infertility; descriptions loose
+B5.10.1,PARTIAL,Identical twins from embryo splitting; not excess seed
+B5.10.2,WRONG,Twins from multiple ovulation or embryo split
+B5.10.3,PARTIAL,Superfetation occurs rarely; most twins are not from it
+B5.10.4,WRONG,Human uterus has one cavity
+B5.11.1,WRONG,Resemblance from inherited genes from both parents
+B5.11.2,WRONG,Resemblance from inherited genes
+B5.11.3,PARTIAL,Both parents contribute; not whole-body seed or copying
+B5.12.1,WRONG,"Resemblance set by genes, not chilling"
+B5.12.2,WRONG,Maternal impression is false
+B5.12.3,WRONG,"Resemblance set by genes, not effluvia"
+B5.13.1,PARTIAL,"Uterine defects, illness, low weight, stress impair fertility"
+B5.13.2,STRONG,"Male infertility: anejaculation, low count, poor sperm, erectile problems"
+B5.13.3,LOOSE,Couple-specific infertility is marginal; temperament talk retrofitted
+B5.14.1,PARTIAL,Male mules make defective sperm; cause is chromosomal mismatch
+B5.14.2,WRONG,"Mule sterility is chromosomal, not womb shape"
+B5.15.1,STRONG,Embryo is a distinct living organism
+B5.15.2,WRONG,Embryo is a genetically distinct organism
+B5.15.3,PARTIAL,"First air breath at birth, right; embryo is a living organism"
+B5.15.4,PARTIAL,First air breath at birth; embryo is not lifeless
+B5.15.5,PARTIAL,Fetal movement is neural; but fetal breathing movements exist
+B5.16.1,WRONG,Fetus fed by placenta and umbilical cord
+B5.16.2,STRONG,Fetus fed via placenta and umbilical cord
+B5.16.3,WRONG,Fetus fed by placenta and umbilical cord
+B5.17.1,WRONG,Organs form sequentially; heart first functional
+B5.17.2,LOOSE,Body axis (notochord) forms early; loins is retrofit
+B5.17.3,PARTIAL,Neural tube forms early; heart functions first
+B5.17.4,STRONG,Heart is first functioning organ
+B5.17.5,WRONG,Heart and neural tube form first
+B5.17.6,WRONG,Heart and neural tube form first
+B5.18.1,WRONG,Day length was never months long
+B5.18.2,PARTIAL,Pregnancy dated from last period; early bleeding occurs
+B5.18.3,STRONG,"Eighth-month preterm infants can survive, with higher mortality"
+B5.18.4,PARTIAL,Seven-month infants can survive; navel mechanism wrong
+B5.18.5,WRONG,Eighth-month infants survive better than seventh-month
+B5.18.6,WRONG,Zodiac has no effect on survival
+B5.19.1,PARTIAL,Animals are born and die; conditional premise
+B5.19.2,PARTIAL,Matter is conserved and recycled; world not eternal
+B5.19.3,PARTIAL,"Life began in water, later moved to land; bark wrong"
+B5.19.4,LOOSE,Evolution did not assemble separate parts
+B5.19.5,LOOSE,"Animals adapt to habitat, not by elemental temperament"
+B5.20.1,WRONG,Stars are not animals
+B5.20.2,UNSCORABLE,Claim about heavenly beings
+B5.20.3,PARTIAL,Animals solve problems but lack language; vague
+B5.20.4,PARTIAL,Animals have cognition; apes and dogs vocalize without language
+B5.20.5,WRONG,Animal cognition not limited by moisture or density
+B5.21.1,PARTIAL,"Limb buds near day 26-28, form complete near day 56"
+B5.21.2,WRONG,No sex difference in embryonic development timing
+B5.22.1,WRONG,"Tissues are cells and biomolecules, not element ratios"
+B5.23.1,WRONG,Sleep is brain-regulated; blood does not withdraw
+B5.23.2,WRONG,Sleep is brain-regulated; cooling does not cause death
+B5.23.3,WRONG,Sleep is brain-regulated; veins carry blood not air
+B5.23.4,WRONG,Sleep is brain-regulated; no sensory spirit
+B5.24.1,PARTIAL,Puberty begins around 12-14; maturity continues later
+B5.25.1,WRONG,"Sleep is brain-regulated, not vapour rising"
+B5.25.2,UNSCORABLE,"Soul-body separation, no physical answer"
+B5.25.3,WRONG,Death is not evaporation of heat
+B5.25.4,WRONG,Death is not separation of fiery parts
+B5.26.1,WRONG,Plants are a separate kingdom from animals
+B5.26.2,STRONG,Plants are living but not animals
+B5.26.3,WRONG,"Plant movements are regulated tropisms, not chance"
+B5.26.4,WRONG,Microbes came first; plants after the Sun formed
+B5.26.5,PARTIAL,Drought leaf-shedding and soil effect on wine real; fruit from fire wrong
+B5.27.1,PARTIAL,Organisms assimilate nutrients; early humans not giants
+B5.28.1,PARTIAL,Hunger signals nutrient deficit; pleasure not from moisture
+B5.29.1,PARTIAL,Fever follows infection; caused by hypothalamic set point
+B5.29.2,STRONG,"Fever follows wounds, inflammation and abscesses (infection)"
+B5.30.1,LOOSE,Homeostasis matters; qualities balance is retrofit
+B5.30.2,LOOSE,"Disease has specific causes, not element disposition"
+B5.30.3,PARTIAL,Diet affects health; most disease has other causes
+B5.30.4,WRONG,"Ageing is cellular damage, not heat loss"
+B5.30.5,WRONG,Climate does not set lifespan this way

@@ -1,0 +1,145 @@
+id,book,chapter,question,line_start,line_end,holders,opinion
+B2.1.1,2,1,"What is the world: one or many, bounded or unbounded?",4789,4789,Thales; followers of Thales,The world is one; there is a single world.
+B2.1.2,2,1,"What is the world: one or many, bounded or unbounded?",4789,4792,Democritus; Epicurus; Metrodorus,"There are infinitely many worlds in infinite space, since the boundless void taken as a whole contains them."
+B2.1.3,2,1,"What is the world: one or many, bounded or unbounded?",4792,4794,Empedocles,The circuit the sun traces in its motion encloses the world and forms its outermost boundary.
+B2.1.4,2,1,"What is the world: one or many, bounded or unbounded?",4794,4794,Seleucus,The world has no limits.
+B2.1.5,2,1,"What is the world: one or many, bounded or unbounded?",4794,4795,Diogenes,"The universe as a whole is infinite, but this ordered world is finite."
+B2.1.6,2,1,"What is the world: one or many, bounded or unbounded?",4795,4800,the Stoics,Universe and world differ: the universe is the world together with the infinite surrounding void; take the void away and what remains is the world.
+B2.2.1,2,2,What shape is the world?,4810,4810,the Stoics,The world is spherical.
+B2.2.2,2,2,What shape is the world?,4810,4811,unnamed,The world is cone-shaped.
+B2.2.3,2,2,What shape is the world?,4811,4811,unnamed,The world is egg-shaped (oval).
+B2.2.4,2,2,What shape is the world?,4811,4812,Epicurus,"The world may be globe-shaped, but it could equally have some other shape."
+B2.3.1,2,3,Is the world a living being?,4822,4825,Democritus; Epicurus; the atomists,The world is not a living being and is not run by wise providence; it is directed by a nature that lacks reason.
+B2.3.2,2,3,Is the world a living being?,4825,4826,unnamed,(All the other philosophers) The world has a soul and is governed by reason and providence.
+B2.3.3,2,3,Is the world a living being?,4826,4834,Aristotle,"Not ensouled throughout: the heavenly spheres are alive and rational, but things around the earth lack soul and reason, and their orderliness is incidental, not original."
+B2.4.1,2,4,Is the world eternal and indestructible?,4844,4847,Pythagoras; Plato; the Stoics,"God made the world; being bodily and perceptible it is destructible by nature, yet it will never perish because God's providence preserves it."
+B2.4.2,2,4,Is the world eternal and indestructible?,4847,4848,Epicurus,"The world came into being and will come to an end, just as plants and animals do."
+B2.4.3,2,4,Is the world eternal and indestructible?,4849,4850,Xenophanes,The world never came into being; it is eternal and cannot be destroyed.
+B2.4.4,2,4,Is the world eternal and indestructible?,4850,4851,Aristotle,"The region below the moon is subject to change, and earthly things there decay."
+B2.5.1,2,5,Where does the world get its nourishment?,4861,4862,Aristotle,If the world took nourishment it would also dissolve; it needs no food and is therefore eternal.
+B2.5.2,2,5,Where does the world get its nourishment?,4863,4864,Plato,The world feeds itself through the transformation of the perishable things within it.
+B2.5.3,2,5,Where does the world get its nourishment?,4864,4868,Philolaus,"The world is destroyed in two ways, by fire dropping out of the sky or by moon-water poured down by whirling air; the vapours from these feed the world."
+B2.6.1,2,6,From which element did God begin making the world?,4878,4880,unnamed,"(The natural philosophers) Formation began from earth, because earth is the centre and the centre is the chief part of a sphere."
+B2.6.2,2,6,From which element did God begin making the world?,4880,4881,Pythagoras,Formation began from fire and the fifth element.
+B2.6.3,2,6,From which element did God begin making the world?,4881,4887,Empedocles,"Ether separated first, then fire, then earth; compressed by rapid rotation, earth gave off water, whose vapour made air; heaven came from ether, the sun from fire."
+B2.6.4,2,6,From which element did God begin making the world?,4887,4891,Plato,"The visible world was modelled on the intelligible one; its soul was made first, then its body, first the fire-and-earth part, then the air-and-water part."
+B2.6.5,2,6,From which element did God begin making the world?,4891,4895,Pythagoras; Plato,"The world was built from the five mathematical solids: earth from the cube, fire the pyramid, air the octahedron, water the icosahedron, the whole sphere the dodecahedron."
+B2.7.1,2,7,In what form and order was the world arranged?,4905,4909,Parmenides,"Concentric bands are wound one inside another, some of rare and some of dense matter, with mixed bands of light and darkness between, all enclosed by a solid wall-like shell."
+B2.7.2,2,7,In what form and order was the world arranged?,4909,4910,Leucippus; Democritus,"The world is wrapped all round by an enclosing membrane, like a garment."
+B2.7.3,2,7,In what form and order was the world arranged?,4911,4913,Epicurus,"Some worlds have a thin outer boundary, others a thick dense one; some worlds move while others stay still."
+B2.7.4,2,7,In what form and order was the world arranged?,4913,4916,Plato,"Fire is outermost, then ether, then air, then water, with earth last; at times he puts ether and fire in the same place."
+B2.7.5,2,7,In what form and order was the world arranged?,4916,4922,Aristotle,"Ether, an unaffectable fifth body, is first, then fire, air, water, earth last; heavenly bodies move in circles, lower light bodies move up, heavy ones down."
+B2.7.6,2,7,In what form and order was the world arranged?,4922,4924,Empedocles,The elements have no permanently fixed places; they take turns occupying one another's positions.
+B2.8.1,2,8,What causes the world's tilt?,4934,4940,Diogenes; Anaxagoras,"After the world formed and earth produced animals, the world tilted southward of its own accord, perhaps by providence, so some zones are habitable and others too cold or hot."
+B2.8.2,2,8,What causes the world's tilt?,4940,4943,Empedocles,"The air yielded under the force of the sun's rays, so the pole tipped, raising the north and lowering the south, and the whole world tilted."
+B2.9.1,2,9,"What lies beyond the world, and is it void?",4954,4955,Pythagoras; the Pythagoreans,"Beyond the world lies void, and the world breathes in from it and out into it."
+B2.9.2,2,9,"What lies beyond the world, and is it void?",4956,4957,the Stoics,Outside the world there is a void into which the world will be dissolved by the cosmic conflagration.
+B2.9.3,2,9,"What lies beyond the world, and is it void?",4957,4959,Posidonius,"The outer void is not infinite, only as large as needed to take the world when it dissolves (stated in his first book On the Void)."
+B2.9.4,2,9,"What lies beyond the world, and is it void?",4959,4960,Aristotle,There is no void.
+B2.9.5,2,9,"What lies beyond the world, and is it void?",4960,4961,Plato,There is no void either inside or outside the world.
+B2.10.1,2,10,"Which parts of the world are right, which left?",4972,4974,Pythagoras; Plato; Aristotle,"The eastern parts, where motion begins, are the world's right side; the western parts are its left."
+B2.10.2,2,10,"Which parts of the world are right, which left?",4974,4976,Empedocles,"The right side lies toward the summer solstice, the left toward the winter solstice."
+B2.11.1,2,11,What is the nature and substance of the heavens?,4986,4987,Anaximenes,Heaven's outer circuit marks the boundary of the earth's revolution.
+B2.11.2,2,11,What is the nature and substance of the heavens?,4987,4990,Empedocles,"Heaven is solid and hard like crystal, made of air compacted by fire, and in each hemisphere it encloses the fire and air."
+B2.11.3,2,11,What is the nature and substance of the heavens?,4990,4991,Aristotle,Heaven is made of the fifth body and of extreme heat blended with extreme cold.
+B2.12.1,2,12,Into how many circles is the heaven divided?,5002,5010,Thales; Pythagoras; the Pythagoreans,"Heaven is divided into five circles (zones): arctic, summer tropic, equator, winter tropic, antarctic; the zodiac lies obliquely across the middle three, and the meridian cuts all at right angles."
+B2.13.1,2,13,"What are the stars made of, and how composed?",5022,5022,Thales,Stars are earthy globes set on fire.
+B2.13.2,2,13,"What are the stars made of, and how composed?",5022,5025,Empedocles,Stars are fiery bodies from the fire that the ether enclosed and broke apart when the elements first separated.
+B2.13.3,2,13,"What are the stars made of, and how composed?",5025,5029,Anaxagoras,"The surrounding ether is fiery; its violent whirling tore stones from the earth, set them alight, and fixed them in the sky as stars."
+B2.13.4,2,13,"What are the stars made of, and how composed?",5029,5033,Diogenes,"Stars resemble pumice and are vents through which the world breathes; there are also invisible stones that sometimes fall to earth and go out, as at Aegospotami."
+B2.13.5,2,13,"What are the stars made of, and how composed?",5033,5034,Empedocles,"The fixed stars are attached to the crystalline sphere, while the planets are free."
+B2.13.6,2,13,"What are the stars made of, and how composed?",5034,5037,Plato,"Stars are mostly fire but share in another element, blended with it as if by glue."
+B2.13.7,2,13,"What are the stars made of, and how composed?",5037,5040,Xenophanes,"Stars are burning clouds, put out by day and relit at night like coals; their risings and settings are kindlings and extinctions."
+B2.13.8,2,13,"What are the stars made of, and how composed?",5040,5044,Heraclides; the Pythagoreans; followers of Orpheus,"Each star is a world set in infinite ether, containing air, earth and ether of its own."
+B2.13.9,2,13,"What are the stars made of, and how composed?",5044,5045,Epicurus,"Rejects none of these accounts, accepting any that is possible."
+B2.14.1,2,14,What shape are the stars?,5055,5056,the Stoics,"Stars are round, as are the sun, moon and world."
+B2.14.2,2,14,What shape are the stars?,5056,5056,Cleanthes,Stars are cone-shaped.
+B2.14.3,2,14,What shape are the stars?,5057,5058,Anaximenes,Stars are fixed like nails in the crystalline vault.
+B2.14.4,2,14,What shape are the stars?,5058,5059,unnamed,"Stars are flat fiery leaves of gold, like painted pictures."
+B2.15.1,2,15,What is the order and position of the stars?,5069,5070,Xenocrates,The stars all move on a single surface.
+B2.15.2,2,15,What is the order and position of the stars?,5070,5071,the Stoics,"The stars move on different surfaces, some higher and some lower."
+B2.15.3,2,15,What is the order and position of the stars?,5071,5073,Democritus,"The fixed stars are highest, then the planets, then in order the sun, Venus and finally the moon."
+B2.15.4,2,15,What is the order and position of the stars?,5073,5080,Plato; some mathematicians,"After the fixed stars come Saturn (Phaenon), Jupiter (Phaethon), Mars, Venus, Mercury, then the sun sixth and the moon seventh."
+B2.15.5,2,15,What is the order and position of the stars?,5080,5080,unnamed,The sun sits at the centre of the planets.
+B2.15.6,2,15,What is the order and position of the stars?,5080,5082,Anaximander; Metrodorus of Chios; Crates,"The sun is highest, the moon next, and the fixed stars and planets below them."
+B2.16.1,2,16,How do the stars move and revolve?,5092,5093,Anaxagoras; Democritus; Cleanthes,All the stars move from east to west.
+B2.16.2,2,16,How do the stars move and revolve?,5093,5095,Alcmaeon; the mathematicians,"The planets move opposite to the fixed stars, from west to east."
+B2.16.3,2,16,How do the stars move and revolve?,5095,5096,Anaximander,The stars are carried round by the rotating circles and spheres to which each is attached.
+B2.16.4,2,16,How do the stars move and revolve?,5097,5097,Anaximenes,The stars turn beneath and around the earth.
+B2.16.5,2,16,How do the stars move and revolve?,5097,5099,Plato; the mathematicians,"The sun, Venus and Mercury move at equal rates."
+B2.17.1,2,17,Where do the stars get their light?,5109,5110,Metrodorus,All the fixed stars get their light from the sun.
+B2.17.2,2,17,Where do the stars get their light?,5110,5111,Heraclitus; the Stoics,The stars are fed by exhalations rising from the earth.
+B2.17.3,2,17,Where do the stars get their light?,5111,5113,Aristotle,"Heavenly bodies need no nourishment, since they are eternal and cannot decay."
+B2.17.4,2,17,Where do the stars get their light?,5113,5114,Plato; the Stoics,The stars draw their food from the same sources that feed the entire world.
+B2.18.1,2,18,"What are the stars called the Dioscuri, or Castor and Pollux?",5125,5126,Xenophanes,The star-like lights on ships' mastheads are small clouds made to shine by their own motion.
+B2.18.2,2,18,"What are the stars called the Dioscuri, or Castor and Pollux?",5126,5128,Metrodorus,"The lights called the Twins are given off by the eyes of frightened, astonished people."
+B2.19.1,2,19,"How do stars give signs, and what causes winter and summer?",5138,5140,Plato,"Signs of summer and winter come from when the sun, moon and fixed stars rise and set."
+B2.19.2,2,19,"How do stars give signs, and what causes winter and summer?",5140,5142,Anaximenes,The other stars play no part; the signs are produced entirely by the sun.
+B2.19.3,2,19,"How do stars give signs, and what causes winter and summer?",5142,5147,Eudoxus; Aratus,"The signs belong to all the stars in common, which Zeus set in order to foretell the year's events."
+B2.20.1,2,20,What is the sun's substance?,5157,5161,Anaximander,"The sun is a ring 28 times the earth's size, like a hollow chariot wheel full of fire, which shows through an opening like a pipe's mouth."
+B2.20.2,2,20,What is the sun's substance?,5161,5164,Xenophanes,"The sun is compacted from small fiery particles gathered out of moist exhalation, or else it is a cloud set on fire."
+B2.20.3,2,20,What is the sun's substance?,5164,5165,the Stoics,The sun is an intelligent flame arising from the sea.
+B2.20.4,2,20,What is the sun's substance?,5165,5166,Plato,The sun is made mostly of fire.
+B2.20.5,2,20,What is the sun's substance?,5166,5167,Anaxagoras; Democritus; Metrodorus,The sun is a red-hot stone or a burning mass.
+B2.20.6,2,20,What is the sun's substance?,5167,5168,Aristotle,The sun is a sphere made of the fifth body.
+B2.20.7,2,20,What is the sun's substance?,5168,5174,Philolaus,"The sun is glass-like, taking light from the cosmic fire and reflecting it to us; what we call the sun is an image of an image."
+B2.20.8,2,20,What is the sun's substance?,5175,5184,Empedocles,"Two suns: an original fire filling the other hemisphere, and the visible sun, a reflection of that fire's light on a crystalline body, carried round with it."
+B2.20.9,2,20,What is the sun's substance?,5184,5186,Epicurus,"The sun is a compact earthy mass, porous like pumice or sponge, set alight by fire."
+B2.21.1,2,21,How large is the sun?,5196,5198,Anaximander,"The sun itself equals the earth in size, but the ring it breathes through and moves in is 27 times larger than the earth."
+B2.21.2,2,21,How large is the sun?,5199,5199,Anaxagoras,The sun is much larger than the Peloponnese.
+B2.21.3,2,21,How large is the sun?,5199,5200,Heraclitus,The sun is the width of a human foot.
+B2.21.4,2,21,How large is the sun?,5200,5202,Epicurus,"Accepts all these; the sun may be the size it looks, or a little larger or smaller."
+B2.22.1,2,22,What shape is the sun?,5212,5212,Anaximenes,The sun is spread flat and broad like a leaf.
+B2.22.2,2,22,What shape is the sun?,5213,5213,Heraclitus,"The sun is shaped like a boat, somewhat curved."
+B2.22.3,2,22,What shape is the sun?,5214,5215,the Stoics,"The sun is spherical, the same shape as the world and the stars."
+B2.22.4,2,22,What shape is the sun?,5215,5215,Epicurus,All the views stated can be defended.
+B2.23.1,2,23,What causes the sun's turning back at the solstices?,5226,5227,Anaximenes,"The heavenly bodies are driven back by dense, resisting air."
+B2.23.2,2,23,What causes the sun's turning back at the solstices?,5227,5229,Anaxagoras,"The sun is turned back by the northern air it pushes, which is thereby made denser and stronger and repels it."
+B2.23.3,2,23,What causes the sun's turning back at the solstices?,5229,5231,Empedocles,The sun is kept from going straight on by its spherical carrier and by the two tropic circles.
+B2.23.4,2,23,What causes the sun's turning back at the solstices?,5231,5232,Diogenes,"At its furthest declination the sun is quenched, its heat damped by severe cold."
+B2.23.5,2,23,What causes the sun's turning back at the solstices?,5232,5235,the Stoics,"The sun travels only over the region holding its food, ocean or earth, and is nourished by their exhalations."
+B2.23.6,2,23,What causes the sun's turning back at the solstices?,5235,5238,Plato; Pythagoras; Aristotle,"The sun's sideways motion comes from the oblique zodiac, bounded by the tropics, as a celestial globe shows."
+B2.24.1,2,24,What causes eclipses of the sun?,5248,5252,Thales,"Solar eclipse occurs when the moon, an earthy body, passes directly between it and the earth; mirrors show the moon lies below the sun then."
+B2.24.2,2,24,What causes eclipses of the sun?,5252,5253,Anaximander,Solar eclipse occurs when the fiery opening of its ring is blocked so the fire cannot escape.
+B2.24.3,2,24,What causes eclipses of the sun?,5254,5255,Heraclitus,Eclipse happens when the boat-shaped sun turns so its hollow faces upward and its convex side toward us.
+B2.24.4,2,24,What causes eclipses of the sun?,5256,5259,Xenophanes,"An eclipse is the sun going out, and a new sun arises in the east; he reports an eclipse lasting a month and a total one turning day to night."
+B2.24.5,2,24,What causes eclipses of the sun?,5259,5261,unnamed,Eclipse is caused by unseen masses of dense cloud gathering over the sun's disc.
+B2.24.6,2,24,What causes eclipses of the sun?,5261,5264,Aristarchus,"Places the sun among the fixed stars; the earth (editor queries 'moon') moves about the sun and, by its tilt, blocks and shades the sun's disc."
+B2.24.7,2,24,What causes eclipses of the sun?,5264,5268,Xenophanes,"There are many suns and moons for the earth's different regions; at times the sun's disc strays over an uninhabited region, wanders in void, and is eclipsed."
+B2.24.8,2,24,What causes eclipses of the sun?,5268,5270,Xenophanes,The sun actually travels onward through infinite space; it only seems to move in a circle because it is so far away.
+B2.25.1,2,25,What is the moon's substance?,5280,5285,Anaximander,"The moon's ring is 19 times the earth's size, fire-filled like the sun's with a single vent; eclipse occurs as the wheel turns."
+B2.25.2,2,25,What is the moon's substance?,5285,5285,Xenophanes,The moon is a condensed cloud.
+B2.25.3,2,25,What is the moon's substance?,5285,5286,the Stoics,The moon is a mixture of fire and air.
+B2.25.4,2,25,What is the moon's substance?,5286,5287,Plato,The moon is a body mostly of earth.
+B2.25.5,2,25,What is the moon's substance?,5287,5289,Anaxagoras; Democritus,"The moon is a solid, dense, fiery body containing plains, mountains and valleys."
+B2.25.6,2,25,What is the moon's substance?,5289,5289,Heraclitus,The moon is an earth wrapped in cloud.
+B2.25.7,2,25,What is the moon's substance?,5290,5290,Pythagoras,The moon's body is mirror-like.
+B2.26.1,2,26,How large is the moon?,5300,5301,the Stoics,"The moon is larger than the earth, as the sun is."
+B2.26.2,2,26,How large is the moon?,5301,5302,Parmenides,The moon equals the sun in size and gets its light from it.
+B2.27.1,2,27,What shape is the moon?,5312,5313,the Stoics,"The moon is spherical, the same shape as the sun."
+B2.27.2,2,27,What shape is the moon?,5313,5313,Empedocles,The moon is shaped like a discus.
+B2.27.3,2,27,What shape is the moon?,5314,5314,Heraclitus,The moon is boat-shaped.
+B2.27.4,2,27,What shape is the moon?,5314,5314,unnamed,The moon is a cylinder.
+B2.28.1,2,28,Where does the moon get its light?,5324,5325,Anaximander,"The moon gives off its own light, though thin and faint."
+B2.28.2,2,28,Where does the moon get its light?,5325,5328,Antiphon,"The moon has light of its own; when hidden, the sun's stronger rays overpower it, as a stronger light dims a weaker, also seen with other stars."
+B2.28.3,2,28,Where does the moon get its light?,5328,5329,Thales; followers of Thales,The moon gets all its light from the sun.
+B2.28.4,2,28,Where does the moon get its light?,5329,5335,Heraclitus,"Sun and moon are alike, boat-shaped, lit by moist exhalations; the sun looks brighter moving in clearer air, the moon dimmer in thicker, murkier air."
+B2.29.1,2,29,What causes eclipses of the moon?,5345,5346,Anaximenes,A lunar eclipse occurs when the opening of the hollow wheel carrying the moon is blocked.
+B2.29.2,2,29,What causes eclipses of the moon?,5346,5348,Berosus,It comes from the moon turning its dark side toward us.
+B2.29.3,2,29,What causes eclipses of the moon?,5348,5349,Heraclitus,It happens in the way a boat turned upside down does.
+B2.29.4,2,29,What causes eclipses of the moon?,5349,5351,some Pythagoreans,"The moon's brightness is caused by the earth, and its obscuring by the counter-earth (Antichthon)."
+B2.29.5,2,29,What causes eclipses of the moon?,5351,5355,unnamed,"(Some later philosophers) The lunar fire is arranged to burn up gradually until full moon, then dwindle until conjunction with the sun puts it out entirely."
+B2.29.6,2,29,What causes eclipses of the moon?,5355,5361,Plato; Aristotle; the Stoics; the mathematicians,"Monthly darkening comes from conjunction with the sun's brighter rays; eclipse occurs when the moon enters earth's shadow, the earth lying between sun and moon."
+B2.30.1,2,30,"What are the moon's phases, and why does it look earthy?",5372,5377,the Pythagoreans,"The moon looks earthy because it is inhabited like earth, with larger animals, fairer plants, creatures fifteen times stronger producing no excrement, and days fifteen times longer."
+B2.30.2,2,30,"What are the moon's phases, and why does it look earthy?",5377,5380,Anaxagoras,"Its unevenness comes from earthy cold matter mixed with fiery and murky matter, so the moon is called a star of false appearance."
+B2.30.3,2,30,"What are the moon's phases, and why does it look earthy?",5380,5382,the Stoics,"Because its substance is varied, the moon's body is liable to decay."
+B2.31.1,2,31,How far is the moon from the sun?,5392,5393,Empedocles,The moon is twice as far from the sun as it is from the earth.
+B2.31.2,2,31,How far is the moon from the sun?,5393,5394,the mathematicians,The moon is eighteen times as far from the sun as from the earth.
+B2.31.3,2,31,How far is the moon from the sun?,5395,5396,Eratosthenes,"The sun is 780,000 stades from the earth."
+B2.32.1,2,32,"What is the year, and how long is each planet's great year?",5407,5411,unnamed,"Periods: Saturn 30 solar years, Jupiter 12, Mars 2, the sun 12 months, Mercury and Venus the same as the sun, the moon 30 days."
+B2.32.2,2,32,"What is the year, and how long is each planet's great year?",5411,5412,unnamed,The great year is 8 solar years.
+B2.32.3,2,32,"What is the year, and how long is each planet's great year?",5412,5412,unnamed,The great year is 19 solar years.
+B2.32.4,2,32,"What is the year, and how long is each planet's great year?",5412,5413,unnamed,The great year is 59 solar years.
+B2.32.5,2,32,"What is the year, and how long is each planet's great year?",5413,5413,Heraclitus,"The great year is 18,000 years."
+B2.32.6,2,32,"What is the year, and how long is each planet's great year?",5414,5415,Diogenes,The great year is 365 of the years Heraclitus assigns.
+B2.32.7,2,32,"What is the year, and how long is each planet's great year?",5415,5416,unnamed,"The great year is 7,777 years."

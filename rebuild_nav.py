@@ -276,6 +276,9 @@ NAV = [
         # scales lane, 2026-11-13: power per kilogram from bacteria to stars, and which cross-scale laws
         # hold. In Other: no tab holds biology or astronomy (lane DECISIONS D4).
         ("Scales", "scales.html"),
+        # philosophy-physics lane, 2026-11-13: the Placita scored against present science, and
+        # the gap from idea to decisive event. Not about energy: Other.
+        ("Philosophers' guesses about nature", "armchair.html"),
     ]),
     ("Code", "code.html"),
     # LAST, AND IT HAS TO STAY LAST. style.css pins this one right with

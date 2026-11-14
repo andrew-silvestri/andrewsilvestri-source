@@ -1,0 +1,3414 @@
+# Placita (pseudo-Plutarch / Aetius), tr. John Dowel, in Plutarch's Morals vol. 3, ed. W. W. Goodwin,
+# Boston, printing of 1911; public domain. Cut from Project Gutenberg eBook #78851 by split_placita.py.
+# Column 1 is the line number in that eBook's plain-text file.
+3725	OF THOSE SENTIMENTS CONCERNING NATURE WITH WHICH PHILOSOPHERS WERE
+3726	DELIGHTED.
+3727	
+3728	
+3729	
+3730	
+3731	BOOK I.
+3732	
+3733	
+3734	It being our determination to discourse of Natural Philosophy, we
+3735	judge it necessary, in the first place and chiefly, to divide the body
+3736	of philosophy into its proper members, that we may know what is that
+3737	which is called philosophy, and what part of it is physical, or the
+3738	explanation of natural things. The Stoics affirm that wisdom is the
+3739	knowledge of things human and divine; that philosophy is the exercise
+3740	of that art which is expedient to this knowledge; that virtue is the
+3741	sole and sovereign art which is thus expedient; and this distributes
+3742	itself into three general parts,—natural, moral, and logical. By
+3743	which just reason (they say) philosophy is tripartite; of which one
+3744	is natural, the other moral, the third logical. The natural is when
+3745	our enquiries are concerning the world and all things contained in
+3746	it; the ethical is the employment of our minds in those things which
+3747	concern the manners of man’s life; the logical (which they also call
+3748	dialectical) regulates our conversation with others in speaking.
+3749	Aristotle, Theophrastus, and after them almost all the Peripatetics
+3750	give the following division of philosophy. It is absolutely requisite
+3751	that the complete person be contemplator of things which have a being,
+3752	and the practiser of those things which are decent; and this easily
+3753	appears by the following instances. If the question be proposed,
+3754	whether the sun, which is so conspicuous to us, be informed with a
+3755	soul or inanimate, he that makes this disquisition is the thinking
+3756	man; for he proceeds no farther than to consider the nature of that
+3757	thing which is proposed. Likewise, if the question be proposed,
+3758	whether the world be infinite, or whether beyond the system of this
+3759	world there is any real being, all these things are the objects about
+3760	which the understanding of man is conversant. But if these be the
+3761	questions,—what measures must be taken to compose the well ordered
+3762	life of man, what are the best methods to govern and educate children,
+3763	or what are the exact rules whereby sovereigns may command and
+3764	establish laws,—all these queries are proposed for the sole end of
+3765	action, and the man conversant therein is the moral and practical man.
+3766	
+3767	
+3768	
+3769	
+3770	CHAPTER I.
+3771	
+3772	WHAT IS NATURE?
+3773	
+3774	
+3775	Since we have undertaken to make a diligent search into Nature, I
+3776	cannot but conclude it necessary to declare what Nature is. It is very
+3777	absurd to attempt a discourse of the essence of natural things, and
+3778	not to understand what is the power and sphere of Nature. If Aristotle
+3779	be credited, Nature is the principle of motion and rest, in that thing
+3780	in which it exists principally and not by accident. For all things
+3781	that are conspicuous to our eyes, which are neither fortuitous nor
+3782	necessary, nor have a divine original, nor acknowledge any such like
+3783	cause, are called natural and enjoy their proper nature. Of this sort
+3784	are earth, fire, water, air, plants, animals; to these may be added all
+3785	things produced from them, such as showers, hail, thunders, hurricanes,
+3786	and winds. All these confess they had a beginning, none of these were
+3787	from eternity, but had something as the origin of them; and likewise
+3788	animals and plants have a principle whence they are produced. But
+3789	Nature, which in all these things hath the priority, is the principle
+3790	not only of motion but of repose; whatsoever enjoys the principle of
+3791	motion, the same has a possibility to find a dissolution. Therefore on
+3792	this account it is that Nature is the principle of motion and rest.
+3793	
+3794	
+3795	
+3796	
+3797	CHAPTER II.
+3798	
+3799	WHAT IS THE DIFFERENCE BETWEEN A PRINCIPLE AND AN ELEMENT?
+3800	
+3801	
+3802	The followers of Aristotle and Plato conclude that the elements are
+3803	discriminated from a principle. Thales the Milesian supposeth that
+3804	a principle and the elements are one and the same thing, but it is
+3805	evident that they vastly differ one from another. For the elements
+3806	are things compounded; but we do pronounce that principles admit not
+3807	of a composition, nor are the effects of any other being. Those which
+3808	we call elements are earth, water, air, and fire. But we term those
+3809	principles which have nothing precedent to them out of which they are
+3810	produced; for otherwise not these themselves, but rather those things
+3811	whereof they are produced, would be the principles. Now there are
+3812	some things which have a pre-existence to earth and water, from which
+3813	they are begotten; to wit, matter, which is without form or shape;
+3814	then form, which we call ἐντελέχεια (_actuality_); and lastly,
+3815	privation. Thales therefore is very peccant, by affirming that water is
+3816	both an element and a principle.
+3817	
+3818	
+3819	
+3820	
+3821	CHAPTER III.
+3822	
+3823	OF PRINCIPLES, AND WHAT THEY ARE.
+3824	
+3825	
+3826	Thales the Milesian doth affirm that water is the principle whence all
+3827	things in the universe spring. This person appears to be the first of
+3828	philosophers; from him the Ionic sect took its denomination, for there
+3829	are many families and successions amongst philosophers. After he had
+3830	professed philosophy in Egypt, when he was very old, he returned to
+3831	Miletus. He pronounced, that all things had their original from water,
+3832	and into water all things are resolved. His first reason was, that
+3833	whatsoever was the prolific seed of all animals was a principle, and
+3834	that is moist; so that it is probable that all things receive their
+3835	original from humidity. His second reason was, that all plants are
+3836	nourished and fructified by that thing which is moist, of which being
+3837	deprived they wither away. Thirdly, that that fire of which the sun and
+3838	stars are made is nourished by watery exhalations,—yea, and the world
+3839	itself; which moved Homer to sing that the generation of it was from
+3840	water:—
+3841	
+3842	                        The ocean is
+3843	  Of all things the kind genesis.[36]
+3844	
+3845	Anaximander, who himself was a Milesian, assigns the principle of all
+3846	things to the Infinite, from whence all things flow, and into the same
+3847	are corrupted; hence it is that infinite worlds are framed, and those
+3848	vanish again into that whence they have their original. And thus he
+3849	farther proceeds, For what other reason is there of an Infinite but
+3850	this, that there may be nothing deficient as to the generation or
+3851	subsistence of what is in nature? There is his error, that he doth not
+3852	acquaint us what this Infinite is, whether it be air, or water, or
+3853	earth, or any other such like body. Besides he is peccant, in that,
+3854	giving us the material cause, he is silent as to the efficient cause of
+3855	beings; for this thing which he makes his Infinite can be nothing but
+3856	matter; but operation cannot take place in the sphere of matter, except
+3857	an efficient cause be annexed.
+3858	
+3859	Anaximenes his fellow-citizen pronounceth, that air is the principle
+3860	of all beings; from it all receive their original, and into it all
+3861	return. He affirms that our soul is nothing but air; it is that which
+3862	constitutes and preserves; the whole world is invested with spirit
+3863	and air. For spirit and air are synonymous. This person is in this
+3864	deficient, that he concludes that of pure air, which is a simple body
+3865	and is made of one only form, all animals are composed. It is not
+3866	possible to think that a single principle should be the matter of all
+3867	things, from whence they receive their subsistence; besides this there
+3868	must be an operating cause. Silver (for example) is not of itself
+3869	sufficient to frame a drinking cup; an operator also is required, which
+3870	is the silversmith. The like may be applied to vessels made of wood,
+3871	brass, or any other material.
+3872	
+3873	Anaxagoras the Clazomenian asserted Homoeomeries (or parts similar or
+3874	homogeneous) to be the original cause of all beings; it seemed to him
+3875	impossible that any thing could arise of nothing or be resolved into
+3876	nothing. Let us therefore instance in nourishment, which appears simple
+3877	and uniform, such as bread which we owe to Ceres, and water which we
+3878	drink. Of this very nutriment, our hair, our veins, our arteries,
+3879	nerves, bones, and all our other parts are nourished. These things
+3880	thus being performed, it must be granted that the nourishment which
+3881	is received by us contains all those things by which these parts of
+3882	us are increased. In it there are those particles which are producers
+3883	of blood, bones, nerves, and all other parts; which particles (as he
+3884	thought) reason discovers for us. For it is not necessary that we
+3885	should reduce all things under the objects of sense; for bread and
+3886	water are fitted to the senses, yet in them there are those particles
+3887	latent which are discoverable only by reason. It being therefore
+3888	evident that there are particles in the nourishment similar to what is
+3889	produced thereby, he terms these homogeneous parts, averring that they
+3890	are the principles of beings. Matter is according to him these similar
+3891	parts, and the efficient cause is a Mind, which orders all things
+3892	that have an existence. Thus he begins his discourse: “All things
+3893	were confused one among another; but Mind divided and reduced them to
+3894	order.” In this he is to be commended, that he yokes together matter
+3895	and an intellectual agent.
+3896	
+3897	Archelaus the son of Apollodorus, the Athenian, pronounceth, that the
+3898	principles of all things have their original from an infinite air
+3899	rarefied or condensed. Air rarefied is fire, condensed is water.
+3900	
+3901	These philosophers, the followers of Thales, succeeding one another,
+3902	made up that sect which takes to itself the denomination of the Ionic.
+3903	
+3904	       *       *       *       *       *
+3905	
+3906	Pythagoras the Samian, the son of Mnesarchus, from another origin
+3907	deduces the principles of all things; it was he who first gave
+3908	philosophy its name. He assigns the first principles to be numbers,
+3909	and those symmetries resulting from them which he styles harmonies;
+3910	and the result of both combined he terms elements, called geometrical.
+3911	Again, he enumerates unity and the indefinite binary number amongst the
+3912	principles. One of these principles tends to an efficient and forming
+3913	cause, which is Mind, and that is God; the other to the passive and
+3914	material part, and that is the visible world. Moreover the nature of
+3915	number (he saith) consists in the ten; for all people, whether Grecians
+3916	or barbarians, reckon from one to ten, and thence return to one
+3917	again. Farther he avers the virtue of ten consists in the quaternion;
+3918	the reason whereof is this,—if any person reckon from one, and by
+3919	addition place his numbers so as to take in the quaternary, he shall
+3920	complete the number ten; if he exceed the four, he shall go beyond
+3921	the ten; for one, two, three, and four being cast up together make
+3922	up ten. The nature of numbers, therefore, if we regard the units,
+3923	resteth in the ten; but if we regard its power, in the four. Therefore
+3924	the Pythagoreans say that their most sacred oath is by that God who
+3925	delivered to them the quaternary.
+3926	
+3927	  By th’ founder of the sacred number four,
+3928	  Eternal Nature’s font and root, they swore.
+3929	
+3930	Of this number the soul of man is composed; for mind, knowledge,
+3931	opinion, and sense are the four that complete the soul, from which all
+3932	sciences, all arts, all rational faculties derive themselves. For what
+3933	our mind perceives, it perceives after the manner of a thing that is
+3934	one, the soul itself being a unity; as for instance, a multitude of
+3935	persons are not the object of our sense nor are comprehended by us, for
+3936	they are infinite; our understanding gives the general notion of _a
+3937	man_, in which all individuals agree. The number of individuals is
+3938	infinite; the generic or specific nature of all being is a unit, or
+3939	to be apprehended as one only thing; from this one conception we give
+3940	the genuine measures of all existence, and therefore we affirm that
+3941	a certain class of beings are rational and discoursive beings. But
+3942	when we come to give the nature of a horse, it is that animal which
+3943	neighs; and this being common to all horses, it is manifest that the
+3944	understanding, which hath such like conceptions, is in its nature
+3945	unity. The number which is called the infinite binary must needs be
+3946	science; in every demonstration or belief belonging to science, and in
+3947	every syllogism, we draw that conclusion which is the question doubted
+3948	of, from those propositions which are by all granted, by which means
+3949	another proposition is demonstrated. The comprehension of these we call
+3950	knowledge; for which reason science is the binary number. But opinion
+3951	is the ternary; for that rationally follows from comprehension. The
+3952	objects of opinion are many things, and the ternary number denotes a
+3953	multitude, as “Thrice happy Grecians;” for which reason Pythagoras
+3954	admits the ternary. This sect of philosophers is called the Italic, by
+3955	reason Pythagoras opened his school in Italy; his hatred of the tyranny
+3956	of Polycrates enforced him to leave his native country Samos.
+3957	
+3958	Heraclitus and Hippasus of Metapontum suppose that fire gives the
+3959	origination to all beings, that they all flow from fire, and in fire
+3960	they all conclude; for of fire when first quenched the world was
+3961	constituted. The first part of the world, being most condensed and
+3962	contracted within itself, made the earth; but part of that earth being
+3963	loosened and made thin by fire, water was produced; afterwards this
+3964	water being exhaled and rarefied into vapors became air; after all this
+3965	the world itself, and all other corporeal beings, shall be dissolved by
+3966	fire in the universal conflagration. By them therefore it appears that
+3967	fire is what gives beginning to all things, and is that in which all
+3968	things receive their period.
+3969	
+3970	Epicurus the son of Neocles, the Athenian, his philosophical sentiments
+3971	being the same with those of Democritus, affirms that the principles of
+3972	all being are bodies which are perceptible only by reason; they admit
+3973	not of a vacuity, nor of any original, but being of a self-existence
+3974	are eternal and incorruptible; they are not liable to any diminution,
+3975	they are indestructible, nor is it possible for them to receive any
+3976	transformation of parts, or admit of any alterations; of these reason
+3977	only is the discoverer; they are in a perpetual motion in vacuity,
+3978	and by means of the empty space; for the vacuum itself is infinite,
+3979	and the bodies that move in it are infinite. Those bodies acknowledge
+3980	these three accidents, figure, magnitude, and gravity. Democritus
+3981	acknowledged but two, magnitude and figure. Epicurus added the third,
+3982	to wit, gravity; for he pronounced that it is necessary that bodies
+3983	receive their motion from that impression which springs from gravity,
+3984	otherwise they could not be moved. The figures of atoms cannot be
+3985	apprehended by our senses, but they are not infinite. These figures
+3986	are neither hooked nor trident-shaped nor ring-shaped, such figures as
+3987	these being easily broken; but the atoms are impassible, impenetrable;
+3988	they have indeed figures proper to themselves, which are discovered
+3989	only by reason. It is called an atom, by reason not of its smallness
+3990	but of its indivisibility; in it no vacuity, no passible affection is
+3991	to be found. And that there is an atom is perfectly clear; for there
+3992	are elements which have a perpetual duration, and there are animals
+3993	which admit of a vacuity, and there is a unity.
+3994	
+3995	Empedocles the Agrigentine, the son of Meton, affirms that there are
+3996	four elements, fire, air, earth, and water, and two powers which bear
+3997	the greatest command in nature, concord and discord, of which one is
+3998	the union, the other the division of beings. Thus he sings,
+3999	
+4000	  Mark the four roots of all created things:—
+4001	  Bright shining Jove, Juno that giveth life,
+4002	  Pluto beneath the earth, and Nestis who
+4003	  Doth with her tears supply the mortal fount.
+4004	
+4005	By Jupiter he means fire and aether, by Juno that gives life he means
+4006	the air, by Pluto the earth, by Nestis and the fountain of all mortals
+4007	(as it were) seed and water.
+4008	
+4009	Socrates the son of Sophroniscus, and Plato son of Ariston, both
+4010	natives of Athens, entertain the same opinion concerning the universe;
+4011	for they suppose three principles, God, matter, and the idea. God
+4012	is the universal understanding; matter is that which is the first
+4013	substratum, accommodated for the generation and corruption of beings;
+4014	the idea is an incorporeal essence, existing in the cogitations and
+4015	apprehensions of God; for God is the soul and mind of the world.
+4016	
+4017	Aristotle the son of Nichomachus, the Stagirite, constitutes three
+4018	principles; Entelecheia (which is the same with form), matter, and
+4019	privation. He acknowledges four elements, and adds a certain fifth
+4020	body, which is ethereal and not obnoxious to mutation.
+4021	
+4022	Zeno son of Mnaseas, the native of Citium, avers these principles to be
+4023	God and matter, the first of which is the efficient cause, the other
+4024	the passible and receptive. Four elements he likewise confesses.
+4025	
+4026	
+4027	
+4028	
+4029	CHAPTER IV.
+4030	
+4031	HOW WAS THIS WORLD COMPOSED IN THAT ORDER AND AFTER THAT MANNER IT IS?
+4032	
+4033	
+4034	The world being broken and confused, after this manner it was reduced
+4035	into figure and composure as now it is. The insectible bodies or
+4036	atoms, by a wild and fortuitous motion, without any governing power,
+4037	incessantly and swiftly were hurried one amongst another, many bodies
+4038	being jumbled together; upon this account they have a diversity in
+4039	the figures and magnitude. These therefore being so jumbled together,
+4040	those bodies which were the greatest and heaviest sank into the lowest
+4041	place; they that were of a lesser magnitude, being round, smooth,
+4042	and slippery, meeting with those heavier bodies were easily broken
+4043	into pieces, and were carried into higher places. But when that force
+4044	whereby these variously figured particles fought with and struck one
+4045	another, and forced the lighter upwards, did cease, and there was no
+4046	farther power left to drive them into superior regions, yet they were
+4047	wholly hindered from descending downwards, and were compelled to reside
+4048	in those places capable to receive them; and these were the heavenly
+4049	spaces, unto which a multitude of these little bodies were whirled,
+4050	and these being thus shivered fell into coherence and mutual embraces,
+4051	and by this means the heaven was produced. Then a various and great
+4052	multitude of atoms enjoying the same nature, as it is before asserted,
+4053	being hurried aloft, did form the stars. The multitude of these
+4054	exhaled bodies, having struck and broke the air in shivers, forced a
+4055	passage through it; this being converted into wind invested the stars,
+4056	as it moved, and whirled them about, by which means to this present
+4057	time that circulary motion which these stars have in the heavens is
+4058	maintained. Much after the same manner the earth was made; for by those
+4059	little particles whose gravity made them to reside in the lower places
+4060	the earth was formed. The heaven, fire, and air were constituted of
+4061	those particles which were carried aloft. But a great deal of matter
+4062	remaining in the earth, this being condensed by the forcible driving
+4063	of the winds and the breathings from the stars, every little part and
+4064	form of it was broken in pieces, which produced the element of water;
+4065	but this being fluidly disposed did run into those places which were
+4066	hollow, and these places were those that were capable to receive and
+4067	protect it; or else the water, subsisting by itself, did make the lower
+4068	places hollow. After this manner the principal parts of the world were
+4069	constituted.
+4070	
+4071	
+4072	
+4073	
+4074	CHAPTER V.
+4075	
+4076	WHETHER THE UNIVERSE IS ONE.
+4077	
+4078	
+4079	The Stoics pronounce that the world is one thing, and this they say is
+4080	the universe and is corporeal.
+4081	
+4082	Empedocles’s opinion is, that the world is one; yet by no means the
+4083	system of this world must be styled the universe, but that it is a
+4084	small part of it, and the remainder is idle matter.
+4085	
+4086	What to Plato seems the truest he thus declares, that there is one
+4087	world, and that world is the universe; and this he endeavors to evince
+4088	by three arguments. First, that the world could not be complete and
+4089	perfect, if it did not within itself include all beings. Secondly,
+4090	nor could it give the true resemblance of its original and exemplar,
+4091	if it were not the one only begotten thing. Thirdly, it could not be
+4092	incorruptible, if there were any being out of its compass to whose
+4093	power it might be obnoxious. But to Plato it may be thus returned.
+4094	First, that the world is not complete and perfect, nor doth it contain
+4095	all things within itself. And if man is a perfect being, yet he doth
+4096	not encompass all things. Secondly, that there are many exemplars and
+4097	originals of statues, houses, and pictures. Thirdly, how is the world
+4098	perfect, if any thing beyond it is possible to be moved about it? But
+4099	the world is not incorruptible, nor can it be so conceived, because it
+4100	had an original.
+4101	
+4102	To Metrodorus it seems absurd, that in a large field one only stalk
+4103	should grow, and in an infinite space one only world exist; and that
+4104	this universe is infinite is manifest by this, that there are causes
+4105	infinite. Now if this world were finite and the causes which produced
+4106	it infinite, it is necessary that the worlds likewise be infinite; for
+4107	where all causes do concur, there the effects also must appear, let the
+4108	causes be what they will, either atoms or elements.
+4109	
+4110	
+4111	
+4112	
+4113	CHAPTER VI.
+4114	
+4115	WHENCE DID MEN OBTAIN THE KNOWLEDGE OF THE EXISTENCE AND ESSENCE OF A
+4116	DEITY?
+4117	
+4118	
+4119	The Stoics thus define the essence of a God. It is a spirit
+4120	intellectual and fiery, which acknowledges no shape, but is continually
+4121	changed into what it pleases, and assimilates itself to all things. The
+4122	knowledge of this Deity they first received from the pulchritude of
+4123	those things which so visibly appeared to us; for they concluded that
+4124	nothing beauteous could casually or fortuitously be formed, but that
+4125	it was framed from the art of a great understanding that produced the
+4126	world. That the world is very resplendent is made perspicuous from the
+4127	figure, the color, the magnitude of it, and likewise from the wonderful
+4128	variety of those stars which adorn this world. The world is spherical;
+4129	the orbicular hath the pre-eminence above all other figures, for being
+4130	round itself it hath its parts likewise round. (On this account,
+4131	according to Plato, the understanding, which is the most sacred part
+4132	of man, is in the head.) The color of it is most beauteous; for it is
+4133	painted with blue; which, though little blacker than purple, yet hath
+4134	such a shining quality, that by reason of the vehement efficacy of its
+4135	color it cuts through such an interval of air; whence it is that at so
+4136	great a distance the heavens are to be contemplated. And in this very
+4137	greatness of the world the beauty of it appears. View all things: that
+4138	which contains the rest carries a beauty with it, as an animal or a
+4139	tree. Also all things which are visible to us accomplish the beauty of
+4140	the world. The oblique circle called the Zodiac in the heaven is with
+4141	different images painted and distinguished:
+4142	
+4143	  There’s Cancer, Leo, Virgo, and the Claws;
+4144	  Scorpio, Arcitenens, and Capricorn;
+4145	  Amphora, Pisces, then the Ram, and Bull;
+4146	  The lovely pair of Brothers next succeed.[37]
+4147	
+4148	There are a thousand others that give us the suitable reflections of
+4149	the beauty of the world. Thus Euripides:
+4150	
+4151	  The starry splendor of the skies,
+4152	  The wondrous work of that most wise
+4153	  Creator, Time.[38]
+4154	
+4155	From this the knowledge of a God is conveyed to man; that the sun, the
+4156	moon, and the rest of the stars, being carried under the earth, rise
+4157	again in their proper color, magnitude, place, and times. Therefore
+4158	they who by tradition delivered to us the knowledge and veneration of
+4159	the Gods did it by these three manner of ways:—first, from Nature;
+4160	secondly, from fables; thirdly, from the testimony given by the laws
+4161	of commonwealths. Philosophers taught the natural way; poets, the
+4162	fabulous; and the political way is received from the constitutions of
+4163	each commonwealth. All sorts of this learning are distinguished into
+4164	these seven parts. The first is from things that are conspicuous, and
+4165	the observation of those bodies which are in places superior to us. To
+4166	men the heavenly bodies that are so visible did give the knowledge of
+4167	the Deity; when they contemplated that they are the causes of so great
+4168	an harmony, that they regulate day and night, winter and summer, by
+4169	their rising and setting, and likewise considered those things which
+4170	by their influences in the earth do receive a being and do likewise
+4171	fructify. It was manifest to men that the Heaven was the father of
+4172	those things, and the Earth the mother; that the Heaven was the father
+4173	is clear, since from the heavens there is the pouring down of waters,
+4174	which have their spermatic faculty; the Earth the mother, because she
+4175	receives them and brings forth. Likewise men considering that the stars
+4176	are running (θέοντες) in a perpetual motion, that the sun and moon give
+4177	us the power to view and contemplate (θεωρεῖν), they call them all Gods
+4178	(θεούς).
+4179	
+4180	In the second and third place, they thus distinguished the Deities into
+4181	those which are beneficial and those that are injurious to mankind.
+4182	Those which are beneficial they call Jupiter, Juno, Mercury, Ceres;
+4183	those who are mischievous the Dirae, Furies, and Mars. These, which
+4184	threaten dangers and violence, men endeavor to appease and conciliate
+4185	by sacred rites. The fourth and the fifth order of Gods they assign to
+4186	things and passions; to passions, Love, Venus, and Desire; the Deities
+4187	that preside over things, Hope, Justice, and Eunomia.
+4188	
+4189	The sixth order of deities are those made by the poets; Hesiod, willing
+4190	to find out a father for those Gods that acknowledge an original,
+4191	invented their progenitors,
+4192	
+4193	  Hyperion, Coeus, and Iapetus,
+4194	  With Creius:[39]
+4195	
+4196	upon which account this is called the fabulous. The seventh rank of
+4197	the deities added to the rest are those which, by their beneficence
+4198	to mankind, were honored with a divine worship, though they were
+4199	born of mortal race; of this sort were Hercules, Castor and Pollux,
+4200	and Bacchus. These are reputed to be of a human species; for of all
+4201	beings that which is divine is most excellent, and man amongst all
+4202	animals is adorned with the greatest beauty, and is also the best,
+4203	being distinguished by virtue above the rest because of his intellect:
+4204	therefore it was thought that those who were admirable for goodness
+4205	should resemble that which is the best and most beautiful.
+4206	
+4207	
+4208	
+4209	
+4210	CHAPTER VII.
+4211	
+4212	WHAT IS GOD?
+4213	
+4214	
+4215	Some of the philosophers, such as Diagoras the Melian, Theodorus the
+4216	Cyrenean, and Euemerus the Tegeatan, did unanimously deny there were
+4217	any Gods; and Callimachus the Cyrenean discovered his mind touching
+4218	Euemerus in these Iambic verses, thus writing:
+4219	
+4220	  To th’ ante-mural temple flock apace,
+4221	  Where he that long ago composed of brass[40]
+4222	  Great Jupiter, Thrasonic old bald pate,
+4223	  Now writes his impious books,—a boastful ass!
+4224	
+4225	meaning books which denote there are no Gods. Euripides the tragedian
+4226	durst not openly declare his sentiment; the court of Areopagus
+4227	terrified him. Yet he sufficiently manifested his thoughts by this
+4228	method. He presented in his tragedy Sisyphus, the first and great
+4229	patron of this opinion, and introduced himself as one agreeing with him:
+4230	
+4231	  Disorder in those days did domineer,
+4232	  And brutal power kept the world in fear.
+4233	
+4234	Afterwards by the sanction of laws wickedness was suppressed; but by
+4235	reason that laws could prohibit only public villanies, yet could not
+4236	hinder many persons from acting secret impieties, some wise persons
+4237	gave this advice, that we ought to blind truth with lying disguises,
+4238	and to persuade men that there is a God:
+4239	
+4240	  There’s an eternal God does hear and see
+4241	  And understand every impiety;
+4242	  Though it in dark recess or thought committed be.
+4243	
+4244	But this poetical fable ought to be rejected, he thought, together with
+4245	Callimachus, who thus saith:
+4246	
+4247	  If you believe a God, it must be meant
+4248	  That you conceive this God omnipotent.
+4249	
+4250	But God cannot do every thing; for, if it were so, then God could
+4251	make snow black, and the fire cold, and him that is in a posture of
+4252	sitting to be upright, and so on the contrary. The brave-speaking Plato
+4253	pronounceth that God formed the world after his own image; but this
+4254	smells rank of the old dotages, old comic poets would say; for how did
+4255	God, casting his eye upon himself, frame this universe? Or how can God
+4256	be spherical, and not be inferior to man?
+4257	
+4258	Anaxagoras avers that bodies did consist from all eternity, but the
+4259	divine intellect did reduce them into their proper orders, and effected
+4260	the origination of all beings. Plato did not suppose that the primary
+4261	bodies had their consistence and repose, but that they were moved
+4262	confusedly and in disorder; but God, knowing that order was better
+4263	than confusion, did digest them into the best methods. Both these were
+4264	equally peccant; for both suppose God to be the great moderator of
+4265	human affairs, and for that cause to have formed this present world;
+4266	when it is apparent that an immortal and blessed being, replenished
+4267	with all his glorious excellencies, and not at all obnoxious to any
+4268	sort of evil, but being wholly occupied with his own felicity and
+4269	immortality, would not employ himself with the concerns of men; for
+4270	certainly miserable is the being which, like a laborer or artificer,
+4271	is molested by the troubles and cares which the forming and governing
+4272	of this world must give him. Add to this, that the God whom these men
+4273	profess was either not at all existing previous to this present world
+4274	(when bodies were either reposed or in a disordered motion), or that
+4275	then God did either sleep, or else was in a perpetual watchfulness, or
+4276	that he did neither of these. Now neither the first nor the second can
+4277	be entertained, because they suppose God to be eternal; if God from
+4278	eternity was in a continual sleep, he was in an eternal death,—and
+4279	what is death but an eternal sleep?—but no sleep can affect a Deity,
+4280	for the immortality of God and alliance to death are vastly different.
+4281	But if God was in a continual vigilance, either there was something
+4282	wanting to make him happy, or else his beatitude was perfectly
+4283	complete; but according to neither of these can God be said to be
+4284	blessed; not according to the first, for if there be any deficiency
+4285	there is no perfect bliss; not according to the second, for, if there
+4286	be nothing wanting to the felicity of God, it must be a useless
+4287	enterprise for him to busy himself in human affairs. And how can it be
+4288	supposed that God administers by his own providence human concerns,
+4289	when to vain and trifling persons prosperous things happen, to great
+4290	and high adverse? Agamemnon was both
+4291	
+4292	  A virtuous prince, for warlike acts renowned,[41]
+4293	
+4294	and by an adulterer and adulteress was vanquished and perfidiously
+4295	slain. Hercules, after he had freed the life of man from many things
+4296	that were pernicious to it, perished by the witchcraft and poison of
+4297	Deianira.
+4298	
+4299	Thales said that the intelligence of the world was God.
+4300	
+4301	Anaximander concluded that the stars were heavenly Deities.
+4302	
+4303	Democritus said that God, being a globe of fire, is intelligence and
+4304	the soul of the world.
+4305	
+4306	Pythagoras says that, of his principles, unity is God; and the perfect
+4307	good, which is indeed the nature of a unity, is mind itself; but the
+4308	binary number, which is infinite, is a devil, and in its own nature
+4309	evil,—about which the multitude of material beings, and this world
+4310	which is the object of our eyes, are conversant.
+4311	
+4312	Socrates and Plato agree that God is that which is one, hath its
+4313	original from its own self, is of a singular subsistence, is one only
+4314	being perfectly good; all these various names signifying goodness do
+4315	all centre in mind; hence God is to be understood as that mind and
+4316	intellect, which is a separate idea, that is to say, pure and unmixed
+4317	of all matter, and not twisted with any thing obnoxious to passions.
+4318	
+4319	Aristotle’s sentiment is, that God hath his residence in superior
+4320	regions, and hath placed his throne in the sphere of the universe, and
+4321	is a separate idea; which sphere is an ethereal body, which is by him
+4322	styled the fifth essence or quintessence. For there is a division of
+4323	the universe into spheres, which are contiguous by their nature but
+4324	appear to reason to be separated; and he concludes that each of the
+4325	spheres is an animal, composed of a body and soul; the body of them is
+4326	ethereal, moved orbicularly, the soul is the rational form, which is
+4327	unmoved, and yet is the cause that the sphere is actually in motion.
+4328	
+4329	The Stoics affirm that God is a thing more common and obvious, and is
+4330	a mechanic fire which every way spreads itself to produce the world; it
+4331	contains in itself all seminal virtues, and by this means all things by
+4332	a fatal necessity were produced. This spirit, passing through the whole
+4333	world, received various names from the mutations in the matter through
+4334	which it ran in its journey. God therefore is the world, the stars, the
+4335	earth, and (highest of all) the supreme mind in the heavens.
+4336	
+4337	In the judgment of Epicurus all the Gods are anthropomorphites, or have
+4338	the shape of men; but they are perceptible only by reason, for their
+4339	nature admits of no other manner of being apprehended, their parts
+4340	being so small and fine that they give no corporeal representations.
+4341	The same Epicurus asserts that there are four other natural beings
+4342	which are immortal: of this sort are atoms, the vacuum, the infinite,
+4343	and the similar parts; and these last are called Homoeomeries and
+4344	likewise elements.
+4345	
+4346	
+4347	
+4348	
+4349	CHAPTER VIII.
+4350	
+4351	OF THOSE THAT ARE CALLED GENIUSES AND HEROES.
+4352	
+4353	
+4354	Having treated of the essence of the deities in a just order, it
+4355	follows that we discourse of daemons and heroes. Thales, Pythagoras,
+4356	Plato, and the Stoics do conclude that daemons are essences which are
+4357	endowed with souls; that the heroes are the souls separated from their
+4358	bodies, some are good, some are bad; the good are those whose souls are
+4359	good, the evil those whose souls are wicked. All this is rejected by
+4360	Epicurus.
+4361	
+4362	
+4363	
+4364	
+4365	CHAPTER IX.
+4366	
+4367	OF MATTER.
+4368	
+4369	
+4370	Matter is that first being which is substrate for generation,
+4371	corruption, and all other alterations.
+4372	
+4373	The disciples of Thales and Pythagoras, with the Stoics, are of opinion
+4374	that matter is changeable, mutable, convertible, and sliding through
+4375	all things.
+4376	
+4377	The followers of Democritus aver that the vacuum, the atom, and the
+4378	incorporeal substance are the first beings, and not obnoxious to
+4379	passions.
+4380	
+4381	Aristotle and Plato affirm that matter is of that species which is
+4382	corporeal, void of any form, species, figure, and quality, but apt to
+4383	receive all forms, that she may be the nurse, the mother, and origin
+4384	of all other beings. But they that do say that water, earth, air, and
+4385	fire are matter do likewise say that matter cannot be without form, but
+4386	conclude it is a body; but they that say that individual particles and
+4387	atoms are matter do say that matter is without form.
+4388	
+4389	
+4390	
+4391	
+4392	CHAPTER X.
+4393	
+4394	OF IDEAS.
+4395	
+4396	
+4397	An idea is a being incorporeal, which has no subsistence by itself, but
+4398	gives figure and form unto shapeless matter, and becomes the cause of
+4399	its manifestation.
+4400	
+4401	Socrates and Plato conjecture that these ideas are essences separate
+4402	from matter, having their existence in the understanding and fancy of
+4403	the Deity, that is, of mind.
+4404	
+4405	Aristotle objected not to forms and ideas; but he doth not believe them
+4406	separated from matter, or patterns of what God has made.
+4407	
+4408	Those Stoics, that are of the school of Zeno, profess that ideas are
+4409	nothing else but the conceptions of our own mind.
+4410	
+4411	
+4412	
+4413	
+4414	CHAPTER XI.
+4415	
+4416	OF CAUSES.
+4417	
+4418	
+4419	A cause is that by which any thing is produced, or by which any thing
+4420	is effected.
+4421	
+4422	Plato gives this triple division of causes,—the material, the
+4423	efficient, and the final cause; the principal cause he judges to be the
+4424	efficient, which is the mind and intellect.
+4425	
+4426	Pythagoras and Aristotle judge the first causes are incorporeal beings,
+4427	but those that are causes by accident or participation become corporeal
+4428	substances; by this means the world is corporeal.
+4429	
+4430	The Stoics grant that all causes are corporeal, inasmuch as they are
+4431	breath.
+4432	
+4433	
+4434	
+4435	
+4436	CHAPTER XII.
+4437	
+4438	OF BODIES.
+4439	
+4440	
+4441	A body is that being which hath these three dimensions, breadth,
+4442	depth, and length;—or a bulk which makes a sensible resistance;—or
+4443	whatsoever of its own nature possesseth a place.
+4444	
+4445	Plato saith that it is neither heavy nor light in its own nature, when
+4446	it exists in its own place; but being in the place where another should
+4447	be, then it has an inclination by which it tends to gravity or levity.
+4448	
+4449	Aristotle saith that, if we simply consider things in their own nature,
+4450	the earth only is to be judged heavy, and fire light; but air and water
+4451	are sometimes heavy and sometimes light.
+4452	
+4453	The Stoics think that of the four elements two are light, fire and air;
+4454	two ponderous, earth and water; that which is naturally light doth by
+4455	its own nature, not by any inclination, recede from its own centre; but
+4456	that which is heavy doth by its own nature tend to its centre; for the
+4457	centre is not a heavy thing of itself.
+4458	
+4459	Epicurus thinks that bodies are not to be limited; but the first
+4460	bodies, which are simple bodies, and all those composed of them, all
+4461	acknowledge gravity; that all atoms are moved, some perpendicularly,
+4462	some obliquely; some are carried aloft either by direct impulse or with
+4463	vibrations.
+4464	
+4465	
+4466	
+4467	
+4468	CHAPTER XIII.
+4469	
+4470	OF THOSE THINGS THAT ARE LEAST IN NATURE.
+4471	
+4472	
+4473	Empedocles, precedent to the four elements, introduceth the most minute
+4474	bodies which resemble elements; but they did exist before the elements,
+4475	having similar parts and orbicular.
+4476	
+4477	Heraclitus brings in the smallest fragments, and those indivisible.
+4478	
+4479	
+4480	
+4481	
+4482	CHAPTER XIV.
+4483	
+4484	OF FIGURES.
+4485	
+4486	
+4487	A figure is the exterior appearance, the circumscription, and the
+4488	boundary of a body.
+4489	
+4490	The Pythagoreans say that the bodies of the four elements are
+4491	spherical, fire being in the supremest place only excepted, whose
+4492	figure is conical.
+4493	
+4494	
+4495	
+4496	
+4497	CHAPTER XV.
+4498	
+4499	OF COLORS.
+4500	
+4501	
+4502	Color is the visible quality of a body.
+4503	
+4504	The Pythagoreans called color the outward appearance of a body.
+4505	Empedocles, that which is consentaneous to the passages of the eye.
+4506	Plato, that they are fires emitted from bodies, which have parts
+4507	harmonious for the sight. Zeno the Stoic, that colors are the first
+4508	figurations of matter. The Pythagoreans, that colors are of four sorts,
+4509	white and black, red and pale; and they derive the variety of colors
+4510	from the diversity of the elements, and that seen in animals also from
+4511	the variety of food and the air in which they live and are bred.
+4512	
+4513	
+4514	
+4515	
+4516	CHAPTER XVI.
+4517	
+4518	OF THE DIVISION OF BODIES.
+4519	
+4520	
+4521	The disciples of Thales and Pythagoras grant that all bodies are
+4522	passible and divisible unto infinity. Others hold that atoms and
+4523	indivisible parts are there fixed, and admit not of a division into
+4524	infinity. Aristotle, that all bodies are potentially but not actually
+4525	divisible into infinity.
+4526	
+4527	
+4528	
+4529	
+4530	CHAPTER XVII.
+4531	
+4532	HOW BODIES ARE MIXED AND CONTEMPERATED ONE WITH ANOTHER.
+4533	
+4534	
+4535	The ancient philosophers held that the mixture of elements proceeded
+4536	from the alteration of qualities; but the disciples of Anaxagoras
+4537	and Democritus say it is done by apposition. Empedocles composes the
+4538	elements of still smaller bulks, those which are the most minute and
+4539	may be termed the elements of elements. Plato assigns three bodies (but
+4540	he will not allow these to be elements, nor properly so called), air,
+4541	fire, and water, which are mutable into one another; but the earth is
+4542	mutable into none of these.
+4543	
+4544	
+4545	
+4546	
+4547	CHAPTER XVIII.
+4548	
+4549	OF A VACUUM.
+4550	
+4551	
+4552	All the natural philosophers from Thales to Plato rejected a vacuum.
+4553	Empedocles says that there is nothing of a vacuity in nature, nor any
+4554	thing superabundant. Leucippus, Democritus, Demetrius, Metrodorus,
+4555	Epicurus, that the atoms are infinite in number; and that a vacuum
+4556	is infinite in magnitude. The Stoics, that within the compass of
+4557	the world there is no vacuum, but beyond it the vacuum is infinite.
+4558	Aristotle,[42] that the vacuum beyond the world is so great that the
+4559	heaven has liberty to breathe into it, for the heaven is fiery.
+4560	
+4561	
+4562	
+4563	
+4564	CHAPTER XIX.
+4565	
+4566	OF PLACE.
+4567	
+4568	
+4569	Plato, to define place, calls it that thing which in its own bosom
+4570	receives forms and ideas; by which metaphor he signifies matter, being
+4571	(as it were) a nurse or receptacle of beings. Aristotle, that it is
+4572	the ultimate superficies of the circumambient body, contiguous to that
+4573	which it doth encompass.
+4574	
+4575	
+4576	
+4577	
+4578	CHAPTER XX.
+4579	
+4580	OF SPACE.
+4581	
+4582	
+4583	The Stoics and Epicureans make a place, a vacuum, and a space to
+4584	differ. A vacuum is that which is void of any thing that may be called
+4585	a body; place is that which is possessed by a body; a space that which
+4586	is partly filled with a body, as a cask with wine.
+4587	
+4588	
+4589	
+4590	
+4591	CHAPTER XXI.
+4592	
+4593	OF TIME.
+4594	
+4595	
+4596	In the sense of Pythagoras, time is that sphere which encompasses the
+4597	world. Plato says that it is a movable image of eternity, or the
+4598	interval of the world’s motion. Eratosthenes, that it is the solar
+4599	motion.
+4600	
+4601	
+4602	
+4603	
+4604	CHAPTER XXII.
+4605	
+4606	OF THE ESSENCE AND NATURE OF TIME.
+4607	
+4608	
+4609	Plato says that the heavenly motion is time. Most of the Stoics affirm
+4610	that motion itself is time. Most philosophers think that time had no
+4611	beginning; Plato, that time had only an ideal beginning.
+4612	
+4613	
+4614	
+4615	
+4616	CHAPTER XXIII.
+4617	
+4618	OF MOTION.
+4619	
+4620	
+4621	Plato and Pythagoras say that motion is a change and alteration in
+4622	matter. Aristotle, that it is the actual operation of that which may be
+4623	moved. Democritus, that there is but one sort of motion, and it is that
+4624	which is vibratory. Epicurus, that there are two species of motion,
+4625	one perpendicular, and the other oblique. Herophilus, that one species
+4626	of motion is obvious only to reason, the other to sense. Heraclitus
+4627	utterly denies that there is any thing of quiet or repose in nature;
+4628	for that is the state of the dead; one sort of motion is eternal, which
+4629	he assigns to beings eternal, the other perishable, to those things
+4630	which are perishable.
+4631	
+4632	
+4633	
+4634	
+4635	CHAPTER XXIV.
+4636	
+4637	OF GENERATION AND CORRUPTION.
+4638	
+4639	
+4640	Parmenides, Melissus, and Zeno deny that there are any such things
+4641	as generation and corruption, for they suppose that the universe is
+4642	unmovable. Empedocles, Epicurus, and other philosophers that combine
+4643	in this, that the world is framed of small corporeal particles meeting
+4644	together, affirm that corruption and generation are not so properly to
+4645	be accepted; but there are conjunctions and separations, which do not
+4646	consist in any alteration according to their qualities, but are made
+4647	according to quantity by coalition or disjunction. Pythagoras, and all
+4648	those who take for granted that matter is subject to mutation, say that
+4649	generation and corruption are to be accepted in their proper sense, and
+4650	that they are accomplished by the alteration, mutation, and dissolution
+4651	of elements.
+4652	
+4653	
+4654	
+4655	
+4656	CHAPTER XXV.
+4657	
+4658	OF NECESSITY.
+4659	
+4660	
+4661	Thales says that necessity is omnipotent, and that it exerciseth
+4662	an empire over every thing. Pythagoras, that the world is invested
+4663	by necessity. Parmenides and Democritus, that there is nothing in
+4664	the world but what is necessarily, and that this same necessity is
+4665	otherwise called fate, justice, providence, and the architect of the
+4666	world.
+4667	
+4668	
+4669	
+4670	
+4671	CHAPTER XXVI.
+4672	
+4673	OF THE NATURE OF NECESSITY.
+4674	
+4675	
+4676	Plato distinguisheth and refers some things to Providence, others to
+4677	necessity. Empedocles makes the nature of necessity to be that cause
+4678	which employs principles and elements. Democritus makes it to be a
+4679	resistance, impulse, and force of matter. Plato sometimes says that
+4680	necessity is matter; at other times, that it is the habitude or respect
+4681	of the efficient cause towards matter.
+4682	
+4683	
+4684	
+4685	
+4686	CHAPTER XXVII.
+4687	
+4688	OF DESTINY OR FATE.
+4689	
+4690	
+4691	Heraclitus, who attributes all things to fate, makes necessity to
+4692	be the same thing with it. Plato admits of a necessity in the minds
+4693	and the actions of men, but yet he introduceth a cause which flows
+4694	from ourselves. The Stoics, in this agreeing with Plato, say that
+4695	necessity is a cause invincible and violent; that fate is the ordered
+4696	complication of causes, in which there is an intexture of those things
+4697	which proceed from our own determination, so that some things are to be
+4698	attributed to fate, others not.
+4699	
+4700	
+4701	
+4702	
+4703	CHAPTER XXVIII.
+4704	
+4705	OF THE NATURE OF FATE.
+4706	
+4707	
+4708	According to Heraclitus, the essence of fate is a certain reason which
+4709	penetrates the substance of all being; and this is an ethereal body,
+4710	containing in itself that seminal faculty which gives an original to
+4711	every being in the universe. Plato declares that it is the eternal
+4712	reason and the eternal law of the nature of the universe. Chrysippus,
+4713	that it is a spiritual faculty, which in due order doth manage and rule
+4714	the universe. Again, in his book styled the Definitions, that fate is
+4715	the reason of the world, or that it is that law whereby Providence
+4716	rules and administers every thing that is in the world; or it is that
+4717	reason by which all things past have been, all things present are,
+4718	and all things future will be. The Stoics say that it is a chain of
+4719	causes, that is, it is an order and connection of causes which cannot
+4720	be resisted. Posidonius, that it is a being the third in degree from
+4721	Jupiter; the first of beings is Jupiter, the second nature, and the
+4722	third fate.
+4723	
+4724	
+4725	
+4726	
+4727	CHAPTER XXIX.
+4728	
+4729	OF FORTUNE.
+4730	
+4731	
+4732	Plato says, that it is an accidental cause and a casual consequence
+4733	in things which proceed from the election and counsel of men.
+4734	Aristotle, that it is an accidental cause in those things which are
+4735	done by an impulse to a certain end; and this cause is uncertain and
+4736	unstable: there is a great deal of difference betwixt that which flows
+4737	from chance and that which falls out by Fortune; for that which is
+4738	fortuitous admits also of chance, and belongs to things practical; but
+4739	what is by chance cannot be also by Fortune, for it belongs to things
+4740	without action: Fortune, moreover, belongs to rational beings, but
+4741	chance to rational and irrational beings alike, and even to inanimate
+4742	things. Epicurus, that it is a cause not always consistent, but various
+4743	as to persons, times, and manners. Anaxagoras and the Stoics, that it
+4744	is that cause which human reason cannot comprehend; for there are some
+4745	things which proceed from necessity, some things from Fate, some from
+4746	choice and free-will, some from Fortune, some from chance.
+4747	
+4748	
+4749	
+4750	
+4751	CHAPTER XXX.
+4752	
+4753	OF NATURE.
+4754	
+4755	
+4756	Empedocles believes that Nature is nothing else but the mixture and
+4757	separation of the elements; for thus he writes in the first book of his
+4758	natural philosophy:
+4759	
+4760	  Nature gives neither life nor death,
+4761	  Mutation makes us die or breathe.
+4762	  The elements first are mixed, then all
+4763	  Do separate: this mortals Nature call.
+4764	
+4765	Anaxagoras is of the same opinion, that Nature is coalition and
+4766	separation, that is, generation and corruption.
+4767	
+4768	
+4769	
+4770	
+4771	BOOK II.
+4772	
+4773	
+4774	Having finished my dissertation concerning principles and elements and
+4775	those things which chiefly appertain to them, I will turn my pen to
+4776	discourse of those things which are produced by them, and will take my
+4777	beginning from the world, which contains and encompasseth all beings.
+4778	
+4779	
+4780	
+4781	
+4782	CHAPTER I.
+4783	
+4784	OF THE WORLD.
+4785	
+4786	
+4787	Pythagoras was the first philosopher that gave the name of κόσμος to
+4788	the world, from the order and beauty of it; for so that word signifies.
+4789	Thales and his followers say the world is one. Democritus, Epicurus,
+4790	and their scholar Metrodorus affirm that there are infinite worlds
+4791	in an infinite space, for that infinite vacuum in its whole extent
+4792	contains them. Empedocles, that the circle which the sun makes in its
+4793	motion circumscribes the world, and that circle is the utmost bound of
+4794	the world. Seleucus, that the world knows no limits. Diogenes, that
+4795	the universe is infinite, but this world is finite. The Stoics make a
+4796	difference between that which is called the universe, and that which is
+4797	called the whole world;—the universe is the infinite space considered
+4798	with the vacuum, the vacuity being removed gives the right conception
+4799	of the world; so that the universe and the world are not the same
+4800	thing.
+4801	
+4802	
+4803	
+4804	
+4805	CHAPTER II.
+4806	
+4807	OF THE FIGURE OF THE WORLD.
+4808	
+4809	
+4810	The Stoics say that the figure of the world is spherical, others that
+4811	it is conical, others oval. Epicurus, that the figure of the world may
+4812	be globular, or that it may admit of other shapes.
+4813	
+4814	
+4815	
+4816	
+4817	CHAPTER III.
+4818	
+4819	WHETHER THE WORLD BE AN ANIMAL.
+4820	
+4821	
+4822	Democritus, Epicurus, and those philosophers who introduced atoms and
+4823	a vacuum, affirm that the world is not an animal, nor governed by any
+4824	wise Providence, but that it is managed by a nature which is void of
+4825	reason. All the other philosophers affirm that the world is informed
+4826	with a soul, and governed by reason and Providence. Aristotle is
+4827	excepted, who is somewhat different; he is of opinion, that the whole
+4828	world is not acted by a soul in every part of it, nor hath it any
+4829	sensitive, rational, or intellectual faculties, nor is it guided by
+4830	reason and Providence in every part of it; of all which the heavenly
+4831	bodies are made partakers, for the circumambient spheres are animated
+4832	and are living beings; but those things which are about the earth are
+4833	void of those endowments; and though those terrestrial bodies are of an
+4834	orderly disposition, yet that is casual and not primogenial.
+4835	
+4836	
+4837	
+4838	
+4839	CHAPTER IV.
+4840	
+4841	WHETHER THE WORLD IS ETERNAL AND INCORRUPTIBLE.
+4842	
+4843	
+4844	Pythagoras [and Plato], with the Stoics, affirm that the world was
+4845	framed by God, and being corporeal is obvious to the senses, and in
+4846	its own nature is obnoxious to destruction; but it shall never perish,
+4847	it being preserved by the providence of God. Epicurus, that the world
+4848	had a beginning, and so shall have an end, as plants and animals have.
+4849	Xenophanes, that the world never had a beginning, is eternal and
+4850	incorruptible. Aristotle, that the part of the world which is sublunary
+4851	is obnoxious to change, and there terrestrial beings find a decay.
+4852	
+4853	
+4854	
+4855	
+4856	CHAPTER V.
+4857	
+4858	WHENCE DOES THE WORLD RECEIVE ITS NUTRIMENT?
+4859	
+4860	
+4861	Aristotle says that, if the world be nourished, it will likewise be
+4862	dissolved; but it requires no aliment, and will therefore be eternal.
+4863	Plato, that this very world prepares for itself a nutriment, by the
+4864	alteration of those things which are corruptible in it. Philolaus
+4865	believes that a destruction happens to the world in two ways; either
+4866	by fire falling from heaven, or by the lunary water being poured down
+4867	through the whirling of the air; and the exhalations proceeding from
+4868	thence are the aliment of the world.
+4869	
+4870	
+4871	
+4872	
+4873	CHAPTER VI.
+4874	
+4875	FROM WHAT ELEMENT GOD DID BEGIN TO RAISE THE FABRIC OF THE WORLD.
+4876	
+4877	
+4878	The natural philosophers pronounce that the forming of this world took
+4879	its original from the earth, it being its centre, for the centre is
+4880	the principal part of the globe. Pythagoras, from the fire and the
+4881	fifth element. Empedocles determines, that the first and principal
+4882	element separated from the rest was the ether, then fire, after that
+4883	the earth, which earth being strongly compacted by the force of a
+4884	violent revolution, water springs from it, the exhalations of which
+4885	water produce the air; the heaven took its origin from the ether, and
+4886	fire gave a being to the sun; those things that belong to the earth
+4887	are condensed from the remainders. Plato, that the visible world was
+4888	framed after the exemplar of the intellectual world; the soul of the
+4889	visible world was first produced, then the corporeal figure, first that
+4890	which came from fire and earth, afterwards that which came from air
+4891	and water. Pythagoras, that the world was formed of five solid figures
+4892	which are called mathematical; the earth was produced by the cube,
+4893	the fire by the pyramid, the air by the octahedron, the water by the
+4894	icosahedron, and the globe of the universe by the dodecahedron. In all
+4895	these Plato hath the same sentiments with Pythagoras.
+4896	
+4897	
+4898	
+4899	
+4900	CHAPTER VII.
+4901	
+4902	IN WHAT FORM AND ORDER THE WORLD WAS COMPOSED.
+4903	
+4904	
+4905	Parmenides believes that there are small coronets alternately twisted
+4906	one within another, some made up of a thin, others of a condensed
+4907	matter; and there are others between them mixed mutually together of
+4908	light and of darkness, and about them all there is a solid substance,
+4909	which like a firm wall surrounds these coronets. Leucippus and
+4910	Democritus wrap the world round about, as with a garment and membrane.
+4911	Epicurus says that that which bounds some worlds is thin, and that
+4912	which limits others is gross and condensed; and of these worlds some
+4913	are in motion, others are fixed. Plato, that fire takes the first place
+4914	in the world, the second the ether, after that the air, under that
+4915	the water; the last place the earth possesseth: sometimes he puts the
+4916	ether and the fire in the same place. Aristotle gives the first place
+4917	to the ether, as that which is impassible, it being a kind of fifth
+4918	body; after which he placeth those that are passible, fire, air, and
+4919	water, and last of all the earth. To those bodies that are accounted
+4920	celestial he assigns a motion that is circular, but to those that are
+4921	seated under them, if they be light bodies, an ascending, if heavy, a
+4922	descending motion. Empedocles, that the places of the elements are not
+4923	always fixed and determined, but they all succeed one another in their
+4924	respective stations.
+4925	
+4926	
+4927	
+4928	
+4929	CHAPTER VIII.
+4930	
+4931	WHAT IS THE CAUSE OF THE WORLD’S INCLINATION.
+4932	
+4933	
+4934	Diogenes and Anaxagoras affirm that, after the world was composed and
+4935	the earth had produced living creatures, the world out of its own
+4936	propensity made an inclination towards the south. Perhaps this may be
+4937	attributed to a wise Providence (they say), that thereby some parts
+4938	of the world may be habitable, others uninhabitable, according as the
+4939	various climates are affected with a rigorous cold, or a scorching
+4940	heat, or a just temperament of cold and heat. Empedocles, that the air
+4941	yielding to the impetuous force of the solar rays, the pole received an
+4942	inclination; whereby the northern parts were exalted and the southern
+4943	depressed, by which means the whole world received its inclination.
+4944	
+4945	
+4946	
+4947	
+4948	CHAPTER IX.
+4949	
+4950	OF THAT THING WHICH IS BEYOND THE WORLD, AND WHETHER IT BE A VACUUM OR
+4951	NOT.
+4952	
+4953	
+4954	Pythagoras and his followers say that beyond the world there is a
+4955	vacuum, into which and out of which the world hath its respiration.
+4956	The Stoics, that there is a vacuum into which the infinite world by a
+4957	conflagration shall be dissolved. Posidonius, not an infinite vacuum,
+4958	but as much as suffices for the dissolution of the world; and this he
+4959	asserts in his first book concerning the Vacuum. Aristotle affirms,
+4960	that there is no vacuum. Plato concludes that neither within nor
+4961	without the world there is any vacuum.
+4962	
+4963	
+4964	
+4965	
+4966	CHAPTER X.
+4967	
+4968	WHAT PARTS OF THE WORLD ARE ON THE RIGHT HAND, AND WHAT PARTS ARE ON
+4969	THE LEFT.
+4970	
+4971	
+4972	Pythagoras, Plato, and Aristotle say that the eastern parts of the
+4973	world, from whence motion commences, are of the right, those of the
+4974	western are of the left-hand of the world. Empedocles, that those that
+4975	are of the right-hand are towards the summer solstice, those of the
+4976	left towards the winter solstice.
+4977	
+4978	
+4979	
+4980	
+4981	CHAPTER XI.
+4982	
+4983	OF HEAVEN, WHAT IS ITS NATURE AND ESSENCE.
+4984	
+4985	
+4986	Anaximenes declares that the circumference of heaven is the limit
+4987	of the earth’s revolution. Empedocles, that the heaven is a solid
+4988	substance, and hath the form and hardness of crystal, it being composed
+4989	of the air compacted by fire, and that in both hemispheres it invests
+4990	the elements of air and fire. Aristotle, that it is formed by the fifth
+4991	body, and by the mixture of extreme heat and cold.
+4992	
+4993	
+4994	
+4995	
+4996	CHAPTER XII.
+4997	
+4998	INTO HOW MANY CIRCLES IS THE HEAVEN DISTINGUISHED; OR, OF THE DIVISION
+4999	OF HEAVEN.
+5000	
+5001	
+5002	Thales, Pythagoras, and the followers of Pythagoras do distribute the
+5003	universal globe of heaven into five circles which they denominate
+5004	zones; one of which is called the arctic circle, which is always
+5005	conspicuous to us, another is the summer tropic, another is the
+5006	equinoctial, another is the winter tropic, another is the antarctic
+5007	circle, which is always invisible. The circle called the zodiac is
+5008	placed under the three that are in the midst, and lies obliquely,
+5009	gently touching them all. Likewise, they are all cut in right angles
+5010	by the meridian, which runs from pole to pole. It is supposed that
+5011	Pythagoras made the first discovery of the obliquity of the zodiac, but
+5012	one Oenopides of Chios challenges to himself the invention of it.
+5013	
+5014	
+5015	
+5016	
+5017	CHAPTER XIII.
+5018	
+5019	WHAT IS THE ESSENCE OF THE STARS, AND HOW THEY ARE COMPOSED.
+5020	
+5021	
+5022	Thales believes that they are globes of earth set on fire. Empedocles,
+5023	that they are fiery bodies arising from that fire which the ether
+5024	embraced within itself, and did shatter in pieces when the elements
+5025	were first separated one from another. Anaxagoras, that the
+5026	circumambient ether is of a fiery substance, which, by a vehement
+5027	force in its whirling about, did tear stones from the earth, and by
+5028	its own power set them on fire, and establish them as stars in the
+5029	heavens. Diogenes thinks they resemble pumice stones, and that they are
+5030	the breathings of the world; again he supposeth that there are some
+5031	invisible stones, which sometimes fall from heaven upon the earth, and
+5032	are there quenched; as it happened at Aegos-potami, where a stony star
+5033	resembling fire did fall. Empedocles, that the fixed stars are fastened
+5034	to the crystal, but the planets are loosened. Plato, that the stars
+5035	for the most part are of a fiery nature, but they are made partakers
+5036	of another element, with which they are mixed after the resemblance of
+5037	glue. Xenophanes, that they are composed of inflamed clouds, which
+5038	in the daytime are quenched, and in the night are kindled again. The
+5039	like we see in coals; for the rising and setting of the stars is
+5040	nothing else but the quenching and kindling of them. Heraclides and
+5041	the Pythagoreans, that every star is a world in an infinite ether, and
+5042	itself encompasseth air, earth, and ether; this opinion is current
+5043	among the followers of Orpheus, for they suppose that each of the stars
+5044	does make a world. Epicurus condemns none of these opinions, for he
+5045	embraces any thing that is possible.
+5046	
+5047	
+5048	
+5049	
+5050	CHAPTER XIV.
+5051	
+5052	OF WHAT FIGURE THE STARS ARE.
+5053	
+5054	
+5055	The Stoics say that the stars are of a circular form, like the sun,
+5056	the moon, and the world. Cleanthes, that they are of a conical figure.
+5057	Anaximenes, that they are fastened as nails in the crystalline
+5058	firmament; some others, that they are fiery plates of gold, resembling
+5059	pictures.
+5060	
+5061	
+5062	
+5063	
+5064	CHAPTER XV.
+5065	
+5066	OF THE ORDER AND PLACE OF THE STARS.
+5067	
+5068	
+5069	Xenocrates says that the stars are moved in one and the same
+5070	superficies. The other Stoics say that they are moved in various
+5071	superficies, some being superior, others inferior. Democritus, that the
+5072	fixed stars are in the highest place; after those the planets; after
+5073	which the sun, Venus, and the moon, in their order. Plato, that the
+5074	first after the fixed stars that makes its appearance is Phaenon, the
+5075	star of Saturn; the second Phaëton, the star of Jupiter; the third the
+5076	fiery, which is the star of Mars; the fourth the morning star, which is
+5077	the star of Venus the fifth the shining star, and that is the star of
+5078	Mercury; in the sixth place is the sun, in the seventh the moon. Plato
+5079	and some of the mathematicians conspire in the same opinion; others
+5080	place the sun as the centre of the planets. Anaximander, Metrodorus of
+5081	Chios, and Crates assign to the sun the superior place, after him they
+5082	place the moon, after them the fixed stars and planets.
+5083	
+5084	
+5085	
+5086	
+5087	CHAPTER XVI.
+5088	
+5089	OF THE MOTION AND CIRCULATION OF THE STARS.
+5090	
+5091	
+5092	Anaxagoras, Democritus, and Cleanthes say that all the stars have their
+5093	motion from east to west. Alcmaeon and the mathematicians, that the
+5094	planets have a contrary motion to the fixed stars, and in opposition
+5095	to them are carried from the west to the east. Anaximander, that they
+5096	are moved by those circles and spheres on which they are placed.
+5097	Anaximenes, that they are turned under and about the earth. Plato
+5098	and the mathematicians, that the sun, Venus, and Mercury have equal
+5099	measures in their motions.
+5100	
+5101	
+5102	
+5103	
+5104	CHAPTER XVII.
+5105	
+5106	WHENCE DO THE STARS RECEIVE THEIR LIGHT?
+5107	
+5108	
+5109	Metrodorus says that all the fixed stars derive their light from the
+5110	sun. Heraclitus and the Stoics, that earthly exhalations are those by
+5111	which the stars are nourished. Aristotle, that the heavenly bodies
+5112	require no nutriment, for they being eternal cannot be obnoxious to
+5113	corruption. Plato and the Stoics, that the whole world and the stars
+5114	are fed by the same things.
+5115	
+5116	
+5117	
+5118	
+5119	CHAPTER XVIII.
+5120	
+5121	WHAT ARE THOSE STARS WHICH ARE CALLED THE DIOSCURI, THE TWINS, OR
+5122	CASTOR AND POLLUX?
+5123	
+5124	
+5125	Xenophanes says that those which appear as stars in the tops of ships
+5126	are little clouds shining by their peculiar motion. Metrodorus, that
+5127	the eyes of frighted and astonished people emit those lights which are
+5128	called the Twins.
+5129	
+5130	
+5131	
+5132	
+5133	CHAPTER XIX.
+5134	
+5135	HOW STARS PROGNOSTICATE, AND WHAT IS THE CAUSE OF WINTER AND SUMMER.
+5136	
+5137	
+5138	Plato says that the summer and winter indications proceed from the
+5139	rising and setting of the stars, that is, from the rising and setting
+5140	of the sun, the moon, and the fixed stars. Anaximenes, that the others
+5141	in this are not at all concerned, but that it is wholly performed by
+5142	the sun. Eudoxus and Aratus assign it in common to all the stars, for
+5143	thus Aratus sings:
+5144	
+5145	  Thund’ring Jove stars in heaven hath fixed,
+5146	  And them in such beauteous order mixed,
+5147	  Which yearly future things predict.
+5148	
+5149	
+5150	
+5151	
+5152	CHAPTER XX.
+5153	
+5154	OF THE ESSENCE OF THE SUN.
+5155	
+5156	
+5157	Anaximander says, that the sun is a circle eight and twenty times
+5158	bigger than the earth, and has a circumference which very much
+5159	resembles that of a chariot-wheel, which is hollow and full of fire;
+5160	the fire of which appears to us through its mouth, as by a hole in a
+5161	pipe; and this is the sun. Xenophanes, that the sun is constituted
+5162	of small bodies of fire compact together and raised from a moist
+5163	exhalation, which collected together make the body of the sun; or that
+5164	it is a cloud enfired. The Stoics, that it is an intelligent flame
+5165	proceeding from the sea. Plato, that it is composed of abundance of
+5166	fire. Anaxagoras, Democritus, and Metrodorus, that it is an enfired
+5167	stone, or a burning mass. Aristotle, that it is a sphere formed out
+5168	of the fifth body. Philolaus the Pythagorean, that the sun shines as
+5169	crystal, which receives its splendor from the fire of the world and so
+5170	reflecteth its light upon us; so that first, the body of fire which
+5171	is celestial belongs to the sun; and secondly, the fiery reflection
+5172	that proceeds from it, in the form of a mirror; and lastly, the light
+5173	which is spread upon us by way of reflection from that mirror; and
+5174	this last we call the sun, which is (as it were) an image of an image.
+5175	Empedocles, that there are two suns; the one the prototype, which is
+5176	a fire placed in the other hemisphere, which it totally fills, and is
+5177	always ordered in a direct opposition to the reflection of its own
+5178	light; and the sun which is visible to us, formed by the reflection of
+5179	that splendor in the other hemisphere (which is filled with air mixed
+5180	with heat), the light reflected from the circular sun in the opposite
+5181	hemisphere falling upon the crystalline sun; and this reflection is
+5182	carried round with the motion of the fiery sun. To give briefly the
+5183	full sense, the sun is nothing else but the light and brightness of
+5184	that fire which encompasseth the earth. Epicurus, that it is an earthy
+5185	bulk well compacted, with hollow passages like a pumice-stone or a
+5186	sponge, which is kindled by fire.
+5187	
+5188	
+5189	
+5190	
+5191	CHAPTER XXI.
+5192	
+5193	OF THE MAGNITUDE OF THE SUN.
+5194	
+5195	
+5196	Anaximander says, that the sun itself in greatness is equal to the
+5197	earth, but that the circle from whence it receives its respiration and
+5198	in which it is moved is seven and twenty times larger than the earth.
+5199	Anaxagoras, that it is far greater than Peloponnesus. Heraclitus, that
+5200	it is no broader than a man’s foot. Epicurus, that he equally embraceth
+5201	all the foresaid opinions,—that the sun may be of magnitude as it
+5202	appears, or it may be somewhat greater or somewhat less.
+5203	
+5204	
+5205	
+5206	
+5207	CHAPTER XXII.
+5208	
+5209	WHAT IS THE FIGURE OR SHAPE OF THE SUN.
+5210	
+5211	
+5212	Anaximenes affirms that in its dilatation it resembles a leaf.
+5213	Heraclitus, that it hath the shape of a boat, and is somewhat crooked.
+5214	The Stoics, that it is spherical, and it is of the same figure with the
+5215	world and the stars. Epicurus, that the recited dogmas may be defended.
+5216	
+5217	
+5218	
+5219	
+5220	CHAPTER XXIII.
+5221	
+5222	OF THE TURNING AND RETURNING OF THE SUN, OR THE SUMMER AND WINTER
+5223	SOLSTICE.
+5224	
+5225	
+5226	Anaximenes thinks that the stars are forced by a condensed and
+5227	resisting air. Anaxagoras, by the repelling force of the northern
+5228	air, which is violently pushed on by the sun, and thus rendered more
+5229	condensed and powerful. Empedocles, that the sun is hindered from
+5230	a continual direct course by its spherical vehicle and by the two
+5231	circular tropics. Diogenes, that the sun, when it comes to its utmost
+5232	declination, is extinguished, a rigorous cold damping the heat. The
+5233	Stoics, that the sun maintains its course only through that space in
+5234	which its aliment is seated, let it be the ocean or the earth; by the
+5235	exhalations proceeding from these it is nourished. Plato, Pythagoras,
+5236	and Aristotle, that the sun receives a transverse motion from the
+5237	obliquity of the zodiac, which is guarded by the tropics; all these the
+5238	globe clearly manifests.
+5239	
+5240	
+5241	
+5242	
+5243	CHAPTER XXIV.
+5244	
+5245	OF THE ECLIPSES OF THE SUN.
+5246	
+5247	
+5248	Thales was the first who affirmed that the eclipse of the sun was
+5249	caused by the moon’s running in a perpendicular line between it and
+5250	the earth; for the moon in its own nature is terrestrial. And by
+5251	mirrors it is made perspicuous that, when the sun is eclipsed, the moon
+5252	is in a direct line below it. Anaximander, that the sun is eclipsed
+5253	when the fiery mouth of it is stopped and hindered from expiration.
+5254	Heraclitus, that it is after the manner of the turning of a boat, when
+5255	the concave appears uppermost to our sight, and the convex nethermost.
+5256	Xenophanes, that the sun is eclipsed when it is extinguished; and that
+5257	a new sun is created to rise in the east. He gives a farther account
+5258	of an eclipse of the sun which remained for a whole month, and again
+5259	of a total eclipse which changed the day into night. Some say that the
+5260	cause of an eclipse is the invisible concourse of condensed clouds
+5261	which cover the orb of the sun. Aristarchus placeth the sun amongst
+5262	the fixed stars, and believeth that the earth [the moon?] is moved
+5263	about the sun, and that by its inclination and vergency it intercepts
+5264	its light and shadows its orb. Xenophanes, that there are many suns
+5265	and many moons, according as the earth is distinguished by climates,
+5266	circles, and zones. At some certain times the orb of the sun, falling
+5267	upon some part of the world which is uninhabited, wanders in a vacuum
+5268	and becomes eclipsed. The same person affirms that the sun, proceeding
+5269	in its motion in the infinite space, appears to us to move orbicularly,
+5270	receiving that representation from its infinite distance from us.
+5271	
+5272	
+5273	
+5274	
+5275	CHAPTER XXV.
+5276	
+5277	OF THE ESSENCE OF THE MOON.
+5278	
+5279	
+5280	Anaximander affirms that the circle of the moon is nineteen times
+5281	bigger than the earth, and resembles the sun, its orb being full of
+5282	fire; and it suffers an eclipse when the wheel turneth,—which he
+5283	describes by the divers turnings of a chariot-wheel, in the midst of it
+5284	there being a hollow replenished with fire, which hath but one way of
+5285	expiration. Xenophanes, that it is a condensed cloud. The Stoics, that
+5286	it is mixed of fire and air. Plato, that it is a body of the greatest
+5287	part earthy. Anaxagoras and Democritus, that it is a solid, condensed,
+5288	and fiery body, in which there are champaign countries, mountains,
+5289	and valleys. Heraclitus, that it is an earth covered with a cloud.
+5290	Pythagoras, that the body of the moon was of a nature like a mirror.
+5291	
+5292	
+5293	
+5294	
+5295	CHAPTER XXVI.
+5296	
+5297	OF THE MAGNITUDE OF THE MOON.
+5298	
+5299	
+5300	The Stoics declare, that in magnitude it exceeds the earth, as the sun
+5301	itself doth. Parmenides, that it is equal to the sun, from whom it
+5302	receives its light.
+5303	
+5304	
+5305	
+5306	
+5307	CHAPTER XXVII.
+5308	
+5309	OF THE FIGURE OF THE MOON.
+5310	
+5311	
+5312	The Stoics believe that it is of the same figure with the sun,
+5313	spherical. Empedocles, that the figure of it resembles a quoit.
+5314	Heraclitus, a boat. Others, a cylinder.
+5315	
+5316	
+5317	
+5318	
+5319	CHAPTER XXVIII.
+5320	
+5321	FROM WHENCE IS IT THAT THE MOON RECEIVES HER LIGHT?
+5322	
+5323	
+5324	Anaximander thinks that she gives light to herself, but it is very
+5325	slender and faint. Antiphon, that the moon shines by its own proper
+5326	light; but when it absconds itself, the solar beams darting on it
+5327	obscure it. Thus it naturally happens, that a more vehement light
+5328	puts out a weaker; the same is seen in other stars. Thales and his
+5329	followers, that the moon borrows all her light of the sun. Heraclitus,
+5330	that the sun and moon are after the same manner affected; in their
+5331	configurations both are shaped like boats, and are made conspicuous to
+5332	us, receiving their light from moist exhalations. The sun appears to us
+5333	more refulgent, by reason it is moved in a clearer and purer air; the
+5334	moon appears more duskish, it being carried in an air more troubled and
+5335	gross.
+5336	
+5337	
+5338	
+5339	
+5340	CHAPTER XXIX.
+5341	
+5342	OF THE ECLIPSE OF THE MOON.
+5343	
+5344	
+5345	Anaximenes believes that the mouth of the hollow wheel, about which
+5346	the moon is turned, being stopped is the cause of an eclipse. Berosus,
+5347	that it proceeds from the turning of the dark side of the lunar orb
+5348	towards us. Heraclitus, that it is performed just after the manner of
+5349	a boat turned upside downwards. Some of the Pythagoreans say, that the
+5350	splendor arises from the earth, its obstruction from the Antichthon
+5351	(or _counter-earth_). Some of the later philosophers, that
+5352	there is such a distribution of the lunar flame, that it gradually
+5353	and in a just order burns until it be full moon; in like manner,
+5354	that this fire decays by degrees, until its conjunction with the sun
+5355	totally extinguisheth it. Plato, Aristotle, the Stoics, and all the
+5356	mathematicians agree in this, that the obscurity with which the moon is
+5357	every month affected ariseth from a conjunction with the sun, by whose
+5358	more resplendent beams she is darkened; and the moon is then eclipsed
+5359	when she falls upon the shadow of the earth, the earth interposing
+5360	between the sun and moon, or (to speak more properly) the earth
+5361	intercepting the light of the moon.
+5362	
+5363	
+5364	
+5365	
+5366	CHAPTER XXX.
+5367	
+5368	OF THE PHASES OF THE MOON, OR THE LUNAR ASPECTS; OR HOW IT COMES TO
+5369	PASS THAT THE MOON APPEARS TO US TERRESTRIAL.
+5370	
+5371	
+5372	The Pythagoreans say, that the moon appears to us terraneous, by reason
+5373	it is inhabited as our earth is, and in it there are animals of a
+5374	larger size and plants of a rarer beauty than our globe affords; that
+5375	the animals in their virtue and energy are fifteen degrees superior to
+5376	ours; that they emit nothing excrementitious; and that the days are
+5377	fifteen times longer. Anaxagoras, that the reason of the inequality
+5378	ariseth from the commixture of things earthy and cold; and that fiery
+5379	and caliginous matter is jumbled together, whereby the moon is said to
+5380	be a star of a counterfeit aspect. The Stoics, that by reason of the
+5381	diversity of her substance the composition of her body is subject to
+5382	corruption.
+5383	
+5384	
+5385	
+5386	
+5387	CHAPTER XXXI.
+5388	
+5389	HOW FAR THE MOON IS REMOVED FROM THE SUN.
+5390	
+5391	
+5392	Empedocles affirms, that the distance of the moon from the sun is
+5393	double her remoteness from the earth. The mathematicians, that her
+5394	distance from the sun is eighteen times her distance from the earth.
+5395	Eratosthenes, that the sun is remote from the earth seven hundred and
+5396	eighty thousand furlongs.
+5397	
+5398	
+5399	
+5400	
+5401	CHAPTER XXXII.
+5402	
+5403	OF THE YEAR, AND HOW MANY CIRCULATIONS MAKE UP THE GREAT YEAR OF EVERY
+5404	PLANET.
+5405	
+5406	
+5407	The year of Saturn is completed when he has had his circulation in the
+5408	space of thirty solar years; of Jupiter in twelve; of Mars in two, of
+5409	the sun in twelve months; in so many Mercury and Venus, the spaces of
+5410	their circulation being equal; of the moon in thirty days, in which
+5411	time her course from her prime to her conjunction is finished. As to
+5412	the great year, some make it to consist of eight years solar, some
+5413	of nineteen, others of fifty-nine. Heraclitus, of eighteen thousand.
+5414	Diogenes, of three hundred and sixty-five such years as Heraclitus
+5415	assigns. Others there are who lengthen it to seven thousand seven
+5416	hundred and seventy-seven years.
+5417	
+5418	
+5419	
+5420	
+5421	BOOK III.
+5422	
+5423	
+5424	In my two precedent treatises having in due order taken a compendious
+5425	view and given an account of the celestial bodies, and of the moon
+5426	which divides between them and the terrestrial, I must now convert my
+5427	pen to discourse in this third book of Meteors, which are beings above
+5428	the earth and below the moon, and are extended to the site and position
+5429	of the earth, which is supposed to be the centre of the sphere of this
+5430	world; and from thence will I take my beginning.
+5431	
+5432	
+5433	
+5434	
+5435	CHAPTER I.
+5436	
+5437	OF THE GALAXY, OR THE MILKY WAY.
+5438	
+5439	
+5440	It is a cloudy circle, which continually appears in the air, and by
+5441	reason of the whiteness of its colors is called the galaxy, or the
+5442	milky way. Some of the Pythagoreans say that, when Phaëton set the
+5443	world on fire, a star falling from its own place in its circular
+5444	passage through the region caused an inflammation. Others say that
+5445	originally it was the first course of the sun; others, that it is an
+5446	image as in a looking-glass, occasioned by the sun’s reflecting its
+5447	beams towards the heavens, and this appears in the clouds and in the
+5448	rainbow. Metrodorus, that it is merely the solar course, or the motion
+5449	of the sun in its own circle. Parmenides, that the mixture of a thick
+5450	and thin substance gives it a color which resembles milk. Anaxagoras,
+5451	that the sun moving under the earth and not being able to enlighten
+5452	every place, the shadow of the earth, being cast upon the part of
+5453	the heavens, makes the galaxy. Democritus, that it is the splendor
+5454	which ariseth from the coalition of many small bodies, which, being
+5455	firmly united amongst themselves, do mutually enlighten one another.
+5456	Aristotle, that it is the inflammation of dry, copious, and coherent
+5457	exhalations, by which the fiery train, whose seat is beneath the ether
+5458	and the planets, is produced. Posidonius, that it is a combination of
+5459	fire, of rarer substance than the stars, but denser than light.
+5460	
+5461	
+5462	
+5463	
+5464	CHAPTER II.
+5465	
+5466	OF COMETS AND SHOOTING FIRES, AND THOSE WHICH RESEMBLE BEAMS.
+5467	
+5468	
+5469	Some of the Pythagoreans say, that a comet is one of those stars which
+5470	do not always appear, but after they have run through their determined
+5471	course, they then rise and are visible to us. Others, that it is the
+5472	reflection of our sight upon the sun, which gives the resemblance of
+5473	comets much after the same manner as images are reflected in mirrors.
+5474	Anaxagoras and Democritus, that two or more stars being in conjunction
+5475	by their united light make a comet. Aristotle, that it is a fiery
+5476	coalition of dry exhalations. Strato, that it is the light of the star
+5477	darting through a thick cloud that hath invested it; this is seen in
+5478	light shining through lanterns. Heraclides, native of Pontus, that
+5479	it is a lofty cloud inflamed by a sublime fire. The like causes he
+5480	assigns to the bearded comet, to those circles that are seen about the
+5481	sun or stars, or those meteors which resemble pillars or beams, and
+5482	all others which are of this kind. This way unanimously go all the
+5483	Peripatetics, believing that these meteors, being formed by the clouds,
+5484	do differ according to their various configurations. Epigenes, that a
+5485	comet arises from an elevation of spirit or wind, mixed with an earthy
+5486	substance and set on fire. Boëthus, that it is a phantasy presented to
+5487	us by inflamed air. Diogenes, that comets are stars. Anaxagoras, that
+5488	those styled shooting stars fall down from the ether like sparks, and
+5489	therefore are soon extinguished. Metrodorus, that it is a forcible
+5490	illapse of the sun upon clouds which makes them to sparkle as fire.
+5491	Xenophanes, that all such fiery meteors are nothing else but the
+5492	conglomeration of the enfired clouds, and the flashing motions of them.
+5493	
+5494	
+5495	
+5496	
+5497	CHAPTER III.
+5498	
+5499	OF VIOLENT ERUPTION OF FIRE OUT OF THE CLOUDS. OF LIGHTNING. OF
+5500	THUNDER. OF HURRICANES. OF WHIRLWINDS.
+5501	
+5502	
+5503	Anaximander affirms that all these are produced by the wind after this
+5504	manner: the wind being enclosed by condensed clouds, by reason of its
+5505	minuteness and lightness it violently endeavors to make its passage;
+5506	and in breaking through the cloud it gives the noise; and the rending
+5507	the cloud, because of the blackness of it, gives a resplendent flame.
+5508	Metrodorus, that when the wind falls upon a cloud whose densing firmly
+5509	compacts it, by breaking the cloud it causeth a great noise, and by
+5510	striking and rending the cloud it gives the flame; and in the swiftness
+5511	of its motion, the sun imparting heat to it, it throws out the
+5512	thunderbolt. The weak declining of the thunderbolt ends in a violent
+5513	tempest. Anaxagoras, that when heat and cold meet and are mixed
+5514	together (that is, ethereal parts with airy), thereby a great noise
+5515	of thunder is produced, and the color seen against the blackness of
+5516	the cloud causes the flashing of fire; the full and great splendor is
+5517	lightning, the more enlarged and embodied fire becomes a whirlwind, the
+5518	cloudiness of it gives the hurricane. The Stoics, that thunder is the
+5519	clashing of clouds one upon another, the flash of lightning is their
+5520	fiery inflammation; their more rapid splendor is the thunderbolt, the
+5521	faint and weak the whirlwind. Aristotle, that all these proceed from
+5522	dry exhalations, which, if they meet with moist vapors, force their
+5523	passage, and the breaking of them gives the noise of thunder; they,
+5524	being very dry, take fire and make lightning; tempests and hurricanes
+5525	arise from the plenitude of matter which each draw to themselves, the
+5526	hotter parts attracted make the whirlwinds, the duller the tempests.
+5527	
+5528	
+5529	
+5530	
+5531	CHAPTER IV.
+5532	
+5533	OF CLOUDS, RAIN, SNOW, AND HAIL.
+5534	
+5535	
+5536	Anaximenes thinks that by the air being very much condensed clouds are
+5537	formed; this air being more compacted, rain is compressed through it;
+5538	when water in its falling down freezeth, then snow is generated; when
+5539	it is encompassed with a moist air, it is hail. Metrodorus, that a
+5540	cloud is composed of a watery exhalation carried into a higher place.
+5541	Epicurus, that they are made of vapors; and that hail and rain are
+5542	formed in a round figure, being in their long descent pressed upon by
+5543	the circumambient air.
+5544	
+5545	
+5546	
+5547	
+5548	CHAPTER V.
+5549	
+5550	OF THE RAINBOW.
+5551	
+5552	
+5553	Those things which affect the air in the superior places of it are
+5554	of two sorts. Some have a real subsistence, such are rain and hail;
+5555	others not. Those which enjoy not a proper subsistence are only in
+5556	appearance; of this sort is the rainbow. Thus the continent to us that
+5557	sail seems to be in motion.
+5558	
+5559	Plato says, that men admiring it feigned that it took origination from
+5560	one Thaumas, which word signifies admiration. Homer says:
+5561	
+5562	  Jove paints the rainbow with a purple dye,
+5563	  Alluring man to cast his wandering eye.[43]
+5564	
+5565	Others therefore fabled that the bow hath a head like a bull, by which
+5566	it swallows up rivers.
+5567	
+5568	But what is the cause of the rainbow? It is evident that what apparent
+5569	things we see come to our eyes in right or in crooked lines, or by
+5570	reflection: these last are incorporeal and to sense obscure, but to
+5571	reason they are obvious. Those which are seen in right lines are those
+5572	which we see through the air or horn or transparent stones, for all
+5573	the parts of these things are very fine and tenuious; but those which
+5574	appear in crooked lines are in water, the thickness of the water
+5575	presenting them bended to our sight. This is the reason that oars in
+5576	themselves straight, when put into the sea, appear to us crooked. The
+5577	third manner of our seeing is by reflection, and this is perspicuous
+5578	by mirrors. After this third sort the rainbow is affected. We conceive
+5579	it is a moist exhalation converted into a cloud, and in a short space
+5580	it is dissolved into small and moist drops. The sun declining towards
+5581	the west, it will necessarily follow that the whole bow is seen
+5582	opposite to the sun; for the eye being directed to those drops receives
+5583	a reflection, and by this means the bow is formed. The eye doth not
+5584	consider the figure and form, but the color of these drops; the first
+5585	of which colors is a shining red, the second a purple, the third is
+5586	blue and green. Let us consider whether the reason of this shining red
+5587	color be the splendor of the sun falling upon these small drops, the
+5588	whole body of light being reflected, by which this bright red color is
+5589	produced; the second part being troubled, and the light languishing
+5590	in the drops, the color becomes purple (for the purple is the faint
+5591	red); but the third part, being more and more troubled, is changed
+5592	into the green color. And this is proved by other effects of Nature;
+5593	if any one shall put water in his mouth and spit it out so opposite to
+5594	the sun that its rays may be reflected on the drops, he shall see the
+5595	resemblance of a rainbow; the same appears to men that are blear-eyed,
+5596	when they fix their watery eyes upon a candle.
+5597	
+5598	Anaximenes thinks the bow is thus formed; the sun casting its splendor
+5599	upon a thick, black, and gross cloud, and the rays not being in a
+5600	capacity to penetrate beyond the superficies. Anaxagoras, that, the
+5601	solar rays being reflected from a condensed cloud, the sun being
+5602	placed directly opposite to it forms the bow after the mode of the
+5603	repercussion of a mirror; after the same manner he assigns the natural
+5604	cause of the Parhelia or mock-suns, which are often seen in Pontus.
+5605	Metrodorus, that when the sun casts its splendor through a cloud, the
+5606	cloud gives itself a blue, and the light a red color.
+5607	
+5608	
+5609	
+5610	
+5611	CHAPTER VI.
+5612	
+5613	OF METEORS WHICH RESEMBLE RODS, OR OF RODS.
+5614	
+5615	
+5616	These rods and the mock-suns are constituted of a double nature, a real
+5617	subsistence, and a mere appearance;—of a real subsistence, because
+5618	the clouds are the object of our eyes; of a mere appearance, for their
+5619	proper color is not seen, but that which is adventitious. The like
+5620	affections, natural and adventitious, in all such things do happen.
+5621	
+5622	
+5623	
+5624	
+5625	CHAPTER VII.
+5626	
+5627	OF WINDS.
+5628	
+5629	
+5630	Anaximander believes that wind is a fluid air, the sun putting into
+5631	motion or melting the moist subtle parts of it. The Stoics, that all
+5632	winds are a flowing air, and from the diversity of the regions whence
+5633	they have their origin receive their denomination; as, from darkness
+5634	and the west the western wind; from the sun and its rising the eastern;
+5635	from the north the northern, and from the south the southern winds.
+5636	Metrodorus, that moist vapors heated by the sun are the cause of the
+5637	impetuousness of violent winds. The Etesian, or those winds which
+5638	annually commence about the rising of the Little Dog, the air about the
+5639	northern pole being more compacted, blow vehemently following the sun
+5640	when he returns from the summer solstice.
+5641	
+5642	
+5643	
+5644	
+5645	CHAPTER VIII.
+5646	
+5647	OF WINTER AND SUMMER.
+5648	
+5649	
+5650	Empedocles and the Stoics believe that winter is caused by the
+5651	thickness of the air prevailing and mounting upwards; and summer by
+5652	fire, it falling downwards.
+5653	
+5654	       *       *       *       *       *
+5655	
+5656	This description being given by me of Meteors, or those things that are
+5657	above us, I must pass to those things which are terrestrial.
+5658	
+5659	
+5660	
+5661	
+5662	CHAPTER IX.
+5663	
+5664	OF THE EARTH, WHAT IS ITS NATURE AND MAGNITUDE.
+5665	
+5666	
+5667	Thales and his followers say that there is but one earth. Hicetes the
+5668	Pythagorean, that there are two earths, this and the Antichthon, or
+5669	the earth opposite to it. The Stoics, that this earth is one, and that
+5670	finite and limited. Xenophanes, that the earth, being compacted of fire
+5671	and air, in its lowest parts hath laid a foundation in an infinite
+5672	depth. Metrodorus, that the earth is mere sediment and dregs of water,
+5673	as the sun is of the air.
+5674	
+5675	
+5676	
+5677	
+5678	CHAPTER X.
+5679	
+5680	OF THE FIGURE OF THE EARTH.
+5681	
+5682	
+5683	Thales, the Stoics, and their followers say that the earth is globular.
+5684	Anaximander, that it resembles a smooth stony pillar. Anaximenes, that
+5685	it hath the shape of a table. Leucippus, of a drum. Democritus, that it
+5686	is like a quoit in its surface, and hollow in the middle.
+5687	
+5688	
+5689	
+5690	
+5691	CHAPTER XI.
+5692	
+5693	OF THE SITE AND POSITION OF THE EARTH.
+5694	
+5695	
+5696	The disciples of Thales say that the earth is the centre of the
+5697	universe. Xenophanes, that it is first, being rooted in the infinite
+5698	space. Philolaus the Pythagorean gives to fire the middle place, and
+5699	this is the hearth-fire of the universe; the second place to the
+5700	Antichthon; the third to that earth which we inhabit, which is seated
+5701	in opposition unto and whirled about the opposite,—which is the reason
+5702	that those which inhabit that earth cannot be seen by us. Parmenides
+5703	was the first that confined the habitable world to the two solstitial
+5704	(or temperate) zones.
+5705	
+5706	
+5707	
+5708	
+5709	CHAPTER XII.
+5710	
+5711	OF THE INCLINATION OF THE EARTH.
+5712	
+5713	
+5714	Leucippus affirms that the earth vergeth towards the southern parts, by
+5715	reason of the thinness and fineness that is in the south; the northern
+5716	parts are more compacted, they being congealed by a rigorous cold, but
+5717	those parts of the world that are opposite are enfired. Democritus,
+5718	because, the southern parts of the atmosphere being the weaker, the
+5719	earth as it enlarges bends towards the south; the northern parts are
+5720	of an unequal, the southern of an equal temperament; and this is the
+5721	reason that the earth bends towards those parts where the earth is
+5722	laden with fruits and its own increase.
+5723	
+5724	
+5725	
+5726	
+5727	CHAPTER XIII.
+5728	
+5729	OF THE MOTION OF THE EARTH.
+5730	
+5731	
+5732	Most of the philosophers say that the earth remains fixed in the same
+5733	place. Philolaus the Pythagorean, that it is moved about the element of
+5734	fire, in an oblique circle, after the same manner of motion that the
+5735	sun and moon have. Heraclides of Pontus and Ecphantus the Pythagorean
+5736	assign a motion to the earth, but not progressive, but after the manner
+5737	of a wheel being carried on its own axis; thus the earth (they say)
+5738	turns itself upon its own centre from west to east. Democritus, that
+5739	when the earth was first formed it had a motion, the parts of it being
+5740	small and light; but in process of time the parts of it were condensed,
+5741	so that by its own weight it was poised and fixed.
+5742	
+5743	
+5744	
+5745	
+5746	CHAPTER XIV.
+5747	
+5748	INTO HOW MANY ZONES IS THE EARTH DIVIDED?
+5749	
+5750	
+5751	Pythagoras says that, as the celestial sphere is distributed into
+5752	five zones, into the same number is the terrestrial; which zones are
+5753	the arctic and antarctic, the summer and winter tropics (or temperate
+5754	zones), and the equinoctial; the middle of which zones equally divides
+5755	the earth and constitutes the torrid zone; but that part which is in
+5756	the middle of the summer and winter tropics is habitable, by reason the
+5757	air is there temperate.
+5758	
+5759	
+5760	
+5761	
+5762	CHAPTER XV.
+5763	
+5764	OF EARTHQUAKES.
+5765	
+5766	
+5767	Thales and Democritus assign the cause of earthquakes to water. The
+5768	Stoics say that it is a moist vapor contained in the earth, making an
+5769	irruption into the air, that makes the earthquake. Anaximenes, that
+5770	the dryness and rarety of the earth are the cause of earthquakes, the
+5771	one of which is produced by extreme drought, the other by immoderate
+5772	showers. Anaxagoras, that the air endeavoring to make a passage out of
+5773	the earth, meeting with a thick superficies, is not able to force its
+5774	way, and so shakes the circumambient earth with a trembling. Aristotle,
+5775	that a cold vapor encompassing every part of the earth prohibits the
+5776	evacuation of vapors; for those which are hot, being in themselves
+5777	light, endeavor to force a passage upwards, by which means the dry
+5778	exhalations, being left in the earth, use their utmost endeavor to make
+5779	a passage out, and being wedged in, they suffer various circumvolutions
+5780	and shake the earth. Metrodorus, that whatsoever is in its own place
+5781	is incapable of motion, except it be pressed upon or drawn by the
+5782	operation of another body; the earth being so seated cannot naturally
+5783	be removed, yet divers parts and places of the earth may move one
+5784	upon another. Parmenides and Democritus, that the earth being so
+5785	equally poised hath no sufficient cause why it should incline rather
+5786	to one side than to the other; so that it may be shaken, but cannot be
+5787	removed. Anaximenes, that the earth by reason of its latitude is borne
+5788	upon the air which presseth upon it. Others opine that the earth swims
+5789	upon the waters, as boards and broad planks, and by that reason is
+5790	moved. Plato, that motion is by six manner of ways, upwards, downwards,
+5791	on the right-hand and on the left, behind and before; therefore it is
+5792	not possible that the earth should be moved in any of these modes,
+5793	for it is altogether seated in the lowest place; it therefore cannot
+5794	receive a motion, since there is nothing about it so peculiar as to
+5795	make it incline any way; but some parts of it are so rare and thin
+5796	that they are capable of motion. Epicurus, that the possibility of the
+5797	earth’s motion ariseth from a thick and aqueous air beneath the earth,
+5798	which may, by moving or pushing it, be capable of its quaking; or that
+5799	being so compassed, and having many passages, it is shaken by the wind
+5800	which is dispersed through the hollow dens of it.
+5801	
+5802	
+5803	
+5804	
+5805	CHAPTER XVI.
+5806	
+5807	OF THE SEA, AND HOW IT IS COMPOSED, AND HOW IT BECOMES TO THE TASTE
+5808	BITTER.
+5809	
+5810	
+5811	Anaximander affirms that the sea is the remainder of the primogenial
+5812	humidity, the greatest part of which being dried up by the fire, the
+5813	influence of the great heat altered its quality. Anaxagoras, that in
+5814	the beginning water did not flow, but was as a standing pool; and that
+5815	it was burnt by the motion of the sun about it, by which the oily
+5816	part of the water being exhaled, the residue became salt and bitter.
+5817	Empedocles, that the sea is the sweat of the earth burnt by the sun.
+5818	Antiphon, that the sweat of that which was hot was separated from the
+5819	other parts which were moist; these by seething and boiling became
+5820	bitter, as happens in all sweats. Metrodorus, that the sea was strained
+5821	through the earth, and retained some part of the density thereof; the
+5822	same is observed in all those things which are strained through ashes.
+5823	The schools of Plato, that the element of water being compacted by the
+5824	rigor of the air became sweet, but that part which was exhaled from the
+5825	earth, being enfired, became of a brackish taste.
+5826	
+5827	
+5828	
+5829	
+5830	CHAPTER XVII.
+5831	
+5832	OF TIDES, OR OF THE EBBING AND FLOWING OF THE SEA.
+5833	
+5834	
+5835	Aristotle and Heraclides say, they proceed from the sun, which moves
+5836	and whirls about the winds; and these falling with a violence upon the
+5837	Atlantic, it is pressed and swells by them, by which means the sea
+5838	flows; and their impression ceasing, the sea retracts, hence they ebb.
+5839	Pytheas the Massilian, that the fulness of the moon gives the flow, the
+5840	wane the ebb. Plato attributes it all to a certain oscillation of the
+5841	sea, which by means of a mouth or orifice causes the alternate ebb and
+5842	flow; and by this means the seas do rise and flow contrarily. Timaeus
+5843	believes that those rivers which fall from the mountains of the Celtic
+5844	Gaul into the Atlantic produce a tide. For upon their entering upon
+5845	that sea, they violently press upon it, and so cause the flow; but they
+5846	disemboguing themselves, there is a cessation of the impetuousness, by
+5847	which means the ebb is produced. Seleucus the mathematician attributes
+5848	a motion to the earth; and thus he pronounceth that the moon in its
+5849	circumlation meets and repels the earth in its motion; between these
+5850	two, the earth and the moon, there is a vehement wind raised and
+5851	intercepted, which rushes upon the Atlantic Ocean, and gives us a
+5852	probable argument that it is the cause the sea is troubled and moved.
+5853	
+5854	
+5855	
+5856	
+5857	CHAPTER XVIII.
+5858	
+5859	OF THE HALO, OR A CIRCLE ABOUT A STAR.
+5860	
+5861	
+5862	The halo or circle is thus formed. A thick and dark air intervening
+5863	between the moon or any other star and our eye, by which means our
+5864	sight is dilated and reflected, when now our sight is incident upon the
+5865	outward circumference of the orb of that star, there presently seems
+5866	a circle to appear. This circle thus appearing is called the ἅλως or
+5867	_halo_; and there is constantly such a circle seen by us, when
+5868	such a density of sight happens.
+5869	
+5870	
+5871	
+5872	
+5873	BOOK IV.
+5874	
+5875	
+5876	Having taken a survey of the general parts of the world, I will take a
+5877	view of the particular members of it.
+5878	
+5879	
+5880	
+5881	
+5882	CHAPTER I.
+5883	
+5884	OF THE OVERFLOWING OF THE NILE.
+5885	
+5886	
+5887	Thales conjectures that the Etesian or anniversary northern winds
+5888	blowing strongly against Egypt heighten the swelling of the Nile, the
+5889	mouth of that river being obstructed by the force of the sea rushing
+5890	into it. Euthymenes the Massilian concludes that the Nile is filled by
+5891	the ocean and that sea which is outward from it, this being naturally
+5892	sweet. Anaxagoras, that the snow in Ethiopia which is frozen in winter
+5893	is melted in summer, and this makes the inundation. Democritus, that
+5894	the snows which are in the northern climates when the sun enters the
+5895	summer solstice are dissolved and diffused; from those vapors clouds
+5896	are compacted, and these are forcibly driven by the Etesian winds
+5897	into the southern parts and into Egypt, from whence violent showers
+5898	are poured; and by this means the fens of Egypt are filled with water,
+5899	and the river Nile hath its inundation. Herodotus the historian, that
+5900	the waters of the Nile receive from their fountain an equal portion of
+5901	water in winter and in summer; but in winter the water appears less,
+5902	because the sun, making its approach nearer to Egypt, draws up the
+5903	rivers of that country into exhalations. Ephorus the historiographer,
+5904	that in summer all Egypt seems to be melted and sweats itself
+5905	into water, to which the thin and sandy soils of Arabia and Lybia
+5906	contribute. Eudoxus relates that the Egyptian priests affirm that, when
+5907	it is summer to us who dwell under the northern tropic, it is winter
+5908	with them that inhabit under the southern tropic; by this means there
+5909	is a various contrariety and opposition of the seasons in the year,
+5910	which cause such showers to fall as make the water to overflow the
+5911	banks of the Nile and diffuse itself throughout all Egypt.
+5912	
+5913	
+5914	
+5915	
+5916	CHAPTER II.
+5917	
+5918	OF THE SOUL.
+5919	
+5920	
+5921	Thales first pronounced that the soul is that being which is in
+5922	a perpetual motion, or that whose motion proceeds from itself.
+5923	Pythagoras, that it is a number moving itself; he takes a number to be
+5924	the same thing with a mind. Plato, that it is an intellectual substance
+5925	moving itself, and that motion is in a numerical harmony. Aristotle,
+5926	that it is the first actuality (ἐντελέχεια) of a natural organical body
+5927	which has life potentially; and this actuality must be understood to be
+5928	the same thing with energy or operation. Dicaearchus, that it is the
+5929	harmony of the four elements. Asclepiades the physician, that it is the
+5930	concurrent exercitation of the senses.
+5931	
+5932	
+5933	
+5934	
+5935	CHAPTER III.
+5936	
+5937	WHETHER THE SOUL BE A BODY, AND WHAT IS THE NATURE AND ESSENCE OF IT.
+5938	
+5939	
+5940	All those that have been named by me do affirm that the soul itself is
+5941	incorporeal, and by its own nature is in a perpetual motion, and in its
+5942	own essence is an intelligent substance, and the actuality of a natural
+5943	organical body which has life. The followers of Anaxagoras, that it is
+5944	airy and a body. The Stoics, that it is a hot breath. Democritus, that
+5945	it is a fiery composition of things which are perceptible by reason,
+5946	the same having their forms spherical and without an inflaming faculty;
+5947	and it is a body. Epicurus, that it is constituted of four qualities,
+5948	of a fiery quality, of an aerial quality, a pneumatical, and of a
+5949	fourth quality which hath no name, but it contains the virtue of the
+5950	sense. Heraclitus, that the soul of the world is the exhalation which
+5951	proceeds from the moist parts of it; but the soul of animals, arising
+5952	from exhalations that are exterior and from those that are within them,
+5953	is homogeneous to it.
+5954	
+5955	
+5956	
+5957	
+5958	CHAPTER IV.
+5959	
+5960	OF THE PARTS OF THE SOUL.
+5961	
+5962	
+5963	Plato and Pythagoras, according to their former account distribute the
+5964	soul into two parts, the rational and irrational. By a more accurate
+5965	and strict account the soul is branched into three parts; they divide
+5966	the unreasonable part into the concupiscible and the irascible. The
+5967	Stoics say the soul is constituted of eight parts; five of which are
+5968	the senses, hearing, seeing, tasting, touching, smelling, the sixth
+5969	is the faculty of speaking, the seventh of generating, the eighth of
+5970	commanding; this is the principal of all, by which all the other are
+5971	guided and ordered in their proper organs, as we see the arms of a
+5972	polypus aptly disposed. Democritus and Epicurus divide the soul into
+5973	two parts, the rational, which hath its residence in the breast, and
+5974	the irrational, which is diffused through the whole structure of the
+5975	body. Democritus, that the quality of the soul is communicated to every
+5976	thing, yea, to the dead corpses; for they are partakers of heat and
+5977	some sense, when the most of both is expired out of them.
+5978	
+5979	
+5980	
+5981	
+5982	CHAPTER V.
+5983	
+5984	WHAT IS THE PRINCIPAL PART OF THE SOUL, AND IN WHAT PART OF THE BODY IT
+5985	RESIDES.
+5986	
+5987	
+5988	Plato and Democritus place its residence in the whole head. Strato,
+5989	in that part of the forehead where the eyebrows are separated.
+5990	Erasistratus, in the Epikranis, or membrane which involves the brain.
+5991	Herophilus, in that sinus of the brain which is the basis of it.
+5992	Parmenides, in the whole breast; which opinion is embraced by Epicurus.
+5993	The Stoics are generally of this opinion, that the seat of the soul is
+5994	throughout the heart, or in the spirit which is about it. Diogenes, in
+5995	the arterial ventricle of the heart, which is also filled with vital
+5996	spirit. Empedocles, in the mass of the blood. There are that say it
+5997	is in the neck of the heart, others in the pericardium, others in
+5998	the midriff. Certain of the Neoterics, that the seat of the soul is
+5999	extended from the head to the diaphragm. Pythagoras, that the animal
+6000	part of the soul resides in the heart, the intellectual in the head.
+6001	
+6002	
+6003	
+6004	
+6005	CHAPTER VI.
+6006	
+6007	OF THE MOTION OF THE SOUL.
+6008	
+6009	
+6010	Plato believes that the soul is in perpetual motion, but that the mind
+6011	is immovable with respect to motion from place to place. Aristotle,
+6012	that the soul is not naturally moved, but its motion is accidental,
+6013	resembling that which is in the forms of bodies.
+6014	
+6015	
+6016	
+6017	
+6018	CHAPTER VII.
+6019	
+6020	OF THE SOUL’S IMMORTALITY.
+6021	
+6022	
+6023	Plato and Pythagoras say that the soul is immortal; when it departs
+6024	out of the body, it retreats to the soul of the world, which is a
+6025	being of the same nature with it. The Stoics, when the souls leave the
+6026	bodies, they are carried to divers places; the souls of the unlearned
+6027	and ignorant descend to the coagmentation of earthly things, but
+6028	the learned and vigorous endure till the general fire. Epicurus and
+6029	Democritus, the soul is mortal, and it perisheth with the body. Plato
+6030	and Pythagoras, that part of the soul of man which is rational is
+6031	eternal; for though it be not God, yet it is the product of an eternal
+6032	Deity; but that part of the soul which is divested of reason dies.
+6033	
+6034	
+6035	
+6036	
+6037	CHAPTER VIII.
+6038	
+6039	OF THE SENSES, AND OF THOSE THINGS WHICH ARE OBJECTS OF THE SENSES.
+6040	
+6041	
+6042	The Stoics give this definition of sense: Sense is the apprehension
+6043	or comprehension of an object by means of an organ. There are several
+6044	ways of expressing what sense is; it is either a habit, a faculty, an
+6045	operation, or an imagination which apprehends by means of an organ of
+6046	sense,—and also the eighth principal thing, from whence the senses
+6047	are derived. The instruments of sense are intelligent spirits, which
+6048	from the said commanding part reach unto all the organs of the body.
+6049	Epicurus, that sense is a faculty, and that which is perceived
+6050	by the sense is the product of it; so that sense hath a double
+6051	acceptation,—sense which is the faculty, and the thing received by
+6052	the sense, which is the effect. Plato, that sense is that commerce
+6053	which the soul and body have with those things that are exterior to
+6054	them; the power of which is from the soul, the organ by which is from
+6055	the body; but both of them apprehend exterior objects by means of the
+6056	imagination. Leucippus and Democritus, that sense and intelligence
+6057	arise from external images; so neither of them can operate without the
+6058	assistance of an image falling upon us.
+6059	
+6060	
+6061	
+6062	
+6063	CHAPTER IX.
+6064	
+6065	WHETHER WHAT APPEARS TO OUR SENSES AND IMAGINATIONS BE TRUE OR NOT.
+6066	
+6067	
+6068	The Stoics say that what the senses represent is true; what the
+6069	imagination, is partly false, partly true. Epicurus, that every
+6070	impression which either the sense or fancy gives us is true, but of
+6071	those things that fall under the account of opinion, some are true,
+6072	some false: sense gives us a false representation of those things
+6073	only which are the objects of our understanding; but the fancy gives
+6074	us a double error, both of things sensible and things intellectual.
+6075	Empedocles and Heraclides, that the senses perceive by a just
+6076	accommodation of the pores in every case; every thing that is perceived
+6077	by the sense being congruously adapted to its proper organ.
+6078	
+6079	
+6080	
+6081	
+6082	CHAPTER X.
+6083	
+6084	HOW MANY SENSES ARE THERE?
+6085	
+6086	
+6087	The Stoics say that there are five senses properly so called, seeing,
+6088	hearing, smelling, tasting, and touching. Aristotle indeed doth not
+6089	add a sixth sense; but he assigns a common sense, which is the judge
+6090	of all compounded species; into this each sense casts its proper
+6091	representation, in which is discovered a transition of one thing into
+6092	another, like as we see in figure and motion where there is a change of
+6093	one into another. Democritus, that there are several species of senses,
+6094	which appertain to beings destitute of reason, to the Gods, and to wise
+6095	men.
+6096	
+6097	
+6098	
+6099	
+6100	CHAPTER XI.
+6101	
+6102	HOW THE ACTIONS OF THE SENSES, THE CONCEPTIONS OF OUR MINDS, AND THE
+6103	HABIT OF OUR REASON ARE FORMED.
+6104	
+6105	
+6106	The Stoics affirm that every man, as soon as he is born, has the
+6107	principal and commanding part of his soul, which is in him like a sheet
+6108	of writing-paper, to which he commits all his notions. The first manner
+6109	of his inscribing is by denoting those notions which flow from the
+6110	senses. Suppose it be of a thing that is white; when the present sense
+6111	of it is vanished, there is yet retained the remembrance; when many
+6112	memorative notions of the same similitude do concur, then he is said to
+6113	have an experience; for experience is nothing else but the abundance of
+6114	notions that are of the same form met together. Some of these notions
+6115	are naturally begotten according to the aforesaid manner, without the
+6116	assistance of art; the others are produced by discipline, learning,
+6117	and industry; these only are properly called notions, the others are
+6118	prenotions. But reason, which gives us the denomination of rational,
+6119	is completed by prenotions in the first seven years. The conception
+6120	of the mind is the vision that the intelligence of a rational animal
+6121	hath received; when that vision falls upon the rational soul, then it
+6122	is called the conception of the mind, for it hath derived its name
+6123	from the mind (ἐννόημα from νοῦς). Therefore these visions are not
+6124	to be found in any other animals; they are appropriated only to Gods
+6125	and to us men. If these we consider generally, they are phantasms; if
+6126	specifically, they are notions. As pence or staters, if you consider
+6127	them according to their own value, are merely pence and staters; but if
+6128	you give them as a price for a naval voyage, they are called not merely
+6129	pence, &c., but your fraught.
+6130	
+6131	
+6132	
+6133	
+6134	CHAPTER XII.
+6135	
+6136	WHAT IS THE DIFFERENCE BETWEEN IMAGINATION (φαντασια[** φαντασία]),
+6137	IMAGINABLE (φανταστόν), FANCY (φανταστικόν), AND PHANTOM (φάντασμα)?
+6138	
+6139	
+6140	Chrysippus affirms, these four are different one from another.
+6141	Imagination (he says) is that passion raised in the soul which
+6142	discovers itself and that which was the efficient of it; for example,
+6143	after the eye hath looked upon a thing that is white, the sight of
+6144	which produceth in the mind a certain impression, this gives us
+6145	reason to conclude that the object of this impression is white, which
+6146	affecteth us. So is it with touching and smelling.
+6147	
+6148	Phantasy or imagination is denominated from φῶς, which denotes
+6149	light; for as light discovers itself and all other things which it
+6150	illuminates, so this imagination discovers itself and that which is
+6151	the cause of it. The imaginable is the efficient cause of imagination;
+6152	as any thing that is white, or any thing that is cold, or every thing
+6153	that may make an impression upon the imagination. Fancy is a vain
+6154	impulse upon the mind of man, proceeding from nothing which is really
+6155	imaginable; this is experienced in those that whirl about their idle
+6156	hands and fight with shadows; for to the imagination there is always
+6157	some real imaginable thing presented, which is the efficient cause of
+6158	it; but to the fancy nothing. A phantom is that to which we are led by
+6159	such a fanciful and vain attraction; this is to be seen in melancholy
+6160	and distracted persons. Of this sort was Orestes in the tragedy,
+6161	pronouncing these words:
+6162	
+6163	  Mother, these maids with horror me affright;
+6164	  Oh hurl them not, I pray, into my sight!
+6165	  They’re smeared with blood, and cruel, dragon-like,
+6166	  Skipping about with deadly fury strike.
+6167	
+6168	These rave as frantic persons, they see nothing, and yet imagine they
+6169	see. Thence Electra thus returns to him:
+6170	
+6171	  O wretched man, securely sleep in bed;
+6172	  Nothing thou seest, thy fancy’s vainly led.[44]
+6173	
+6174	After the same manner Theoclymenus in Homer.
+6175	
+6176	
+6177	
+6178	
+6179	CHAPTER XIII.
+6180	
+6181	OF OUR SIGHT, AND BY WHAT MEANS WE SEE.
+6182	
+6183	
+6184	Democritus and Epicurus suppose that sight is caused by the insinuation
+6185	of little images into the visive organ, and by the entrance of certain
+6186	rays which return to the eye after striking upon the object. Empedocles
+6187	supposes that images are mixed with the rays of the eye; these he
+6188	styles the rays of images. Hipparchus, that the visual rays extend
+6189	from both the eyes to the superficies of bodies, and give to the sight
+6190	the apprehension of those same bodies, after the same manner in which
+6191	the hand touching the extremity of bodies gives the sense of feeling.
+6192	Plato, that the sight is the splendor of united rays; there is a light
+6193	which reaches some distance from the eyes into a congruous air, and
+6194	there is likewise a light emitted from bodies, which meets and is
+6195	joined with the fiery visual light in the intermediate air (which is
+6196	liquid and mutable); and the conjunction of these rays gives the sense
+6197	of seeing. This is Plato’s corradiancy, or splendor of united rays.
+6198	
+6199	
+6200	
+6201	
+6202	CHAPTER XIV.
+6203	
+6204	OF THOSE IMAGES WHICH ARE PRESENTED TO OUR EYES IN MIRRORS.
+6205	
+6206	
+6207	Empedocles says that these images are caused by certain effluvias
+6208	which, meeting together and insisting upon the superficies of the
+6209	mirror, are perfected by that fiery quality emitted by the said mirror,
+6210	which transmutes withal the air that surrounds it. Democritus and
+6211	Epicurus, that the specular appearances are formed by the subsistence
+6212	of the images which flow from our eyes; these fall upon the mirror
+6213	and remain, while the light rebounds to the eye. The followers of
+6214	Pythagoras explain it by the reflection of the sight; for our sight
+6215	being extended (as it were) to the brass, and meeting with the smooth
+6216	dense surface thereof it is struck back, and caused to return upon
+6217	itself: the same appears in the hand, when it is stretched out and then
+6218	brought back again to the shoulder. Any one may apply these instances
+6219	to explain the manner of seeing.
+6220	
+6221	
+6222	
+6223	
+6224	CHAPTER XV.
+6225	
+6226	WHETHER DARKNESS CAN BE VISIBLE TO US.
+6227	
+6228	
+6229	The Stoics say that darkness is seen by us, for out of our eyes there
+6230	issues out some light into it; and our eyes do not impose upon us,
+6231	for they really perceive there is darkness. Chrysippus says that we
+6232	see darkness by the striking of the intermediate air; for the visual
+6233	spirits which proceed from the principal part of the soul and reach to
+6234	the ball of the eye pierce this air, which, after they have made those
+6235	strokes upon it, presses conically on the surrounding air, where this
+6236	is homogeneous. For from the eyes those rays are poured forth which are
+6237	neither black nor cloudy. Upon this account darkness is visible to us
+6238	
+6239	
+6240	
+6241	
+6242	CHAPTER XVI.
+6243	
+6244	OF HEARING.
+6245	
+6246	
+6247	Empedocles says that hearing is formed by the insidency of the air
+6248	upon the spiral, which it is said hangs within the ear as a bell, and
+6249	is beat upon by the air. Alcmaeon, that the vacuity that is within
+6250	the ear makes us to have the sense of hearing, for the air forcing a
+6251	vacuum gives the sound; every inanity affords a ringing. Diogenes, the
+6252	air which is in the head, being struck upon by the voice, gives the
+6253	hearing. Plato and his followers, the air which exists in the head
+6254	being struck upon, is reflected to the principal part of the soul, and
+6255	this causeth the sense of hearing.
+6256	
+6257	
+6258	
+6259	
+6260	CHAPTER XVII.
+6261	
+6262	OF SMELLING.
+6263	
+6264	
+6265	Alcmaeon believes that the principal part of the soul, residing in the
+6266	brain, draws to itself odors by respiration. Empedocles, that scents
+6267	insert themselves into the breathing of the lungs; for, when there is a
+6268	great difficulty in breathing, odors are not perceived by reason of the
+6269	sharpness; and this we experience in those who have the defluxion of
+6270	rheum.
+6271	
+6272	
+6273	
+6274	
+6275	CHAPTER XVIII.
+6276	
+6277	OF TASTE.
+6278	
+6279	
+6280	Alcmaeon says that a moist warmth in the tongue, joined with the
+6281	softness of it, gives the difference of taste. Diogenes, that by the
+6282	softness and sponginess of the tongue, and because the veins of the
+6283	body are joined in it, tastes are diffused by the tongue; for they are
+6284	attracted from it to that sense and to the commanding part of the soul,
+6285	as from a sponge.
+6286	
+6287	
+6288	
+6289	
+6290	CHAPTER XIX.
+6291	
+6292	OF THE VOICE.
+6293	
+6294	
+6295	Plato thus defines a voice,—that it is a breath drawn by the mind
+6296	through the mouth, and a blow given to the air and through the
+6297	ear, brain, and blood transmitted to the soul. Voice is abusively
+6298	attributed to irrational and inanimate beings; thus we improperly
+6299	call the neighing of horses or any other sound by the name of voice.
+6300	But properly a voice (φωνή) is an articulate sound, which illustrates
+6301	(φωτίζει) the understanding of man. Epicurus says that it is an efflux
+6302	emitted from things that are vocal, or that give sounds or great
+6303	noises; this is broken into those fragments which are after the same
+6304	configuration. Like figures are round figures with round, and irregular
+6305	and triangular with those of the same nature. These falling upon the
+6306	ears produce the sense of hearing. This is seen in leaking vessels, and
+6307	in fullers when they fan or blow their cloths.
+6308	
+6309	Democritus, that the air is broken into bodies of similar
+6310	configuration, and these are rolled up and down with the fragments of
+6311	the voice; as it is proverbially said, One daw lights with another, or,
+6312	God always brings like to like. Thus we see upon the shore, that stones
+6313	like to one another are found in the same place, in one place the
+6314	long-shaped, in another the round are seen. So in sieves, things that
+6315	are of the same form meet together, but those that are different are
+6316	divided; as pulse and beans falling from the same sieve are separated
+6317	one from another. To this it may be objected: How can some fragments of
+6318	air fill a theatre in which there is an infinite company of persons?
+6319	The Stoics, that the air is not composed of small fragments, but is a
+6320	continued body and nowhere admits a vacuum; and being struck with the
+6321	breath, it is infinitely moved in waves and in right circles, until it
+6322	fill that air which invests it; as we see in a fish-pool which we smite
+6323	by a falling stone cast upon it; yet the air is moved spherically, the
+6324	water orbicularly. Anaxagoras says a voice is then formed, when upon a
+6325	solid air the breath is incident, which being repercussed is carried to
+6326	the ears; after the same manner the echo is produced.
+6327	
+6328	
+6329	
+6330	
+6331	CHAPTER XX.
+6332	
+6333	WHETHER THE VOICE IS INCORPOREAL. WHAT IS IT THAT GIVES THE ECHO?
+6334	
+6335	
+6336	Pythagoras, Plato, and Aristotle say that the voice is incorporeal; for
+6337	it is not the air that makes the voice, but the figure which compasseth
+6338	the air and its superficies, having received a stroke, give the voice.
+6339	But every superficies of itself is incorporeal. True it is that it
+6340	moveth with the body, but of itself it hath no body; as we perceive
+6341	in a staff that is bended, the matter only admits of an inflection,
+6342	while the superficies doth not. According to the Stoics, a voice is
+6343	corporeal, since every thing that is an agent or operates is a body; a
+6344	voice acts and operates, for we hear it and are sensible of it; for it
+6345	falls and makes an impression on the ear, as a seal of a ring gives its
+6346	similitude upon the wax. Moreover, every thing that creates a delight
+6347	or molestation is a body; harmonious music affects with delight, but
+6348	discord is tiresome. And every thing that is moved is a body; and the
+6349	voice moves, and having its illapse upon smooth places is reflected, as
+6350	when a ball is cast against a wall it rebounds. A voice spoken in the
+6351	Egyptian pyramids is so broken, that it gives four or five echoes.
+6352	
+6353	
+6354	
+6355	
+6356	CHAPTER XXI.
+6357	
+6358	BY WHAT MEANS THE SOUL IS SENSIBLE, AND WHAT IS THE PRINCIPAL AND
+6359	COMMANDING PART OF IT.
+6360	
+6361	
+6362	The Stoics say that the highest part of the soul is the commanding
+6363	part of it: this is the cause of sense, imagination, consents, and
+6364	desires; and this we call the rational part. From this principal and
+6365	commander there are produced seven parts of the soul, which are spread
+6366	through the body, as the seven arms in a polypus. Of these seven parts,
+6367	five are assigned to the senses, seeing, hearing, smelling, tasting,
+6368	touching. Sight is a spirit which is extended from the commanding
+6369	part to the eyes; hearing is that spirit which from the principal
+6370	reacheth to the ears; smelling a spirit drawn from the principal to the
+6371	nostrils; tasting a spirit extended from the principal to the tongue;
+6372	touching is a spirit which from the principal is drawn to the extremity
+6373	of those bodies which are obnoxious to a sensible touch. Of the rest,
+6374	the one called the spermatical is a spirit which reacheth from the
+6375	principal to the generating vessels; the other, which is the vocal
+6376	and termed the voice, is a spirit extended from the principal to the
+6377	throat, tongue, and other proper organs of speaking. And this principal
+6378	part itself hath that place in our spherical head which God hath in the
+6379	world.
+6380	
+6381	
+6382	
+6383	
+6384	CHAPTER XXII.
+6385	
+6386	OF RESPIRATION OR BREATHING.
+6387	
+6388	
+6389	Empedocles thinks, that the first breath the first animal drew was
+6390	when the moisture in unborn infants was separated, and by that means
+6391	an entrance was given to the external air into the gaping vessels, the
+6392	moisture in them being evacuated. After this the natural heat, in a
+6393	violent force pressing upon the external air for a passage, begets an
+6394	expiration; but this heat returning to the inward parts, and the air
+6395	giving way to it, causeth an inspiration. The respiration that now is
+6396	arises when the blood is carried to the exterior surface, and by this
+6397	fluxion drives the airy substance through the nostrils; thus in its
+6398	recess it causeth expiration, but the air being again forced into those
+6399	places which are emptied of blood, it causeth an inspiration. To evince
+6400	which, he proposeth the instance of a water-clock which gives the
+6401	account of time by the running of water.
+6402	
+6403	Asclepiades supposeth the lungs to be in the manner of a tunnel, and
+6404	maketh the cause of breathing to be the fineness of the inward parts of
+6405	the breast; for thither the outward air which is more gross hastens,
+6406	but is forced backward, the breast not being capable either to receive
+6407	or want it. But there being always some of the more tenuous parts of
+6408	the air left, so that all of it is not exploded, to that which there
+6409	remains the more ponderous external air with equal violence is forced;
+6410	and this he compares to cupping-glasses. All spontaneous breathings are
+6411	formed by the contracting of the smaller pores of the lungs, and to the
+6412	closing up of the pipes in the neck; for these are at our command.
+6413	
+6414	Herophilus attributes a moving faculty to the nerves, arteries, and
+6415	muscles, but believes that the lungs are affected only with a natural
+6416	desire of enlarging and contracting themselves. Farther, there is the
+6417	first operation of the lungs by attraction of the outward air, which is
+6418	drawn in because of the abundance of the external air. Next to this,
+6419	there is a second natural appetite of the lungs; the breast, pouring in
+6420	upon itself the breath, and being filled, is no longer able to make an
+6421	attraction, and throws the superfluity of it upon the lungs, whereby
+6422	it is in turn sent forth by way of expiration; the parts of the body
+6423	mutually concurring to this function by the alternate participation of
+6424	fulness and emptiness. So that to lungs pertain four motions;—first,
+6425	when the lungs receive the outward air; secondly, when the outward air
+6426	thus entertained is transmitted to the breast; thirdly, when the lungs
+6427	again receive that air which they imparted to the breast; fourthly,
+6428	when this air then received from the breast is thrown outwards. Of
+6429	these four motions two are dilatations, one when the lungs attract the
+6430	external air, another when the breast dischargeth itself of it upon the
+6431	lungs; two are contractions, one when the breast draws into itself the
+6432	air, the second when it expels this which was insinuated into it. The
+6433	breast admits only of two motions;—of dilatation, when it draws from
+6434	the lungs the breath, and of contraction, when it returns what it did
+6435	receive.
+6436	
+6437	
+6438	
+6439	
+6440	CHAPTER XXIII.
+6441	
+6442	OF THE PASSIONS OF THE BODY, AND WHETHER THE SOUL HATH A SYMPATHETICAL
+6443	CONDOLENCY WITH IT.
+6444	
+6445	
+6446	The Stoics say that all the passions are seated in those parts of
+6447	the body which are affected, the senses have their residence in the
+6448	commanding part of the soul. Epicurus, that all the passions and all
+6449	the senses are in those parts which are affected, but the commanding
+6450	part is subject to no passion. Strato, that all the passions and senses
+6451	of the soul are in the rational or commanding part of it, and are not
+6452	fixed in those places which are affected; for in this part patience
+6453	takes its residence, and this is apparent in terrible and dolorous
+6454	things, as also in timorous and valiant persons.
+6455	
+6456	
+6457	
+6458	
+6459	BOOK V.
+6460	
+6461	
+6462	
+6463	
+6464	CHAPTER I.
+6465	
+6466	OF DIVINATION.
+6467	
+6468	
+6469	Plato and the Stoics introduce divination as a divine enthusiasm, the
+6470	soul itself being of a divine constitution, and this prophetic faculty
+6471	being an inspiration, or an illapse of the divine knowledge into man;
+6472	and so likewise they explain interpretation by dreams. And these same
+6473	admit many divisions of the art of divination. Xenophanes and Epicurus
+6474	utterly refuse any such art of foretelling future contingencies.
+6475	Pythagoras rejects all manner of divination which is by sacrifices.
+6476	Aristotle and Dicaearchus admit only these two kinds of it, a fury by a
+6477	divine inspiration, and dreams; they deny the immortality of the soul,
+6478	yet they affirm that the mind of man hath a participation of something
+6479	that is divine.
+6480	
+6481	
+6482	
+6483	
+6484	CHAPTER II.
+6485	
+6486	WHENCE DREAMS DO ARISE.
+6487	
+6488	
+6489	Democritus says that dreams are formed by the illapse of adventitious
+6490	representations. Strato, that the irrational part of the soul in sleep
+6491	becoming more sensible is moved by the rational part of it. Herophilus,
+6492	that dreams which are caused by divine instinct have a necessary cause;
+6493	but dreams which have their origin from a natural cause arise from
+6494	the soul’s forming within itself the images of those things which are
+6495	convenient for it, and which will happen; those dreams which are of a
+6496	constitution mixed of both these have their origin from the fortuitous
+6497	appulse of images, as when we see those things which please us; thus
+6498	it happens many times to those persons who in their sleep imagine they
+6499	embrace their mistresses.
+6500	
+6501	
+6502	
+6503	
+6504	CHAPTER III.
+6505	
+6506	OF THE NATURE OF GENERATIVE SEED.
+6507	
+6508	
+6509	Aristotle says, that seed is that thing which contains in itself a
+6510	power of moving, whereby it is enabled to produce a being like unto
+6511	that from whence it was emitted. Pythagoras, that seed is the sediment
+6512	of that which nourisheth us, the froth of the purest blood, of the
+6513	same nature as the blood and marrow of our bodies. Alcmaeon, that it
+6514	is a part of the brain. Plato, that it is the deflux of the spinal
+6515	marrow. Epicurus, that it is a fragment torn from the body and soul.
+6516	Democritus, that it proceeds from all the parts of the body, and
+6517	chiefly from the principal parts, as the flesh and muscles.
+6518	
+6519	
+6520	
+6521	
+6522	CHAPTER IV.
+6523	
+6524	WHETHER THE SPERM BE A BODY.
+6525	
+6526	
+6527	Leucippus and Zeno say, that it is a body and a fragment of the
+6528	soul. Pythagoras, Plato, and Aristotle, that the spermatic faculty
+6529	is incorporeal, as the mind is which moves the body; but the effused
+6530	matter is corporeal. Strato and Democritus, that the very power is a
+6531	body; for it is like spirit.
+6532	
+6533	
+6534	
+6535	
+6536	CHAPTER V.
+6537	
+6538	WHETHER WOMEN DO GIVE A SPERMATIC EMISSION AS MEN DO.
+6539	
+6540	
+6541	Pythagoras, Epicurus, and Democritus say, that women have a seminal
+6542	projection, but their spermatic vessels are inverted; and it is this
+6543	that makes them have a venereal appetite. Aristotle and Plato, that
+6544	they emit a material moisture, as sweat we see produced by exercise and
+6545	labor; but that moisture has no spermatic power. Hippo, that women
+6546	have a seminal emission, but not after the mode of men; it contributes
+6547	nothing to generation, for it falls without the matrix; and therefore
+6548	some women without coition, especially widows, give the seed. The same
+6549	also asserts that from men the bones, from women the flesh proceeds.
+6550	
+6551	
+6552	
+6553	
+6554	CHAPTER VI.
+6555	
+6556	HOW IT IS THAT CONCEPTIONS ARE MADE.
+6557	
+6558	
+6559	Aristotle says, that conception takes place when the womb is drawn
+6560	forward by the natural purgation, and the monthly terms attract from
+6561	the whole bulk part of the purest blood, and this is met by the genital
+6562	seed of man. On the contrary, there is a failure by the impurity and
+6563	inflation of the womb, by the passions of fear and grief, by the
+6564	weakness of women, or the decay of strength in men.
+6565	
+6566	
+6567	
+6568	
+6569	CHAPTER VII.
+6570	
+6571	AFTER WHAT MANNER MALES AND FEMALES ARE GENERATED.
+6572	
+6573	
+6574	Empedocles affirms, that heat and cold give the difference in the
+6575	generation of males and females. Hence is it, as histories acquaint us,
+6576	that the first men had their original from the earth in the eastern and
+6577	southern parts, and the first females in the northern parts thereof.
+6578	Parmenides is of opinion perfectly contrariant. He affirms that men
+6579	first sprouted out of the northern earth, for their bodies are more
+6580	dense; women out of the southern, for theirs are more rare and fine.
+6581	Hippo, that the more compacted and strong sperm, and the more fluid and
+6582	weak, discriminate the sexes. Anaxagoras and Parmenides, that the seed
+6583	of the man is naturally cast from his right side into the right side
+6584	of the womb, or from the left side of the man into the left side of
+6585	the womb; when there is an alteration in this course of nature, females
+6586	are generated. Cleophanes, whom Aristotle makes mention of, assigns
+6587	the generation of men to the right testicle, of women to the left.
+6588	Leucippus gives the reason of it to the alteration or diversity of
+6589	parts, according to which the man hath a yard, the female the matrix;
+6590	as to any other reason he is silent. Democritus, that the parts which
+6591	are common to both sexes are engendered indifferently by one or the
+6592	other; but the peculiar parts by the one that is more prevalent. Hippo,
+6593	that if the spermatic faculty be more effectual, the male, if the
+6594	nutritive aliment, the female is generated.
+6595	
+6596	
+6597	
+6598	
+6599	CHAPTER VIII.
+6600	
+6601	BY WHAT MEANS IT IS THAT MONSTROUS BIRTHS ARE EFFECTED.
+6602	
+6603	
+6604	Empedocles believes that monsters receive their origination from the
+6605	abundance or defect of seed, or from its division into parts which are
+6606	superabundant, or from some perturbation in the motion, or else that
+6607	there is an error by a lapse into an improper receptacle; and thus he
+6608	presumes he hath given all the causes of monstrous conceptions. Strato,
+6609	that it comes from addition, subtraction, or transposition of the seed,
+6610	or the distension or inflation of the matrix. And some physicians say
+6611	that the matrix suffers distortion, being distended with wind.
+6612	
+6613	
+6614	
+6615	
+6616	CHAPTER IX.
+6617	
+6618	HOW IT COMES TO PASS THAT A WOMAN’S TOO FREQUENT CONVERSATION WITH A
+6619	MAN HINDERS CONCEPTION.
+6620	
+6621	
+6622	Diocles the physician says that either no genital sperm is projected,
+6623	or, if there be, it is in a less quantity than nature requires, or
+6624	there is no prolific faculty in it; or there is a deficiency of a
+6625	due proportion of heat, cold, moisture, and dryness; or there is a
+6626	resolution of the generative parts. The Stoics attribute sterility to
+6627	the obliquity of the yard, by which means it is not able to ejaculate
+6628	in a due manner, or to the unproportionable magnitude of the parts,
+6629	the matrix being so contracted as not to be in a capacity to receive.
+6630	Erasistratus assigns it to the womb’s being more callous or more
+6631	carneous, thinner or smaller, than nature does require.
+6632	
+6633	
+6634	
+6635	
+6636	CHAPTER X.
+6637	
+6638	WHENCE IT IS THAT ONE BIRTH GIVES TWO OR THREE CHILDREN.
+6639	
+6640	
+6641	Empedocles affirms, that the superabundance of sperm and the division
+6642	of it causes the bringing forth of two or three infants. Asclepiades,
+6643	that it is performed from the excellent quality of the sperm, after
+6644	the manner that from the root of one barleycorn two or three stalks do
+6645	grow; sperm that is of this quality is the most prolific. Erasistratus,
+6646	that superfetation may happen to women as to irrational creatures; for,
+6647	if the womb be well purged and very clean, then there may be divers
+6648	births. The Stoics, that it ariseth from the various receptacles that
+6649	are in the womb: when the seed illapses into the first and second of
+6650	them at once, then there are conceptions upon conception; and so two or
+6651	three infants are born.
+6652	
+6653	
+6654	
+6655	
+6656	CHAPTER XI.
+6657	
+6658	WHENCE IT IS THAT CHILDREN REPRESENT THEIR PARENTS AND PROGENTITORS.
+6659	
+6660	
+6661	Empedocles says, that the similitude of children to their parents
+6662	proceeds from the vigorous prevalency of the generating sperm; the
+6663	dissimilitude from the evaporation of the natural heat contained in
+6664	the same. Parmenides, that when the sperm descends from the right side
+6665	of the womb, then the infant gives the resemblance of the father; if
+6666	from the left, it is stamped with the similitude of the mother. The
+6667	Stoics, that the whole body and soul give the sperm; and hence arise
+6668	the resemblances in the characters and figures of the children, as a
+6669	painter in his copy imitates the colors which are in the picture before
+6670	him. Women have a concurrent emission of seed; if the feminine seed
+6671	have the predominancy, then the child resembles the mother; if the
+6672	masculine, the father.
+6673	
+6674	
+6675	
+6676	
+6677	CHAPTER XII.
+6678	
+6679	HOW IT COMES TO PASS THAT CHILDREN HAVE A GREATER SIMILITUDE WITH
+6680	STRANGERS THAN WITH THEIR PARENTS.
+6681	
+6682	
+6683	The greatest part of physicians affirm, that this happens casually and
+6684	fortuitously; for, when the sperm of the man and woman is too much
+6685	refrigerated, then children carry a dissimilitude to their parents.
+6686	Empedocles, that a woman’s imagination when she conceives impresses
+6687	a shape upon the infant; for women have been enamored with images
+6688	and statues, and the children which were born of them gave their
+6689	similitudes. The Stoics, that the resemblances flow from the sympathy
+6690	and consent of minds, by the insertion of effluvias and rays, not of
+6691	images or pictures.
+6692	
+6693	
+6694	
+6695	
+6696	CHAPTER XIII.
+6697	
+6698	WHENCE ARISETH BARRENNESS IN WOMEN, AND IMPOTENCY IN MEN?
+6699	
+6700	
+6701	The physicians maintain, that sterility in women may arise from the
+6702	womb; for if it be after any ways thus affected, there will be
+6703	barrenness,—if it be more condensed, or more spongy, or more hardened,
+6704	or more callous, or more carneous; or it may be from low spirits,
+6705	or from an atrophy or vicious distemper of body; or, lastly, it may
+6706	arise from a twisted or distorted configuration. Diocles holds that
+6707	the sterility in men ariseth from some of these causes,—either that
+6708	they cannot at all ejaculate any sperm, or if they do, it is less
+6709	than nature doth require, or else there is no generative faculty in
+6710	the sperm, or the genital members are flagging; or from the obliquity
+6711	of the yard. The Stoics attribute the cause of sterility to the
+6712	contrariant qualities and dispositions of those who lie with one
+6713	another; but if it chance that these persons are separated, and there
+6714	happen a conjunction of those who are of a suitable temperament, then
+6715	there is a commixture according to nature, and by this means an infant
+6716	is formed.
+6717	
+6718	
+6719	
+6720	
+6721	CHAPTER XIV.
+6722	
+6723	HOW IF COMES TO PASS THAT MULES ARE BARREN.
+6724	
+6725	
+6726	Alcmaeon says, that the barrenness of the male mules ariseth from the
+6727	thinness of the genital sperm, that is, the seed is too chill; the
+6728	female mules are barren, for their womb does not open its mouth (as
+6729	he expresses it). Empedocles, the matrix of the mule is so small, so
+6730	depressed, so narrow, so invertedly growing to the belly, that the
+6731	sperm cannot be regularly cast into it, and if it could, there would be
+6732	no capacity to receive it. Diocles concurs in this opinion with him;
+6733	for, saith he, in our anatomical dissection of mules we have seen that
+6734	their matrices are of such configurations; and it is possible that
+6735	there may be the same reason why some women are barren.
+6736	
+6737	
+6738	
+6739	
+6740	CHAPTER XV.
+6741	
+6742	WHETHER THE INFANT IN THE MOTHER’S WOMB BE AN ANIMAL.
+6743	
+6744	
+6745	Plato says, that the embryo is an animal; for, being contained in the
+6746	mother’s womb, motion and aliment are imparted to it. The Stoics say
+6747	that it is not an animal, but to be accounted part of the mother’s
+6748	belly; like as we see the fruit of trees is esteemed part of the
+6749	trees, until it be full ripe; then it falls and ceaseth to belong to
+6750	the tree; and thus it is with the embryo. Empedocles, that the embryo
+6751	is not an animal, yet whilst it remains in the belly it breathes. The
+6752	first breath that it draws as an animal is when the infant is newly
+6753	born; then the child having its moisture separated, the extraneous
+6754	air making an entrance into the empty places, a respiration is caused
+6755	in the infant by the empty vessels receiving of it. Diogenes, that
+6756	infants are bred in the matrix inanimate, yet they have a natural
+6757	heat; but presently, when the infant is cast into the open air, its
+6758	heat draws air into the lungs, and so it becomes an animal. Herophilus
+6759	acknowledgeth that infants have a natural, but not a respiratory
+6760	motion, and that the nerves are the cause of that motion; that then
+6761	they become animals, when being first born they suck in something of
+6762	the air.
+6763	
+6764	
+6765	
+6766	
+6767	CHAPTER XVI.
+6768	
+6769	HOW EMBRYOS ARE NOURISHED, OR HOW THE INFANT IN THE BELLY RECEIVES ITS
+6770	ALIMENT.
+6771	
+6772	
+6773	Democritus and Epicurus say, that the embryos in the womb receive their
+6774	aliment by the mouth, for we perceive, as soon as ever the infant is
+6775	born, it applies its mouth to the breast; in the wombs of women (our
+6776	understanding concludes) there are little dugs, and the embryos have
+6777	small mouths by which they receive their nutriment. The Stoics, that
+6778	by the secundines and navel they partake of aliment, and therefore the
+6779	midwife instantly after their birth binds the navel, and opens the
+6780	infant’s mouth, that it may receive another sort of aliment. Alcmaeon,
+6781	that they receive their nourishment from every part of the body; as a
+6782	sponge sucks in water.
+6783	
+6784	
+6785	
+6786	
+6787	CHAPTER XVII.
+6788	
+6789	WHAT PART OF THE BODY IS FIRST FORMED IN THE WOMB.
+6790	
+6791	
+6792	The Stoics believe that the greater part is formed at the same time.
+6793	Aristotle, as the keel of a ship is first made, so the first part that
+6794	is formed is the loins. Alcmaeon, the head, for that is the commanding
+6795	and the principal part of the body. The physicians, the heart, in which
+6796	are the veins and arteries. Some think the great toe is first formed;
+6797	others affirm the navel.
+6798	
+6799	
+6800	
+6801	
+6802	CHAPTER XVIII.
+6803	
+6804	WHENCE IS IT THAT INFANTS BORN IN THE SEVENTH MONTH ARE BORN ALIVE.
+6805	
+6806	
+6807	Empedocles says, that when the human race took first its original from
+6808	the earth, the sun was so slow in its motion that then one day in its
+6809	length was equal to ten months, as now they are; in process of time one
+6810	day became as long as seven months are; and there is the reason that
+6811	those infants which are born at the end of seven months or ten months
+6812	are born alive, the course of nature so disposing that the infant
+6813	shall be brought to maturity in one day after that night in which it
+6814	is begotten. Timaeus says, that we count not ten months but nine, by
+6815	treason that we reckon the first conception from the retention of
+6816	the menstruas; and so it may generally pass for seven months when
+6817	really there are not seven; for it sometimes happens that even after
+6818	conception a woman is purged in some degree. Polybus, Diocles, and the
+6819	Empirics acknowledge that the eighth month gives a vital birth to the
+6820	infant, though the life of it is more faint and languid; many therefore
+6821	we see born in that month die out of mere weakness. Though we see many
+6822	born in that month arrive at the state of man, yet (they affirm) if
+6823	children be born in that month, none are willing to rear them.
+6824	
+6825	Aristotle and Hippocrates, that if the womb is grown full in seven
+6826	months, then the child falls from the mother and is born alive; but if
+6827	it falls from her but is not properly nourished, the navel being weak
+6828	on account of the heavy burden of the infant, then it doth not thrive;
+6829	but if the infant continues nine months in the womb, and then breaks
+6830	forth from the woman, it is entire and perfect. Polybus, that a hundred
+6831	and eighty-two days and a half suffice for the bringing forth of a
+6832	living child; that is, six months, in which space of time the sun moves
+6833	from one tropic to the other; and this is called seven months, for the
+6834	days which are overplus in the sixth are accounted to give the seventh
+6835	month. Those children which are born in the eighth month cannot live,
+6836	for, the infant then falling from the womb, the navel, which is the
+6837	cause of nourishment, is thereby too much stretched; and is the reason
+6838	that the infant languishes and hath an atrophy. The astrologers, that
+6839	eight months are enemies to every birth, seven are friends and kind
+6840	to it. The signs of the zodiac are then enemies, when they fall upon
+6841	those stars which are lords of houses; whatever infant is then born
+6842	will have a life short and unfortunate. Those signs of the zodiac which
+6843	are malevolent and injurious to generation are those pairs of which
+6844	the last is reckoned the eighth from the first, as the first and the
+6845	eighth, the second and the ninth, &c.; so is the Ram unsociable with
+6846	Scorpio, the Bull with Sagittarius, the Twins with the Goat, the Crab
+6847	with Aquarius, the Lion with Pisces, the Virgin with the Ram. Upon this
+6848	reason those infants that are born in the seventh or tenth months are
+6849	like to live, but those in the eighth month will die.
+6850	
+6851	
+6852	
+6853	
+6854	CHAPTER XIX.
+6855	
+6856	OF THE GENERATION OF ANIMALS, HOW ANIMALS ARE BEGOTTEN, AND WHETHER
+6857	THEY ARE OBNOXIOUS TO CORRUPTION.
+6858	
+6859	
+6860	Those philosophers who entertain the opinion that the world had
+6861	an original do likewise assert that all animals are generated and
+6862	corruptible. The followers of Epicurus, who gives an eternity to the
+6863	world, affirm the generation of animals ariseth from the various
+6864	permutation of parts mutually among themselves, for they are parts of
+6865	this world. With them Anaxagoras and Euripides concur:
+6866	
+6867	                            For nothing dies,
+6868	  But different changes give their various forms.
+6869	
+6870	Anaximander’s opinion is, that the first animals were generated in
+6871	moisture, and were enclosed in bark on which thorns grew; but in
+6872	process of time they came upon dry land, and this thorny bark with
+6873	which they were covered being broken, they lived for a short space of
+6874	time. Empedocles says, that the first generation of animals and plants
+6875	was by no means completed, for the parts were disjoined and would not
+6876	admit of a union; the second preparation for their being generated was
+6877	when their parts were united and appeared in the form of images; the
+6878	third preparation for generation was when their parts mutually amongst
+6879	themselves gave a being to one another; the fourth, when there was no
+6880	longer a mixture of similar elements (like earth and water), but a
+6881	union of animals among themselves,—in some the nourishment being made
+6882	dense, in others female beauty provoking a lust of spermatic motion.
+6883	All sorts of animals are discriminated by their proper temperament and
+6884	constitution; some are carried by a proper appetite and inclination to
+6885	water; some, which partake of a more fiery quality, to breathe in the
+6886	air; those that are heavier incline to the earth; but those animals
+6887	whose parts are of a just and equal temperament are fitted equally for
+6888	all places.
+6889	
+6890	
+6891	
+6892	
+6893	CHAPTER XX.
+6894	
+6895	HOW MANY SPECIES OF ANIMALS THERE ARE, AND WHETHER ALL ANIMALS HAVE THE
+6896	ENDOWMENTS OF SENSE AND REASON.
+6897	
+6898	
+6899	There is a certain treatise of Aristotle, in which animals are
+6900	distributed into four kinds, terrestrial, aqueous, fowl, and heavenly;
+6901	and he calls the stars and the world also animals, yea, and God himself
+6902	he defines to be an animal endowed with reason and immortal. Democritus
+6903	and Epicurus esteem all animals rational which have their residence in
+6904	the heavens. Anaxagoras says that animals have only that reason which
+6905	is operative, but not that which is passive, which is justly styled the
+6906	interpreter of the mind, and is like the mind itself. Pythagoras and
+6907	Plato, that the souls of all those who are styled brutes are rational;
+6908	but by the evil constitution of their bodies, and because they have
+6909	a want of a discoursive faculty, they do not act rationally. This is
+6910	manifested in apes and dogs, which have voice but not speech. Diogenes,
+6911	that this sort of animals are partakers of intelligence and air, but
+6912	by reason of the density in some parts of them, and by the superfluity
+6913	of moisture in others, they enjoy neither understanding nor sense; but
+6914	they are affected as madmen are, the commanding rational part being
+6915	defectuous and impeached.
+6916	
+6917	
+6918	
+6919	
+6920	CHAPTER XXI.
+6921	
+6922	WHAT TIME IS REQUIRED TO SHAPE THE PARTS OF ANIMALS IN THE WOMB.
+6923	
+6924	
+6925	Empedocles believes, that the joints of men begin to be formed from
+6926	the thirty-sixth day, and their shape is completed in the nine and
+6927	fortieth. Asclepiades, that male embryos, by reason of a greater
+6928	natural heat, have their joints begun to be formed in the twenty-sixth
+6929	day,—many even sooner,—and that they are completed in all their parts
+6930	on the fiftieth day; the parts of the females are articulated in two
+6931	months, but by the defect of heat are not consummated till the fourth;
+6932	but the members of brutes are completed at various times, according to
+6933	the commixture of the elements of which they consist.
+6934	
+6935	
+6936	
+6937	
+6938	CHAPTER XXII.
+6939	
+6940	OF WHAT ELEMENTS EACH OF THE MEMBERS OF US MEN IS COMPOSED.
+6941	
+6942	
+6943	Empedocles says, that the fleshy parts of us are constituted by the
+6944	contemperation of the four elements in us; earth and fire mixed with a
+6945	double proportion of water make the nerves; but when it happens that
+6946	the nerves are refrigerated where they meet the air, then the nails are
+6947	made; the bones are produced by two parts of water and the same of air,
+6948	with four parts of fire and the same of earth, duly mixed together;
+6949	sweat and tears flow from the liquefaction of these bodies of ours.
+6950	
+6951	
+6952	
+6953	
+6954	CHAPTER XXIII.
+6955	
+6956	WHAT ARE THE CAUSES OF SLEEP AND DEATH?
+6957	
+6958	
+6959	Alcmaeon says, that sleep is caused when the blood retreats to the
+6960	concourse of the veins, but when the blood diffuses itself, then we
+6961	awake; and when there is a total retirement of the blood, then men die.
+6962	Empedocles, that a moderate cooling of the blood causeth sleep, but a
+6963	total remotion of heat from blood causeth death. Diogenes, that when
+6964	all the blood is so diffused as that it fills all the veins, and forces
+6965	the air contained in them to the back and to the belly that is below
+6966	it, the breast being thereby more heated, thence sleep arises; but if
+6967	every thing that is airy in the breast forsakes the veins, then death
+6968	succeeds. Plato and the Stoics, that sleep ariseth from the relaxation
+6969	of the sensitive spirit, it not receiving such total remission as if
+6970	it fell to the earth, but so that that spirit is carried about the
+6971	intestine parts of the eyebrows, in which the principal part has its
+6972	residence; but when there is a total remission of the sensitive spirit,
+6973	then death ensues.
+6974	
+6975	
+6976	
+6977	
+6978	CHAPTER XXIV.
+6979	
+6980	WHEN AND FROM WHENCE THE PERFECTION OF A MAN COMMENCES.
+6981	
+6982	
+6983	Heraclitus and the Stoics say, that men begin their completeness when
+6984	the second septenary of years begins, about which time the seminal
+6985	serum is emitted. Trees first begin their perfection when they give
+6986	their seeds; till then they are immature, imperfect, and unfruitful.
+6987	After the same manner a man is completed in the second septenary
+6988	of years, and is capable of learning what is good and evil, and of
+6989	discipline therein.
+6990	
+6991	
+6992	
+6993	
+6994	CHAPTER XXV.
+6995	
+6996	WHETHER SLEEP OR DEATH APPERTAINS TO THE SOUL OR BODY.
+6997	
+6998	
+6999	Aristotle’s opinion is, that both the soul and body sleep; and this
+7000	proceeds from the moisture in the breast, which doth steam and arise
+7001	in the manner of a vapor into the head, and from the aliment in the
+7002	stomach, whose natural heat is cooled in the heart. Death is the
+7003	perfect refrigeration of all heat in the body; but death is only of
+7004	the body, and not of the soul, for the soul is immortal. Anaxagoras
+7005	thinks, that sleep makes the operations of the body to cease; it is a
+7006	corporeal passion and affects not the soul. Death is the separation of
+7007	the soul from the body. Leucippus, that sleep is only of the body; but
+7008	when the smaller particles cause immoderate evaporation from the soul’s
+7009	heat, this makes death; but these affections of death and sleep are of
+7010	the body, not of the soul. Empedocles, that death is nothing else but
+7011	separation of those fiery parts by which man is composed, and according
+7012	to this sentiment both body and soul die; but sleep is only a smaller
+7013	separation of the fiery qualities.
+7014	
+7015	
+7016	
+7017	
+7018	CHAPTER XXVI.
+7019	
+7020	HOW PLANTS GROW, AND WHETHER THEY ARE ANIMALS.
+7021	
+7022	
+7023	Plato and Empedocles believe, that plants are animals, and are informed
+7024	with a soul; of this there are clear arguments, for they have tossing
+7025	and shaking, and their branches are extended; when the woodmen bend
+7026	them they yield, but they return to their former straightness and
+7027	strength again when they are let loose, and even draw up weights that
+7028	are laid upon them. Aristotle doth grant that they live, but not that
+7029	they are animals; for animals are affected with appetite, sense, and
+7030	reason. The Stoics and Epicureans deny that they are informed with a
+7031	soul; by reason that all sorts of animals have either sense, appetite,
+7032	or reason; but plants move fortuitously, and not by means of any soul.
+7033	Empedocles, that the first of all animals were trees, and they sprang
+7034	from the earth before the sun in its glory enriched the world, and
+7035	before day and night were distinguished; but by the harmony which is
+7036	in their constitution they partake of a masculine and feminine nature;
+7037	and they increase by that heat which is exalted out of the earth, so
+7038	that they are parts belonging to it, as embryos in the womb are parts
+7039	of the womb. Fruits in plants are excrescences proceeding from water
+7040	and fire; but the plants which have a deficiency of water, when this
+7041	is dried up by the heat of summer, lose their leaves; whereas they
+7042	that have plenty thereof keep their leaves on still, as the olive,
+7043	laurel, and palm. The differences of their moisture and juice arise
+7044	from the difference of particles and various other causes, and they
+7045	are discriminated by the various particles that feed them. And this
+7046	is apparent in vines; for the excellence of wine flows not from the
+7047	difference in the vines, but from the soil from whence they receive
+7048	their nutriment.
+7049	
+7050	
+7051	
+7052	
+7053	CHAPTER XXVII.
+7054	
+7055	OF NOURISHMENT AND GROWTH.
+7056	
+7057	
+7058	EMPEDOCLES believes, that animals are nourished by the
+7059	remaining in them of that which is proper to their own nature; they are
+7060	augmented by the application of heat; and the subtraction of either
+7061	of these makes them to languish and decay. The stature of men in this
+7062	present age, if compared with the magnitude of those men which were
+7063	first produced, is no other than a mere infancy.
+7064	
+7065	
+7066	
+7067	
+7068	CHAPTER XXVIII.
+7069	
+7070	WHENCE IT IS THAT IN ANIMALS THERE ARE APPETITES AND PLEASURES.
+7071	
+7072	
+7073	Empedocles says that the want of those elements which compose animals
+7074	gives to them appetite, and pleasures spring from humidity. As to the
+7075	motions of dangers and such like things, as perturbations, &c....
+7076	
+7077	
+7078	
+7079	
+7080	CHAPTER XXIX.
+7081	
+7082	WHAT IS THE CAUSE OF A FEVER, OR WHETHER IT IS AN AFFECTION OF THE BODY
+7083	ANNEXED TO A PRIMARY PASSION.
+7084	
+7085	
+7086	Erasistratus gives this definition of a fever: A fever is a quick
+7087	motion of blood, not produced by our consent, which enters into the
+7088	vessels proper unto the vital spirits. This we see in the sea; it is
+7089	in a serene calm when nothing disturbs it, but is in motion when a
+7090	violent preternatural wind blows upon it, and then it rageth and is
+7091	circled with waves. After this manner it is in the body of man; when
+7092	the blood is in a nimble agitation, then it falls upon those vessels
+7093	in which the spirits are, and there being in an extraordinary heat,
+7094	it fires the whole body. The opinion that a fever is an appendix to a
+7095	preceding affection pleaseth him. Diocles proceeds after this manner:
+7096	Those things which are internal and latent are manifested by those
+7097	which externally break forth and appear; and it is clear to us that a
+7098	fever is annexed to certain outward affections, for example, to wounds,
+7099	inflaming tumors, inguinary abscesses.
+7100	
+7101	
+7102	
+7103	
+7104	CHAPTER XXX.
+7105	
+7106	OF HEALTH, SICKNESS, AND OLD AGE.
+7107	
+7108	
+7109	Alcmaeon says that the preserver of health is an equal proportion of
+7110	the qualities of heat, moisture, cold, dryness, bitterness, sweetness,
+7111	and the other qualities; on the contrary, the prevailing empire of one
+7112	above the rest is the cause of diseases and author of destruction. The
+7113	efficient cause of disease is the excess of heat or cold, the material
+7114	cause is superabundance or defect, the place is the blood or brain.
+7115	But health is the harmonious commixture of the elements. Diocles, that
+7116	sickness for the most part proceeds from the irregular disposition of
+7117	the elements in the body, for that makes an ill habit or constitution
+7118	of it. Erasistratus, that sickness is caused by the excess of food,
+7119	indigestion, and corruptions; on the contrary, health is the moderation
+7120	of the diet, and the taking that which is convenient and sufficient for
+7121	us. It is the unanimous opinion of the Stoics that the want of heat
+7122	brings old age, for (they say) those persons in whom heat more abounds
+7123	live the longer. Asclepiades, that the Ethiopians soon grow old, and
+7124	at thirty years of age are ancient men, their bodies being excessively
+7125	heated and scorched by the sun; in Britain persons live a hundred and
+7126	twenty years, on account of the coldness of the country, and because
+7127	the people contain the fiery element within their bodies; for the
+7128	bodies of the Ethiopians are more fine and thin, because they are
+7129	relaxed by the sun’s heat, while they who live in northern countries
+7130	have a contrary state of their bodies, for they are condensed and
+7131	robust, and by consequence live the longer.
+7132	
+7133	
+7134	
+7135	

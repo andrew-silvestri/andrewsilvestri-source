@@ -1,0 +1,264 @@
+id,grade,reason
+B1.0.1,UNSCORABLE,Classification of philosophy; no physical claim
+B1.0.2,UNSCORABLE,Classification of philosophy; no physical claim
+B1.1.1,UNSCORABLE,Definition of nature; no checkable physical claim
+B1.2.1,UNSCORABLE,Metaphysical distinction of principle and element
+B1.2.2,WRONG,"Water is a compound of hydrogen and oxygen, not an element"
+B1.3.1,WRONG,Matter is not made of water; water is H2O
+B1.3.2,LOOSE,Multiverse ideas only verbally similar; no boundless substrate in physics
+B1.3.3,WRONG,Matter is not condensed or rarefied air
+B1.3.4,WRONG,Food holds no ready blood or bone particles; digestion rebuilds molecules
+B1.3.5,WRONG,Fire and water are not rarefied or condensed air
+B1.3.6,LOOSE,"Mathematical laws describe nature, but things are not numbers"
+B1.3.7,WRONG,Matter is not transformed fire; no cyclic conflagration
+B1.3.8,PARTIAL,"Matter is atomic, but atoms are divisible, created and transformable"
+B1.3.9,WRONG,"Atoms have mass and charge structure, not just size and shape"
+B1.3.10,PARTIAL,"Atoms have mass, but weight does not cause their motion"
+B1.3.11,WRONG,"Fire, air, earth, water are not elements"
+B1.3.12,UNSCORABLE,Theological and metaphysical principles
+B1.3.13,WRONG,No four elements or fifth aether body
+B1.3.14,UNSCORABLE,Theological principle: God and matter
+B1.4.1,PARTIAL,Accretion and density layering real; stars not formed from light atoms rising
+B1.5.1,UNSCORABLE,Uniqueness of the universe is not checkable
+B1.5.2,PARTIAL,Our system is a tiny part of the cosmos; rest not inert matter
+B1.5.3,UNSCORABLE,Uniqueness of the universe is not checkable
+B1.5.4,PARTIAL,Countless planetary systems exist; infinitely many worlds unconfirmed
+B1.6.1,UNSCORABLE,"Claim about gods, daemons or theology"
+B1.6.2,UNSCORABLE,"Claim about gods, daemons or theology"
+B1.7.1,UNSCORABLE,"Claim about gods, daemons or theology"
+B1.7.2,UNSCORABLE,"Claim about gods, daemons or theology"
+B1.7.3,UNSCORABLE,"Claim about gods, daemons or theology"
+B1.7.4,UNSCORABLE,"Claim about gods, daemons or theology"
+B1.7.5,UNSCORABLE,"Claim about gods, daemons or theology"
+B1.7.6,UNSCORABLE,"Claim about gods, daemons or theology"
+B1.7.7,UNSCORABLE,"Claim about gods, daemons or theology"
+B1.7.8,UNSCORABLE,"Claim about gods, daemons or theology"
+B1.7.9,UNSCORABLE,"Claim about gods, daemons or theology"
+B1.7.10,UNSCORABLE,"Claim about gods, daemons or theology"
+B1.7.11,UNSCORABLE,"Claim about gods, daemons or theology"
+B1.7.12,UNSCORABLE,"Claim about gods, daemons or theology"
+B1.7.13,UNSCORABLE,"Claim about gods, daemons or theology"
+B1.7.14,UNSCORABLE,"Claim about gods, daemons or theology"
+B1.7.15,UNSCORABLE,"Claim about gods, daemons or theology"
+B1.8.1,UNSCORABLE,"Claim about gods, daemons or theology"
+B1.8.2,UNSCORABLE,"Claim about gods, daemons or theology"
+B1.9.1,LOOSE,Mass-energy and nuclear change only verbally resemble universal flux
+B1.9.2,WRONG,"Atoms are acted upon: excited, ionised, split"
+B1.9.3,UNSCORABLE,Metaphysical account of formless matter
+B1.9.4,UNSCORABLE,Metaphysical claim about matter and form
+B1.9.5,UNSCORABLE,Metaphysical claim about matter and form
+B1.10.1,UNSCORABLE,Metaphysics of ideas or causes; no physical answer
+B1.10.2,UNSCORABLE,Metaphysics of ideas or causes; no physical answer
+B1.10.3,UNSCORABLE,Metaphysics of ideas or causes; no physical answer
+B1.11.1,UNSCORABLE,Metaphysics of ideas or causes; no physical answer
+B1.11.2,UNSCORABLE,Metaphysics of ideas or causes; no physical answer
+B1.11.3,UNSCORABLE,Metaphysics of ideas or causes; no physical answer
+B1.12.1,WRONG,"Weight is gravitational attraction, independent of natural place"
+B1.12.2,WRONG,Air and water always have weight; nothing is absolutely light
+B1.12.3,WRONG,Air has weight; apparent lightness is buoyancy
+B1.12.4,PARTIAL,"All matter has mass; atoms move randomly, not mainly downward"
+B1.13.1,LOOSE,Round minimal bodies only verbally resemble atoms or particles
+B1.13.2,PARTIAL,Matter has smallest constituents; atoms themselves are divisible
+B1.14.1,WRONG,Elements have no sphere or cone shapes
+B1.15.1,LOOSE,"Colour arises from surface reflection of wavelengths, not the surface itself"
+B1.15.2,LOOSE,"Colour depends on photoreceptor response to wavelength, not pore fit"
+B1.15.3,LOOSE,"Light reaches eye from bodies, but colours are not flames"
+B1.15.4,UNSCORABLE,Paraphrase too unclear to check
+B1.15.5,WRONG,"Colour is a continuum of wavelengths, not four basic colours"
+B1.16.1,WRONG,Matter is not infinitely divisible; it has discrete constituents
+B1.16.2,PARTIAL,"Division ends at particles, but chemical atoms are divisible"
+B1.16.3,WRONG,"Matter has discrete constituents, not even potentially infinite division"
+B1.17.1,LOOSE,Chemical compounds have new properties; elements themselves persist
+B1.17.2,PARTIAL,True of mixtures; compounds involve chemical bonding
+B1.17.3,PARTIAL,Elements are made of smaller particles; his four are not elements
+B1.17.4,WRONG,"Fire, air, water are not interconvertible elements"
+B1.18.1,WRONG,"Near-vacuum exists, e.g. interplanetary space"
+B1.18.2,WRONG,"Near-vacuum exists, e.g. interplanetary space"
+B1.18.3,PARTIAL,Vast empty space exists; infinite atoms and space unconfirmed
+B1.18.4,WRONG,Space within the solar system is near-vacuum
+B1.18.5,WRONG,Heavens are not fiery and do not breathe into void
+B1.19.1,UNSCORABLE,"Definition of place, space or time; no physical answer"
+B1.19.2,UNSCORABLE,"Definition of place, space or time; no physical answer"
+B1.20.1,UNSCORABLE,"Definition of place, space or time; no physical answer"
+B1.21.1,UNSCORABLE,"Definition of place, space or time; no physical answer"
+B1.21.2,UNSCORABLE,"Definition of place, space or time; no physical answer"
+B1.21.3,UNSCORABLE,"Definition of place, space or time; no physical answer"
+B1.22.1,UNSCORABLE,"Definition of place, space or time; no physical answer"
+B1.22.2,UNSCORABLE,"Definition of place, space or time; no physical answer"
+B1.22.3,WRONG,"Standard cosmology gives the universe a finite age, 13.8 Gyr"
+B1.22.4,UNSCORABLE,Philosophical claim about time beginning in thought
+B1.23.1,UNSCORABLE,Definition of motion
+B1.23.2,UNSCORABLE,Definition of motion
+B1.23.3,LOOSE,"Thermal vibration exists, but it is not the only motion"
+B1.23.4,WRONG,Atoms do not fall downward or swerve
+B1.23.5,UNSCORABLE,Epistemic classification of motion
+B1.23.6,PARTIAL,No absolute rest; particles always move; rest-as-death is not physics
+B1.24.1,WRONG,Change and motion are real
+B1.24.2,STRONG,Conservation of mass: chemical change rearranges atoms
+B1.24.3,LOOSE,"Nuclear transmutation exists, but not of fire, air, water, earth"
+B1.25.1,UNSCORABLE,"Necessity, fate, fortune or providence; no physical answer"
+B1.25.2,UNSCORABLE,"Necessity, fate, fortune or providence; no physical answer"
+B1.25.3,UNSCORABLE,"Necessity, fate, fortune or providence; no physical answer"
+B1.26.1,UNSCORABLE,"Necessity, fate, fortune or providence; no physical answer"
+B1.26.2,UNSCORABLE,"Necessity, fate, fortune or providence; no physical answer"
+B1.26.3,LOOSE,Mechanical determinism only verbally resembles necessity as force
+B1.26.4,UNSCORABLE,"Necessity, fate, fortune or providence; no physical answer"
+B1.27.1,UNSCORABLE,"Necessity, fate, fortune or providence; no physical answer"
+B1.27.2,UNSCORABLE,"Necessity, fate, fortune or providence; no physical answer"
+B1.27.3,UNSCORABLE,"Necessity, fate, fortune or providence; no physical answer"
+B1.28.1,UNSCORABLE,"Necessity, fate, fortune or providence; no physical answer"
+B1.28.2,UNSCORABLE,"Necessity, fate, fortune or providence; no physical answer"
+B1.28.3,UNSCORABLE,"Necessity, fate, fortune or providence; no physical answer"
+B1.28.4,UNSCORABLE,"Necessity, fate, fortune or providence; no physical answer"
+B1.28.5,UNSCORABLE,"Necessity, fate, fortune or providence; no physical answer"
+B1.28.6,UNSCORABLE,"Necessity, fate, fortune or providence; no physical answer"
+B1.29.1,UNSCORABLE,"Necessity, fate, fortune or providence; no physical answer"
+B1.29.2,UNSCORABLE,"Necessity, fate, fortune or providence; no physical answer"
+B1.29.3,UNSCORABLE,"Necessity, fate, fortune or providence; no physical answer"
+B1.29.4,UNSCORABLE,"Necessity, fate, fortune or providence; no physical answer"
+B1.30.1,PARTIAL,"Change is recombination of constituents, but not four elements"
+B1.30.2,PARTIAL,Change is recombination of constituents; unspecified elements
+B2.1.1,UNSCORABLE,Uniqueness of the universe is not checkable
+B2.1.2,PARTIAL,Countless planetary systems exist; infinitely many worlds unconfirmed
+B2.1.3,WRONG,Cosmos is not bounded by the solar path
+B2.1.4,PARTIAL,Universe has no known edge; infinitude unconfirmed
+B2.1.5,PARTIAL,"Our system is finite; universe possibly infinite, unconfirmed"
+B2.1.6,UNSCORABLE,Definition of universe versus world
+B2.2.1,WRONG,Universe has no spherical boundary
+B2.2.2,WRONG,Universe has no cone shape
+B2.2.3,WRONG,Universe has no egg shape
+B2.2.4,UNSCORABLE,Agnostic claim; nothing to check
+B2.3.1,UNSCORABLE,Providence and world-soul questions are not physical
+B2.3.2,UNSCORABLE,Providence and world-soul questions are not physical
+B2.3.3,UNSCORABLE,"Ensouled spheres: theological, not physical"
+B2.4.1,UNSCORABLE,Divine creation and preservation: theology
+B2.4.2,STRONG,Earth and solar system formed 4.6 Gyr ago and will end
+B2.4.3,WRONG,"Earth and solar system had a beginning, 4.6 Gyr ago"
+B2.4.4,PARTIAL,"Earth changes, but heavens change too"
+B2.5.1,WRONG,The world is not eternal; Earth formed and will end
+B2.5.2,LOOSE,Matter recycling resembles self-feeding only loosely
+B2.5.3,WRONG,No sky fire or moon water feeding the world
+B2.6.1,WRONG,Earth is not the centre of the universe
+B2.6.2,WRONG,No fire or fifth element formed first
+B2.6.3,LOOSE,"Outgassing made oceans and air, but ether-fire-earth sequence is wrong"
+B2.6.4,UNSCORABLE,World soul made first: theology
+B2.6.5,WRONG,Elements are not Platonic solids
+B2.7.1,WRONG,Cosmos is not concentric bands within a solid shell
+B2.7.2,WRONG,No enclosing membrane around the cosmos
+B2.7.3,WRONG,Planetary systems have no outer shells
+B2.7.4,WRONG,"Cosmos is not layered fire, ether, air, water, earth"
+B2.7.5,WRONG,No aether layer; heavenly motion is gravitational orbits
+B2.7.6,LOOSE,Matter cycles exist; elements having places is not physics
+B2.8.1,WRONG,Pole elevation reflects observer latitude on a spherical Earth; no tilting
+B2.8.2,WRONG,"Celestial pole tilt is latitude, not air yielding to sunlight"
+B2.9.1,WRONG,The cosmos does not breathe in void
+B2.9.2,WRONG,No cosmic conflagration dissolving the world
+B2.9.3,WRONG,No outer void sized for a conflagration
+B2.9.4,WRONG,Near-vacuum exists in space
+B2.9.5,WRONG,Near-vacuum exists in space
+B2.10.1,UNSCORABLE,Right and left of the world are conventions
+B2.10.2,UNSCORABLE,Right and left of the world are conventions
+B2.11.1,UNSCORABLE,Paraphrase too unclear to check
+B2.11.2,WRONG,No solid crystalline heavens
+B2.11.3,WRONG,Heavens are not a fifth body; space is mostly cold vacuum
+B2.12.1,STRONG,Celestial zones and oblique ecliptic are correct geometry
+B2.13.1,PARTIAL,"Stars are hot luminous spheres, but plasma, not earthy"
+B2.13.2,PARTIAL,Stars are hot luminous bodies; origin story wrong
+B2.13.3,WRONG,Stars are not stones torn from Earth
+B2.13.4,PARTIAL,Meteorites do fall; stars are not pumice vents
+B2.13.5,WRONG,No crystalline sphere; stars at varied distances
+B2.13.6,PARTIAL,"Stars are hot luminous plasma, not fire"
+B2.13.7,WRONG,Stars are not clouds extinguished by day
+B2.13.8,LOOSE,"Stars host planets, but a star is not an earth-air world"
+B2.13.9,UNSCORABLE,Agnostic stance; nothing to check
+B2.14.1,STRONG,"Stars, Sun and Moon are spheroidal"
+B2.14.2,WRONG,"Stars are spheroidal, not conical"
+B2.14.3,WRONG,Stars are not fixed in a vault
+B2.14.4,WRONG,"Stars are spheroidal, not flat leaves"
+B2.15.1,WRONG,Stars lie at very different distances
+B2.15.2,STRONG,Stars lie at very different distances
+B2.15.3,PARTIAL,"Moon nearest, stars farthest correct; other order partly wrong"
+B2.15.4,PARTIAL,"Moon nearest, stars farthest; Sun is not sixth"
+B2.15.5,STRONG,Sun is at the centre of the planetary system
+B2.15.6,WRONG,Moon is nearest; stars far beyond the Sun
+B2.16.1,PARTIAL,Daily apparent motion east to west; planets drift eastward against stars
+B2.16.2,STRONG,Planets move eastward relative to fixed stars
+B2.16.3,WRONG,No rotating spheres; Earth rotates
+B2.16.4,PARTIAL,Stars apparently circle below horizon; actual cause is Earth rotation
+B2.16.5,STRONG,Venus and Mercury accompany the Sun; mean zodiacal period one year
+B2.17.1,WRONG,Stars are suns with their own light
+B2.17.2,WRONG,"Stars are fusion-powered, not fed by exhalations"
+B2.17.3,WRONG,Stars evolve and die
+B2.17.4,WRONG,"Stars are fusion-powered, not fed"
+B2.18.1,LOOSE,"St Elmo fire is corona discharge, not shining clouds"
+B2.18.2,WRONG,"St Elmo fire is corona discharge, not from eyes"
+B2.19.1,STRONG,Heliacal risings and settings track seasons
+B2.19.2,STRONG,Seasons are governed by the Sun alone
+B2.19.3,WRONG,Stars do not foretell yearly events
+B2.20.1,WRONG,"Sun is a plasma sphere, not a fire-filled ring"
+B2.20.2,WRONG,Sun is not condensed moist exhalation or cloud
+B2.20.3,WRONG,"Sun is fusion plasma, not flame from sea"
+B2.20.4,PARTIAL,"Sun is hot luminous plasma, not fire"
+B2.20.5,PARTIAL,"Sun is incandescent but gaseous plasma, not stone"
+B2.20.6,PARTIAL,Sun is spherical but not a fifth body
+B2.20.7,WRONG,Sun emits its own light
+B2.20.8,WRONG,Sun emits its own light; no second sun
+B2.20.9,PARTIAL,"Sun is incandescent but plasma, not earthy pumice"
+B2.21.1,WRONG,Sun diameter is about 109 Earths
+B2.21.2,PARTIAL,True but vastly understated; Sun is 109 Earth diameters
+B2.21.3,WRONG,Sun diameter is about 1.39 million km
+B2.21.4,WRONG,"Sun is about 1.39 million km across, not apparent size"
+B2.22.1,WRONG,Sun is spherical
+B2.22.2,WRONG,Sun is spherical
+B2.22.3,STRONG,Sun is spherical
+B2.22.4,UNSCORABLE,Agnostic stance; nothing to check
+B2.23.1,WRONG,"Solstices result from axial tilt and orbit, not air"
+B2.23.2,WRONG,"Solstices result from axial tilt and orbit, not air"
+B2.23.3,WRONG,No spherical carrier; solstices from axial tilt
+B2.23.4,WRONG,Sun is not quenched at solstice
+B2.23.5,WRONG,Sun is not fed by exhalations
+B2.23.6,STRONG,"Solstices reflect the ecliptic obliquity, about 23.4 degrees"
+B2.24.1,STRONG,Solar eclipse is the Moon passing between Sun and Earth
+B2.24.2,WRONG,Solar eclipse is the Moon blocking the Sun
+B2.24.3,WRONG,Solar eclipse is the Moon blocking the Sun
+B2.24.4,WRONG,Sun does not go out during eclipses
+B2.24.5,WRONG,"Solar eclipse is the Moon, not clouds"
+B2.24.6,PARTIAL,"Earth orbits the Sun, but eclipses are lunar shadows"
+B2.24.7,WRONG,One Sun; eclipses are lunar shadows
+B2.24.8,WRONG,Apparent solar circuit is Earth rotation and orbit
+B2.25.1,WRONG,"Moon is a rocky sphere, not a fire ring"
+B2.25.2,WRONG,"Moon is rock, not cloud"
+B2.25.3,WRONG,"Moon is rock, not fire and air"
+B2.25.4,STRONG,Moon is a rocky body
+B2.25.5,PARTIAL,"Moon has plains, mountains, valleys, but is not fiery"
+B2.25.6,PARTIAL,Moon is earth-like rock but has no cloud or atmosphere
+B2.25.7,PARTIAL,"Moon reflects sunlight, but diffusely with low albedo"
+B2.26.1,WRONG,Moon is about a quarter of Earth diameter
+B2.26.2,PARTIAL,"Moon is lit by the Sun, but 400 times smaller"
+B2.27.1,STRONG,Moon is spherical
+B2.27.2,WRONG,Moon is spherical
+B2.27.3,WRONG,Moon is spherical
+B2.27.4,WRONG,Moon is spherical
+B2.28.1,WRONG,Moon shines by reflected sunlight
+B2.28.2,WRONG,Moon shines by reflected sunlight
+B2.28.3,STRONG,Moon shines by reflected sunlight
+B2.28.4,WRONG,"Moon shines by reflected sunlight, not exhalations"
+B2.29.1,WRONG,Lunar eclipse is Earth shadow on the Moon
+B2.29.2,WRONG,Lunar eclipse is Earth shadow on the Moon
+B2.29.3,WRONG,Lunar eclipse is Earth shadow on the Moon
+B2.29.4,WRONG,No counter-earth; lunar eclipse is Earth shadow
+B2.29.5,WRONG,Moon has no fire; phases from sunlit geometry
+B2.29.6,STRONG,Lunar eclipse is Earth shadow; new moon is solar conjunction
+B2.30.1,WRONG,Moon is lifeless and airless
+B2.30.2,PARTIAL,"Moon mottling is surface material differences, but not fiery"
+B2.30.3,WRONG,Moon is not decaying from varied substance
+B2.31.1,WRONG,Sun is about 400 times farther than the Moon
+B2.31.2,WRONG,"Sun is about 400 times farther than the Moon, not 18"
+B2.31.3,WRONG,"Sun is about 150 million km away, far beyond 780,000 stades"
+B2.32.1,STRONG,"Periods: Saturn 29.5 y, Jupiter 11.9, Mars 1.9, Moon 29.5 d"
+B2.32.2,PARTIAL,"Eight-year lunisolar cycle is approximate, not an all-planet return"
+B2.32.3,PARTIAL,Nineteen years is the Metonic lunisolar cycle; not all planets
+B2.32.4,PARTIAL,59 years approximates lunisolar and some planet cycles only
+B2.32.5,WRONG,"No known common planetary return at 18,000 years"
+B2.32.6,WRONG,No known common planetary return at that period
+B2.32.7,WRONG,"No known common planetary return at 7,777 years"
