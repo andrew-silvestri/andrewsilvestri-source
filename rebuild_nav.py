@@ -256,6 +256,9 @@ NAV = [
         # night-shift lane (batch 2), 2026-11-13: night workers' day in the ATUS diaries against everyone
         # else's and the body clock. Other: a health and work page, not energy.
         ("Night work", "nightshift.html"),
+        # great-filter lane, 2026-11-13: the chain of steps from chemistry to radio and which could be
+        # the Great Filter. Other: not an energy page. Label is the page's <title>.
+        ("The Great Filter", "greatfilter.html"),
     ]),
     ("Code", "code.html"),
     # LAST, AND IT HAS TO STAY LAST. style.css pins this one right with

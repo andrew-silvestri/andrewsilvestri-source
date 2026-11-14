@@ -143,6 +143,10 @@ GENERATORS = [
     # (every quoted figure was matched in its source by the build) (space-depression lane, 2026-11-13).
     ("space-depression page: space-depression/update_page.py --apply",
      ["update_page.py", "--apply"], "space-depression", "site"),
+    # greatfilter/update_page.py writes site/greatfilter.html from greatfilter/sources.py and
+    # outputs/payload.json (great-filter lane, 2026-11-13).
+    ("greatfilter page: greatfilter/update_page.py --apply",
+     ["update_page.py", "--apply"], "greatfilter", "site"),
     # storage/update_page.py writes site/storage.html from storage/outputs/payload.json
     # (build_storage.py, which needs ERCOT's files under storage/data/raw, gitignored) and
     # storage/data/imm.json. R4, 2026-10-23.

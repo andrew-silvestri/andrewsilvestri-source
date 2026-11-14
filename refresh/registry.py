@@ -102,6 +102,17 @@ ENTRIES = [
         "why": "A finished policy chain, 1990-2006, stated on the page as not updated.",
     },
     {
+        # great-filter lane, 2026-11-13. Disabled: no fetched data; every figure is a published
+        # value in sources.py, and the page says its data does not update.
+        "page": "greatfilter",
+        "cwd": "greatfilter",
+        "fetch": [],
+        "build": [["python", "build_greatfilter.py"]],
+        "keys": [],
+        "enabled": False,
+        "why": "Published dates, counts and estimates with no data feed; stated on the page as not updated.",
+    },
+    {
         # night-shift lane (batch 2), 2026-11-13. Disabled: the Leave and Job Flexibilities Module is a
         # one-off 2024-25 supplement, and the page joins it to the 2024 and 2025 diaries; the page says
         # its data does not update. update_page.claims() would stop a rebuild that contradicts the prose.

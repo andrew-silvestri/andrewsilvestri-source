@@ -34,6 +34,7 @@ OPTIONAL = [
     "python oxygen/test_oxygen.py",
     "python nightshift/test_nightshift.py",
     "python space-depression/test_space_depression.py",
+    "python greatfilter/test_greatfilter.py",
     "node tests/test_kit.js", "python tests/test_refresh.py",
 ]
 # test files in tests/ that are not suites in their own right

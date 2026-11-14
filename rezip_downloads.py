@@ -306,6 +306,10 @@ TARGETS = [
     # Not data/raw: the fetch script re-downloads the files and the readers refuse one whose SHA-1 differs.
     target("space-depression", "space-depression-code.zip", keep={"outputs"},
            skip=("data/raw", "data/raw/*", "outputs/*.png")),
+    # The Great Filter (great-filter lane, 2026-11-13): the table of published dates and counts with a
+    # source a row, the model script (hard-steps simulation, Drake ranges), the page generator and the
+    # tests, with the payload. No downloaded data: every figure is from a paper named in sources.py.
+    target("greatfilter", "greatfilter-code.zip", keep={"outputs"}),
     # food-code.zip retired with its page on 2026-09-09: food.html was
     # unpublished at Andrew's request, for now, and the last build is
     # unpublished/downloads/food-code.zip. The TARGET goes with the page,
