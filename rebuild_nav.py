@@ -288,6 +288,9 @@ NAV = [
         ("Skyline sonification", "skyline.html"),
         # page/perfidy, 2026-11-07: the Perfidy type family. Label is the page's <title>.
         ("Perfidy", "perfidy.html"),
+        # ai-web lane, 2026-11-14: five predicted futures for the web set against measurements. Other, at
+        # Andrew's choice (2026-11-14). Label is the page's <title>.
+        ("The web after AI", "aiweb.html"),
     ]),
     ("Code", "code.html"),
     # LAST, AND IT HAS TO STAY LAST. style.css pins this one right with

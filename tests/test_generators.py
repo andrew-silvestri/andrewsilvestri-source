@@ -176,6 +176,10 @@ GENERATORS = [
     # from the tracked tables in armchair/data) (philosophy-physics lane, 2026-11-13).
     ("armchair page: armchair/update_page.py --apply",
      ["update_page.py", "--apply"], "armchair", "site"),
+    # aiweb/update_page.py writes site/aiweb.html from aiweb/outputs/payload.json (build_aiweb.py, from the
+    # tracked table in aiweb/sources.py) (ai-web lane, 2026-11-14); it reads nothing gitignored.
+    ("aiweb page: aiweb/update_page.py --apply",
+     ["update_page.py", "--apply"], "aiweb", "site"),
     # lowcarbon-shoe/update_page.py writes site/lowcarbon-shoe.html from lowcarbon-shoe/outputs/payload.json
     # (eco-shoe lane, 2026-11-07); it reads nothing gitignored.
     ("lowcarbon-shoe page: lowcarbon-shoe/update_page.py --apply",

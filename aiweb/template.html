@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<link rel="preload" href="assets/perfidy/PerfidyText-Regular.woff2" as="font" type="font/woff2" crossorigin>
+<title>The web after AI — Andrew Silvestri</title>
+<meta name="description" content="Five futures are predicted for the web in the age of AI. Set against what has been measured so far, search is still growing, but fewer searches end in a visit, machines make most requests, and AI writes about half of new articles.">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="alternate icon" href="favicon.png">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<meta name="theme-color" content="#F2F0EF">
+<link rel="canonical" href="https://andrewsilvestri.com/aiweb.html">
+<meta property="og:type" content="website">
+<meta property="og:title" content="The web after AI — Andrew Silvestri">
+<meta property="og:description" content="Five predicted futures for the web, each set against what has been measured so far: search is growing, the visits after it are shrinking.">
+<meta property="og:url" content="https://andrewsilvestri.com/aiweb.html">
+<script>try{document.documentElement.dataset.motion=matchMedia('(prefers-reduced-motion: reduce)').matches?'off':'on';}catch(e){document.documentElement.dataset.motion='on';}</script>
+<link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="assets/aiweb.css">
+</head><body>
+{{nav}}
+<main>
+<h1>People still search, but fewer of them reach the web</h1>
+<p class="dim">On 19 February 2024 Gartner, a research firm, predicted that the volume of searches on traditional search engines would fall {{gartner_drop}} percent by 2026, as people put their questions to chatbots instead. In October 2026 Alphabet reported that Google's query growth was the highest it had been in five years, and that search revenue had grown {{goog_growth}} percent in a year, to ${{goog_rev}} billion a quarter. The forecast missed. The change it was reaching for is still happening, in a different place: fewer searches end with a visit to a website. This page maps the five futures most often predicted for the web, and sets each against what has been measured so far.</p>
+{{stamp}}
+{{takeaways}}
+
+{{hero}}
+
+<h2 id="map">How is the map drawn?</h2>
+
+<p>Most predictions about the web are claims about two shares: how much of it is read by machines rather than people, and how much is written by machines rather than people. The map puts reading across and writing up. Four futures sit on it. In the first, the web adapts to AI as it adapted to search engines and phones. In a hollowed web, AI answers stand in for the visit. In an agentic web, software agents browse and buy for their owners. In a synthetic flood, machines write most of what is published. The fifth future, a closing web, is about access rather than authorship, so it is drawn as a strip below the map. Where each future sits is this page's judgement. The markers for today are measurements.</p>
+
+<p>Today sits near the middle of the map, but which middle depends on the measure. Automated software made {{bot_share}} percent of all traffic on the network of Imperva, a security firm, in 2025, and Cloudflare, a network company, counted the same {{cf_machine_html}} percent of requests for web pages as non-human. AI wrote {{graphite_articles}} percent of new English-language articles in early 2026, by one company's detectors, but only {{graphite_serp}} percent of the pages Google showed in mid-2025. The web publishes {{pub_shown_words}} as much machine writing as it shows.</p>
+
+<h2 id="hollow">Do searches still end on websites?</h2>
+
+<p>The hollowed web is the future that publishers predict most often. Its mechanism is simple: an AI answer at the top of the results page settles the question, so the reader never visits the pages it was drawn from. Search engines once crawled pages in exchange for sending readers to them. In July 2025 Cloudflare counted about {{crawl_google}} crawls by Google for every visit Google sent back. For OpenAI the figure was {{crawl_openai}}, and for Anthropic {{crawl_anthropic}}. Those ratios are a bargain that one side has stopped keeping.</p>
+
+<p>The click data point the same way. The Pew Research Center tracked the browsing of {{pew_n}} American adults in March 2025, across {{pew_searches}} Google searches. People clicked a result on {{pew_click_ai}} percent of searches that showed an AI summary and on {{pew_click_no}} percent of those that did not. They clicked a link inside the summary on {{pew_click_in}} percent. SparkToro, which studies search behaviour, estimates that {{zero_2026}} percent of American Google searches in early 2026 ended with no click at all, up from {{zero_2024}} percent in 2024. Chartbeat, which measures traffic for more than {{chartbeat_sites}} news sites, found Google search traffic to them down {{chartbeat_drop}} percent worldwide in the year to November 2025.</p>
+
+<p>Not every count agrees. Google says the number of clicks it sends is stable, but has not published the data. A study of more than {{graphite_sites}} American sites by Graphite, a search-marketing agency, found organic Google traffic down only {{graphite_traffic}} percent in 2025, with the largest sites gaining. The losses gather where an answer can replace the visit: news, health and recipes. They also gather on small sites, which lost {{chartbeat_small}} percent of their search traffic in Chartbeat's count against {{chartbeat_large}} percent for large ones. Wikipedia, which relies on visits for its donors and volunteers, counted about {{wiki_drop}} percent fewer human page views in 2025 than a year before.</p>
+
+<p class="ev-line"><b>Evidence: strong that fewer searches end in a visit; moderate on how much of the drop AI answers cause.</b> Most of the data come from browsing panels and from firms that sell traffic services, and other changes to search happened at the same time.</p>
+
+<h2 id="agents">Are machines becoming the web's main readers?</h2>
+
+<p>The agentic web goes one step further: software agents, not people, do the browsing. In 2025 Microsoft announced what it called the open agentic web, Google published a protocol for agents to make payments, and OpenAI published one for agents to buy inside ChatGPT. The Model Context Protocol, Anthropic's standard for connecting AI models to outside tools, had more than {{mcp_servers}} public servers by December 2025. McKinsey, a consultancy, projects that agents could arrange ${{mck_lo}} trillion to ${{mck_hi}} trillion of commerce by 2030.</p>
+
+<p>Machines already make most of the web's requests. Automated software made {{bot_share}} percent of the traffic Imperva saw in 2025, up from {{bot_share_prev}} percent a year before. Most of it is old-fashioned automation: scrapers, scanners and search crawlers. Declared AI crawlers made {{cf_ai_bots}} percent of requests for web pages on Cloudflare's network in 2025, about as many as Google's own crawler at {{cf_googlebot}} percent. Agents working for a person are a small, fast-growing slice of that traffic. In October 2026 HUMAN Security, which tracks it, found that {{agent_browse}} percent of agent requests went to product and search pages and {{agent_checkout}} percent reached a checkout.</p>
+
+<p>Buying is the weak link. OpenAI launched one-click purchases inside ChatGPT in September 2025 and moved checkout back to merchants' own sites in March 2026. In a 2025 Forrester survey, {{forrester_trust}} percent of American online adults said they would trust an agent to make routine purchases for them. Agents browse. People still pay.</p>
+
+<p class="ev-line"><b>Evidence: strong that machines make most requests; weak that agents act for people at scale.</b> Every traffic share comes from a company that sells bot management, and each defines a bot its own way.</p>
+
+<h2 id="gates">Is the web closing its doors?</h2>
+
+<p>The closing web is a reaction to the other two futures. A site that loses visitors to AI answers has less reason to let AI companies read it. In 2024 Shayne Longpre and colleagues at the Data Provenance Initiative audited the websites behind three large AI training sets. In a single year, instructions to crawlers in robots.txt files had come to restrict {{dpi_after_lo}} to {{dpi_after_hi}} percent of the text, up from about {{dpi_before}} percent. For the most important sources the restricted share was {{dpi_head_lo}} to {{dpi_head_hi}} percent.</p>
+
+<p>News publishers moved fastest. By late 2025 about {{news_block}} percent of the top news sites in the United States and Britain blocked at least one AI training crawler, according to BuzzStream, a marketing firm. Across the million most-visited websites, about {{top1m_block}} percent of those with a robots.txt file blocked OpenAI's crawler outright in September 2025. Closing came with a price list. By one count, {{deals}} licensing deals between publishers and AI companies were announced between January 2023 and June 2026. News Corp's deal with OpenAI is reported at about ${{newscorp}} million over five years. Amazon's with The New York Times is reported at ${{nyt_lo}} million to ${{nyt_hi}} million a year, about {{nyt_share}} percent of the paper's revenue.</p>
+
+<p>The gates leak. TollBit, which sells licensing tools to publishers, found that about {{tollbit}} percent of AI bot visits in late 2025 ignored a site's robots.txt. Courts are doing some of what fences cannot. By October 2026, {{lawsuits}} copyright suits had been filed against AI companies in the United States, and Anthropic had settled with book authors for ${{bartz}} billion.</p>
+
+<p class="ev-line"><b>Evidence: strong for news sites, weak for the web as a whole.</b> Most of the million largest sites still let AI crawlers in, and a robots.txt file is a request, not a lock.</p>
+
+<h2 id="flood">How much of the web do machines now write?</h2>
+
+<p>The best-known number about the synthetic flood is a guess. So where did it come from? A 2022 report by Europol's Innovation Lab said that experts estimated as much as {{europol}} percent of online content may be synthetically generated by 2026. Its only source was a 2020 book by Nina Schick, a writer on deepfakes, who said in a 2023 interview that the figure might be reached by 2025. No survey, model or measurement stood behind it. It has been quoted as a Europol forecast ever since.</p>
+
+<p>The measured share is lower, and more interesting. Graphite, the agency that studied search traffic, ran a sample of new English-language articles through three AI detectors. It found that {{graphite_articles}} percent were mostly machine-written in early 2026, a share that has stayed near half for {{graphite_flat}} quarters. In mid-2025 such pages made up only {{graphite_serp}} percent of Google's results and {{graphite_top}} percent of its first results. NewsGuard, which rates news sites, counted {{ng_2023}} websites publishing AI-generated news with little human oversight in May 2023 and {{ng_2026}} by June 2026, about {{ng_ratio}} times as many.</p>
+
+<p>The flood also runs back into the machines. In 2024 Ilia Shumailov and colleagues showed in Nature that models trained again and again on their own output lose the rare cases first, and then degrade. In the same paper, keeping some of the original human-written data in each round prevented most of the damage. A web that keeps its record of human writing is worth more to AI companies, not less.</p>
+
+<p class="ev-line"><b>Evidence: moderate.</b> The shares come from commercial AI detectors that misread a small fraction of human text as machine-written, and the counts of sites are lower bounds.</p>
+
+<h2 id="adapt">Or does the web adapt, as it did before?</h2>
+
+<p>The quietest forecast is that the web absorbs AI as it absorbed search engines, social networks and phones. Google's business supports it. Search revenue reached ${{goog_rev}} billion in the third quarter of 2026, and google.com received {{g_visits}} billion visits in August 2026 against {{c_visits}} billion for chatgpt.com, about {{g_c_ratio}} times as many, on Similarweb's estimates for the web alone. People use chatbots in addition to search, not instead of it. Across six countries surveyed by the Reuters Institute, weekly use of standalone AI tools rose from {{ri_ai_2025}} to {{ri_ai_2026}} percent of online adults in a year, and {{ri_saw}} percent had seen AI answers inside a search engine in the previous week.</p>
+
+<p>But adaptation describes the gatekeepers better than the web behind them. Google keeps its users by answering more of their questions itself. The sites that supplied the answers see fewer of those users. AI tools have not filled the gap: they sent under {{ai_ref_share}} percent of publishers' page views in Chartbeat's data to early 2026.</p>
+
+<p class="ev-line"><b>Evidence: strong that search remains the web's front door; weak that the sites behind it keep their traffic.</b></p>
+
+<h2 id="forecasters">What do forecasters expect?</h2>
+
+<p>People who forecast for a living mostly expect a mixed outcome. Elon University canvassed {{elon_n}} experts at the turn of 2025 on how AI would change being human by 2035: {{elon_better}} percent expected mostly better, {{elon_worse}} percent mostly worse, and {{elon_mixed}} percent an equal measure of both. In a 2024 Pew survey, {{pew_exp}} percent of AI experts expected AI to have a positive effect on the United States over the next 20 years, against {{pew_pub}} percent of the public. The table sets four specific forecasts against what has been measured since.</p>
+
+{{scorecard}}
+
+<p>The record so far favours the cautious forecasts. The loud ones, a collapse in search and a web of synthetic text, came with dates that have arrived without them. The quieter shift, from visits to answers, came without much of a forecast at all.</p>
+
+<h2 id="watch">What would settle it?</h2>
+
+<p>Three numbers will show which future is arriving. If AI tools start to send a real share of visits, against the under {{ai_ref_share}} percent they send publishers now, the hollowed web is being repaired. If more than the {{agent_checkout}} percent of agent requests that now reach a checkout start to end in a purchase, the agentic web has begun. And if the AI share of what Google shows climbs from {{graphite_serp}} percent toward the {{graphite_articles}} percent of what is published, the flood has reached the front page. So far the web has kept its searchers and is losing its visitors.</p>
+
+<h2 id="method">Method</h2>
+
+<p><b>Figures.</b> Every number on this page is copied from the report, filing or survey cited beside it, as read on {{as_of_words}}, and listed with its source in the download. Where sources disagree, the page gives the measure closest to the claim and names it. Zero-click shares, for example, range from about a quarter to about two-thirds depending on whether mobile searches and follow-up searches are counted. Ratios and growth rates are computed from the published values by the build script.</p>
+
+<p><b>The map.</b> The axes are the share of the web read by machines and the share written by them, from 0 to 100 percent. The placement of each future is this page's judgement of where its predictors put the end state. Today's horizontal position is the automated share of traffic in Imperva's 2025 data, which matches Cloudflare's share of non-human requests for web pages. The two vertical markers are the AI share of new English articles (Graphite, early 2026) and of Google's results (Graphite, mid-2025). The strip is the share of sites that block AI training crawlers in two samples.</p>
+
+<h2 id="limits">Limits</h2>
+
+<p>Almost every measure of web traffic comes from a company with something to sell: bot protection, search marketing, licensing or analytics. Their samples are their own customers, and their definitions of a bot, a click or an AI-written article differ. AI detectors misclassify some human writing and miss some machine writing, and none of them measures text that a person drafted with AI and then edited. Requests are not readers: one person's question can send an agent to dozens of pages. The forecasts in the table were picked because each named a number and a date; most predictions about the web name neither.</p>
+
+<h2 id="code">The code</h2>
+
+<p>Python: the table of published figures with a source and a date for each, the build script that computes the ratios and writes the payload, the page generator that draws the map and the table, and the tests. {{zip_kb}} KB.</p>
+<p><a class="btn" href="downloads/aiweb-code.zip">Download source</a>
+<a class="btn ghost" href="code.html">All code</a></p>
+
+<footer>
+<p><a href="about.html">Andrew Silvestri</a></p>
+<p><a href="code.html">Built with Python, Julia, JavaScript and public data.</a></p>
+</footer>
+</main>
+<script src="assets/motion.js"></script>
+<script src="assets/lightbox.js"></script>
+<script src="assets/nav.js"></script>
+</body></html>
