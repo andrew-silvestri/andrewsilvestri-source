@@ -147,6 +147,11 @@ GENERATORS = [
     # outputs/payload.json (great-filter lane, 2026-11-13).
     ("greatfilter page: greatfilter/update_page.py --apply",
      ["update_page.py", "--apply"], "greatfilter", "site"),
+    # origins/update_page.py writes site/origins.html from origins/outputs/payload.json
+    # (build_origins.py; the raw databases under origins/data/raw are gitignored). Lane
+    # origins-of-life, 2026-11-13.
+    ("origins page: origins/update_page.py --apply",
+     ["update_page.py", "--apply"], "origins", "site"),
     # storage/update_page.py writes site/storage.html from storage/outputs/payload.json
     # (build_storage.py, which needs ERCOT's files under storage/data/raw, gitignored) and
     # storage/data/imm.json. R4, 2026-10-23.

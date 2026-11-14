@@ -310,6 +310,12 @@ TARGETS = [
     # source a row, the model script (hard-steps simulation, Drake ranges), the page generator and the
     # tests, with the payload. No downloaded data: every figure is from a paper named in sources.py.
     target("greatfilter", "greatfilter-code.zip", keep={"outputs"}),
+    # The gradient of life (origins-of-life lane, 2026-11-13): the comfort analysis, the MARHYS extraction,
+    # the payload builder and its checks, the page generator and the tests, with the derived tables, the
+    # timeline and the payload. Not data/raw: the ASHRAE database (Zenodo 4993952) and MARHYS 3.0
+    # (PANGAEA 958978) are free downloads, named with their SHA-1 in origins/README.md.
+    target("origins", "origins-code.zip", keep={"outputs"},
+           skip=("data/raw", "data/raw/*", "outputs/*.png")),
     # food-code.zip retired with its page on 2026-09-09: food.html was
     # unpublished at Andrew's request, for now, and the last build is
     # unpublished/downloads/food-code.zip. The TARGET goes with the page,

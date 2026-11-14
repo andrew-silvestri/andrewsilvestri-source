@@ -102,6 +102,18 @@ ENTRIES = [
         "why": "A finished policy chain, 1990-2006, stated on the page as not updated.",
     },
     {
+        # origins-of-life lane, 2026-11-13. Disabled: the page reads two fixed database versions
+        # (ASHRAE II v2.1.0, MARHYS 3.0) and says its data does not update; build_origins.checks()
+        # would stop a rebuild that contradicts the page's words.
+        "page": "origins",
+        "cwd": "origins",
+        "fetch": [["python", "fetch_public.py"]],
+        "build": [["python", "analyse_ashrae.py"], ["python", "build_origins.py"]],
+        "keys": [],
+        "enabled": False,
+        "why": "Fixed database versions, stated on the page as not updated.",
+    },
+    {
         # great-filter lane, 2026-11-13. Disabled: no fetched data; every figure is a published
         # value in sources.py, and the page says its data does not update.
         "page": "greatfilter",

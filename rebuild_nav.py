@@ -259,6 +259,9 @@ NAV = [
         # great-filter lane, 2026-11-13: the chain of steps from chemistry to radio and which could be
         # the Great Filter. Other: not an energy page. Label is the page's <title>.
         ("The Great Filter", "greatfilter.html"),
+        # origins-of-life lane, 2026-11-13: membrane gradients from the origin of life to pain and set points.
+        # Other: not an energy-industry page. Label is the page's <title>.
+        ("The gradient of life", "origins.html"),
     ]),
     ("Code", "code.html"),
     # LAST, AND IT HAS TO STAY LAST. style.css pins this one right with
