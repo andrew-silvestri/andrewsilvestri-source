@@ -203,6 +203,15 @@ a globe is a map, and the first picture should say "this is a model", not
 this paragraph described the previous palette (violet accent, dark ground,
 WebGL hero trails); that stylesheet is in git before that date.
 
+**Since 2026-11-15 the home page's hero is a video, by Andrew's decision.**
+The first 30 seconds of a piano-studio render (a skeleton playing a
+nocturne), muted, looped, 16:9: `site/assets/hero-video.js` and
+`assets/hero-nocturne-*.mp4` / `hero-nocturne.webp`. The band is now
+min(viewport less navband, width x 9/16), not the whole first screen; the
+reasons, and what carried over from `hero.js`, are in that file's header.
+`hero.js` is kept in `assets/` and no longer loaded, so the paragraphs below
+describe the canvas it was, and `?hero=` pins in the tests now pin nothing.
+
 **The home page's hero is a live canvas, and that trade was made
 deliberately on 2026-09-06.** `site/assets/hero.js` draws one of three named
 nonlinear systems - double pendulum, Lorenz attractor, Burrau's three-body
