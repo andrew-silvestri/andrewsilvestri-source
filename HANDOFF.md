@@ -205,7 +205,9 @@ WebGL hero trails); that stylesheet is in git before that date.
 
 **Since 2026-11-15 the home page's hero is a video, by Andrew's decision.**
 The first 30 seconds of a piano-studio render (a skeleton playing a
-nocturne), muted, looped, 16:9: `site/assets/hero-video.js` and
+nocturne), looped, 16:9, muted until the Sound button (`.herosound`) is
+pressed, with a caption and the CC BY credits for the skeleton mesh and the
+piano samples as `.herocap` - licence terms, which stay while the video does: `site/assets/hero-video.js` and
 `assets/hero-nocturne-*.mp4` / `hero-nocturne.webp`. The band is now
 min(viewport less navband, width x 9/16), not the whole first screen; the
 reasons, and what carried over from `hero.js`, are in that file's header.
